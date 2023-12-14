@@ -1,0 +1,48 @@
+import { Dialog, DialogConfig } from '@angular/cdk/dialog';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { catchError, EMPTY, switchMap } from 'rxjs';
+// TODO when MessageService is integrated 
+// import { MessageService } from 'src/app/shared/services/message.service';
+ import { AaService } from '../../services/aa.service';
+import { LoginComponent } from './login/login.component';
+import { NgIf } from '@angular/common';
+
+@Component({
+    selector: 'pure-aa',
+    templateUrl: './aa.component.html',
+    styleUrls: ['./aa.component.scss'],
+    standalone: true,
+    imports: [NgIf, RouterLink]
+})
+export class AaComponent {
+
+  dialog_conf = {
+    hasBackdrop: false,
+    panelClass: 'pure-dialog',
+  }
+
+  constructor(
+    private dialog: Dialog,
+    public aa: AaService,
+    // TODO when Message is integrated
+    // private msg: MessageService,
+  ) { }
+
+  sign_in() {
+    const ref = this.dialog.open(LoginComponent, this.dialog_conf);
+    ref.closed.pipe(
+      switchMap((form: any) => form ? this.aa.login(form.username, form.password) : EMPTY),
+      catchError(err => {
+        // TODO when Message is integrated
+        // this.msg.error(err);
+        return EMPTY;
+      })
+    ).subscribe();
+  }
+
+  sign_out() {
+    this.aa.logout();
+  }
+
+}

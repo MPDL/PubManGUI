@@ -1,0 +1,93 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  box-sizing: border-box;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/**
+ * Basic styles for links
+ */
+a {
+  color: $brand-color;
+  text-decoration: none;
+
+  @include on-event {
+    color: $text-color;
+    // text-decoration: underline;
+  }
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wfvs-dialog .cdk-dialog-container{
+  // padding: 0 !important;
+  transition: none !important;
+  box-shadow: none !important;
+  background: none;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.highlight {
+  color: $yellow-200;
+  background-color: $gray-600;
+}
+
+.highlighted {
+  color: black;
+  background-color: $gray-400;
+  // transform: translateX(.5rem);
+}
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+// Overlay backdrop styling
+.overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+// Overlay panel styling
+.overlay-panel {
+  padding: 10%;
+  text-align: center;
+  // display: flex;
+  // flex-direction: column;
+  // background-color: lightyellow;
+  // border: solid 1px orange;
+  // padding: 20px;
+}
+
+.bi {
+  font-size: 1.0rem;
+}
+
+.test-class {
+  background-color: blue;
+}
