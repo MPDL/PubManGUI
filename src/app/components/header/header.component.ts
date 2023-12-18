@@ -4,8 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { AaService } from 'src/app/base/services/aa.service';
 import { AaComponent } from '../aa/aa.component';
 import { Router, RouterLink } from '@angular/router';
-// TODO when switch-bs-theme is integrated
-//import { SwitchBsThemeComponent } from 'src/app/shared/components/switch-bs-theme/switch-bs-theme.component';
+import { SwitchThemeComponent } from '../switch-theme/switch-theme.component';
 // TODO when TooltipDirective is integrated
 //import { TooltipDirective } from 'src/app/shared/directives/tooltip.directive';
 
@@ -14,7 +13,7 @@ import { Router, RouterLink } from '@angular/router';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [ RouterLink, FormsModule, ReactiveFormsModule, AaComponent]
+    imports: [ AaComponent, FormsModule, RouterLink, ReactiveFormsModule, SwitchThemeComponent]
 })
 export class HeaderComponent {
 
