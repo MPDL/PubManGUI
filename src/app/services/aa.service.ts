@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, EMPTY, map, Observable, switchMap, throwError } from 'rxjs';
-// TODO when MessageService is integrated
-// import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +12,8 @@ export class AaService {
   private tokenUrl = 'https://pure.mpg.de/rest/login';
 
   constructor(
-    private http: HttpClient
-    // TODO when MessageService is integrated
-    // private message: MessageService
+    private http: HttpClient,
+    private message: MessageService
   ) { }
 
   get token(): string | null {
@@ -77,8 +75,7 @@ export class AaService {
           this.isLoggedIn = true;
           return this.who(token);
         } else {
-          // TODO when MessageService is integrated
-          // this.message.error(response.status + ' ' + response.statusText);
+          this.message.error(response.status + ' ' + response.statusText);
           return EMPTY;
         }
       }),
