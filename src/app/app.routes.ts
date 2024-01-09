@@ -1,23 +1,21 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-// import { ItemListViewComponent } from './components/item-list-view/item-list-view.component';
+import { SearchResultListComponent } from './components/list-view/search-result-list/search-result-list.component';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'list',
         pathMatch: 'full'
     },
     {
         path: 'home',
         component: HomeComponent
     },
-    /*
     {
         path: 'list',
-        component: ItemListViewComponent
+        component: SearchResultListComponent
     },
-    */
     /* TODO Add after adding search
     {
         
