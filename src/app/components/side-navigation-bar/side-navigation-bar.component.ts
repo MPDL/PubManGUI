@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './side-navigation-bar.component.html',
   styleUrl: './side-navigation-bar.component.scss'
 })
+
 export class SideNavigationBarComponent {
   @ViewChild('sidenav', {read: ElementRef}) nav!: ElementRef;
   renderer = inject(Renderer2);
@@ -28,4 +29,6 @@ export class SideNavigationBarComponent {
   collapse() {
     this.renderer.addClass(this.nav.nativeElement, 'collapsed');
   }
+
+  
 }
