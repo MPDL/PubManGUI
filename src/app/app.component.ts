@@ -1,21 +1,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { FooterComponent } from './components/footer/footer.component';
+import { NavigationService } from './shared/services/navigation.service';
 import { HeaderComponent } from './components/header/header.component';
-import { SideNavigationBarComponent } from './components/side-navigation-bar/side-navigation-bar.component';
-
+import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ScrollToTopComponent } from './shared/components/scroll-to-top/scroll-to-top.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FooterComponent, HeaderComponent, RouterOutlet, SideNavigationBarComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'pure';
 
-  // TODO after adding NavigationService
-  //constructor(private navigation: NavigationService) {}
-  constructor() {}
+  constructor(private navigation: NavigationService) {}
 }

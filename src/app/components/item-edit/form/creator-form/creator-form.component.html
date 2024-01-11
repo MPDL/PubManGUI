@@ -1,0 +1,107 @@
+<div [formGroup]="creator_form" class="">
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <div class="col-sm ms-sm-3" [ngClass]="{'border-bottom': index !== index_length -1}">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <label for="type" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2 ">type</label>
+                <div class="col-sm">
+                    <label for="creator_type" class="visually-hidden">type</label>
+                    <select id="creator_type" class="form-select form-select-sm" formControlName="type"
+                        (change)="type_change(type.value)">
+                        <option [value]="null" selected>type</option>
+                        @for (t of creator_types; track t) {
+                        <option [value]="t">{{t}}</option>
+                        }
+                    </select>
+                </div>
+                <label for="role" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">role</label>
+                <div class="col-sm">
+                    <label for="creator_role" class="visually-hidden">role</label>
+                    <select id="creator_role" class="form-select form-select-sm" formControlName="role">
+                        <option [value]="null" selected>role</option>
+                        @for (r of creator_roles; track r) {
+                        <option [value]="r">{{r}}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            @if (type.value === 'ORGANIZATION') {
+            <ng-container formGroupName="organization">
+                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                    <label for="name" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">name</label>
+                    <div class="col-sm">
+                        <pure-selector [form]="organization" [control_name]="'name'" (notice)="updateOU($event)"
+                            purePureOus placeholder="search ous ...">
+                            <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+                        </pure-selector>
+                    </div>
+                </div>
+            </ng-container>
+            }
+            @if (type.value === 'PERSON') {
+            <ng-container formGroupName="person">
+                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                    <label for="givenName" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">given</label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control form-control-sm" id="givenName"
+                            formControlName="givenName">
+                    </div>
+                    <label for="familyName"
+                        class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">family</label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control form-control-sm" id="familyName"
+                            formControlName="familyName">
+                    </div>
+                </div>
+                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                    <label for="cone" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">cone</label>
+                    <div class="col-sm">
+                        <pure-selector [form]="person" [control_name]="'completeName'" (notice)="updatePerson($event)"
+                            pureConePersons placeholder="search cone ...">
+                            <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+                        </pure-selector>
+                    </div>
+                </div>
+                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                    <label for="orcid" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">orcid</label>
+                    <div class="col-sm">
+                        <input type="text" class="form-control form-control-sm" id="orcid" formControlName="orcid">
+                    </div>
+                    <label for="id" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">id</label>
+                    <div class="col-sm">
+                        <pure-identifier-form [identifier_form]="identifier" [multi]="false"
+                            (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
+                    </div>
+                </div>
+                <div formArrayName="organizations">
+                    @for (pou of organizations.controls; track pou; let i = $index) {
+                    <div>
+                        <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center" [formGroupName]="i">
+                            <label for="ou_name" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">ou
+                                {{i+1}}</label>
+                            <div class="col-sm">
+                                <pure-selector [form]="pou" [control_name]="'name'" (notice)="updatePersonOU($event, i)"
+                                    purePureOus placeholder="search ous ...">
+                                    <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+                                </pure-selector>
+                            </div>
+                            <div class="col-sm-1">
+                                <pure-add-remove-buttons [index]="i"
+                                    (notice)="add_remove_person_ou($event)"></pure-add-remove-buttons>
+                            </div>
+                        </div>
+                    </div>
+                    } @empty {
+                        <div class="col-sm offset-sm-1">
+                            <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add organization'"
+                                (notice)="add_remove_person_ou($event)"></pure-add-remove-buttons>
+                        </div>
+                    }
+                </div>
+            </ng-container>
+            }
+        </div>
+        <div class="col-sm-1">
+            <pure-add-remove-buttons [index]="index" (notice)="add_remove_creator($event)"></pure-add-remove-buttons>
+        </div>
+    </div>
+</div>

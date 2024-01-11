@@ -1,0 +1,18 @@
+<h4>Organizational Units</h4>
+<cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding class="flat-tree-node">
+        <button class="btn btn-sm btn-outline border-0" (click)="info(node)"><i class="bi-dash"
+                [style.visibility]="'hidden'"></i><span
+                [ngClass]="{'text-muted': node.item.publicStatus === 'CLOSED'}">{{node.item.name}}</span></button>
+    </cdk-tree-node>
+    <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChildren" cdkTreeNodePadding class="flat-tree-node">
+        <button class="btn btn-sm btn-outline border-0" cdkTreeNodeToggle (click)="info(node)">
+            <i class="text-primary"
+                [ngClass]="{'bi-chevron-down': treeControl.isExpanded(node), 'bi-chevron-right': !treeControl.isExpanded(node)}"></i>
+            <span [ngClass]="{'text-muted': node.item.publicStatus === 'CLOSED'}">{{node.item.name}}</span>
+        </button>
+        <div *ngIf="node.isLoading" class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </cdk-tree-node>
+</cdk-tree>

@@ -1,0 +1,26 @@
+.side_nav {
+    bottom: 45%;
+    left: 10%;
+    position: fixed;
+    top: 14%;
+    width: 250px;
+    z-index: 16;
+    overflow: hidden;
+    /*
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    */
+  }
+  
+  .side_nav.collapsed {
+    width: 60px;
+  }
+  
+  .side_nav.collapsed .bi {
+    font-size: 1.25rem;
+  }
+  
+  .side_nav.collapsed .nav-label {
+    display: none;
+  }

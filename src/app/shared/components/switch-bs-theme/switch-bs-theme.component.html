@@ -1,0 +1,13 @@
+<!--<div class="form-check form-switch">
+    <input id="switch" class="form-check-input" type="checkbox" role="switch"
+        (click)="switch_theme()">
+</div>-->
+<div>
+    <a [routerLink]="[]" class="nav-link" (click)="switch_theme()">
+        @if (icon.localeCompare('moon') === 0) {
+            <i class="bi-moon"></i>
+        } @else {
+            <i class="bi-sun"></i>
+        }
+    </a>
+</div>

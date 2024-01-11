@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, EMPTY, map, Observable, switchMap, throwError } from 'rxjs';
-import { MessageService } from './message.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AaService {
 
   private tokenUrl = 'https://pure.mpg.de/rest/login';
@@ -17,7 +16,7 @@ export class AaService {
   ) { }
 
   get token(): string | null {
-    return sessionStorage.getItem('token');
+      return sessionStorage.getItem('token');
   }
 
   set token(token2set) {

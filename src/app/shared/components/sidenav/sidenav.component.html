@@ -1,0 +1,35 @@
+<!--
+    <div class="d-none d-lg-block">hide on screens smaller than lg</div>
+    see: https://getbootstrap.com/docs/5.3/utilities/display/
+
+    alternative: use navbar-expand-lg (requires navbar-toggler and collapse navbar-collapse d-lg-flex)
+-->
+<nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()">
+    <div class="container-fluid">
+        <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#side_nav"
+            aria-controls="side_nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>-->
+        <!--<div class="collapse navbar-collapse d-lg-flex" id="side_nav">-->
+            <nav class="nav flex-column">
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                        class="bi bi-file-earmark-plus"></i><small class="nav-label ms-1">Eingabe</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()"><i
+                        class="bi bi-folder-check"></i><small class="nav-label ms-1">Meine
+                        Datensätze</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                        class="bi bi-award"></i><small class="nav-label ms-1">QA-Bereich</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                        class="bi bi-download"></i><small class="nav-label ms-1">Import</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                        class="bi bi-clipboard-data"></i><small class="nav-label ms-1">Batch-Verarbeitung</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                        class="bi bi-box2"></i><small class="nav-label ms-1">Ablage</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()"><i
+                        class="bi bi-diagram-3"></i><small class="nav-label ms-1">Organisationsstruktur</small></a>
+                <a class="nav-link" [routerLink]="['']" (click)="collapse()"><i class="bi bi-geo-alt"></i><small
+                        class="nav-label ms-1"></small></a>
+            </nav>
+        <!--</div>-->
+    </div>
+</nav>

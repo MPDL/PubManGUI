@@ -1,0 +1,16 @@
+<div [formGroup]="form">
+    <mat-chip-grid #chipGrid aria-label="Enter ...">
+        @for (chip of chips; track chip) {
+        <mat-chip-row (removed)="remove(chip)" [editable]="true" (edited)="edit(chip, $event)"
+            [aria-description]="'press enter to edit ' + chip">
+            {{chip}}
+            <button matChipRemove [attr.aria-label]="'remove ' + chip">
+                x
+            </button>
+        </mat-chip-row>
+        }
+        <input class="form-control form-control-sm" [placeholder]="'Add ' + control_name + ' ...'" 
+            [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" />
+    </mat-chip-grid>
+</div>

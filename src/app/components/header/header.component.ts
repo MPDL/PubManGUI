@@ -1,23 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-// TODO when aa is integrated
-//import { AaService } from 'src/app/base/services/aa.service';
-import { AaComponent } from '../aa/aa.component';
 import { Router, RouterLink } from '@angular/router';
-import { SwitchThemeComponent } from '../switch-theme/switch-theme.component';
-// TODO when TooltipDirective is integrated
-//import { TooltipDirective } from 'src/app/shared/directives/tooltip.directive';
+import { AaComponent } from '../aa/aa.component';
+import { SwitchBsThemeComponent } from 'src/app/shared/components/switch-bs-theme/switch-bs-theme.component';
+import { TooltipDirective } from 'src/app/shared/directives/tooltip.directive';
+import { DOCUMENT } from '@angular/common';
+import { AaService } from 'src/app/services/aa.service';
 
 @Component({
     selector: 'pure-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [ AaComponent, FormsModule, RouterLink, ReactiveFormsModule, SwitchThemeComponent]
+    imports: [ RouterLink, FormsModule, ReactiveFormsModule, TooltipDirective, SwitchBsThemeComponent, AaComponent]
 })
 export class HeaderComponent {
 
-  user_name = 'pure user'
+  headerHeight: number = 0;
+  header!: HTMLElement;
+  private document = inject(DOCUMENT);
+  newHeight: any;
+
+  ngOnInit() {
+    const nav = this.document.getElementById('header');
+    if (nav) {
+      this.header = nav;
+    }
+    this.headerHeight = this.header.offsetHeight as number;
+  }
+
+  ngAfterViewInit() {
+    this.document.addEventListener('scroll', (ev) => {
+      this.resizeHeader(ev);
+    });
+  }
 
   search_form = this.form_builder.group({
     text: '',
@@ -25,8 +41,7 @@ export class HeaderComponent {
 
   constructor(
     private form_builder: FormBuilder,
-    // TODO when aa is integrated
-    // public aa: AaService,
+    public aa: AaService,
     private router: Router
     ) { }
 
@@ -34,9 +49,38 @@ export class HeaderComponent {
     const search_term = this.search_form.get('text')?.value;
     if (search_term) {
       const query = { query_string: { query: search_term } };
-      this.router.navigateByUrl('/', {onSameUrlNavigation: 'reload', state: {query}});
+      this.router.navigateByUrl('/list', {onSameUrlNavigation: 'reload', state: {query}});
     }
     this.search_form.controls['text'].patchValue('');
+  }
+
+  resizeHeader(event: any) {
+    this.newHeight = this.headerHeight - window.scrollY / 2;
+
+    if (this.newHeight < 50) {
+      this.newHeight = 50;
+    }
+
+    let fontsize = this.newHeight / this.headerHeight;
+    if (fontsize >= 0.5) {
+      this.header.style.fontSize = fontsize + 'em';
+    }
+    // if (this.newHeight >= this.headerHeight) {
+      this.header.style.height = this.newHeight + 'px';
+    // }
+
+  }
+
+  help() {
+    alert('help ya self!');
+  }
+
+  tools() {
+    alert('select from tools ...');
+  }
+
+  switch_lang() {
+    alert('select lasagne')
   }
 
 }

@@ -1,0 +1,22 @@
+<ng-container [formGroup]="identifier_form">
+    <div class="row g-1 align-items-center">
+        <div class="col-sm-3">
+            <label for="identifier_type" class="visually-hidden">type</label>
+            <select id="identifier_type" class="form-select form-select-sm" formControlName="type">
+                <option [ngValue]="null" selected>type</option>
+                @for (t of identifier_types; track t) {
+                <option [ngValue]="t">{{t}}</option>
+                }
+            </select>
+        </div>
+        <div [ngClass]="{'col-sm-8': multi, 'col-sm-9': !multi}">
+            <input type="text" class="form-control form-control-sm" id="identifier_value" formControlName="id">
+        </div>
+        @if (multi) {
+        <div class="col-1 btn-group btn-group-sm d-flex justify-content-between">
+            <input type="button" class="btn btn-sm" name="add" value="+" (click)="addIdentifier()" />
+            <input type="button" class="btn btn-sm" name="remove" value="--" (click)="removeIdentifier()" />
+        </div>
+        }
+    </div>
+</ng-container>

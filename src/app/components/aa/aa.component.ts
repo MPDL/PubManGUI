@@ -2,9 +2,8 @@ import { Dialog, DialogConfig } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { catchError, EMPTY, switchMap } from 'rxjs';
-// TODO when MessageService is integrated 
-// import { MessageService } from 'src/app/shared/services/message.service';
- import { AaService } from '../../services/aa.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { AaService } from 'src/app/services/aa.service';
 import { LoginComponent } from './login/login.component';
 import { NgIf } from '@angular/common';
 
@@ -25,8 +24,7 @@ export class AaComponent {
   constructor(
     private dialog: Dialog,
     public aa: AaService,
-    // TODO when Message is integrated
-    // private msg: MessageService,
+    private msg: MessageService,
   ) { }
 
   sign_in() {
@@ -34,8 +32,7 @@ export class AaComponent {
     ref.closed.pipe(
       switchMap((form: any) => form ? this.aa.login(form.username, form.password) : EMPTY),
       catchError(err => {
-        // TODO when Message is integrated
-        // this.msg.error(err);
+        this.msg.error(err);
         return EMPTY;
       })
     ).subscribe();

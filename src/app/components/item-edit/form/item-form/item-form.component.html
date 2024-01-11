@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="col-lg-10 col-sm-12">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <!--<div class="row g-1 mb-1">-->
+            <pure-metadata-form [meta_form]="metadata_form" (notice)="handleNotification($event)">
+            </pure-metadata-form>
+            <!--</div>-->
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center" formGroupName="context">
+                <label for="context" class="col-sm-2 col-form-label col-form-label-sm">context</label>
+                <div class="col-sm-9">
+                    <pure-selector [form]="context" [control_name]="'name'" (notice)="updateCtx($event)" purePureCtxs
+                        placeholder="search contexts ...">
+                        <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+                    </pure-selector>
+                </div>
+            </div>
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <label for="title" class="col-sm-2 col-form-label col-form-label-sm">message</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control form-control-sm" id="message" name="message"
+                        formControlName="message">
+                </div>
+            </div>
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                <label for="title" class="col-sm-2 col-form-label col-form-label-sm">local tags</label>
+                <div class="col-sm-9">
+                    <pure-chips [form]="form" [chips]="localTags.value" [control_name]="'localTags'"></pure-chips>
+                </div>
+                <!--<div class="col-sm">
+                <ng-container formArrayName="localTags">
+                    @for (tag of localTags.controls; track tag; let i = $index) {
+                    <div class="d-sm-flex flex-sm-row gap-1 align-items-center"
+                        [ngClass]="{'mb-1': i !== localTags.controls.length - 1}">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="tag" [formControlName]="i"
+                                [value]="tag.value">
+                        </div>
+                        <div class="col-sm-1">
+                            <pure-add-remove-buttons [index]="i"
+                                (notice)="add_remove_local_tag($event)"></pure-add-remove-buttons>
+                        </div>
+                    </div>
+                    } @empty {
+                    <div class="col-sm-1">
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add tag'"
+                            (notice)="add_remove_local_tag($event)"></pure-add-remove-buttons>
+                    </div>
+                    }
+                </ng-container>
+            </div>-->
+            </div>
+            <div class="d-sm-flex flex-sm-row mb-1">
+                <div class="col-sm offset-sm-2">
+                    <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="submit" value="save">s a v e</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <pre>valid? {{form.valid}}</pre>
+</div>
+<div class="container-fluid d-sm-flex flex-sm-row mb-1">
+    <pre class="col-sm">{{form.value | json}}</pre>
+    <pre class="col-sm">{{form_2_submit | json}}</pre>
+</div>

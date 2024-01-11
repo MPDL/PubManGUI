@@ -5,19 +5,13 @@
 @import "../../../../node_modules/bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
-@import "../colors/paletton_ikb10";
+@import "../colors/mpdl";
 
-$primary: $ikb-primary-0;
-$info: $ikb-secondary-0;
-$warning: $ikb-complement-0;
 $input-focus-box-shadow: 0 0 0 0 transparent;
-// $input-focus-border-color: $ikb-complement-0;
 $form-select-focus-box-shadow: 0 0 0 0 transparent;
 $form-check-input-focus-box-shadow: 0 0 0 0 transparent;
 $list-group-border-width: 0;
-//$form-check-input-checked-bg-color:       transparent;
-//$form-check-input-checked-border-color:   $ikb-complement-2;
-//$form-check-radio-checked-bg-image:       url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$ikb-complement-2}'/></svg>");
+$form-check-input-checked-bg-color: $mpdl-iseo1;
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
 @import "../../../../node_modules/bootstrap/scss/variables";
@@ -33,6 +27,7 @@ $border-color-dark: $gray-600;
 
 // 5. Include remainder of required parts
 @import "../../../../node_modules/bootstrap/scss/maps";
+
 @import "../../../../node_modules/bootstrap/scss/mixins";
 @import "../../../../node_modules/bootstrap/scss/root";
 
@@ -52,7 +47,7 @@ $border-color-dark: $gray-600;
 @import "../../../../node_modules/bootstrap/scss/nav";
 @import "../../../../node_modules/bootstrap/scss/navbar";
 // @import "../../../../node_modules/bootstrap/scss/accordion";
-// @import "../../../../node_modules/bootstrap/scss/breadcrumb";
+@import "../../../../node_modules/bootstrap/scss/breadcrumb";
 @import "../../../../node_modules/bootstrap/scss/pagination";
 @import "../../../../node_modules/bootstrap/scss/badge";
 @import "../../../../node_modules/bootstrap/scss/alert";
@@ -62,8 +57,8 @@ $border-color-dark: $gray-600;
 // @import "../../../../node_modules/bootstrap/scss/toasts";
 @import "../../../../node_modules/bootstrap/scss/modal";
 @import "../../../../node_modules/bootstrap/scss/tooltip";
-// @import "../../../../node_modules/bootstrap/scss/popover";
-@import "../../../../node_modules/bootstrap/scss/carousel";
+@import "../../../../node_modules/bootstrap/scss/popover";
+// @import "../../../../node_modules/bootstrap/scss/carousel";
 @import "../../../../node_modules/bootstrap/scss/spinners";
 @import "../../../../node_modules/bootstrap/scss/offcanvas";
 // @import "../../../../node_modules/bootstrap/scss/placeholders";

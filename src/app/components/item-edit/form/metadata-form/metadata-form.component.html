@@ -1,0 +1,53 @@
+<div [formGroup]="meta_form">
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <label for="title" class="col-sm-2 col-form-label col-form-label-sm">title</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control form-control-sm" id="title" name="title" formControlName="title">
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="alt_titles" class="col-sm-2 col-form-label col-form-label-sm">alternative titles</label>
+        <div class="col-sm">
+            <ng-container formArrayName="alternativeTitles">
+                @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
+                <ng-container [formGroupName]="ati">
+                    <pure-alt-title-form [alt_title_form]="alt" [index]="ati"
+                        [index_length]="alternativeTitles.controls.length"
+                        (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
+                </ng-container>
+                } @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add title'" (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <label for="genre" class="col-sm-2 col-form-label col-form-label-sm">genre</label>
+        <div class="col-sm-9">
+            <select id="genre" class="form-select form-select-sm" formControlName="genre"
+                (change)="genre_change($event)">
+                <option [value]="null" selected>genre</option>
+                @for (g of genre_types; track g) {
+                <option [value]="g">{{g}}</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="creatures" class="col-sm-1 col-form-label col-form-label-sm">creators</label>
+        <div class="col-sm">
+            <ng-container formArrayName="creators">
+                @for (creature of creators.controls; track creature; let ci = $index) {
+                <ng-container [formGroupName]="ci">
+                    <pure-creator-form [creator_form]="creature" [index]="ci" [index_length]="creators.length"
+                        (notice)="handleCreatorNotification($event)"></pure-creator-form>
+                </ng-container>
+                } @empty {
+                <div class="col-sm offset-sm-1 ps-2">
+                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add creator'" (notice)="handleCreatorNotification($event)"></pure-add-remove-buttons>
+                </div>
+                }
+            </ng-container>
+        </div>
+    </div>
+</div>

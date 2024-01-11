@@ -1,0 +1,32 @@
+<nav id="sidenav" #sidenav class="navbar navbar-expand-lg bg-body">
+        <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#top_nav"
+                        aria-controls="top_nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-lg-flex" id="top_nav">
+                        <nav class="nav bg-body">
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('first')"><i
+                                                class="bi-sort-alpha-down"></i></a>
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('second')"><i
+                                                class="bi-list-ol"></i></a>
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('third')"><i
+                                                class="bi-x-diamond"></i></a>
+                                <div class="vr"></div>
+                                <a [routerLink]="[]" class="nav-link px-3" (click)="do_some_navigation('fourth')"><i
+                                                class="bi-upload"></i></a>
+                                <div class="vr"></div>
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('fivth')"><i
+                                                class="bi-clipboard-plus"></i></a>
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('sixth')"><i
+                                                class="bi-clipboard-minus"></i></a>
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('seventh')"><i
+                                                class="bi-journal-plus"></i></a>
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('eighth')"><i
+                                                class="bi-journal-minus"></i></a>
+                                <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('eighth')"><i
+                                                class="bi-gear"></i></a>
+                        </nav>
+                </div>
+        </div>
+</nav>

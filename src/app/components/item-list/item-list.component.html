@@ -1,0 +1,89 @@
+<div class="row align-items-center top_nav_pos bg-body">
+    <div class="col-sm-4 ps-0">
+        <pure-topnav></pure-topnav>
+    </div>
+    <div class="col-sm-1">
+        <small>{{current_page}} / {{number_of_pages}}</small>
+    </div>
+    <nav class="col-sm-6" purePagination #pagination="purePagination" [totalPages]="number_of_pages"
+        [pageNo]="current_page" (pageChange)="onPageChange($event)">
+        <ul class="pagination pagination-sm">
+            <li class="page-item" [ngClass]="{'disabled': pagination.isFirst}">
+                <button class="page-link" (click)="pagination.first()" [disabled]="pagination.isFirst">
+                    First
+                </button>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': pagination.isFirst}">
+                <button class="page-link" (click)="pagination.prev()" [disabled]="pagination.isFirst">
+                    Previous
+                </button>
+            </li>
+            @for (page of select_pages(pagination.totalPages); track page; let i = $index) {
+            <li class="page-item">
+                @if (isNumber(page)) {
+                <button class="page-link" (click)="onPageChange(page+1)">
+                    {{page+1}}
+                </button>
+                }
+                @if (!isNumber(page)) {
+                <button class="page-link">
+                    {{page}}
+                </button>
+                }
+            </li>
+            }
+            <li class="page-item" [ngClass]="{'disabled': pagination.isLast}">
+                <button class="page-link" (click)="pagination.next()" [disabled]="pagination.isLast">
+                    Next
+                </button>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': pagination.isLast}">
+                <button class="page-link" (click)="pagination.last()" [disabled]="pagination.isLast">
+                    Last
+                </button>
+            </li>
+        </ul>
+    </nav>
+    <div class="col-sm-1 text-start">
+        <select class="form-select form-select-sm" [formControl]="select_pages_2_display"
+            (change)="pageSizeHandler($event)" size="1">
+            @for (pages of pages_2_display; track pages) {
+            <option [selected]="pages.value === 10" [value]="pages.value">{{pages.label}}</option>
+            }
+        </select>
+        <!--<label for="pageSize"><small>&nbsp; per Page</small></label>-->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-9 col-sm-12">
+        @if (result_list | async; as list) {
+        <div class="card">
+            <div class="card-header">
+                <div class="form-check ms-4">
+                    <input #input [formControl]="select_all" class="form-check-input" type="checkbox" value=""
+                        id="form_check" (change)="select_all_items($event)">
+                    <label for="form_check"><small
+                            [innerHTML]="input.checked ? 'deselect all' : 'select all'"></small></label>
+                </div>
+            </div>
+            <div class="list-group list-group-flush">
+                @for (item of list; track item; let last = $last) {
+                <div class="list-group-item py-0">
+                    <pure-item-list-element [item]="item" [last_item]="last"
+                        [authenticated]="aa.isLoggedIn"></pure-item-list-element>
+                </div>
+                }
+            </div>
+        </div>
+        }
+    </div>
+    <div class="col-lg-3 d-none d-lg-block">
+        <div class="card mt-4">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                facets or filters or whatever else ya wanna display here ...
+            </div>
+        </div>
+    </div>
+</div>
