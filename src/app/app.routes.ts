@@ -4,7 +4,7 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 import { OuTreeComponent } from './components/ou-tree/ou-tree.component';
 import { ItemSearchComponent } from './components/item-search/item-search.component';
 import { ItemFormComponent } from './components/item-edit/form/item-form/item-form.component copy';
-import { itemResolver } from './services/item--resolver';
+import { itemResolver } from './services/item-resolver';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
@@ -32,6 +32,9 @@ export const routes: Routes = [
       },
       {
         path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver }
+      },
+      {
+        path: 'edit', component: ItemFormComponent
       },
       {
         path: '**',
