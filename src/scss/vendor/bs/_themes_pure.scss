@@ -68,7 +68,7 @@
         --bs-list-group-action-hover-bg: var(--bs-gray-700);
     }
 
-    .mat-mdc-chip .mat-mdc-standard-chip {
+    .mat-mdc-chip.mat-mdc-standard-chip {
         --mdc-chip-container-height: 24px;
         background-color: darkgray;
         border: 1px solid gray;
