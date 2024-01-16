@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, EMPTY, map, Observable, switchMap, throwError } from 'rxjs';
 import { MessageService } from 'src/app/shared/services/message.service';
+import * as props from 'src/assets/properties.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AaService {
 
-  private tokenUrl = 'https://pure.mpg.de/rest/login';
+  private tokenUrl = props.inge_rest_uri.concat('/login');
 
   constructor(
     private http: HttpClient,

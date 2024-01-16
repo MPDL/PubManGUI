@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
+import * as props from 'src/assets/properties.json';
 
 export interface SearchResult {
   numberOfRecords: number,
@@ -21,7 +22,8 @@ export interface TaskParamVO {
 })
 export class IngeCrudService {
 
-  restUri = 'https://gui.inge.mpdl.mpg.de/rest';
+  // restUri = 'https://gui.inge.mpdl.mpg.de/rest';
+  restUri = props.inge_rest_uri;
 
   constructor(
     protected httpClient: HttpClient
