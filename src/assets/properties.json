@@ -1,4 +1,4 @@
 {
     "cone_instamce_uri": "http://localhost:3232/cone",
-    "else_rest_uri": "http://mpdlu011/dowm/else"
+    "inge_rest_uri": "https://gui.inge.mpdl.mpg.de/rest"
 }
