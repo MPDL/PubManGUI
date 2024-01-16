@@ -3,15 +3,14 @@ import { map } from 'rxjs/operators';
 import { term_filter, AggregationParams } from '../model/aggs-params';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from './message.service';
-import { environment } from 'src/environments/environment';
+import * as props from 'src/assets/properties.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AggregationService {
 
-  searchUrl = environment.else_rest_url.concat('/find');
-  pure_search = 'https://pure.mpg.de/rest/items/elasticsearch';
+  inge_elastic_uri = props.inge_rest_uri.concat('/items/elasticsearch');
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -28,19 +27,7 @@ export class AggregationService {
       size: 0,
       aggregations: aggregation
     };
-    return this.http.post(this.searchUrl, params, this.httpOptions).pipe(
-      map(response => {
-        return this.findByKey(response, 'buckets');
-      })
-    );
-  }
-
-  getBuckets_from_pure(aggregation: any) {
-    const params = {
-      size: 0,
-      aggregations: aggregation
-    };
-    return this.http.post(this.pure_search, params, this.httpOptions).pipe(
+    return this.http.post(this.inge_elastic_uri, params, this.httpOptions).pipe(
       map(response => {
         return this.findByKey(response, 'buckets');
       })
@@ -50,7 +37,7 @@ export class AggregationService {
   termfilter(i: string, f: string, v: string) {
     term_filter.index = i;
     term_filter.query.term = { [f]: v };
-    return this.http.post<any>(this.searchUrl, term_filter, this.httpOptions).pipe(
+    return this.http.post<any>(this.inge_elastic_uri, term_filter, this.httpOptions).pipe(
       map(response => response),
     );
   }

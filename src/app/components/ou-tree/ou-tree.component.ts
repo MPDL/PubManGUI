@@ -4,12 +4,12 @@ import { map, Observable } from 'rxjs';
 import { Database, DynamicDataSource, FlatNode, DynamicFlatTreeControl } from './dyn-tree';
 import { NgClass, NgIf } from '@angular/common';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import * as props from 'src/assets/properties.json';
 
 @Injectable()
  export class OUsDatabase extends Database<any> {
 
-  pure_live = 'https://pure.mpg.de/rest/';
-  pure_local = 'http://localhost:8080/rest/';
+  inge_uri = props.inge_rest_uri;
 
   constructor (
     private http: HttpClient
@@ -18,13 +18,13 @@ import { CdkTreeModule } from '@angular/cdk/tree';
   }
 
   getRootLevelItems(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.pure_live}ous/toplevel`).pipe(
+    return this.http.get<any[]>(`${this.inge_uri}/ous/toplevel`).pipe(
       map(nodes => nodes)
     );
   }
 
   getChildren(item: any): Observable<any[]> {
-    return this.http.get<any[]>(`${this.pure_live}ous/${item.objectId}/children`).pipe(
+    return this.http.get<any[]>(`${this.inge_uri}/ous/${item.objectId}/children`).pipe(
       map(ous => ous)
     );
   }
