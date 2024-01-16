@@ -1,5 +1,5 @@
 <ng-container [formGroup]="identifier_form">
-    <div class="row g-1 align-items-center">
+    <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1}">
         <div class="col-sm-3">
             <label for="identifier_type" class="visually-hidden">type</label>
             <select id="identifier_type" class="form-select form-select-sm" formControlName="type">
@@ -13,9 +13,8 @@
             <input type="text" class="form-control form-control-sm" id="identifier_value" formControlName="id">
         </div>
         @if (multi) {
-        <div class="col-1 btn-group btn-group-sm d-flex justify-content-between">
-            <input type="button" class="btn btn-sm" name="add" value="+" (click)="addIdentifier()" />
-            <input type="button" class="btn btn-sm" name="remove" value="--" (click)="removeIdentifier()" />
+        <div class="col-sm-1">
+            <pure-add-remove-buttons [index]="index" (notice)="add_remove_identifier($event)"></pure-add-remove-buttons>
         </div>
         }
     </div>

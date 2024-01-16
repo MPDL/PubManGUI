@@ -1,25 +1,22 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IdType } from 'src/app/model/inge';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
 
 @Component({
-  selector: 'pure-identifier-form',
+  selector: 'pure-language-form',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent],
-  templateUrl: './identifier-form.component.html',
-  styleUrls: ['./identifier-form.component.scss']
+  templateUrl: './language-form.component.html',
+  styleUrl: './language-form.component.scss'
 })
-export class IdentifierFormComponent {
-
-  @Input() identifier_form!: FormGroup;
-  @Input() index!: number;
+export class LanguageFormComponent {
+  @Input() language_form!: FormControl;
   @Input() index_length!: number;
+  @Input() index!: number;
   @Input() multi!: boolean;
   @Output() notice = new EventEmitter();
 
-  identifier_types = Object.keys(IdType);
   add_remove_identifier(event: any) {
     this.notice.emit(event);
   }

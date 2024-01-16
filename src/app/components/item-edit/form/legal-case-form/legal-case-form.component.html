@@ -1,0 +1,23 @@
+<div [formGroup]="legal_case_form" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+    <label class="col-sm-2 col-form-label col-form-label-sm">Legal Case</label>
+    <div class="col-sm-10">
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">Title</label>
+                <input type="text" class="form-control form-control-sm" formControlName="title">
+            </div>
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">Court Name</label>
+                <input type="text" class="form-control form-control-sm" formControlName="courtName">
+            </div>
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">Identifier</label>
+                <input type="text" class="form-control form-control-sm" formControlName="identifier">
+            </div>
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">Date Published</label>
+                <input type="text" class="form-control form-control-sm" formControlName="datePublished">
+            </div>
+        </div>
+    </div>
+</div>

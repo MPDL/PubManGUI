@@ -16,7 +16,8 @@
                         (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
                 </ng-container>
                 } @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add title'" (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add title'"
+                    (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
                 }
             </ng-container>
         </div>
@@ -44,10 +45,93 @@
                 </ng-container>
                 } @empty {
                 <div class="col-sm offset-sm-1 ps-2">
-                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add creator'" (notice)="handleCreatorNotification($event)"></pure-add-remove-buttons>
+                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add creator'"
+                        (notice)="handleCreatorNotification($event)"></pure-add-remove-buttons>
                 </div>
                 }
             </ng-container>
         </div>
     </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Dates</label>
+        <div class="col-sm-9">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm-3">
+                    <label class="col-form-label col-form-label-sm">Date Accepted</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="dateAccepted">
+                </div>
+                <div class="col-sm-3">
+                    <label class="col-form-label col-form-label-sm">Date Created</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="dateCreated">
+                </div>
+                <div class="col-sm-3">
+                    <label class="col-form-label col-form-label-sm">Date Modified</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="dateModified">
+                </div>
+            </div>
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm-3">
+                    <label class="col-form-label col-form-label-sm">Date Published in Print</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="datePublishedInPrint">
+                </div>
+                <div class="col-sm-3">
+                    <label class="col-form-label col-form-label-sm">Date Published Online</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="datePublishedOnline">
+                </div>
+                <div class="col-sm-3">
+                    <label class="col-form-label col-form-label-sm">Date Published Online</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="dateSubmitted">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Thesis</label>
+        <div class="col-sm-9">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm-3">
+                    <label class="col-form-label col-form-label-sm">Degree</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="degree">
+                </div>
+            </div>
+        </div>
+    </div>
+    <pure-event-form [event_form]="event"></pure-event-form>
+    <pure-legal-case-form [legal_case_form]="legalCase"></pure-legal-case-form>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Identifiers</label>
+        <div class="col-sm">
+            <ng-container formArrayName="identifiers">
+                @for (identifier of identifiers.controls; track identifier; let identifierIndex = $index) {
+                <ng-container [formGroupName]="identifierIndex">
+                    <pure-identifier-form [identifier_form]="identifier" [index]="identifierIndex" [multi]="true"
+                        [index_length]="identifiers.controls.length"
+                        (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
+                </ng-container>
+                }
+                @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add identifier'"
+                    (notice)="handleIdentifierNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <label for="languages" class="col-sm-2 col-form-label col-form-label-sm">Languages</label>
+        <div class="col-sm" id="languages" >
+            <ng-container formArrayName="languages">
+                @for (language of languages.controls; track languageIndex; let languageIndex = $index) {
+                <ng-container [formGroupName]="languageIndex">
+                    <pure-language-form [language_form]="language" [index]="languageIndex" [multi]="true"
+                        [index_length]="languages.controls.length"
+                        (notice)="handleLanguageNotification($event)"></pure-language-form>
+                </ng-container>
+                }
+                @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add identifier'"
+                    (notice)="handleLanguageNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+      </div>
 </div>
