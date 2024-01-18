@@ -6,6 +6,7 @@ import { httpInterceptorProviders } from './services/interceptors';
 import { PureRrs } from './services/pure-rrs';
 import { DialogModule } from '@angular/cdk/dialog';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { setLocale, setLocaleId } from './services/i18n.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,5 +18,7 @@ export const appConfig: ApplicationConfig = {
     },
     importProvidersFrom(DialogModule),
     provideHttpClient(withInterceptorsFromDi()),
+    setLocale,
+    setLocaleId
   ]
 };
