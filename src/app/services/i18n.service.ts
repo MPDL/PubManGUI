@@ -45,7 +45,6 @@ class I18nService {
      const lbls = await import(
       `../../assets/i18n/labels.${this.locale}.json`
     );
-    console.log('labels', lbls)
     const translation = Object.assign(lbls.default.translations, msgs.default.translations);
     // Load translations for the current locale at run-time
     loadTranslations(translation);
