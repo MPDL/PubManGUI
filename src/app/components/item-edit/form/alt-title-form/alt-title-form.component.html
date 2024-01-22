@@ -3,7 +3,7 @@
         <div class="col-sm">
             <label for="alt_title_type" class="visually-hidden">type</label>
             <select id="alt_title_type" class="form-select form-select-sm" formControlName="type">
-                <option [ngValue]="null" selected>type</option>
+                <option [ngValue]="null" selected disabled>type</option>
                 @for (t of alt_title_types; track t) {
                 <option [ngValue]="t">{{t}}</option>
                 }
@@ -12,7 +12,7 @@
         <div class="col-sm">
             <label for="alt_title_lang" class="visually-hidden">language</label>
             <select id="alt_title_lang" class="form-select form-select-sm" formControlName="language">
-                <option [value]="null" selected>language</option>
+                <option [value]="null" selected disabled>language</option>
                 @for (l of alt_title_langs; track l) {
                 <option [value]="l">{{l}}</option>
                 }
