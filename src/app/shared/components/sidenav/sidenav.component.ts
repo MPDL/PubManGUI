@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -10,6 +10,8 @@ import { RouterLink } from '@angular/router';
 })
 export class SidenavComponent implements AfterViewInit {
 
+  @Input() mobile !: boolean;
+  
   @ViewChild('sidenav', {read: ElementRef}) nav!: ElementRef;
   renderer = inject(Renderer2);
 

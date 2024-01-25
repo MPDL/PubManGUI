@@ -7,13 +7,14 @@ import { TooltipDirective } from 'src/app/shared/directives/tooltip.directive';
 import { DOCUMENT } from '@angular/common';
 import { AaService } from 'src/app/services/aa.service';
 import { LangSwitchComponent } from 'src/app/shared/components/lang-switch/lang-switch.component';
+import { SidenavComponent } from 'src/app/shared/components/sidenav/sidenav.component';
 
 @Component({
     selector: 'pure-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [ RouterLink, FormsModule, ReactiveFormsModule, TooltipDirective, SwitchBsThemeComponent, LangSwitchComponent, AaComponent]
+    imports: [ RouterLink, FormsModule, ReactiveFormsModule, TooltipDirective, SwitchBsThemeComponent, LangSwitchComponent, AaComponent, SidenavComponent]
 })
 export class HeaderComponent {
 
