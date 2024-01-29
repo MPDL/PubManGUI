@@ -37,6 +37,10 @@ export const routes: Routes = [
         path: 'edit', component: ItemFormComponent
       },
       {
+        path: 'batch',
+        loadChildren: () => import('./components/batch/batch-routing.module').then(m => m.BatchRoutingModule)
+      },
+      {
         path: '**',
         component: PageNotFoundComponent
       }

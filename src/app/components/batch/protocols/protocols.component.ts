@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { BatchNavComponent } from '../batch-nav/batch-nav.component';
 
 @Component({
   selector: 'pure-protocols',
   standalone: true,
   imports: [
     CommonModule,
+    BatchNavComponent,
   ],
-  template: `<p>protocols works!</p>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './protocols.component.html'
 })
 export class ProtocolsComponent { }

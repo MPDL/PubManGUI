@@ -1,0 +1,9 @@
+<div class="position-absolute pure-bottom-10 start-50 translate-middle">
+    <div class="position-relative">
+        <ul class="list-group list-group-horizontal">
+            <li *ngFor="let item of navItems" [routerLink]="[ item.route ]" routerLinkActive="active"
+                class="list-group-item shadow-lg">{{ item.text }}
+            </li>
+        </ul>
+    </div>
+</div>
