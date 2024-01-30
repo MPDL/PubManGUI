@@ -1,0 +1,57 @@
+<div class="container">
+  <form [formGroup]="searchForm" (ngSubmit)="search()">
+    <div formArrayName="fields">
+      @for (criterion of criterions; track criterion; let i = $index) {
+        <div>
+          <!--
+          <pure-search-base-criterion [searchForm]=searchForm [criterion]=criterion [index]=i (addSearchCriterion)="addSearchCriterion()" />
+    -->
+          <div class="row mt-1 w-100 align-items-center">
+            <!--Operator -->
+            <div class="col-1">
+              <select class="form-select form-select-sm"></select>
+            </div>
+            <!--Type -->
+            <div class="col-2">
+              <select class="form-select form-select-sm"></select>
+            </div>
+
+            <!-- Input -->
+            <div class="col-2">
+              @if (criterion.getDisplayType() == "STANDARD") {
+                <div [formGroup]="criterion.form">
+                  <input type="text" formControlName="standard"/>
+                </div>
+              }
+            </div>
+
+            <div class="col-1 ms-auto">
+              <!-- WARNING!!!-->
+              <!-- if type is omitted, submit will trigger remove ... -->
+              <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, criterion)">
+                <strong>+</strong>
+              </button>
+              <button type="button" class="btn btn-sm" (click)="removeSearchCriterion(i)">
+                <strong>-</strong>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      }
+
+      <div class="btn-grid mt-2">
+
+        <button type="button" class="btn btn-sm btn-outline-info"
+                [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="show_form()">
+          show form
+        </button>
+
+      </div>
+    </div>
+  </form>
+
+  @if (result) {
+    <pre>{{result | json}}</pre>
+  }
+</div>

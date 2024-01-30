@@ -1,0 +1,19 @@
+
+@if (criterion.type == SearchType.TITLE) {
+  <div [formGroup]="criterion.form">
+    <input type="text" formControlName="standard"/>
+  </div>
+}
+
+
+<div class="col-1 ms-auto">
+  <!-- WARNING!!!-->
+  <!-- if type is omitted, submit will trigger remove ... -->
+  <button type="button" class="btn btn-sm" (click)="addCriterion()">
+    <strong>+</strong>
+  </button>
+  <button type="button" class="btn btn-sm" (click)="removeCriterion()">
+    <strong>-</strong>
+  </button>
+</div>
+
