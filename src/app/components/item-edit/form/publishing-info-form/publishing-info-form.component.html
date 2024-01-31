@@ -1,0 +1,19 @@
+<div [formGroup]="publishing_info_form" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+    <label class="col-sm-2 col-form-label col-form-label-sm">Publishing Info</label>
+    <div class="col-sm-10">
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">Edition</label>
+                <input type="text" class="form-control form-control-sm" formControlName="edition">
+            </div>
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">Place</label>
+                <input type="text" class="form-control form-control-sm" formControlName="place">
+            </div>
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">Publisher</label>
+                <input type="text" class="form-control form-control-sm" formControlName="publisher">
+            </div>
+        </div>
+    </div>
+</div>
