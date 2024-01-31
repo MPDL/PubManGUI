@@ -8,3 +8,80 @@
     change accordingly.
   </div>
 </div>
+
+<div class="mt-5">
+  <div class="accordion accordion-flush" id="accordionActions">
+    <div class="accordion-item">
+      <h3 class="accordion-header header_color" id="headingItemState">
+        <button class="accordion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseItemState"
+          aria-expanded="true" aria-controls="collapseItemState">
+          <span class="float-start ps-2">Item State</span>
+        </button>
+      </h3>
+      <div id="collapseItemState" class="accordion-collapse collapse show" aria-labelledby="headingItemState" data-bs-parent="#accordionActions">
+        <div class="accordion-body mb-1">
+          <pure-actions-item-state></pure-actions-item-state> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="accordion-item">
+      <h3 class="accordion-header header_color" id="headingContext">
+        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContext"
+        aria-expanded="false" aria-controls="collapseContext">
+          <span class="float-start ps-2">Context</span>
+        </button>
+      </h3>
+      <div id="collapseContext" class="accordion-collapse collapse" aria-labelledby="headingContext" data-bs-parent="#accordionActions">
+        <div class="accordion-body">
+          <pure-actions-context></pure-actions-context>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="accordion-item">
+      <h3 class="accordion-header header_color" id="headingTags">
+        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
+          <span class="float-start ps-2">Local Tags</span>  
+        </button>
+      </h3>
+      <div id="collapseTags" class="accordion-collapse collapse" aria-labelledby="headingTags" data-bs-parent="#accordionActions">
+        <div class="accordion-body">
+          <pure-actions-local-tags></pure-actions-local-tags>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="accordion-item">
+      <h3 class="accordion-header header_color" id="headingGenre">
+        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGenre"
+          aria-expanded="false" aria-controls="collapseGenre">
+          <span class="float-start ps-2">Genre</span>
+        </button>
+      </h3>
+      <div id="collapseGenre" class="accordion-collapse collapse" aria-labelledby="headingGenre" data-bs-parent="#accordionActions">
+        <div class="accordion-body">
+          <pure-actions-genre></pure-actions-genre>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="accordion-item">
+      <h3 class="accordion-header header_color" id="headingMetadata">
+        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMetadata" aria-expanded="false" aria-controls="collapseMetadata">
+          <span class="float-start ps-2">Metadata</span>
+        </button>
+      </h3>
+      <div id="collapseMetadata" class="accordion-collapse collapse" aria-labelledby="headingMetadata" data-bs-parent="#accordionActions">
+        <div class="accordion-body">
+          <pure-actions-metadata></pure-actions-metadata>
+        </div>
+      </div>
+    </div>    
+
+  </div>
+</div>

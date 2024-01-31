@@ -1,3 +1,31 @@
 .pure-bottom-10 {
     bottom: 10%;
 }
+
+.accordion {
+    .accordion-item {
+
+        .accordion-header,
+        .accordion-button {
+            color: var(--accent-color-contrast);
+            background-color: var(--accent-color-1);
+            border: none;
+        }
+    }
+
+    .header_second_color {
+        background-color: var(--accent-color-2) !important;
+
+        .accordion-button {
+            background-color: var(--accent-color-2) !important;
+        }
+    }
+
+    .header_third_color {
+        background-color: var(--accent-color-3) !important;
+
+        .accordion-button {
+            background-color: var(--accent-color-3) !important;
+        }
+    }
+}

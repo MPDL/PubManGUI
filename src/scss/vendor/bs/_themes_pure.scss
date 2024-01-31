@@ -36,6 +36,10 @@
         background-color: $mpdl-iseo4;
     }
 
+    --accent-color-1: #{$mpg-slate-gray-0};
+    --accent-color-2: #{$mpg-slate-gray-1};
+    --accent-color-3: #{$mpg-slate-gray-2};
+    --accent-color-contrast: #{$mpdl-light};
 }
 
 [data-bs-theme=dark] {
@@ -83,4 +87,8 @@
         background-color: $body-tertiary-bg-dark;
     }
 
+    --accent-color-1: #{$mpg-sand-orange-0};
+    --accent-color-2: #{$mpg-sand-orange-1};
+    --accent-color-3: #{$mpg-sand-orange-2};
+    --accent-color-contrast: #{$mpdl-dark};
 }

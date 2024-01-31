@@ -1,0 +1,52 @@
+<div class="mt-3 ms-3">
+  <div class="accordion accordion-flush" id="accordionMetadataFiles">
+
+    <div class="accordion-item">
+      <h5 class="accordion-header header_third_color" id="headingVisibility">
+        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseVisibility" aria-expanded="false" aria-controls="collapseVisibility">
+          <span class="float-start ps-2">Visibility</span>
+        </button>
+      </h5>
+      <div id="collapseVisibility" class="accordion-collapse collapse" aria-labelledby="headingVisibility"
+        data-bs-parent="#accordionMetadataFiles">
+        <div class="accordion-body">
+          <pure-change-file-visibility-form></pure-change-file-visibility-form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="accordion-item">
+      <h5 class="accordion-header header_third_color" id="headingContentCategory">
+        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseContentCategory" aria-expanded="false" aria-controls="collapseContentCategory">
+          <span class="float-start ps-2">Content Category</span>
+        </button>
+      </h5>
+      <div id="collapseContentCategory" class="accordion-collapse collapse" aria-labelledby="headingContentCategory"
+        data-bs-parent="#accordionMetadataFiles">
+        <div class="accordion-body">
+          <pure-change-file-content-category-form></pure-change-file-content-category-form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="accordion-item">
+      <h5 class="accordion-header header_third_color" id="headingIpRanges">
+        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseIpRanges" aria-expanded="false" aria-controls="collapseIpRanges">
+          <span class="float-start ps-2">IP Ranges</span>
+        </button>
+      </h5>
+      <div id="collapseIpRanges" class="accordion-collapse collapse" aria-labelledby="headingIpRanges"
+        data-bs-parent="#accordionMetadataFiles">
+        <div class="accordion-body">
+          <pure-replace-file-audience-form></pure-replace-file-audience-form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
