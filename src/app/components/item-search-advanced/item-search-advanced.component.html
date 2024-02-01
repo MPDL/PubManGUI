@@ -8,7 +8,7 @@
           <pure-search-base-criterion [searchForm]=searchForm [criterion]=criterion [index]=i (addSearchCriterion)="addSearchCriterion()" />
     -->
           <div class="row mt-1 w-100 align-items-center">
-            @if (searchTypes[criterions[i].type]['displayType'] == DisplayType.OPERATOR) {
+            @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.OPERATOR) {
               @if(i!=0) {
               <!--Operator -->
               <div class="col-1" formGroupName="content">
@@ -35,7 +35,7 @@
 
             <!-- Input -->
             <div class="col-2" >
-              @if (searchTypes[criterions[i].type]['displayType'] == DisplayType.STANDARD) {
+              @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.STANDARD) {
                 <div formGroupName="content">
                   <input type="text" formControlName="text"/>
                 </div>
@@ -45,7 +45,7 @@
             <div class="col-1 ms-auto">
               <!-- WARNING!!!-->
               <!-- if type is omitted, submit will trigger remove ... -->
-              <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, criterions[i])">
+              <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, $any(currentFormGroup))">
                 <strong>+</strong>
               </button>
               <button type="button" class="btn btn-sm" (click)="removeSearchCriterion(i)">
@@ -72,4 +72,6 @@
   @if (result) {
     <pre>{{result | json}}</pre>
   }
+
+  <pre>{{$any(esfields) | json}}</pre>
 </div>

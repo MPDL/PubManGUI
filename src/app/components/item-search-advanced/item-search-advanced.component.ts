@@ -3,7 +3,7 @@ import {Form, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModul
 import {AaService} from "../../services/aa.service";
 import {Router} from "@angular/router";
 import {ConeService} from "../../services/cone.service";
-import {SearchBaseCriterionComponent} from "./criterions/search-base-criterion/search-base-criterion.component";
+
 import {AsyncPipe, JsonPipe, NgFor, NgIf} from "@angular/common";
 import {TitleSearchCriterion} from "./criterions/standard/TitleSearchCriterion";
 import {SearchCriterion} from "./criterions/SearchCriterion";
@@ -14,7 +14,7 @@ import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, SearchBaseCriterionComponent, JsonPipe
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss'
@@ -22,7 +22,7 @@ import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config
 export class ItemSearchAdvancedComponent {
 
   searchForm!: FormGroup;
-  criterions: SearchCriterion[] = [];
+  //criterions: SearchCriterion[] = [];
 
   result: any;
 
@@ -54,11 +54,11 @@ export class ItemSearchAdvancedComponent {
     console.log("Change criterion at index " + index + " to type " + newType);
 
     const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass;
-    this.criterions.splice(index, 1);
-    this.criterions.splice(index,0, newSearchCriterion);
+    //this.criterions.splice(index, 1);
+    //this.criterions.splice(index,0, newSearchCriterion);
 
     this.fields.removeAt(index);
-    this.fields.insert(index, newSearchCriterion.formGroup);
+    this.fields.insert(index, newSearchCriterion);
   }
 
   get fields(): FormArray {
@@ -71,6 +71,7 @@ export class ItemSearchAdvancedComponent {
     return searchTypes;
   }
 
+
   search() {
     console.log("Search clicked!");
   }
@@ -80,24 +81,24 @@ export class ItemSearchAdvancedComponent {
     const newSearchCriterion: SearchCriterion = new searchTypes[searchCriterion.type].handlerClass;
 
     //const newForm = newSearchCriterion.initForm();
-    this.fields.insert(index+1, searchCriterion.formGroup);
-    this.criterions.splice(index+1,0, newSearchCriterion);
+    this.fields.insert(index+1, newSearchCriterion);
+    //this.criterions.splice(index+1,0, newSearchCriterion);
 
     //Add operator
     const newOperator = new LogicalOperator();
-    this.fields.insert(index+1, newOperator.formGroup);
-    this.criterions.splice(index+1,0, newOperator);
+    this.fields.insert(index+1, newOperator);
+    //this.criterions.splice(index+1,0, newOperator);
 
   }
 
   appendSearchCriterion(searchCriterion: SearchCriterion) {
-    this.addSearchCriterion(this.criterions.length-1, searchCriterion);
+    this.addSearchCriterion(this.fields.length-1, searchCriterion);
   }
 
 
   removeSearchCriterion(index: number) {
     this.fields.removeAt(index);
-    this.criterions.splice(index,1);
+    //this.criterions.splice(index,1);
 
   }
 

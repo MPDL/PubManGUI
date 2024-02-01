@@ -8,11 +8,11 @@ export class TitleSearchCriterion extends StandardSearchCriterion {
     super("title");
   }
 
-  getElasticIndexes(): string[] {
+  override getElasticIndexes(): string[] {
     return ["metadata.title", "metadata.alternativeTitles.value"];
   }
 
-  getElasticSearchNestedPath(): string {
+  override getElasticSearchNestedPath(): string {
     return "";
   }
 

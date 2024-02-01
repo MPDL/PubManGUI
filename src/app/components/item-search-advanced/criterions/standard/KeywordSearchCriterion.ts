@@ -8,11 +8,11 @@ export class KeywordSearchCriterion extends StandardSearchCriterion {
     super("keyword");
   }
 
-  getElasticIndexes(): string[] {
-    return ["metadata.keywords", "metadata.alternativeTitles.value"];
+  override getElasticIndexes(): string[] {
+    return ["metadata.freeKeywords"];
   }
 
-  getElasticSearchNestedPath(): string {
+  override getElasticSearchNestedPath(): string {
     return "";
   }
 

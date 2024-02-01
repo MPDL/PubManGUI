@@ -1,7 +1,7 @@
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {searchTypes} from "./search_config";
 
-export abstract class SearchCriterion extends FormGroup {
+export abstract class SearchCriterion extends FormGroup<any> {
   //type! : Type;
 
   protected fb = new FormBuilder();
@@ -51,11 +51,6 @@ protected unescapeForQueryString(escapeMe: string): string {
   result = result.replace("\\\\", "\\");
   return result;
 }
-
-
-  public baseElasticSearchQueryBuilder(elasticIndexes: string[], searchString: string): Object | null {
-    return null;
-  }
 
 
 
