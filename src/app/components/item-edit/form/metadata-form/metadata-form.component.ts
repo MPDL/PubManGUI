@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre } from 'src/app/model/inge';
+import { AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, PublishingInfoVO } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
@@ -10,6 +10,7 @@ import { EventFormComponent } from '../event-form/event-form.component';
 import { LanguageFormComponent } from '../language-form/language-form.component';
 import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';
 import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
+import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -24,7 +25,9 @@ import { IdentifierFormComponent } from '../identifier-form/identifier-form.comp
     EventFormComponent, 
     IdentifierFormComponent,
     LanguageFormComponent,
-    LegalCaseFormComponent, ],
+    LegalCaseFormComponent, 
+    PublishingInfoFormComponent,
+  ],
   templateUrl: './metadata-form.component.html',
   styleUrls: ['./metadata-form.component.scss']
 })
@@ -63,6 +66,10 @@ export class MetadataFormComponent {
 
   get legalCase() {
     return this.meta_form.get('legalCase') as FormGroup<ControlType<LegalCaseVO>>;
+  }
+
+  get publishingInfo() {
+    return this.meta_form.get('publishingInfo') as FormGroup<ControlType<PublishingInfoVO>>;
   }
 
   handleAltTitleNotification(event: any) {
