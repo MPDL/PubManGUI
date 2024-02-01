@@ -27,7 +27,12 @@ export const routes: Routes = [
         component: OuTreeComponent
       },
       {
-        path: 'as', component: ItemSearchAdvancedComponent, data: {
+        path: 'as', component: ItemSearchComponent, data: {
+          saveComponent: true
+        }
+      },
+      {
+        path: 'as2', component: ItemSearchAdvancedComponent, data: {
           saveComponent: true
         }
       },

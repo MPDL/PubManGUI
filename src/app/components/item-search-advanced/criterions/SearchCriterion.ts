@@ -1,46 +1,36 @@
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {searchTypes} from "./search_config";
 
-export enum SearchType {
-  TITLE,
-  KEYWORD,
-  CLASSIFICATION,
-
-  AND_OP,
-  OR_OP,
-  NOT_OP,
-
-  OPENING_PARENTHESIS,
-  CLOSING_PARENTHESIS
-
-}
-export abstract class SearchCriterion {
+export abstract class SearchCriterion extends FormGroup {
   //type! : Type;
 
   protected fb = new FormBuilder();
   level: Number = 0;
-  type: SearchType;
-  form!: FormGroup;
+  type: any;
+  content!: FormGroup;
+  //formGroup!: FormGroup;
+  //properties!: any
 
-  constructor(type : SearchType) {
+  protected constructor(type: string) {
+    super({type : new FormControl(type)});
     this.type = type;
+    //this.properties = (searchTypes as any)[type];
+    this.content = this.fb.group({});
+    this.addControl("content", this.content);
   }
 
-  public abstract initForm(): FormGroup;
 
-  public abstract getElasticSearchNestedPath(): string;
+  public abstract getElasticSearchNestedPath(): string | null;
 
-  public abstract getQueryStringContent(): string;
+  //public abstract getQueryStringContent(): string;
 
   public abstract isEmpty(): boolean;
 
-  public abstract parseQueryStringContent(content: string): void;
+  //public abstract parseQueryStringContent(content: string): void;
 
-  public abstract toElasticSearchQuery(): Object | undefined;
+  public abstract toElasticSearchQuery(): Object | null;
 
-  public abstract getNewInstance(): SearchCriterion;
-
-  public abstract getDisplayType() : string;
-
+  //public abstract getNewInstance(): SearchCriterion;
 
   protected escapeForQueryString(escapeMe: string) : string {
   let result = escapeMe.replace("\\", "\\\\");
@@ -63,8 +53,8 @@ protected unescapeForQueryString(escapeMe: string): string {
 }
 
 
-  public baseElasticSearchQueryBuilder(elasticIndexes: string[], searchString: string): Object | undefined {
-    return undefined;
+  public baseElasticSearchQueryBuilder(elasticIndexes: string[], searchString: string): Object | null {
+    return null;
   }
 
 

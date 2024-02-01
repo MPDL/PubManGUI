@@ -1,26 +1,43 @@
 <div class="container">
   <form [formGroup]="searchForm" (ngSubmit)="search()">
     <div formArrayName="fields">
-      @for (criterion of criterions; track criterion; let i = $index) {
-        <div>
+      @for (currentFormGroup of fields.controls; track currentFormGroup; let i = $index;) {
+
+        <div [formGroupName]="i">
           <!--
           <pure-search-base-criterion [searchForm]=searchForm [criterion]=criterion [index]=i (addSearchCriterion)="addSearchCriterion()" />
     -->
           <div class="row mt-1 w-100 align-items-center">
-            <!--Operator -->
-            <div class="col-1">
-              <select class="form-select form-select-sm"></select>
-            </div>
+            @if (searchTypes[criterions[i].type]['displayType'] == DisplayType.OPERATOR) {
+              @if(i!=0) {
+              <!--Operator -->
+              <div class="col-1" formGroupName="content">
+                <select class="form-select form-select-sm" formControlName="operator">
+                  <option value="AND">AND</option>
+                  <option value="OR">OR</option>
+                  <option value="NOT">NOT</option>
+                </select>
+              </div>
+              }
+            }
+            @else {
             <!--Type -->
             <div class="col-2">
-              <select class="form-select form-select-sm"></select>
+              <select class="form-select form-select-sm" formControlName="type" (change)="changeType(i, t.value)" #t>
+                @for(searchType of searchTypeKeys; track searchType) {
+                <option value="{{searchType}}">
+                  {{searchType}}
+                </option>
+                }
+              </select>
+
             </div>
 
             <!-- Input -->
-            <div class="col-2">
-              @if (criterion.getDisplayType() == "STANDARD") {
-                <div [formGroup]="criterion.form">
-                  <input type="text" formControlName="standard"/>
+            <div class="col-2" >
+              @if (searchTypes[criterions[i].type]['displayType'] == DisplayType.STANDARD) {
+                <div formGroupName="content">
+                  <input type="text" formControlName="text"/>
                 </div>
               }
             </div>
@@ -28,13 +45,14 @@
             <div class="col-1 ms-auto">
               <!-- WARNING!!!-->
               <!-- if type is omitted, submit will trigger remove ... -->
-              <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, criterion)">
+              <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, criterions[i])">
                 <strong>+</strong>
               </button>
               <button type="button" class="btn btn-sm" (click)="removeSearchCriterion(i)">
                 <strong>-</strong>
               </button>
             </div>
+            }
           </div>
         </div>
 

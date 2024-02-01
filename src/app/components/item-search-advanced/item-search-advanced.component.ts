@@ -6,7 +6,9 @@ import {ConeService} from "../../services/cone.service";
 import {SearchBaseCriterionComponent} from "./criterions/search-base-criterion/search-base-criterion.component";
 import {AsyncPipe, JsonPipe, NgFor, NgIf} from "@angular/common";
 import {TitleSearchCriterion} from "./criterions/standard/TitleSearchCriterion";
-import {SearchCriterion, SearchType} from "./criterions/SearchCriterion";
+import {SearchCriterion} from "./criterions/SearchCriterion";
+import {LogicalOperator} from "./criterions/operators/LogicalOperator";
+import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -24,7 +26,9 @@ export class ItemSearchAdvancedComponent {
 
   result: any;
 
-  protected readonly SearchType = SearchType;
+  searchTypeKeys: string[] = Object.keys(searchTypes);
+
+  protected readonly DisplayType = DisplayType;
 
   constructor(
     private router: Router,
@@ -39,25 +43,32 @@ export class ItemSearchAdvancedComponent {
       fields: this.fb.array([])
     });
 
-
-    this.addSearchCriterion(0, new TitleSearchCriterion());
-    this.addSearchCriterion(0, new TitleSearchCriterion());
-    //Create main search form with form array
+    this.appendSearchCriterion(new TitleSearchCriterion());
+    this.appendSearchCriterion(new TitleSearchCriterion());
 
 
-    //Add criterions to array
-    /*
-    for(let searchCriterion of this.criterions) {
-      const formArray = this.searchForm.get("fields") as FormArray;
-      formArray.push(searchCriterion.form);
-    }
 
-     */
+  }
 
+  changeType(index: number, newType: string) {
+    console.log("Change criterion at index " + index + " to type " + newType);
+
+    const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass;
+    this.criterions.splice(index, 1);
+    this.criterions.splice(index,0, newSearchCriterion);
+
+    this.fields.removeAt(index);
+    this.fields.insert(index, newSearchCriterion.formGroup);
   }
 
   get fields(): FormArray {
     return this.searchForm.get("fields") as FormArray;
+  }
+
+
+
+  get searchTypes() : searchTypesI {
+    return searchTypes;
   }
 
   search() {
@@ -66,13 +77,24 @@ export class ItemSearchAdvancedComponent {
 
   addSearchCriterion(index: number, searchCriterion: SearchCriterion) {
 
-    const newSearchCriterion = searchCriterion.getNewInstance();
+    const newSearchCriterion: SearchCriterion = new searchTypes[searchCriterion.type].handlerClass;
 
-    const newForm: FormGroup = newSearchCriterion.initForm();
-    this.fields.insert(index+1, newForm);
+    //const newForm = newSearchCriterion.initForm();
+    this.fields.insert(index+1, searchCriterion.formGroup);
     this.criterions.splice(index+1,0, newSearchCriterion);
 
+    //Add operator
+    const newOperator = new LogicalOperator();
+    this.fields.insert(index+1, newOperator.formGroup);
+    this.criterions.splice(index+1,0, newOperator);
+
   }
+
+  appendSearchCriterion(searchCriterion: SearchCriterion) {
+    this.addSearchCriterion(this.criterions.length-1, searchCriterion);
+  }
+
+
   removeSearchCriterion(index: number) {
     this.fields.removeAt(index);
     this.criterions.splice(index,1);
@@ -82,5 +104,6 @@ export class ItemSearchAdvancedComponent {
   show_form() {
     this.result = this.searchForm.value;
   }
+
 
 }

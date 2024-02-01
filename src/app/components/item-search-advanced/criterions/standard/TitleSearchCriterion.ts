@@ -1,4 +1,3 @@
-import {SearchType} from "../SearchCriterion";
 import {FormControl, FormGroup} from "@angular/forms";
 import {StandardSearchCriterion} from "./StandardSearchCriterion";
 
@@ -6,7 +5,7 @@ export class TitleSearchCriterion extends StandardSearchCriterion {
 
 
   constructor() {
-    super(SearchType.TITLE);
+    super("title");
   }
 
   getElasticIndexes(): string[] {
@@ -17,9 +16,6 @@ export class TitleSearchCriterion extends StandardSearchCriterion {
     return "";
   }
 
-  getNewInstance() {
-    return new TitleSearchCriterion();
-  }
 
 
 

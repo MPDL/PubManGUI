@@ -1,43 +1,34 @@
-import {SearchCriterion, SearchType} from "../SearchCriterion";
-import {FormControl, FormGroup, FormBuilder} from "@angular/forms";
+import {SearchCriterion} from "../SearchCriterion";
+import {FormControl, FormGroup} from "@angular/forms";
+import {DisplayType} from "../search_config";
 
 export abstract class StandardSearchCriterion extends SearchCriterion {
 
-  protected constructor(type: SearchType) {
+  protected constructor(type: string) {
     super(type);
-
-
+    this.content.addControl("text", new FormControl(''));
   }
 
-  override initForm() : FormGroup {
-
-    this.form = this.fb.group({
-      standard : new FormControl('')
-    });
-    return this.form;
-  }
-
+  /*
   override getQueryStringContent() : string {
-    return this.escapeForQueryString(this.form.get('standard')?.value);
+    return this.escapeForQueryString(this.form.get('text')?.value);
   }
 
   override parseQueryStringContent(content: string) {
-    this.form.setValue({searchString: this.unescapeForQueryString(content)});
+    this.form.setValue({text: this.unescapeForQueryString(content)});
   }
+
+   */
 
   abstract getElasticIndexes(): string[];
 
   override isEmpty(): boolean {
-    const searchString = this.form.get('standard')?.value;
+    const searchString = this.content.get('text')?.value;
     return searchString == null || searchString.trim().isEmpty();
   }
 
-  override toElasticSearchQuery(): Object | undefined {
-    return this.baseElasticSearchQueryBuilder(this.getElasticIndexes(), this.form.get('searchString')?.value);
-  }
-
-  override getDisplayType(): string {
-    return "STANDARD";
+  override toElasticSearchQuery(): Object | null {
+    return this.baseElasticSearchQueryBuilder(this.getElasticIndexes(), this.content.get('text')?.value);
   }
 
 

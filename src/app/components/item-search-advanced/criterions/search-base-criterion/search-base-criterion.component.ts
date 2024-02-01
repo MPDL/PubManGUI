@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, Type} from '@angular/core';
-import {SearchCriterion, SearchType} from "../SearchCriterion";
+import {SearchCriterion} from "../SearchCriterion";
 import {AbstractControl, FormArray, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ItemSearchComponent} from "../../../item-search/item-search.component";
 import {NgFor, NgIf} from "@angular/common";
@@ -14,7 +14,7 @@ import {TitleSearchCriterion} from "../standard/TitleSearchCriterion";
 })
 export class SearchBaseCriterionComponent {
 
-  protected readonly SearchType = SearchType;
+  //protected readonly SearchType = SearchType;
 
   @Input() searchForm!: FormGroup;
   @Input() criterion!: SearchCriterion;
