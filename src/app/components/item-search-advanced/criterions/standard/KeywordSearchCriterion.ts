@@ -12,7 +12,7 @@ export class KeywordSearchCriterion extends StandardSearchCriterion {
     return ["metadata.freeKeywords"];
   }
 
-  override getElasticSearchNestedPath(): string {
+  override getElasticSearchNestedPath(): string | undefined{
     return "";
   }
 

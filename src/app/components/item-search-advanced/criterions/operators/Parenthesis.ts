@@ -5,21 +5,18 @@ import {DisplayType} from "../search_config";
 export class Parenthesis extends SearchCriterion{
 
 
-  constructor() {
-    super("parenthesis");
+
+  partnerParenthesis : Parenthesis | undefined;
+
+  constructor(type: string) {
+    super(type);
     this.content.addControl(
-      "parenthesis" , new FormControl('(')
+      "parenthesis" , new FormControl(type)
     );
   }
 
-
-
-  getElasticSearchNestedPath(): string | null {
-    return null;
-  }
-
-  getNewInstance() {
-    return new Parenthesis();
+  getElasticSearchNestedPath(): string | undefined {
+    return undefined;
   }
 
   getDisplayType(): DisplayType {
@@ -34,8 +31,8 @@ export class Parenthesis extends SearchCriterion{
     return false;
   }
 
-  toElasticSearchQuery(): Object | null {
-    return null;
+  toElasticSearchQuery(): Object | undefined {
+    return undefined;
   }
 
 

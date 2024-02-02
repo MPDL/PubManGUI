@@ -1,7 +1,7 @@
 <div class="container">
   <form [formGroup]="searchForm" (ngSubmit)="search()">
     <div formArrayName="fields">
-      @for (currentFormGroup of fields.controls; track currentFormGroup; let i = $index;) {
+      @for (currentFormGroup of fields.controls; track currentFormGroup; let i = $index; ) {
 
         <div [formGroupName]="i">
           <!--
@@ -9,51 +9,86 @@
     -->
           <div class="row mt-1 w-100 align-items-center">
             @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.OPERATOR) {
-              @if(i!=0) {
-              <!--Operator -->
-              <div class="col-1" formGroupName="content">
-                <select class="form-select form-select-sm" formControlName="operator">
-                  <option value="AND">AND</option>
-                  <option value="OR">OR</option>
-                  <option value="NOT">NOT</option>
-                </select>
-              </div>
-              }
-            }
-            @else {
-            <!--Type -->
-            <div class="col-2">
-              <select class="form-select form-select-sm" formControlName="type" (change)="changeType(i, t.value)" #t>
-                @for(searchType of searchTypeKeys; track searchType) {
-                <option value="{{searchType}}">
-                  {{searchType}}
-                </option>
-                }
-              </select>
+              @if (i != 0) {
 
-            </div>
-
-            <!-- Input -->
-            <div class="col-2" >
-              @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.STANDARD) {
-                <div formGroupName="content">
-                  <input type="text" formControlName="text"/>
+                <!--Operator -->
+                <div class="col-2" formGroupName="content">
+                  <select class="form-select form-select-sm" formControlName="operator"
+                          (change)="changeOperator(i, t.value)" #t>
+                    <option value="and">AND</option>
+                    <option value="or">OR</option>
+                    <option value="not">NOT</option>
+                  </select>
                 </div>
-              }
-            </div>
 
-            <div class="col-1 ms-auto">
-              <!-- WARNING!!!-->
-              <!-- if type is omitted, submit will trigger remove ... -->
-              <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, $any(currentFormGroup))">
-                <strong>+</strong>
-              </button>
-              <button type="button" class="btn btn-sm" (click)="removeSearchCriterion(i)">
-                <strong>-</strong>
-              </button>
-            </div>
+              }
+            } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PARENTHESIS) {
+              <span>{{ $any(currentFormGroup).type === 'opening_parenthesis' ? '(' : ')' }}</span>
+
+            } @else {
+
+
+              <div class="col-2">
+                <div class="row">
+                  <div class="col-1">
+
+                    @if (currentlyOpenedParenthesis === undefined) {
+                      <button type="button" class="btn btn-sm btn-outline-dark"
+                              [disabled]="currentlyOpenedParenthesis!==undefined" (click)="addOpeningParenthesis(i)">
+                        (
+                      </button>
+                    }
+                  </div>
+                  <div class="col">
+                    <!--Type -->
+                    <select class="form-select form-select-sm" formControlName="type" (change)="changeType(i, t.value)"
+                            #t>
+                      @for (searchType of searchTypeKeys; track searchType) {
+                        <option value="{{searchType}}">
+                          {{ searchType }}
+                        </option>
+                      }
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Input -->
+              <div class="col">
+                @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.STANDARD) {
+                  <div formGroupName="content">
+                    <input class="form-control" type="text" formControlName="text"/>
+                  </div>
+                }
+              </div>
+
+              <div class="col-1 ms-auto">
+                <!-- WARNING!!!-->
+                <!-- if type is omitted, submit will trigger remove ... -->
+                <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, $any(currentFormGroup))">
+                  <strong>+</strong>
+                </button>
+                <button type="button" class="btn btn-sm" (click)="removeSearchCriterion(i)">
+                  <strong>-</strong>
+                </button>
+              </div>
+
+
             }
+
           </div>
+
+          <!-- Possible closing parenthesis-->
+          @if(possibleCriterionsForClosingParenthesisMap.includes($any(currentFormGroup))) {
+          <div class="row">
+            <div class="col-1">
+                <button type="button" class="btn btn-sm btn-outline-dark" (click)="addClosingParenthesis(i)">
+                  )
+                </button>
+            </div>
+          </div>
+          }
         </div>
 
       }
@@ -64,14 +99,19 @@
                 [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="show_form()">
           show form
         </button>
+        <button type="button" class="btn btn-sm btn-outline-dark"
+                [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="show_query()">
+          show query
+        </button>
 
       </div>
     </div>
   </form>
 
   @if (result) {
-    <pre>{{result | json}}</pre>
+    <pre>{{ result | json }}</pre>
   }
-
-  <pre>{{$any(esfields) | json}}</pre>
+  @if (query) {
+    <pre>{{ query | json }}</pre>
+  }
 </div>

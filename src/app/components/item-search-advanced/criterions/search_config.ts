@@ -3,27 +3,6 @@ import {Parenthesis} from "./operators/Parenthesis";
 import {LogicalOperator} from "./operators/LogicalOperator";
 import {KeywordSearchCriterion} from "./standard/KeywordSearchCriterion";
 
-
-function escapeForQueryString(escapeMe: string) : string {
-  let result = escapeMe.replace("\\", "\\\\");
-  result = result.replace("=", "\\=");
-  result = result.replace("|", "\\|");
-  result = result.replace("(", "\\(");
-  result = result.replace(")", "\\)");
-  result = result.replace("\"", "\\\"");
-  return result;
-}
-
-function unescapeForQueryString(escapeMe: string): string {
-  let result = escapeMe.replace("\\=", "=");
-  result = result.replace("\\\"", "\"");
-  result = result.replace("\\|", "|");
-  result = result.replace("\\(", "(");
-  result = result.replace("\\)", ")");
-  result = result.replace("\\\\", "\\");
-  return result;
-}
-
 export enum DisplayType {
   STANDARD,
   DATE,
@@ -50,11 +29,23 @@ export const searchTypes : searchTypesI = {
     handlerClass: KeywordSearchCriterion
   },
   classification: {},
-  operator: {
+  and: {
     displayType: DisplayType.OPERATOR,
     handlerClass: LogicalOperator
   },
-  parenthesis: {
+  or: {
+    displayType: DisplayType.OPERATOR,
+    handlerClass: LogicalOperator
+  },
+  not: {
+    displayType: DisplayType.OPERATOR,
+    handlerClass: LogicalOperator
+  },
+  opening_parenthesis: {
+    displayType: DisplayType.PARENTHESIS,
+    handlerClass: Parenthesis
+  },
+  closing_parenthesis: {
     displayType: DisplayType.PARENTHESIS,
     handlerClass: Parenthesis
   }

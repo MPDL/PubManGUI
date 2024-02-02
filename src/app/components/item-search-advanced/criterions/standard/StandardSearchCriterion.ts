@@ -1,6 +1,7 @@
 import {SearchCriterion} from "../SearchCriterion";
 import {FormControl, FormGroup} from "@angular/forms";
 import {DisplayType} from "../search_config";
+import {baseElasticSearchQueryBuilder} from "../../../../shared/services/search-utils";
 
 export abstract class StandardSearchCriterion extends SearchCriterion {
 
@@ -24,11 +25,11 @@ export abstract class StandardSearchCriterion extends SearchCriterion {
 
   override isEmpty(): boolean {
     const searchString = this.content.get('text')?.value;
-    return searchString == null || searchString.trim().isEmpty();
+    return searchString == null || searchString.trim().length===0;
   }
 
-  override toElasticSearchQuery(): Object | null {
-    return this.baseElasticSearchQueryBuilder(this.getElasticIndexes(), this.content.get('text')?.value);
+  override toElasticSearchQuery(): Object | undefined {
+    return baseElasticSearchQueryBuilder(this.getElasticIndexes(), this.content.get('text')?.value);
   }
 
 

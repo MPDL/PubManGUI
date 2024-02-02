@@ -5,7 +5,7 @@ export abstract class SearchCriterion extends FormGroup<any> {
   //type! : Type;
 
   protected fb = new FormBuilder();
-  level: Number = 0;
+  level: number = 0;
   type: any;
   content!: FormGroup;
   //formGroup!: FormGroup;
@@ -20,7 +20,7 @@ export abstract class SearchCriterion extends FormGroup<any> {
   }
 
 
-  public abstract getElasticSearchNestedPath(): string | null;
+  public abstract getElasticSearchNestedPath(): string | undefined;
 
   //public abstract getQueryStringContent(): string;
 
@@ -28,29 +28,11 @@ export abstract class SearchCriterion extends FormGroup<any> {
 
   //public abstract parseQueryStringContent(content: string): void;
 
-  public abstract toElasticSearchQuery(): Object | null;
+  public abstract toElasticSearchQuery(): Object | undefined;
 
   //public abstract getNewInstance(): SearchCriterion;
 
-  protected escapeForQueryString(escapeMe: string) : string {
-  let result = escapeMe.replace("\\", "\\\\");
-  result = result.replace("=", "\\=");
-  result = result.replace("|", "\\|");
-  result = result.replace("(", "\\(");
-  result = result.replace(")", "\\)");
-  result = result.replace("\"", "\\\"");
-  return result;
-}
 
-protected unescapeForQueryString(escapeMe: string): string {
-  let result = escapeMe.replace("\\=", "=");
-  result = result.replace("\\\"", "\"");
-  result = result.replace("\\|", "|");
-  result = result.replace("\\(", "(");
-  result = result.replace("\\)", ")");
-  result = result.replace("\\\\", "\\");
-  return result;
-}
 
 
 

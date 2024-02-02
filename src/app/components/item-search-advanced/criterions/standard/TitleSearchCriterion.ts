@@ -12,7 +12,7 @@ export class TitleSearchCriterion extends StandardSearchCriterion {
     return ["metadata.title", "metadata.alternativeTitles.value"];
   }
 
-  override getElasticSearchNestedPath(): string {
+  override getElasticSearchNestedPath(): string | undefined {
     return "";
   }
 

@@ -5,27 +5,23 @@ import {DisplayType} from "../search_config";
 export class LogicalOperator extends SearchCriterion {
 
 
-  constructor() {
-    super("operator");
+  constructor(type: string) {
+    super(type);
     this.content.addControl(
-      "operator" , new FormControl('AND')
+      "operator" , new FormControl(type)
     );
   }
 
-  getElasticSearchNestedPath(): string | null {
-    return null;
-  }
-
-  getNewInstance() {
-    return new LogicalOperator();
+  getElasticSearchNestedPath(): string | undefined {
+    return undefined;
   }
 
   isEmpty(): boolean {
     return false;
   }
 
-  toElasticSearchQuery(): Object | null {
-    return null;
+  toElasticSearchQuery(): Object | undefined {
+    return undefined;
   }
 
 
