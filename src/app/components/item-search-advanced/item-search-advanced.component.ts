@@ -5,12 +5,16 @@ import {Router} from "@angular/router";
 import {ConeService} from "../../services/cone.service";
 
 import {AsyncPipe, JsonPipe, NgFor, NgIf} from "@angular/common";
-import {TitleSearchCriterion} from "./criterions/standard/TitleSearchCriterion";
+
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
 import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
-import {Parenthesis} from "./criterions/operators/Parenthesis";
-import {KeywordSearchCriterion} from "./criterions/standard/KeywordSearchCriterion";
+import {Parenthesis, PARENTHESIS_TYPE} from "./criterions/operators/Parenthesis";
+import {CreatorRole, IdType, MdsPublicationGenre} from "../../model/inge";
+import {KeywordSearchCriterion, TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
+import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
+import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
+
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -30,6 +34,9 @@ export class ItemSearchAdvancedComponent {
   query: any;
 
   searchTypeKeys: string[] = Object.keys(searchTypes);
+  identifierOptions = Object.keys(IdType);
+  personOptions = Object.keys(CreatorRole);
+  genreOptions = Object.keys(MdsPublicationGenre);
   currentlyOpenedParenthesis!: Parenthesis | undefined;
   possibleCriterionsForClosingParenthesisMap: SearchCriterion[] = []
   protected readonly DisplayType = DisplayType;
@@ -50,7 +57,11 @@ export class ItemSearchAdvancedComponent {
 
     this.fields.push(new TitleSearchCriterion());
     this.fields.push(new LogicalOperator("and"));
-    this.fields.push(new KeywordSearchCriterion());
+    this.fields.push(new PersonSearchCriterion());
+    this.fields.push(new LogicalOperator("and"));
+    this.fields.push(new OrganizationSearchCriterion());
+    this.fields.push(new LogicalOperator("and"));
+    this.fields.push(new DateSearchCriterion(DATE_SEARCH_TYPES.ANYDATE));
 
 
 
@@ -59,7 +70,7 @@ export class ItemSearchAdvancedComponent {
   changeType(index: number, newType: string) {
     console.log("Change criterion at index " + index + " to type " + newType);
 
-    const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass;
+    const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass(newType);
     //this.criterions.splice(index, 1);
     //this.criterions.splice(index,0, newSearchCriterion);
 
@@ -99,7 +110,7 @@ export class ItemSearchAdvancedComponent {
     if (DisplayType.PARENTHESIS === this.searchTypes[searchCriterion.type].displayType) {
       newSearchCriterion = new TitleSearchCriterion();
     } else {
-      newSearchCriterion = new searchTypes[searchCriterion.type].handlerClass;
+      newSearchCriterion = new searchTypes[searchCriterion.type].handlerClass(searchCriterion.type);
     }
 
     newSearchCriterion.level = searchCriterion.level;
@@ -107,7 +118,7 @@ export class ItemSearchAdvancedComponent {
 
     // If the add button of an opening parenthesis is used, the logical operator has to be added
     // after the new criterion
-    if ("opening_parenthesis" === searchCriterion.type) {
+    if (PARENTHESIS_TYPE.OPENING_PARENTHESIS === searchCriterion.type) {
       this.fields.insert(index + 2, new LogicalOperator("and"));
     } else {
       this.fields.insert(index + 1, new LogicalOperator("and"));
@@ -133,7 +144,7 @@ export class ItemSearchAdvancedComponent {
   }
 
   addOpeningParenthesis(index: number) {
-    this.currentlyOpenedParenthesis = new Parenthesis("opening_parenthesis");
+    this.currentlyOpenedParenthesis = new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS);
     this.currentlyOpenedParenthesis.level = (this.fields.at(index) as SearchCriterion).level;
     // add before criterion
     this.fields.insert(index, this.currentlyOpenedParenthesis);
@@ -143,7 +154,7 @@ export class ItemSearchAdvancedComponent {
   }
 
 addClosingParenthesis(index:number) {
-  const closingParenthesis = new Parenthesis("closing_parenthesis");
+  const closingParenthesis = new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS);
   this.currentlyOpenedParenthesis!.partnerParenthesis = closingParenthesis;
   closingParenthesis.partnerParenthesis = this.currentlyOpenedParenthesis;
   this.currentlyOpenedParenthesis = undefined;
@@ -161,7 +172,7 @@ addClosingParenthesis(index:number) {
 
       for (let sc of this.fields.controls as SearchCriterion[]) {
 
-        if ("closing_parenthesis" === sc.type) {
+        if (PARENTHESIS_TYPE.CLOSING_PARENTHESIS === sc.type) {
           balanceCounter--;
           if (lookForClosingParenthesis && balanceCounter <= startParenthesisBalance) {
             lookForClosingParenthesis = false;
@@ -170,7 +181,7 @@ addClosingParenthesis(index:number) {
 
         sc.level = balanceCounter;
 
-        if ("opening_parenthesis" === sc.type) {
+        if (PARENTHESIS_TYPE.OPENING_PARENTHESIS === sc.type) {
           balanceCounter++;
         }
 
@@ -216,11 +227,11 @@ addClosingParenthesis(index:number) {
       let scBefore = criterionList[position - 1];
 
 
-      deleteBefore = scBefore.type !== ("opening_parenthesis");
+      deleteBefore = scBefore.type !== (PARENTHESIS_TYPE.OPENING_PARENTHESIS);
 
       if (!deleteBefore && position + 1 < criterionList.length) {
         let scAfter = criterionList[position + 1];
-        deleteBefore = scAfter.type === ("closing_parenthesis");
+        deleteBefore = scAfter.type === (PARENTHESIS_TYPE.CLOSING_PARENTHESIS);
       }
     }
 
@@ -258,10 +269,10 @@ addClosingParenthesis(index:number) {
     // now remove empty parenthesis
     for (let i = 0; i < criterionList.length; i++) {
       let sc = criterionList[i];
-      if ("opening_parenthesis" === (sc.type)) {
+      if (PARENTHESIS_TYPE.OPENING_PARENTHESIS === (sc.type)) {
         if (i + 1 < criterionList.length) {
           let next = criterionList[i + 1];
-          if ("closing parenthesis" === (next.type)) {
+          if (PARENTHESIS_TYPE.CLOSING_PARENTHESIS === (next.type)) {
             parenthesisToRemove.push(sc);
             parenthesisToRemove.push(next);
           }
@@ -270,7 +281,9 @@ addClosingParenthesis(index:number) {
       }
     }
 
-    criterionList = criterionList.filter( x => !parenthesisToRemove.includes(x) );
+    parenthesisToRemove.forEach(parenthesis => {
+      if(criterionList.includes(parenthesis)) criterionList.splice(criterionList.indexOf(parenthesis), 1);
+    });
 
     // if first criterion is an operand, remove it
     if (criterionList != null && criterionList.length > 0
@@ -321,10 +334,10 @@ scListToElasticSearchQuery(scList: SearchCriterion[]): Object | undefined {
   // Set partner parenthesis for every parenthesis
   let parenthesisStack : Parenthesis[] = [];
   for (let sc of cleanedScList) {
-  if ("opening_parenthesis" === (sc.type)) {
+  if (PARENTHESIS_TYPE.OPENING_PARENTHESIS === (sc.type)) {
   parenthesisStack.push(sc as Parenthesis);
 
-} else if ("closing_parenthesis" === (sc.type)) {
+} else if (PARENTHESIS_TYPE.CLOSING_PARENTHESIS === (sc.type)) {
 
   const closingParenthesis = sc as Parenthesis;
   const openingParenthesis = parenthesisStack.pop();
@@ -358,8 +371,8 @@ cleanedScListToElasticSearchQuery(scList: SearchCriterion[],  parentNestedPath: 
   //SearchCriterionBase.logger.debug("List: " + criterionList);
 
   // Remove unnecessary parenthesis
-  while ("opening_parenthesis" === (criterionList[0].type)
-  && "closing_parenthesis" === (criterionList[criterionList.length - 1].type)
+  while (PARENTHESIS_TYPE.OPENING_PARENTHESIS === (criterionList[0].type)
+  && PARENTHESIS_TYPE.CLOSING_PARENTHESIS === (criterionList[criterionList.length - 1].type)
   && (criterionList[0] as Parenthesis).partnerParenthesis === (criterionList[criterionList.length - 1] as Parenthesis)) {
 
     criterionList.splice(0, 1);
@@ -386,10 +399,10 @@ cleanedScListToElasticSearchQuery(scList: SearchCriterion[],  parentNestedPath: 
         lastOperator = op;
       }
 
-    } else if ("opening_parenthesis" === sc.type) {
+    } else if (PARENTHESIS_TYPE.OPENING_PARENTHESIS === sc.type) {
       parenthesisOpened++;
 
-    } else if ("closing_parenthesis" === sc.type) {
+    } else if (PARENTHESIS_TYPE.CLOSING_PARENTHESIS === sc.type) {
       parenthesisOpened--;
 
     } else {

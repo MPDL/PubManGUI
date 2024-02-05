@@ -2,6 +2,11 @@ import {SearchCriterion} from "../SearchCriterion";
 import {FormControl, FormGroup} from "@angular/forms";
 import {DisplayType} from "../search_config";
 
+export enum PARENTHESIS_TYPE {
+  OPENING_PARENTHESIS="opening_parenthesis",
+  CLOSING_PARENTHESIS="closing_parenthesis",
+}
+
 export class Parenthesis extends SearchCriterion{
 
 

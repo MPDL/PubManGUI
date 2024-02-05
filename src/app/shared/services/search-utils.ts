@@ -120,3 +120,33 @@ export const baseElasticSearchSortBuilder = (indexField: string, order: string):
 
   //return fieldSort;
 }
+
+
+export const buildDateRangeQuery = (index: string, from: string, to: string) => {
+
+  return {
+    range: {
+      [index]: {
+        ...from && from.trim() !== "" && {gte: roundDateString(from)},
+        ...to && to.trim() !== "" && {lte: roundDateString(to)}
+
+      }
+    }
+  }
+}
+
+const roundDateString = (toQuery: string) => {
+  if (!toQuery) {
+    return undefined;
+  } else if (toQuery.match(/^\d\d\d\d$/)) {
+    return toQuery + "||/y";
+  } else if (toQuery.match(/^\d\d\d\d-\d\d$/)) {
+    return toQuery + "||/M";
+  } else if (toQuery.match(/^\d\d\d\d-\d\d-\d\d$/)) {
+    return toQuery + "||/d";
+  }
+
+  return toQuery;
+
+
+}

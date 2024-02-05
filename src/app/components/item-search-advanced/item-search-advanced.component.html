@@ -7,7 +7,7 @@
           <!--
           <pure-search-base-criterion [searchForm]=searchForm [criterion]=criterion [index]=i (addSearchCriterion)="addSearchCriterion()" />
     -->
-          <div class="row mt-1 w-100 align-items-center">
+          <div class="row mt-1 w-100 align-items-center" style="margin-left: {{$any(currentFormGroup).level * 15}}px">
             @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.OPERATOR) {
               @if (i != 0) {
 
@@ -23,7 +23,9 @@
 
               }
             } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PARENTHESIS) {
+              <div class="col" >
               <span>{{ $any(currentFormGroup).type === 'opening_parenthesis' ? '(' : ')' }}</span>
+              </div>
 
             } @else {
 
@@ -61,6 +63,87 @@
                     <input class="form-control" type="text" formControlName="text"/>
                   </div>
                 }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PERSON) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                      <select class="form-select form-select-sm" formControlName="role">
+                        @for(val of personOptions; track val) {
+                          <option [value]="val">
+                            {{ val }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                    <div class="col-6">
+                      <input class="form-control" type="text" formControlName="text"/>
+                    </div>
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="hidden"/>
+                    </div>
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ORGANIZATION) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-6">
+                      <input class="form-control" type="text" formControlName="text"/>
+                    </div>
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="hidden"/>
+                    </div>
+                    <div class="col-3">
+                      <input id="predecessorsAndSuccessors" class="form-control form-check-input" type="checkbox" formControlName="includePredecessorsAndSuccessors"/>
+                      <label class="form-check-label" for="predecessorsAndSuccessors">
+                        Include predecessors and successors
+                      </label>
+                    </div>
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.DATE) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="from" placeholder="YYYY-MM-DD"/>
+                    </div>
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="to" placeholder="YYYY-MM-DD"/>
+                    </div>
+                  </div>
+
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.IDENTIFIER) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                    <select class="form-select form-select-sm" formControlName="identifierType">
+                      @for(idType of identifierOptions; track idType) {
+                        <option [value]="idType">
+                          {{ idType }}
+                        </option>
+                        }
+                    </select>
+                    </div>
+                    <div class="col-6">
+                    <input class="form-control" type="text" formControlName="text"/>
+                    </div>
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CLASSIFICATION) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                      <select class="form-select form-select-sm" formControlName="classificationType">
+                        <option value="todo">TODO</option>
+                        <!--
+                        @for(classificationType of identifierOptions; track classificationType) {
+                          <option [value]="classificationType">
+                            {{ idType }}
+                          </option>
+                        }
+                        -->
+                      </select>
+                    </div>
+                    <div class="col-6">
+                      <input class="form-control" type="text" formControlName="text"/>
+                    </div>
+                  </div>
+                }
               </div>
 
               <div class="col-1 ms-auto">
@@ -81,7 +164,7 @@
 
           <!-- Possible closing parenthesis-->
           @if(possibleCriterionsForClosingParenthesisMap.includes($any(currentFormGroup))) {
-          <div class="row">
+          <div class="row" style="margin-left: {{($any(currentFormGroup).level-1) * 15}}px">
             <div class="col-1">
                 <button type="button" class="btn btn-sm btn-outline-dark" (click)="addClosingParenthesis(i)">
                   )
