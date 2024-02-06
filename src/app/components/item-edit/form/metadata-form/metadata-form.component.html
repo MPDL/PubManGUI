@@ -208,7 +208,24 @@
             </div>
         </div>
     </div>
-    <!-- TODO Subjects-->
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="subjects" class="col-sm-2 col-form-label col-form-label-sm">Subjects</label>
+        <div class="col-sm" id="subjects">
+            <ng-container formArrayName="subjects">
+                @for (subject of subjects.controls; track subjectIndex; let subjectIndex = $index) {
+                <ng-container [formGroupName]="subjectIndex">
+                    <pure-subject-form [subject_form]="subject" [index]="subjectIndex" [multi]="true"
+                        [index_length]="subjects.controls.length"
+                        (notice)="handleSubjectNotification($event)"></pure-subject-form>
+                </ng-container>
+                }
+                @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add subject'"
+                    (notice)="handleSubjectNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+    </div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label for="tableOfContents" class="col-sm-2 col-form-label col-form-label-sm">Table of Contents</label>
         <div class="col-sm">
