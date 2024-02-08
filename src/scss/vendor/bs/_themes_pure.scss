@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 [data-bs-theme=light] {
     --bs-link-color: #{$gray-700};
     --bs-link-hover-color: #{$mpdl-iseo1};
@@ -36,11 +38,11 @@
         background-color: $mpdl-iseo4;
     }
 
-    --main-title-text-color: #{$mpg-blue};
+    --main-title-text-color: #{$mpg-blue};  
     --accent-color-1: #{$mpg-slate-gray-0};
-    --accent-color-2: #{$mpg-slate-gray-1};
-    --accent-color-3: #{$mpg-slate-gray-2};
-    --accent-color-contrast: #{$mpdl-light};
+    --accent-color-2: #{lighten($mpg-slate-gray-0, 10% )};     
+    --accent-color-3: #{lighten($mpg-slate-gray-0, 20% )}; 
+    --accent-color-contrast: #{$mpg-light-gray};
 }
 
 [data-bs-theme=dark] {
@@ -88,9 +90,9 @@
         background-color: $body-tertiary-bg-dark;
     }
 
-    --main-title-text-color: #{$mpg-secondary-blue};
-    --accent-color-1: #{$mpg-sand-orange-0};
-    --accent-color-2: #{$mpg-sand-orange-1};
-    --accent-color-3: #{$mpg-sand-orange-2};
-    --accent-color-contrast: #{$mpdl-dark};
+    --main-title-text-color: #{$mpdl-light};
+    --accent-color-1: #{$mpg-slate-gray-1};
+    --accent-color-2: #{lighten($mpg-slate-gray-1, 10% )};     
+    --accent-color-3: #{lighten($mpg-slate-gray-1, 20% )}; 
+    --accent-color-contrast: #{$mpg-light-gray};
 }

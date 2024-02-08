@@ -1,1 +1,33 @@
-<p>replace-source-edition-form works!</p>
+<div class="form-control box-grey">
+
+    <div class="description">
+      Adjusts the "Edition" field in all existing sources. Existing values will be
+      overwritten.
+    </div>
+
+    <form [formGroup]="replaceSourceEditionForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Source to be adjusted</label>
+        <div class="col-sm-1">
+          <select class="form-control form-select" formControlName="sourceNumber">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Add value</label>
+        <div class="col-sm-9">
+          <input class="form-control" formControlName="sourceEdition">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" [disabled]="!replaceSourceEditionForm.valid" class="btn btn-outline-secondary col-1 float-end">
+            Adjust
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>

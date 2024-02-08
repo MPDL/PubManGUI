@@ -1,1 +1,39 @@
-<p>change-source-genre-form works!</p>
+<div class="form-control box-grey">
+
+    <div class="description">
+      The genre of existing sources will be changed within the items
+    </div>
+
+    <form [formGroup]="changeSourceGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-4 col-form-label">Genre to be replaced</label>
+        <div class="col-sm-8">
+          <select class="form-control form-select" formControlName="sourceGenreFrom">
+            <option value="" selected="selected">-</option>
+            <option *ngFor="let genre of sourceGenres" [ngValue]="genre">
+              {{genre | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-4 col-form-label">Replacing genre</label>
+        <div class="col-sm-8">
+          <select class="form-control form-select" formControlName="sourceGenreTo">
+            <option value="" selected="selected">-</option>
+            <option *ngFor="let genre of sourceGenres" [ngValue]="genre">
+              {{genre | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" [disabled]="!changeSourceGenreForm.valid" class="btn btn-outline-secondary col-1 float-end">
+            Change
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>

@@ -1,1 +1,45 @@
-<p>add-source-identifier-form works!</p>
+<div class="form-control box-grey">
+
+    <div class="description">
+      New Identifiers (IDs) will be added to the existing sources
+    </div>
+
+    <form [formGroup]="addSourceIdentifierForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Source to be adjusted</label>
+        <div class="col-sm-1">
+          <select class="form-control form-select" formControlName="sourceNumber">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Type of ID</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="identifierType">
+            <option value="" selected="selected">-</option>
+            <option *ngFor="let type of sourceIdTypes" [ngValue]="type">
+              {{type | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Value of additional ID</label>
+        <div class="col-sm-9">
+          <input class="form-control" formControlName="identifier">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" [disabled]="!addSourceIdentifierForm.valid" class="btn btn-outline-secondary col-1 float-end">
+            Add
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>

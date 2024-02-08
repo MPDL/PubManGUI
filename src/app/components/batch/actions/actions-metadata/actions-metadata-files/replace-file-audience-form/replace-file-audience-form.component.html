@@ -1,1 +1,51 @@
-<p>replace-file-audience-form works!</p>
+<div class="form-control box-grey">
+
+    <div class="description">
+      All files with the visibility "restricted" will be assigned to the following IP
+      range(s)
+    </div>
+
+    <form [formGroup]="replaceFileAudienceForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label" for="ipRange">Assign IP range</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <select class="form-control form-select" [formControl]="ipRange">
+              <option *ngFor="let ou of ous" [ngValue]="ou.label">{{ou.label}}
+              </option>
+            </select>
+            <button (click)="onAddToNewIPRanges()" class="input-group-text" type="button">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label *ngIf="ipRangesToAdd.length" class="col-sm-2 col-form-label">Selected IP
+          range(s)</label>
+        <div class="col-sm-10" formArrayName="ipRanges">
+          <div class="mb-1" *ngFor="let range of ipRangesToAdd.controls; let i = index;">
+            <div class="input-group">
+              <input [formControlName]="i" class="form-control" readonly>
+              <button (click)="onDeleteIPRange( i )" class="input-group-text" type="button">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+            </div>
+            <span *ngIf="isValidFieldInArray(ipRangesToAdd, i)" class="form-text text-danger">
+              this field is required
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" [disabled]="!replaceFileAudienceForm.valid" class="btn btn-outline-secondary col-1 float-end">
+            Assign
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>

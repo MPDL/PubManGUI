@@ -1,1 +1,38 @@
-<p>change-file-visibility-form works!</p>
+<div class="form-control box-grey">
+
+    <div class="description">
+      The visibility of files will be changed as follows
+    </div>
+
+    <form [formGroup]="changeFileVisibilityForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Visibility to be replaced</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="filesVisibilityFrom">
+            <option *ngFor="let fileVisibility of visibilityTypes"
+              [ngValue]="fileVisibility" >
+              {{fileVisibility | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Replacing visibility</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="filesVisibilityTo">
+            <option *ngFor="let fileVisibility of visibilityTypes"
+              [ngValue]="fileVisibility">
+              {{fileVisibility | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" [disabled]="!changeFileVisibilityForm.valid" class="btn btn-outline-secondary col-1 float-end">
+            Change
+          </button>
+        </div>
+      </div>
+    </form>
+</div>

@@ -3,17 +3,24 @@
 }
 
 .accordion {
+
     .accordion-item {
 
-        .accordion-header,
-        .accordion-button {
+        .accordion-header {
             color: var(--accent-color-contrast);
             background-color: var(--accent-color-1);
+            margin-bottom: 1px;
             border: none;
         }
 
-        .accordion-header {
-            margin-bottom: 1px;
+        .accordion-button {
+            color: var(--accent-color-contrast);
+            background-color: var(--accent-color-1) !important;
+            border: none;
+        }
+
+        .accordion-body { 
+            margin-bottom: 1em;
         }
     }
 
@@ -44,6 +51,20 @@
     h5 {
         font-size: 0.92em;
     }
+}
+
+.box-grey {
+	background: var(--main-content-background-color);
+	color: var(--main-content-text-color);
+	clear: both;
+	float: none;
+	margin: 1em 0 1em 0;
+	padding: 1em 2em 1em 2em;
+    border: none;
+}
+
+.description {
+    margin: 1em 0;
 }
 
 

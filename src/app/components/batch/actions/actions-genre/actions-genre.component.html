@@ -1,1 +1,53 @@
-<p>actions-genre works!</p>
+<div class="form-control box-grey">
+    <h2 class="m-0">Change Genre</h2>
+    <div class="description">
+      <p>
+        The items will be transformed from one genre to another.
+      </p>
+      <p><strong>
+          Please note that all metadata fields that are not allowed within the new genre will be deleted
+          automatically!
+        </strong></p>
+    </div>
+
+    <form [formGroup]="changeGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Genre to be replaced</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="genreFrom">
+            <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Replacing genre</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="genreTo">
+            <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Degree type</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="degree" disable="disabled">
+            <option value="" selected="selected">-</option>
+            <option *ngFor="let degree of degreeTypes" [ngValue]="degree">{{degree | titlecase}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" [disabled]="!changeGenreForm.valid" class="btn btn-outline-secondary col-1 float-end">
+            Change
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>

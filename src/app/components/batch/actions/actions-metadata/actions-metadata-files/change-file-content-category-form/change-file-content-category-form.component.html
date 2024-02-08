@@ -1,1 +1,39 @@
-<p>change-file-content-category-form works!</p>
+<div class="form-control box-grey">
+
+    <div class="description">
+      The content category of files will be changed as follows
+    </div>
+
+    <form [formGroup]="changeFileContentCategoryForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-3 row">
+        <label class="col-sm-4 col-form-label">Content category to be replaced</label>
+        <div class="col-sm-8">
+          <select class="form-control form-select" formControlName="contentFileCategoryFrom">
+            <option value="" selected="selected">-</option>
+            <option *ngFor="let category of contentCategories" [ngValue]="category">
+              {{category | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-4 col-form-label">Replacing content category</label>
+        <div class="col-sm-8">
+          <select class="form-control form-select" formControlName="contentFileCategoryTo">
+            <option value="" selected="selected">-</option>
+            <option *ngFor="let category of contentCategories" [ngValue]="category">
+              {{category | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" [disabled]="!changeFileContentCategoryForm.valid" class="btn btn-outline-secondary col-1 float-end">
+            Change
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>

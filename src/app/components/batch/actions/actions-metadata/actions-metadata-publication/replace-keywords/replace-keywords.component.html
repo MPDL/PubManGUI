@@ -1,3 +1,29 @@
-<p>replace-keywords works!</p>
-<pure-change-keywords-form></pure-change-keywords-form>
-<pure-replace-keywords-form></pure-replace-keywords-form>
+<div class="form-control box-grey">
+
+    <div class="description">
+      Keywords will be replaced within the items. You can select between the
+      complete
+      overwriting of all previous contents and the targeted replacement of
+      individual terms
+    </div>
+
+    <form [formGroup]="_chooseMethodForm">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Choose method</label>
+        <div class="col-sm-3">
+          <select class="form-control form-select" formControlName="keywordsReplaceMethod">
+            <option value="REPLACE_ALL" selected="selected">ALL</option>
+            <option value="REPLACE_BY_VALUE">SPECIFIC VALUE</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="keywordsReplaceMethod.match('REPLACE_BY_VALUE')">
+        <pure-change-keywords-form></pure-change-keywords-form>
+    </div>
+
+    <div *ngIf="keywordsReplaceMethod.match('REPLACE_ALL')">
+        <pure-replace-keywords-form></pure-replace-keywords-form>
+    </div>
+  </div>
