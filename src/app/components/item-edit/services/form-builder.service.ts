@@ -118,7 +118,7 @@ export class FormBuilderService {
       publishingInfo: metadata?.publishingInfo ? this.publishing_info_FG(metadata.publishingInfo) : this.publishing_info_FG(null),
       reviewMethod: this.fb.control(metadata?.reviewMethod ? metadata.reviewMethod : ReviewMethod.NO_REVIEW),
       sources: this.fb.array(metadata?.sources ? metadata.sources.map(s => this.source_FG(s) as AbstractControl) : []),
-      freeKeywords: this.fb.control(metadata?.location ? metadata.location : null),
+      freeKeywords: this.fb.control(metadata?.freeKeywords ? metadata.freeKeywords : null),
       subjects: this.fb.array(metadata?.subjects ? metadata.subjects.map(s => this.subject_FG(s) as AbstractControl) : []),
       tableOfContents: this.fb.control(metadata?.tableOfContents ? metadata.tableOfContents : null),
       totalNumberOfPages: this.fb.control(metadata?.totalNumberOfPages ? metadata.totalNumberOfPages : null),

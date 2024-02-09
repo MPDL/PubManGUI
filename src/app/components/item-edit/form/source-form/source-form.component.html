@@ -1,0 +1,136 @@
+<div [formGroup]="source_form" class=""><div class="d-sm-flex flex-sm-row gap-1 mb-1">
+    <label for="alt_titles" class="col-sm-2 col-form-label col-form-label-sm">Source 1</label>
+</div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="alt_titles" class="col-sm-2 col-form-label col-form-label-sm">alternative titles</label>
+        <div class="col-sm">
+            <ng-container formArrayName="alternativeTitles">
+                @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
+                <ng-container [formGroupName]="ati">
+                    <pure-alt-title-form [alt_title_form]="alt" [index]="ati"
+                        [index_length]="alternativeTitles.controls.length"
+                        (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
+                </ng-container>
+                } @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add title'"
+                    (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+        <div class="col-sm-1">
+            <pure-add-remove-buttons [index]="index" (notice)="add_remove_source($event)"></pure-add-remove-buttons>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="source_title" class="col-sm-2 col-form-label col-form-label-sm">Title</label>
+        <div class="col-sm">
+            <input type="text" class="form-control form-control-sm" id="source_title" name="title"
+                formControlName="title">
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="creatures" class="col-sm-2 col-form-label col-form-label-sm">creators</label>
+        <div class="col-sm">
+            <ng-container formArrayName="creators">
+                @for (creature of creators.controls; track creature; let ci = $index) {
+                <ng-container [formGroupName]="ci">
+                    <pure-creator-form [creator_form]="creature" [index]="ci" [index_length]="creators.length"
+                        (notice)="handleCreatorNotification($event)"></pure-creator-form>
+                </ng-container>
+                } @empty {
+                <div class="col-sm">
+                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add creator'"
+                        (notice)="handleCreatorNotification($event)"></pure-add-remove-buttons>
+                </div>
+                }
+            </ng-container>
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <div class="col-sm-2">
+            <label for="source_volume" class="col-form-label col-form-label-sm">Volume</label>
+            <input type="text" class="form-control form-control-sm" id="source_volume" name="volume"
+                formControlName="volume">
+        </div>
+        <div class="col-sm-2">
+            <label for="source_issue" class="col-form-label col-form-label-sm">Issue</label>
+            <input type="text" class="form-control form-control-sm" id="source_issue" name="issue"
+                formControlName="issue">
+        </div>
+        <div class="col-sm-2">
+            <label for="source_sequenceNumber" class="col-form-label col-form-label-sm">Sequence number</label>
+            <input type="text" class="form-control form-control-sm" id="source_sequenceNumber" name="sequenceNumber"
+                formControlName="sequenceNumber">
+        </div>
+        <div class="col-sm-2">
+            <label for="source_datePublishedInPrint" class="col-form-label col-form-label-sm">Date published in
+                print</label>
+            <input type="text" class="form-control form-control-sm" id="source_datePublishedInPrint"
+                name="datePublishedInPrint" formControlName="datePublishedInPrint">
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <div class="col-sm-2">
+            <label for="source_startPage" class="col-form-label col-form-label-sm">Start page</label>
+            <input type="text" class="form-control form-control-sm" id="source_startPage" name="startPage"
+                formControlName="startPage">
+        </div>
+        <div class="col-sm-2">
+            <label for="source_endPage" class="col-form-label col-form-label-sm">End page</label>
+            <input type="text" class="form-control form-control-sm" id="source_endPage" name="endPage"
+                formControlName="endPage">
+        </div>
+        <div class="col-sm-2">
+            <label for="source_totalNumberOfPages" class="col-form-label col-form-label-sm">Total number of Pages</label>
+            <input type="text" class="form-control form-control-sm" id="source_totalNumberOfPages" name="totalNumberOfPages"
+                formControlName="totalNumberOfPages">
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+    <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label class="col-sm-2 col-form-label col-form-label-sm">Identifiers</label>
+        <div class="col-sm">
+            <ng-container formArrayName="identifiers">
+                @for (identifier of identifiers.controls; track identifier; let identifierIndex = $index) {
+                <ng-container [formGroupName]="identifierIndex">
+                    <pure-identifier-form [identifier_form]="identifier" [index]="identifierIndex" [multi]="true"
+                        [index_length]="identifiers.controls.length"
+                        (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
+                </ng-container>
+                }
+                @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add identifier'"
+                    (notice)="handleIdentifierNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <label for="genre" class="col-sm-2 col-form-label col-form-label-sm">genre</label>
+        <div class="col-sm">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm">
+                    <select id="genre" class="form-select form-select-sm" formControlName="genre"
+                        (change)="genre_change($event)">
+                        <option [value]="null" selected disabled>genre</option>
+                        @for (g of genre_types; track g) {
+                        <option [value]="g">{{g}}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+</div>

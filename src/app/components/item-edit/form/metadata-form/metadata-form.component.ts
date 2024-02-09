@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, PublishingInfoVO } from 'src/app/model/inge';
+import { AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, PublishingInfoVO, SourceVO, SubjectVO } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
@@ -11,6 +11,8 @@ import { LanguageFormComponent } from '../language-form/language-form.component'
 import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';
 import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
 import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
+import { SourceFormComponent } from '../source-form/source-form.component';
+import { SubjectFormComponent } from '../subject-form/subject-form.component';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -27,6 +29,8 @@ import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-
     LanguageFormComponent,
     LegalCaseFormComponent, 
     PublishingInfoFormComponent,
+    SourceFormComponent,
+    SubjectFormComponent,
   ],
   templateUrl: './metadata-form.component.html',
   styleUrls: ['./metadata-form.component.scss']
@@ -70,6 +74,14 @@ export class MetadataFormComponent {
 
   get publishingInfo() {
     return this.meta_form.get('publishingInfo') as FormGroup<ControlType<PublishingInfoVO>>;
+  }
+
+  get sources() {
+    return this.meta_form.get('sources') as FormArray<FormGroup<ControlType<SourceVO>>>;
+  }
+
+  get subjects() {
+    return this.meta_form.get('subjects') as FormArray<FormGroup<ControlType<SubjectVO>>>;
   }
 
   handleAltTitleNotification(event: any) {
@@ -151,6 +163,46 @@ export class MetadataFormComponent {
 
   genre_change(event: any) {
     console.log('changed genre', event.target.value)
+  }
+  
+  handleSourceNotification(event: any) {
+    if (event.action === 'add') {
+      this.addSource(event.index);
+    } else if (event.action === 'remove') {
+      this.removeSource(event.index);
+    }
+  }
+
+  handleNoSources() {
+    this.sources.push(this.fbs.source_FG(null));
+  }
+
+  addSource(index: number) {
+    this.sources.insert(index + 1, this.fbs.source_FG(null));
+  }
+
+  removeSource(index: number) {
+    this.sources.removeAt(index);
+  }
+
+  handleSubjectNotification(event: any) {
+    if (event.action === 'add') {
+      this.addSubject(event.index);
+    } else if (event.action === 'remove') {
+      this.removeSubject(event.index);
+    }
+  }
+
+  handleNoSubjects() {
+    this.subjects.push(this.fbs.subject_FG(null));
+  }
+
+  addSubject(index: number) {
+    this.subjects.insert(index + 1, this.fbs.subject_FG(null));
+  }
+
+  removeSubject(index: number) {
+    this.subjects.removeAt(index);
   }
   
 }

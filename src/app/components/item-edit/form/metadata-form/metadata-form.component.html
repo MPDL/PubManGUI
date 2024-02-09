@@ -45,7 +45,6 @@
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
             </div>
-
         </div>
     </div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
@@ -68,51 +67,55 @@
     </div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label class="col-sm-2 col-form-label col-form-label-sm">Dates</label>
-        <div class="col-sm-9">
+        <div class="col-sm">
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="col-form-label col-form-label-sm">Date Accepted</label>
                     <input type="text" class="form-control form-control-sm" formControlName="dateAccepted">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="col-form-label col-form-label-sm">Date Created</label>
                     <input type="text" class="form-control form-control-sm" formControlName="dateCreated">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="col-form-label col-form-label-sm">Date Modified</label>
                     <input type="text" class="form-control form-control-sm" formControlName="dateModified">
                 </div>
             </div>
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="col-form-label col-form-label-sm">Date Published in Print</label>
                     <input type="text" class="form-control form-control-sm" formControlName="datePublishedInPrint">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="col-form-label col-form-label-sm">Date Published Online</label>
                     <input type="text" class="form-control form-control-sm" formControlName="datePublishedOnline">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="col-form-label col-form-label-sm">Date Published Online</label>
                     <input type="text" class="form-control form-control-sm" formControlName="dateSubmitted">
                 </div>
             </div>
+            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+            </div>
         </div>
     </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label class="col-sm-2 col-form-label col-form-label-sm">Thesis</label>
-        <div class="col-sm-9">
+        <div class="col-sm">
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="col-form-label col-form-label-sm">Degree</label>
                     <input type="text" class="form-control form-control-sm" formControlName="degree">
                 </div>
+            </div>
+            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
         </div>
     </div>
     <pure-event-form [event_form]="event"></pure-event-form>
     <pure-legal-case-form [legal_case_form]="legalCase"></pure-legal-case-form>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label class="col-sm-2 col-form-label col-form-label-sm">Identifiers</label>
         <div class="col-sm">
             <ng-container formArrayName="identifiers">
@@ -161,7 +164,6 @@
             </div>
         </div>
     </div>
-    <!-- TODO Publishing Info-->
     <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
         <label for="reviewMethod" class="col-sm-2 col-form-label col-form-label-sm">Review Method</label>
@@ -170,6 +172,67 @@
                 <div class="col-sm">
                     <input type="text" class="form-control form-control-sm" id="reviewMethod" name="reviewMethod"
                         formControlName="reviewMethod">
+                </div>
+                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="sources" class="col-sm-2 col-form-label col-form-label-sm">Sources</label>
+        <div class="col-sm">
+            <ng-container formArrayName="sources">
+                @for (source of sources.controls; track source; let sourcesIndex = $index) {
+                <ng-container [formGroupName]="sourcesIndex">
+                    <pure-source-form [source_form]="source" [index]="sourcesIndex"
+                        [index_length]="sources.controls.length"
+                        (notice)="handleSourceNotification($event)"></pure-source-form>
+                </ng-container>
+                } @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add source'"
+                    (notice)="handleSourceNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <label for="freeKeywords" class="col-sm-2 col-form-label col-form-label-sm">Free Keywords</label>
+        <div class="col-sm">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm">
+                    <input type="text" class="form-control form-control-sm" id="freeKeywords" name="freeKeywords"
+                        formControlName="freeKeywords">
+                </div>
+                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="subjects" class="col-sm-2 col-form-label col-form-label-sm">Subjects</label>
+        <div class="col-sm" id="subjects">
+            <ng-container formArrayName="subjects">
+                @for (subject of subjects.controls; track subjectIndex; let subjectIndex = $index) {
+                <ng-container [formGroupName]="subjectIndex">
+                    <pure-subject-form [subject_form]="subject" [index]="subjectIndex" [multi]="true"
+                        [index_length]="subjects.controls.length"
+                        (notice)="handleSubjectNotification($event)"></pure-subject-form>
+                </ng-container>
+                }
+                @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add subject'"
+                    (notice)="handleSubjectNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="tableOfContents" class="col-sm-2 col-form-label col-form-label-sm">Table of Contents</label>
+        <div class="col-sm">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm">
+                    <textarea class="form-control form-control-sm" id="tableOfContents" name="tableOfContents"
+                        formControlName="tableOfContents"></textarea>
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
