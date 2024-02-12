@@ -12,7 +12,6 @@ export class ItemsService extends IngeCrudService{
   getItem(itemId: string, token?: string): Observable<ItemVersionVO>{
     const path = this.itemsPath + '/' + itemId;
     if(token) {
-      console.log('Path: ' + path)
       return this.get(path, token);
     } else {
       return this.get(path);
