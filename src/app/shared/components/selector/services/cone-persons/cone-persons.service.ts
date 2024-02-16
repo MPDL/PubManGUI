@@ -65,7 +65,6 @@ export class ConePersonsService {
 
   resource(uri: string) {
     const params = new HttpParams().set('uri', uri);
-    console.log("resource: \n" + JSON.stringify(params));
     return this.http.get<PersonResource>(this.rest_uri, { params }).pipe(
       map((response: any) => response),
       catchError((error) => {
