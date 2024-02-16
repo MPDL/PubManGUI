@@ -124,7 +124,9 @@ export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion
   }
 
   protected getElasticSearchFieldForHiddenId(): string[] {
-    return ["metadata.creators.person.organizations.identifier", "metadata.creators.organization.identifier", ...(this.includeSource) ? "metadata.sources.creators.person.organizations.identifierPath" : []];
+    return ["metadata.creators.person.organizations.identifier", "metadata.creators.organization.identifier",
+      ...(this.includeSource) ? ["metadata.sources.creators.person.organizations.identifierPath"] : [],
+    ];
   }
 
   protected getElasticSearchFieldForSearchString(): string[] {

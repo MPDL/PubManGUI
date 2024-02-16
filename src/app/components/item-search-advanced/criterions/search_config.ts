@@ -2,7 +2,7 @@ import {Parenthesis} from "./operators/Parenthesis";
 import {LogicalOperator} from "./operators/LogicalOperator";
 import {
   AnyFieldSearchCriterion,
-  ClassificationSearchCriterion, CollectionSearchCriterion,
+  ClassificationSearchCriterion, CollectionSearchCriterion, EventTitleSearchCriterion,
   FulltextSearchCriterion, IdentifierSearchCriterion,
   JournalSearchCriterion,
   KeywordSearchCriterion,
@@ -17,6 +17,7 @@ import {
   OrganizationSearchCriterion,
   PersonSearchCriterion
 } from "./StringOrHiddenIdSearchCriterion";
+import {GenreSearchCriterion, ReviewMethodSearchCriterion, StateSearchCriterion} from "./EnumSearchCriterion";
 
 
 export enum DisplayType {
@@ -26,6 +27,7 @@ export enum DisplayType {
   ORGANIZATION,
   CLASSIFICATION,
   DATE,
+  ENUM,
   OPERATOR,
   PARENTHESIS
 }
@@ -76,6 +78,10 @@ export const searchTypes : searchTypesI = {
   language: {
     displayType: DisplayType.STANDARD,
     handlerClass: LanguageSearchCriterion
+  },
+  eventTitle: {
+    displayType: DisplayType.STANDARD,
+    handlerClass: EventTitleSearchCriterion
   },
   source: {
     displayType: DisplayType.STANDARD,
@@ -150,12 +156,24 @@ export const searchTypes : searchTypesI = {
     handlerClass: DateSearchCriterion
   },
   modifiedBy: {
-    displayType: DisplayType.OPERATOR,
+    displayType: DisplayType.STANDARD,
     handlerClass: ModifiedBySearchCriterion
   },
   createdBy: {
-    displayType: DisplayType.OPERATOR,
+    displayType: DisplayType.STANDARD,
     handlerClass: CreatedBySearchCriterion
+  },
+  reviewMethod: {
+    displayType: DisplayType.ENUM,
+    handlerClass: ReviewMethodSearchCriterion
+  },
+  genre: {
+    displayType: DisplayType.ENUM,
+    handlerClass: GenreSearchCriterion
+  },
+  state: {
+    displayType: DisplayType.ENUM,
+    handlerClass: StateSearchCriterion
   },
   and: {
     displayType: DisplayType.OPERATOR,

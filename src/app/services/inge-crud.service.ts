@@ -152,28 +152,4 @@ export class IngeCrudService {
     return this.getHttpStatus('DELETE', path, body, this.addAuhorizationHeader(token));
   }
 
-
-
-  Zone: any;
-
-  /** Simulate synchronous behaviour, see https://dev.to/jdgamble555/forcing-angular-to-wait-on-your-async-function-2ck1 **/
-  async waitFor<T>(prom: Promise<T> | Observable<T>): Promise<T> {
-    if (isObservable(prom)) {
-      prom = lastValueFrom(prom);
-    }
-    const macroTask = this.Zone.current
-      .scheduleMacroTask(
-        `WAITFOR-${Math.random()}`,
-        () => {
-        },
-        {},
-        () => {
-        }
-      );
-    return prom.then((p: T) => {
-      macroTask.invoke();
-      return p;
-    });
-
-  }
 }

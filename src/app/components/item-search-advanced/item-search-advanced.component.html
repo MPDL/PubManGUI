@@ -42,7 +42,42 @@
                     }
                   </div>
                   <div class="col">
+                    <select class="form-select" formControlName="type" (change)="changeType(i, t.value)" #t>
+                      <option value="title">title</option>
+                      <option value="keyword">keyword</option>
+                      <option value="classification">classification</option>
+                      <option value="anyField">anyField</option>
+                      <option value="fulltext">fulltext</option>
+                      <option value="person">person</option>
+                      <option value="orcid">orcid</option>
+                      <option value="organization">organization</option>
+                      <option value="orcid">orcid</option>
+                      <optgroup label="Dates">
+                        <option value="anyDate">anyDate</option>
+                        <option value="publishedInPrintDate">publishedInPrintDate</option>
+                        <option value="publishedDate">publishedDate</option>
+                        <option value="acceptedDate">acceptedDate</option>
+                        <option value="submittedDate">submittedDate</option>
+                        <option value="modifiedDate">modifiedDate</option>
+                        <option value="createdDate">createdDate</option>
+                      </optgroup>
+                      <optgroup label="Event">
+                        <option value="eventTitle">eventTitle</option>
+                        <option value="eventStartDate">eventStartDate</option>
+                        <option value="eventEndDate">eventEndDate</option>
+                      </optgroup>
+                      <option value="genre">genre</option>
+                      <option value="reviewMethod">reviewMethod</option>
+                      <option value="language">language</option>
+                      <option value="source">source</option>
+                      <option value="journal">journal</option>
+                      <option value="localTag">localTag</option>
+                      <option value="identifier">identifier</option>
+                      <option value="collection">collection</option>
+                      <option value="projectInfo">projectInfo</option>
+                    </select>
                     <!--Type -->
+                    <!--
                     <select class="form-select form-select-sm" formControlName="type" (change)="changeType(i, t.value)"
                             #t>
                       @for (searchType of searchTypeKeys; track searchType) {
@@ -51,6 +86,7 @@
                         </option>
                       }
                     </select>
+                    -->
                   </div>
                 </div>
 
@@ -83,6 +119,28 @@
                   </div>
                 }
                 @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ORGANIZATION) {
+
+                  <div class="row" formGroupName="content">
+                    <div class="col-6">
+                      <pure-autosuggest [control]="$any(currentFormGroup.get(['content', 'text']))" purePureOus placeholder="search ous ..."
+                                     (notice)="select_ou($event, currentFormGroup)">
+                        <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+                      </pure-autosuggest>
+                    </div>
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="hidden"/>
+                    </div>
+                    <div class="col-3 form-check">
+                      <input id="predecessorsAndSuccessors" class="form-check-input" type="checkbox"
+                             formControlName="includePredecessorsAndSuccessors"/>
+                      <label class="form-check-label" for="predecessorsAndSuccessors">
+                        Include predecessors and successors
+                      </label>
+                    </div>
+                  </div>
+
+                  <!--
+
                   <div class="row" formGroupName="content">
                     <div class="col-6">
                       <input class="form-control" type="text" formControlName="text"/>
@@ -90,13 +148,15 @@
                     <div class="col-3">
                       <input class="form-control" type="text" formControlName="hidden"/>
                     </div>
-                    <div class="col-3">
-                      <input id="predecessorsAndSuccessors" class="form-control form-check-input" type="checkbox" formControlName="includePredecessorsAndSuccessors"/>
+                    <div class="col-3 form-check">
+                      <input id="predecessorsAndSuccessors" class="form-check-input" type="checkbox" formControlName="includePredecessorsAndSuccessors"/>
                       <label class="form-check-label" for="predecessorsAndSuccessors">
                         Include predecessors and successors
                       </label>
                     </div>
+
                   </div>
+                  -->
                 }
                 @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.DATE) {
                   <div class="row" formGroupName="content">
@@ -141,6 +201,19 @@
                     </div>
                     <div class="col-6">
                       <input class="form-control" type="text" formControlName="text"/>
+                    </div>
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-6">
+                      <select class="form-select form-select-sm" formControlName="text">
+                        @for(val of $any(currentFormGroup).getValues(); track val) {
+                          <option [value]="val">
+                            {{ val }}
+                          </option>
+                        }
+                      </select>
                     </div>
                   </div>
                 }

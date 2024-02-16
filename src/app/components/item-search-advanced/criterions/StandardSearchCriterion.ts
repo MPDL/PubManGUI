@@ -356,6 +356,7 @@ export class SourceSearchCriterion extends StandardSearchCriterion {
   override getElasticSearchNestedPath(): string | undefined {
     return "metadata.sources";
   }
+
 }
 
 

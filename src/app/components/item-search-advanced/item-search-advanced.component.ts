@@ -1,5 +1,13 @@
 import {Component, Input} from '@angular/core';
-import {Form, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {
+  AbstractControl,
+  Form,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from "@angular/forms";
 import {AaService} from "../../services/aa.service";
 import {Router} from "@angular/router";
 import {ConeService} from "../../services/cone.service";
@@ -16,13 +24,17 @@ import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/S
 import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
 import {OrganizationsService} from "../../services/organizations.service";
 import {forkJoin, map, tap} from "rxjs";
+import {OptionDirective} from "../../shared/components/selector/directives/option.directive";
+import {PureOusDirective} from "../../shared/components/selector/services/pure_ous/pure-ous.directive";
+import {SelectorComponent} from "../../shared/components/selector/selector.component";
+import {AutosuggestComponent} from "../../shared/components/autosuggest/autosuggest.component";
 
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, AutosuggestComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss'
@@ -216,6 +228,11 @@ addClosingParenthesis(index:number) {
     console.log(this.query);
   }
 
+  select_ou(ou: any, currentFormGroup: AbstractControl<any>) {
+    currentFormGroup.get("content")?.get("hidden")?.setValue(ou.id);
+    //this.isc_form.patchValue({ hidden_id: ou.id }, { emitEvent: false });
+  }
+
 
 
   removeSearchCriterionWithOperator(criterionList: SearchCriterion[], criterion: SearchCriterion) {
@@ -348,15 +365,17 @@ scListToElasticSearchQuery(scList: SearchCriterion[]) {
   openingParenthesis!.partnerParenthesis = closingParenthesis;
 }
 }
+  //Join all subquery-creations
   forkJoin(cleanedScList.map(sc => sc.toElasticSearchQuery()))
     //Set query in every search criterion object
     .pipe(tap(queries => cleanedScList.forEach((sc, i) => {sc.query = queries[i]})))
+
+    //when everything is ready, create complete query
     .subscribe(data => {
     this.query = this.cleanedScListToElasticSearchQuery(cleanedScList, data, undefined)
   }
   )
 
-//return this.cleanedScListToElasticSearchQuery(cleanedScList, undefined);
 }
 
 cleanedScListToElasticSearchQuery(scList: SearchCriterion[], queries: (Object | undefined)[], parentNestedPath: string | undefined):Object | undefined {
