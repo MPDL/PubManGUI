@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ContextDbRO } from 'src/app/model/inge';
 import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
@@ -14,6 +14,7 @@ import { SelectorComponent } from "../../../../shared/components/selector/select
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     PureCtxsDirective,
     OptionDirective,
@@ -27,16 +28,22 @@ export class ActionsContextComponent {
 
   // changeContext(List<String> itemIds, String contextFrom, String contextTo, String userId, String token);
   public changeContextForm: FormGroup = this.fb.group({
-    contextFrom: ['', [Validators.required]],
-    contextTo: ['', [Validators.required]],
+    contextFrom: this.fb.group<ControlType<ContextDbRO>>({
+      objectId: this.fb.control(''),
+      name: this.fb.control('')
+    }),
+    contextTo: this.fb.group<ControlType<ContextDbRO>>({
+      objectId: this.fb.control(''),
+      name: this.fb.control('')
+    }),
   });
 
   get contextFrom() {
-    return this.changeContextForm.get('contextFrom') as FormGroup<ControlType<ContextDbRO>>
+    return this.changeContextForm.get('contextFrom') as FormGroup<ControlType<ContextDbRO>>;
   }
 
   get contextTo() {
-    return this.changeContextForm.get('contextFrom') as FormGroup<ControlType<ContextDbRO>>
+    return this.changeContextForm.get('contextTo') as FormGroup<ControlType<ContextDbRO>>;
   }
 
   updateContextFrom(event: any) {

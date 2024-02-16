@@ -9,9 +9,9 @@
     <div class="mb-3 row">
       <label class="col-sm-3 col-form-label" for="contextFrom">Previous context</label>
       <div class="col-sm-9">
-        <pure-selector id="contextFrom" [form]="changeContextForm" [control_name]="'contextFrom'"
+        <pure-selector id="contextFrom" [form]="contextFrom" [control_name]="'name'"
           (notice)="updateContextFrom($event)" purePureCtxs placeholder="search contexts ...">
-          <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+          <ng-container *pureOption="let item">{{ item.text }}</ng-container>  
         </pure-selector>
       </div>
     </div>
@@ -19,8 +19,8 @@
     <div class="mb-3 row">
       <label class="col-sm-3 col-form-label" for="contextTo">New context</label>
       <div class="col-sm-9">
-        <pure-selector id="contextTo" [form]="changeContextForm" [control_name]="'contextTo'"
-          (notice)="updateContextTo($event)" purePureCtxs placeholder="search contexts ...">
+        <pure-selector id="contextTo" [form]="contextTo" [control_name]="'name'"
+          (notice)="updateContextTo($event)" purePureCtxs placeholder="search contexts ..." >
           <ng-container *pureOption="let item">{{ item.text }}</ng-container>
         </pure-selector>
       </div>
@@ -28,11 +28,14 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <button type="submit" [disabled]="!changeContextForm.valid" class="btn col-1 float-end">
+        <button type="submit" [disabled]="!changeContextForm.valid" class="btn btn-outline-secondary col-1 float-end">
           Change
         </button>
       </div>
     </div>
   </form>
+  
+  <hr>
+  <small><pre>{{ changeContextForm.value | json }}</pre></small>
 
 </div>

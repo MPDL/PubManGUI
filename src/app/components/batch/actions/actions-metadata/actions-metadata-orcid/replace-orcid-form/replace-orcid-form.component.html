@@ -1,33 +1,33 @@
 <div class="form-control box-grey">
 
-    <div class="description">
-      The ORCID stored in CoNE for the selected person will be added to the
-      items. Any existing values will be overwritten.
+  <div class="description">
+    The ORCID stored in CoNE for the selected person will be added to the
+    items. Any existing values will be overwritten.
+  </div>
+
+  <form [formGroup]="changeOrcidForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label" for="changeOrcidForm">CoNE</label>
+      <div class="col-sm-9">
+        <pure-selector id="changeOrcidForm" [form]="changeOrcidForm" [control_name]="'completeName'" (notice)="updatePerson($event)" pureConePersons
+          placeholder="search cone ...">
+          <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+        </pure-selector>
+      </div>
     </div>
 
-    <form [formGroup]="changeOrcidForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-3 row">
-        <div class="col-sm-8">
-          <div class="input-group">
-            <input class="form-control searchfield" name="personSearch"
-              placeholder="Please enter a person">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="input-group" hidden>
-            <input class="form-control" formControlName="creatorId" readonly>
-            <input class="form-control" formControlName="orcid" readonly>
-          </div>
-        </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <button type="submit" [disabled]="!changeOrcidForm.valid" class="btn btn-outline-secondary col-1 float-end">
+          Add
+        </button>
       </div>
+    </div>
+  </form>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <button type="submit" [disabled]="!changeOrcidForm.valid" class="btn col-1 float-end">
-            Add
-          </button>
-        </div>
-      </div>
-    </form>
+  <hr>
+  <small>
+    <pre>{{ changeOrcidForm.value | json }}</pre>
+  </small>
 
-  </div>
+</div>

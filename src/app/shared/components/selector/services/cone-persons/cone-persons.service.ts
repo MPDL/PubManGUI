@@ -16,6 +16,11 @@ export interface position_shite {
   http_purl_org_dc_elements_1_1_identifier: string,
 }
 
+export interface identifier_bunch { 
+  http_www_w3_org_1999_02_22_rdf_syntax_ns_value: string,
+  http_www_w3_org_2001_XMLSchema_instance_type: string
+}
+
 export interface PersonResource {
   id: string,
   http_purl_org_escidoc_metadata_terms_0_1_degree: string,
@@ -23,7 +28,8 @@ export interface PersonResource {
   http_xmlns_com_foaf_0_1_givenname: string,
   http_purl_org_escidoc_metadata_terms_0_1_position: position_shite[] | position_shite,
   http_xmlns_com_foaf_0_1_family_name: string,
-  http_purl_org_dc_terms_alternative: string
+  http_purl_org_dc_terms_alternative: string,
+  http_purl_org_dc_elements_1_1_identifier: identifier_bunch[] | identifier_bunch
 }
 
 @Injectable({
@@ -31,7 +37,7 @@ export interface PersonResource {
 })
 export class ConePersonsService {
 
-  rest_uri = props.cone_instamce_uri;
+  rest_uri = props.cone_instance_uri;
 
   constructor(
     private http: HttpClient
@@ -39,6 +45,8 @@ export class ConePersonsService {
 
   private getResources(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<any> {
     const requestUrl = this.rest_uri + path;
+    console.log('path: ' + path); // DEBUG
+    console.log('requestUrl: ' + requestUrl); // DEBUG
     return this.http.request(method, requestUrl, {
       body,
       headers,
@@ -57,6 +65,7 @@ export class ConePersonsService {
 
   resource(uri: string) {
     const params = new HttpParams().set('uri', uri);
+    console.log("resource: \n" + JSON.stringify(params));
     return this.http.get<PersonResource>(this.rest_uri, { params }).pipe(
       map((response: any) => response),
       catchError((error) => {

@@ -23,6 +23,7 @@ export interface TaskParamVO {
 export class IngeCrudService {
 
   // restUri = 'https://gui.inge.mpdl.mpg.de/rest';
+  // restUri = 'https://qa.pure.mpdl.mpg.de/rest';
   restUri = props.inge_rest_uri;
 
   constructor(
