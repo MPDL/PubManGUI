@@ -8,7 +8,7 @@ import * as props from 'src/assets/properties.json';
 })
 export class ConeService {
 
-  rest_uri = props.cone_instamce_uri;
+  rest_uri = props.cone_instance_uri;
 
   constructor(
     private http: HttpClient
