@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, PublishingInfoVO, SourceVO, SubjectVO } from 'src/app/model/inge';
+import { AbstractVO, AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, PublishingInfoVO, SourceVO, SubjectVO } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
@@ -13,6 +13,7 @@ import { IdentifierFormComponent } from '../identifier-form/identifier-form.comp
 import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
 import { SourceFormComponent } from '../source-form/source-form.component';
 import { SubjectFormComponent } from '../subject-form/subject-form.component';
+import { AbstractFormComponent } from '../abstract-form/abstract-form.component';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -21,6 +22,7 @@ import { SubjectFormComponent } from '../subject-form/subject-form.component';
     CommonModule, 
     FormsModule, 
     ReactiveFormsModule, 
+    AbstractFormComponent,
     AddRemoveButtonsComponent,
     AltTitleFormComponent, 
     CreatorFormComponent, 
@@ -82,6 +84,10 @@ export class MetadataFormComponent {
 
   get subjects() {
     return this.meta_form.get('subjects') as FormArray<FormGroup<ControlType<SubjectVO>>>;
+  }
+
+  get abstracts() {
+    return this.meta_form.get('abstracts') as FormArray<FormGroup<ControlType<AbstractVO>>>;
   }
 
   handleAltTitleNotification(event: any) {
@@ -203,6 +209,26 @@ export class MetadataFormComponent {
 
   removeSubject(index: number) {
     this.subjects.removeAt(index);
+  }
+
+  handleAbstractNotification(event: any) {
+    if (event.action === 'add') {
+      this.addAbstract(event.index);
+    } else if (event.action === 'remove') {
+      this.removeAbstract(event.index);
+    }
+  }
+
+  handleNoAbstracts() {
+    this.abstracts.push(this.fbs.abstract_FG(null));
+  }
+
+  addAbstract(index: number) {
+    this.abstracts.insert(index + 1, this.fbs.abstract_FG(null));
+  }
+
+  removeAbstract(index: number) {
+    this.abstracts.removeAt(index);
   }
   
 }

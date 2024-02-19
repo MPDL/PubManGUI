@@ -1,0 +1,25 @@
+<div [formGroup]="abstract_form" class="">
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="abstracts" class="col-sm-2 col-form-label col-form-label-sm">{{index + 1}}. Abstract</label>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+            <label for="abstract_language" class="col-sm-2 col-form-label col-form-label-sm">Language</label>
+            <div class="col-sm">
+                <input type="text" class="form-control form-control-sm" id="abstract_language" name="abstract_language"
+                    formControlName="language">
+            </div>
+        
+        <div class="col-sm-1">
+            <pure-add-remove-buttons [index]="index" (notice)="add_remove_abstract($event)"></pure-add-remove-buttons>
+        </div>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="abstract_value" class="col-sm-2 col-form-label col-form-label-sm">Abstract</label>
+        <div class="col-sm">
+            <input type="text" class="form-control form-control-sm" id="abstract_value" name="abstract_value"
+                formControlName="value">
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+</div>

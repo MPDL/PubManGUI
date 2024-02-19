@@ -239,4 +239,22 @@
             </div>
         </div>
     </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="abstracts" class="col-sm-2 col-form-label col-form-label-sm">Abstracs</label>
+        <div class="col-sm" id="abstract">
+            <ng-container formArrayName="abstracts">
+                @for (abstract of abstracts.controls; track abstractIndex; let abstractIndex = $index) {
+                <ng-container [formGroupName]="abstractIndex">
+                    <pure-abstract-form [abstract_form]="abstract" [index]="abstractIndex" [multi]="true"
+                        [index_length]="abstracts.controls.length"
+                        (notice)="handleAbstractNotification($event)"></pure-abstract-form>
+                </ng-container>
+                }
+                @empty {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add abstract'"
+                    (notice)="handleAbstractNotification($event)"></pure-add-remove-buttons>
+                }
+            </ng-container>
+        </div>
+    </div>
 </div>
