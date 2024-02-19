@@ -8,7 +8,7 @@ import { ConePersonsDirective } from 'src/app/shared/components/selector/service
 import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
 import { SelectorComponent } from "../../../../../../shared/components/selector/selector.component";
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
-import { filter } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'pure-replace-orcid-form',
