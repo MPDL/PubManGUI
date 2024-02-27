@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeFileContentCategoryParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-file-content-category-form',
@@ -15,43 +17,35 @@ import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFor
 })
 export class ChangeFileContentCategoryFormComponent { 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
   contentCategories = Object.keys(ContentCategories);
 
-  // changeFileContentCategory(List<String> itemIds, String filesContentCategoryFrom, String filesContentCategoryTo, String userId, String token);
   public changeFileContentCategoryForm: FormGroup = this.fb.group({
-    contentFileCategoryFrom: ['', [ Validators.required ]],
-    contentFileCategoryTo: ['', [ Validators.required ]],
-  });
+    filesContentCategoryFrom: ['', [ Validators.required ]],
+    filesContentCategoryTo: ['', [ Validators.required ]],
+  }, { validators: this.fieldsNotEqual.bind(this) });
 
-
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  fieldsNotEqual(formGroup: FormGroup) {
+    const from = formGroup.controls['filesContentCategoryFrom'].value;
+    const to = formGroup.controls['filesContentCategoryTo'].value;
+    if (formGroup.controls['filesContentCategoryTo'].dirty) {
+      if (from === to) {
+        formGroup.controls['filesContentCategoryTo'].setErrors({'fieldsMatch': true});
+        return { fieldsMatch: true }
+      };
     }
-
+    formGroup.get('filesContentCategoryTo')?.setErrors(null);
     return null;
+  } 
+
+  get changeFileContentCategoryParams(): ChangeFileContentCategoryParams {
+    const actionParams: ChangeFileContentCategoryParams = {
+      filesContentCategoryFrom: this.changeFileContentCategoryForm.controls['filesContentCategoryFrom'].value,
+      filesContentCategoryTo: this.changeFileContentCategoryForm.controls['filesContentCategoryTo'].value,
+      itemIds: []
+    }
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -60,9 +54,8 @@ export class ChangeFileContentCategoryFormComponent {
       return;
     }
 
-    console.log(this.changeFileContentCategoryForm.value);
+    this.bs.changeFileContentCategory(this.changeFileContentCategoryParams).subscribe( actionResponse => console.log(actionResponse));
   }
-
 }
 
 // TO-DO

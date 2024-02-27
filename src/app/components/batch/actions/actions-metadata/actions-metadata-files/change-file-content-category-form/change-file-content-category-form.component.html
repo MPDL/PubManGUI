@@ -6,9 +6,9 @@
 
     <form [formGroup]="changeFileContentCategoryForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <div class="mb-3 row">
-        <label class="col-sm-4 col-form-label">Content category to be replaced</label>
-        <div class="col-sm-8">
-          <select class="form-control form-select" formControlName="contentFileCategoryFrom">
+        <label class="col-sm-3 col-form-label">Content category to be replaced</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="filesContentCategoryFrom">
             <option value="" selected="selected">-</option>
             <option *ngFor="let category of contentCategories" [ngValue]="category">
               {{category | titlecase}}</option>
@@ -17,9 +17,9 @@
       </div>
 
       <div class="mb-3 row">
-        <label class="col-sm-4 col-form-label">Replacing content category</label>
-        <div class="col-sm-8">
-          <select class="form-control form-select" formControlName="contentFileCategoryTo">
+        <label class="col-sm-3 col-form-label">Replacing content category</label>
+        <div class="col-sm-9">
+          <select class="form-control form-select" formControlName="filesContentCategoryTo">
             <option value="" selected="selected">-</option>
             <option *ngFor="let category of contentCategories" [ngValue]="category">
               {{category | titlecase}}</option>
@@ -28,8 +28,13 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-12">
-          <button type="submit" [disabled]="!changeFileContentCategoryForm.valid" class="btn btn-outline-secondary col-1 float-end">
+        <div class="offset-sm-3 col-sm-6">
+					<div *ngIf="changeFileContentCategoryForm.controls['filesContentCategoryTo'].hasError('fieldsMatch')" class="form-text text-danger">
+						Both fields can't have the same value.
+					</div>
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" [disabled]="!changeFileContentCategoryForm.valid" class="btn btn-outline-secondary col-4 float-end">
             Change
           </button>
         </div>

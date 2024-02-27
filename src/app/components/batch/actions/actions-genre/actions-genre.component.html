@@ -32,22 +32,26 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Degree type</label>
         <div class="col-sm-9">
-          <select class="form-control form-select" formControlName="degree" disable="disabled">
+          <select class="form-control form-select" formControlName="degreeType" disable="disabled">
             <option value="" selected="selected">-</option>
-            <option *ngFor="let degree of degreeTypes" [ngValue]="degree">{{degree | titlecase}}
+            <option *ngFor="let degreeType of degreeTypes" [ngValue]="degreeType">{{degreeType | titlecase}}
             </option>
           </select>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-12">
-          <button type="submit" [disabled]="!changeGenreForm.valid" class="btn btn-outline-secondary col-1 float-end">
+        <div class="offset-sm-3 col-sm-6">
+					<div *ngIf="changeGenreForm.controls['genreTo'].hasError('fieldsMatch')" class="form-text text-danger">
+						Both fields can't have the same value.
+					</div>
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" [disabled]="!changeGenreForm.valid" class="btn btn-outline-secondary col-4 float-end">
             Change
           </button>
         </div>
       </div>
     </form>
-
 
   </div>

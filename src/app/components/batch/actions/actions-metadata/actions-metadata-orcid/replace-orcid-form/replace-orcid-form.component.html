@@ -16,7 +16,7 @@
       </div>
       <div *ngIf="changeOrcidForm.get('orcid')?.value" class="col-sm-1">
         <a href="{{changeOrcidForm.get('orcid')?.value}}">
-          <img class="" height="16px" width="auto" src="assets/images/orcid.svg" />
+          <img class="" height="24px" width="auto" src="assets/images/orcid.svg" />
         </a>
       </div>
     </div>
@@ -29,10 +29,5 @@
       </div>
     </div>
   </form>
-
-  <hr>
-  <small>
-    <pre>{{ changeOrcidForm.value | json }}</pre>
-  </small>
 
 </div>

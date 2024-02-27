@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { IdType } from 'src/app/model/inge';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { AddSourceIdentiferParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-add-source-identifier-form',
@@ -16,43 +19,24 @@ import { IdType } from 'src/app/model/inge';
 })
 export class AddSourceIdentifierFormComponent {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
   sourceIdTypes = Object.keys(IdType);
 
-  // addSourceIdentifier(List<String> itemIds, String sourceNumber, IdentifierVO.IdType identifierType, String identifier, String userId, String token);
   public addSourceIdentifierForm: FormGroup = this.fb.group({
     sourceNumber: ['', [ Validators.required ]],
-    identifierType: ['', [ Validators.required ]],
-    identifier: ['', [ Validators.required ]],
+    sourceIdentifierType: ['', [ Validators.required ]],
+    sourceIdentifier: ['', [ Validators.required ]],
   });
 
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  get addSourceIdentifierParams(): AddSourceIdentiferParams {
+    const actionParams: AddSourceIdentiferParams = {
+      sourceNumber: this.addSourceIdentifierForm.controls['sourceNumber'].value,
+      sourceIdentifierType: this.addSourceIdentifierForm.controls['sourceIdentifierType'].value,
+      sourceIdentifier: this.addSourceIdentifierForm.controls['sourceIdentifier'].value,
+      itemIds: []
     }
-
-    return null;
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -61,7 +45,6 @@ export class AddSourceIdentifierFormComponent {
       return;
     }
 
-    console.log(this.addSourceIdentifierForm.value);
+    this.bs.addSourceIdentifer(this.addSourceIdentifierParams).subscribe( actionResponse => console.log(actionResponse));
   }
-
  }

@@ -18,7 +18,7 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Type of ID</label>
         <div class="col-sm-9">
-          <select class="form-control form-select" formControlName="identifierType">
+          <select class="form-control form-select" formControlName="sourceIdentifierType">
             <option value="" selected="selected">-</option>
             <option *ngFor="let type of sourceIdTypes" [ngValue]="type">
               {{type | titlecase}}</option>
@@ -29,14 +29,14 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Value of ID to be replaced</label>
         <div class="col-sm-9">
-          <input class="form-control" formControlName="identifierFrom">
+          <input class="form-control" formControlName="sourceIdentifierFrom">
         </div>
       </div>
 
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Value of replacing ID</label>
         <div class="col-sm-9">
-          <input class="form-control" formControlName="identifierTo">
+          <input class="form-control" formControlName="sourceIdentifierTo">
         </div>
       </div>
 

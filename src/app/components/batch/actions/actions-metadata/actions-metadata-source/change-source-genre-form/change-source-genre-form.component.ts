@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { SourceGenre } from 'src/app/model/inge';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeSourceGenreParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-source-genre-form',
@@ -16,42 +19,22 @@ import { SourceGenre } from 'src/app/model/inge';
 })
 export class ChangeSourceGenreFormComponent {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
   sourceGenres = Object.keys(SourceGenre);
 
-  // changeSourceGenre(List<String> itemIds, SourceVO.Genre sourceGenreFrom, SourceVO.Genre sourceGenreTo, String userId, String token);
   public changeSourceGenreForm: FormGroup = this.fb.group({
     sourceGenreFrom: ['', [Validators.required]],
     sourceGenreTo: ['', [Validators.required]],
   });
 
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  get changeSourceGenreParams(): ChangeSourceGenreParams {
+    const actionParams: ChangeSourceGenreParams = {
+      sourceGenreFrom: this.changeSourceGenreForm.controls['sourceGenreFrom'].value,
+      sourceGenreTo: this.changeSourceGenreForm.controls['sourceGenreTo'].value,
+      itemIds: []
     }
-
-    return null;
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -60,6 +43,6 @@ export class ChangeSourceGenreFormComponent {
       return;
     }
 
-    console.log(this.changeSourceGenreForm.value);
+    this.bs.changeSourceGenre(this.changeSourceGenreParams).subscribe( actionResponse => console.log(actionResponse));
   }
 }

@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { AddKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-add-keywords-form',
@@ -14,40 +17,18 @@ import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFor
 })
 export class AddKeywordsFormComponent {
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
-  // addKeywords(List<String> itemIds, String publicationKeywords, String userId, String token);
   public addKeywordsForm: FormGroup = this.fb.group({
     publicationKeywords: ['', [ Validators.required ]],
   });
 
-
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  get addKeywordsParams(): AddKeywordsParams {
+    const actionParams: AddKeywordsParams = {
+      publicationKeywords: this.addKeywordsForm.controls['publicationKeywords'].value,
+      itemIds: []
     }
-
-    return null;
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -56,7 +37,6 @@ export class AddKeywordsFormComponent {
       return;
     }
 
-    console.log(this.addKeywordsForm.value);
+    this.bs.addKeywords(this.addKeywordsParams).subscribe( actionResponse => console.log(actionResponse));
   }
-
 }

@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeExternalReferenceContentCategoryParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-external-reference-content-category-form',
@@ -17,40 +19,33 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
 
   contentCategories = Object.keys(ContentCategories);
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
-  // changeExternalReferenceContentCategory(List<String> itemIds, String externalReferencesContentCategoryFrom, String externalReferencesContentCategoryTo, String userId, String token);
   public changeExternalReferenceContentCategoryForm: FormGroup = this.fb.group({
     externalReferencesContentCategoryFrom: ['', [ Validators.required ]],
     externalReferencesContentCategoryTo: ['', [ Validators.required ]],
-  });
+  }, { validators: this.fieldsNotEqual.bind(this) });
 
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  fieldsNotEqual(formGroup: FormGroup) {
+    const from = formGroup.controls['externalReferencesContentCategoryFrom'].value;
+    const to = formGroup.controls['externalReferencesContentCategoryTo'].value;
+    if (formGroup.controls['externalReferencesContentCategoryTo'].dirty) {
+      if (from === to) {
+        formGroup.controls['externalReferencesContentCategoryTo'].setErrors({'fieldsMatch': true});
+        return { fieldsMatch: true }
+      };
     }
-
+    formGroup.get('externalReferencesContentCategoryTo')?.setErrors(null);
     return null;
+  } 
+
+  get changeExternalReferenceContentCategoryParams(): ChangeExternalReferenceContentCategoryParams {
+    const actionParams: ChangeExternalReferenceContentCategoryParams = {
+      externalReferencesContentCategoryFrom: this.changeExternalReferenceContentCategoryForm.controls['externalReferencesContentCategoryFrom'].value,
+      externalReferencesContentCategoryTo: this.changeExternalReferenceContentCategoryForm.controls['externalReferencesContentCategoryTo'].value,
+      itemIds: []
+    }
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -59,10 +54,8 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
       return;
     }
 
-    console.log(this.changeExternalReferenceContentCategoryForm.value);
+    this.bs.changeExternalReferenceContentCategory(this.changeExternalReferenceContentCategoryParams).subscribe( actionResponse => console.log(actionResponse));
   }
-
-
 
  }
 

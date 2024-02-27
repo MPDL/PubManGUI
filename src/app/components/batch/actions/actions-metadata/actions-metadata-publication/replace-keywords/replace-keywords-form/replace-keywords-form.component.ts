@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ReplaceKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-replace-keywords-form',
@@ -14,48 +17,27 @@ import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFor
 })
 export class ReplaceKeywordsFormComponent {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
-  // replaceAllKeywords(List<String> itemIds, String publicationKeywordsTo, String userId, String token);
-  public replaceAllKeywordsForm: FormGroup = this.fb.group({
+  public replaceKeywordsForm: FormGroup = this.fb.group({
     publicationKeywordsTo: ['', [ Validators.required ]],
   });
 
-  isValidField( form: FormGroup, field: string ): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray( formArray: FormArray, index: number ) {
-    return formArray.controls[index].errors
-        && formArray.controls[index].touched;
-  }
-
-  getFieldError( form: FormGroup, field: string ): string | null {
-    if ( !form.controls[field] ) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors) ) {
-      switch( key ) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${ errors['minlength'].requiredLength } characters required!`;
-      }
+  get replaceKeywordsParams(): ReplaceKeywordsParams {
+    const actionParams: ReplaceKeywordsParams = {
+      publicationKeywordsTo: this.replaceKeywordsForm.controls['publicationKeywordsTo'].value,
+      itemIds: []
     }
-
-    return null;
+    return actionParams;
   }
 
   onSubmit(): void {
-    if (this.replaceAllKeywordsForm.invalid) {
-      this.replaceAllKeywordsForm.markAllAsTouched();
+    if (this.replaceKeywordsForm.invalid) {
+      this.replaceKeywordsForm.markAllAsTouched();
       return;
     }
 
-    console.log(this.replaceAllKeywordsForm.value);
+    this.bs.replaceKeywords(this.replaceKeywordsParams).subscribe( actionResponse => console.log(actionResponse));
   }
 
  }

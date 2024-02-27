@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-local-tags-form',
@@ -14,42 +17,34 @@ import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFor
 })
 export class ChangeLocalTagsFormComponent {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
-
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
-    }
-
-    return null;
-  }
-
-  // changeLocalTags(List<String> itemIds, String localTagFrom, String localTagTo, String userId, String token);
   public changeLocalTagsForm: FormGroup = this.fb.group({
     localTagFrom: ['', [Validators.required]],
     localTagTo: ['', [Validators.required]],
-  }); 
+  }, { validators: this.fieldsNotEqual.bind(this) });
+
+  fieldsNotEqual(formGroup: FormGroup) {
+    const from = formGroup.controls['localTagFrom'].value;
+    const to = formGroup.controls['localTagTo'].value;
+    if (formGroup.controls['localTagTo'].dirty) {
+      if (from === to) {
+        formGroup.controls['localTagTo'].setErrors({'fieldsMatch': true});
+        return { fieldsMatch: true }
+      };
+    }
+    formGroup.get('localTagTo')?.setErrors(null);
+    return null;
+  } 
+
+  get changeLocalTagsParams(): ChangeLocalTagParams {
+    const actionParams: ChangeLocalTagParams = {
+      localTagFrom: this.changeLocalTagsForm.controls['localTagFrom'].value,
+      localTagTo: this.changeLocalTagsForm.controls['localTagTo'].value,
+      itemIds: []
+    }
+    return actionParams;
+  }
 
   onSubmit(): void {
     if (this.changeLocalTagsForm.invalid) {
@@ -57,8 +52,7 @@ export class ChangeLocalTagsFormComponent {
       return;
     }
 
-    console.log(this.changeLocalTagsForm.value);
+    this.bs.changeLocalTags(this.changeLocalTagsParams).subscribe( actionResponse => console.log(actionResponse));
     //this.changeLocalTags.reset();
   }
-
 }

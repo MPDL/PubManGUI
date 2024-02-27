@@ -18,7 +18,7 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Type of ID</label>
         <div class="col-sm-9">
-          <select class="form-control form-select" formControlName="identifierType">
+          <select class="form-control form-select" formControlName="sourceIdentifierType">
             <option value="" selected="selected">-</option>
             <option *ngFor="let type of sourceIdTypes" [ngValue]="type">
               {{type | titlecase}}</option>
@@ -29,7 +29,7 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Value of additional ID</label>
         <div class="col-sm-9">
-          <input class="form-control" formControlName="identifier">
+          <input class="form-control" formControlName="sourceIdentifier">
         </div>
       </div>
 

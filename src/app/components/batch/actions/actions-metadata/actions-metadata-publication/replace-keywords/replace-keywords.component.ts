@@ -39,32 +39,4 @@ export class ReplaceKeywordsComponent {
         this.keywordsReplaceMethod = method;
       });
   }
-
-  isValidField( form: FormGroup, field: string ): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray( formArray: FormArray, index: number ) {
-    return formArray.controls[index].errors
-        && formArray.controls[index].touched;
-  }
-
-  getFieldError( form: FormGroup, field: string ): string | null {
-    if ( !form.controls[field] ) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors) ) {
-      switch( key ) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${ errors['minlength'].requiredLength } characters required!`;
-      }
-    }
-
-    return null;
-  }
  }

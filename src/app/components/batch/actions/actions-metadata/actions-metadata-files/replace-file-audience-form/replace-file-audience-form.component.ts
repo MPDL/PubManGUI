@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, ReactiveFormsModule } from '@angular/forms';
 
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -17,42 +19,25 @@ export class ReplaceFileAudienceFormComponent {
 
   ous = Ous;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
-  // replaceFileAudience(List<String> itemIds, List<String> ipRange, String userId, String token);
   public replaceFileAudienceForm: FormGroup = this.fb.group({
     ipRanges: this.fb.array([])
   });
 
-  public ipRange: FormControl = new FormControl('', Validators.required);
+  public ipRange: FormControl = new FormControl('', [Validators.required] );
 
-
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
+  get replaceFileAudienceParams(): ReplaceFileAudienceParams {
+    const actionParams: ReplaceFileAudienceParams = {
+      audiences: this.getIDsOfIPRange(),
+      itemIds: []
+    }
+    return actionParams;
   }
 
   isValidFieldInArray(formArray: FormArray, index: number) {
     return formArray.controls[index].errors
       && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
-    }
-
-    return null;
   }
 
   onSubmit(): void {
@@ -61,9 +46,8 @@ export class ReplaceFileAudienceFormComponent {
       return;
     }
 
-    console.log(this.replaceFileAudienceForm.value);
+    this.bs.replaceFileAudience(this.replaceFileAudienceParams).subscribe( actionResponse => console.log(actionResponse));
   }
-
 
   // IP ranges
   get ipRangesToAdd() {
@@ -71,12 +55,12 @@ export class ReplaceFileAudienceFormComponent {
   }
 
   onAddToNewIPRanges(): void {
-    // Check no duplicates
-    console.log("new IP range " + this.ipRange.value);
-    if (this.ipRange.invalid) return;
-    console.log("new IP range " + this.ipRange.value);
     const range = this.ipRange.value;
-    console.log("new IP range " + range);
+    const added = this.ipRangesToAdd.controls.map(control => control.value);
+    const hasDuplicate = added.indexOf(range) != -1;
+    this.ipRange.setErrors( hasDuplicate ? { 'duplicated': true } : null);
+    if (this.ipRange.errors) return;
+
     this.ipRangesToAdd.push(
       this.fb.control(range, Validators.required)
     );
@@ -88,15 +72,14 @@ export class ReplaceFileAudienceFormComponent {
     this.ipRangesToAdd.removeAt(index);
   }
 
-  getIDsOfIPRange(): { value: {} } {
-
+  getIDsOfIPRange(): string[] {
     let ipRanges = [];
 
     for (let range of this.ipRangesToAdd.controls) {
       ipRanges.push(this.ous.find(x => x.label === range.value)!.id);
     }
 
-    return { value: { ipRanges } };
+    return ipRanges;
   }
 
 }

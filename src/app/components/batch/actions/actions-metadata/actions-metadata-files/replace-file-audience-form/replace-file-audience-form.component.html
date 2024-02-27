@@ -40,8 +40,13 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-12">
-          <button type="submit" [disabled]="!replaceFileAudienceForm.valid" class="btn btn-outline-secondary col-1 float-end">
+        <div class="offset-sm-3 col-sm-6">
+					<div *ngIf="ipRange.hasError('duplicated')" class="form-text text-danger">
+						Field can't be duplicated.
+					</div>
+      </div>
+      <div class="col-sm-3">
+          <button type="submit" [disabled]="!replaceFileAudienceForm.valid" class="btn btn-outline-secondary col-4 float-end">
             Assign
           </button>
         </div>

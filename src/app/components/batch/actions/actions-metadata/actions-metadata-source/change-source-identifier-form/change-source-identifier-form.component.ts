@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { IdType } from 'src/app/model/inge';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeSourceIdentifierParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-source-identifier-form',
@@ -17,45 +19,26 @@ import { IdType } from 'src/app/model/inge';
 })
 export class ChangeSourceIdentifierFormComponent { 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
   sourceIdTypes = Object.keys(IdType);
 
-  // changeSourceIdentifier(List<String> itemIds, String sourceNumber, IdentifierVO.IdType identifierType, String identifierFrom, String identifierTo, String userId, String token);
   public changeSourceIdentifierForm: FormGroup = this.fb.group({
     sourceNumber: ['', [ Validators.required ]],
-    identifierType: ['', [ Validators.required ]],
-    identifierFrom: ['', [ Validators.required ]],
-    identifierTo: ['', [ Validators.required ]], 
+    sourceIdentifierType: ['', [ Validators.required ]],
+    sourceIdentifierFrom: ['', [ Validators.required ]],
+    sourceIdentifierTo: ['', [ Validators.required ]], 
   });
 
-
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  get changeSourceIdentifierParams(): ChangeSourceIdentifierParams {
+    const actionParams: ChangeSourceIdentifierParams = {
+      sourceNumber: this.changeSourceIdentifierForm.controls['sourceNumber'].value,
+      sourceIdentifierType: this.changeSourceIdentifierForm.controls['sourceIdentifierType'].value,
+      sourceIdentifierFrom: this.changeSourceIdentifierForm.controls['sourceIdentifierFrom'].value,
+      sourceIdentifierTo: this.changeSourceIdentifierForm.controls['sourceIdentifierTo'].value,
+      itemIds: []
     }
-
-    return null;
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -64,6 +47,6 @@ export class ChangeSourceIdentifierFormComponent {
       return;
     }
 
-    console.log(this.changeSourceIdentifierForm.value);
+    this.bs.changeSourceIdentifier(this.changeSourceIdentifierParams).subscribe( actionResponse => console.log(actionResponse));
   }
 }

@@ -4,6 +4,7 @@ import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverDirective } from 'src/app/shared/directives/popover.directive';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'pure-item-list-element',
@@ -22,12 +23,37 @@ export class ItemListElementComponent {
   router = inject(Router);
 
   check_box = new FormControl(false);
+  check_box_subscription: Subscription = new Subscription();
 
   no_name = 'n/a';
 
   dummy_citation = `Eisner, D., Neher, E., Taschenberger, H., & Smith, G. (2023).
   Physiology of intracellular calcium buffering. Physiological Reviews, 103(4), 2767-2845.
   doi:10.1152/physrev.00042.2022. `
+
+  ngAfterViewInit() {
+    if (this.item?.objectId) {
+      const objectId = this.item.objectId;
+      this.check_box_subscription =
+        this.check_box.valueChanges.subscribe(val => {
+          const item_list = sessionStorage.getItem('item_list');
+          
+          let items: string[] = [];
+          if (item_list) {
+            items = JSON.parse(item_list);
+          }
+          if (val) {
+            if (items.indexOf(objectId) < 0) {
+              items.push(objectId);
+            }
+          } else {
+              items.splice(items.indexOf(objectId), 1);
+          }
+          
+          sessionStorage.setItem('item_list', JSON.stringify(items));
+        });
+    }
+  }
 
   get abstract() {
 

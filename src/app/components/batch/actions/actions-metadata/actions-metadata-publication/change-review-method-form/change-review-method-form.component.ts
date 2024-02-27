@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { ReviewMethod } from 'src/app/model/inge';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeReviewMethodParams } from 'src/app/components/batch/interfaces/actions-params';
+
 
 @Component({
   selector: 'pure-change-review-method-form',
@@ -18,40 +22,33 @@ export class ChangeReviewMethodFormComponent {
 
   reviewMethods = Object.keys(ReviewMethod);
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
-  // changeReviewMethod(List<String> itemIds, String reviewMethodFrom, String reviewMethodTo, String userId, String token);
   public changeReviewMethodForm: FormGroup = this.fb.group({
     reviewMethodFrom: ['', [ Validators.required ]],
     reviewMethodTo: ['', [ Validators.required ]],
-  });
+  }, { validators: this.fieldsNotEqual.bind(this) });
 
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  fieldsNotEqual(formGroup: FormGroup) {
+    const from = formGroup.controls['reviewMethodFrom'].value;
+    const to = formGroup.controls['reviewMethodTo'].value;
+    if (formGroup.controls['reviewMethodTo'].dirty) {
+      if (from === to) {
+        formGroup.controls['reviewMethodTo'].setErrors({'fieldsMatch': true});
+        return { fieldsMatch: true }
+      };
     }
-
+    formGroup.get('reviewMethodTo')?.setErrors(null);
     return null;
+  } 
+
+  get changeReviewMethodParams(): ChangeReviewMethodParams {
+    const actionParams: ChangeReviewMethodParams = {
+      reviewMethodFrom: this.changeReviewMethodForm.controls['reviewMethodFrom'].value,
+      reviewMethodTo: this.changeReviewMethodForm.controls['reviewMethodTo'].value,
+      itemIds: []
+    }
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -60,6 +57,6 @@ export class ChangeReviewMethodFormComponent {
       return;
     }
 
-    console.log(this.changeReviewMethodForm.value);
+    this.bs.changeReviewMethod(this.changeReviewMethodParams).subscribe( actionResponse => console.log(actionResponse));
   }
  }

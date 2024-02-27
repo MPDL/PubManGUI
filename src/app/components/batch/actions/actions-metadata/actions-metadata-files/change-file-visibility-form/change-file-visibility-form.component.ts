@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { Visibility } from '../../../../../../model/inge';
+import { Visibility } from 'src/app/model/inge';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeFileVisibilityParams } from 'src/app/components/batch/interfaces/actions-params';
+
 
 @Component({
   selector: 'pure-change-file-visibility-form',
@@ -16,42 +20,35 @@ import { Visibility } from '../../../../../../model/inge';
 })
 export class ChangeFileVisibilityFormComponent {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
   visibilityTypes = Object.keys(Visibility);
 
-  // changeFileVisibility(List<String> itemIds, Visibility filesVisibilityFrom, Visibility filesVisibilityTo, IpRange currentIp, String userId, String token);
   public changeFileVisibilityForm: FormGroup = this.fb.group({
     filesVisibilityFrom: ['', [Validators.required]],
     filesVisibilityTo: ['', [Validators.required]],
-  });
+  }, { validators: this.fieldsNotEqual.bind(this) });
 
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
+  fieldsNotEqual(formGroup: FormGroup) {
+    const from = formGroup.controls['filesVisibilityFrom'].value;
+    const to = formGroup.controls['filesVisibilityTo'].value;
+    if (formGroup.controls['filesVisibilityTo'].dirty) {
+      if (from === to) {
+        formGroup.controls['filesVisibilityTo'].setErrors({'fieldsMatch': true});
+        return { fieldsMatch: true }
+      };
     }
-
+    formGroup.get('filesVisibilityTo')?.setErrors(null);
     return null;
+}
+
+  get changeFileVisibilityParams(): ChangeFileVisibilityParams {
+    const actionParams: ChangeFileVisibilityParams = {
+      filesVisibilityFrom: this.changeFileVisibilityForm.controls['filesVisibilityFrom'].value,
+      filesVisibilityTo: this.changeFileVisibilityForm.controls['filesVisibilityTo'].value,
+      itemIds: []
+    }
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -60,6 +57,6 @@ export class ChangeFileVisibilityFormComponent {
       return;
     }
 
-    console.log(this.changeFileVisibilityForm.value);
+    this.bs.changeFileVisibility(this.changeFileVisibilityParams).subscribe( actionResponse => console.log(actionResponse));
   }
 }

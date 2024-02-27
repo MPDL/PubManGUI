@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, Type, inject } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { ControlType } from "src/app/components/item-edit/services/form-builder.service";
 import { IdType, IdentifierVO, PersonVO, OrganizationVO } from 'src/app/model/inge';
 import { ConePersonsDirective } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.directive';
 import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
-import { SelectorComponent } from "../../../../../../shared/components/selector/selector.component";
+import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
-import { RouterModule } from '@angular/router';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-replace-orcid-form',
@@ -24,13 +26,9 @@ import { RouterModule } from '@angular/router';
 })
 export class ReplaceOrcidFormComponent {
 
-  @Output() notice = new EventEmitter();
+  constructor(private fb: FormBuilder, private bs: BatchService, private cone: ConePersonsService) { 
+  }
 
-  cone = inject(ConePersonsService);
-
-  constructor(private fb: FormBuilder) { }
-
-  // changeOrcid(List<String> itemIds, String creatorId, String orcid, String userId, String token);
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
     completeName: this.fb.control(''),
     givenName: this.fb.control(''),
@@ -49,6 +47,15 @@ export class ReplaceOrcidFormComponent {
 
   });
 
+  get changeOrcidParams(): ReplaceOrcidParams {
+    const actionParams: ReplaceOrcidParams = {
+      creatorId: this.changeOrcidForm.controls['identifier'].value.id,
+      orcid: this.changeOrcidForm.controls['orcid'].value,
+      itemIds: []
+    }
+    return actionParams;
+  }
+
   updatePerson(event: any) {
     this.cone.resource(event.id).subscribe(
       (person: PersonResource) => {
@@ -58,7 +65,7 @@ export class ReplaceOrcidFormComponent {
           familyName: person.http_xmlns_com_foaf_0_1_family_name,
           identifier: {
             type: IdType.CONE,
-            id: person.id.substring(34)
+            id: person.id.substring(person.id.lastIndexOf('/') + 1),
           },
         };
 
@@ -75,41 +82,12 @@ export class ReplaceOrcidFormComponent {
       });
   }
 
-  isValidField(form: FormGroup, field: string): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
-  }
-
-  getFieldError(form: FormGroup, field: string): string | null {
-    if (!form.controls[field]) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${errors['minlength'].requiredLength} characters required!`;
-      }
-    }
-
-    return null;
-  }
-
   onSubmit(): void {
     if (this.changeOrcidForm.invalid) {
       this.changeOrcidForm.markAllAsTouched();
       return;
     }
 
-    console.log(this.changeOrcidForm.value);
+    this.bs.replaceOrcid(this.changeOrcidParams).subscribe( actionResponse => console.log(actionResponse));
   }
-
- }
+}

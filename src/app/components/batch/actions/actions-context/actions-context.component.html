@@ -27,15 +27,17 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
-        <button type="submit" [disabled]="!changeContextForm.valid" class="btn btn-outline-secondary col-1 float-end">
+      <div class="offset-sm-3 col-sm-6">
+					<div *ngIf="changeContextForm.controls['contextTo'].hasError('fieldsMatch')" class="form-text text-danger">
+						Both fields can't have the same value.
+					</div>
+      </div>
+      <div class="col-sm-3">
+        <button type="submit" [disabled]="!changeContextForm.valid" class="btn btn-outline-secondary col-4 float-end">
           Change
         </button>
       </div>
     </div>
   </form>
-  
-  <hr>
-  <small><pre>{{ changeContextForm.value | json }}</pre></small>
 
 </div>

@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ChangeKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-keywords-form',
@@ -14,40 +17,33 @@ import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFor
 })
 export class ChangeKeywordsFormComponent { 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private bs: BatchService) { }
 
-  // changeKeywords(List<String> itemIds, String publicationKeywordsFrom, String publicationKeywordsTo, String userId, String token);
   public changeKeywordsForm: FormGroup = this.fb.group({
     publicationKeywordsFrom: ['', [ Validators.required ]],
     publicationKeywordsTo: ['', [ Validators.required ]],
-  });
+  }, { validators: this.fieldsNotEqual.bind(this) });
 
-  isValidField( form: FormGroup, field: string ): boolean | null {
-    return form.controls[field].errors
-      && form.controls[field].touched;
-  }
-
-  isValidFieldInArray( formArray: FormArray, index: number ) {
-    return formArray.controls[index].errors
-        && formArray.controls[index].touched;
-  }
-
-  getFieldError( form: FormGroup, field: string ): string | null {
-    if ( !form.controls[field] ) return null;
-
-    const errors = form.controls[field].errors || {};
-
-    for (const key of Object.keys(errors) ) {
-      switch( key ) {
-        case 'required':
-          return 'A value is required!';
-
-        case 'minlength':
-          return `At least ${ errors['minlength'].requiredLength } characters required!`;
-      }
+  fieldsNotEqual(formGroup: FormGroup) {
+    const from = formGroup.controls['publicationKeywordsFrom'].value;
+    const to = formGroup.controls['publicationKeywordsTo'].value;
+    if (formGroup.controls['publicationKeywordsTo'].dirty) {
+      if (from === to) {
+        formGroup.controls['publicationKeywordsTo'].setErrors({'fieldsMatch': true});
+        return { fieldsMatch: true }
+      };
     }
-
+    formGroup.get('publicationKeywordsTo')?.setErrors(null);
     return null;
+  } 
+
+  get changeKeywordsParams(): ChangeKeywordsParams {
+    const actionParams: ChangeKeywordsParams = {
+      publicationKeywordsFrom: this.changeKeywordsForm.controls['publicationKeywordsFrom'].value,
+      publicationKeywordsTo: this.changeKeywordsForm.controls['publicationKeywordsTo'].value,
+      itemIds: []
+    }
+    return actionParams;
   }
 
   onSubmit(): void {
@@ -56,6 +52,6 @@ export class ChangeKeywordsFormComponent {
       return;
     }
 
-    console.log(this.changeKeywordsForm.value);
+    this.bs.changeKeywords(this.changeKeywordsParams).subscribe( actionResponse => console.log(actionResponse));
   }
 }
