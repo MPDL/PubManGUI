@@ -1372,7 +1372,6 @@ export interface ElasticSearchIndexField {
 export const createIndexMapFromElasticsearch = () => {
   let  result: ElasticSearchIndexFields = {};
   fillMap(item_mapping["mappings"]["properties"], result, "", []);
-  console.log(result);
   return result;
 }
 

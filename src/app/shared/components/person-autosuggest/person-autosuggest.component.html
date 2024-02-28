@@ -1,0 +1,15 @@
+
+<ng-template #personAutosuggestTemplate let-r="result" let-t="term">
+  <ngb-highlight [result]="r.value" [term]="t"
+                 [style.font-size]="(r.type==='alt') ? 'small' : ''"
+                 [style.padding-left]="(r.type==='alt') ? '20px' : ''"></ngb-highlight>
+</ng-template>
+
+
+<input class="form-control" type="text" [formControl]="formForPersonsName"
+       [ngbTypeahead]="suggestPersons"
+       (selectItem)="suggestPersonsSelector($event)"
+       [resultFormatter]="suggestPersonsFormatter"
+       [inputFormatter]="suggestPersonsFormatter"
+       [resultTemplate]="personAutosuggestTemplate"
+/>

@@ -23,18 +23,20 @@ import {KeywordSearchCriterion, TitleSearchCriterion} from "./criterions/Standar
 import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
 import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
 import {OrganizationsService} from "../../services/organizations.service";
-import {forkJoin, map, tap} from "rxjs";
+import {debounceTime, distinctUntilChanged, forkJoin, map, Observable, OperatorFunction, switchMap, tap} from "rxjs";
 import {OptionDirective} from "../../shared/components/selector/directives/option.directive";
 import {PureOusDirective} from "../../shared/components/selector/services/pure_ous/pure-ous.directive";
 import {SelectorComponent} from "../../shared/components/selector/selector.component";
-import {AutosuggestComponent} from "../../shared/components/autosuggest/autosuggest.component";
+import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
+import {OuAutosuggestComponent} from "../../shared/components/ou-autosuggest/ou-autosuggest.component";
+import {PersonAutosuggestComponent} from "../../shared/components/person-autosuggest/person-autosuggest.component";
 
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, AutosuggestComponent
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss'
@@ -517,6 +519,8 @@ cleanedScListToElasticSearchQuery(scList: SearchCriterion[], queries: (Object | 
   return resultedQueryBuilder;
 
 }
+
+
 
 
 }

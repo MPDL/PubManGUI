@@ -80,9 +80,11 @@
           "configurations": {
             "production": {
               "buildTarget": "PubManGUI:build:production"
+
             },
             "development": {
-              "buildTarget": "PubManGUI:build:development"
+              "buildTarget": "PubManGUI:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

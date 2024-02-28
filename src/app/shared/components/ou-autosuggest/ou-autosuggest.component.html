@@ -1,0 +1,5 @@
+<input class="form-control" type="text" [formControl]="formForOuName"
+       [ngbTypeahead]="suggestOus"
+       (selectItem)="suggestOusSelector($event)"
+       [resultFormatter]="suggestOusFormatter"
+       [inputFormatter]="suggestOusFormatter"/>

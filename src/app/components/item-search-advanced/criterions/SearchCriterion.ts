@@ -21,6 +21,12 @@ export abstract class SearchCriterion extends FormGroup<any> {
     this.addControl("content", this.content);
   }
 
+  public parseContentIn(content: Object) {
+    Object.entries(content).forEach(([key, val]) => {
+      this.content.get(key)?.setValue(val);
+    })
+  }
+
 
   public abstract getElasticSearchNestedPath(): string | undefined;
 

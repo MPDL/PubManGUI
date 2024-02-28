@@ -111,7 +111,8 @@
                       </select>
                     </div>
                     <div class="col-6">
-                      <input class="form-control" type="text" formControlName="text"/>
+                      <pure-person-autosuggest [formForPersonsName] ="$any(currentFormGroup).content.get('text')"
+                                           [formForPersonsId]="$any(currentFormGroup).content.get('hidden')"/>
                     </div>
                     <div class="col-3">
                       <input class="form-control" type="text" formControlName="hidden"/>
@@ -122,11 +123,25 @@
 
                   <div class="row" formGroupName="content">
                     <div class="col-6">
+                      <pure-ou-autosuggest [formForOuName]="$any(currentFormGroup).content.get('text')"
+                                           [formForOuId]="$any(currentFormGroup).content.get('hidden')"/>
+                      <!--
+                      <input class="form-control" type="text" formControlName="text"
+                             [ngbTypeahead]="$any(currentFormGroup).suggestOus"
+                             (selectItem)="$any(currentFormGroup).suggestOusSelector($event)"
+                             [resultFormatter]="$any(currentFormGroup).suggestOusFormatter"
+                             [inputFormatter]="$any(currentFormGroup).suggestOusFormatter"/>
+                             -->
+                    </div>
+
+                    <!--
+                    <div class="col-6">
                       <pure-autosuggest [control]="$any(currentFormGroup.get(['content', 'text']))" purePureOus placeholder="search ous ..."
                                      (notice)="select_ou($event, currentFormGroup)">
                         <ng-container *pureOption="let item">{{ item.text }}</ng-container>
                       </pure-autosuggest>
                     </div>
+                    -->
                     <div class="col-3">
                       <input class="form-control" type="text" formControlName="hidden"/>
                     </div>

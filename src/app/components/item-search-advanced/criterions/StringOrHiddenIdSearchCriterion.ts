@@ -6,7 +6,18 @@ import {inject} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {OrganizationsService} from "../../../services/organizations.service";
 import {AffiliationDbVO} from "../../../model/inge";
-import {catchError, firstValueFrom, forkJoin, lastValueFrom, map, Observable, of, tap} from "rxjs";
+import {
+  catchError,
+  debounceTime, distinctUntilChanged,
+  firstValueFrom,
+  forkJoin,
+  lastValueFrom,
+  map,
+  Observable,
+  of,
+  OperatorFunction, switchMap,
+  tap
+} from "rxjs";
 
 
 export abstract class StringOrHiddenIdSearchCriterion extends SearchCriterion {
@@ -23,10 +34,11 @@ export abstract class StringOrHiddenIdSearchCriterion extends SearchCriterion {
   }
 
   override isEmpty(): boolean {
-    const from: string = this.content.get('text')?.value;
-    const to: string = this.content.get('hidden')?.value;
+    const text: string = this.content.get('text')?.value;
+    const hidden: string = this.content.get('hidden')?.value;
 
-    return ((!from) || from.trim()==="") && ((!to) || to.trim()==="");
+    //console.log("isEmtpy " + text + hidden)
+    return ((!text) || !text.trim()) && ((!hidden) || !hidden.trim());
   }
 
 
