@@ -1,10 +1,9 @@
 <div [formGroup]="creator_form" class="">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm ms-sm-3" [ngClass]="{'border-bottom': index !== index_length -1}">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <label for="type" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2 ">type</label>
-                <div class="col-sm">
-                    <label for="creator_type" class="visually-hidden">type</label>
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
+                <div class="col-sm-2">
+                    <label for="creator_type" class="col-form-label col-form-label-sm text-end pe-2">type</label>
                     <select id="creator_type" class="form-select form-select-sm" formControlName="type"
                         (change)="type_change(type.value)">
                         <option [value]="null" selected disabled>type</option>
@@ -13,9 +12,8 @@
                         }
                     </select>
                 </div>
-                <label for="role" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">role</label>
-                <div class="col-sm">
-                    <label for="creator_role" class="visually-hidden">role</label>
+                <div class="col-sm-2">
+                    <label for="creator_role" class="col-form-label col-form-label-sm text-end pe-2">role</label>
                     <select id="creator_role" class="form-select form-select-sm" formControlName="role">
                         <option [value]="null" selected disabled>role</option>
                         @for (r of creator_roles; track r) {
@@ -23,55 +21,65 @@
                         }
                     </select>
                 </div>
-            </div>
-            @if (type.value === 'ORGANIZATION') {
-            <ng-container formGroupName="organization">
-                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                    <label for="name" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">name</label>
-                    <div class="col-sm">
-                        <pure-selector [form]="organization" [control_name]="'name'" (notice)="updateOU($event)"
-                            purePureOus placeholder="search ous ...">
-                            <ng-container *pureOption="let item">{{ item.text }}</ng-container>
-                        </pure-selector>
-                    </div>
+                @if (type.value === 'ORGANIZATION') {
+                <div class="col-sm-2" formGroupName="organization">
+                    <label for="name" class="col-form-label col-form-label-sm text-end pe-2">name</label>
+                    <pure-selector [form]="organization" [control_name]="'name'" (notice)="updateOU($event)" purePureOus
+                        placeholder="search ous ...">
+                        <ng-container *pureOption="let item">{{ item.text }}</ng-container>
+                    </pure-selector>
                 </div>
-            </ng-container>
-            }
-            @if (type.value === 'PERSON') {
-            <ng-container formGroupName="person">
-                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                    <label for="givenName" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">given</label>
-                    <div class="col-sm">
+                }
+                @if (type.value === 'PERSON') {
+                <ng-container formGroupName="person">
+                    <div class="col-sm-3">
+                        <label for="givenName" class="col-form-label col-form-label-sm text-end pe-2">given</label>
                         <input type="text" class="form-control form-control-sm" id="givenName"
                             formControlName="givenName">
                     </div>
-                    <label for="familyName"
-                        class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">family</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control form-control-sm" id="familyName"
-                            formControlName="familyName">
-                    </div>
-                </div>
-                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                    <label for="cone" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">cone</label>
-                    <div class="col-sm">
-                        <pure-selector [form]="person" [control_name]="'completeName'" (notice)="updatePerson($event)"
+                    <div class="col-sm-3">
+                        <label for="familyName" class="col-form-label col-form-label-sm text-end pe-2">family</label>
+                        <!--<input type="text" class="form-control form-control-sm" id="familyName"
+                            formControlName="familyName">-->
+                        <pure-selector [form]="person" [control_name]="'familyName'" (notice)="updatePerson($event)"
                             pureConePersons placeholder="search cone ...">
                             <ng-container *pureOption="let item">{{ item.text }}</ng-container>
                         </pure-selector>
                     </div>
-                </div>
-                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                    <label for="orcid" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">orcid</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control form-control-sm" id="orcid" formControlName="orcid">
+                    @if(person.controls.identifier.controls.type.value == 'CONE') {
+                    <div class="col-sm-auto">
+                        <span id="coneIcon" class="material-symbols-outlined"
+                            title="{{person.controls.identifier.controls.id.value}}">
+                            fingerprint
+                        </span>
                     </div>
-                    <label for="id" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">id</label>
-                    <div class="col-sm">
-                        <pure-identifier-form [identifier_form]="identifier" [multi]="false"
-                            (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
+                    }
+                    @if(person.controls.orcid.value) {
+                    <div class="col-sm-auto">
+                        <span id="coneIcon" class="material-symbols-outlined" title="{{person.controls.orcid.value}}">
+                            <span class="material-symbols-outlined">
+                                remember_me
+                            </span>
+                        </span>
                     </div>
-                </div>
+                    }
+                    <!-- Just in case 
+                        <label for="orcid" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">orcid</label>
+                        <div class="col-sm">
+                            <input type="text" class="form-control form-control-sm" id="orcid" formControlName="orcid">
+                        </div>
+                        <label for="id" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">id</label>
+                        <div class="col-sm">
+                            <pure-identifier-form [identifier_form]="identifier" [multi]="false"
+                                (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
+                        </div>
+                        -->
+                </ng-container>
+                }
+            </div>
+
+            @if (type.value === 'PERSON') {
+            <ng-container formGroupName="person">
                 <div formArrayName="organizations">
                     @for (pou of organizations.controls; track pou; let i = $index) {
                     <div>
@@ -91,10 +99,10 @@
                         </div>
                     </div>
                     } @empty {
-                        <div class="col-sm offset-sm-1">
-                            <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add organization'"
-                                (notice)="add_remove_person_ou($event)"></pure-add-remove-buttons>
-                        </div>
+                    <div class="col-sm offset-sm-1">
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add organization'"
+                            (notice)="add_remove_person_ou($event)"></pure-add-remove-buttons>
+                    </div>
                     }
                 </div>
             </ng-container>
