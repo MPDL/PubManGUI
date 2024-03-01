@@ -15,8 +15,16 @@
         .accordion-body {
             background: #{$mpg-light-gray};
 
-            input {
-                background: white;
+            input{
+                background-color: white;
+            }
+            
+            textarea {
+                background-color: white;
+            }
+
+            select {
+                background-color: white;
             }
         }
     }
