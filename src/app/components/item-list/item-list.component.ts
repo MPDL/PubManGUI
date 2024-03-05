@@ -69,10 +69,11 @@ export class ItemListComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
-      // required to work immediately. 
+      // required to work immediately.
       startWith(this.router)
     ).subscribe(() => {
       const query = history.state.query;
+      console.log(query)
       if (query) {
         this.current_query = this.update_query(query);
         this.items(this.current_query);

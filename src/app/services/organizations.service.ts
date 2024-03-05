@@ -1,14 +1,24 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import { AffiliationDbVO, BasicDbRO, MdsOrganizationalUnitDetailsVO } from '../model/inge';
-import { IngeCrudService } from './inge-crud.service';
+import {IngeCrudService, SearchResult} from './inge-crud.service';
+import {HttpClient} from "@angular/common/http";
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationsService extends IngeCrudService{
+
+  static instance: OrganizationsService;
   ousPath:string = '/ous';
-  ingeCrudService: IngeCrudService = inject(IngeCrudService);
+  //ingeCrudService: IngeCrudService = inject(IngeCrudService);
+
+  constructor(httpClient: HttpClient) {
+    super(httpClient);
+    OrganizationsService.instance = this;
+  }
 
   getOrganization(organizationId: string, token?: string): Observable<AffiliationDbVO>{
     const path = this.ousPath + '/' + organizationId;
@@ -25,7 +35,7 @@ export class OrganizationsService extends IngeCrudService{
 
   updateOrganization(organization: AffiliationDbVO, token: string): Observable<AffiliationDbVO> {
     const path = this.ousPath + '/' + organization.objectId
-    
+
     return this.put(path, organization, token);
   }
 
@@ -97,5 +107,20 @@ export class OrganizationsService extends IngeCrudService{
     const body = ou.lastModificationDate;
 
     return this.put(path, body, token);
+  }
+
+  getSuccessors(id: string): Observable<SearchResult<AffiliationDbVO>> {
+    const query = {
+      query: {
+        term: {
+          "predecessorAffiliations.objectId": {
+            value: id
+          }
+        }
+      }
+    }
+
+    return this.search(this.ousPath, query);
+
   }
 }

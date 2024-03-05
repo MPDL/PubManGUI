@@ -9,6 +9,7 @@ import { SelectorComponent } from 'src/app/shared/components/selector/selector.c
 import { ClickOutsideDirective } from 'src/app/shared/directives/click-outside.directive';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { CreatorRole, IdType, MdsPublicationGenre } from 'src/app/model/inge';
+import {OrganizationSearchCriterion} from "../../item-search-advanced/criterions/StringOrHiddenIdSearchCriterion";
 
 // const valid_date_old = /^((?:19|20)[0-9][0-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/;
 export const valid_date = /^((?:19|20)[0-9][0-9])(?:(?:-(0[1-9]|1[012]))(?:-(0[1-9]|[12][0-9]|3[01]))?)?$/;

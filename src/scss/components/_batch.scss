@@ -9,7 +9,7 @@
         .accordion {
 
             .accordion-item {
-
+/*
                 .accordion-header {
                     color: var(--accent-color-contrast);
                     background-color: var(--accent-color-1);
@@ -19,9 +19,9 @@
                     color: var(--accent-color-contrast);
                     background-color: var(--accent-color-1) !important;
                 }
-
+*/
                 .accordion-body {
-                    background: var(--main-content-background-color);
+                    background-color: var(--main-content-background-color);
                 }
             }
 

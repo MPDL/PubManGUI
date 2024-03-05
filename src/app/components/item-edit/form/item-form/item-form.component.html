@@ -1,9 +1,5 @@
 <div class="container-fluid">
         <form [formGroup]="form" (ngSubmit)="submit()">
-            <!--<div class="row g-1 mb-1">-->
-            <pure-metadata-form [meta_form]="metadata_form" (notice)="handleNotification($event)">
-            </pure-metadata-form>
-            <!--</div>-->
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center" formGroupName="context">
                 <label for="context" class="col-sm-2 col-form-label col-form-label-sm">context</label>
                 <div class="col-sm">
@@ -21,6 +17,11 @@
                     </div>
                 </div>
             </div>
+            <!--<div class="row g-1 mb-1">-->
+            <pure-metadata-form [meta_form]="metadata_form" (notice)="handleNotification($event)">
+            </pure-metadata-form>
+            <!--</div>-->
+            
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                 <label for="title" class="col-sm-2 col-form-label col-form-label-sm">message</label>
                 <div class="col-sm">

@@ -1,0 +1,266 @@
+<div class="container">
+  <form [formGroup]="searchForm" (ngSubmit)="search()">
+    <div formArrayName="fields">
+      @for (currentFormGroup of fields.controls; track currentFormGroup; let i = $index; ) {
+
+        <div [formGroupName]="i">
+          <!--
+          <pure-search-base-criterion [searchForm]=searchForm [criterion]=criterion [index]=i (addSearchCriterion)="addSearchCriterion()" />
+    -->
+          <div class="row mt-1 w-100 align-items-center" style="margin-left: {{$any(currentFormGroup).level * 15}}px">
+            @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.OPERATOR) {
+              @if (i != 0) {
+
+                <!--Operator -->
+                <div class="col-2" formGroupName="content">
+                  <select class="form-select form-select-sm" formControlName="operator"
+                          (change)="changeOperator(i, t.value)" #t>
+                    <option value="and">AND</option>
+                    <option value="or">OR</option>
+                    <option value="not">NOT</option>
+                  </select>
+                </div>
+
+              }
+            } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PARENTHESIS) {
+              <div class="col" >
+              <span>{{ $any(currentFormGroup).type === 'opening_parenthesis' ? '(' : ')' }}</span>
+                <button type="button" class="btn btn-sm btn-outline-dark" (click)="removeParenthesis(i)">
+                  <span class="bi bi-x"></span>
+                </button>
+              </div>
+
+            } @else {
+
+
+              <div class="col-2">
+                <div class="row">
+                  <div class="col-1">
+
+                    @if (currentlyOpenedParenthesis === undefined) {
+                      <button type="button" class="btn btn-sm btn-outline-dark"
+                              [disabled]="currentlyOpenedParenthesis!==undefined" (click)="addOpeningParenthesis(i)">
+                        (
+                      </button>
+                    }
+                  </div>
+                  <div class="col">
+                    <select class="form-select" formControlName="type" (change)="changeType(i, t.value)" #t>
+                      <option value="title">title</option>
+                      <option value="keyword">keyword</option>
+                      <option value="classification">classification</option>
+                      <option value="anyField">anyField</option>
+                      <option value="fulltext">fulltext</option>
+                      <option value="person">person</option>
+                      <option value="orcid">orcid</option>
+                      <option value="organization">organization</option>
+                      <option value="orcid">orcid</option>
+                      <optgroup label="Dates">
+                        <option value="anyDate">anyDate</option>
+                        <option value="publishedInPrintDate">publishedInPrintDate</option>
+                        <option value="publishedDate">publishedDate</option>
+                        <option value="acceptedDate">acceptedDate</option>
+                        <option value="submittedDate">submittedDate</option>
+                        <option value="modifiedDate">modifiedDate</option>
+                        <option value="createdDate">createdDate</option>
+                      </optgroup>
+                      <optgroup label="Event">
+                        <option value="eventTitle">eventTitle</option>
+                        <option value="eventStartDate">eventStartDate</option>
+                        <option value="eventEndDate">eventEndDate</option>
+                      </optgroup>
+                      <option value="genre">genre</option>
+                      <option value="reviewMethod">reviewMethod</option>
+                      <option value="language">language</option>
+                      <option value="source">source</option>
+                      <option value="journal">journal</option>
+                      <option value="localTag">localTag</option>
+                      <option value="identifier">identifier</option>
+                      <option value="collection">collection</option>
+                      <option value="projectInfo">projectInfo</option>
+                    </select>
+                    <!--Type -->
+                    <!--
+                    <select class="form-select form-select-sm" formControlName="type" (change)="changeType(i, t.value)"
+                            #t>
+                      @for (searchType of searchTypeKeys; track searchType) {
+                        <option value="{{searchType}}">
+                          {{ searchType }}
+                        </option>
+                      }
+                    </select>
+                    -->
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Input -->
+              <div class="col">
+                @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.STANDARD) {
+                  <div formGroupName="content">
+                    <input class="form-control" type="text" formControlName="text"/>
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PERSON) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                      <select class="form-select form-select-sm" formControlName="role">
+                        @for(val of personOptions; track val) {
+                          <option [value]="val">
+                            {{ val }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                    <div class="col">
+                      <pure-person-autosuggest [formForPersonsName] ="$any(currentFormGroup).content.get('text')"
+                                           [formForPersonsId]="$any(currentFormGroup).content.get('hidden')"/>
+                    </div>
+                    <!--
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="hidden"/>
+                    </div>
+                    -->
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ORGANIZATION) {
+
+                  <div class="row" formGroupName="content">
+                    <div class="col">
+                      <pure-ou-autosuggest [formForOuName]="$any(currentFormGroup).content.get('text')"
+                                           [formForOuId]="$any(currentFormGroup).content.get('hidden')"/>
+                    </div>
+
+                    <!--
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="hidden"/>
+                    </div>
+                    -->
+                    <div class="col-3 form-check">
+                      <input id="predecessorsAndSuccessors" class="form-check-input" type="checkbox"
+                             formControlName="includePredecessorsAndSuccessors"/>
+                      <label class="form-check-label" for="predecessorsAndSuccessors">
+                        Include predecessors and successors
+                      </label>
+                    </div>
+                  </div>
+
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.DATE) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="from" placeholder="YYYY-MM-DD"/>
+                    </div>
+                    <div class="col-3">
+                      <input class="form-control" type="text" formControlName="to" placeholder="YYYY-MM-DD"/>
+                    </div>
+                  </div>
+
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.IDENTIFIER) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                    <select class="form-select form-select-sm" formControlName="identifierType">
+                      @for(idType of identifierOptions; track idType) {
+                        <option [value]="idType">
+                          {{ idType }}
+                        </option>
+                        }
+                    </select>
+                    </div>
+                    <div class="col-6">
+                    <input class="form-control" type="text" formControlName="text"/>
+                    </div>
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CLASSIFICATION) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-3">
+                      <select class="form-select form-select-sm" formControlName="classificationType">
+                        <option value="todo">TODO</option>
+                        <!--
+                        @for(classificationType of identifierOptions; track classificationType) {
+                          <option [value]="classificationType">
+                            {{ idType }}
+                          </option>
+                        }
+                        -->
+                      </select>
+                    </div>
+                    <div class="col-6">
+                      <input class="form-control" type="text" formControlName="text"/>
+                    </div>
+                  </div>
+                }
+                @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
+                  <div class="row" formGroupName="content">
+                    <div class="col-6">
+                      <select class="form-select form-select-sm" formControlName="text">
+                        @for(val of $any(currentFormGroup).getValues(); track val) {
+                          <option [value]="val">
+                            {{ val }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <div class="col-1 ms-auto">
+                <!-- WARNING!!!-->
+                <!-- if type is omitted, submit will trigger remove ... -->
+                <button type="button" class="btn btn-sm" (click)="addSearchCriterion(i, $any(currentFormGroup))">
+                  <strong>+</strong>
+                </button>
+                <button type="button" class="btn btn-sm" (click)="removeSearchCriterion(i)">
+                  <strong>-</strong>
+                </button>
+              </div>
+
+
+            }
+
+          </div>
+
+          <!-- Possible closing parenthesis-->
+          @if(possibleCriterionsForClosingParenthesisMap.includes($any(currentFormGroup))) {
+          <div class="row" style="margin-left: {{($any(currentFormGroup).level-1) * 15}}px">
+            <div class="col-1">
+                <button type="button" class="btn btn-sm btn-outline-dark" (click)="addClosingParenthesis(i)">
+                  )
+                </button>
+            </div>
+          </div>
+          }
+        </div>
+
+      }
+
+      <div class="btn-grid mt-2">
+
+        <button type="button" class="btn btn-sm btn-outline-primary"
+                [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="search()">
+          search
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-info"
+                [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="show_form()">
+          show form
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-dark"
+                [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="show_query()">
+          show query
+        </button>
+
+      </div>
+    </div>
+  </form>
+
+  @if (result) {
+    <pre>{{ result | json }}</pre>
+  }
+  @if (query) {
+    <pre>{{ query | json }}</pre>
+  }
+</div>

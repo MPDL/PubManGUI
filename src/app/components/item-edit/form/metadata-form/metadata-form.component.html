@@ -1,156 +1,249 @@
 <div [formGroup]="meta_form">
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-        <label for="title" class="col-sm-2 col-form-label col-form-label-sm">title</label>
-        <div class="col-sm">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm">
-                    <input type="text" class="form-control form-control-sm" id="title" name="title"
-                        formControlName="title">
+
+    <div class="accordion" id="accordionPanelsMetadata">
+        <!--GROUP Standard-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodyStandardGroup" aria-expanded="true"
+                    aria-controls="accordionBodyStandardGroup">
+                    Standard Group
+                </button>
+            </h2>
+            <div id="accordionBodyStandardGroup" class="accordion-collapse collapse show">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                        <label for="genre" class="col-sm-2 col-form-label col-form-label-sm">genre</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm">
+                                    <select id="genre" class="form-select form-select-sm" formControlName="genre"
+                                        (change)="genre_change($event)">
+                                        <option [value]="null" selected disabled>genre</option>
+                                        @for (g of genre_types; track g) {
+                                        <option [value]="g">{{g}}</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-sm-1">
+                                    <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TODO File upload for thumbnail -->
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label class="col-sm-2 col-form-label col-form-label-sm">TODO: File Upload for Thumbnail</label>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label class="col-sm-2 col-form-label col-form-label-sm">Thesis</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm-2">
+                                    <label class="col-form-label col-form-label-sm">Degree</label>
+                                    <input type="text" class="form-control form-control-sm" formControlName="degree">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                        <label for="title" class="col-sm-2 col-form-label col-form-label-sm">Title</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm">
+                                    <input type="text" class="form-control form-control-sm" id="title" name="title"
+                                        formControlName="title">
+                                </div>
+                                <div class="col-sm-1">
+                                    <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label for="alt_titles" class="col-sm-2 col-form-label col-form-label-sm">Alternative
+                            Titles</label>
+                        <div class="col-sm">
+                            <ng-container formArrayName="alternativeTitles">
+                                @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
+                                <ng-container [formGroupName]="ati">
+                                    <pure-alt-title-form [alt_title_form]="alt" [index]="ati"
+                                        [index_length]="alternativeTitles.controls.length"
+                                        (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
+                                </ng-container>
+                                } @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add title'"
+                                    (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    test test
+                </div>
+            </div>
+        </div>
+
+
+        <!--GROUP Creator-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodyCreatorGroup" aria-expanded="true"
+                    aria-controls="accordionBodyCreatorGroup">
+                    Creator Group
+                </button>
+            </h2>
+            <div id="accordionBodyCreatorGroup" class="accordion-collapse collapse show">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label for="creatures" class="col-sm-2 col-form-label col-form-label-sm">creators</label>
+                        <div class="col-sm">
+                            <!-- TODO Add many -->
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                                <label for="creatures" class="col-sm-2 col-form-label col-form-label-sm">TDOO: add many</label>
+                            </div>
+                            <ng-container formArrayName="creators">
+                                @for (creature of creators.controls; track creature; let ci = $index) {
+                                <ng-container [formGroupName]="ci">
+                                    <pure-creator-form [creator_form]="creature" [index]="ci"
+                                        [index_length]="creators.length"
+                                        (notice)="handleCreatorNotification($event)"></pure-creator-form>
+                                </ng-container>
+                                } @empty {
+                                <div class="col-sm">
+                                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add creator'"
+                                        (notice)="handleCreatorNotification($event)"></pure-add-remove-buttons>
+                                </div>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="alt_titles" class="col-sm-2 col-form-label col-form-label-sm">alternative titles</label>
-        <div class="col-sm">
-            <ng-container formArrayName="alternativeTitles">
-                @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
-                <ng-container [formGroupName]="ati">
-                    <pure-alt-title-form [alt_title_form]="alt" [index]="ati"
-                        [index_length]="alternativeTitles.controls.length"
-                        (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
-                </ng-container>
-                } @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add title'"
-                    (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
-                }
-            </ng-container>
-        </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-        <label for="genre" class="col-sm-2 col-form-label col-form-label-sm">genre</label>
-        <div class="col-sm">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm">
-                    <select id="genre" class="form-select form-select-sm" formControlName="genre"
-                        (change)="genre_change($event)">
-                        <option [value]="null" selected disabled>genre</option>
-                        @for (g of genre_types; track g) {
-                        <option [value]="g">{{g}}</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="creatures" class="col-sm-2 col-form-label col-form-label-sm">creators</label>
-        <div class="col-sm">
-            <ng-container formArrayName="creators">
-                @for (creature of creators.controls; track creature; let ci = $index) {
-                <ng-container [formGroupName]="ci">
-                    <pure-creator-form [creator_form]="creature" [index]="ci" [index_length]="creators.length"
-                        (notice)="handleCreatorNotification($event)"></pure-creator-form>
-                </ng-container>
-                } @empty {
-                <div class="col-sm">
-                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add creator'"
-                        (notice)="handleCreatorNotification($event)"></pure-add-remove-buttons>
-                </div>
-                }
-            </ng-container>
-        </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label class="col-sm-2 col-form-label col-form-label-sm">Dates</label>
-        <div class="col-sm">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-2">
-                    <label class="col-form-label col-form-label-sm">Date Accepted</label>
-                    <input type="text" class="form-control form-control-sm" formControlName="dateAccepted">
-                </div>
-                <div class="col-sm-2">
-                    <label class="col-form-label col-form-label-sm">Date Created</label>
-                    <input type="text" class="form-control form-control-sm" formControlName="dateCreated">
-                </div>
-                <div class="col-sm-2">
-                    <label class="col-form-label col-form-label-sm">Date Modified</label>
-                    <input type="text" class="form-control form-control-sm" formControlName="dateModified">
+
+        <!--GROUP Dates-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodyDatesGroup" aria-expanded="true"
+                    aria-controls="accordionBodyDatesGroup">
+                    Dates Group
+                </button>
+            </h2>
+            <div id="accordionBodyDatesGroup" class="accordion-collapse collapse show">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label class="col-sm-2 col-form-label col-form-label-sm">Dates</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm-2">
+                                    <label class="col-form-label col-form-label-sm">Date Published in Print</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        formControlName="datePublishedInPrint">
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="col-form-label col-form-label-sm">Date Published Online</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        formControlName="datePublishedOnline">
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="col-form-label col-form-label-sm">Date Accepted</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        formControlName="dateAccepted">
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="col-form-label col-form-label-sm">Date Submitted</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        formControlName="dateSubmitted">
+                                </div>
+                            </div>
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm-2">
+                                    <label class="col-form-label col-form-label-sm">Date Created</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        formControlName="dateCreated">
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="col-form-label col-form-label-sm">Date Modified</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        formControlName="dateModified">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-2">
-                    <label class="col-form-label col-form-label-sm">Date Published in Print</label>
-                    <input type="text" class="form-control form-control-sm" formControlName="datePublishedInPrint">
-                </div>
-                <div class="col-sm-2">
-                    <label class="col-form-label col-form-label-sm">Date Published Online</label>
-                    <input type="text" class="form-control form-control-sm" formControlName="datePublishedOnline">
-                </div>
-                <div class="col-sm-2">
-                    <label class="col-form-label col-form-label-sm">Date Published Online</label>
-                    <input type="text" class="form-control form-control-sm" formControlName="dateSubmitted">
-                </div>
-            </div>
-            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-            </div>
         </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label class="col-sm-2 col-form-label col-form-label-sm">Thesis</label>
-        <div class="col-sm">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-2">
-                    <label class="col-form-label col-form-label-sm">Degree</label>
-                    <input type="text" class="form-control form-control-sm" formControlName="degree">
-                </div>
-            </div>
-            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-            </div>
-        </div>
-    </div>
-    <pure-event-form [event_form]="event"></pure-event-form>
-    <pure-legal-case-form [legal_case_form]="legalCase"></pure-legal-case-form>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label class="col-sm-2 col-form-label col-form-label-sm">Identifiers</label>
-        <div class="col-sm">
-            <ng-container formArrayName="identifiers">
-                @for (identifier of identifiers.controls; track identifier; let identifierIndex = $index) {
-                <ng-container [formGroupName]="identifierIndex">
-                    <pure-identifier-form [identifier_form]="identifier" [index]="identifierIndex" [multi]="true"
-                        [index_length]="identifiers.controls.length"
-                        (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
-                </ng-container>
-                }
-                @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add identifier'"
-                    (notice)="handleIdentifierNotification($event)"></pure-add-remove-buttons>
-                }
-            </ng-container>
-        </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-        <label for="languages" class="col-sm-2 col-form-label col-form-label-sm">Languages</label>
-        <div class="col-sm" id="languages">
-            <ng-container formArrayName="languages">
-                @for (language of languages.controls; track languageIndex; let languageIndex = $index) {
-                <ng-container [formGroupName]="languageIndex">
-                    <pure-language-form [language_form]="language" [index]="languageIndex" [multi]="true"
-                        [index_length]="languages.controls.length"
-                        (notice)="handleLanguageNotification($event)"></pure-language-form>
-                </ng-container>
-                }
-                @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add language'"
-                    (notice)="handleLanguageNotification($event)"></pure-add-remove-buttons>
-                }
-            </ng-container>
-        </div>
-    </div>
+
+        <!--GROUP Details-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodyDetailsGroup" aria-expanded="true"
+                    aria-controls="accordionBodyDetailsGroup">
+                    Details Group
+                </button>
+            </h2>
+            <div id="accordionBodyDetailsGroup" class="accordion-collapse collapse">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                        <label for="languages" class="col-sm-2 col-form-label col-form-label-sm">Languages</label>
+                        <div class="col-sm" id="languages">
+                            <ng-container formArrayName="languages">
+                                @for (language of languages.controls; track languageIndex; let languageIndex = $index) {
+                                <ng-container [formGroupName]="languageIndex">
+                                    <pure-language-form [language_form]="language" [index]="languageIndex"
+                                        [multi]="true" [index_length]="languages.controls.length"
+                                        (notice)="handleLanguageNotification($event)"></pure-language-form>
+                                </ng-container>
+                                }
+                                @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add language'"
+                                    (notice)="handleLanguageNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label class="col-sm-2 col-form-label col-form-label-sm">Total number of pages</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm">
+                                    <input type="text" class="form-control form-control-sm"
+                                        formControlName="totalNumberOfPages">
+                                </div>
+                                <div class="col-sm-1">
+                                    <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                        <label for="reviewMethod" class="col-sm-2 col-form-label col-form-label-sm">Review
+                            Method</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm">
+                                    <input type="text" class="form-control form-control-sm" id="reviewMethod"
+                                        name="reviewMethod" formControlName="reviewMethod">
+                                </div>
+                                <div class="col-sm-1">
+                                    <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
+                    <!--
     <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
         <label for="location" class="col-sm-2 col-form-label col-form-label-sm">Location</label>
         <div class="col-sm">
@@ -159,120 +252,206 @@
                     <input type="text" class="form-control form-control-sm" id="location" name="location"
                         formControlName="location">
                 </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                <div class="col-sm-1">
+                    <!- -NEEDED to keep the layout including one last collumn for add-remove buttons- ->
                 </div>
             </div>
         </div>
     </div>
-    <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-        <label for="reviewMethod" class="col-sm-2 col-form-label col-form-label-sm">Review Method</label>
-        <div class="col-sm">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm">
-                    <input type="text" class="form-control form-control-sm" id="reviewMethod" name="reviewMethod"
-                        formControlName="reviewMethod">
+    -->
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label class="col-sm-2 col-form-label col-form-label-sm">Identifiers</label>
+                        <div class="col-sm">
+                            <ng-container formArrayName="identifiers">
+                                @for (identifier of identifiers.controls; track identifier; let identifierIndex =
+                                $index) {
+                                <ng-container [formGroupName]="identifierIndex">
+                                    <pure-identifier-form [identifier_form]="identifier" [index]="identifierIndex"
+                                        [multi]="true" [index_length]="identifiers.controls.length"
+                                        (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
+                                </ng-container>
+                                }
+                                @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add identifier'"
+                                    (notice)="handleIdentifierNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label for="abstracts" class="col-sm-2 col-form-label col-form-label-sm">Abstracts</label>
+                        <div class="col-sm" id="abstract">
+                            <ng-container formArrayName="abstracts">
+                                @for (abstract of abstracts.controls; track abstractIndex; let abstractIndex = $index) {
+                                <ng-container [formGroupName]="abstractIndex">
+                                    <pure-abstract-form [abstract_form]="abstract" [index]="abstractIndex"
+                                        [multi]="true" [index_length]="abstracts.controls.length"
+                                        (notice)="handleAbstractNotification($event)"></pure-abstract-form>
+                                </ng-container>
+                                }
+                                @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add abstract'"
+                                    (notice)="handleAbstractNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                        <label for="freeKeywords" class="col-sm-2 col-form-label col-form-label-sm">Free
+                            Keywords</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm">
+                                    <input type="text" class="form-control form-control-sm" id="freeKeywords"
+                                        name="freeKeywords" formControlName="freeKeywords">
+                                </div>
+                                <div class="col-sm-1">
+                                    <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label for="subjects" class="col-sm-2 col-form-label col-form-label-sm">Subjects</label>
+                        <div class="col-sm" id="subjects">
+                            <ng-container formArrayName="subjects">
+                                @for (subject of subjects.controls; track subjectIndex; let subjectIndex = $index) {
+                                <ng-container [formGroupName]="subjectIndex">
+                                    <pure-subject-form [subject_form]="subject" [index]="subjectIndex" [multi]="true"
+                                        [index_length]="subjects.controls.length"
+                                        (notice)="handleSubjectNotification($event)"></pure-subject-form>
+                                </ng-container>
+                                }
+                                @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add subject'"
+                                    (notice)="handleSubjectNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label for="tableOfContents" class="col-sm-2 col-form-label col-form-label-sm">Table of
+                            Contents</label>
+                        <div class="col-sm">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                                <div class="col-sm">
+                                    <textarea class="form-control form-control-sm" id="tableOfContents"
+                                        name="tableOfContents" formControlName="tableOfContents"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="sources" class="col-sm-2 col-form-label col-form-label-sm">Sources</label>
-        <div class="col-sm">
-            <ng-container formArrayName="sources">
-                @for (source of sources.controls; track source; let sourcesIndex = $index) {
-                <ng-container [formGroupName]="sourcesIndex">
-                    <pure-source-form [source_form]="source" [index]="sourcesIndex"
-                        [index_length]="sources.controls.length"
-                        (notice)="handleSourceNotification($event)"></pure-source-form>
-                </ng-container>
-                } @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add source'"
-                    (notice)="handleSourceNotification($event)"></pure-add-remove-buttons>
-                }
-            </ng-container>
-        </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-        <label for="freeKeywords" class="col-sm-2 col-form-label col-form-label-sm">Free Keywords</label>
-        <div class="col-sm">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm">
-                    <input type="text" class="form-control form-control-sm" id="freeKeywords" name="freeKeywords"
-                        formControlName="freeKeywords">
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+
+        <!--GROUP Event-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodyEventGroup" aria-expanded="true"
+                    aria-controls="accordionBodyEventGroup">
+                    Event Group
+                </button>
+            </h2>
+            <div id="accordionBodyEventGroup" class="accordion-collapse collapse">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <pure-event-form [event_form]="event"></pure-event-form>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="subjects" class="col-sm-2 col-form-label col-form-label-sm">Subjects</label>
-        <div class="col-sm" id="subjects">
-            <ng-container formArrayName="subjects">
-                @for (subject of subjects.controls; track subjectIndex; let subjectIndex = $index) {
-                <ng-container [formGroupName]="subjectIndex">
-                    <pure-subject-form [subject_form]="subject" [index]="subjectIndex" [multi]="true"
-                        [index_length]="subjects.controls.length"
-                        (notice)="handleSubjectNotification($event)"></pure-subject-form>
-                </ng-container>
-                }
-                @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add subject'"
-                    (notice)="handleSubjectNotification($event)"></pure-add-remove-buttons>
-                }
-            </ng-container>
-        </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="tableOfContents" class="col-sm-2 col-form-label col-form-label-sm">Table of Contents</label>
-        <div class="col-sm">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm">
-                    <textarea class="form-control form-control-sm" id="tableOfContents" name="tableOfContents"
-                        formControlName="tableOfContents"></textarea>
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+
+        <!--GROUP Project Info-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodyProjectInfoGroup" aria-expanded="true"
+                    aria-controls="accordionBodyProjectInfoGroup">
+                    Project Info Group
+                </button>
+            </h2>
+            <div id="accordionBodyProjectInfoGroup" class="accordion-collapse collapse">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label for="projectInfos" class="col-sm-2 col-form-label col-form-label-sm">Project Info</label>
+                        <div class="col-sm" id="projectInfo">
+                            <ng-container formArrayName="projectInfo">
+                                @for (projectInfoElement of projectInfo.controls; track projectInfoElement; let
+                                projectInfoIndex =
+                                $index) {
+                                <ng-container [formGroupName]="projectInfoIndex">
+                                    <pure-project-info-form [project_info_form]="projectInfoElement"
+                                        [index]="projectInfoIndex" [multi]="true"
+                                        [index_length]="projectInfo.controls.length"
+                                        (notice)="handleProjectInfoNotification($event)"></pure-project-info-form>
+                                </ng-container>
+                                }
+                                @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add projectInfo'"
+                                    (notice)="handleProjectInfoNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="abstracts" class="col-sm-2 col-form-label col-form-label-sm">Abstracts</label>
-        <div class="col-sm" id="abstract">
-            <ng-container formArrayName="abstracts">
-                @for (abstract of abstracts.controls; track abstractIndex; let abstractIndex = $index) {
-                <ng-container [formGroupName]="abstractIndex">
-                    <pure-abstract-form [abstract_form]="abstract" [index]="abstractIndex" [multi]="true"
-                        [index_length]="abstracts.controls.length"
-                        (notice)="handleAbstractNotification($event)"></pure-abstract-form>
-                </ng-container>
-                }
-                @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add abstract'"
-                    (notice)="handleAbstractNotification($event)"></pure-add-remove-buttons>
-                }
-            </ng-container>
+
+        <!--GROUP Legal Case-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodyLegalCaseGroup" aria-expanded="true"
+                    aria-controls="accordionBodyLegalCaseGroup">
+                    Legal Case Group
+                </button>
+            </h2>
+            <div id="accordionBodyLegalCaseGroup" class="accordion-collapse collapse">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <pure-legal-case-form [legal_case_form]="legalCase"></pure-legal-case-form>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="projectInfos" class="col-sm-2 col-form-label col-form-label-sm">Project Info</label>
-        <div class="col-sm" id="projectInfo">
-            <ng-container formArrayName="projectInfo">
-                @for (projectInfoElement of projectInfo.controls; track projectInfoElement; let projectInfoIndex = $index) {
-                <ng-container [formGroupName]="projectInfoIndex">
-                    <pure-project-info-form [project_info_form]="projectInfoElement" [index]="projectInfoIndex" [multi]="true"
-                        [index_length]="projectInfo.controls.length"
-                        (notice)="handleProjectInfoNotification($event)"></pure-project-info-form>
-                </ng-container>
-                }
-                @empty {
-                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add projectInfo'"
-                    (notice)="handleProjectInfoNotification($event)"></pure-add-remove-buttons>
-                }
-            </ng-container>
+
+        <!--GROUP Sources-->
+        <div class="accordion-item border border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#accordionBodySourcesGroup" aria-expanded="true"
+                    aria-controls="accordionBodySourcesGroup">
+                    Sources Group
+                </button>
+            </h2>
+            <div id="accordionBodySourcesGroup" class="accordion-collapse collapse">
+                <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                        <label for="sources" class="col-sm-2 col-form-label col-form-label-sm">Sources</label>
+                        <div class="col-sm">
+                            <ng-container formArrayName="sources">
+                                @for (source of sources.controls; track source; let sourcesIndex = $index) {
+                                <ng-container [formGroupName]="sourcesIndex">
+                                    <pure-source-form [source_form]="source" [index]="sourcesIndex"
+                                        [index_length]="sources.controls.length"
+                                        (notice)="handleSourceNotification($event)"></pure-source-form>
+                                </ng-container>
+                                } @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add source'"
+                                    (notice)="handleSourceNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
+
+
+
 </div>

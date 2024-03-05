@@ -6,6 +6,7 @@ import { ItemSearchComponent } from './components/item-search/item-search.compon
 import { ItemFormComponent } from './components/item-edit/form/item-form/item-form.component';
 import { itemResolver } from './services/item-resolver';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import {ItemSearchAdvancedComponent} from "./components/item-search-advanced/item-search-advanced.component";
 
 export const routes: Routes = [
     {
@@ -27,6 +28,11 @@ export const routes: Routes = [
       },
       {
         path: 'as', component: ItemSearchComponent, data: {
+          saveComponent: true
+        }
+      },
+      {
+        path: 'as2', component: ItemSearchAdvancedComponent, data: {
           saveComponent: true
         }
       },

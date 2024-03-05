@@ -2,6 +2,7 @@ import { Directive, inject } from '@angular/core';
 import { SelectorDatasource } from '../selector-datasource.service';
 import { Observable, debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
 import { ConePerson, ConePersonsService } from './cone-persons.service';
+import { HttpParams } from '@angular/common/http';
 
 @Directive({
     selector: '[pureConePersons]',
@@ -24,7 +25,9 @@ export class ConePersonsDirective implements SelectorDatasource<ConePerson> {
             filter(typed => (typed != null && typed.length >= 3)),
             distinctUntilChanged(),
             debounceTime(500),
-            switchMap((searchValue) => this.service.find(this.resource_path + searchValue)),
+            switchMap((searchValue) => {
+                const params = new HttpParams().set('q', searchValue).set('format', 'json');
+                return this.service.find(this.resource_path + "query", params)}),
             map((persons) => persons.map(
                 (person: any) => Object.assign(person, { selected: person.value })
             )));

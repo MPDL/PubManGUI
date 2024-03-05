@@ -40,6 +40,7 @@
 
     --main-title-text-color: #{$mpg-blue};
     --main-content-background-color: white;
+    --main-content-color: black;
     --accent-color-1: #{$mpg-slate-gray-0};
     --accent-color-2: #{lighten($mpg-slate-gray-0, 10% )};     
     --accent-color-3: #{lighten($mpg-slate-gray-0, 20% )}; 
@@ -92,7 +93,8 @@
     }
 
     --main-title-text-color: var(--accent-color-3);
-    --main-content-background-color: #{$mpdl-dark};
+    --main-content-background-color: #{body-tertiary-bg-dark};
+    --main-content-color: white;
     --accent-color-1: #{$mpg-slate-gray-1};
     --accent-color-2: #{lighten($mpg-slate-gray-1, 10% )};     
     --accent-color-3: #{lighten($mpg-slate-gray-1, 20% )}; 

@@ -1,0 +1,32 @@
+
+<ng-template #personAutosuggestTemplate let-r="result" let-t="term">
+  <ngb-highlight [result]="r.value" [term]="t"
+                 [style.font-size]="(r.type==='alt') ? 'small' : ''"
+                 [style.padding-left]="(r.type==='alt') ? '20px' : ''"
+                 [style.background-color]="(r.type==='main') ? 'lightgrey' : ''"></ngb-highlight>
+</ng-template>
+
+<div class="input-group">
+<input class="form-control" type="text" [formControl]="formForPersonsName"
+       [ngbTypeahead]="suggestPersons"
+       (selectItem)="suggestPersonsSelector($event)"
+       [resultFormatter]="suggestPersonsFormatter"
+       [inputFormatter]="suggestPersonsFormatter"
+       [resultTemplate]="personAutosuggestTemplate"
+       [readonly]="formForPersonsId && formForPersonsId.value"
+       placeholder="Start typing..."
+/>
+
+  @if(searching) {
+
+    <button class="btn btn-outline-dark" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span class="visually-hidden">Loading...</span>
+    </button>
+  }
+@if(formForPersonsId && formForPersonsId.value) {
+<button class="btn btn-outline-dark" type="button" (click)="deleteFields()">
+  <span class="bi bi-x"></span>
+</button>
+}
+</div>

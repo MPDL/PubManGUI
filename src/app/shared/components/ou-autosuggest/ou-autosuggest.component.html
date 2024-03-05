@@ -1,0 +1,22 @@
+<div class="input-group">
+<input class="form-control" type="text" [formControl]="formForOuName"
+       [ngbTypeahead]="suggestOus"
+       (selectItem)="suggestOusSelector($event)"
+       [resultFormatter]="suggestOusFormatter"
+       [inputFormatter]="suggestOusFormatter"
+       [readonly]="formForOuId?.value"
+       placeholder="Start typing..."/>
+
+  @if(searching) {
+  <button class="btn btn-outline-dark" disabled>
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span class="visually-hidden">Loading...</span>
+  </button>
+  }
+
+@if(formForOuId?.value) {
+  <button class="btn btn-outline-dark" type="button" (click)="deleteFields()">
+    <span class="bi bi-x"></span>
+  </button>
+}
+</div>

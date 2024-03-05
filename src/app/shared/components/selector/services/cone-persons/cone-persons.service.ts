@@ -37,7 +37,7 @@ export interface PersonResource {
 })
 export class ConePersonsService {
 
-  rest_uri = props.cone_instance_uri;
+  rest_uri = props.cone_instamce_uri;
 
   constructor(
     private http: HttpClient
@@ -64,8 +64,8 @@ export class ConePersonsService {
   }
 
   resource(uri: string) {
-    const params = new HttpParams().set('uri', uri);
-    return this.http.get<PersonResource>(this.rest_uri, { params }).pipe(
+    const params = new HttpParams().set('format', 'json');
+    return this.http.get<PersonResource>(uri, { params }).pipe(
       map((response: any) => response),
       catchError((error) => {
         return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
