@@ -44,12 +44,10 @@ import {PersonAutosuggestComponent} from "../../shared/components/person-autosug
 export class ItemSearchAdvancedComponent {
 
   searchForm!: FormGroup;
-  //criterions: SearchCriterion[] = [];
 
   result: any;
   query: any;
 
-  searchTypeKeys: string[] = Object.keys(searchTypes);
   identifierOptions = Object.keys(IdType);
   personOptions = Object.keys(CreatorRole);
   genreOptions = Object.keys(MdsPublicationGenre);
@@ -59,11 +57,8 @@ export class ItemSearchAdvancedComponent {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder,
-    private ouService: OrganizationsService
+    private fb: FormBuilder
   ) {
-
-
   }
 
   ngOnInit() {
@@ -86,20 +81,13 @@ export class ItemSearchAdvancedComponent {
     console.log("Change criterion at index " + index + " to type " + newType);
 
     const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass(newType);
-    //this.criterions.splice(index, 1);
-    //this.criterions.splice(index,0, newSearchCriterion);
-
     this.fields.removeAt(index);
     this.fields.insert(index, newSearchCriterion);
   }
 
   changeOperator(index: number, newOperatorType: string) {
-    console.log("Change operator at index " + index + " to type " + newOperatorType);
-
+    //console.log("Change operator at index " + index + " to type " + newOperatorType);
     const newSearchCriterion = new LogicalOperator(newOperatorType);
-    //this.criterions.splice(index, 1);
-    //this.criterions.splice(index,0, newSearchCriterion);
-
     this.fields.removeAt(index);
     this.fields.insert(index, newSearchCriterion);
   }
@@ -139,11 +127,6 @@ export class ItemSearchAdvancedComponent {
   }
 
 
-  appendSearchCriterion(searchCriterion: SearchCriterion) {
-    this.addSearchCriterion(this.fields.length - 1, searchCriterion);
-  }
-
-
   removeSearchCriterion(index: number) {
 
     const sc = this.fields.at(index) as SearchCriterion;
@@ -159,7 +142,7 @@ export class ItemSearchAdvancedComponent {
     this.fields.insert(index, this.currentlyOpenedParenthesis);
 
     this.updateListForClosingParenthesis(this.currentlyOpenedParenthesis);
-    console.log(this.possibleCriterionsForClosingParenthesisMap);
+    //console.log(this.possibleCriterionsForClosingParenthesisMap);
   }
 
   addClosingParenthesis(index: number) {
@@ -169,6 +152,22 @@ export class ItemSearchAdvancedComponent {
     this.currentlyOpenedParenthesis = undefined;
     this.fields.insert(index + 1, closingParenthesis);
     this.updateListForClosingParenthesis(undefined);
+  }
+
+  removeParenthesis(position: number) {
+    const parenthesis = this.fields.at(position) as Parenthesis;
+    const partnerParenthesis = parenthesis.partnerParenthesis;
+
+    this.fields.controls.splice(position, 1);
+    if (partnerParenthesis) {
+      this.fields.controls.splice(this.fields.controls.indexOf(partnerParenthesis), 1);
+    }
+
+    if (parenthesis === (this.currentlyOpenedParenthesis)) {
+      this.currentlyOpenedParenthesis = undefined;
+    }
+
+    this.updateListForClosingParenthesis(this.currentlyOpenedParenthesis);
   }
 
   private updateListForClosingParenthesis(startParenthesis: Parenthesis | undefined) {
@@ -214,13 +213,7 @@ export class ItemSearchAdvancedComponent {
   }
 
 
-  select_ou(ou: any, currentFormGroup: AbstractControl<any>) {
-    currentFormGroup.get("content")?.get("hidden")?.setValue(ou.id);
-    //this.isc_form.patchValue({ hidden_id: ou.id }, { emitEvent: false });
-  }
-
-
-  removeSearchCriterionWithOperator(criterionList: SearchCriterion[], criterion: SearchCriterion) {
+  private removeSearchCriterionWithOperator(criterionList: SearchCriterion[], criterion: SearchCriterion) {
 
     const position = criterionList.indexOf(criterion);
     // try to delete
@@ -298,7 +291,7 @@ export class ItemSearchAdvancedComponent {
   }
 
 
-  removeEmptyFields(criterionList: SearchCriterion[]): SearchCriterion[] {
+  private removeEmptyFields(criterionList: SearchCriterion[]): SearchCriterion[] {
     if (!criterionList) {
       return [];
 
@@ -313,7 +306,7 @@ export class ItemSearchAdvancedComponent {
       for (let sc of copyForIteration) {
         if (sc.isEmpty()) {
           this.removeSearchCriterionWithOperator(copyForRemoval, sc);
-          console.log("Removing " + sc.type);
+          //console.log("Removing " + sc.type);
         }
       }
 
@@ -326,10 +319,10 @@ export class ItemSearchAdvancedComponent {
   }
 
 
-  scListToElasticSearchQuery(scList: SearchCriterion[]) {
+  private scListToElasticSearchQuery(scList: SearchCriterion[]) {
     const cleanedScList = this.removeEmptyFields(scList);
 
-    console.log("Cleaned List " + cleanedScList);
+    //console.log("Cleaned List " + cleanedScList);
 
     // Set partner parenthesis for every parenthesis
     let parenthesisStack: Parenthesis[] = [];
@@ -362,7 +355,7 @@ export class ItemSearchAdvancedComponent {
 
   }
 
-  cleanedScListToElasticSearchQuery(scList: SearchCriterion[], queries: (Object | undefined)[], parentNestedPath: string | undefined): Object | undefined {
+  private cleanedScListToElasticSearchQuery(scList: SearchCriterion[], queries: (Object | undefined)[], parentNestedPath: string | undefined): Object | undefined {
 
     //SearchCriterionBase.logger.debug("Call with list: " + scList);
 
@@ -444,12 +437,10 @@ export class ItemSearchAdvancedComponent {
 
       //SearchCriterionBase.logger.debug("found main operators: " + mainOperators);
 
-      console.log("found main operators: " + mainOperators);
+      //console.log("found main operators: " + mainOperators);
       let should = [];
       let must = [];
       let mustNot = [];
-
-      //final BoolQuery.Builder bq = new BoolQuery.Builder();
 
       // If there are AND/NOTAND operators mixed with OR operators, divide by OR operators ->
       // Remove all AND / NOTAND operators
@@ -504,17 +495,10 @@ export class ItemSearchAdvancedComponent {
 
   search() {
     const searchCriterions = this.fields.controls.map(fc => fc as SearchCriterion)
-    this.scListToElasticSearchQuery(searchCriterions).pipe(
-      /*
-      map(query => {
-        const wholeQuery = {query: query};
-        return wholeQuery;
-      })
-      */
-
-    ).subscribe(query =>
-      this.router.navigateByUrl('/list', {onSameUrlNavigation: 'reload', state: {query}})
-    );
+    this.scListToElasticSearchQuery(searchCriterions)
+      .subscribe(query =>
+        this.router.navigateByUrl('/list', {onSameUrlNavigation: 'reload', state: {query}})
+      );
 
   }
 

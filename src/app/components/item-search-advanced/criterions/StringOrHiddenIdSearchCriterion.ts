@@ -111,7 +111,7 @@ export class PersonSearchCriterion extends StringOrHiddenIdSearchCriterion {
             bool: {
               must: [
                 baseElasticSearchQueryBuilder("metadata.creators.role", role),
-                (hidden && hidden.trim()) ? [baseElasticSearchQueryBuilder(this.getElasticSearchFieldForHiddenId(), hidden)] : multiMatchForSearchString,
+                (hidden && hidden.trim()) ? baseElasticSearchQueryBuilder(this.getElasticSearchFieldForHiddenId(), hidden) : multiMatchForSearchString,
 
               ]
             }
@@ -133,7 +133,7 @@ export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion
   }
 
   protected getElasticSearchFieldForHiddenId(): string[] {
-    return ["metadata.creators.person.organizations.identifier", "metadata.creators.organization.identifier",
+    return ["metadata.creators.person.organizations.identifierPath", "metadata.creators.organization.identifierPath",
       ...(this.includeSource) ? ["metadata.sources.creators.person.organizations.identifierPath"] : [],
     ];
   }

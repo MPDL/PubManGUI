@@ -25,6 +25,9 @@
             } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PARENTHESIS) {
               <div class="col" >
               <span>{{ $any(currentFormGroup).type === 'opening_parenthesis' ? '(' : ')' }}</span>
+                <button type="button" class="btn btn-sm btn-outline-dark" (click)="removeParenthesis(i)">
+                  <span class="bi bi-x"></span>
+                </button>
               </div>
 
             } @else {
