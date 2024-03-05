@@ -2,12 +2,21 @@ import { Injectable } from '@angular/core';
 import { IngeCrudService } from './inge-crud.service';
 import { Observable } from 'rxjs';
 import { ContextDbVO } from '../model/inge';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContextsService extends IngeCrudService{
+
+  static instance: ContextsService;
   contextsPath: string = '/contexts';
+
+  constructor(httpClient: HttpClient) {
+    super(httpClient);
+    ContextsService.instance = this;
+  }
+
 
   getUser(userId: string, token?: string): Observable<ContextDbVO>{
     const path = this.contextsPath + '/' + userId;
@@ -24,7 +33,7 @@ export class ContextsService extends IngeCrudService{
 
   updateUser(user: ContextDbVO, token: string): Observable<ContextDbVO> {
     const path = this.contextsPath + '/' + user.objectId
-    
+
     return this.put(path, user, token);
   }
 

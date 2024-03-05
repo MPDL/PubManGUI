@@ -465,7 +465,7 @@ export const enum ChecksumAlgorithm {
     MD5 = "MD5",
 }
 
-export const enum ItemVersionState {
+export enum ItemVersionState {
     PENDING = "PENDING",
     SUBMITTED = "SUBMITTED",
     RELEASED = "RELEASED",
@@ -491,7 +491,7 @@ export const enum DegreeType {
     STAATSEXAMEN = "STAATSEXAMEN",
 }
 
-export const enum ReviewMethod {
+export enum ReviewMethod {
     INTERNAL = "INTERNAL",
     NO_REVIEW = "NO_REVIEW",
     PEER = "PEER",

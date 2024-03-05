@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import {Observable, catchError, map, throwError, isObservable, lastValueFrom} from 'rxjs';
 import * as props from 'src/assets/properties.json';
+import {ItemVersionVO} from "../model/inge";
 
-export interface SearchResult {
+export interface SearchResult<Type> {
   numberOfRecords: number,
   records: {
-    data: any,
+    data: Type,
     persistenceId: string
   }[]
 }
@@ -27,23 +28,24 @@ export class IngeCrudService {
 
   constructor(
     protected httpClient: HttpClient
-  ) { }
+  ) {
+  }
 
-  private getSearchResults(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult> {
+  private getSearchResults(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult<any>> {
     const requestUrl = this.restUri + path;
-    return this.httpClient.request<SearchResult>(method, requestUrl, {
+    return this.httpClient.request<SearchResult<ItemVersionVO>>(method, requestUrl, {
       body,
       headers,
       params
     }).pipe(
-      map((searchResult: SearchResult) => searchResult),
+      map((searchResult: SearchResult<any>) => searchResult),
       catchError((error) => {
         return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
       })
     );
   }
 
-  private getElasticSearchResults(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult> {
+  private getElasticSearchResults(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult<any>> {
     const requestUrl = this.restUri + path;
     return this.httpClient.request<any>(method, requestUrl, {
       body,
@@ -108,14 +110,14 @@ export class IngeCrudService {
     return headers;
   }
 
-  list(path: string, body?: any, token?: string,  params?: HttpParams): Observable<SearchResult> {
+  list(path: string, body?: any, token?: string, params?: HttpParams): Observable<SearchResult<any>> {
     if (token) {
       return this.getSearchResults('GET', path, body, this.addAuhorizationHeader(token), params);
     }
     return this.getSearchResults('GET', path, body, undefined, params);
   }
 
-  search(path: string, body: any, token?: string, params?: HttpParams): Observable<SearchResult> {
+  search(path: string, body: any, token?: string, params?: HttpParams): Observable<SearchResult<any>> {
     if (token) {
       return this.getSearchResults('POST', path.concat('/search'), body, this.addAuthAndContentType(token), params);
     }
@@ -149,4 +151,5 @@ export class IngeCrudService {
   delete(path: string, body: any, token: string): Observable<number> {
     return this.getHttpStatus('DELETE', path, body, this.addAuhorizationHeader(token));
   }
+
 }
