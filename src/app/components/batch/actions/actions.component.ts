@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { throwError } from 'rxjs';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 import { BatchNavComponent } from '../batch-nav/batch-nav.component';
 
@@ -31,27 +33,24 @@ export class ActionsComponent {
 
   private isProcessing: boolean = false;
 
-  constructor(private bs: BatchService) { }
+  constructor(private bs: BatchService, private message: MessageService) { }
 
   ngAfterViewInit() {
-    // check if there are actions in process:
     this.bs.getBatchProcessUserLock().subscribe({
       next: () => this.isProcessing = true,
       error: () => this.isProcessing = false
     })
-    //  if true launch modal with actions lock
-    if (!this.isProcessing) {
 
+    if (this.isProcessing) {
+      const msg = `Please wait, a process is runnig!\n`;
+      this.message.error(msg);
+      throwError(() => msg);
     };
 
     if (!this.bs.items) {
-      console.log('Please wait, a process is runnig!');
-    }
-
-    // check if there are items selected:
-    //  if false launch modal with actions lock
-    if (!this.bs.items) {
-      console.log('Please, select items to be processed!');
+      const msg = `Please, select items to be processed!\n`;
+      this.message.error(msg);
+      throwError(() => msg);
     }
   }
 }

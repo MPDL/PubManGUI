@@ -2,18 +2,13 @@
 
     .accordion-item {
 
-        .accordion-header {
-            color: var(--accent-color-contrast);
-            background-color: var(--accent-color-1);
-        }
-
         .accordion-button {
-            color: var(--accent-color-contrast);
-            background-color: var(--accent-color-1);
+            color: var(--accent-text-color);
+            background-color: var(--accent-bg-color);
         }
 
         .accordion-body {
-            background: #{$mpg-light-gray};
+            background: var(--secondary-content-bg-color);
 
             input{
                 background-color: white;

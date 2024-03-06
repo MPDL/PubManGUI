@@ -9,35 +9,28 @@
         .accordion {
 
             .accordion-item {
-/*
-                .accordion-header {
-                    color: var(--accent-color-contrast);
-                    background-color: var(--accent-color-1);
-                }
-
+                /*
                 .accordion-button {
                     color: var(--accent-color-contrast);
-                    background-color: var(--accent-color-1) !important;
+                    background-color: var(--accent-color) !important;
                 }
-*/
+                */
                 .accordion-body {
-                    background-color: var(--main-content-background-color);
+                    background-color: var(--main-content-bg-color);
                 }
             }
 
             .header_second_color {
-                background-color: var(--accent-color-2) !important;
-
+ 
                 .accordion-button {
-                    background-color: var(--accent-color-2) !important;
+                    background-color: color-mix(in hsl,var(--accent-bg-color),white 10%) !important;
                 }
             }
 
             .header_third_color {
-                background-color: var(--accent-color-3) !important;
 
                 .accordion-button {
-                    background-color: var(--accent-color-3) !important;
+                    background-color: color-mix(in hsl,var(--accent-bg-color),white 20%) !important;
                 }
             }
 
@@ -67,5 +60,10 @@
             line-height: 1.5em;
             font-size: 1.2em;
         }
+
+        .form-control::placeholder {
+            color: color-mix(in srgb,var(--main-title-text-color),white 15%);
+            font-style: italic;
+          }
     }
 }
