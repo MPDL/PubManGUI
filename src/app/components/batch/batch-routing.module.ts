@@ -13,9 +13,9 @@ const routes: Routes = [
     .then(m => m.ActionsComponent),
   },
   {
-    path: 'protocols',
-    loadComponent: () => import('./protocols/protocols.component')
-      .then(m => m.ProtocolsComponent),
+    path: 'logs',
+    loadComponent: () => import('./logs/log-list.component')
+      .then(m => m.LogListComponent),
   },
   {
     path: '',

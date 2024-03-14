@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeExternalReferenceContentCategoryParams } from 'src/app/components/batch/interfaces/actions-params';
 
@@ -19,30 +20,18 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
 
   contentCategories = Object.keys(ContentCategories);
   
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   public changeExternalReferenceContentCategoryForm: FormGroup = this.fb.group({
-    externalReferencesContentCategoryFrom: ['', [ Validators.required ]],
-    externalReferencesContentCategoryTo: ['', [ Validators.required ]],
-  }, { validators: this.fieldsNotEqual.bind(this) });
-
-  fieldsNotEqual(formGroup: FormGroup) {
-    const from = formGroup.controls['externalReferencesContentCategoryFrom'].value;
-    const to = formGroup.controls['externalReferencesContentCategoryTo'].value;
-    if (formGroup.controls['externalReferencesContentCategoryTo'].dirty) {
-      if (from === to) {
-        formGroup.controls['externalReferencesContentCategoryTo'].setErrors({'fieldsMatch': true});
-        return { fieldsMatch: true }
-      };
-    }
-    formGroup.get('externalReferencesContentCategoryTo')?.setErrors(null);
-    return null;
-  } 
+    externalReferenceContentCategoryFrom: ['', [ Validators.required ]],
+    externalReferenceContentCategoryTo: ['', [ Validators.required ]],
+  }, 
+  { validators: this.vs.notEqualsValidator('externalReferenceContentCategoryFrom','externalReferenceContentCategoryTo') });
 
   get changeExternalReferenceContentCategoryParams(): ChangeExternalReferenceContentCategoryParams {
     const actionParams: ChangeExternalReferenceContentCategoryParams = {
-      externalReferencesContentCategoryFrom: this.changeExternalReferenceContentCategoryForm.controls['externalReferencesContentCategoryFrom'].value,
-      externalReferencesContentCategoryTo: this.changeExternalReferenceContentCategoryForm.controls['externalReferencesContentCategoryTo'].value,
+      externalReferenceContentCategoryFrom: this.changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryFrom'].value,
+      externalReferenceContentCategoryTo: this.changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'].value,
       itemIds: []
     }
     return actionParams;

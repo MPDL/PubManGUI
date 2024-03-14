@@ -1,35 +1,53 @@
 <div class="form-control border-0 p-4 mb-2">
-    <h2 class="m-0">Replace</h2>
-    <div class="mt-2 mb-5">
-      Certain tags will be replaced within the items
+  <h2 class="m-0">Replace</h2>
+  <div class="mt-2 mb-5">
+    Certain tags will be replaced within the items
+  </div>
+
+  <form [formGroup]="changeLocalTagsForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="col-form-label">Tag to replace</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="localTagFrom">
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-2 col-sm-6">
+        &nbsp;
+        <span *ngIf="vs.notValidField(changeLocalTagsForm.controls['localTagFrom'])" class="form-text text-danger small">
+          {{ vs.getFieldError(changeLocalTagsForm.controls['localTagFrom']) }}
+        </span>
+      </div>
     </div>
 
-    <form [formGroup]="changeLocalTagsForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-3 row">
-        <label class="col-sm-2 col-form-label">Tag to replace</label>
-        <div class="col-sm-10">
-          <input class="form-control" formControlName="localTagFrom">
-        </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="col-form-label">Replacing Tag</label>
       </div>
-      <div class="mb-3 row">
-        <label class="col-sm-2 col-form-label">Replacing Tag</label>
-        <div class="col-sm-10">
-          <input class="form-control" formControlName="localTagTo">
-        </div>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="localTagTo">
       </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-2 col-sm-6">
+        <span *ngIf="vs.notValidField(changeLocalTagsForm.controls['localTagTo'])" class="form-text text-danger small">
+          Previous and new local tags {{ vs.getFieldError(changeLocalTagsForm.controls['localTagTo']) }}
+        </span>
+        &nbsp;
+      </div>
+    </div>
 
-      <div class="row">
-        <div class="offset-sm-3 col-sm-6">
-					<div *ngIf="changeLocalTagsForm.controls['localTagTo'].hasError('fieldsMatch')" class="form-text text-danger">
-						Both fields can't have the same value.
-					</div>
+    <div class="mb-1 row">
+      <div class="offset-sm-9 col-sm-3">
+        <button type="submit" [disabled]="!changeLocalTagsForm.valid" class="btn btn-outline-secondary col-4 float-end">
+          Replace
+        </button>
       </div>
-      <div class="col-sm-3">
-            <button type="submit" [disabled]="!changeLocalTagsForm.valid" class="btn btn-outline-secondary col-4 float-end">
-                Replace
-            </button>
-        </div>
-      </div>
-    </form>
+    </div>
+
+  </form>
 
 </div>

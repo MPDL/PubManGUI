@@ -1,27 +1,36 @@
 <form [formGroup]="changeKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Keywords to be replaced</label>
-      <div class="col-sm-9">
-        <input class="form-control" formControlName="publicationKeywordsFrom">
-      </div>
+  <div class="mb-3 row">
+    <div class="col-sm-3">
+      <label class="col-form-label">Keywords to be replaced</label>
     </div>
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Replacing key words</label>
-      <div class="col-sm-9">
-        <input class="form-control" formControlName="publicationKeywordsTo">
-      </div>
+    <div class="col-sm-9">
+      <input class="form-control" formControlName="keywordsFrom">
     </div>
+  </div>
 
-    <div class="row">
-      <div class="offset-sm-3 col-sm-6">
-        <div *ngIf="changeKeywordsForm.controls['publicationKeywordsTo'].hasError('fieldsMatch')" class="form-text text-danger">
-          Both fields can't have the same value.
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <button type="submit" [disabled]="!changeKeywordsForm.valid" class="btn btn-outline-secondary col-4 float-end">
-          Replace
-        </button>
-      </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <label class="col-form-label">Replacing keywords</label>
     </div>
-  </form>
+    <div class="col-sm-9">
+      <input class="form-control" formControlName="keywordsTo">
+    </div>
+  </div>
+  <div class="mb-2 row">
+    <div class="offset-sm-3 col-sm-6">
+      <span *ngIf="vs.notValidField(changeKeywordsForm.controls['keywordsTo'])"
+        class="form-text text-danger small">
+        Previous and new keywords {{ vs.getFieldError(changeKeywordsForm.controls['keywordsTo']) }}
+      </span>
+      &nbsp;
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="offset-sm-9 col-sm-3">
+      <button type="submit" [disabled]="!changeKeywordsForm.valid" class="btn btn-outline-secondary col-4 float-end">
+        Replace
+      </button>
+    </div>
+  </div>
+</form>

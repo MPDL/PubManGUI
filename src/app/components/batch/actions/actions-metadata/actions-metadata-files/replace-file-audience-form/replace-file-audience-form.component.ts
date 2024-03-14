@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormArray, FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, ReactiveFormsModule } from '@angular/forms';
 
+
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/actions-params';
 import { ipList }  from 'src/app/components/batch/interfaces/actions-responses';
@@ -20,7 +22,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
   ous: ipList[] = [];
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   ngOnInit(): void {
     this.bs.getIpList()
@@ -31,7 +33,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
     allowedAudienceIds: this.fb.array([])
   });
 
-  public audienceId: FormControl = new FormControl('', [Validators.required] );
+  public audienceId: FormControl = new FormControl('', [Validators.required, Validators.minLength(1), this.vs.notBeOnValidator( this.replaceFileAudienceForm.controls['allowedAudienceIds'] )] );
 
   get replaceFileAudienceParams(): ReplaceFileAudienceParams {
     const actionParams: ReplaceFileAudienceParams = {
@@ -39,11 +41,6 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
       itemIds: []
     }
     return actionParams;
-  }
-
-  isValidFieldInArray(formArray: FormArray, index: number) {
-    return formArray.controls[index].errors
-      && formArray.controls[index].touched;
   }
 
   onSubmit(): void {
@@ -60,14 +57,16 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   onAddToNewAudiences(): void {
+    /*
     const range = this.audienceId.value;
     const added = this.AudiencesToAdd.controls.map(control => control.value);
     const hasDuplicate = added.indexOf(range) != -1;
     this.audienceId.setErrors( hasDuplicate ? { 'duplicated': true } : null);
-    if (this.audienceId.errors) return;
+    */
+    if (this.audienceId.invalid) return;
 
     this.AudiencesToAdd.push(
-      this.fb.control(range, Validators.required)
+      this.fb.control(this.audienceId.value, Validators.required)
     );
 
     this.audienceId.reset();

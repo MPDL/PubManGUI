@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { ControlType } from "../../../item-edit/services/form-builder.service";
 import { OptionDirective } from "../../../../shared/components/selector/directives/option.directive";
 import { SelectorComponent } from "../../../../shared/components/selector/selector.component";
 
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeContextParams } from 'src/app/components/batch/interfaces/actions-params';
 
@@ -28,7 +29,7 @@ import { ChangeContextParams } from 'src/app/components/batch/interfaces/actions
 })
 export class ActionsContextComponent {
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   public changeContextForm: FormGroup = this.fb.group({
     contextFrom: this.fb.group<ControlType<ContextDbRO>>({
@@ -39,22 +40,10 @@ export class ActionsContextComponent {
       objectId: this.fb.control('', [Validators.required]),
       name: this.fb.control('')
     }),
-  }, { 
-    validators: [this.fieldsNotEqual.bind(this)] 
-  });
-
-  fieldsNotEqual(formGroup: FormGroup) {
-      const from = formGroup.controls['contextFrom'].value.objectId;
-      const to = formGroup.controls['contextTo'].value.objectId;
-      if (formGroup.controls['contextTo'].dirty) {
-        if (from === to) {
-          formGroup.controls['contextTo'].setErrors({'fieldsMatch': true});
-          return { fieldsMatch: true }
-        };
-      }
-      formGroup.get('contextTo')?.setErrors(null);
-      return null;
-  }
+  },
+    {
+      validators: this.vs.notEqualsValidator('contextFrom.objectId', 'contextTo.objectId')
+    });
 
   get changeContextParams(): ChangeContextParams {
     const actionParams: ChangeContextParams = {

@@ -50,14 +50,14 @@ export interface ChangeGenreParams {
 // Files
 export interface ChangeFileVisibilityParams {
         itemIds: string[],
-        filesVisibilityFrom: string,
-        filesVisibilityTo: string,
+        fileVisibilityFrom: string,
+        fileVisibilityTo: string,
 }
 
 export interface ChangeFileContentCategoryParams {
         itemIds: string[],
-        filesContentCategoryFrom: string,
-        filesContentCategoryTo: string,
+        fileContentCategoryFrom: string,
+        fileContentCategoryTo: string,
 }
 
 export interface ReplaceFileAudienceParams {
@@ -68,8 +68,8 @@ export interface ReplaceFileAudienceParams {
 // External References
 export interface ChangeExternalReferenceContentCategoryParams {
         itemIds: string[],
-        externalReferencesContentCategoryFrom: string,
-        externalReferencesContentCategoryTo: string,
+        externalReferenceContentCategoryFrom: string,
+        externalReferenceContentCategoryTo: string,
 }
 
 // ORCID
@@ -88,18 +88,18 @@ export interface ChangeReviewMethodParams {
 
 export interface AddKeywordsParams {
         itemIds: string[],
-        publicationKeywords: string,
+        keywords: string,
 }
 
 export interface ReplaceKeywordsParams {
         itemIds: string[],
-        publicationKeywordsTo: string,
+        keywords: string,
 }
 
 export interface ChangeKeywordsParams {
         itemIds: string[],
-        publicationKeywordsFrom: string,
-        publicationKeywordsTo: string,
+        keywordsFrom: string,
+        keywordsTo: string,
 }
 
 // Source

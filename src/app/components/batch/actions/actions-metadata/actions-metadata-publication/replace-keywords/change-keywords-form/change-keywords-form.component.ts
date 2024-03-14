@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
 
@@ -17,30 +18,20 @@ import { ChangeKeywordsParams } from 'src/app/components/batch/interfaces/action
 })
 export class ChangeKeywordsFormComponent { 
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   public changeKeywordsForm: FormGroup = this.fb.group({
-    publicationKeywordsFrom: ['', [ Validators.required ]],
-    publicationKeywordsTo: ['', [ Validators.required ]],
-  }, { validators: this.fieldsNotEqual.bind(this) });
+    keywordsFrom: ['', [ Validators.required ]],
+    keywordsTo: ['', [ Validators.required ]],
+  }, 
+  { validators: this.vs.notEqualsValidator('keywordsFrom','keywordsTo') });
 
-  fieldsNotEqual(formGroup: FormGroup) {
-    const from = formGroup.controls['publicationKeywordsFrom'].value;
-    const to = formGroup.controls['publicationKeywordsTo'].value;
-    if (formGroup.controls['publicationKeywordsTo'].dirty) {
-      if (from === to) {
-        formGroup.controls['publicationKeywordsTo'].setErrors({'fieldsMatch': true});
-        return { fieldsMatch: true }
-      };
-    }
-    formGroup.get('publicationKeywordsTo')?.setErrors(null);
-    return null;
-  } 
+  // TO-DO if multiple words? check if they don't repeat
 
   get changeKeywordsParams(): ChangeKeywordsParams {
     const actionParams: ChangeKeywordsParams = {
-      publicationKeywordsFrom: this.changeKeywordsForm.controls['publicationKeywordsFrom'].value,
-      publicationKeywordsTo: this.changeKeywordsForm.controls['publicationKeywordsTo'].value,
+      keywordsFrom: this.changeKeywordsForm.controls['keywordsFrom'].value,
+      keywordsTo: this.changeKeywordsForm.controls['keywordsTo'].value,
       itemIds: []
     }
     return actionParams;

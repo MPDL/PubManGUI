@@ -24,9 +24,6 @@ export class WithdrawPubItemsFormComponent {
   }
 
   onSubmit(): void {
-    this.bs.withdrawPubItems(this.withdrawPubItemsParams).subscribe({
-      next: (actionResponse) => console.log('Next: \n' + JSON.stringify(actionResponse)),
-      error: (err) =>  console.log('Error: \n' + err)
-    })
+    this.bs.withdrawPubItems(this.withdrawPubItemsParams).subscribe(actionResponse => console.log(actionResponse))
   }
  }

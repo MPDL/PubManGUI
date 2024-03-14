@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { MdsPublicationGenre, DegreeType } from 'src/app/model/inge';
-
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeGenreParams } from 'src/app/components/batch/interfaces/actions-params';
+import { MdsPublicationGenre, DegreeType } from 'src/app/model/inge';
 
 
 @Component({
@@ -20,7 +20,7 @@ import { ChangeGenreParams } from 'src/app/components/batch/interfaces/actions-p
 })
 export class ActionsGenreComponent { 
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   genres = Object.keys(MdsPublicationGenre);
   degreeTypes = Object.keys(DegreeType);
@@ -29,20 +29,7 @@ export class ActionsGenreComponent {
     genreFrom: ['', [Validators.required]],
     genreTo: ['', [Validators.required]],
     degreeType: ['', [Validators.required]],
-  }, { validators: this.fieldsNotEqual.bind(this) });
-
-  fieldsNotEqual(formGroup: FormGroup) {
-    const from = formGroup.controls['genreFrom'].value;
-    const to = formGroup.controls['genreTo'].value;
-    if (formGroup.controls['genreTo'].dirty) {
-      if (from === to) {
-        formGroup.controls['genreTo'].setErrors({'fieldsMatch': true});
-        return { fieldsMatch: true }
-      };
-    }
-    formGroup.get('genreTo')?.setErrors(null);
-    return null;
-  }
+  }, { validators: this.vs.notEqualsValidator('genreFrom','genreTo') });
 
   get changeGenreParams(): ChangeGenreParams {
     const actionParams: ChangeGenreParams = {

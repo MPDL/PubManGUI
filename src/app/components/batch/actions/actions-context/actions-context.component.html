@@ -28,9 +28,9 @@
 
     <div class="row">
       <div class="offset-sm-3 col-sm-6">
-					<div *ngIf="changeContextForm.controls['contextTo'].hasError('fieldsMatch')" class="form-text text-danger">
-						Both fields can't have the same value.
-					</div>
+          <div *ngIf="changeContextForm.errors" class="form-text text-danger">
+            Previous and new contexts {{ vs.getFieldError(changeContextForm) }}
+          </div>
       </div>
       <div class="col-sm-3">
         <button type="submit" [disabled]="!changeContextForm.valid" class="btn btn-outline-secondary col-4 float-end">

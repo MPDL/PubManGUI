@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/actions-params';
 
@@ -17,25 +18,16 @@ import { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/action
 })
 export class ChangeLocalTagsFormComponent {
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   public changeLocalTagsForm: FormGroup = this.fb.group({
-    localTagFrom: ['', [Validators.required]],
-    localTagTo: ['', [Validators.required]],
-  }, { validators: this.fieldsNotEqual.bind(this) });
+    localTagFrom: ['', [Validators.required, this.vs.singleWordValidator()]],
+    localTagTo: ['', [Validators.required, this.vs.singleWordValidator()]],
+  },
+    {
+      validators: this.vs.notEqualsValidator('localTagFrom', 'localTagTo')
+    });
 
-  fieldsNotEqual(formGroup: FormGroup) {
-    const from = formGroup.controls['localTagFrom'].value;
-    const to = formGroup.controls['localTagTo'].value;
-    if (formGroup.controls['localTagTo'].dirty) {
-      if (from === to) {
-        formGroup.controls['localTagTo'].setErrors({'fieldsMatch': true});
-        return { fieldsMatch: true }
-      };
-    }
-    formGroup.get('localTagTo')?.setErrors(null);
-    return null;
-  } 
 
   get changeLocalTagsParams(): ChangeLocalTagParams {
     const actionParams: ChangeLocalTagParams = {
@@ -52,7 +44,8 @@ export class ChangeLocalTagsFormComponent {
       return;
     }
 
-    this.bs.changeLocalTags(this.changeLocalTagsParams).subscribe( actionResponse => console.log(actionResponse));
-    //this.changeLocalTags.reset();
+    this.bs.changeLocalTags(this.changeLocalTagsParams).subscribe(actionResponse => console.log(actionResponse));
+    this.changeLocalTagsForm.reset();
   }
+
 }

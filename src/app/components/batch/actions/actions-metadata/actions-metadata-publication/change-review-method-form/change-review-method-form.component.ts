@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { ReviewMethod } from 'src/app/model/inge';
-
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeReviewMethodParams } from 'src/app/components/batch/interfaces/actions-params';
-
+import { ReviewMethod } from 'src/app/model/inge';
 
 @Component({
   selector: 'pure-change-review-method-form',
@@ -22,25 +21,13 @@ export class ChangeReviewMethodFormComponent {
 
   reviewMethods = Object.keys(ReviewMethod);
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   public changeReviewMethodForm: FormGroup = this.fb.group({
     reviewMethodFrom: ['', [ Validators.required ]],
     reviewMethodTo: ['', [ Validators.required ]],
-  }, { validators: this.fieldsNotEqual.bind(this) });
-
-  fieldsNotEqual(formGroup: FormGroup) {
-    const from = formGroup.controls['reviewMethodFrom'].value;
-    const to = formGroup.controls['reviewMethodTo'].value;
-    if (formGroup.controls['reviewMethodTo'].dirty) {
-      if (from === to) {
-        formGroup.controls['reviewMethodTo'].setErrors({'fieldsMatch': true});
-        return { fieldsMatch: true }
-      };
-    }
-    formGroup.get('reviewMethodTo')?.setErrors(null);
-    return null;
-  } 
+  }, 
+  { validators: this.vs.notEqualsValidator('reviewMethodFrom','reviewMethodTo') });
 
   get changeReviewMethodParams(): ChangeReviewMethodParams {
     const actionParams: ChangeReviewMethodParams = {

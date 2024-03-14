@@ -20,6 +20,6 @@ export class BatchNavComponent {
   public navItems: NavItem[] = [
     { route: '/list', text: 'Datasets' },
     { route: '/batch/actions', text: 'Actions' },
-    { route: '/batch/protocols', text: 'Protocols' },
+    { route: '/batch/logs', text: 'Logs' },
   ];
 }

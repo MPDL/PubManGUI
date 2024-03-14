@@ -7,7 +7,9 @@
 
   <form [formGroup]="changeOrcidForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label" for="changeOrcidForm">CoNE</label>
+      <div class="col-sm-3">
+        <label class="col-form-label"for="changeOrcidForm">CoNE</label>
+      </div>
       <div class="col-sm-8">
         <pure-selector id="changeOrcidForm" [form]="changeOrcidForm" [control_name]="'completeName'" (notice)="updatePerson($event)" pureConePersons
           placeholder="search cone ...">

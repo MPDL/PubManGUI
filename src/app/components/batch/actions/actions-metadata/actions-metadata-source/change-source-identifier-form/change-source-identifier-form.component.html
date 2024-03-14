@@ -1,52 +1,69 @@
 <div class="form-control border-0 p-4 mb-2">
 
-    <div class="mt-2 mb-5">
-      The values of specific identifiers (IDs) will be replaced within the sources
+  <div class="mt-2 mb-5">
+    The values of specific identifiers (IDs) will be replaced within the sources
+  </div>
+
+  <form [formGroup]="changeSourceIdentifierForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="mb-3 row">
+      <div class="col-sm-3">
+        <label class="col-form-label">Source to be adjusted</label>
+      </div>
+      <div class="col-sm-1">
+        <select class="form-control form-select" formControlName="sourceNumber">
+          <option value="1" selected="selected">1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
     </div>
 
-    <form [formGroup]="changeSourceIdentifierForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Source to be adjusted</label>
-        <div class="col-sm-1">
-          <select class="form-control form-select" formControlName="sourceNumber">
-            <option value="1" selected="selected">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
+    <div class="mb-3 row">
+      <div class="col-sm-3">
+        <label class="col-form-label">Type of ID</label>
       </div>
-
-      <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Type of ID</label>
-        <div class="col-sm-9">
-          <select class="form-control form-select" formControlName="sourceIdentifierType">
-            <option value="" selected="selected">-</option>
-            <option *ngFor="let type of sourceIdTypes" [ngValue]="type">
-              {{type | titlecase}}</option>
-          </select>
-        </div>
+      <div class="col-sm-9">
+        <select class="form-control form-select" formControlName="sourceIdentifierType">
+          <option value="" selected="selected">-</option>
+          <option *ngFor="let type of sourceIdTypes" [ngValue]="type">
+            {{type | titlecase}}</option>
+        </select>
       </div>
+    </div>
 
-      <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Value of ID to be replaced</label>
-        <div class="col-sm-9">
-          <input class="form-control" formControlName="sourceIdentifierFrom">
-        </div>
+    <div class="mb-3 row">
+      <div class="col-sm-3">
+        <label class="col-form-label">Value of ID to be replaced</label>
       </div>
-
-      <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Value of replacing ID</label>
-        <div class="col-sm-9">
-          <input class="form-control" formControlName="sourceIdentifierTo">
-        </div>
+      <div class="col-sm-9">
+        <input class="form-control" formControlName="sourceIdentifierFrom">
       </div>
+    </div>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <button type="submit" [disabled]="!changeSourceIdentifierForm.valid" class="btn btn-outline-secondary col-1 float-end">
-            Replace
-          </button>
-        </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="col-form-label">Value of replacing ID</label>
       </div>
-    </form>
-
+      <div class="col-sm-9">
+        <input class="form-control" formControlName="sourceIdentifierTo">
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+          <span *ngIf="vs.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])" class="form-text text-danger small">
+              Previous and new identifiers {{ vs.getFieldError(changeSourceIdentifierForm) }}
+          </span>
+          &nbsp;
+      </div>
   </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <button type="submit" [disabled]="!changeSourceIdentifierForm.valid"
+          class="btn btn-outline-secondary col-1 float-end">
+          Replace
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

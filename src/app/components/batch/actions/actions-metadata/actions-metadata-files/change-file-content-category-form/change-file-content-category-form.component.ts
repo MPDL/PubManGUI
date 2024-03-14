@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeFileContentCategoryParams } from 'src/app/components/batch/interfaces/actions-params';
 
@@ -17,32 +18,20 @@ import { ChangeFileContentCategoryParams } from 'src/app/components/batch/interf
 })
 export class ChangeFileContentCategoryFormComponent { 
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   contentCategories = Object.keys(ContentCategories);
 
   public changeFileContentCategoryForm: FormGroup = this.fb.group({
-    filesContentCategoryFrom: ['', [ Validators.required ]],
-    filesContentCategoryTo: ['', [ Validators.required ]],
-  }, { validators: this.fieldsNotEqual.bind(this) });
-
-  fieldsNotEqual(formGroup: FormGroup) {
-    const from = formGroup.controls['filesContentCategoryFrom'].value;
-    const to = formGroup.controls['filesContentCategoryTo'].value;
-    if (formGroup.controls['filesContentCategoryTo'].dirty) {
-      if (from === to) {
-        formGroup.controls['filesContentCategoryTo'].setErrors({'fieldsMatch': true});
-        return { fieldsMatch: true }
-      };
-    }
-    formGroup.get('filesContentCategoryTo')?.setErrors(null);
-    return null;
-  } 
+    fileContentCategoryFrom: ['', [ Validators.required ]],
+    fileContentCategoryTo: ['', [ Validators.required ]],
+  }, 
+  { validators: this.vs.notEqualsValidator('fileContentCategoryFrom','fileContentCategoryTo') });
 
   get changeFileContentCategoryParams(): ChangeFileContentCategoryParams {
     const actionParams: ChangeFileContentCategoryParams = {
-      filesContentCategoryFrom: this.changeFileContentCategoryForm.controls['filesContentCategoryFrom'].value,
-      filesContentCategoryTo: this.changeFileContentCategoryForm.controls['filesContentCategoryTo'].value,
+      fileContentCategoryFrom: this.changeFileContentCategoryForm.controls['fileContentCategoryFrom'].value,
+      fileContentCategoryTo: this.changeFileContentCategoryForm.controls['fileContentCategoryTo'].value,
       itemIds: []
     }
     return actionParams;

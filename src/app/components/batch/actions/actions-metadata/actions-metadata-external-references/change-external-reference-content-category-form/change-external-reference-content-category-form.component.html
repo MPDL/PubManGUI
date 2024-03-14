@@ -6,10 +6,12 @@
 
     <form [formGroup]="changeExternalReferenceContentCategoryForm" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Content category to be
-                replaced</label>
+            <div class="col-sm-3">
+                <label class="col-form-label">Content category to be
+                    replaced</label>
+            </div>
             <div class="col-sm-9">
-                <select class="form-control form-select" formControlName="externalReferencesContentCategoryFrom">
+                <select class="form-control form-select" formControlName="externalReferenceContentCategoryFrom">
                     <option value="" selected="selected">-</option>
                     <option *ngFor="let category of contentCategories" [ngValue]="category">
                         {{category | titlecase}}</option>
@@ -17,25 +19,31 @@
             </div>
         </div>
 
-        <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Replacing content category</label>
+        <div class="row">
+            <div class="col-sm-3">
+                <label class="col-form-label">Replacing content category</label>
+            </div>
             <div class="col-sm-9">
-                <select class="form-control form-select" formControlName="externalReferencesContentCategoryTo">
+                <select class="form-control form-select" formControlName="externalReferenceContentCategoryTo">
                     <option value="" selected="selected">-</option>
                     <option *ngFor="let category of contentCategories" [ngValue]="category">
                         {{category | titlecase}}</option>
                 </select>
             </div>
         </div>
-        <div class="row">
+        <div class="mb-2 row">
             <div class="offset-sm-3 col-sm-6">
-                <div *ngIf="changeExternalReferenceContentCategoryForm.controls['externalReferencesContentCategoryTo'].hasError('fieldsMatch')" class="form-text text-danger">
-                    Both fields can't have the same value.
-                </div>
+                <span *ngIf="vs.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'])" class="form-text text-danger small">
+                    Previous and new content categories {{ vs.getFieldError(changeExternalReferenceContentCategoryForm) }}
+                </span>
+                &nbsp;
             </div>
-            <div class="col-sm-3">
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
                 <button type="submit" [disabled]="!changeExternalReferenceContentCategoryForm.valid"
-                    class="btn btn-outline-secondary col-4 float-end">
+                    class="btn btn-outline-secondary col-1 float-end">
                     Change
                 </button>
             </div>

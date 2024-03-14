@@ -20,12 +20,12 @@ export class ReplaceKeywordsFormComponent {
   constructor(private fb: FormBuilder, private bs: BatchService) { }
 
   public replaceKeywordsForm: FormGroup = this.fb.group({
-    publicationKeywordsTo: ['', [ Validators.required ]],
+    keywords: ['', [ Validators.required ]],
   });
 
   get replaceKeywordsParams(): ReplaceKeywordsParams {
     const actionParams: ReplaceKeywordsParams = {
-      publicationKeywordsTo: this.replaceKeywordsForm.controls['publicationKeywordsTo'].value,
+      keywords: this.replaceKeywordsForm.controls['keywords'].value,
       itemIds: []
     }
     return actionParams;

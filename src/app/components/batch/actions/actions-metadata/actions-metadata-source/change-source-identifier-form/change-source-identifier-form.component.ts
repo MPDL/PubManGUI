@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { IdType } from 'src/app/model/inge';
-
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeSourceIdentifierParams } from 'src/app/components/batch/interfaces/actions-params';
+import { IdType } from 'src/app/model/inge';
 
 @Component({
   selector: 'pure-change-source-identifier-form',
@@ -19,7 +19,7 @@ import { ChangeSourceIdentifierParams } from 'src/app/components/batch/interface
 })
 export class ChangeSourceIdentifierFormComponent { 
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   sourceIdTypes = Object.keys(IdType);
 
@@ -28,6 +28,9 @@ export class ChangeSourceIdentifierFormComponent {
     sourceIdentifierType: ['', [ Validators.required ]],
     sourceIdentifierFrom: ['', [ Validators.required ]],
     sourceIdentifierTo: ['', [ Validators.required ]], 
+  },
+  {
+    validators: this.vs.notEqualsValidator('sourceIdentifierFrom', 'sourceIdentifierTo')
   });
 
   get changeSourceIdentifierParams(): ChangeSourceIdentifierParams {

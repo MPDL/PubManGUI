@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { SourceGenre } from 'src/app/model/inge';
-
+import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeSourceGenreParams } from 'src/app/components/batch/interfaces/actions-params';
+import { SourceGenre } from 'src/app/model/inge';
 
 @Component({
   selector: 'pure-change-source-genre-form',
@@ -19,14 +19,17 @@ import { ChangeSourceGenreParams } from 'src/app/components/batch/interfaces/act
 })
 export class ChangeSourceGenreFormComponent {
 
-  constructor(private fb: FormBuilder, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
 
   sourceGenres = Object.keys(SourceGenre);
 
   public changeSourceGenreForm: FormGroup = this.fb.group({
     sourceGenreFrom: ['', [Validators.required]],
     sourceGenreTo: ['', [Validators.required]],
-  });
+  },
+    {
+      validators: this.vs.notEqualsValidator('sourceGenreFrom', 'sourceGenreTo')
+    });
 
   get changeSourceGenreParams(): ChangeSourceGenreParams {
     const actionParams: ChangeSourceGenreParams = {
@@ -43,6 +46,7 @@ export class ChangeSourceGenreFormComponent {
       return;
     }
 
-    this.bs.changeSourceGenre(this.changeSourceGenreParams).subscribe( actionResponse => console.log(actionResponse));
+    this.bs.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => console.log(actionResponse));
+    this.changeSourceGenreForm.reset();
   }
 }

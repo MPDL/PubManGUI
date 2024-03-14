@@ -20,12 +20,14 @@ export class AddKeywordsFormComponent {
   constructor(private fb: FormBuilder, private bs: BatchService) { }
 
   public addKeywordsForm: FormGroup = this.fb.group({
-    publicationKeywords: ['', [ Validators.required ]],
+    keywords: ['', [ Validators.required ]],
   });
+
+  // TO-DO Check that words don't repeat
 
   get addKeywordsParams(): AddKeywordsParams {
     const actionParams: AddKeywordsParams = {
-      publicationKeywords: this.addKeywordsForm.controls['publicationKeywords'].value,
+      keywords: this.addKeywordsForm.controls['keywords'].value,
       itemIds: []
     }
     return actionParams;
