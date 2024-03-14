@@ -59,6 +59,32 @@ export class AaService {
     sessionStorage.setItem('isAdmin', String(bool));
   }
 
+  get isDepositor(): boolean {
+    const isDepositor_string = sessionStorage.getItem('isDepositor');
+    if (isDepositor_string) {
+      return !!JSON.parse(isDepositor_string);
+    } else {
+      return false;
+    }
+  }
+
+  set isDepositor(bool) {
+    sessionStorage.setItem('isDepositor', String(bool));
+  }
+
+  get isModerator(): boolean {
+    const isModerator_string = sessionStorage.getItem('isModerator');
+    if (isModerator_string) {
+      return !!JSON.parse(isModerator_string);
+    } else {
+      return false;
+    }
+  }
+
+  set isModerator(bool) {
+    sessionStorage.setItem('isModerator', String(bool));
+  }
+
   login(userName: string, password: string) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const body = userName + ':' + password;
@@ -101,9 +127,16 @@ export class AaService {
       map((response) => {
         user = response;
         this.user = user;
-        if (user.grantList != null) {
+        if (user.grantList) {
+          console.log("GrantList", JSON.stringify(user.grantList));
           if (user.grantList.find((grant: any) => grant.role === 'SYSADMIN')) {
             this.isAdmin = true;
+          }
+          if (user.grantList.find((grant: any) => grant.role === 'DEPOSITOR')) {
+            this.isDepositor = true;
+          }
+          if (user.grantList.find((grant: any) => grant.role === 'MODERATOR')) {
+            this.isModerator = true;
           }
         }
         return user;
