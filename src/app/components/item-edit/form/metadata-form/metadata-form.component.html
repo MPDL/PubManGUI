@@ -2,16 +2,16 @@
 
     <div class="accordion" id="accordionPanelsMetadata">
         <!--GROUP Standard-->
-        <div class="accordion-item border border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyStandardGroup" aria-expanded="true"
                     aria-controls="accordionBodyStandardGroup">
                     Standard Group
                 </button>
             </h2>
             <div id="accordionBodyStandardGroup" class="accordion-collapse collapse show">
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                         <label for="genre" class="col-sm-2 col-form-label col-form-label-sm">Genre</label>
                         <div class="col-sm">
@@ -85,7 +85,7 @@
 
 
         <!--GROUP Creator-->
-        <div class="accordion-item border border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyCreatorGroup" aria-expanded="true"
@@ -94,7 +94,7 @@
                 </button>
             </h2>
             <div id="accordionBodyCreatorGroup" class="accordion-collapse collapse show">
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                         <label for="creatures" class="col-sm-2 col-form-label col-form-label-sm">Creators</label>
                         <div class="col-sm">
@@ -129,7 +129,7 @@
         </div>
 
         <!--GROUP Dates-->
-        <div class="accordion-item border border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyDatesGroup" aria-expanded="true"
@@ -138,7 +138,7 @@
                 </button>
             </h2>
             <div id="accordionBodyDatesGroup" class="accordion-collapse collapse show">
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                         <label class="col-sm-2 col-form-label col-form-label-sm">Dates</label>
                         <div class="col-sm">
@@ -186,7 +186,7 @@
         </div>
 
         <!--GROUP Details-->
-        <div class="accordion-item border border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyDetailsGroup" aria-expanded="true"
@@ -195,7 +195,7 @@
                 </button>
             </h2>
             <div id="accordionBodyDetailsGroup" class="accordion-collapse collapse">
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                         <label for="languages" class="col-sm-2 col-form-label col-form-label-sm">Languages</label>
                         <div class="col-sm" id="languages">
@@ -291,7 +291,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                         <label for="abstracts" class="col-sm-2 col-form-label col-form-label-sm">Abstracts</label>
                         <div class="col-sm" id="abstract">
@@ -363,7 +363,7 @@
         </div>
 
         <!--GROUP Event-->
-        <div class="accordion-item border border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyEventGroup" aria-expanded="true"
@@ -372,14 +372,14 @@
                 </button>
             </h2>
             <div id="accordionBodyEventGroup" class="accordion-collapse collapse">
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <pure-event-form [event_form]="event"></pure-event-form>
                 </div>
             </div>
         </div>
 
         <!--GROUP Project Info-->
-        <div class="accordion-item border border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyProjectInfoGroup" aria-expanded="true"
@@ -388,7 +388,7 @@
                 </button>
             </h2>
             <div id="accordionBodyProjectInfoGroup" class="accordion-collapse collapse">
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                         <label for="projectInfos" class="col-sm-2 col-form-label col-form-label-sm">Project Info</label>
                         <div class="col-sm" id="projectInfo">
@@ -415,7 +415,7 @@
         </div>
 
         <!--GROUP Legal Case-->
-        <div class="accordion-item border border-0">
+        <div class="accordion-item border-0">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyLegalCaseGroup" aria-expanded="true"
@@ -424,14 +424,14 @@
                 </button>
             </h2>
             <div id="accordionBodyLegalCaseGroup" class="accordion-collapse collapse">
-                <div class="accordion-body border rounded mt-3 mb-3">
+                <div class="accordion-body mt-3 mb-3">
                     <pure-legal-case-form [legal_case_form]="legalCase"></pure-legal-case-form>
                 </div>
             </div>
         </div>
 
         <!--GROUP Sources-->
-        <div class="accordion-item border border-0 mb-3">
+        <div class="accordion-item border-0 mb-3">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodySourcesGroup" aria-expanded="true"
@@ -442,7 +442,7 @@
             <div id="accordionBodySourcesGroup" class="accordion-collapse collapse">
                 <ng-container formArrayName="sources">
                     @for (source of sources.controls; track source; let sourcesIndex = $index) {
-                    <div class="accordion-body border rounded mt-3 mb-3">
+                    <div class="accordion-body mt-3 mb-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label for="sources" class="col-sm-2 col-form-label col-form-label-sm">{{sourcesIndex + 1}}.
                                 Source</label>

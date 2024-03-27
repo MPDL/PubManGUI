@@ -1,9 +1,8 @@
 .side_nav {
-    bottom: 45%;
     left: 10%;
     position: fixed;
     top: 14%;
-    width: 250px;
+    width: 11.5em;
     z-index: 16;
     overflow: hidden;
     /*
@@ -26,13 +25,12 @@
   }
 
   .side_nav_mobile {
-    left: 1vh;
+    left: 0.5vh;
     position: fixed;
-    top: 1vh;
-    width: 250px;
+    top: 2vh;
+    width: 12em;
     z-index: 16;
     overflow: hidden;
-    background-color: whitesmoke;
     margin-left: 0px;
     /*
     -webkit-transition: all 0.25s ease-in-out;

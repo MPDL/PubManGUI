@@ -1,55 +1,213 @@
 [data-bs-theme=light] {
-    --bs-link-color: #{$gray-700};
-    --bs-link-hover-color: #{$mpdl-iseo1};
+ /*
+    --bs-body-color: #{$mpg-gray}; // text color
+    --bs-body-bg: #{$body-bg};
+    --bs-body-secondary-color: #{$body-secondary-color};
+    --bs-body-secondary-bg: #{$body-secondary-bg};
+    --bs-body-tertiary-bg: #{$body-tertiary-bg};
+    --bs-link-color: #{$mpg-gray};
+*/
+    --accent-bg-color: #{$mpg-slate-gray-0};
+    --accent-text-color: #{$mpg-light-gray};
+    --accent-color-1: #{$mpg-slate-gray-0};
+    --accent-color-2: #{lighten($mpg-slate-gray-0, 10% )};
+    --accent-color-3: #{lighten($mpg-slate-gray-0, 20% )};
+    --accent-color-contrast: #{$mpg-light-gray};
 
-    .form-control,
-    .form-select {
-        // background-color: #{shade-color($body-bg, 2%)};
-        background-color: #{$body-tertiary-bg};
+    .accordion {
+        .accordion-item {
+
+            .accordion-button {
+                color: #{$mpg-light-gray};
+                background-color: #{$mpg-blue};
+            }
+
+            .accordion-body {
+                background: #{$body-secondary-bg};
+
+                input {
+                    background-color: #{$body-tertiary-bg};
+                }
+
+                textarea {
+                    background-color: #{$body-tertiary-bg};
+                }
+
+                select {
+                    background-color: #{$body-tertiary-bg};
+                }
+            }
+        }
     }
 
-    .form-control:focus,
-    .form-select:focus {
-        background-color: #{$body-bg};
-        border-color: #{tint-color($secondary, 10%)};
+    .badge-blue {
+        background-color: $mpdl-iseo1;
+    }
+    
+    .badge-green {
+        background-color: $mpdl-iseo2;
+    }
+    
+    .badge-yellow {
+        background-color: $mpdl-iseo3;
+    }
+
+    .cdk-drag-preview {
+        background: #{$mpdl-iseo1};
+        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
     }
 
     .dropdown-item {
         --bs-dropdown-link-hover-bg: var(--bs-gray-200);
     }
+    
+    .form-control,
+    .form-select {
+        // background-color: #{shade-color($background-content, 2%)};
+        background-color: #{$body-tertiary-bg};
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: $body-secondary-bg;
+        border-color: #{tint-color($secondary, 10%)};
+    }
+
+    .header_color {
+        background-color: $body-secondary-bg;
+    }
+
+    .highlight {
+        color: $yellow-200;
+        background-color: $gray-600;
+    }
+    
+    .highlighted {
+        color: black;
+        background-color: $gray-400;
+        // transform: translateX(.5rem);
+    }
 
     .list-group {
-        --bs-list-group-action-hover-bg: var(--bs-secondary-bg);
+        --bs-list-group-action-hover-bg: #{$body-tertiary-bg};
+    }
+
+    .list-item-bg {
+        background-color: $mpg-bg-gray;
     }
 
     .mat-mdc-chip.mat-mdc-standard-chip {
         --mdc-chip-container-height: 24px;
-        background-color: whitesmoke;
+        background-color: $body-secondary-bg;
         border: 1px solid lightgray;
     }
 
-    .header_color {
-        background-color: $mpdl-iseo4;
+    .overlay-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .pure-dialog .cdk-dialog-container {
+        background: $body-bg;
     }
 
-    .list-item-bg {
-        background-color: $mpdl-iseo4;
+    .scroll-to-top {
+        color: $mpg-secondary-blue;
     }
 
-    --main-title-text-color: #{$mpg-blue};  
-    --accent-color-1: #{$mpg-slate-gray-0};
-    --accent-color-2: #{lighten($mpg-slate-gray-0, 10% )};     
-    --accent-color-3: #{lighten($mpg-slate-gray-0, 20% )}; 
-    --accent-color-contrast: #{$mpg-light-gray};
+    .side_nav_mobile {
+        background-color: $body-secondary-bg;
+    }
 }
 
 [data-bs-theme=dark] {
-    --bs-link-color: #{$gray-300};
-    --bs-link-hover-color: #{$mpdl-iseo1};
 
-    .nav-pills {
-        --bs-nav-pills-link-active-color: #{$gray-100};
-        --bs-nav-pills-link-active-bg: #{$gray-700};
+    // $mpg-blue is possible but $body-bg-dark not why?
+    --bs-primary:               #{$mpg-light-gray};
+    --bs-primary-rgb:           246,246,246; // rgb($mpg-light-gray)
+    --bs-secondary:             #{$mpg-bg-gray};
+    --bs-secondary-rgb:         238,238,238; // rgb($mpg-bg-gray)
+    // --bs-body-bg:               #{$mpg-slate-gray-0};
+    // --bs-secondary-bg:          #{$mpg-slate-gray-1};
+    // --bs-tertiary-bg:           #{$mpg-slate-gray-2};
+    --bs-body-color:            #{$body-color-dark}; // text color
+    --bs-body-secondary-color:  #{$body-secondary-color-dark}; // text color
+    --bs-body-tertiary-color:   #{body-tertiary-color-dar}; // text color
+    --bs-link-color:            #{$body-color-dark};
+    --bs-link-hover-color:      #{$body-tertiary-color-dark};
+    /* 
+    // NOT Working: variables from _variables_pure.scss
+    --bs-primary:               #{$body-color-dark};
+    --bs-primary-rgb:           246,246,246; // rgb($body-color-dark)
+    --bs-secondary:             #{$body-secondary-color-dark};
+    --bs-secondary-rgb:         238,238,238; // rgb($body-secondary-color-dark)
+    --bs-body-bg:               #{$body-bg-dark};
+    --bs-secondary-bg:          #{$body-secondary-bg-dark};
+    --bs-tertiary-bg:           #{$body-tertiary-bg-dark};
+    --bs-body-color:            #{$body-color-dark}; // text color
+    --bs-body-secondary-color:  #{$body-secondary-color-dark}; // text color
+    --bs-body-tertiary-color:   #{body-tertiary-color-dar}; // text color
+    --bs-link-color:            #{$body-color-dark};
+    --bs-link-hover-color:      #{$body-tertiary-color-dark};
+    */
+
+    --accent-color-1: #{$mpg-slate-gray-1};
+    --accent-color-2: #{lighten($mpg-slate-gray-1, 10% )};
+    --accent-color-3: #{lighten($mpg-slate-gray-1, 20% )};
+    --accent-color-contrast: #{$mpg-light-gray};
+
+    .accordion {
+
+        .accordion-item {
+
+            .accordion-header {
+                color: #{$body-color-dark};
+                background-color: #{$body-tertiary-color-dark};
+            }
+
+            .accordion-button {
+                color: var(--accent-color-contrast);
+                background-color: #{$mpg-blue};
+            }
+
+            .accordion-body {
+                background: #{$body-secondary-bg-dark};
+
+                input {
+                    background-color: #{$body-tertiary-bg-dark};
+                }
+
+                textarea {
+                    background-color:#{$body-tertiary-bg-dark};
+                }
+
+                select {
+                    background-color: #{$body-tertiary-bg-dark};
+                }
+            }
+        }
+    }
+
+    .badge-blue {
+        background-color: $mpdl-iseo1;
+    }
+    
+    .badge-green {
+        background-color: $mpdl-iseo2;
+    }
+    
+    .badge-yellow {
+        background-color: $mpdl-iseo3;
+    }
+
+    .cdk-drag-preview {
+        background: #{$mpg-bg-gray};
+        box-shadow: 0 5px 5px -3px rgba(238,238,238, 0.2),
+        0 8px 10px 1px rgba(238,238,238, 0.14),
+    }
+
+    .dropdown-item {
+        --bs-dropdown-link-hover-bg: #{$body-secondary-color-dark};
     }
 
     .form-control,
@@ -60,16 +218,33 @@
 
     .form-control:focus,
     .form-select:focus {
-        background-color: #{$body-bg-dark};
+        background-color: #{$body-secondary-bg-dark};
         border-color: #{tint-color($info, 10%)};
     }
 
-    .dropdown-item {
-        --bs-dropdown-link-hover-bg: var(--bs-gray-700);
+    .header_color {
+        // background-color: $mpdl-iseo5;
+        background-color: $body-secondary-bg-dark;
+    }
+
+    .highlight {
+        color: $yellow-200;
+        background-color: $gray-600;
+    }
+    
+    .highlighted {
+        color: black;
+        background-color: $gray-400;
+        // transform: translateX(.5rem);
     }
 
     .list-group {
         --bs-list-group-action-hover-bg: var(--bs-gray-700);
+    }
+
+    .list-item-bg {
+        // background-color: $mpdl-iseo5;
+        background-color: $body-tertiary-bg-dark;
     }
 
     .mat-mdc-chip.mat-mdc-standard-chip {
@@ -78,19 +253,20 @@
         border: 1px solid gray;
     }
 
-    .header_color {
-        // background-color: $mpdl-iseo5;
-        background-color: $body-tertiary-bg-dark;
+    .overlay-backdrop {
+        background-color: rgba(238,238,238, 0.5);
     }
 
-    .list-item-bg {
-        // background-color: $mpdl-iseo5;
-        background-color: $body-tertiary-bg-dark;
+    .pure-dialog .cdk-dialog-container {
+        background: var(--bs-body-bg);
     }
 
-    --main-title-text-color: #{$mpdl-light};
-    --accent-color-1: #{$mpg-slate-gray-1};
-    --accent-color-2: #{lighten($mpg-slate-gray-1, 10% )};     
-    --accent-color-3: #{lighten($mpg-slate-gray-1, 20% )}; 
-    --accent-color-contrast: #{$mpg-light-gray};
+    .scroll-to-top {
+        color: $mpg-bg-gray;
+    }
+
+    .side_nav_mobile {
+        background-color: $body-secondary-bg-dark;
+    }
+
 }
