@@ -10,12 +10,16 @@
         <ul class="pagination pagination-sm">
             <li class="page-item" [ngClass]="{'disabled': pagination.isFirst}">
                 <button class="page-link" (click)="pagination.first()" [disabled]="pagination.isFirst">
-                    First
+                    <span class="material-symbols-outlined">
+                        first_page
+                    </span>
                 </button>
             </li>
             <li class="page-item" [ngClass]="{'disabled': pagination.isFirst}">
                 <button class="page-link" (click)="pagination.prev()" [disabled]="pagination.isFirst">
-                    Previous
+                    <span class="material-symbols-outlined">
+                        navigate_before
+                    </span>
                 </button>
             </li>
             @for (page of select_pages(pagination.totalPages); track page; let i = $index) {
@@ -34,12 +38,16 @@
             }
             <li class="page-item" [ngClass]="{'disabled': pagination.isLast}">
                 <button class="page-link" (click)="pagination.next()" [disabled]="pagination.isLast">
-                    Next
+                    <span class="material-symbols-outlined">
+                        navigate_next
+                    </span>
                 </button>
             </li>
             <li class="page-item" [ngClass]="{'disabled': pagination.isLast}">
                 <button class="page-link" (click)="pagination.last()" [disabled]="pagination.isLast">
-                    Last
+                    <span class="material-symbols-outlined">
+                        last_page
+                    </span>
                 </button>
             </li>
         </ul>
