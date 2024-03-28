@@ -10,8 +10,6 @@
 <input class="form-control" type="text" [formControl]="formForPersonsName"
        [ngbTypeahead]="suggestPersons"
        (selectItem)="suggestPersonsSelector($event)"
-       [resultFormatter]="suggestPersonsFormatter"
-       [inputFormatter]="suggestPersonsFormatter"
        [resultTemplate]="personAutosuggestTemplate"
        [readonly]="formForPersonsId && formForPersonsId.value"
        placeholder="Start typing..."

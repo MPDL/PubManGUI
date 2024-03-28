@@ -255,6 +255,25 @@
 
       </div>
     </div>
+
+    <!--
+    <div [formGroup]="genreListFormGroup">
+      <div formGroupName="genres">
+        <ul class="list-group" style="max-height:200px">
+      @for (currentGenre of genreListKeys; track currentGenre; let i = $index; ) {
+        <li class="list-group-item">
+          <input id="genre" class="form-check-input" type="checkbox"
+                 formControlName="currentGenre"/>
+          <label class="form-check-label" for="genre">{{currentGenre}}</label>
+        </li>
+      }
+        </ul>
+      </div>
+
+
+    </div>
+    -->
+
   </form>
 
   @if (result) {

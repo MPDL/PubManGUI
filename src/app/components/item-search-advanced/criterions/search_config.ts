@@ -28,6 +28,7 @@ export enum DisplayType {
   CLASSIFICATION,
   DATE,
   ENUM,
+  GENRELIST,
   OPERATOR,
   PARENTHESIS
 }
@@ -173,6 +174,10 @@ export const searchTypes : searchTypesI = {
   },
   state: {
     displayType: DisplayType.ENUM,
+    handlerClass: StateSearchCriterion
+  },
+  genreList: {
+    displayType: DisplayType.GENRELIST,
     handlerClass: StateSearchCriterion
   },
   and: {

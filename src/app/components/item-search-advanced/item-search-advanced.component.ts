@@ -30,6 +30,7 @@ import {SelectorComponent} from "../../shared/components/selector/selector.compo
 import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 import {OuAutosuggestComponent} from "../../shared/components/ou-autosuggest/ou-autosuggest.component";
 import {PersonAutosuggestComponent} from "../../shared/components/person-autosuggest/person-autosuggest.component";
+import {GenreListSearchCriterion} from "./criterions/GenreListSearchCriterion";
 
 
 @Component({
@@ -54,6 +55,8 @@ export class ItemSearchAdvancedComponent {
   currentlyOpenedParenthesis!: Parenthesis | undefined;
   possibleCriterionsForClosingParenthesisMap: SearchCriterion[] = []
   protected readonly DisplayType = DisplayType;
+
+  genreListFormGroup: GenreListSearchCriterion = new GenreListSearchCriterion();
 
   constructor(
     private router: Router,
@@ -99,6 +102,11 @@ export class ItemSearchAdvancedComponent {
 
   get searchTypes(): searchTypesI {
     return searchTypes;
+  }
+
+  get genreListKeys(): string[] {
+    return Object.keys((this.genreListFormGroup.get('content')?.get('genres') as FormGroup).controls);
+    //return this.genreListFormGroup as FormGroup;
   }
 
 

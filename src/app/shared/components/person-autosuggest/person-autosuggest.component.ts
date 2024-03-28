@@ -65,12 +65,6 @@ export class PersonAutosuggestComponent {
       tap(() => (this.searching = false)),
     );
 
-  suggestPersonsFormatter= (person: any) => {
-    //console.log("setOU" + JSON.stringify(ou));
-    if (typeof person === 'object')
-      return person.value
-    return person;
-  }
 
   suggestPersonsSelector= (event: any) => {
     //console.log("setOU" + JSON.stringify(event));
