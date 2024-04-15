@@ -15,9 +15,11 @@
       "prefix": "pure",
       "architect": {
         "build": {
+
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/pub-man-gui",
+            "baseHref" :"/pubman-gui/browser",
+            "outputPath": "dist/pubman-gui",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
