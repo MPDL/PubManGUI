@@ -11,6 +11,7 @@
         .accordion {
 
             .accordion-item {
+
                 /*
                 .accordion-button {
                     color: var(--accent-color-contrast);
@@ -23,16 +24,16 @@
             }
 
             .header_second_color {
- 
+
                 .accordion-button {
-                    background-color: color-mix(in hsl,var(--accent-bg-color),white 10%) !important;
+                    background-color: color-mix(in hsl, var(--accent-bg-color), white 10%) !important;
                 }
             }
 
             .header_third_color {
 
                 .accordion-button {
-                    background-color: color-mix(in hsl,var(--accent-bg-color),white 20%) !important;
+                    background-color: color-mix(in hsl, var(--accent-bg-color), white 20%) !important;
                 }
             }
 
@@ -64,14 +65,23 @@
         }
 
         .form-control::placeholder {
-            color: color-mix(in srgb,var(--main-title-text-color),white 15%);
+            color: color-mix(in srgb, var(--main-title-text-color), white 15%);
             font-style: italic;
-          }
+        }
     }
 
     .logs {
-        tr {
-            height: 3em;
-          }
+
+        table {
+            border-spacing: 4em !important;
+
+            th, td {
+                padding: 1em;
+            }
+
+            tbody {
+                background-color: var(--accent-color-contrast);
+            }
+        }
     }
 }

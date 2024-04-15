@@ -4,14 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import * as resp from '../../../interfaces/actions-responses';
+import * as resp from 'src/app/components/batch/interfaces/actions-responses';
 
-import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule, NgbTypeaheadModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { BatchProcessMessages, ItemVersionVO, BatchProcessLogDetailState } from 'src/app/model/inge';
 import { ItemsService } from 'src/app/services/items.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
 
 type detail = {
  'item': resp.getBatchProcessLogDetailsResponse, 
@@ -23,9 +25,10 @@ type detail = {
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     NgbTypeaheadModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    StateFilterPipe
   ],
   templateUrl: './log-item-list.component.html',
 })
@@ -85,7 +88,12 @@ export class LogItemListComponent implements OnInit, DoCheck {
 
   localeMessages = this.messagesEn;
 
-  constructor(private bs: BatchService, private activatedRoute: ActivatedRoute, private router: Router, private is: ItemsService, private message: MessageService) {}
+  public filterForm: FormGroup = this.fb.group({
+    success: [true, Validators.requiredTrue],
+    fail: [true, Validators.requiredTrue],
+  });
+
+  constructor(private bs: BatchService, private activatedRoute: ActivatedRoute, private router: Router, private is: ItemsService, private message: MessageService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
 
@@ -104,7 +112,7 @@ export class LogItemListComponent implements OnInit, DoCheck {
                 { 
                   this.detailLogs.push({item: element, title: actionResponse.metadata?.title});
                   this.collectionSize++;
-                  if(element.state === BatchProcessLogDetailState.ERROR) this.failed++; // TO-DO enum
+                  if(element.state === BatchProcessLogDetailState.ERROR) this.failed++;
                   return 
                 })
             );
@@ -156,6 +164,17 @@ export class LogItemListComponent implements OnInit, DoCheck {
     this.bs.items = toFill;
     const msg = `${ toFill.length } items to batch!\n`;
     this.message.info(msg);
+  }
+
+  refreshFilters():BatchProcessLogDetailState[] {
+    const filteredStatus = [];
+    if (this.filterForm.get('success')?.value) {
+      filteredStatus.push(BatchProcessLogDetailState.SUCCESS); // TO-DO enhance with valid enum values
+    }
+    if (this.filterForm.get('fail')?.value) {
+      filteredStatus.push(BatchProcessLogDetailState.ERROR);
+    }
+    return filteredStatus;
   }
 
 }

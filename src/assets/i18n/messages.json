@@ -6,6 +6,8 @@
     "batch.log.details.fill.all": "Fill batch with all items from the log",
     "batch.log.details.fill.errors": "Fill batch with errors only",
     "batch.log.details.failed": "failed",
-    "batch.log.details.succeded": "succeded"
+    "batch.log.details.succeded": "succeded",
+    "batch.log.details.filter.failed": "Show failed items",
+    "batch.log.details.filter.succeded": "Show successful items"
   }
 }

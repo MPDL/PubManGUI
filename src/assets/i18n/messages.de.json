@@ -6,6 +6,8 @@
     "batch.log.details.fill.all": "Alle Datensätze übernehmen",
     "batch.log.details.fill.errors": "Nur Fehler übernehmen",
     "batch.log.details.failed": "fehlgeschlagen",
-    "batch.log.details.succeded": "erfolgreich"
+    "batch.log.details.succeded": "erfolgreich",
+    "batch.log.details.filter.failed": "Fehlgeschlagene Items anzeigen",
+    "batch.log.details.filter.succeded": "Erfolgreiche Items anzeigen"
   }
 }
