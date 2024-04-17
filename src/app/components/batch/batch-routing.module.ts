@@ -4,8 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'list',
-    redirectTo: '/list',
+    path: 'datasets',
+    loadComponent: () => import('./datasets/datasets.component')
+    .then(m => m.DatasetsComponent),
   },
   {
     path: 'actions',
@@ -24,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'actions',
+    redirectTo: 'datasets',
     pathMatch: 'full',
   }
 ];

@@ -8,6 +8,8 @@
     "batch.log.details.failed": "fehlgeschlagen",
     "batch.log.details.succeded": "erfolgreich",
     "batch.log.details.filter.failed": "Fehlgeschlagene Items anzeigen",
-    "batch.log.details.filter.succeded": "Erfolgreiche Items anzeigen"
+    "batch.log.details.filter.succeded": "Erfolgreiche Items anzeigen",
+    "pagination.page": "Seite",
+    "pagination.of": "von"
   }
 }

@@ -18,10 +18,12 @@ export class BatchService {
 
   private ouList: resp.ipList[] = [];
 
+  private savedSelection = "datasets-checked";
+
   constructor(private http: HttpClient, public aa: AaService) { }
 
   get items(): any {
-    const itemList = sessionStorage.getItem('item_list');
+    const itemList = sessionStorage.getItem(this.savedSelection);
     if (itemList) { 
       return JSON.parse(itemList); 
     } else {
@@ -31,7 +33,7 @@ export class BatchService {
   }
 
   set items(items: string[]) {
-    sessionStorage.setItem('item_list', JSON.stringify(items));
+    sessionStorage.setItem(this.savedSelection, JSON.stringify(items));
   }
 
   get token(): string | null {

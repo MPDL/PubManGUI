@@ -8,9 +8,33 @@
     <h4>Log</h4>
   </div>
 
-  <div class="offset-sm-5 col-2 d-flex justify-content-between p-4 ">
-    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-      (pageChange)="refreshLogs()">
+  <div class="offset-sm-5 col-2 d-flex justify-content-between p-4">
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="refreshLogs()">
+      <ng-template ngbPaginationPages let-page let-pages="pages">
+        @if (pages.length > 0) {
+          <li class="ngb-custom-pages-item">
+            <div class="mb-3 d-flex flex-nowrap px-2">
+              <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
+              <input
+                #i
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                class="form-control custom-pages-input"
+                id="paginationInput"
+                [value]="page"
+                (keyup.enter)="selectPage(i.value)"
+                (blur)="selectPage(i.value)"
+                (input)="formatInput($any($event).target)"
+                aria-labelledby="paginationInputLabel paginationDescription"
+                style="width: 2.5rem"
+                max="collectionSize/pageSize"
+              />
+              <span id="paginationDescription" class="col-form-label text-nowrap px-2"> of {{ pages.length }}</span>
+            </div>
+          </li>
+        }
+      </ng-template>
     </ngb-pagination>
 
     <!--select class="form-select w-auto d-none d-lg-block" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
@@ -36,18 +60,18 @@
       <tbody>
         @for (log of inPage; track log.batchLogHeaderId) {
           <tr class="border-bottom">
-            <td>
+            <td class="col-2">
               {{ log.state | titlecase }}
             </td>
-            <td>
+            <td class="col-7">
               {{ log.method | titlecase }}
             </td>
-            <td>
+            <td class="col-2">
               {{ log.endDate | date: 'short' }}
             </td>
-            <td>
+            <td class="col-1">
               <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]" [state]="{ method: log.method, started: log.startDate }">
-                <span class="material-symbols-outlined text-secondary">
+                <span class="material-symbols-outlined text-secondary ms-3">
                   info
                 </span>
               </a>

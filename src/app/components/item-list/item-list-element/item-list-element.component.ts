@@ -1,7 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { ItemVersionVO } from 'src/app/model/inge';
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverDirective } from 'src/app/shared/directives/popover.directive';
 import { Subscription } from 'rxjs';
@@ -21,9 +21,11 @@ export class ItemListElementComponent {
   authenticated = false;
 
   router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   check_box = new FormControl(false);
   check_box_subscription: Subscription = new Subscription();
+  savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
 
   no_name = 'n/a';
 
@@ -37,7 +39,7 @@ export class ItemListElementComponent {
       this.check_box.setValue(this.getStoredCheckBoxState(objectId));
       this.check_box_subscription =
         this.check_box.valueChanges.subscribe(val => {
-          const item_list = sessionStorage.getItem('item_list');
+          const item_list = sessionStorage.getItem(this.savedSelection);
           
           let items: string[] = [];
           if (item_list) {
@@ -51,7 +53,7 @@ export class ItemListElementComponent {
               items.splice(items.indexOf(objectId), 1);
           }
           
-          sessionStorage.setItem('item_list', JSON.stringify(items));
+          sessionStorage.setItem(this.savedSelection, JSON.stringify(items));
         });
     }
   }
@@ -83,7 +85,7 @@ export class ItemListElementComponent {
   }
 
   getStoredCheckBoxState(objectId: string): boolean {
-    const item_list = sessionStorage.getItem('item_list');
+    const item_list = sessionStorage.getItem(this.savedSelection);
 
     let items: string[] = [];
     if (item_list) {

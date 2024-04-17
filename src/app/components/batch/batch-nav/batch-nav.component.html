@@ -2,7 +2,7 @@
     <div class="position-absolute start-50 translate-middle nav-bottom-10">
         <ul class="nav justify-content-center">
             <li *ngFor="let option of navList" [routerLink]="[ option.route ]" routerLinkActive="active"
-                class="nav-item btn btn-outline-secondary px-3 py-2 m-2 shadow-lg"
+                class="nav-item btn btn-outline-secondary rounded-pill border-5 m-2 shadow-lg fw-bold"
                 data-bs-toggle="button">{{ option.text }}
             </li>
         </ul>

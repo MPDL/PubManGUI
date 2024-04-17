@@ -28,6 +28,6 @@ export class LogsComponent implements OnInit {
   constructor(private bs: BatchService, private message: MessageService) { }
 
   ngOnInit(): void {    
-    // this.batchProcessLogHeaderId = this.bs.batchProcessLogHeaderId ? this.bs.batchProcessLogHeaderId : 278; // DEBUG
+
   }
 }

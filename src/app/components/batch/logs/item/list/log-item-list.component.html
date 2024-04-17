@@ -10,18 +10,45 @@
 
       <div class="row">
         <div class="col-sm-6 d-flex justify-content-between py-4">
-          <button class="btn btn-outline-secondary" i18n="@@batch.log.details.fill.all" (click)="fillWithAll()">Fill
-            batch
-            with all items from the log</button>
+          <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.log.details.fill.all" 
+            (click)="fillWithAll()">
+            Fill batch with all items from the log
+          </button>
           <div *ngIf="failed > 0">
-            <button class="btn btn-outline-secondary" i18n="@@batch.log.details.fill.errors"
-              (click)="fillWithFailed()">Fill batch with errors only</button>
+            <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.log.details.fill.errors"
+              (click)="fillWithFailed()">
+              Fill batch with errors only
+            </button>
           </div>
         </div>
 
         <div class="offset-sm-4 col-2 d-flex justify-content-between py-4">
-          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-            (pageChange)="refreshLogs()">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="refreshLogs()">
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              @if (pages.length > 0) {
+                <li class="ngb-custom-pages-item border-0">
+                  <div class="mb-3 d-flex flex-nowrap px-2">
+                    <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1" i18n="@@pagination.page">Page</label>
+                    <input
+                      #i
+                      type="text"
+                      inputmode="numeric"
+                      pattern="[0-9]*"
+                      class="form-control custom-pages-input"
+                      id="paginationInput"
+                      [value]="page"
+                      (keyup.enter)="selectPage(i.value)"
+                      (blur)="selectPage(i.value)"
+                      (input)="formatInput($any($event).target)"
+                      aria-labelledby="paginationInputLabel paginationDescription"
+                      style="width: 2.5rem"
+                      max="collectionSize/pageSize"
+                    />
+                    <span id="paginationDescription" class="col-form-label text-nowrap px-2"><span i18n="@@pagination.of"> of </span> {{ pages.length }} </span>
+                  </div>
+                </li>
+              }
+            </ng-template>
           </ngb-pagination>
 
           <!--select class="form-select w-auto d-none d-lg-block" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
@@ -67,7 +94,7 @@
               <!--@for (log of inPage; track log.item.itemObjectId | filter:refreshFilters():'state'") {
               -->
                 <tr class="border-bottom" *ngFor="let log of inPage | stateFilter:refreshFilters():'state'">
-                  <td>
+                  <td class="col-1">
                     <span>{{ log.item.state | titlecase }}</span>
                   </td>
                   <td>
@@ -85,13 +112,13 @@
 
         <div class="col-lg-2 d-none d-lg-block">
           <form [formGroup]="filterForm">
-            <div class="form-check">
+            <div class="form-check" *ngIf="(collectionSize - failed) > 0">
               <input class="form-check-input" type="checkbox" id="success" formControlName="success" checked>
               <label class="form-check-label" for="success" i18n="@@batch.log.details.filter.succeded">
                 Show successful items
               </label>
             </div>
-            <div class="form-check">
+            <div class="form-check" *ngIf="failed > 0">
               <input class="form-check-input" type="checkbox" value="" id="faile" formControlName="fail" checked>
               <label class="form-check-label" for="fail" i18n="@@batch.log.details.filter.failed">
                 Show failed items

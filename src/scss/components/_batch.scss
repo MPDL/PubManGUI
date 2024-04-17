@@ -1,8 +1,18 @@
 .batch {
 
-    .batch-nav {
+    .batch-nav {     
+
         .nav-bottom-10 {
+            position: fixed !important;
             bottom: 8%;
+            z-index: 9;
+        }
+    }
+
+    .datasets {
+
+        pure-topnav {
+            display: none;
         }
     }
 

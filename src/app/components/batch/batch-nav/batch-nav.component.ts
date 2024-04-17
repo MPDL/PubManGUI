@@ -18,7 +18,7 @@ interface NavOption {
 export class BatchNavComponent {
   
   public navList: NavOption[] = [
-    { route: '/list', text: 'Datasets' },
+    { route: '/batch/datasets', text: 'Datasets' },
     { route: '/batch/actions', text: 'Actions' },
     { route: '/batch/logs', text: 'Logs' },
   ];

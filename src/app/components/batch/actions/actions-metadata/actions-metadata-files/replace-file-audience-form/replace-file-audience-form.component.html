@@ -17,7 +17,7 @@
               </option>
             </select>
             <button (click)="onAddToNewAudiences()" class="input-group-text" type="button">
-                <i class="bi bi-plus-lg"></i>
+              <span class="material-symbols-outlined">add</span>
             </button>
           </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="input-group">
               <input [formControlName]="i" class="form-control" readonly>
               <button (click)="onDeleteAudience( i )" class="input-group-text" type="button">
-                <i class="bi bi-dash-lg"></i>
+                <span class="material-symbols-outlined">remove</span>
               </button>
             </div>
 

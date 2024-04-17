@@ -15,6 +15,8 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
 
+const FILTER_PAG_REGEX = /[^0-9]/g;
+
 type detail = {
  'item': resp.getBatchProcessLogDetailsResponse, 
  'title': string
@@ -134,6 +136,14 @@ export class LogItemListComponent implements OnInit, DoCheck {
       (this.page - 1) * this.pageSize + this.pageSize,
     );
   }
+
+  selectPage(page: string) {
+		this.page = parseInt(page, this.pageSize) || 1;
+	}
+
+	formatInput(input: HTMLInputElement) {
+		input.value = input.value.replace(FILTER_PAG_REGEX, '');
+	}
 
   goBack(): void {
     this.router.navigateByUrl('/batch/logs');
