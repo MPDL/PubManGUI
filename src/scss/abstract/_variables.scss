@@ -4,7 +4,9 @@
 
 /// Regular font family
 /// @type List
-$text-font-stack: 'Merriweather300', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$text-font-stack: 'Roboto300', "Segoe UI", 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+
+$headings-font-family: 'Merriweather300', 'Times New Roman', Times, serif;
 
 /// Code (monospace) font family
 /// @type List
