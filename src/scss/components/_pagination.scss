@@ -1,13 +1,23 @@
-
 .mpdl-pagination {
     font-size: 0.875rem;
-    vertical-align: top;
+
+    button {
+        padding: 0 0.1em;
+        vertical-align: baseline;
+    }
 
     input {
-        padding: 0 0 0 0;
+        padding: 0.1em 0.1em;
         width: 3em;
         display: inline;
         text-align: center;
+    }
+
+    select {
+        margin-left: 1em;
+        padding: 0.1em 0.1em;
+        width: 4em;
+        display: inline;
     }
 
 }
