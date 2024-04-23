@@ -28,7 +28,7 @@
             .accordion-body {
                 background: #{$body-secondary-bg};
 
-                input {
+                input:not([type=checkbox]) {
                     background-color: #{$body-tertiary-bg};
                 }
 
