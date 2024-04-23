@@ -9,6 +9,7 @@
     --bs-body-tertiary-bg: #{$body-tertiary-bg};
     --bs-link-color: #{$mpg-gray};
 */
+
     --accent-bg-color: #{$mpg-slate-gray-0};
     --accent-text-color: #{$mpg-light-gray};
     --accent-color-1: #{$mpg-slate-gray-0};
@@ -109,6 +110,10 @@
 
     .nav-link {
         color: var(--bs-nav-link-color);
+    }
+
+    .nav-link:hover {
+        color: var(--bs-nav-link-hover-color);
     }
 
     .mat-mdc-chip.mat-mdc-standard-chip {
