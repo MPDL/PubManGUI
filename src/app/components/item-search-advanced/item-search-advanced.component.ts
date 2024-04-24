@@ -56,7 +56,7 @@ export class ItemSearchAdvancedComponent {
   possibleCriterionsForClosingParenthesisMap: SearchCriterion[] = []
   protected readonly DisplayType = DisplayType;
 
-  genreListFormGroup: GenreListSearchCriterion = new GenreListSearchCriterion();
+  genreListSearchCriterion = new GenreListSearchCriterion();
 
   constructor(
     private router: Router,
@@ -68,6 +68,8 @@ export class ItemSearchAdvancedComponent {
     this.searchForm = this.fb.group({
       fields: this.fb.array([])
     });
+
+    this.genreListSearchCriterion = new GenreListSearchCriterion();
 
     this.fields.push(new TitleSearchCriterion());
     this.fields.push(new LogicalOperator("and"));
@@ -105,7 +107,7 @@ export class ItemSearchAdvancedComponent {
   }
 
   get genreListKeys(): string[] {
-    return Object.keys((this.genreListFormGroup.get('content')?.get('genres') as FormGroup).controls);
+    return Object.keys((this.genreListSearchCriterion.get('content')?.get('genres') as FormGroup).controls);
     //return this.genreListFormGroup as FormGroup;
   }
 
@@ -501,9 +503,17 @@ export class ItemSearchAdvancedComponent {
 
   }
 
+
+  prepareQuery() {
+    const searchCriterions = this.fields.controls.map(fc => fc as SearchCriterion);
+    searchCriterions.push(new LogicalOperator("and"));
+    searchCriterions.push(this.genreListSearchCriterion);
+    return searchCriterions
+  }
+
   search() {
-    const searchCriterions = this.fields.controls.map(fc => fc as SearchCriterion)
-    this.scListToElasticSearchQuery(searchCriterions)
+
+    this.scListToElasticSearchQuery(this.prepareQuery())
       .subscribe(query =>
         this.router.navigateByUrl('/list', {onSameUrlNavigation: 'reload', state: {query}})
       );
@@ -515,7 +525,6 @@ export class ItemSearchAdvancedComponent {
   }
 
   show_query() {
-    const searchCriterions = this.fields.controls.map(fc => fc as SearchCriterion)
-    this.scListToElasticSearchQuery(searchCriterions).subscribe(query => this.query = query);
+    this.scListToElasticSearchQuery(this.prepareQuery()).subscribe(query => this.query = query);
   }
 }
