@@ -234,7 +234,8 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
-                                    <select id="reviewMethod" class="form-select form-select-sm" formControlName="reviewMethod">
+                                    <select id="reviewMethod" class="form-select form-select-sm"
+                                        formControlName="reviewMethod">
                                         <option [value]="null" selected disabled>Review Method</option>
                                         @for (rm of review_method_types; track rm) {
                                         <option [value]="rm">{{rm}}</option>
@@ -388,29 +389,33 @@
                 </button>
             </h2>
             <div id="accordionBodyProjectInfoGroup" class="accordion-collapse collapse">
-                <div class="accordion-body mt-3 mb-3">
-                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                        <label for="projectInfos" class="col-sm-2 col-form-label col-form-label-sm">Project Info</label>
-                        <div class="col-sm" id="projectInfo">
-                            <ng-container formArrayName="projectInfo">
-                                @for (projectInfoElement of projectInfo.controls; track projectInfoElement; let
-                                projectInfoIndex =
-                                $index) {
+
+                <ng-container formArrayName="projectInfo">
+                    @for (projectInfoElement of projectInfo.controls; track projectInfoElement; let
+                    projectInfoIndex =
+                    $index) {
+                    <div class="accordion-body mt-3 mb-3">
+                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                            <label for="projectInfos" class="col-sm-2 col-form-label col-form-label-sm">{{projectInfoIndex + 1}}. Project-Info</label>
+                            <div class="col-sm" id="projectInfo">
                                 <ng-container [formGroupName]="projectInfoIndex">
                                     <pure-project-info-form [project_info_form]="projectInfoElement"
                                         [index]="projectInfoIndex" [multi]="true"
                                         [index_length]="projectInfo.controls.length"
                                         (notice)="handleProjectInfoNotification($event)"></pure-project-info-form>
                                 </ng-container>
-                                }
-                                @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add projectInfo'"
-                                    (notice)="handleProjectInfoNotification($event)"></pure-add-remove-buttons>
-                                }
-                            </ng-container>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    }
+                    @empty {
+                    <div class="accordion-body mt-3 mb-3">
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add projectInfo'"
+                            (notice)="handleProjectInfoNotification($event)"></pure-add-remove-buttons>
+                    </div>
+                    }
+                </ng-container>
+
             </div>
         </div>
 
@@ -456,8 +461,10 @@
                         </div>
                     </div>
                     } @empty {
-                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add source'"
-                        (notice)="handleSourceNotification($event)"></pure-add-remove-buttons>
+                    <div class="accordion-body mt-3 mb-3">
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add source'"
+                            (notice)="handleSourceNotification($event)"></pure-add-remove-buttons>
+                    </div>
                     }
                 </ng-container>
             </div>

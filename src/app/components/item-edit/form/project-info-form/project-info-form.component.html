@@ -1,19 +1,13 @@
 <div [formGroup]="project_info_form" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-            <label for="project-info" class="col-sm-2 col-form-label col-form-label-sm">{{index + 1}}. Project-Info</label>
-            <div class="col-sm"></div>
-            <div class="col-sm-1">
-                <pure-add-remove-buttons [index]="index"
-                    (notice)="add_remove_projectInfo($event)"></pure-add-remove-buttons>
-            </div>
-        </div>
-        <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
                 <label class="col-sm-2 col-form-label col-form-label-sm">Project Name</label>
                 <input type="text" class="form-control form-control-sm" formControlName="title">
             </div>
-            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+            <div class="col-sm-1">
+                <pure-add-remove-buttons [index]="index"
+                    (notice)="add_remove_projectInfo($event)"></pure-add-remove-buttons>
             </div>
         </div>
         <div [formGroup]="grantIdentifier" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
