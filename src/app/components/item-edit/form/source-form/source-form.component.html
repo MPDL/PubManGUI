@@ -72,6 +72,8 @@
     <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label class="col-sm-2 col-form-label col-form-label-sm">Identifiers</label>
+    </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm">
             <ng-container formArrayName="identifiers">
                 @for (identifier of identifiers.controls; track identifier; let identifierIndex = $index) {
@@ -81,6 +83,7 @@
                         (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
                 </ng-container>
                 }
+                
                 @empty {
                 <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add identifier'"
                     (notice)="handleIdentifierNotification($event)"></pure-add-remove-buttons>
