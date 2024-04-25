@@ -39,7 +39,7 @@ export class GenreListSearchCriterion extends SearchCriterion {
   }
 
   override isEmpty(): boolean {
-    return Object.keys(this.genreFormGroup.controls).some(genre => this.genreFormGroup.get(genre)?.value == 'true');
+    return !Object.keys(this.genreFormGroup.controls).some(genre => this.genreFormGroup.get(genre)?.value);
   }
 
   override toElasticSearchQuery(): Observable<Object | undefined> {

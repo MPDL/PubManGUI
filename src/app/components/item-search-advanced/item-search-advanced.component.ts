@@ -1,36 +1,26 @@
-import {Component, Input} from '@angular/core';
-import {
-  AbstractControl,
-  Form,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule
-} from "@angular/forms";
-import {AaService} from "../../services/aa.service";
+import {Component} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
-import {ConeService} from "../../services/cone.service";
 
-import {AsyncPipe, JsonPipe, NgFor, NgIf} from "@angular/common";
+import {JsonPipe, NgFor, NgIf} from "@angular/common";
 
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
 import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
 import {Parenthesis, PARENTHESIS_TYPE} from "./criterions/operators/Parenthesis";
 import {CreatorRole, IdType, MdsPublicationGenre} from "../../model/inge";
-import {KeywordSearchCriterion, TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
+import {TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
 import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
 import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
-import {OrganizationsService} from "../../services/organizations.service";
-import {debounceTime, distinctUntilChanged, forkJoin, map, Observable, OperatorFunction, switchMap, tap} from "rxjs";
+import {forkJoin, map, tap} from "rxjs";
 import {OptionDirective} from "../../shared/components/selector/directives/option.directive";
 import {PureOusDirective} from "../../shared/components/selector/services/pure_ous/pure-ous.directive";
 import {SelectorComponent} from "../../shared/components/selector/selector.component";
-import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 import {OuAutosuggestComponent} from "../../shared/components/ou-autosuggest/ou-autosuggest.component";
 import {PersonAutosuggestComponent} from "../../shared/components/person-autosuggest/person-autosuggest.component";
 import {GenreListSearchCriterion} from "./criterions/GenreListSearchCriterion";
+import {PublicationStateSearchCriterion} from "./criterions/PublicationStateSearchCriterion";
+import {COMPONENT_SEARCH_TYPES, FileSectionSearchCriterion} from "./criterions/FileSectionSearchCriterion";
 
 
 @Component({
@@ -57,6 +47,11 @@ export class ItemSearchAdvancedComponent {
   protected readonly DisplayType = DisplayType;
 
   genreListSearchCriterion = new GenreListSearchCriterion();
+  publicationStateSearchCriterion = new PublicationStateSearchCriterion();
+  fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
+  //locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
+  //fileContentCategorySearchCriterion = new ComponentContentCategorySearchCriterion();
+  //locatorContentCategorySearchCriterion = new ComponentContentCategorySearchCriterion();
 
   constructor(
     private router: Router,
@@ -68,8 +63,6 @@ export class ItemSearchAdvancedComponent {
     this.searchForm = this.fb.group({
       fields: this.fb.array([])
     });
-
-    this.genreListSearchCriterion = new GenreListSearchCriterion();
 
     this.fields.push(new TitleSearchCriterion());
     this.fields.push(new LogicalOperator("and"));
@@ -350,10 +343,16 @@ export class ItemSearchAdvancedComponent {
       }
     }
     //Join all subquery-creations
-    return forkJoin(cleanedScList.map(sc => sc.toElasticSearchQuery()))
+    return forkJoin(cleanedScList.map(sc => {
+      const query = sc.toElasticSearchQuery();
+      console.log("Calling " + sc.type + query);
+      return query;
+    }))
+
       //Set query in every search criterion object
       .pipe(tap(queries => cleanedScList.forEach((sc, i) => {
-        sc.query = queries[i]
+        console.log("Transforming list to queries " + sc.type + " -- " + JSON.stringify(queries[i]));
+        sc.query = queries[i];
       })))
 
       //when everything is ready, create complete query
@@ -369,6 +368,7 @@ export class ItemSearchAdvancedComponent {
 
     //SearchCriterionBase.logger.debug("Call with list: " + scList);
 
+    console.log("Transforming list to queries " + queries)
     if (scList.length == 0) {
       return {match_all: {}};
     }
@@ -506,8 +506,32 @@ export class ItemSearchAdvancedComponent {
 
   prepareQuery() {
     const searchCriterions = this.fields.controls.map(fc => fc as SearchCriterion);
+    searchCriterions.unshift(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS));
+
     searchCriterions.push(new LogicalOperator("and"));
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
     searchCriterions.push(this.genreListSearchCriterion);
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS));
+    searchCriterions.push(new LogicalOperator("and"));
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
+    searchCriterions.push(this.publicationStateSearchCriterion);
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS));
+
+
+    searchCriterions.push(new LogicalOperator("and"));
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
+    searchCriterions.push(this.fileSectionSearchCriterion);
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS));
+    /*
+    searchCriterions.push(new LogicalOperator("and"));
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
+    searchCriterions.push(this.locatorSectionSearchCriterion);
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS));
+
+     */
+
+
     return searchCriterions
   }
 

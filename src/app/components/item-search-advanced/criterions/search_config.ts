@@ -18,6 +18,9 @@ import {
   PersonSearchCriterion
 } from "./StringOrHiddenIdSearchCriterion";
 import {GenreSearchCriterion, ReviewMethodSearchCriterion, StateSearchCriterion} from "./EnumSearchCriterion";
+import {GenreListSearchCriterion} from "./GenreListSearchCriterion";
+import {PublicationStateSearchCriterion} from "./PublicationStateSearchCriterion";
+import {COMPONENT_SEARCH_TYPES, FileSectionSearchCriterion} from "./FileSectionSearchCriterion";
 
 
 export enum DisplayType {
@@ -28,7 +31,7 @@ export enum DisplayType {
   CLASSIFICATION,
   DATE,
   ENUM,
-  GENRELIST,
+  EXTERNAL_BLOCKS,
   OPERATOR,
   PARENTHESIS
 }
@@ -177,9 +180,22 @@ export const searchTypes : searchTypesI = {
     handlerClass: StateSearchCriterion
   },
   genreList: {
-    displayType: DisplayType.GENRELIST,
-    handlerClass: StateSearchCriterion
+    displayType: DisplayType.EXTERNAL_BLOCKS,
+    handlerClass: GenreListSearchCriterion
   },
+  publicationStateList: {
+    displayType: DisplayType.EXTERNAL_BLOCKS,
+    handlerClass: PublicationStateSearchCriterion
+  },
+  [COMPONENT_SEARCH_TYPES.FILES]: {
+    displayType: DisplayType.EXTERNAL_BLOCKS,
+    handlerClass: FileSectionSearchCriterion
+  },
+  [COMPONENT_SEARCH_TYPES.LOCATORS]: {
+    displayType: DisplayType.EXTERNAL_BLOCKS,
+    handlerClass: FileSectionSearchCriterion
+  },
+
   and: {
     displayType: DisplayType.OPERATOR,
     handlerClass: LogicalOperator

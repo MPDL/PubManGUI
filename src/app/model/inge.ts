@@ -636,3 +636,18 @@ export enum AlternativeTitleType {
     OTHER = "OTHER",
 }
 
+export enum ContentCategories {
+  any_fulltext="http://purl.org/escidoc/metadata/ves/content-categories/any-fulltext",
+  pre_print="http://purl.org/escidoc/metadata/ves/content-categories/pre-print",
+  post_print="http://purl.org/escidoc/metadata/ves/content-categories/post-print",
+  publisher_version="http://purl.org/escidoc/metadata/ves/content-categories/publisher-version",
+  abstract="http://purl.org/escidoc/metadata/ves/content-categories/abstract",
+  table_of_contents="http://purl.org/escidoc/metadata/ves/content-categories/table-of-contents",
+  supplementary_material="http://purl.org/escidoc/metadata/ves/content-categories/supplementary-material",
+  correspondence="http://purl.org/escidoc/metadata/ves/content-categories/correspondence",
+  copyright_transfer_agreement="http://purl.org/escidoc/metadata/ves/content-categories/copyright-transfer-agreement",
+  research_data="http://purl.org/escidoc/metadata/ves/content-categories/research-data",
+  multimedia="http://purl.org/escidoc/metadata/ves/content-categories/multimedia",
+  code="http://purl.org/escidoc/metadata/ves/content-categories/code"
+}
+
