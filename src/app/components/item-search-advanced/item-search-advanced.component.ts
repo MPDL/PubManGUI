@@ -21,13 +21,14 @@ import {PersonAutosuggestComponent} from "../../shared/components/person-autosug
 import {GenreListSearchCriterion} from "./criterions/GenreListSearchCriterion";
 import {PublicationStateSearchCriterion} from "./criterions/PublicationStateSearchCriterion";
 import {COMPONENT_SEARCH_TYPES, FileSectionSearchCriterion} from "./criterions/FileSectionSearchCriterion";
+import {FileSectionComponent} from "./file-section-component/file-section-component.component";
 
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss'
