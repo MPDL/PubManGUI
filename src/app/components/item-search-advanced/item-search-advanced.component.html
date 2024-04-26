@@ -1,3 +1,22 @@
+@if(searchHistory.length) {
+<div class="container mb-4">
+  <div class="row">
+    Search history:
+    <div class="col">
+      <select class="form-select" (change)="applySearchFromHistory(searchHistorySelect.value)" #searchHistorySelect>
+        <option value="">
+          -
+        </option>
+        @for (savedSearch of searchHistory; track savedSearch; let i = $index;) {
+          <option [value]="i">
+            {{ savedSearch.title + ' '+ (savedSearch.date | date:'yyyy-MM-dd HH:mm:ss')}}
+          </option>
+        }
+      </select>
+    </div>
+  </div>
+</div>
+}
 <div class="accordion">
   <form [formGroup]="searchForm" (ngSubmit)="search()">
     <div class="accordion-item border-0">
@@ -10,9 +29,9 @@
         </button>
       </h2>
       <div id="accordionBodyStandardGroup" class="accordion-collapse collapse show">
-        <div formArrayName="fields" class="accordion-body mt-3 mb-3">
+        <div formArrayName="flexibleFields" class="accordion-body mt-3 mb-3">
 
-          @for (currentFormGroup of fields.controls; track currentFormGroup; let i = $index; ) {
+          @for (currentFormGroup of flexibleFields.controls; track currentFormGroup; let i = $index; ) {
 
             <div [formGroupName]="i" class="d-sm-flex flex-sm-row gap-1 mb-3 align-items-center"
                  style="margin-left: {{$any(currentFormGroup).level * 15}}px">
@@ -329,15 +348,15 @@
     <div class="btn-grid mt-2">
 
       <button type="button" class="btn btn-sm btn-outline-primary"
-              [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="search()">
+              [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="search()">
         search
       </button>
       <button type="button" class="btn btn-sm btn-outline-info"
-              [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="show_form()">
+              [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
         show form
       </button>
       <button type="button" class="btn btn-sm btn-outline-dark"
-              [disabled]="searchForm.invalid || fields.controls.length === 0" (click)="show_query()">
+              [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
         show query
       </button>
 

@@ -33,7 +33,7 @@ export const routes: Routes = [
       },
       {
         path: 'as2', component: ItemSearchAdvancedComponent, data: {
-          saveComponent: true
+          //saveComponent: true
         }
       },
       {

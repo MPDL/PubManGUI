@@ -24,6 +24,12 @@ export class FileSectionSearchCriterion extends SearchCriterion {
   constructor(fileType: COMPONENT_SEARCH_TYPES) {
     super(fileType);
     this.content.addControl("component_available", new FormControl("WHATEVER"));
+    this.content.addControl("fields", new FormArray([
+      this.componentVisibilitySearchCriterion,
+      this.embargoDateSearchCriterion,
+      this.componentContentCategorySearchCriterion,
+      this.oaStatusSearchCriterion
+    ]));
     this.componentContentCategorySearchCriterion.content.disable();
     this.componentVisibilitySearchCriterion.content.disable();
     this.embargoDateSearchCriterion.content.disable();
@@ -70,7 +76,7 @@ export class FileSectionSearchCriterion extends SearchCriterion {
                 break;
               }
               case "NO" : {
-                boolQuery['mustNot'] = [baseElasticSearchQueryBuilder("files.storage", this.type)];
+                boolQuery['must_not'] = [baseElasticSearchQueryBuilder("files.storage", this.type)];
                 break;
               }
               case "WHATEVER" : {

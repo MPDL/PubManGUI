@@ -46,6 +46,9 @@ export interface searchTypeI {
 }
 
 
+/**
+ * Directory for flexible search criterions of the advanced search
+ */
 export const searchTypes : searchTypesI = {
   title: {
     displayType: DisplayType.STANDARD,
@@ -179,23 +182,6 @@ export const searchTypes : searchTypesI = {
     displayType: DisplayType.ENUM,
     handlerClass: StateSearchCriterion
   },
-  genreList: {
-    displayType: DisplayType.EXTERNAL_BLOCKS,
-    handlerClass: GenreListSearchCriterion
-  },
-  publicationStateList: {
-    displayType: DisplayType.EXTERNAL_BLOCKS,
-    handlerClass: PublicationStateSearchCriterion
-  },
-  [COMPONENT_SEARCH_TYPES.FILES]: {
-    displayType: DisplayType.EXTERNAL_BLOCKS,
-    handlerClass: FileSectionSearchCriterion
-  },
-  [COMPONENT_SEARCH_TYPES.LOCATORS]: {
-    displayType: DisplayType.EXTERNAL_BLOCKS,
-    handlerClass: FileSectionSearchCriterion
-  },
-
   and: {
     displayType: DisplayType.OPERATOR,
     handlerClass: LogicalOperator

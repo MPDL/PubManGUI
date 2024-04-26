@@ -53,7 +53,7 @@ export class OuAutosuggestComponent {
     );
 
   suggestOusFormatter= (ou: any) => {
-    console.log("setOU" + JSON.stringify(ou));
+    //console.log("setOU" + JSON.stringify(ou));
     if (typeof ou === 'object')
       return ou.namePath.join(', ');
     return ou;
