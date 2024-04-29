@@ -1,3 +1,4 @@
+import { ChecksumAlgorithm } from './../../../../../.history/src/app/model/inge_20240328161343';
 import { Component, Input, inject } from '@angular/core';
 import { ItemVersionVO } from 'src/app/model/inge';
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
@@ -36,30 +37,15 @@ export class ItemListElementComponent {
   ngAfterViewInit() {
     if (this.item?.objectId) {
       const objectId = this.item.objectId;
-      this.check_box.setValue(this.getStoredCheckBoxState(objectId));
+      this.check_box.setValue(false);
       this.check_box_subscription =
         this.check_box.valueChanges.subscribe(val => {
-          const item_list = sessionStorage.getItem(this.savedSelection);
-          
-          let items: string[] = [];
-          if (item_list) {
-            items = JSON.parse(item_list);
-          }
-          if (val) {
-            if (items.indexOf(objectId) < 0) {
-              items.push(objectId);
-            }
-          } else {
-              items.splice(items.indexOf(objectId), 1);
-          }
-          
-          sessionStorage.setItem(this.savedSelection, JSON.stringify(items));
+          this.setStoredCheckBoxState(this.check_box.value as boolean);
         });
     }
   }
 
   get abstract() {
-
     if (this.item && this.item?.metadata?.abstracts?.length > 0) {
       return this.item?.metadata.abstracts[0].value;
     } else {
@@ -84,13 +70,26 @@ export class ItemListElementComponent {
     this.router.navigate(['edit', this.item?.objectId])
   }
 
-  getStoredCheckBoxState(objectId: string): boolean {
-    const item_list = sessionStorage.getItem(this.savedSelection);
+  setStoredCheckBoxState(isChecked: boolean) {
+    let fromSelection: string[] = [];
+    if (sessionStorage.getItem(this.savedSelection)) {
+      fromSelection = JSON.parse(sessionStorage.getItem(this.savedSelection) as string);
+    } 
 
-    let items: string[] = [];
-    if (item_list) {
-      items = JSON.parse(item_list);
+    if (fromSelection.length > 0) {
+      const pos = fromSelection.indexOf(this.item?.objectId as string);
+      if (pos < 0) {
+        if (isChecked) {
+          fromSelection.push(this.item?.objectId as string);      }
+      } else {
+        if (!isChecked) {
+          fromSelection.splice(pos, 1);
+        }
+      }
+    } else {
+      if (isChecked) fromSelection.push(this.item?.objectId as string); 
     }
-    return items.indexOf(objectId) < 0 ? false : true;
+
+    sessionStorage.setItem(this.savedSelection, JSON.stringify(fromSelection));
   }
 }

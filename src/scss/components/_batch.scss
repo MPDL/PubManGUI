@@ -11,8 +11,27 @@
 
     .datasets {
 
-        pure-topnav {
-            display: none;
+        #topnav {
+
+            nav:nth-child(1),
+            .nav-link:nth-of-type(2n),
+            .nav-link:nth-of-type(3n),
+            .nav-link:nth-of-type(4n),
+            .nav-link:nth-of-type(7n)
+            {
+                display: none;
+            }
+        }
+
+        pure-item-list {
+            
+            .row:nth-of-type(2n) {
+
+                .col-lg-3 {
+                    display: none !important;
+                }
+
+            }
         }
     }
 

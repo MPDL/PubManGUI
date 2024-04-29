@@ -8,6 +8,7 @@ import * as resp from '../interfaces/actions-responses';
 
 import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';
+import { ItemVersionVO } from 'src/app/model/inge';
 
 @Injectable({
   providedIn: 'root'
@@ -18,25 +19,41 @@ export class BatchService {
 
   private ouList: resp.ipList[] = [];
 
-  private savedSelection = "datasets-checked";
+  datasetList = "dataset-list";
+  savedSelection = "datasets-checked";
 
   constructor(private http: HttpClient, public aa: AaService) { }
 
-  get items(): any {
-    const itemList = sessionStorage.getItem(this.savedSelection);
+  addToBatchDatasets(selection: string) {
+    const fromSelection = sessionStorage.getItem(selection);
+    let datasets: string[] = this.items;
+    if( fromSelection ) {
+      this.items = datasets.concat(JSON.parse(fromSelection).filter((element: string) => !datasets.includes(element)));
+    }
+  }
+
+  removeFromBatchDatasets(selection: string) {
+      const fromSelection = sessionStorage.getItem(selection);
+      let datasets: string[] = this.items;
+      if( fromSelection ) {
+        this.items = datasets.filter((element: string) => !fromSelection.includes(element));
+      }
+  }
+
+  get items(): string[] {
+    const itemList = sessionStorage.getItem(this.datasetList);
     if (itemList) { 
       return JSON.parse(itemList); 
     } else {
-      return null;
-      // throw new Error('Please, select items to be processed!');
+      return [] as string[];
     }
   }
 
   set items(items: string[]) {
-    sessionStorage.setItem(this.savedSelection, JSON.stringify(items));
+    sessionStorage.setItem(this.datasetList, JSON.stringify(items));
   }
 
-  get token(): string | null {
+  get token(): string | undefined {
     const token = this.aa.token ? this.aa.token : undefined;
     if (token) {
       return token; 
@@ -75,6 +92,13 @@ export class BatchService {
       .set('Authorization', this.token!);
     const url  = `${ this.baseUrl }/miscellaneous/getIpList`;
     return this.http.get<resp.ipList[]>(url, { headers });
+  }
+
+  getItem(id: string):Observable<ItemVersionVO> {
+    const headers = new HttpHeaders()
+      .set('Authorization', this.token!);
+    const url  = `${ this.baseUrl }/items/${id}`;
+    return this.http.get<ItemVersionVO>(url, { headers });
   }
 
   getAllBatchProcessLogHeaders():Observable<resp.BatchProcessLogHeaderDbVO[]> {

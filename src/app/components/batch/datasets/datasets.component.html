@@ -3,8 +3,95 @@
 
   <div class="datasets pt-4 mt-5">
     <div class="mt-5 fs-6">
-      <pure-item-list></pure-item-list>
-    </div>
-  </div>
 
-</div>
+      <div class="row align-items-center top_nav_pos bg-body">
+        <div class="col-lg-8 ps-0 d-flex justify-content-between py-4">
+
+          <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.datasets.remove"
+            (click)="removeChecked()">
+            Remove checked items
+          </button>
+
+          <div>
+            <small>{{current_page}} / {{number_of_pages}}</small>
+          </div>
+
+          <nav purePagination #pagination="purePagination" [totalPages]="number_of_pages"
+            [pageNo]="current_page" (pageChange)="onPageChange($event)">
+            <ul class="pagination pagination-sm">
+              <li class="page-item" [ngClass]="{'disabled': pagination.isFirst}">
+                <button class="page-link" (click)="pagination.first()" [disabled]="pagination.isFirst">
+                  <span class="material-symbols-outlined">
+                    first_page
+                  </span>
+                </button>
+              </li>
+              <li class="page-item" [ngClass]="{'disabled': pagination.isFirst}">
+                <button class="page-link" (click)="pagination.prev()" [disabled]="pagination.isFirst">
+                  <span class="material-symbols-outlined">
+                    navigate_before
+                  </span>
+                </button>
+              </li>
+              @for (page of select_pages(pagination.totalPages); track page; let i = $index) {
+              <li class="page-item">
+                @if (isNumber(page)) {
+                <button class="page-link" (click)="onPageChange(page+1)">
+                  {{page+1}}
+                </button>
+                }
+                @if (!isNumber(page)) {
+                <button class="page-link">
+                  {{page}}
+                </button>
+                }
+              </li>
+              }
+              <li class="page-item" [ngClass]="{'disabled': pagination.isLast}">
+                <button class="page-link" (click)="pagination.next()" [disabled]="pagination.isLast">
+                  <span class="material-symbols-outlined">
+                    navigate_next
+                  </span>
+                </button>
+              </li>
+              <li class="page-item" [ngClass]="{'disabled': pagination.isLast}">
+                <button class="page-link" (click)="pagination.last()" [disabled]="pagination.isLast">
+                  <span class="material-symbols-outlined">
+                    last_page
+                  </span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-9 col-sm-12">
+            @if (result_list | async; as list) {
+            <div class="card">
+              <div class="card-header">
+                <div class="form-check ms-4">
+                  <input #input [formControl]="select_all" class="form-check-input" type="checkbox" value=""
+                    id="form_check" (change)="select_all_items($event)">
+                  <label for="form_check"><small
+                      [innerHTML]="input.checked ? 'deselect all' : 'select all'"></small></label>
+                </div>
+              </div>
+              <div class="list-group list-group-flush">
+                @for (item of list; track item; let last = $last) {
+                <div class="list-group-item py-0">
+                  <pure-item-list-element [item]="item" [last_item]="last"
+                    [authenticated]="aa.isLoggedIn"></pure-item-list-element>
+                </div>
+                }
+              </div>
+            </div>
+            }
+          </div>
+          <div class="col-lg-3 d-none d-lg-block">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
