@@ -97,12 +97,14 @@ export class ItemSearchAdvancedComponent {
   }
 
   parseFormJson(formJson: any) {
+    //Reset all
+    this.reset();
+
     for (let [key, value] of Object.entries(formJson)) {
 
       if(key === "flexibleFields") {
         //Clear old fields
         this.flexibleFields.clear();
-
         //Recreate flexible search criterions and patch form values
         for (let currentField of (value as any[])) {
           const newSearchCriterion: SearchCriterion = new searchTypes[currentField.type].handlerClass(currentField.type);

@@ -127,6 +127,9 @@
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PERSON) {
                   <div class="col-sm-2" formGroupName="content">
                     <select class="form-select" formControlName="role">
+                      <option value="">
+                        PERSON
+                      </option>
                       @for (val of personOptions; track val) {
                         <option [value]="val">
                           {{ val }}
@@ -170,6 +173,9 @@
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.IDENTIFIER) {
                   <div class="col-sm-3" formGroupName="content">
                     <select class="form-select" formControlName="identifierType">
+                      <option value="">
+                        -
+                      </option>
                       @for (idType of identifierOptions; track idType) {
                         <option [value]="idType">
                           {{ idType }}
