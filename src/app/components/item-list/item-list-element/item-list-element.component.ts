@@ -1,4 +1,3 @@
-import { ChecksumAlgorithm } from './../../../../../.history/src/app/model/inge_20240328161343';
 import { Component, Input, inject } from '@angular/core';
 import { ItemVersionVO } from 'src/app/model/inge';
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
