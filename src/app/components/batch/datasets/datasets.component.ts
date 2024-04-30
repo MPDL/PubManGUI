@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, QueryList, ViewChildren } from '@angular/core';
+import { OnInit, Component, QueryList, ViewChildren } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, throwError, filter, map, startWith, tap, of } from 'rxjs';
+import { Observable, throwError, filter, startWith, of } from 'rxjs';
 
 import { ItemVersionVO } from 'src/app/model/inge';
 import { AaService } from 'src/app/services/aa.service';
@@ -11,7 +11,7 @@ import { BatchService } from '../services/batch.service';
 
 import { PaginationDirective } from 'src/app/shared/directives/pagination.directive';
 import { ItemListElementComponent } from 'src/app/components/item-list/item-list-element/item-list-element.component';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'pure-batch-datasets',
@@ -26,7 +26,7 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
   ],
   templateUrl: './datasets.component.html'
 })
-export class DatasetsComponent implements AfterViewInit { 
+export class DatasetsComponent implements OnInit { 
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
 
   result_list: Observable<ItemVersionVO[]> | undefined;
@@ -57,7 +57,8 @@ export class DatasetsComponent implements AfterViewInit {
     private router: Router
   ) {}
 
-  ngAfterViewInit(): void {
+  //ngAfterViewInit(): void {
+  ngOnInit(): void {    
     console.log("on Datasets");
     this.bs.getBatchProcessUserLock().subscribe({
       next: () => this.isProcessing = true,
@@ -89,7 +90,6 @@ export class DatasetsComponent implements AfterViewInit {
         this.bs.getItem(element).subscribe(actionResponse => results.push(actionResponse));   
       }
     };
-    console.log(JSON.stringify(results));
     this.result_list = of(results);
   }
 
@@ -134,20 +134,9 @@ export class DatasetsComponent implements AfterViewInit {
   }
 
   removeChecked() {
-      // const checked_list = JSON.parse(sessionStorage.getItem(this.bs.savedSelection) as string);
-      // if (checked_list) {
-      //  console.log("Remove checked items: \n" + checked_list);
-      //  let item_list: string[] = this.bs.items;
-      //  console.log("from: \n" + item_list);
-      //  for(var element of item_list) { 
-      //    if (element) {
-            this.bs.removeFromBatchDatasets(this.bs.savedSelection);
-      //    }
-      //  };
-        this.items(this.bs.items);
-      //  console.log("result: \n" + item_list);
-      sessionStorage.removeItem(this.bs.savedSelection);
-      // }
+    this.bs.removeFromBatchDatasets(this.bs.savedSelection);
+    this.items(this.bs.items);
+    sessionStorage.removeItem(this.bs.savedSelection);
   }
 
 }

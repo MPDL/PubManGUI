@@ -88,52 +88,46 @@ export class BatchService {
   // public updateContext(event: any) {}
 
   getIpList():Observable<resp.ipList[]> {
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
     const url  = `${ this.baseUrl }/miscellaneous/getIpList`;
+    const headers = new HttpHeaders().set('Authorization', this.token!);
     return this.http.get<resp.ipList[]>(url, { headers });
   }
 
   getItem(id: string):Observable<ItemVersionVO> {
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
     const url  = `${ this.baseUrl }/items/${id}`;
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+    console.log("getItem " + url + " " + JSON.stringify(headers));
     return this.http.get<ItemVersionVO>(url, { headers });
   }
 
   getAllBatchProcessLogHeaders():Observable<resp.BatchProcessLogHeaderDbVO[]> {
     const url  = `${ this.baseUrl }/batchProcess/getAllBatchProcessLogHeaders`;
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
-      return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { headers });
-  }
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+    return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { headers });
+  } 
 
   getBatchProcessLogHeaderId(batchLogHeaderId: number):Observable<resp.BatchProcessLogHeaderDbVO> {
     const url  = `${ this.baseUrl }/batchProcess/${ batchLogHeaderId }`;
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
-      return this.http.get<resp.BatchProcessLogHeaderDbVO>(url, { headers });
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+    return this.http.get<resp.BatchProcessLogHeaderDbVO>(url, { headers });
   }
 
   getBatchProcessLogDetails(batchProcessLogDetailId: number):Observable<resp.getBatchProcessLogDetailsResponse[]> {
     const url  = `${ this.baseUrl }/batchProcess/batchProcessLogDetails/${ batchProcessLogDetailId }`;
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
-      return this.http.get<resp.getBatchProcessLogDetailsResponse[]>(url, { headers });
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+    return this.http.get<resp.getBatchProcessLogDetailsResponse[]>(url, { headers });
   }
 
   getBatchProcessUserLock():Observable<resp.getBatchProcessUserLockResponse> {
     const url  = `${ this.baseUrl }/batchProcess/getBatchProcessUserLock`;
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
-      return this.http.get<resp.getBatchProcessUserLockResponse>(url, { headers, context: ignoredStatuses([404]) });
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+    return this.http.get<resp.getBatchProcessUserLockResponse>(url, { headers, context: ignoredStatuses([404]) });
   }
 
   deleteBatchProcessUserLock():Observable<any> {
     const url  = `${ this.baseUrl }/batchProcess/deleteBatchProcessUserLock/${ this.user }`;
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
-      return this.http.get<any>(url, { headers });
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+    return this.http.get<any>(url, { headers });
   }
 
   deletePubItems(actionParams: params.DeletePubItemsParams): Observable<resp.actionGenericResponse> {

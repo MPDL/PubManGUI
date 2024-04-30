@@ -109,7 +109,7 @@ export class LogItemListComponent implements OnInit, DoCheck {
         if (LOGS.length === 0) return this.router.navigate(['/batch/logs']);
 
         LOGS.sort((a,b) => b.startDate.valueOf() - a.startDate.valueOf())
-          .forEach(element => this.is.getItem(element.itemObjectId)
+          .forEach(element => this.is.getItem(element.itemObjectId, this.bs.token)
             .subscribe( actionResponse => 
                 { 
                   this.detailLogs.push({item: element, title: actionResponse.metadata?.title});
