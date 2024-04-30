@@ -57,6 +57,10 @@
         background-color: $mpdl-iseo3;
     }
 
+  .badge-gray {
+    background-color: $mpg-slate-gray-0;
+  }
+
     .cdk-drag-preview {
         background: #{$mpdl-iseo1};
         box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
@@ -159,7 +163,7 @@
         a:hover path {
             fill: var(--bs-nav-link-hover-color);
         }
-    
+
         a.svg-bg-icon {
             circle {
                 fill: var(--bs-nav-link-color);
@@ -192,7 +196,7 @@
     --bs-body-tertiary-color: #{body-tertiary-color-dar}; // text color
     --bs-link-color: #{$body-color-dark};
     --bs-link-hover-color: #{$body-tertiary-color-dark};
-    /* 
+    /*
     // NOT Working: variables from _variables_pure.scss
     --bs-primary:               #{$body-color-dark};
     --bs-primary-rgb:           246,246,246; // rgb($body-color-dark)
@@ -361,7 +365,7 @@
         a:hover path {
             fill: var(--bs-nav-link-hover-color);
         }
-    
+
         a.svg-bg-icon {
             circle {
                 fill: var(--bs-nav-link-color);
