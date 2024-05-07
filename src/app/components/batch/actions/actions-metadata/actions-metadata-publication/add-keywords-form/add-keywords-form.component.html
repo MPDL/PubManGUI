@@ -1,24 +1,24 @@
 <div class="form-control border-0 p-4 mb-2">
+  <h2 class="m-0">Add Keywords</h2>
+  <div class="mt-2 mb-5">
+    New keywords will be added to any existing values
+  </div>
 
-    <div class="mt-2 mb-5">
-      New keywords will be added to any existing values
+  <form [formGroup]="addKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Additional keywords</label>
+      <div class="col-sm-9">
+        <input class="form-control" formControlName="keywords">
+      </div>
     </div>
 
-    <form [formGroup]="addKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Additional keywords</label>
-        <div class="col-sm-9">
-          <input class="form-control" formControlName="keywords">
-        </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <button type="submit" [disabled]="!addKeywordsForm.valid" class="btn btn-outline-secondary col-1 float-end">
+          Add
+        </button>
       </div>
+    </div>
+  </form>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <button type="submit" [disabled]="!addKeywordsForm.valid" class="btn btn-outline-secondary col-1 float-end">
-            Add
-          </button>
-        </div>
-      </div>
-    </form>
-
-  </div>
+</div>

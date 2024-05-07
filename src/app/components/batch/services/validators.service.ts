@@ -15,7 +15,7 @@ export class ValidatorsService {
       && control.touched;
   }
 
-  notValidFieldInArray(formArray: FormArray, index: number): boolean | null {
+  notValidFieldInArray(formArray: FormArray, index: number) {
     return formArray.controls[index].errors
       && formArray.controls[index].touched;
   }

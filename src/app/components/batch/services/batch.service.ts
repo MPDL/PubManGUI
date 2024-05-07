@@ -96,7 +96,6 @@ export class BatchService {
   getItem(id: string):Observable<ItemVersionVO> {
     const url  = `${ this.baseUrl }/items/${id}`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
-    console.log("getItem " + url + " " + JSON.stringify(headers));
     return this.http.get<ItemVersionVO>(url, { headers });
   }
 

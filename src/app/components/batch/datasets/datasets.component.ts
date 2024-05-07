@@ -57,9 +57,7 @@ export class DatasetsComponent implements OnInit {
     private router: Router
   ) {}
 
-  //ngAfterViewInit(): void {
   ngOnInit(): void {    
-    console.log("on Datasets");
     this.bs.getBatchProcessUserLock().subscribe({
       next: () => this.isProcessing = true,
       error: () => this.isProcessing = false

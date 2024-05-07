@@ -1,51 +1,53 @@
 <div class="form-control border-0 p-4 mb-2">
+  <h2 class="m-0">Review Type</h2>
+  <div class="mt-2 mb-5">
+    The review type in all items will be changed as follows
+  </div>
 
-    <div class="mt-2 mb-5">
-      The review type in all items will be changed as follows
+  <form [formGroup]="changeReviewMethodForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="mb-3 row">
+      <div class="col-sm-3">
+        <label class=" col-form-label">Review types to be replaced</label>
+      </div>
+      <div class="col-sm-9">
+        <select class="form-control form-select" formControlName="reviewMethodFrom">
+          <option value="" selected="selected">-</option>
+          <option *ngFor="let method of reviewMethods" [ngValue]="method">
+            {{method | titlecase}}</option>
+        </select>
+      </div>
     </div>
 
-    <form [formGroup]="changeReviewMethodForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-3 row">
-        <div class="col-sm-3">
-          <label class=" col-form-label">Review types to be replaced</label>
-        </div>
-        <div class="col-sm-9">
-          <select class="form-control form-select" formControlName="reviewMethodFrom">
-            <option value="" selected="selected">-</option>
-            <option *ngFor="let method of reviewMethods" [ngValue]="method">
-              {{method | titlecase}}</option>
-          </select>
-        </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="col-form-label">Replacing review types</label>
       </div>
+      <div class="col-sm-9">
+        <select class="form-control form-select" formControlName="reviewMethodTo">
+          <option value="" selected="selected">-</option>
+          <option *ngFor="let method of reviewMethods" [ngValue]="method">
+            {{method | titlecase}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        <span *ngIf="vs.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])"
+          class="form-text text-danger small">
+          Previous and new review types {{ vs.getFieldError(changeReviewMethodForm) }}
+        </span>
+        &nbsp;
+      </div>
+    </div>
 
-      <div class="row">
-        <div class="col-sm-3">
-            <label class="col-form-label">Replacing review types</label>
-        </div>
-        <div class="col-sm-9">
-          <select class="form-control form-select" formControlName="reviewMethodTo">
-            <option value="" selected="selected">-</option>
-            <option *ngFor="let method of reviewMethods" [ngValue]="method">
-              {{method | titlecase}}</option>
-          </select>
-        </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <button type="submit" [disabled]="!changeReviewMethodForm.valid"
+          class="btn btn-outline-secondary col-1 float-end">
+          Change
+        </button>
       </div>
-      <div class="mb-2 row">
-        <div class="offset-sm-3 col-sm-6">
-            <span *ngIf="vs.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])" class="form-text text-danger small">
-              Previous and new review types {{ vs.getFieldError(changeReviewMethodForm) }}
-            </span>
-            &nbsp;
-        </div>
-      </div>
+    </div>
+  </form>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <button type="submit" [disabled]="!changeReviewMethodForm.valid" class="btn btn-outline-secondary col-1 float-end">
-            Change
-          </button>
-        </div>
-      </div>
-    </form>
-
-  </div>
+</div>

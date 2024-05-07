@@ -4,7 +4,7 @@
     The following tags will be added to all items
   </div>
 
-  <form [formGroup]="addLocalTagsForm" (ngSubmit)="onSubmit()" autocomplete="off">
+  <form [formGroup]="addLocalTagsForm" (ngSubmit)="onSubmit()" autocomplete="off" (keydown.enter)="$event.preventDefault()">
     <div class="row">
       <div class="col-sm-2">
         <label class="col-form-label">New tag</label>

@@ -57,9 +57,13 @@ export class AddLocalTagsFormComponent {
       this.addLocalTagsForm.markAllAsTouched();
       return;
     }
+    if (this.localTag.valid) {
+      this.onAddToNewTags();
+    }
 
     this.bs.addLocalTags(this.addLocalTagsParams).subscribe( actionResponse => console.log(actionResponse));
-    this.addLocalTagsForm.reset();
+    ( this.addLocalTagsForm.controls['localTags'] as FormArray ) = this.fb.array([]);
+    this.addLocalTagsForm.reset;
   }
 
 }

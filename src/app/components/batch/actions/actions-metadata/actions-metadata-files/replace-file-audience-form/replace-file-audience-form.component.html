@@ -1,62 +1,63 @@
 <div class="form-control border-0 p-4 mb-2">
+  <h2 class="m-0">Visibility</h2>
+  <div class="mt-2 mb-5">
+    All files with the visibility "restricted" will be assigned to the following IP
+    range(s)
+  </div>
 
-    <div class="mt-2 mb-5">
-      All files with the visibility "restricted" will be assigned to the following IP
-      range(s)
-    </div>
-
-    <form [formGroup]="replaceFileAudienceForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="row">
-        <div class="col-sm-2">
-          <label class="col-form-label" for="audienceId">Assign IP range</label>
-        </div>
-        <div class="col-sm-10">
-          <div class="input-group">
-            <select class="form-control form-select" [formControl]="audienceId">
-              <option *ngFor="let ou of ous" [ngValue]="ou.name">{{ou.name}}
-              </option>
-            </select>
-            <button (click)="onAddToNewAudiences()" class="input-group-text" type="button">
-              <span class="material-symbols-outlined">add</span>
-            </button>
-          </div>
-        </div>
+  <form [formGroup]="replaceFileAudienceForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="col-form-label" for="audienceId">Assign IP range</label>
       </div>
-      <div class="mb-2 row">
-        <div class="offset-sm-2 col-sm-6">
-          <span *ngIf="vs.notValidField(audienceId)" class="form-text text-danger small">
-            IP range {{ vs.getFieldError(audienceId) }}
-          </span>
-          &nbsp;
-        </div>
-      </div>
-
-      <div class="mb-3 row">
-        <label *ngIf="AudiencesToAdd.length" class="col-sm-2 col-form-label">Selected IP
-          range(s)</label>
-        <div class="col-sm-10" formArrayName="allowedAudienceIds">
-          <div class="mb-1" *ngFor="let range of AudiencesToAdd.controls; let i = index;">
-            <div class="input-group">
-              <input [formControlName]="i" class="form-control" readonly>
-              <button (click)="onDeleteAudience( i )" class="input-group-text" type="button">
-                <span class="material-symbols-outlined">remove</span>
-              </button>
-            </div>
-
-            <span *ngIf="vs.notValidFieldInArray(AudiencesToAdd, i)" class="form-text text-danger small">
-              {{ vs.getFieldError(replaceFileAudienceForm.controls[i]) }}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="offset-sm-9 col-sm-3">
-          <button type="submit" [disabled]="!replaceFileAudienceForm.valid" class="btn btn-outline-secondary col-4 float-end">
-            Assign
+      <div class="col-sm-10">
+        <div class="input-group">
+          <select class="form-control form-select" [formControl]="audienceId">
+            <option *ngFor="let ou of ous" [ngValue]="ou.name">{{ou.name}}
+            </option>
+          </select>
+          <button (click)="onAddToNewAudiences()" class="input-group-text" type="button">
+            <span class="material-symbols-outlined">add</span>
           </button>
         </div>
       </div>
-    </form>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-2 col-sm-6">
+        <span *ngIf="vs.notValidField(audienceId)" class="form-text text-danger small">
+          IP range {{ vs.getFieldError(audienceId) }}
+        </span>
+        &nbsp;
+      </div>
+    </div>
 
-  </div>
+    <div class="mb-3 row">
+      <label *ngIf="AudiencesToAdd.length" class="col-sm-2 col-form-label">Selected IP
+        range(s)</label>
+      <div class="col-sm-10" formArrayName="allowedAudienceIds">
+        <div class="mb-1" *ngFor="let range of AudiencesToAdd.controls; let i = index;">
+          <div class="input-group">
+            <input [formControlName]="i" class="form-control" readonly>
+            <button (click)="onDeleteAudience( i )" class="input-group-text" type="button">
+              <span class="material-symbols-outlined">remove</span>
+            </button>
+          </div>
+
+          <span *ngIf="vs.notValidFieldInArray(AudiencesToAdd, i)" class="form-text text-danger small">
+            {{ vs.getFieldError(replaceFileAudienceForm.controls[i]) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="offset-sm-9 col-sm-3">
+        <button type="submit" [disabled]="!audienceId.valid || !replaceFileAudienceForm.valid"
+          class="btn btn-outline-secondary col-4 float-end">
+          Assign
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

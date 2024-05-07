@@ -43,13 +43,19 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
     return actionParams;
   }
 
-  onSubmit(): void {
+  onSubmit(): void {    
     if (this.replaceFileAudienceForm.invalid) {
       this.replaceFileAudienceForm.markAllAsTouched();
       return;
     }
 
+    if (this.audienceId.valid) {
+      this.onAddToNewAudiences();
+    }
+
     this.bs.replaceFileAudience(this.replaceFileAudienceParams).subscribe( actionResponse => console.log(actionResponse) );
+    ( this.replaceFileAudienceForm.controls['allowedAudienceIds'] as FormArray ) = this.fb.array([]);
+    this.replaceFileAudienceForm.reset;
   }
 
   get AudiencesToAdd() {

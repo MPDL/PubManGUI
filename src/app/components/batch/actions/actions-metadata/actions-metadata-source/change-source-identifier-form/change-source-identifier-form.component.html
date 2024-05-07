@@ -1,5 +1,5 @@
 <div class="form-control border-0 p-4 mb-2">
-
+  <h2 class="m-0">Replace Identifier</h2>
   <div class="mt-2 mb-5">
     The values of specific identifiers (IDs) will be replaced within the sources
   </div>
@@ -49,12 +49,13 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-          <span *ngIf="vs.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])" class="form-text text-danger small">
-              Previous and new identifiers {{ vs.getFieldError(changeSourceIdentifierForm) }}
-          </span>
-          &nbsp;
+        <span *ngIf="vs.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])"
+          class="form-text text-danger small">
+          Previous and new identifiers {{ vs.getFieldError(changeSourceIdentifierForm) }}
+        </span>
+        &nbsp;
       </div>
-  </div>
+    </div>
 
     <div class="row">
       <div class="col-sm-12">

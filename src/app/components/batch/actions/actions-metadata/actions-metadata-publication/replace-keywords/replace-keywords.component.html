@@ -1,29 +1,29 @@
 <div class="form-control border-0 p-4 mb-2">
-
-    <div class="my-2">
-      Keywords will be replaced within the items. You can select between the
-      complete
-      overwriting of all previous contents and the targeted replacement of
-      individual terms
-    </div>
-
-    <form [formGroup]="_chooseMethodForm">
-      <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Choose method</label>
-        <div class="col-sm-3">
-          <select class="form-control form-select" formControlName="keywordsReplaceMethod">
-            <option value="REPLACE_ALL" selected="selected">ALL</option>
-            <option value="REPLACE_BY_VALUE">SPECIFIC VALUE</option>
-          </select>
-        </div>
-      </div>
-    </form>
-
-    <div *ngIf="keywordsReplaceMethod.match('REPLACE_BY_VALUE')">
-        <pure-change-keywords-form></pure-change-keywords-form>
-    </div>
-
-    <div *ngIf="keywordsReplaceMethod.match('REPLACE_ALL')">
-        <pure-replace-keywords-form></pure-replace-keywords-form>
-    </div>
+  <h2 class="m-0">Replace Keywords</h2>
+  <div class="my-2">
+    Keywords will be replaced within the items. You can select between the
+    complete
+    overwriting of all previous contents and the targeted replacement of
+    individual terms
   </div>
+
+  <form [formGroup]="_chooseMethodForm">
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Choose method</label>
+      <div class="col-sm-3">
+        <select class="form-control form-select" formControlName="keywordsReplaceMethod">
+          <option value="REPLACE_ALL" selected="selected">ALL</option>
+          <option value="REPLACE_BY_VALUE">SPECIFIC VALUE</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="keywordsReplaceMethod.match('REPLACE_BY_VALUE')">
+    <pure-change-keywords-form></pure-change-keywords-form>
+  </div>
+
+  <div *ngIf="keywordsReplaceMethod.match('REPLACE_ALL')">
+    <pure-replace-keywords-form></pure-replace-keywords-form>
+  </div>
+</div>
