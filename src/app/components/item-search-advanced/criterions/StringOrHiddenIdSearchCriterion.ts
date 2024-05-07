@@ -1,10 +1,8 @@
 import {SearchCriterion} from "./SearchCriterion";
 import {FormControl, Validators} from "@angular/forms";
 import {baseElasticSearchQueryBuilder, buildDateRangeQuery} from "../../../shared/services/search-utils";
-import {IngeCrudService, SearchResult} from "../../../services/inge-crud.service";
 import {inject} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {OrganizationsService} from "../../../services/organizations.service";
 import {AffiliationDbVO} from "../../../model/inge";
 import {
   catchError,
@@ -18,6 +16,7 @@ import {
   OperatorFunction, switchMap,
   tap
 } from "rxjs";
+import {OrganizationsService} from "../../../services/pubman-rest-client/organizations.service";
 
 
 export abstract class StringOrHiddenIdSearchCriterion extends SearchCriterion {
@@ -153,7 +152,7 @@ export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion
     if (hidden && hidden.trim() && this.content.get("includePredecessorsAndSuccessors")?.value) {
       let idSources: Observable<string | string[]>[] = [of(hidden)];
 
-      idSources.push(OrganizationsService.instance.getOrganization(hidden)
+      idSources.push(OrganizationsService.instance.retrieve(hidden)
         .pipe(
           map(ou => ou.predecessorAffiliations?.map(pa => pa.objectId)))
         .pipe(

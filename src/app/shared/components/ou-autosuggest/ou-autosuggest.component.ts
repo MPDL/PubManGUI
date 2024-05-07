@@ -10,9 +10,9 @@ import {
   switchMap,
   tap
 } from "rxjs";
-import {OrganizationsService} from "../../../services/organizations.service";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {OrganizationsService} from "../../../services/pubman-rest-client/organizations.service";
 
 @Component({
   selector: 'pure-ou-autosuggest',
@@ -37,7 +37,7 @@ export class OuAutosuggestComponent {
       distinctUntilChanged(),
       tap(() => (this.searching = true)),
       switchMap((term) =>
-        this.organizationsService.elastic('/ous', this.ouAutoSuggestElasticQuery(term)).pipe(
+        this.organizationsService.elasticSearch(this.ouAutoSuggestElasticQuery(term)).pipe(
           map(response => {
               return response.hits.hits.map((hit: any) => hit._source);
             }

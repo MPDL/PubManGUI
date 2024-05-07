@@ -1,83 +1,63 @@
 import {Injectable, inject} from '@angular/core';
-import { MessageService } from '../shared/services/message.service';
+
 import {Observable} from 'rxjs';
-import { IngeCrudService } from './inge-crud.service';
-import { AccountUserDbVO, GrantVO } from '../model/inge';
+
 import { OrganizationsService } from './organizations.service';
+import {PubmanGenericRestClientService} from "./pubman-generic-rest-client.service";
+import {AccountUserDbVO, GrantVO} from "../../model/inge";
+import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService extends IngeCrudService{
-  usersPath: string = '/useres';
-  
-  messagesService: MessageService = inject(MessageService);
+export class UsersService extends PubmanSearchableGenericRestClientService<AccountUserDbVO>{
   organizationService: OrganizationsService = inject(OrganizationsService)
 
-  getUser(userId: string, token?: string): Observable<AccountUserDbVO>{
-    const path = this.usersPath + '/' + userId;
-    if(token) {
-      return this.get(path, token);
-    } else {
-      return this.get(path);
-    }
-  }
 
-  createUser(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
-    return this.post(this.usersPath, user, token);
-  }
-
-  updateUser(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
-    const path = this.usersPath + '/' + user.objectId
-    
-    return this.put(path, user, token);
-  }
-
-  deleteUser(user: AccountUserDbVO, token: string ): Observable<Number>{
-    const path = this.usersPath + '/' + user.objectId;
-    return this.delete(path, null, token);
+  constructor() {
+    super('/users');
   }
 
   activate(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
-    const path = this.usersPath + '/' + user.objectId + '/activate';
+    const path = this.subPath + '/' + user.objectId + '/activate';
     const body = user.lastModificationDate;
 
-    return this.put(path, body, token);
+    return this.httpPut(path, body, token);
   }
 
   deactivate(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
-    const path = this.usersPath + '/' + user.objectId + '/deactivate';
+    const path = this.subPath + '/' + user.objectId + '/deactivate';
     const body = user.lastModificationDate;
 
-    return this.put(path, body, token);
+    return this.httpPut(path, body, token);
 
   }
 
   addGrants(user: AccountUserDbVO, grants: GrantVO[], token: string): Observable<AccountUserDbVO> {
-    const path = this.usersPath + '/' + user.objectId + '/add';
+    const path = this.subPath + '/' + user.objectId + '/add';
     const body = JSON.stringify(grants);
 
-    return this.put(path, body, token);
+    return this.httpPut(path, body, token);
   }
 
   removeGrants(user: AccountUserDbVO, grants: GrantVO[], token: string): Observable<AccountUserDbVO> {
-    const path = this.usersPath + '/' + user.objectId + '/remove';
+    const path = this.subPath + '/' + user.objectId + '/remove';
     const body = JSON.stringify(grants);
 
-    return this.put(path, body, token);
+    return this.httpPut(path, body, token);
   }
 
   changePassword(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
-    const path = this.usersPath + '/' + user.objectId + '/password';
+    const path = this.subPath + '/' + user.objectId + '/password';
     const body = user.password;
 
-    return this.put(path, body, token);
+    return this.httpPut(path, body, token);
   }
 
   generateRandomPassword(token: string): Observable<string> {
-    const path = this.usersPath + '/generateRandomPassword';
+    const path = this.subPath + '/generateRandomPassword';
 
-    return this.get(path, token);
+    return this.httpGet(path, token);
   }
 
   /*

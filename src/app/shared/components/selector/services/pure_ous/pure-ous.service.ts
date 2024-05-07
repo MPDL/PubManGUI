@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { ou_suggest } from 'src/app/model/pure_queries';
 import { SelectedValue } from '../selector-datasource.service';
-import { IngeCrudService } from 'src/app/services/inge-crud.service';
+import {OrganizationsService} from "../../../../../services/pubman-rest-client/organizations.service";
 
 export interface OU extends SelectedValue {
   id: string
@@ -14,11 +14,11 @@ export interface OU extends SelectedValue {
 export class PureOusService {
 
   constructor(
-    private service: IngeCrudService,
+    private service: OrganizationsService,
   ) { }
 
   getOUs(val: string) {
-    return this.service.elastic('/ous', ou_suggest(val)).pipe(
+    return this.service.elasticSearch(ou_suggest(val)).pipe(
       map(response => {
         const hits = response.hits.hits;
         const fields = hits.map((hit: any) => hit.fields);

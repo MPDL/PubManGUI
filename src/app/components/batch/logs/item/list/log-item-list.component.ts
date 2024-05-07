@@ -9,16 +9,16 @@ import * as resp from 'src/app/components/batch/interfaces/actions-responses';
 import { NgbPaginationModule, NgbTypeaheadModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { BatchProcessMessages, ItemVersionVO, BatchProcessLogDetailState } from 'src/app/model/inge';
-import { ItemsService } from 'src/app/services/items.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
+import {ItemsService} from "../../../../../services/pubman-rest-client/items.service";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 type detail = {
- 'item': resp.getBatchProcessLogDetailsResponse, 
+ 'item': resp.getBatchProcessLogDetailsResponse,
  'title': string
 }
 
@@ -109,13 +109,13 @@ export class LogItemListComponent implements OnInit, DoCheck {
         if (LOGS.length === 0) return this.router.navigate(['/batch/logs']);
 
         LOGS.sort((a,b) => b.startDate.valueOf() - a.startDate.valueOf())
-          .forEach(element => this.is.getItem(element.itemObjectId, this.bs.token)
-            .subscribe( actionResponse => 
-                { 
+          .forEach(element => this.is.retrieve(element.itemObjectId, this.bs.token)
+            .subscribe( actionResponse =>
+                {
                   this.detailLogs.push({item: element, title: actionResponse.metadata?.title});
                   this.collectionSize++;
                   if(element.state === BatchProcessLogDetailState.ERROR) this.failed++;
-                  return 
+                  return
                 })
             );
 

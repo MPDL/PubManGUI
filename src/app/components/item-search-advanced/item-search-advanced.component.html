@@ -1,14 +1,23 @@
 @if(aaService.isLoggedIn) {
-
-  <script>
-
-  </script>
 <div class="mb-4">
   <div class="dropdown">
   <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="outside" >
     My Saved Searches
   </button>
   <div class="dropdown-menu" >
+    <form >
+      <h5>Save current search</h5>
+      <div class="row mb-4">
+        <div class="col-9">
+          <input type=text class="form-control" id="searchName" [formControl]="savedSearchNameForm" placeholder="Name">
+        </div>
+        <div class="col-3">
+          <button type="button" class="btn btn-primary btn-sm" [disabled]="savedSearchNameForm.invalid || searchForm.invalid" (click)="saveCurrentSearchForm()">Save current</button>
+        </div>
+      </div>
+    </form>
+    <hr class="dropdown-divider">
+        <h5>Saved search forms</h5>
         @for (savedSearch of savedSearches; track savedSearch; let i = $index;) {
           <div class="row mb-2">
            <div class="col-6">
@@ -18,7 +27,7 @@
               {{savedSearch.creationDate | date:'yyyy-MM-dd HH:mm:ss'}}
             </div>
             <div class="col-2">
-              <button class="btn btn-sm btn-secondary" (click)="copySavedSearchLink(savedSearch.objectId)">copy link</button>
+              <button class="btn btn-sm btn-secondary" (click)="copySavedSearchLink(savedSearch.objectId)">Copy link</button>
             </div>
             <div class="col-2">
               <button class="btn btn-sm btn-danger" (click)="deleteSavedSearch(i)">Delete</button>
@@ -27,21 +36,8 @@
           </div>
 
         }
-    <hr class="dropdown-divider">
-    <form >
-    <div class="row">
-
-        <div class="col-9">
-          <label for="searchName" class="form-label">Name</label>
-          <input type=text class="form-control" id="searchName" [formControl]="savedSearchNameForm">
-        </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-primary btn-sm" [disabled]="savedSearchNameForm.invalid || searchForm.invalid" (click)="saveCurrentSearchForm()">Save current</button>
-        </div>
 
 
-    </div>
-    </form>
     </div>
 
 </div>
@@ -281,6 +277,37 @@
       </div>
     </div>
 
+
+
+
+    <!--Item state -->
+    <div class="accordion-item border-0">
+
+      <h2 class="accordion-header">
+        <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#accordionBodyPubStatusGroup" aria-expanded="true"
+                aria-controls="accordionBodyPubStatusGroup">
+          Item Status
+        </button>
+      </h2>
+      <div id="accordionBodyItemStateGroup" class="accordion-collapse collapse show">
+        <div class="accordion-body mt-3 mb-3">
+
+
+          <div class="row mb-3">
+            @for (pubState of itemStateListSearchCriterion.itemStateOptions; track pubState; let i = $index; ) {
+              <div class="col-md-6 col-xxl-4">
+                <div class="form-check">
+                  <input id="pubStateName{{i}}" class="form-check-input" type="checkbox"
+                         [formControl]="$any(itemStateListSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
+                  <label class="form-check-label" for="pubStateName{{i}}">{{ pubState }}</label>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--Genre -->
     <div class="accordion-item border-0">

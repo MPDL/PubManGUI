@@ -15,7 +15,7 @@ export const itemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
         router.navigate(['pure/pure']);
         return EMPTY
     } else {
-        return service.getItem(item_id, undefined).pipe(
+        return service.retrieve(item_id, undefined).pipe(
             mergeMap(item => {
                 if (item) {
                     return of(item);

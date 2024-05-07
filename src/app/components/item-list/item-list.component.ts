@@ -7,8 +7,9 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TopnavComponent } from 'src/app/shared/components/topnav/topnav.component';
 import { Observable, filter, map, startWith, tap } from 'rxjs';
 import { ItemVersionVO } from 'src/app/model/inge';
-import { IngeCrudService } from '../../services/inge-crud.service';
+
 import { AaService } from 'src/app/services/aa.service';
+import {ItemsService} from "../../services/pubman-rest-client/items.service";
 
 @Component({
   selector: 'pure-item-list',
@@ -63,7 +64,7 @@ export class ItemListComponent implements AfterViewInit {
   current_query: any;
 
   constructor(
-    private service: IngeCrudService,
+    private service: ItemsService,
     public aa: AaService,
     private router: Router
   ) { }
@@ -89,7 +90,7 @@ export class ItemListComponent implements AfterViewInit {
   items(body: any) {
     let token = undefined;
     if (this.aa.token) token = this.aa.token;
-    this.result_list = this.service.search('/items', body, token).pipe(
+    this.result_list = this.service.search(body, token).pipe(
       tap(result => {
         this.number_of_results = result.numberOfRecords;
         this.number_of_pages = Math.ceil(this.number_of_results / this.page_size)

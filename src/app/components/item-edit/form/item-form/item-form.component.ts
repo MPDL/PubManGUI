@@ -12,8 +12,8 @@ import { OptionDirective } from 'src/app/shared/components/selector/directives/o
 import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
 import { remove_null_empty, remove_objects } from 'src/app/shared/services/utils_final';
 import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
-import { ContextsService } from 'src/app/services/contexts.service';
 import { AaService } from 'src/app/services/aa.service';
+import {ContextsService} from "../../../../services/pubman-rest-client/contexts.service";
 
 @Component({
   selector: 'pure-item-form',
@@ -43,7 +43,7 @@ export class ItemFormComponent implements OnInit {
     this.contextService.getDepositorContextsForCurrentUser()
       .subscribe(
         contexts => {
-          this.user_contexts = contexts as ContextDbRO[]; console.log('UserContexts: ' + JSON.stringify(this.user_contexts))
+          this.user_contexts = contexts.records.map(sr => sr.data); console.log('UserContexts: ' + JSON.stringify(this.user_contexts))
         }
       );
   }
