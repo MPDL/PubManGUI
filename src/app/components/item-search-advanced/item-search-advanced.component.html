@@ -333,19 +333,20 @@
           </div>
 
           <!--All genres except THESIS -->
-          <div #myElement class="row" *ngFor="let row of getRows(); let i = index">
-              <div class="col-md-6 col-xxl-4" *ngFor="let col of getCols(); let j = index">
-                @if (genreListSearchCriterion.genreOptions[(i + j * getAnzGenreRows())] != 'THESIS'){
+          <div class="row" *ngFor="let row of genreRows; let i = index">
+              <div class="col-md-6 col-xxl-4" *ngFor="let col of genreCols; let j = index">
+                @if (genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] != 'THESIS'){
                     <div class="form-check">
-                        <input id="genreName{{(i + j * getAnzGenreRows())}}" class="form-check-input" type="checkbox"
-                               [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(genreListSearchCriterion.genreOptions[(i + j * getAnzGenreRows())])"/>
-                        <label class="form-check-label" for="genreName{{(i + j * getAnzGenreCols())}}">{{ genreListSearchCriterion.genreOptions[(i + j * getAnzGenreRows())] }}</label>
-                      <!--<pre>{{getAnzGenreRows()}},{{getAnzGenreCols()}}  {{i}},{{j}} : {{ (i + j * getAnzGenreRows()) }} : {{ genreListSearchCriterion.genreOptions[(i + j * getAnzGenreRows())] | json }}</pre>-->
+                        <input id="genreName{{(i + j * anzGenreRows)}}" class="form-check-input" type="checkbox"
+                               [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)])"/>
+                        <label class="form-check-label" for="genreName{{(i + j * anzGenreCols)}}">{{ genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] }}</label>
+                      <!--<pre>{{anzGenreRows}},{{anzGenreCols}}  {{i}},{{j}} : {{ (i + j * anzGenreRows) }} : {{ genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] | json }}</pre>-->
                     </div>
                 }
               </div>
           </div>
 
+          <!--
           <div class="row mb-3">
           </div>
           <div class="row mb-3">
@@ -361,6 +362,7 @@
               }
             }
           </div>
+          -->
 
           <!--THESIS genre-->
           <div class="row mt-2">
