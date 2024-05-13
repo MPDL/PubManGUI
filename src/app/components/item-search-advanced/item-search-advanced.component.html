@@ -280,34 +280,64 @@
 
 
 
-    <!--Item state -->
-    <div class="accordion-item border-0">
+    @if(aaService.isLoggedIn) {
+      <!--Contexts -->
+      <div class="accordion-item border-0">
 
-      <h2 class="accordion-header">
-        <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#accordionBodyPubStatusGroup" aria-expanded="true"
-                aria-controls="accordionBodyPubStatusGroup">
-          Item Status
-        </button>
-      </h2>
-      <div id="accordionBodyItemStateGroup" class="accordion-collapse collapse show">
-        <div class="accordion-body mt-3 mb-3">
+        <h2 class="accordion-header">
+          <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#accordionBodyPubStatusGroup" aria-expanded="true"
+                  aria-controls="accordionBodyPubStatusGroup">
+            Contexts
+          </button>
+        </h2>
+        <div id="accordionBodyItemStateGroup" class="accordion-collapse collapse show">
+          <div class="accordion-body mt-3 mb-3">
 
 
-          <div class="row mb-3">
-            @for (pubState of itemStateListSearchCriterion.itemStateOptions; track pubState; let i = $index; ) {
-              <div class="col-md-6 col-xxl-4">
-                <div class="form-check">
-                  <input id="pubStateName{{i}}" class="form-check-input" type="checkbox"
-                         [formControl]="$any(itemStateListSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
-                  <label class="form-check-label" for="pubStateName{{i}}">{{ pubState }}</label>
+            <div class="row mb-3">
+              @for (context of contextListSearchCriterion.contextOptions | keyvalue; track context; let i = $index; ) {
+                <div class="col-md-6 col-xxl-4">
+                  <div class="form-check">
+                    <input id="pubStateName{{i}}" class="form-check-input" type="checkbox"
+                           [formControl]="$any(contextListSearchCriterion.contextListFormGroup).get(context.key)"/>
+                    <label class="form-check-label" for="pubStateName{{i}}">{{ context.value.name }} ({{ context.value.objectId }})</label>
+                  </div>
                 </div>
-              </div>
-            }
+              }
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!--Item state -->
+      <div class="accordion-item border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#accordionBodyPubStatusGroup" aria-expanded="true"
+                  aria-controls="accordionBodyPubStatusGroup">
+            Item Status
+          </button>
+        </h2>
+        <div id="accordionBodyItemStateGroup" class="accordion-collapse collapse show">
+          <div class="accordion-body mt-3 mb-3">
+
+
+            <div class="row mb-3">
+              @for (pubState of itemStateListSearchCriterion.itemStateOptions; track pubState; let i = $index; ) {
+                <div class="col-md-6 col-xxl-4">
+                  <div class="form-check">
+                    <input id="pubStateName{{i}}" class="form-check-input" type="checkbox"
+                           [formControl]="$any(itemStateListSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
+                    <label class="form-check-label" for="pubStateName{{i}}">{{ pubState }}</label>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
 
     <!--Genre -->
     <div class="accordion-item border-0">

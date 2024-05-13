@@ -1,4 +1,4 @@
-@if (aaService.isDepositor || aaService.isModerator) 
+@if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator)
 {
 <div class="container-fluid">
     <form [formGroup]="form" (ngSubmit)="submit()">

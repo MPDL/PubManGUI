@@ -42,8 +42,8 @@ export class BatchService {
 
   get items(): string[] {
     const itemList = sessionStorage.getItem(this.datasetList);
-    if (itemList) { 
-      return JSON.parse(itemList); 
+    if (itemList) {
+      return JSON.parse(itemList);
     } else {
       return [] as string[];
     }
@@ -56,12 +56,12 @@ export class BatchService {
   get token(): string | undefined {
     const token = this.aa.token ? this.aa.token : undefined;
     if (token) {
-      return token; 
+      return token;
     } else throw new Error('Please, log in!');
   }
 
   get user(): any {
-    const user_string = this.aa.user ? this.aa.user : undefined;
+    const user_string = this.aa.principal.getValue().user?.objectId;
     if (user_string) {
       return user_string;
     } else throw new Error('Please, log in!');
@@ -103,7 +103,7 @@ export class BatchService {
     const url  = `${ this.baseUrl }/batchProcess/getAllBatchProcessLogHeaders`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
     return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { headers });
-  } 
+  }
 
   getBatchProcessLogHeaderId(batchLogHeaderId: number):Observable<resp.BatchProcessLogHeaderDbVO> {
     const url  = `${ this.baseUrl }/batchProcess/${ batchLogHeaderId }`;
@@ -160,19 +160,19 @@ export class BatchService {
 
     return actionResponse;
   }
-  
+
   revisePubItems(actionParams: params.RevisePubItemsParams): Observable<resp.actionGenericResponse> {
     actionParams.itemIds = this.items;
 
     const headers = new HttpHeaders().set('Authorization', this.token!);
-    const url  = `${ this.baseUrl }/batchProcess/revisePubItems`; 
-    const body = actionParams; 
+    const url  = `${ this.baseUrl }/batchProcess/revisePubItems`;
+    const body = actionParams;
 
     const actionResponse: Observable<resp.actionGenericResponse> = this.http.put<resp.actionGenericResponse>( url, body, { headers })
       .pipe(
         tap( (value: resp.actionGenericResponse) => console.log('Success: \n' + JSON.stringify(value)) ),
         catchError( err => throwError( () => err )),
-      ); 
+      );
 
     return actionResponse;
   }
@@ -205,7 +205,7 @@ export class BatchService {
         tap( (value: resp.actionGenericResponse) => console.log('Success: \n' + JSON.stringify(value)) ),
         catchError( err => throwError( () => err )),
       );
-    
+
     return actionResponse;
   }
 
@@ -226,7 +226,7 @@ export class BatchService {
 
     return actionResponse;
   }
-  
+
   addLocalTags(actionParams: params.AddLocalTagsParams): Observable<resp.actionGenericResponse> {
     actionParams.itemIds = this.items;
 
@@ -235,14 +235,14 @@ export class BatchService {
     const body = actionParams;
     const actionResponse: Observable<resp.actionGenericResponse> = this.http.put<resp.actionGenericResponse>( url, body, { headers })
       .pipe(
-        tap( (value: resp.actionGenericResponse) => { 
+        tap( (value: resp.actionGenericResponse) => {
           console.log('Success: \n' + JSON.stringify(value));
           this.batchProcessLogHeaderId = value.batchLogHeaderId;} ),
         catchError( err => throwError( () => err )),
       );
 
     return actionResponse;
-  } 
+  }
 
   changeLocalTags(actionParams: params.ChangeLocalTagParams): Observable<resp.actionGenericResponse> { // TO-DO check function name!
     actionParams.itemIds = this.items;
@@ -259,7 +259,7 @@ export class BatchService {
       );
 
     return actionResponse;
-  } 
+  }
 
   changeGenre(actionParams: params.ChangeGenreParams): Observable<resp.actionGenericResponse> {
     actionParams.itemIds = this.items;
@@ -278,7 +278,7 @@ export class BatchService {
     return actionResponse;
   }
 
-  changeFileVisibility(actionParams: params.ChangeFileVisibilityParams): Observable<resp.actionGenericResponse> {  
+  changeFileVisibility(actionParams: params.ChangeFileVisibilityParams): Observable<resp.actionGenericResponse> {
     //console.log(`{\"userAccountIpRange\": ${JSON.stringify(actionParams.localTags)}}`);
     actionParams.itemIds = this.items;
 
@@ -363,7 +363,7 @@ export class BatchService {
       );
 
     return actionResponse;
-  } 
+  }
 
   changeReviewMethod(actionParams: params.ChangeReviewMethodParams): Observable<resp.actionGenericResponse> {
     actionParams.itemIds = this.items;
@@ -483,7 +483,7 @@ export class BatchService {
 
     return actionResponse;
   }
-  
+
   changeSourceIdentifier(actionParams: params.ChangeSourceIdentifierParams): Observable<resp.actionGenericResponse> {
     actionParams.itemIds = this.items;
 

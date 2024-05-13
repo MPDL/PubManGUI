@@ -8,7 +8,7 @@ import {
   Validators
 } from "@angular/forms";
 import {ActivatedRoute, Router, UrlSerializer} from "@angular/router";
-import {DatePipe, JsonPipe, NgFor, NgIf} from "@angular/common";
+import {DatePipe, JsonPipe, KeyValuePipe, NgFor, NgIf} from "@angular/common";
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
 import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
@@ -17,7 +17,7 @@ import {CreatorRole, IdType, SavedSearchVO} from "../../model/inge";
 import {TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
 import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
 import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
-import {forkJoin, map, tap} from "rxjs";
+import {forkJoin, map, Subscription, take, tap} from "rxjs";
 import {OptionDirective} from "../../shared/components/selector/directives/option.directive";
 import {PureOusDirective} from "../../shared/components/selector/services/pure_ous/pure-ous.directive";
 import {SelectorComponent} from "../../shared/components/selector/selector.component";
@@ -32,12 +32,14 @@ import {Clipboard} from "@angular/cdk/clipboard";
 import {ItemStateListSearchCriterion} from "./criterions/ItemStateListSearchCriterion";
 import {SavedSearchService} from "../../services/pubman-rest-client/saved-search.service";
 import {Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterion";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
@@ -58,6 +60,7 @@ export class ItemSearchAdvancedComponent {
   possibleCriterionsForClosingParenthesisMap: SearchCriterion[] = []
   protected readonly DisplayType = DisplayType;
 
+  contextListSearchCriterion = new ContextListSearchCriterion();
   itemStateListSearchCriterion = new ItemStateListSearchCriterion();
   genreListSearchCriterion = new GenreListSearchCriterion();
   publicationStateSearchCriterion = new PublicationStateSearchCriterion();
@@ -66,6 +69,8 @@ export class ItemSearchAdvancedComponent {
 
   savedSearches: SavedSearchVO[] = [];
   savedSearchNameForm: FormControl = new FormControl("", Validators.required);
+
+  private principalSubscription?: Subscription;
 
   constructor(
     private router: Router,
@@ -79,6 +84,7 @@ export class ItemSearchAdvancedComponent {
   }
 
   ngOnInit() {
+    console.log("Initializing advanced search");
     this.reset();
     const searchId = this.route.snapshot.queryParamMap.get("searchId");
     if (searchId) {
@@ -86,7 +92,17 @@ export class ItemSearchAdvancedComponent {
         this.parseFormJson(savedSearch.searchForm);
       })
     }
-    this.updateSavedSearchList();
+    this.principalSubscription = this.aaService.principal.subscribe(p =>
+    {
+      this.updateSavedSearchList()
+    })
+    //this.updateSavedSearchList();
+
+  }
+
+  ngOnDestroy() {
+    console.log("Destroying advanced search");
+    this.principalSubscription?.unsubscribe();
   }
 
 
@@ -96,9 +112,12 @@ export class ItemSearchAdvancedComponent {
     this.publicationStateSearchCriterion = new PublicationStateSearchCriterion();
     this.fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
     this.locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
+    this.contextListSearchCriterion = new ContextListSearchCriterion();
 
     this.searchForm = this.fb.group({
+
       flexibleFields: this.fb.array([]),
+      contexts: this.contextListSearchCriterion,
       itemStates: this.itemStateListSearchCriterion,
       genres: this.genreListSearchCriterion,
       publicationState: this.publicationStateSearchCriterion,
@@ -168,8 +187,8 @@ export class ItemSearchAdvancedComponent {
   }
 
   getAnzGenreCols(): number {
-    console.log('akt. Breite des Elements:', this.myElementRef !== undefined ? this.myElementRef.nativeElement.clientWidth : 'undefined');
-    console.log('akt. Breite des Elements mit Rand:', this.myElementRef !== undefined ? this.myElementRef.nativeElement.offsetWidth : 'undefined');
+    //console.log('akt. Breite des Elements:', this.myElementRef !== undefined ? this.myElementRef.nativeElement.clientWidth : 'undefined');
+    //console.log('akt. Breite des Elements mit Rand:', this.myElementRef !== undefined ? this.myElementRef.nativeElement.offsetWidth : 'undefined');
     return this.myElementRef !== undefined && this.myElementRef.nativeElement.clientWidth < 718 ? 1 : this.myElementRef !== undefined && this.myElementRef.nativeElement.clientWidth < 940 ? 2 : 3;
   }
 
@@ -439,13 +458,13 @@ export class ItemSearchAdvancedComponent {
     }))
 
       //Set query in every search criterion object
-      .pipe(tap(queries => cleanedScList.forEach((sc, i) => {
-        //console.log("Transforming list to queries " + sc.type + " -- " + JSON.stringify(queries[i]));
-        sc.query = queries[i];
-      })))
-
-      //when everything is ready, create complete query
-      .pipe(map(data => {
+      .pipe(
+        tap(queries => cleanedScList.forEach((sc, i) => {
+          //console.log("Transforming list to queries " + sc.type + " -- " + JSON.stringify(queries[i]));
+          sc.query = queries[i];
+        })),
+        //when everything is ready, create complete query
+        map(data => {
             return this.cleanedScListToElasticSearchQuery(cleanedScList, data, undefined)
           }
         )
@@ -598,6 +617,10 @@ export class ItemSearchAdvancedComponent {
     searchCriterions.unshift(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
     searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS));
 
+    searchCriterions.push(new LogicalOperator("and"));
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
+    searchCriterions.push(this.contextListSearchCriterion);
+    searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.CLOSING_PARENTHESIS));
 
     searchCriterions.push(new LogicalOperator("and"));
     searchCriterions.push(new Parenthesis(PARENTHESIS_TYPE.OPENING_PARENTHESIS));
@@ -677,8 +700,10 @@ export class ItemSearchAdvancedComponent {
     });
   }
 
+
+
   private updateSavedSearchList() {
-    if (this.aaService.isLoggedIn) {
+    if (this.aaService.principal.getValue().loggedIn) {
       this.savedSearchService.getAllSearch(this.aaService.token == null ? "" : this.aaService.token).subscribe(savedSearches => this.savedSearches = savedSearches)
     }
   }

@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import {Observable, map, EMPTY} from 'rxjs';
 import { AaService } from 'src/app/services/aa.service';
 import {PubmanGenericRestClientService, SearchResult} from "./pubman-generic-rest-client.service";
 import {AccountUserDbVO, ContextDbVO} from "../../model/inge";
 import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
+import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-gene
 export class ContextsService extends PubmanSearchableGenericRestClientService<ContextDbVO>{
 
   static instance: ContextsService;
-  aaService = inject(AaService);
 
   constructor() {
     super('/contexts');
@@ -32,9 +32,9 @@ export class ContextsService extends PubmanSearchableGenericRestClientService<Co
     return this.httpPut(path, context, token);
   }
 
-  getDepositorContextsForCurrentUser(): Observable<SearchResult<ContextDbVO>> {
-    let token = this.aaService.token ? this.aaService.token : undefined;
-    let user: AccountUserDbVO = this.aaService.user;
+  getContextsForCurrentUser(role:string, user:AccountUserDbVO, token:string) {
+    //let token = this.aaService.token ? this.aaService.token : undefined;
+    //let user: AccountUserDbVO = this.aaService.user;
     let should: any [] = []
     let body = {
       query: {
@@ -49,14 +49,19 @@ export class ContextsService extends PubmanSearchableGenericRestClientService<Co
       console.log("userGrantType: " + grant.grantType
         + " | userGrantObjectRef: " + grant.objectRef
         + " | userGrantObjectRole: " + grant.role);
-      if (grant.role == "DEPOSITOR") {
+      if (grant.role === role) {
         body.query.bool.should.push({"term" : {"objectId" : grant.objectRef}})
       }
     }
 
     console.log('Body: ' + JSON.stringify(body));
     console.log('Token: ' + token);
-    return (this.search(JSON.stringify(body), token));
+    if(body.query.bool.should.length) {
+      return (this.search(body, token));
+    }
+    else return EMPTY;
   }
+
+
 
 }

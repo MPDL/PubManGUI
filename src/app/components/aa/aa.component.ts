@@ -5,14 +5,14 @@ import { catchError, EMPTY, switchMap } from 'rxjs';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { AaService } from 'src/app/services/aa.service';
 import { LoginComponent } from './login/login.component';
-import { NgIf } from '@angular/common';
+import {AsyncPipe, NgIf} from '@angular/common';
 
 @Component({
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
     styleUrls: ['./aa.component.scss'],
     standalone: true,
-    imports: [NgIf, RouterLink]
+  imports: [NgIf, RouterLink, AsyncPipe]
 })
 export class AaComponent {
 
@@ -30,7 +30,14 @@ export class AaComponent {
   sign_in() {
     const ref = this.dialog.open(LoginComponent, this.dialog_conf);
     ref.closed.pipe(
-      switchMap((form: any) => form ? this.aa.login(form.username, form.password) : EMPTY),
+      switchMap((form: any) => {
+        console.log("Login dialog"+ form);
+        if(form) {
+          return this.aa.login(form.username, form.password);
+          //return this.aa.principal.asObservable()
+        }
+        else return EMPTY
+      }),
       catchError(err => {
         this.msg.error(err);
         return EMPTY;

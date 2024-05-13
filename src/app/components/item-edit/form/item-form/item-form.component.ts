@@ -40,12 +40,20 @@ export class ItemFormComponent implements OnInit {
     ).subscribe(f => {
       this.form = f;
     });
+    this.aaService.principal.subscribe(
+      p => {
+        this.user_contexts = p.depositorContexts;
+      }
+    )
+    /*
     this.contextService.getDepositorContextsForCurrentUser()
       .subscribe(
         contexts => {
           this.user_contexts = contexts.records.map(sr => sr.data); console.log('UserContexts: ' + JSON.stringify(this.user_contexts))
         }
       );
+
+     */
   }
 
   get localTags() {
