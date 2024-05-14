@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from "@angular/forms";
-import {ActivatedRoute, Router, UrlSerializer} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DatePipe, JsonPipe, KeyValuePipe, NgFor, NgIf} from "@angular/common";
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
@@ -17,7 +17,7 @@ import {CreatorRole, IdType, SavedSearchVO} from "../../model/inge";
 import {TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
 import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
 import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
-import {forkJoin, map, Subscription, take, tap} from "rxjs";
+import {forkJoin, map, Subscription, tap} from "rxjs";
 import {OptionDirective} from "../../shared/components/selector/directives/option.directive";
 import {PureOusDirective} from "../../shared/components/selector/services/pure_ous/pure-ous.directive";
 import {SelectorComponent} from "../../shared/components/selector/selector.component";
@@ -31,8 +31,7 @@ import {AaService} from "../../services/aa.service";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {ItemStateListSearchCriterion} from "./criterions/ItemStateListSearchCriterion";
 import {SavedSearchService} from "../../services/pubman-rest-client/saved-search.service";
-import {Component, ElementRef, ViewChild, ViewEncapsulation, HostListener} from "@angular/core";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Component, HostListener, ViewEncapsulation} from "@angular/core";
 import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterion";
 
 @Component({
