@@ -32,7 +32,7 @@ import { BatchService } from '../services/batch.service';
 })
 export class ActionsComponent {
 
-  public isProcessing: boolean = true;
+  public isProcessing: boolean = false;
 
   constructor(
     private bs: BatchService, 
