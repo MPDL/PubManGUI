@@ -15,15 +15,18 @@
             border-radius: 0.4rem;
             font-family: Merriweather;
             font-size: 1.1rem;
-
-            li:hover {
-                text-decoration: underline ;
-                text-decoration-thickness: 0.2rem; 
-            }
+            cursor: pointer;
         }
+
+        .current {
+            text-decoration: underline ;
+            text-decoration-thickness: 0.2rem; 
+        }
+
     }
 
     .datasets {
+        
         #topnav {
             nav:nth-child(1),
             .nav-link:nth-of-type(2n),
@@ -34,6 +37,7 @@
                 display: none;
             }
         }
+        
 
         pure-item-list {       
             .row:nth-of-type(2n) {

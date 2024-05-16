@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { OnInit, Component, QueryList, ViewChildren } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, throwError, filter, startWith, of } from 'rxjs';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, throwError, filter, startWith, of, tap, map } from 'rxjs';
 
 import { ItemVersionVO } from 'src/app/model/inge';
 import { AaService } from 'src/app/services/aa.service';
@@ -30,23 +30,14 @@ export class DatasetsComponent implements OnInit {
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
 
   result_list: Observable<ItemVersionVO[]> | undefined;
+  number_of_results: number | undefined;
   select_all = new FormControl(false);
 
     // Pagination:
     page_size = 10;
     number_of_pages = 1;
     current_page = 1;
-    jump_to = this.current_page;
-  
-    update_query = (query: any) => {
-      return {
-        query,
-        size: this.page_size,
-        from: 0
-      }
-    }
-  
-    current_query: any;
+    jump_to = new FormControl<number>(this.current_page, [Validators.nullValidator, Validators.min(1)]);
 
   private isProcessing: boolean = false;
 
@@ -98,6 +89,13 @@ export class DatasetsComponent implements OnInit {
       }
     };
     this.result_list = of(results);
+      this.number_of_results = itemList.length;
+      this.number_of_pages = Math.ceil(this.number_of_results / this.page_size);
+      this.jump_to.addValidators(Validators.max(this.number_of_pages));
+  }
+
+  jumpToPage() {
+    this.jump_to.errors? alert("value must be between 1 and " + this.number_of_pages) : this.onPageChange(this.jump_to.value as number);
   }
 
   select_pages(total: number): Array<number> {
@@ -126,10 +124,8 @@ export class DatasetsComponent implements OnInit {
 
   onPageChange(page_number: number) {
     this.current_page = page_number;
+    this.jump_to.setValue(page_number);
     const from = page_number * this.page_size - this.page_size;
-    this.current_query.size = this.page_size;
-    this.current_query.from = from;
-    this.items(this.current_query);
   }
 
   select_all_items(event: any) {

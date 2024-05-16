@@ -1,7 +1,7 @@
 <div class="batch-nav">
     <div class="position-absolute start-50 translate-middle nav-bottom-10">
         <ul class="nav p-3 d-flex justify-content-around">
-            <li *ngFor="let option of navList" [routerLink]="[ option.route ]" routerLinkActive="active"
+            <li *ngFor="let option of navList" [routerLink]="[ option.route ]" routerLinkActive="current"
                 class="nav-item fw-bold"
                 data-bs-toggle="button">{{ option.text | titlecase}} 
             </li>

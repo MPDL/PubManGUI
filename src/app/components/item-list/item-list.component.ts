@@ -9,7 +9,7 @@ import { Observable, filter, map, startWith, tap } from 'rxjs';
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
-import {ItemsService} from "../../services/pubman-rest-client/items.service";
+import { ItemsService}  from "../../services/pubman-rest-client/items.service";
 
 @Component({
   selector: 'pure-item-list',
