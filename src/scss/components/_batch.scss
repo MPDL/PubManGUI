@@ -11,6 +11,7 @@
         .nav {
             width: 43.5vw;
             background-color: var(--bs-body-bg) !important;
+            opacity: 0.9;
             box-shadow: 0 0 10px 0 gray;
             border-radius: 0.4rem;
             font-family: Merriweather;
@@ -54,16 +55,15 @@
         .accordion {
 
             .accordion-item {
-
-                /*
-                .accordion-button {
-                    color: var(--accent-color-contrast);
-                    background-color: var(--accent-color) !important;
-                }
-                */
+                
                 .accordion-body {
-                    background-color: var(--main-content-bg-color);
+                    background-color: var(--bs-body-bg);
                 }
+
+                .form-control {
+                    background-color: var(--accent-color-contrast);
+                }
+                
             }
 
             .header_second_color {
@@ -96,19 +96,17 @@
 
         // DEV
         h1 {
-            color: var(--main-title-text-color);
             line-height: 2em;
             font-size: 1.8em;
         }
 
         h2 {
-            color: var(--main-title-text-color);
             line-height: 1.5em;
             font-size: 1.2em;
         }
 
         .form-control::placeholder {
-            color: color-mix(in srgb, var(--main-title-text-color), white 15%);
+            color: color-mix(in srgb, var(--accent-bg-color), white 15%);
             font-style: italic;
         }
     }
@@ -123,7 +121,11 @@
             }
 
             tbody {
-                background-color: #{$body-tertiary-bg};
+                background-color: var(--accent-color-contrast);
+            }
+
+            tr {
+                border-color: var(--bs-body-bg) !important;
             }
         }
     }
