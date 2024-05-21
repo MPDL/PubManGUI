@@ -34,8 +34,9 @@ export class LogProcessListComponent implements OnInit {
 
   ngOnInit(): void {
     this.bs.getAllBatchProcessLogHeaders().subscribe( actionResponse => 
-      { 
-        this.processLogs = actionResponse.sort((a,b) => b.startDate.valueOf() - a.startDate.valueOf());
+      { console.log(actionResponse);
+        this.processLogs = actionResponse.sort((b,a) => a.batchLogHeaderId - b.batchLogHeaderId);
+        console.log(actionResponse);
         this.collectionSize = this.processLogs.length;
         this.refreshLogs();
         return;

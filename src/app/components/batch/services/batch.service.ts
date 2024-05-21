@@ -24,20 +24,26 @@ export class BatchService {
 
   constructor(private http: HttpClient, public aa: AaService) { }
 
-  addToBatchDatasets(selection: string) {
+  addToBatchDatasets(selection: string): number  {
     const fromSelection = sessionStorage.getItem(selection);
     let datasets: string[] = this.items;
+    const prev = datasets.length;
     if( fromSelection ) {
       this.items = datasets.concat(JSON.parse(fromSelection).filter((element: string) => !datasets.includes(element)));
+      return Math.abs(this.items.length - prev); // added
     }
+    return 0;
   }
 
-  removeFromBatchDatasets(selection: string) {
+  removeFromBatchDatasets(selection: string): number {
       const fromSelection = sessionStorage.getItem(selection);
       let datasets: string[] = this.items;
-      if( fromSelection ) {
+      const prev = datasets.length;
+      if( fromSelection && prev > 0) {
         this.items = datasets.filter((element: string) => !fromSelection.includes(element));
+        return Math.abs(prev - this.items.length); // removed
       }
+      return 0;
   }
 
   get items(): string[] {

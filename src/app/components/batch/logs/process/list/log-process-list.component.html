@@ -1,88 +1,87 @@
-<div class="row align-items-center top_nav_pos bg-body">
-  <div class="col-sm-6 ps-0 d-flex justify-content-between">
-  </div>
-</div>
+<div class="batch">
+  <div class="logs mt-5">
+    <div class="fs-6">
 
-<div class="row">
-  <div class="col-sm-5 d-flex justify-content-between py-4">
-    <h4>Logs</h4>
-  </div>
+      <div class="row">
+        <div class="col-lg-10 col-sm-12 d-flex justify-content-between">
+          <div class="col-12 col-xxl-1">
+            <h4>Logs</h4>
+          </div>
 
-  <div class="offset-sm-5 col-2 d-flex justify-content-between p-4">
-    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="refreshLogs()">
-      <ng-template ngbPaginationPages let-page let-pages="pages">
-        @if (pages.length > 0) {
-          <li class="ngb-custom-pages-item">
-            <div class="mb-3 d-flex flex-nowrap px-2">
-              <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
-              <input
-                #i
-                type="text"
-                inputmode="numeric"
-                pattern="[0-9]*"
-                class="form-control custom-pages-input"
-                id="paginationInput"
-                [value]="page"
-                (keyup.enter)="selectPage(i.value)"
-                (blur)="selectPage(i.value)"
-                (input)="formatInput($any($event).target)"
-                aria-labelledby="paginationInputLabel paginationDescription"
-                style="width: 2.5rem"
-                max="collectionSize/pageSize"
-              />
-              <span id="paginationDescription" class="col-form-label text-nowrap px-2"> of {{ pages.length }}</span>
-            </div>
-          </li>
-        }
-      </ng-template>
-    </ngb-pagination>
+          <div class="col-12 col-xxl-9 small d-flex justify-content-end">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true"
+              [pageSize]="pageSize" (pageChange)="refreshLogs()">
+              <ng-template ngbPaginationPages let-page let-pages="pages">
+                @if (pages.length > 0) {
+                <li class="ngb-custom-pages-item">
+                  <div class="mb-3 d-flex flex-nowrap px-2">
+                    <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
+                    <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                      id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)"
+                      (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                      aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem"
+                      max="collectionSize/pageSize" />
+                    <span id="paginationDescription" class="col-form-label text-nowrap px-2"> of {{ pages.length
+                      }}</span>
+                  </div>
+                </li>
+                }
+              </ng-template>
+            </ngb-pagination>
+          </div>
 
-    <!--select class="form-select w-auto d-none d-lg-block" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
-      <option [ngValue]="15">15 logs per page</option>
-      <option [ngValue]="30">30 logs per page</option>
-      <option [ngValue]="45">45 logs per page</option>
-    </select-->
-  </div>
-</div>
+          <div class="col-12 col-xxl-1">
+            <select class="form-select form-select-sm" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
+              <option [ngValue]="15">15</option>
+              <option [ngValue]="30">30</option>
+              <option [ngValue]="45">45</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-<div class="row">
-  <div class="col-lg-10 col-sm-12">
-    <table class="table table-responsive fs-6 col-12">
-      <thead>
-        <tr class="border-bottom">
-          <th scope="col" class="pe-2">Status</th>
-          <th scope="col" class="pe-2">Action</th>
-          <th scope="col" class="pe-2">Date</th>
-          <th scope="col">Details</th>
-        </tr>
-      </thead>
+      <div class="row">
+        <div class="col-lg-10 col-sm-12">
+          <table class="table table-responsive fs-6 col-12">
+            <thead>
+              <tr class="border-bottom">
+                <th scope="col" class="pe-2">Status</th>
+                <th scope="col" class="pe-2">Action</th>
+                <th scope="col" class="pe-2">Date</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
 
-      <tbody>
-        @for (log of inPage; track log.batchLogHeaderId) {
-          <tr class="border-bottom">
-            <td class="col-2">
-              {{ log.state | titlecase }}
-            </td>
-            <td class="col-7">
-              {{ log.method | titlecase }}
-            </td>
-            <td class="col-2">
-              {{ log.endDate | date: 'short' }}
-            </td>
-            <td class="col-1">
-              <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]" [state]="{ method: log.method, started: log.startDate }">
-                <span class="material-symbols-outlined text-secondary ms-3">
-                  info
-                </span>
-              </a>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+            <tbody>
+              @for (log of inPage; track log.batchLogHeaderId) {
+              <tr class="border-bottom">
+                <td class="col-2">
+                  {{ log.state | titlecase }}
+                </td>
+                <td class="col-7">
+                  {{ log.method | titlecase }}
+                </td>
+                <td class="col-2">
+                  {{ log.endDate | date: "dd.MM.yyyy 'at' HH:mm":'':'en-EN'}}
+                </td>
+                <td class="col-1">
+                  <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
+                    [state]="{ method: log.method, started: log.startDate }">
+                    <span class="material-symbols-outlined text-secondary ms-3">
+                      info
+                    </span>
+                  </a>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
 
-  <div class="col-lg-2 d-none d-lg-block">
+        <div class="col-lg-2 d-none d-lg-block">
 
+        </div>
+      </div>
+    </div>
   </div>
 </div>

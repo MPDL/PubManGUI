@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'pure-topnav',
@@ -11,7 +12,10 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 })
 export class TopnavComponent {
 
-  constructor(private activatedRoute: ActivatedRoute, private bs: BatchService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private message: MessageService, 
+    private bs: BatchService) {}
 
   do_some_navigation(target: string) {
     alert('navigating 2 ' + target);
@@ -19,16 +23,31 @@ export class TopnavComponent {
 
   addToBatchDatasets() {
     const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
-    this.bs.addToBatchDatasets(savedSelection);
-    sessionStorage.removeItem(savedSelection);
-    this.resetCheckBoxes();
+    const selected = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!).length : 0;
+    if (selected) {
+      const added = this.bs.addToBatchDatasets(savedSelection);
+      sessionStorage.removeItem(savedSelection);
+      this.resetCheckBoxes();
+
+      this.message.error(selected + ' items selected' + ((selected! - added) > 0 ? `, ${selected! - added} on batch duplicated were ignored.` : ''));
+    } else {
+      this.message.error(`Please, select items to be processed!\n`);
+    }
+
   }
 
   removeFromBatchDatasets() {
     const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
-    this.bs.removeFromBatchDatasets(savedSelection);
-    sessionStorage.removeItem(savedSelection);
-    this.resetCheckBoxes();
+    const selected = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!).length : 0;
+    if (selected) {
+      const removed = this.bs.removeFromBatchDatasets(savedSelection);
+      sessionStorage.removeItem(savedSelection);
+      this.resetCheckBoxes();
+
+      this.message.error(selected + ' items selected' + ((selected! - removed) > 0 ? `, ${selected! - removed} not on batch were ignored.` : ''));
+    } else {
+      this.message.error(`Please, select items to be processed!\n`);
+    }
   }
 
   resetCheckBoxes() {
