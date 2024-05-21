@@ -3,53 +3,51 @@
     <div class="fs-6">
 
       <div class="row">
-        <div class="col-sm-6 d-flex justify-content-between py-4">
-          <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.logs.details.fill.all" 
-            (click)="fillWithAll()">
-            Fill batch with all items from the log
-          </button>
-          <div *ngIf="failed > 0">
-            <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.logs.details.fill.errors"
-              (click)="fillWithFailed()">
-              Fill batch with errors only
-            </button>
-          </div>
-        </div>
+        <div class="col-lg-10 col-sm-12 d-flex justify-content-between">
 
-        <div class="offset-sm-4 col-2 d-flex justify-content-between py-4">
-          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="refreshLogs()">
-            <ng-template ngbPaginationPages let-page let-pages="pages">
-              @if (pages.length > 0) {
+          <div class="col-12 col-xxl-6 small d-flex justify-content-between">
+            <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.logs.details.fill.all"
+              (click)="fillWithAll()">
+              Fill batch with all items from the log
+            </button>
+            <div *ngIf="failed > 0">
+              <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.logs.details.fill.errors"
+                (click)="fillWithFailed()">
+                Fill batch with errors only
+              </button>
+            </div>
+          </div>
+
+          <div class="col-12 col-xxl-5 small d-flex justify-content-center">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true"
+              [pageSize]="pageSize" (pageChange)="refreshLogs()">
+              <ng-template ngbPaginationPages let-page let-pages="pages">
+                @if (pages.length > 0) {
                 <li class="ngb-custom-pages-item border-0">
                   <div class="mb-3 d-flex flex-nowrap px-2">
-                    <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1" i18n="@@pagination.page">Page</label>
-                    <input
-                      #i
-                      type="text"
-                      inputmode="numeric"
-                      pattern="[0-9]*"
-                      class="form-control custom-pages-input"
-                      id="paginationInput"
-                      [value]="page"
-                      (keyup.enter)="selectPage(i.value)"
-                      (blur)="selectPage(i.value)"
-                      (input)="formatInput($any($event).target)"
-                      aria-labelledby="paginationInputLabel paginationDescription"
-                      style="width: 2.5rem"
-                      max="collectionSize/pageSize"
-                    />
-                    <span id="paginationDescription" class="col-form-label text-nowrap px-2"><span i18n="@@pagination.of"> of </span> {{ pages.length }} </span>
+                    <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1"
+                      i18n="@@pagination.page">Page</label>
+                    <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                      id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)"
+                      (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                      aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem"
+                      max="collectionSize/pageSize" />
+                    <span id="paginationDescription" class="col-form-label text-nowrap px-2"><span
+                        i18n="@@pagination.of"> of </span> {{ pages.length }} </span>
                   </div>
                 </li>
-              }
-            </ng-template>
-          </ngb-pagination>
+                }
+              </ng-template>
+            </ngb-pagination>
+          </div>
 
-          <!--select class="form-select w-auto d-none d-lg-block" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
-          <option [ngValue]="15">15 logs per page</option>
-          <option [ngValue]="30">30 logs per page</option>
-          <option [ngValue]="45">45 logs per page</option>
-        </select-->
+          <div class="col-12 col-xxl-1">
+            <select class="form-select form-select-sm" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
+              <option [ngValue]="15">15</option>
+              <option [ngValue]="30">30</option>
+              <option [ngValue]="45">45</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -57,12 +55,14 @@
         <div class="col-sm-12 d-flex justify-content-between py-4">
           <h4>{{ method }}</h4>
           <div>
-            <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: 'short' }}</span>
+            <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: "dd.MM.yyyy 'at' HH:mm":'':'en-EN' }}</span>
           </div>
           <div>
-            <span *ngIf="collectionSize - failed > 0">{{ collectionSize - failed }} <span i18n="@@batch.logs.details.succeded">
+            <span *ngIf="collectionSize - failed > 0">{{ collectionSize - failed }} <span
+                i18n="@@batch.logs.details.succeded">
                 successful</span></span>
-            <span *ngIf="failed > 0" class="text-danger fw-bold ms-3">{{ failed }} <span i18n="@@batch.logs.details.failed">
+            <span *ngIf="failed > 0" class="text-danger fw-bold ms-3">{{ failed }} <span
+                i18n="@@batch.logs.details.failed">
                 failed</span></span>
           </div>
           <button class="btn pt-0" (click)="goBack()">
@@ -87,17 +87,17 @@
             <tbody>
               <!--@for (log of inPage; track log.item.itemObjectId | filter:refreshFilters():'state'") {
               -->
-                <tr class="border-bottom" *ngFor="let log of inPage | stateFilter:refreshFilters():'state'">
-                  <td class="col-1">
-                    <span>{{ log.item.state | titlecase }}</span>
-                  </td>
-                  <td>
-                    <span>{{ log.title }}</span>
-                  </td>
-                  <td>
-                    <span>{{ localeMessages.get(log.item.message) }}</span>
-                  </td>
-                </tr>
+              <tr class="border-bottom" *ngFor="let log of inPage | stateFilter:refreshFilters():'state'">
+                <td class="col-1">
+                  <span>{{ log.item.state | titlecase }}</span>
+                </td>
+                <td>
+                  <span>{{ log.title }}</span>
+                </td>
+                <td>
+                  <span>{{ localeMessages.get(log.item.message) }}</span>
+                </td>
+              </tr>
               <!--}
               -->
             </tbody>

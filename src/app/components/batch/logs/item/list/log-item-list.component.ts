@@ -11,9 +11,9 @@ import { NgbPaginationModule, NgbTypeaheadModule } from "@ng-bootstrap/ng-bootst
 import { BatchProcessMessages, ItemVersionVO, BatchProcessLogDetailState } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
-import {ItemsService} from "../../../../../services/pubman-rest-client/items.service";
+import { ItemsService} from "../../../../../services/pubman-rest-client/items.service";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -28,6 +28,7 @@ type detail = {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     NgbTypeaheadModule,
     NgbPaginationModule,
     StateFilterPipe
