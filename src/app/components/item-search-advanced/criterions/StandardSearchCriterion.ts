@@ -2,6 +2,8 @@ import {SearchCriterion} from "./SearchCriterion";
 import {FormControl} from "@angular/forms";
 import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
 import {Observable, of} from "rxjs";
+import {ContextDbVO} from "../../../model/inge";
+import {ContextsService} from "../../../services/pubman-rest-client/contexts.service";
 
 
 export abstract class StandardSearchCriterion extends SearchCriterion {
@@ -150,8 +152,13 @@ export class IdentifierSearchCriterion extends StandardSearchCriterion {
 
 export class CollectionSearchCriterion extends StandardSearchCriterion {
 
+  contextList: ContextDbVO[] = [];
+
+
   constructor() {
     super("collection");
+    ContextsService.instance.list(undefined, 1000, 0)
+      .subscribe( result => this.contextList = result.records.map(res => res.data));
   }
 
   override getElasticIndexes(): string[] {

@@ -228,7 +228,17 @@
                   <div class="col" formGroupName="content">
                     <input class="form-control" type="text" formControlName="text"/>
                   </div>
-                } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
+                } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CONTEXT) {
+                  <div class="col-sm-3" formGroupName="content">
+                    <select class="form-select form-select-sm" formControlName="text">
+                      @for (context of $any(currentFormGroup).contextList; track context) {
+                        <option [value]="context.objectId">
+                          {{ context.name }}
+                        </option>
+                      }
+                    </select>
+                  </div>
+              } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
 
                   <div class="col" formGroupName="content">
                     <select class="form-select" formControlName="text">
