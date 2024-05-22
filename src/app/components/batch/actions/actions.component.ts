@@ -54,7 +54,7 @@ export class ActionsComponent {
     };
 
     if (!this.areItemsSelected()) {
-      this.message.error(`Please, select items to be processed!\n`);
+      this.message.error(`The batch processing is empty!\n`);
       this.message.dialog.afterAllClosed.subscribe(result => {
         this.router.navigate(['list'])
       })

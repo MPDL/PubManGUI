@@ -18,12 +18,22 @@
             </div>
           </div>
 
-          <div class="col-12 col-xxl-5 small d-flex justify-content-center">
+          <div class="col-12 col-xxl-6 small d-flex justify-content-end">
             <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true"
               [pageSize]="pageSize" (pageChange)="refreshLogs()">
+              <ng-template ngbPaginationFirst>
+                <span class="material-symbols-outlined">
+                  first_page
+                </span>
+              </ng-template>
+              <ng-template ngbPaginationPrevious>
+                <span class="material-symbols-outlined">
+                  navigate_before
+                </span>
+              </ng-template>
               <ng-template ngbPaginationPages let-page let-pages="pages">
                 @if (pages.length > 0) {
-                <li class="ngb-custom-pages-item border-0">
+                <li class="ngb-custom-pages-item">
                   <div class="mb-3 d-flex flex-nowrap px-2">
                     <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1"
                       i18n="@@pagination.page">Page</label>
@@ -38,21 +48,30 @@
                 </li>
                 }
               </ng-template>
+              <ng-template ngbPaginationNext>
+                <span class="material-symbols-outlined">
+                  navigate_next
+                </span>
+              </ng-template>
+              <ng-template ngbPaginationLast>
+                <span class="material-symbols-outlined">
+                  last_page
+                </span>
+              </ng-template>
             </ngb-pagination>
-          </div>
 
-          <div class="col-12 col-xxl-1">
-            <select class="form-select form-select-sm" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
-              <option [ngValue]="15">15</option>
+            <select class="form-select form-select-sm ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
+              <option [ngValue]="5">5</option>
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
               <option [ngValue]="30">30</option>
-              <option [ngValue]="45">45</option>
             </select>
           </div>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-12 d-flex justify-content-between py-4">
+        <div class="col-lg-10 col-sm-12 d-flex justify-content-between py-4">
           <h4>{{ method }}</h4>
           <div>
             <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: "dd.MM.yyyy 'at' HH:mm":'':'en-EN' }}</span>
@@ -65,7 +84,7 @@
                 i18n="@@batch.logs.details.failed">
                 failed</span></span>
           </div>
-          <button class="btn pt-0" (click)="goBack()">
+          <button class="btn pt-0 pe-0" (click)="goBack()">
             <span class="material-symbols-outlined text-secondary fs-2" style="transform: rotate(-180deg);">
               exit_to_app
             </span>

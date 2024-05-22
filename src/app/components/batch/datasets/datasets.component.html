@@ -4,11 +4,12 @@
   <div class="datasets mt-5">
     <div class="row align-items-center top_nav_pos bg-body">
       <div class="col-12 col-xxl-4">
-
+      @if (number_of_results && number_of_results > 0) {
         <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.datasets.remove"
           (click)="removeChecked()">
           Remove checked items
         </button>
+      }
       </div>
 
       <nav class="col-12 col-xxl-5" purePagination #pagination="purePagination" [totalPages]="number_of_pages"

@@ -1,6 +1,5 @@
 <div class="batch">
   <div class="logs mt-5">
-    <div class="fs-6">
 
       <div class="row">
         <div class="col-lg-10 col-sm-12 d-flex justify-content-between">
@@ -8,9 +7,19 @@
             <h4>Logs</h4>
           </div>
 
-          <div class="col-12 col-xxl-9 small d-flex justify-content-end">
+          <div class="col-12 col-xxl-11 small d-flex justify-content-end">
             <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true"
               [pageSize]="pageSize" (pageChange)="refreshLogs()">
+              <ng-template ngbPaginationFirst>
+                <span class="material-symbols-outlined">
+                  first_page
+                </span>
+              </ng-template>
+              <ng-template ngbPaginationPrevious>
+                <span class="material-symbols-outlined">
+                  navigate_before
+                </span>
+              </ng-template>
               <ng-template ngbPaginationPages let-page let-pages="pages">
                 @if (pages.length > 0) {
                 <li class="ngb-custom-pages-item">
@@ -27,14 +36,23 @@
                 </li>
                 }
               </ng-template>
+              <ng-template ngbPaginationNext>
+                <span class="material-symbols-outlined">
+                  navigate_next
+                </span>
+              </ng-template>
+              <ng-template ngbPaginationLast>
+                <span class="material-symbols-outlined">
+                  last_page
+                </span>
+              </ng-template>
             </ngb-pagination>
-          </div>
 
-          <div class="col-12 col-xxl-1">
-            <select class="form-select form-select-sm" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
-              <option [ngValue]="15">15</option>
+            <select class="form-select form-select-sm ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
+              <option [ngValue]="5">5</option>
+              <option [ngValue]="10">10</option>
+              <option [ngValue]="20">20</option>
               <option [ngValue]="30">30</option>
-              <option [ngValue]="45">45</option>
             </select>
           </div>
         </div>
@@ -68,7 +86,7 @@
                   <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
                     [state]="{ method: log.method, started: log.startDate }">
                     <span class="material-symbols-outlined text-secondary ms-3">
-                      info
+                      list
                     </span>
                   </a>
                 </td>
@@ -82,6 +100,5 @@
 
         </div>
       </div>
-    </div>
   </div>
 </div>

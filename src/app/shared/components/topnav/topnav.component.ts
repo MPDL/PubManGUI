@@ -31,7 +31,7 @@ export class TopnavComponent {
 
       this.message.error(selected + ' items selected' + ((selected! - added) > 0 ? `, ${selected! - added} on batch duplicated were ignored.` : ''));
     } else {
-      this.message.error(`Please, select items to be processed!\n`);
+      this.message.error(`The batch processing is empty!\n`);
     }
 
   }
@@ -46,7 +46,7 @@ export class TopnavComponent {
 
       this.message.error(selected + ' items selected' + ((selected! - removed) > 0 ? `, ${selected! - removed} not on batch were ignored.` : ''));
     } else {
-      this.message.error(`Please, select items to be processed!\n`);
+      this.message.error(`The batch processing is empty!\n`);
     }
   }
 

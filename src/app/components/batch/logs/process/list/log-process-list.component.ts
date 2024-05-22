@@ -25,7 +25,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 export class LogProcessListComponent implements OnInit { 
 
   page = 1;
-	pageSize = 15;
+	pageSize = 10;
 	collectionSize = 0;
   inPage: resp.BatchProcessLogHeaderDbVO[] = [];
   processLogs: resp.BatchProcessLogHeaderDbVO[] = [];

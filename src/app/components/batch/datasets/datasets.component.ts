@@ -68,7 +68,7 @@ export class DatasetsComponent implements OnInit {
     };
 
     if (!this.areItemsSelected()) {
-      this.message.error(`Please, select items to be processed!\n`);
+      this.message.error(`The batch processing is empty!\n`);
       this.message.dialog.afterAllClosed.subscribe(result => {
         this.router.navigate(['list'])
       })
@@ -163,7 +163,7 @@ export class DatasetsComponent implements OnInit {
     this.items(this.bs.items);
     sessionStorage.removeItem(this.bs.savedSelection);
     if (this.bs.items.length === 0) {
-      this.message.error(`Please, select items to be processed!\n`);
+      this.message.error(`The batch processing is empty!\n`);
       this.message.dialog.afterAllClosed.subscribe(result => {
         this.router.navigate(['list'])
       })
