@@ -11,7 +11,7 @@
         <label class="col-form-label">Previous context</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select form-select-sm" formControlName="contextFrom">
+        <select class="form-control form-select-sm" formControlName="contextFrom">
           <option [value]="" selected disabled>Context</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -20,12 +20,12 @@
       </div>
     </div>
 
-    <div class="mb-3 row">
+    <div class="row">
       <div class="col-sm-3">
         <label class="col-form-label">New context</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select form-select-sm" formControlName="contextTo">
+        <select class="form-control form-select-sm" formControlName="contextTo">
           <option [value]="" selected disabled>Context</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -37,7 +37,7 @@
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
         @if (changeContextForm.errors) {
-          <span class="form-text text-danger">
+          <span class="form-text text-danger small">
             Previous and new contexts {{ vs.getFieldError(changeContextForm) }}
           </span>
         } @else {

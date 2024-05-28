@@ -5,7 +5,6 @@
   </div>
 
   <form [formGroup]="changeLocalTagsForm" (ngSubmit)="onSubmit()" autocomplete="off">
-
     <div class="row">
       <div class="col-sm-2">
         <label class="col-form-label">Tag to replace</label>
@@ -16,10 +15,13 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-2 col-sm-6">
-        &nbsp;
-        <span *ngIf="vs.notValidField(changeLocalTagsForm.controls['localTagFrom'])" class="form-text text-danger small">
-          {{ vs.getFieldError(changeLocalTagsForm.controls['localTagFrom']) }}
-        </span>
+      @if(vs.notValidField(changeLocalTagsForm.controls['localTagFrom'])) {
+      <span class="form-text text-danger small">
+        {{ vs.getFieldError(changeLocalTagsForm.controls['localTagFrom']) }}
+      </span>
+      } @else {
+        <span>&nbsp;</span>
+      }
       </div>
     </div>
 
@@ -33,10 +35,13 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-2 col-sm-6">
-        <span *ngIf="vs.notValidField(changeLocalTagsForm.controls['localTagTo'])" class="form-text text-danger small">
+        @if(vs.notValidField(changeLocalTagsForm.controls['localTagTo'])) {
+        <span class="form-text text-danger small">
           Previous and new local tags {{ vs.getFieldError(changeLocalTagsForm.controls['localTagTo']) }}
         </span>
-        &nbsp;
+        } @else {
+          <span>&nbsp;</span>
+        }
       </div>
     </div>
 

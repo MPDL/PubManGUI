@@ -10,7 +10,7 @@
         <label class="col-form-label">Visibility to be replaced</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-control form-select" formControlName="fileVisibilityFrom">
+        <select class="form-control form-select-sm" formControlName="fileVisibilityFrom">
           @for (fileVisibility of visibilityTypes; track fileVisibility) {
             <option [value]="fileVisibility"> {{fileVisibility | titlecase}}</option>
           }
@@ -23,7 +23,7 @@
         <label class="col-form-label">Replacing visibility</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-control form-select" formControlName="fileVisibilityTo">
+        <select class="form-control form-select-sm" formControlName="fileVisibilityTo">
           @for (fileVisibility of visibilityTypes; track fileVisibility) {
             <option [value]="fileVisibility"> {{fileVisibility | titlecase}}</option>
           }

@@ -10,12 +10,12 @@
               (click)="fillWithAll()">
               Fill batch with all items from the log
             </button>
-            <div *ngIf="failed > 0">
+            @if(failed > 0) {
               <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.logs.details.fill.errors"
                 (click)="fillWithFailed()">
                 Fill batch with errors only
               </button>
-            </div>
+            }
           </div>
 
           <div class="col-12 col-xxl-6 small d-flex justify-content-end">
@@ -78,12 +78,18 @@
               HH:mm":'':'en-EN' }}</span>
           </div>
           <div>
-            <span *ngIf="collectionSize - failed > 0">{{ collectionSize - failed }} <span
+            @if(collectionSize - failed > 0) {
+            <span>{{ collectionSize - failed }} <span
                 i18n="@@batch.logs.details.succeded">
-                successful</span></span>
-            <span *ngIf="failed > 0" class="text-danger fw-bold ms-3">{{ failed }} <span
+                successful</span>
+            </span>
+            }
+            @if(failed > 0) {
+            <span class="text-danger fw-bold ms-3">{{ failed }} <span
                 i18n="@@batch.logs.details.failed">
-                failed</span></span>
+                failed</span>
+            </span>
+            }
           </div>
           <button class="btn pt-0 pe-0" (click)="goBack()">
             <span class="material-symbols-outlined text-secondary fs-2" style="transform: rotate(-180deg);">
@@ -96,8 +102,6 @@
       <div class="row">
         <div class="col-lg-10 col-sm-12">
           <table class="table table-responsive fs-6 col-12" onChange="refreshInPageCount()">
-
-
             <thead>
               @if((inPage | stateFilter:refreshFilters():'state').length > 0) {
               <tr class="border-bottom">
@@ -135,18 +139,22 @@
 
         <div class="col-lg-2 d-none d-lg-block">
           <form [formGroup]="filterForm">
-            <div class="form-check" *ngIf="(collectionSize - failed) > 0">
+            @if((collectionSize - failed) > 0) {
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" id="success" formControlName="success" checked>
               <label class="form-check-label" for="success" i18n="@@batch.logs.details.filter.succeded">
                 Show successful items
               </label>
             </div>
-            <div class="form-check" *ngIf="failed > 0">
+            }
+            @if(failed > 0) {
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="faile" formControlName="fail" checked>
               <label class="form-check-label" for="fail" i18n="@@batch.logs.details.filter.failed">
                 Show failed items
               </label>
             </div>
+            }
           </form>
         </div>
       </div>

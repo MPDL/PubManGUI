@@ -18,11 +18,13 @@
   </div>
   <div class="mb-2 row">
     <div class="offset-sm-3 col-sm-6">
-      <span *ngIf="vs.notValidField(changeKeywordsForm.controls['keywordsTo'])"
-        class="form-text text-danger small">
+      @if(vs.notValidField(changeKeywordsForm.controls['keywordsTo'])) {
+      <span class="form-text text-danger small">
         Previous and new keywords {{ vs.getFieldError(changeKeywordsForm.controls['keywordsTo']) }}
       </span>
-      &nbsp;
+      } @else {
+      <span>&nbsp;</span>
+      }
     </div>
   </div>
 

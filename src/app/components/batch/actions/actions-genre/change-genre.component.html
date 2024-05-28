@@ -16,7 +16,7 @@
           <label class="col-form-label">Genre to be replaced</label>
         </div>
         <div class="col-sm-10">
-          <select class="form-control form-select" formControlName="genreFrom">
+          <select class="form-control form-select-sm" formControlName="genreFrom">
             @for (genre of genres; track genre) {
               <option [value]="genre">{{genre | titlecase}}</option>
             }
@@ -29,13 +29,14 @@
           <label class="col-form-label">Replacing genre</label>
         </div>
         <div class="col-sm-10">
-          <select class="form-control form-select" formControlName="genreTo">
+          <select class="form-control form-select-sm" formControlName="genreTo">
             @for (genre of genres; track genre) {
               <option [value]="genre">{{genre | titlecase}}</option>
             }
           </select>
         </div>
       </div>
+
       <div class="mb-2 row">
         <div class="offset-sm-2 col-sm-6">
           @if (vs.notValidField(changeGenreForm.controls['genreTo'])) {
@@ -51,8 +52,8 @@
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">Degree type</label>
         <div class="col-sm-10">
-          <select class="form-control form-select" formControlName="degreeType" disable="disabled">
-            <option value="" selected="selected">-</option>
+          <select class="form-control form-select-sm" formControlName="degreeType" disable="disabled">
+            <option value="" selected disabled>-</option>
             @for (degreeType of degreeTypes; track degreeType) {
               <option [value]="degreeType">{{degreeType | titlecase}}</option>
             }

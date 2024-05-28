@@ -12,7 +12,7 @@
       </div>
       <div class="col-sm-10">
         <div class="input-group">
-          <select class="form-control form-select" [formControl]="audienceId">
+          <select class="form-control form-select-sm" [formControl]="audienceId">
             @for (ou of ous; track ou) {
               <option [value]="ou.name"> {{ou.name}}</option>
             }
@@ -36,8 +36,10 @@
     </div>
 
     <div class="mb-3 row">
-      <label *ngIf="AudiencesToAdd.length" class="col-sm-2 col-form-label">Selected IP
-        range(s)</label>
+      @if(AudiencesToAdd.length) {
+      <label class="col-sm-2 col-form-label">Selected IP
+        range(s)
+      </label>
       <div class="col-sm-10" formArrayName="allowedAudienceIds">
         @for (range of AudiencesToAdd.controls; track range; let i = $index) {
         <div class="mb-1">
@@ -57,6 +59,7 @@
         </div>
         }
       </div>
+      }
     </div>
 
     <div class="row">
