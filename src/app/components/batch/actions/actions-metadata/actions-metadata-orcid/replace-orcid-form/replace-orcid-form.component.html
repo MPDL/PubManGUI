@@ -16,11 +16,13 @@
           <ng-container *pureOption="let item">{{ item.text }}</ng-container>
         </pure-selector>
       </div>
-      <div *ngIf="changeOrcidForm.get('orcid')?.value" class="col-sm-1">
+      @if(changeOrcidForm.get('orcid')?.value) {
+      <div class="col-sm-1">
         <a href="{{changeOrcidForm.get('orcid')?.value}}">
           <img class="" height="24px" width="auto" src="assets/images/orcid.svg" />
         </a>
       </div>
+      }
     </div>
 
     <div class="row">

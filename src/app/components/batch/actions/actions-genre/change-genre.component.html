@@ -17,7 +17,9 @@
         </div>
         <div class="col-sm-10">
           <select class="form-control form-select" formControlName="genreFrom">
-            <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+            @for (genre of genres; track genre) {
+              <option [value]="genre">{{genre | titlecase}}</option>
+            }
           </select>
         </div>
       </div>
@@ -28,16 +30,21 @@
         </div>
         <div class="col-sm-10">
           <select class="form-control form-select" formControlName="genreTo">
-            <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+            @for (genre of genres; track genre) {
+              <option [value]="genre">{{genre | titlecase}}</option>
+            }
           </select>
         </div>
       </div>
       <div class="mb-2 row">
         <div class="offset-sm-2 col-sm-6">
-          <span *ngIf="vs.notValidField(changeGenreForm.controls['genreTo'])" class="form-text text-danger small">
+          @if (vs.notValidField(changeGenreForm.controls['genreTo'])) {
+          <span class="form-text text-danger small">
             Previous and new genres {{ vs.getFieldError(changeGenreForm.controls['genreTo']) }}
           </span>
-          &nbsp;
+          } @else {
+          <span>&nbsp;</span>
+          }
         </div>
       </div>
 
@@ -46,8 +53,9 @@
         <div class="col-sm-10">
           <select class="form-control form-select" formControlName="degreeType" disable="disabled">
             <option value="" selected="selected">-</option>
-            <option *ngFor="let degreeType of degreeTypes" [ngValue]="degreeType">{{degreeType | titlecase}}
-            </option>
+            @for (degreeType of degreeTypes; track degreeType) {
+              <option [value]="degreeType">{{degreeType | titlecase}}</option>
+            }
           </select>
         </div>
       </div>

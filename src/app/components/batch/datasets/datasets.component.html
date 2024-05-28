@@ -1,6 +1,8 @@
-<div class="batch" *ngIf="areItemsSelected()">
-  <pure-batch-nav />
+@if(aaSvc.isLoggedIn) {
+<div class="batch">
+  <pure-batch-nav [areItemsSelected]="areItemsSelected()"/>
 
+  @if(areItemsSelected()) {
   <div class="datasets mt-5">
     <div class="row align-items-center top_nav_pos bg-body">
       <div class="col-12 col-xxl-4">
@@ -68,8 +70,7 @@
           <div class="list-group list-group-flush">
             @for (item of list; track item; let last = $last) {
             <div class="list-group-item py-0">
-              <pure-item-list-element [item]="item" [last_item]="last"
-                [authenticated]="aa.isLoggedIn"></pure-item-list-element>
+              <pure-item-list-element [item]="item" [last_item]="last"></pure-item-list-element>
             </div>
             }
           </div>
@@ -80,4 +81,6 @@
       </div>
     </div>
   </div>
+  }
 </div>
+}

@@ -9,7 +9,7 @@
       <label class="col-sm-3 col-form-label">Source to be adjusted</label>
       <div class="col-sm-1">
         <select class="form-control form-select" formControlName="sourceNumber">
-          <option value="1" selected="selected">1</option>
+          <option value="1" selected>1</option>
           <option value="2">2</option>
         </select>
       </div>
@@ -19,9 +19,10 @@
       <label class="col-sm-3 col-form-label">Type of ID</label>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="sourceIdentifierType">
-          <option value="" selected="selected">-</option>
-          <option *ngFor="let type of sourceIdTypes" [ngValue]="type">
-            {{type | titlecase}}</option>
+          <option value="" selected disabled>-</option>
+          @for (type of sourceIdTypes; track type) {
+            <option [value]="type">{{type | titlecase}}</option>
+          }
         </select>
       </div>
     </div>

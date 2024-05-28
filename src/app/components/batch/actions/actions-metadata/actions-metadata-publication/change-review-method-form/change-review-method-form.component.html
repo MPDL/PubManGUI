@@ -11,9 +11,10 @@
       </div>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="reviewMethodFrom">
-          <option value="" selected="selected">-</option>
-          <option *ngFor="let method of reviewMethods" [ngValue]="method">
-            {{method | titlecase}}</option>
+          <option value="" selected disabled>-</option>
+          @for (method of reviewMethods; track method) {
+            <option [value]="method">{{method | titlecase}}</option>
+          }
         </select>
       </div>
     </div>
@@ -24,19 +25,22 @@
       </div>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="reviewMethodTo">
-          <option value="" selected="selected">-</option>
-          <option *ngFor="let method of reviewMethods" [ngValue]="method">
-            {{method | titlecase}}</option>
+          <option value="" selected disabled>-</option>
+          @for (method of reviewMethods; track method) {
+            <option [value]="method">{{method | titlecase}}</option>
+          }
         </select>
       </div>
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        <span *ngIf="vs.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])"
-          class="form-text text-danger small">
+        @if (vs.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])) {
+        <span class="form-text text-danger small">
           Previous and new review types {{ vs.getFieldError(changeReviewMethodForm) }}
         </span>
-        &nbsp;
+        } @else {
+          <span>&nbsp;</span>
+        }
       </div>
     </div>
 

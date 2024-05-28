@@ -7,7 +7,7 @@
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-sm">
-                        <select id="context" class="form-select form-select-sm" formControlName="objectId" (change)="context_change(contextSelect.value)" #contextSelect>
+                        <select id="contextFromSelect" class="form-select form-select-sm" formControlName="objectId" (change)="context_change(contextFromSelect.value)" #contextFromSelect>
                             <option [value]="null" selected disabled>Context</option>
                             @for (contextObject of user_contexts; track contextObject) {
                             <option [value]="contextObject.objectId">{{contextObject.name}}</option>

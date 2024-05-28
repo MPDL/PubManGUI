@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { throwError } from 'rxjs';
-import { Router } from '@angular/router';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { Router } from '@angular/router';
+import { MessageService } from 'src/app/shared/services/message.service'
+import { AaService } from 'src/app/services/aa.service';
 
 import { BatchNavComponent } from '../batch-nav/batch-nav.component';
 
@@ -37,7 +37,8 @@ export class ActionsComponent {
   constructor(
     private bs: BatchService, 
     private message: MessageService,
-    private router: Router
+    //private router: Router,
+    public aaSvc: AaService
   ) { }
 
   ngAfterViewInit() {
@@ -48,16 +49,16 @@ export class ActionsComponent {
 
     if (this.isProcessing) {
       this.message.error(`Please wait, a process is runnig!\n`);
-      this.message.dialog.afterAllClosed.subscribe(result => {
+      /*this.message.dialog.afterAllClosed.subscribe(result => {
         this.router.navigate(['batch/datasets'])
-      })
+      })*/
     };
 
     if (!this.areItemsSelected()) {
       this.message.error(`The batch processing is empty!\n`);
-      this.message.dialog.afterAllClosed.subscribe(result => {
-        this.router.navigate(['list'])
-      })
+      /*this.message.dialog.afterAllClosed.subscribe(result => {
+        this.router.navigate(['batch/logs'])
+      })*/
     }
   }
 

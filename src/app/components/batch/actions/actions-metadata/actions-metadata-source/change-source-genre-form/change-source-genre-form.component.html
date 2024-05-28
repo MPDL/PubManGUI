@@ -11,9 +11,10 @@
       </div>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="sourceGenreFrom">
-          <option value="" selected="selected">-</option>
-          <option *ngFor="let genre of sourceGenres" [ngValue]="genre">
-            {{genre | titlecase}}</option>
+          <option value="" selected disabled>-</option>
+          @for (genre of sourceGenres; track genre) {
+            <option [value]="genre">{{genre | titlecase}}</option>
+          }
         </select>
       </div>
     </div>
@@ -24,19 +25,22 @@
       </div>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="sourceGenreTo">
-          <option value="" selected="selected">-</option>
-          <option *ngFor="let genre of sourceGenres" [ngValue]="genre">
-            {{genre | titlecase}}</option>
+          <option value="" selected disabled>-</option>
+          @for (genre of sourceGenres; track genre) {
+            <option [value]="genre">{{genre | titlecase}}</option>
+          }
         </select>
       </div>
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        <span *ngIf="vs.notValidField(changeSourceGenreForm.controls['sourceGenreTo'])"
-          class="form-text text-danger small">
+        @if (vs.notValidField(changeSourceGenreForm.controls['sourceGenreTo'])) {
+        <span class="form-text text-danger small">
           Previous and new genres {{ vs.getFieldError(changeSourceGenreForm) }}
         </span>
-        &nbsp;
+        } @else {
+          <span>&nbsp;</span>
+        }
       </div>
     </div>
 

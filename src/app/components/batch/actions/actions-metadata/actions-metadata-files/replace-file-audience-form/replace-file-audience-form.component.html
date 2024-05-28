@@ -13,8 +13,9 @@
       <div class="col-sm-10">
         <div class="input-group">
           <select class="form-control form-select" [formControl]="audienceId">
-            <option *ngFor="let ou of ous" [ngValue]="ou.name">{{ou.name}}
-            </option>
+            @for (ou of ous; track ou) {
+              <option [value]="ou.name"> {{ou.name}}</option>
+            }
           </select>
           <button (click)="onAddToNewAudiences()" class="input-group-text" type="button">
             <span class="material-symbols-outlined">add</span>
@@ -24,10 +25,13 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-2 col-sm-6">
-        <span *ngIf="vs.notValidField(audienceId)" class="form-text text-danger small">
+        @if (vs.notValidField(audienceId)) {
+        <span class="form-text text-danger small">
           IP range {{ vs.getFieldError(audienceId) }}
         </span>
-        &nbsp;
+        } @else {
+          <span>&nbsp;</span>
+        }
       </div>
     </div>
 
@@ -35,18 +39,23 @@
       <label *ngIf="AudiencesToAdd.length" class="col-sm-2 col-form-label">Selected IP
         range(s)</label>
       <div class="col-sm-10" formArrayName="allowedAudienceIds">
-        <div class="mb-1" *ngFor="let range of AudiencesToAdd.controls; let i = index;">
+        @for (range of AudiencesToAdd.controls; track range; let i = $index) {
+        <div class="mb-1">
           <div class="input-group">
             <input [formControlName]="i" class="form-control" readonly>
             <button (click)="onDeleteAudience( i )" class="input-group-text" type="button">
               <span class="material-symbols-outlined">remove</span>
             </button>
           </div>
-
-          <span *ngIf="vs.notValidFieldInArray(AudiencesToAdd, i)" class="form-text text-danger small">
+          @if (vs.notValidFieldInArray(AudiencesToAdd, i)) {
+          <span class="form-text text-danger small">
             {{ vs.getFieldError(replaceFileAudienceForm.controls[i]) }}
           </span>
+          } @else {
+          <span>&nbsp;</span>
+          }
         </div>
+        }
       </div>
     </div>
 

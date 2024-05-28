@@ -7,32 +7,47 @@
 
   <form [formGroup]="changeContextForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label" for="contextFrom">Previous context</label>
+      <div class="col-sm-3">
+        <label class="col-form-label">Previous context</label>
+      </div>
       <div class="col-sm-9">
-        <pure-selector id="contextFrom" [form]="contextFrom" [control_name]="'name'"
-          (notice)="updateContextFrom($event)" purePureCtxs placeholder="search contexts ...">
-          <ng-container *pureOption="let item">{{ item.text }}</ng-container>  
-        </pure-selector>
+        <select class="form-select form-select-sm" formControlName="contextFrom">
+          <option [value]="" selected disabled>Context</option>
+          @for (contextObject of user_contexts; track contextObject) {
+          <option [value]="contextObject.objectId">{{contextObject.name}}</option>
+          }
+        </select>
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label" for="contextTo">New context</label>
+      <div class="col-sm-3">
+        <label class="col-form-label">New context</label>
+      </div>
       <div class="col-sm-9">
-        <pure-selector id="contextTo" [form]="contextTo" [control_name]="'name'"
-          (notice)="updateContextTo($event)" purePureCtxs placeholder="search contexts ..." >
-          <ng-container *pureOption="let item">{{ item.text }}</ng-container>
-        </pure-selector>
+        <select class="form-select form-select-sm" formControlName="contextTo">
+          <option [value]="" selected disabled>Context</option>
+          @for (contextObject of user_contexts; track contextObject) {
+          <option [value]="contextObject.objectId">{{contextObject.name}}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (changeContextForm.errors) {
+          <span class="form-text text-danger">
+            Previous and new contexts {{ vs.getFieldError(changeContextForm) }}
+          </span>
+        } @else {
+          <span>&nbsp;</span>
+        }
       </div>
     </div>
 
     <div class="row">
-      <div class="offset-sm-3 col-sm-6">
-          <div *ngIf="changeContextForm.errors" class="form-text text-danger">
-            Previous and new contexts {{ vs.getFieldError(changeContextForm) }}
-          </div>
-      </div>
-      <div class="col-sm-3">
+      <div class="offset-sm-9 col-sm-3">
         <button type="submit" [disabled]="!changeContextForm.valid" class="btn btn-outline-secondary col-4 float-end">
           Change
         </button>

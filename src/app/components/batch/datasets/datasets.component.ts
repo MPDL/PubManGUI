@@ -53,7 +53,7 @@ export class DatasetsComponent implements OnInit {
   constructor(
     private bs: BatchService,
     private message: MessageService,
-    public aa: AaService,
+    public aaSvc: AaService,
     private router: Router
   ) { }
 
@@ -69,9 +69,9 @@ export class DatasetsComponent implements OnInit {
 
     if (!this.areItemsSelected()) {
       this.message.error(`The batch processing is empty!\n`);
-      this.message.dialog.afterAllClosed.subscribe(result => {
-        this.router.navigate(['list'])
-      })
+      /*this.message.dialog.afterAllClosed.subscribe(result => {
+        this.router.navigate(['batch/logs'])
+      })*/
     } 
 
     this.router.events.pipe(

@@ -1,7 +1,8 @@
+@if(aaSvc.isLoggedIn) {
 <div class="batch col-lg-12 col-sm-12">
+  <pure-batch-nav [areItemsSelected]="areItemsSelected()"/>
+  
   @if (areItemsSelected() && !isProcessing) {
-  <pure-batch-nav />
-
   <div class="actions mt-5">
     <div class="fs-6">
       The selected action will be executed on all publications currently stored in the workspace.
@@ -95,3 +96,4 @@
   </div>
   }
 </div>
+}

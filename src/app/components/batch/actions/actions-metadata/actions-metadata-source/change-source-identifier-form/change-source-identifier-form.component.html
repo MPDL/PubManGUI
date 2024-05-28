@@ -23,9 +23,11 @@
       </div>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="sourceIdentifierType">
-          <option value="" selected="selected">-</option>
-          <option *ngFor="let type of sourceIdTypes" [ngValue]="type">
+          <option value="" selected disabled>-</option>
+          @for (type of sourceIdTypes; track type) {
+          <option [value]="type">
             {{type | titlecase}}</option>
+          }
         </select>
       </div>
     </div>
@@ -49,11 +51,13 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        <span *ngIf="vs.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])"
-          class="form-text text-danger small">
+        @if(vs.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])) {
+        <span class="form-text text-danger small">
           Previous and new identifiers {{ vs.getFieldError(changeSourceIdentifierForm) }}
         </span>
-        &nbsp;
+        } @else {
+        <span>&nbsp;</span>
+        }
       </div>
     </div>
 

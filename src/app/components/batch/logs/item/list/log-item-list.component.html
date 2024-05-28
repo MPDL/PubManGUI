@@ -74,7 +74,8 @@
         <div class="col-lg-10 col-sm-12 d-flex justify-content-between py-4">
           <h4>{{ method }}</h4>
           <div>
-            <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: "dd.MM.yyyy 'at' HH:mm":'':'en-EN' }}</span>
+            <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: "dd.MM.yyyy 'at'
+              HH:mm":'':'en-EN' }}</span>
           </div>
           <div>
             <span *ngIf="collectionSize - failed > 0">{{ collectionSize - failed }} <span
@@ -94,19 +95,22 @@
 
       <div class="row">
         <div class="col-lg-10 col-sm-12">
-          <table class="table table-responsive fs-6 col-12">
+          <table class="table table-responsive fs-6 col-12" onChange="refreshInPageCount()">
+
+
             <thead>
+              @if((inPage | stateFilter:refreshFilters():'state').length > 0) {
               <tr class="border-bottom">
                 <th scope="col" class="pe-2">Status</th>
                 <th scope="col" class="pe-2">Title</th>
                 <th scope="col">Message</th>
               </tr>
+              }
             </thead>
 
             <tbody>
-              <!--@for (log of inPage; track log.item.itemObjectId | filter:refreshFilters():'state'") {
-              -->
-              <tr class="border-bottom" *ngFor="let log of inPage | stateFilter:refreshFilters():'state'">
+              @for (log of inPage | stateFilter:refreshFilters():'state' ; track log.item.itemObjectId) {
+              <tr class="border-bottom">
                 <td class="col-1">
                   <span>{{ log.item.state | titlecase }}</span>
                 </td>
@@ -117,8 +121,14 @@
                   <span>{{ localeMessages.get(log.item.message) }}</span>
                 </td>
               </tr>
-              <!--}
-              -->
+              }
+              @empty {
+              <tr>
+                <th colspan="3" class="text-center">
+                  <span class="text-center">No items to see</span>
+                </th>
+              </tr>
+              }
             </tbody>
           </table>
         </div>

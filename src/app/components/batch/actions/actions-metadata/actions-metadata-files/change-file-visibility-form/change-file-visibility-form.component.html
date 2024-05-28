@@ -11,8 +11,9 @@
       </div>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="fileVisibilityFrom">
-          <option *ngFor="let fileVisibility of visibilityTypes" [ngValue]="fileVisibility">
-            {{fileVisibility | titlecase}}</option>
+          @for (fileVisibility of visibilityTypes; track fileVisibility) {
+            <option [value]="fileVisibility"> {{fileVisibility | titlecase}}</option>
+          }
         </select>
       </div>
     </div>
@@ -23,18 +24,21 @@
       </div>
       <div class="col-sm-9">
         <select class="form-control form-select" formControlName="fileVisibilityTo">
-          <option *ngFor="let fileVisibility of visibilityTypes" [ngValue]="fileVisibility">
-            {{fileVisibility | titlecase}}</option>
+          @for (fileVisibility of visibilityTypes; track fileVisibility) {
+            <option [value]="fileVisibility"> {{fileVisibility | titlecase}}</option>
+          }
         </select>
       </div>
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        <span *ngIf="vs.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])"
-          class="form-text text-danger small">
+        @if (vs.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
+        <span class="form-text text-danger small">
           Previous and new file visibilities {{ vs.getFieldError(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
         </span>
-        &nbsp;
+        } @else {
+          <span>&nbsp;</span>
+        }
       </div>
     </div>
 

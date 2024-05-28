@@ -3,15 +3,16 @@ import { Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ContextDbRO } from 'src/app/model/inge';
+import { ContextDbRO, ContextDbVO } from 'src/app/model/inge';
 import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
-import { ControlType } from "../../../item-edit/services/form-builder.service";
-import { OptionDirective } from "../../../../shared/components/selector/directives/option.directive";
-import { SelectorComponent } from "../../../../shared/components/selector/selector.component";
+import { ControlType } from "src/app/components/item-edit/services/form-builder.service";
+import { OptionDirective } from "src/app/shared/components/selector/directives/option.directive";
+import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ChangeContextParams } from 'src/app/components/batch/interfaces/actions-params';
+import { AaService } from 'src/app/services/aa.service';
 
 
 @Component({
@@ -29,45 +30,30 @@ import { ChangeContextParams } from 'src/app/components/batch/interfaces/actions
 })
 export class ActionsContextComponent {
 
-  constructor(private fb: FormBuilder, public vs: ValidatorsService, private bs: BatchService) { }
+  constructor(private fb: FormBuilder, public vs: ValidatorsService, private aaSvc: AaService, private bs: BatchService) { }
+
+  user_contexts?: ContextDbRO[];
+
+  ngOnInit(): void {
+    this.aaSvc.principal.subscribe(
+      p => {
+        this.user_contexts = p.depositorContexts;
+      }
+    )
+  }
 
   public changeContextForm: FormGroup = this.fb.group({
-    contextFrom: this.fb.group<ControlType<ContextDbRO>>({
-      objectId: this.fb.control('', [Validators.required]),
-      name: this.fb.control('')
-    }),
-    contextTo: this.fb.group<ControlType<ContextDbRO>>({
-      objectId: this.fb.control('', [Validators.required]),
-      name: this.fb.control('')
-    }),
-  },
-    {
-      validators: this.vs.notEqualsValidator('contextFrom.objectId', 'contextTo.objectId')
-    });
+    contextFrom: this.fb.group<ControlType<ContextDbVO>>,
+    contextTo: this.fb.group<ControlType<ContextDbVO>>
+  });
 
   get changeContextParams(): ChangeContextParams {
     const actionParams: ChangeContextParams = {
-      contextFrom: this.changeContextForm.controls['contextFrom'].value.objectId,
-      contextTo: this.changeContextForm.controls['contextTo'].value.objectId,
+      contextFrom: this.changeContextForm.controls['contextFrom'].value,
+      contextTo: this.changeContextForm.controls['contextTo'].value,
       itemIds: []
     }
     return actionParams;
-  }
-
-  get contextFrom() {
-    return this.changeContextForm.get('contextFrom') as FormGroup<ControlType<ContextDbRO>>;
-  }
-
-  get contextTo() {
-    return this.changeContextForm.get('contextTo') as FormGroup<ControlType<ContextDbRO>>;
-  }
-
-  updateContextFrom(event: any) {
-    this.contextFrom.patchValue({ objectId: event.id }, { emitEvent: false });
-  }
-
-  updateContextTo(event: any) {
-    this.contextTo.patchValue({ objectId: event.id }, { emitEvent: false });
   }
 
   onSubmit(): void {
@@ -75,7 +61,6 @@ export class ActionsContextComponent {
       this.changeContextForm.markAllAsTouched();
       return;
     }
-
     this.bs.changeContext(this.changeContextParams).subscribe(actionResponse => console.log(actionResponse));
   }
 

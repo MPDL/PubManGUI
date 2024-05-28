@@ -30,4 +30,8 @@ export class LogsComponent implements OnInit {
   ngOnInit(): void {    
 
   }
+
+  areItemsSelected(): boolean {
+    return this.bs.items && this.bs.items.length > 0;
+  }
 }

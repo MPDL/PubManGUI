@@ -12,9 +12,10 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-control form-select" formControlName="externalReferenceContentCategoryFrom">
-                    <option value="" selected="selected">-</option>
-                    <option *ngFor="let category of contentCategories" [ngValue]="category">
-                        {{category | titlecase}}</option>
+                    <option value="" selected disabled>-</option>
+                    @for (category of contentCategories; track category) {
+                        <option [value]="category">{{category | titlecase}}</option>
+                    }
                 </select>
             </div>
         </div>
@@ -25,18 +26,22 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-control form-select" formControlName="externalReferenceContentCategoryTo">
-                    <option value="" selected="selected">-</option>
-                    <option *ngFor="let category of contentCategories" [ngValue]="category">
-                        {{category | titlecase}}</option>
+                    <option value="" selected disabled>-</option>
+                    @for (category of contentCategories; track category) {
+                        <option [value]="category">{{category | titlecase}}</option>
+                    }
                 </select>
             </div>
         </div>
         <div class="mb-2 row">
             <div class="offset-sm-3 col-sm-6">
-                <span *ngIf="vs.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'])" class="form-text text-danger small">
+                @if (vs.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'])) {
+                <span class="form-text text-danger small">
                     Previous and new content categories {{ vs.getFieldError(changeExternalReferenceContentCategoryForm) }}
                 </span>
-                &nbsp;
+                } @else {
+                <span>&nbsp;</span>
+                }
             </div>
         </div>
 

@@ -1,10 +1,12 @@
 <div class="batch-nav">
     <div class="position-absolute start-50 translate-middle nav-bottom-10">
         <ul class="nav p-3 d-flex justify-content-around">
-            <li *ngFor="let option of navList" [routerLink]="[ option.route ]" routerLinkActive="current"
-                class="nav-item fw-bold"
+            @for(option of navList; track option) {
+            <li [routerLink]="[ option.route ]" routerLinkActive="current"
+                [ngClass]="{'disabled' : !areItemsSelected && option.text !== 'logs'}"
                 data-bs-toggle="button">{{ option.text | titlecase}} 
             </li>
+            }
         </ul>
     </div>
 </div>
