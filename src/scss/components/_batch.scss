@@ -16,7 +16,6 @@
             border-radius: 0.4rem;
             font-family: Merriweather;
             font-size: 1.1rem;
-            cursor: pointer;
         }
 
         .current {
@@ -24,9 +23,14 @@
             text-decoration-thickness: 0.2rem;
         }
 
+        li {
+            cursor: pointer;
+        }
+
         .disabled {
             text-decoration: none;
             color: color-mix(in srgb, var(--bs-body-color), transparent 40%);
+            cursor: not-allowed;
         }
     }
 
