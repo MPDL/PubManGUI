@@ -65,7 +65,12 @@
 
                 .accordion-body {
                     background-color: var(--bs-body-bg);
+
+                    .action-card {
+                        background-color: var(--accent-color-contrast);
+                    }
                 }
+                
             }
 
             .accordion-button {
