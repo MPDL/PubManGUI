@@ -1,6 +1,6 @@
 import {SearchCriterion} from "./SearchCriterion";
 import {FormControl} from "@angular/forms";
-import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
+import {baseElasticSearchQueryBuilder, baseElasticSearchSortBuilder} from "../../../shared/services/search-utils";
 import {Observable, of} from "rxjs";
 import {ContextDbVO} from "../../../model/inge";
 import {ContextsService} from "../../../services/pubman-rest-client/contexts.service";
@@ -157,8 +157,25 @@ export class CollectionSearchCriterion extends StandardSearchCriterion {
 
   constructor() {
     super("collection");
+
+
+    /*
+    const elasticsearchBody = {
+      query: {match_all:{}},
+      fields: ["objectId", "name"],
+      size: 1000,
+      _source: false,
+      sort: [{"name.keyword" :{order:"asc"}}]
+    }
+    ContextsService.instance.elasticSearch(elasticsearchBody)
+      .subscribe();
+*/
+    //Retrieve all contexts and sort them by their name
     ContextsService.instance.list(undefined, 1000, 0)
-      .subscribe( result => this.contextList = result.records.map(res => res.data));
+      .subscribe( result => this.contextList = result.records
+        .map(res => res.data)
+        .sort((c1, c2) => c1.name.localeCompare(c2.name))
+      );
   }
 
   override getElasticIndexes(): string[] {
