@@ -10,7 +10,7 @@
         <label class="col-form-label">Source to be adjusted</label>
       </div>
       <div class="col-sm-1">
-        <select class="form-control form-select-sm" formControlName="sourceNumber">
+        <select class="form-select form-select-sm" formControlName="sourceNumber">
           <option value="1" selected>1</option>
           <option value="2">2</option>
         </select>
@@ -22,7 +22,7 @@
         <label class="col-form-label">Type of ID</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-control form-select-sm" formControlName="sourceIdentifierType">
+        <select class="form-select form-select-sm" formControlName="sourceIdentifierType">
           <option value="" selected disabled hidden>-</option>
           @for (type of sourceIdTypes; track type) {
           <option [value]="type">

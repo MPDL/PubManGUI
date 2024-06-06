@@ -78,14 +78,15 @@
               HH:mm":'':'en-EN' }}</span>
           </div>
           <div>
-            @if(collectionSize - failed > 0) {
-            <span>{{ collectionSize - failed }} <span
-                i18n="@@batch.logs.details.succeded">
-                successful</span>
+            @if(collectionSize > 0) {
+            <span>{{ collectionSize }} <span
+                i18n="@@batch.logs.details.total">
+                total</span>
             </span>
             }
             @if(failed > 0) {
-            <span class="text-danger fw-bold ms-3">{{ failed }} <span
+            ,
+            <span class="text-danger fw-bold ms-3"> {{ failed }} <span
                 i18n="@@batch.logs.details.failed">
                 failed</span>
             </span>

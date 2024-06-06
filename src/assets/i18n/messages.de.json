@@ -40,6 +40,7 @@
     "batch.logs.started.on": "Gestarted am",
     "batch.logs.details.fill.all": "Alle Datensätze übernehmen",
     "batch.logs.details.fill.errors": "Nur Fehler übernehmen",
+    "batch.logs.details.total": "insgesamt",
     "batch.logs.details.failed": "fehlgeschlagen",
     "batch.logs.details.succeded": "erfolgreich",
     "batch.logs.details.filter.failed": "Fehlgeschlagene Items anzeigen",
