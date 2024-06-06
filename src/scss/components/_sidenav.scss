@@ -2,20 +2,10 @@
   left: 10%;
   position: fixed;
   top: 14%;
-  width: 12em;
+  width: 13em;
   z-index: 16;
   overflow: hidden;
 
-  /*
-    -webkit-transition: all 0.25s ease-in-out;
-    -moz-transition: all 0.25s ease-in-out;
-    transition: all 0.25s ease-in-out;
-    */
-  .material-symbols-outlined {
-    vertical-align: middle;
-    // font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 48;
-    font-variation-settings: 'wght' 500, 'GRAD' 0, 'opsz' 48;
-  }
 }
 
 .side_nav.collapsed {
@@ -44,11 +34,14 @@
     -moz-transition: all 0.25s ease-in-out;
     transition: all 0.25s ease-in-out;
     */
+  /*
   .material-symbols-outlined {
     vertical-align: middle;
     // font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 48;
     font-variation-settings: 'wght' 500, 'GRAD' 0, 'opsz' 48;
   }
+
+   */
 }
 
 .side_nav_mobile.collapsed {
