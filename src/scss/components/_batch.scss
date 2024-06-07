@@ -2,9 +2,13 @@
 
     .batch-nav {
 
+        :hover {
+            box-shadow: 0 1px 9px 0 lightcyan;
+        }
+
         .nav-bottom-10 {
             position: fixed !important;
-            bottom: 10%;
+            bottom: 8%;
             z-index: 9999;
         }
 
@@ -118,7 +122,7 @@
 
         .pagination {
             --bs-pagination-padding-x: 0; //0.75rem;
-            --bs-pagination-padding-y: 0.2rem; //0.375rem;
+            --bs-pagination-padding-y: 0.1rem; //0.375rem;
             --bs-pagination-font-size: 0.875rem; //1rem;
             --bs-pagination-bg: transparent; //var(--bs-body-bg);
             --bs-pagination-border-width: 0; //var(--bs-border-width);
@@ -130,6 +134,10 @@
             --bs-pagination-active-border-width: 0;
             --bs-pagination-disabled-bg: transparent; //var(--bs-secondary-bg);
             --bs-pagination-disabled-border-width: 0;
+
+            a {
+                padding-top: 0.2rem;
+            }
 
             input {
                 padding: 0.1rem 0.1rem;
@@ -144,18 +152,23 @@
 
         }
 
-        .form-select-sm {
+        .page-size {
             width: 4rem;
             height: 2rem;
             border-radius: 0.375rem;
+            font-size: 0.875rem; 
+            padding: 0.1rem 1rem;
+            margin-top: 0;
         }
 
         table {
-            border-spacing: 4em !important;
 
-            th,
+            th {
+                padding: 0.2em 1em;
+            }
+
             td {
-                padding: 1em;
+                padding: 0.8em 1em;
             }
 
             tbody {

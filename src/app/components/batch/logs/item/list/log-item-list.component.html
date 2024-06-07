@@ -3,23 +3,52 @@
     <div class="fs-6">
 
       <div class="row">
+        <div class="col-lg-10 col-sm-12 d-flex justify-content-between align-items-center mb-1">
+          <h5>{{ method }}</h5>
+          <div>
+            <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: "dd.MM.yyyy 'at'
+              HH:mm":'':'en-EN' }}</span>
+          </div>
+          <div>
+            @if(collectionSize > 0) {
+            <span class="me-0">{{ collectionSize }} <span class="me-0" i18n="@@batch.logs.details.total">
+                total</span>
+            </span>
+            }
+            @if(failed > 0) {
+            <span class="m-0">,</span>
+            <span class="text-danger fw-bold ms-3"> {{ failed }} <span i18n="@@batch.logs.details.failed">
+                failed</span>
+            </span>
+            }
+          </div>
+          <button class="btn pt-0 pe-0" (click)="goBack()" title="Back to Logs">
+            <span class="material-symbols-outlined fs-2" style="transform: rotate(-180deg);">
+              exit_to_app
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-lg-10 col-sm-12 d-flex justify-content-between">
 
-          <div class="col-12 col-xxl-6 small d-flex justify-content-between">
-            <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.logs.details.fill.all"
+          <div class="col-12 col-xxl-6 small d-inline-flex justify-content-start align-items-center">
+            <button class="btn btn-outline-secondary button-small d-inline-block" i18n="@@batch.logs.details.fill.all"
               (click)="fillWithAll()">
               Fill batch with all items from the log
             </button>
             @if(failed > 0) {
-              <button class="btn btn-outline-secondary h-75 d-inline-block" i18n="@@batch.logs.details.fill.errors"
-                (click)="fillWithFailed()">
-                Fill batch with errors only
-              </button>
+            <button class="btn btn-outline-secondary button-small d-inline-block ms-3"
+              i18n="@@batch.logs.details.fill.errors" (click)="fillWithFailed()">
+              Fill batch with errors only
+            </button>
             }
           </div>
 
-          <div class="col-12 col-xxl-6 small d-flex justify-content-end">
-            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true"
+          <div class="col-12 col-xxl-6 small d-inline-flex justify-content-end align-items-center">
+
+            <ngb-pagination class="mb-0 p-0" [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true"
               [pageSize]="pageSize" (pageChange)="refreshLogs()">
               <ng-template ngbPaginationFirst>
                 <span class="material-symbols-outlined">
@@ -34,7 +63,7 @@
               <ng-template ngbPaginationPages let-page let-pages="pages">
                 @if (pages.length > 0) {
                 <li class="ngb-custom-pages-item">
-                  <div class="mb-3 d-flex flex-nowrap px-2">
+                  <div class="d-flex flex-nowrap px-2">
                     <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1"
                       i18n="@@pagination.page">Page</label>
                     <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
@@ -60,7 +89,7 @@
               </ng-template>
             </ngb-pagination>
 
-            <select class="form-select form-select-sm ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
+            <select class="form-select page-size ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
               <option [ngValue]="5">5</option>
               <option [ngValue]="10">10</option>
               <option [ngValue]="20">20</option>
@@ -71,38 +100,8 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-10 col-sm-12 d-flex justify-content-between py-4">
-          <h4>{{ method }}</h4>
-          <div>
-            <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: "dd.MM.yyyy 'at'
-              HH:mm":'':'en-EN' }}</span>
-          </div>
-          <div>
-            @if(collectionSize > 0) {
-            <span>{{ collectionSize }} <span
-                i18n="@@batch.logs.details.total">
-                total</span>
-            </span>
-            }
-            @if(failed > 0) {
-            ,
-            <span class="text-danger fw-bold ms-3"> {{ failed }} <span
-                i18n="@@batch.logs.details.failed">
-                failed</span>
-            </span>
-            }
-          </div>
-          <button class="btn pt-0 pe-0" (click)="goBack()" title="Back to Logs">
-            <span class="material-symbols-outlined text-secondary fs-2" style="transform: rotate(-180deg);">
-              exit_to_app
-            </span>
-          </button>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col-lg-10 col-sm-12">
-          <table class="table table-responsive fs-6 col-12" onChange="refreshInPageCount()">
+          <table class="table table-responsive fs-6 col-12 mt-4" onChange="refreshInPageCount()">
             <thead>
               @if((inPage | stateFilter:refreshFilters():'state').length > 0) {
               <tr class="border-bottom">
@@ -125,6 +124,7 @@
                 <td>
                   <span>{{ localeMessages.get(log.item.message) }}</span>
                 </td>
+                <hr>
               </tr>
               }
               @empty {
@@ -138,7 +138,7 @@
           </table>
         </div>
 
-        <div class="col-lg-2 d-none d-lg-block">
+        <div class="col-lg-2 d-none d-lg-block mt-4">
           <form [formGroup]="filterForm">
             @if((collectionSize - failed) > 0) {
             <div class="form-check">
@@ -150,8 +150,8 @@
             }
             @if(failed > 0) {
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="faile" formControlName="fail" checked>
-              <label class="form-check-label" for="fail" i18n="@@batch.logs.details.filter.failed">
+              <input class="form-check-input" type="checkbox" value="" id="fail" formControlName="fail" checked>
+              <label class="form-check-label lh-lg" for="fail" i18n="@@batch.logs.details.filter.failed">
                 Show failed items
               </label>
             </div>
