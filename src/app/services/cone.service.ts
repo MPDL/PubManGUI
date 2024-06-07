@@ -8,7 +8,7 @@ import * as props from 'src/assets/properties.json';
 })
 export class ConeService {
 
-  rest_uri = props.cone_instamce_uri;
+  rest_uri = props.cone_instance_uri;
 
   constructor(
     private http: HttpClient
@@ -16,6 +16,9 @@ export class ConeService {
 
   private getResources(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<any> {
     const requestUrl = this.rest_uri + path;
+    console.log('rest_uri: ' + this.rest_uri); // DEBUG
+    console.log('path: ' + path); // DEBUG
+    console.log('requestUrl: ' + requestUrl); // DEBUG
     return this.http.request(method, requestUrl, {
       body,
       headers,

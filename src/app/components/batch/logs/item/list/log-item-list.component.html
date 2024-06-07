@@ -60,7 +60,7 @@
               </ng-template>
             </ngb-pagination>
 
-            <select class="form-select form-select-sm ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
+            <select class="form-select ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
               <option [ngValue]="5">5</option>
               <option [ngValue]="10">10</option>
               <option [ngValue]="20">20</option>

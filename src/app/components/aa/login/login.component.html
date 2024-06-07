@@ -4,8 +4,8 @@
     </div>
     <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
       <div class="modal-body">
-        <input type="text" class="form-control form-control-sm" placeholder="email" formControlName="username" />
-        <input type="password" class="form-control form-control-sm" placeholder="pwd" formControlName="password" />
+        <input type="text" class="form-control" placeholder="email" formControlName="username" />
+        <input type="password" class="form-control" placeholder="pwd" formControlName="password" />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-info btn-sm" (click)="close()">Close</button>

@@ -1,6 +1,6 @@
 <div [formGroup]="abstract_form" class="">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="abstracts" class="col-sm-2 col-form-label col-form-label-sm">{{index + 1}}. Abstract</label>
+        <label for="abstracts" class="col-sm-2 col-form-label">{{index + 1}}. Abstract</label>
         <div class="col-sm"></div>
         <div class="col-sm-1">
             <pure-add-remove-buttons [index]="index" (notice)="add_remove_abstract($event)"></pure-add-remove-buttons>
@@ -8,8 +8,8 @@
     </div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm">
-            <label for="abstract_language" class="col-sm-2 col-form-label col-form-label-sm">Language</label>
-            <input type="text" class="form-control form-control-sm" id="abstract_language" name="abstract_language"
+            <label for="abstract_language" class="col-sm-2 col-form-label">Language</label>
+            <input type="text" class="form-control" id="abstract_language" name="abstract_language"
                 formControlName="language">
         </div>
         <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -17,8 +17,8 @@
     </div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm">
-            <label for="abstract_value" class="col-sm-2 col-form-label col-form-label-sm">Abstract</label>
-            <textarea class="form-control form-control-sm" id="abstract_value" name="abstract_value"
+            <label for="abstract_value" class="col-sm-2 col-form-label">Abstract</label>
+            <textarea class="form-control" id="abstract_value" name="abstract_value"
                 formControlName="value"></textarea>
         </div>
         <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->

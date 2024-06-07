@@ -45,7 +45,7 @@
               last_page
             </span>
           </button>
-          <select class="form-select form-select-sm" [formControl]="select_pages_2_display"
+          <select class="form-select" [formControl]="select_pages_2_display"
             (change)="pageSizeHandler($event)" size="1">
             @for (pages of pages_2_display; track pages) {
             <option [selected]="pages.value === 10" [value]="pages.value">{{pages.label}}</option>

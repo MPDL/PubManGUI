@@ -1,4 +1,4 @@
 {
-    "cone_instamce_uri": "http://localhost:4200/cone",
+    "cone_instance_uri": "http://localhost:4200/cone",
     "inge_rest_uri": "https://gui.inge.mpdl.mpg.de/rest"
 }

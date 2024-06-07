@@ -54,6 +54,10 @@ ul {
   /*line-height: 0 !important;*/
   position: relative;
   top: -1px;
+  /*
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  */
 }
 
 button > .material-symbols-outlined {

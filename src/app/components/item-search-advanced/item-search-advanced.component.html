@@ -67,7 +67,7 @@
 
                   <!--Operator -->
                   <div class="col-auto" formGroupName="content">
-                    <select class="form-select form-select-sm" formControlName="operator"
+                    <select class="form-select" formControlName="operator"
                             (change)="changeOperator(i, t.value)" #t>
                       <option value="and">AND</option>
                       <option value="or">OR</option>
@@ -133,7 +133,7 @@
                   </select>
                   <!--Type -->
                   <!--
-                  <select class="form-select form-select-sm" formControlName="type" (change)="changeType(i, t.value)"
+                  <select class="form-select" formControlName="type" (change)="changeType(i, t.value)"
                           #t>
                     @for (searchType of searchTypeKeys; track searchType) {
                       <option value="{{searchType}}">
@@ -164,7 +164,7 @@
                     </select>
                   </div>
                   <div class="col">
-                    <pure-person-autosuggest [formForPersonsName]="$any(currentFormGroup).content.get('text')"
+                    <pure-person-autosuggest [formForPersonsCompleteName]="$any(currentFormGroup).content.get('text')"
                                              [formForPersonsId]="$any(currentFormGroup).content.get('hidden')"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ORGANIZATION) {
@@ -214,7 +214,7 @@
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CLASSIFICATION) {
                   <div class="col-sm-3" formGroupName="content">
-                    <select class="form-select form-select-sm" formControlName="classificationType">
+                    <select class="form-select" formControlName="classificationType">
                       <option value="todo">TODO</option>
                       <!--
                       @for(classificationType of identifierOptions; track classificationType) {
@@ -230,7 +230,7 @@
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CONTEXT) {
                   <div class="col-sm-3" formGroupName="content">
-                    <select class="form-select form-select-sm" formControlName="text">
+                    <select class="form-select" formControlName="text">
                       @for (context of $any(currentFormGroup).contextList; track context) {
                         <option [value]="context.objectId">
                           {{ context.name }}

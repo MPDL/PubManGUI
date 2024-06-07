@@ -1,6 +1,6 @@
 <div class="">
   <div class="form-group" [formGroup]="form">
-    <input [formControlName]="control_name" [value]="searchedValue$ | async" class="form-control form-control-sm"
+    <input [formControlName]="control_name" [value]="searchedValue$ | async" class="form-control"
       [placeholder]="placeholder" (keydown)="onKeydown($event)" #input (input)="handleInput($event)">
   </div>
   <ng-template #overlayContainer>

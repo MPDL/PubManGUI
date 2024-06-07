@@ -2,7 +2,7 @@
     <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1}">
         <div class="col-sm">
             <label for="alt_title_type" class="visually-hidden">type</label>
-            <select id="alt_title_type" class="form-select form-select-sm" formControlName="type">
+            <select id="alt_title_type" class="form-select" formControlName="type">
                 <option [ngValue]="null" selected disabled>type</option>
                 @for (t of alt_title_types; track t) {
                 <option [ngValue]="t">{{t}}</option>
@@ -12,7 +12,7 @@
         <!--
         <div class="col-sm">
             <label for="alt_title_lang" class="visually-hidden">language</label>
-            <select id="alt_title_lang" class="form-select form-select-sm" formControlName="language">
+            <select id="alt_title_lang" class="form-select" formControlName="language">
                 <option [value]="null" selected disabled>language</option>
                 @for (l of alt_title_langs; track l) {
                 <option [value]="l">{{l}}</option>
@@ -21,7 +21,7 @@
         </div>
         -->
         <div class="col-sm-8">
-            <input type="text" class="form-control form-control-sm" id="alt_title_value" formControlName="value">
+            <input type="text" class="form-control" id="alt_title_value" formControlName="value">
         </div>
         <div class="col-sm-1">
             <pure-add-remove-buttons [index]="index" (notice)="add_remove_alt_title($event)"></pure-add-remove-buttons>

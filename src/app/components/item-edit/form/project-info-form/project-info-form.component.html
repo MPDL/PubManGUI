@@ -2,8 +2,8 @@
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
-                <label class="col-sm-2 col-form-label col-form-label-sm">Project Name</label>
-                <input type="text" class="form-control form-control-sm" formControlName="title">
+                <label class="col-sm-2 col-form-label">Project Name</label>
+                <input type="text" class="form-control" formControlName="title">
             </div>
             <div class="col-sm-1">
                 <pure-add-remove-buttons [index]="index"
@@ -12,9 +12,9 @@
         </div>
         <div [formGroup]="grantIdentifier" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
-                <label class="col-form-label col-form-label-sm">Grant Identifier</label>
-                <input type="text" class="form-control form-control-sm" id="grant_identifier_type" formControlName="type" hidden>
-                <input type="text" class="form-control form-control-sm" id="grant_identifier_value" formControlName="id">
+                <label class="col-form-label">Grant Identifier</label>
+                <input type="text" class="form-control" id="grant_identifier_type" formControlName="type" hidden>
+                <input type="text" class="form-control" id="grant_identifier_value" formControlName="id">
                 <!--
                     <pure-identifier-form [identifier_form]="grantIdentifier" [multi]="false"></pure-identifier-form>
                 -->
@@ -24,13 +24,13 @@
         </div>
         <div [formGroup]="fundingProgram" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm-4">
-                <label class="col-form-label col-form-label-sm">Funding Program</label>
-                <input type="text" class="form-control form-control-sm" formControlName="title">
+                <label class="col-form-label">Funding Program</label>
+                <input type="text" class="form-control" formControlName="title">
             </div>
             <div [formGroup]="fundingProgramIdentifier" class="col-sm">
-                <label class="col-sm col-form-label col-form-label-sm">Program Identifier</label>
-                <input type="text" class="form-control form-control-sm" id="progam_identifier_type" formControlName="type" hidden>
-                <input type="text" class="form-control form-control-sm" id="progam_identifier_value" formControlName="id">
+                <label class="col-sm col-form-label">Program Identifier</label>
+                <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
+                <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
                 <!--
                 <ng-container formArrayName="identifiers">
                     @for (fundingProgramIdentifier of fundingProgramIdentifiers.controls; track
@@ -55,13 +55,13 @@
         </div>
         <div [formGroup]="fundingOrganization" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm-4">
-                <label class="col-form-label col-form-label-sm">Funding Organization</label>
-                <input type="text" class="form-control form-control-sm" formControlName="title">
+                <label class="col-form-label">Funding Organization</label>
+                <input type="text" class="form-control" formControlName="title">
             </div>
             <div [formGroup]="fundingOrganizationIdentifier" class="col-sm">
-                <label class="col-sm col-form-label col-form-label-sm">Organization Identifier</label>
-                <input type="text" class="form-control form-control-sm" id="progam_identifier_type" formControlName="type" hidden>
-                <input type="text" class="form-control form-control-sm" id="progam_identifier_value" formControlName="id">
+                <label class="col-sm col-form-label">Organization Identifier</label>
+                <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
+                <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
                 <!--
                 <ng-container formArrayName="identifiers">
                     @for (fundingOrganizationIdentifier of fundingOrganizationIdentifiers.controls; track

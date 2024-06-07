@@ -10,7 +10,7 @@
           <label class="col-form-label">Content category to be replaced</label>
         </div>
         <div class="col-sm-9">
-          <select class="form-select form-select-sm" formControlName="fileContentCategoryFrom">
+          <select class="form-select" formControlName="fileContentCategoryFrom">
             <option value="" selected disabled hidden>-</option>
             @for (category of contentCategories; track category) {
               <option [value]="category"> {{category | titlecase}}</option>
@@ -24,7 +24,7 @@
           <label class="col-form-label">Replacing content category</label>
         </div>
         <div class="col-sm-9">
-          <select class="form-select form-select-sm" formControlName="fileContentCategoryTo">
+          <select class="form-select" formControlName="fileContentCategoryTo">
             <option value="" selected disabled hidden>-</option>
             @for (category of contentCategories; track category) {
               <option [value]="category"> {{category | titlecase}}</option>

@@ -10,11 +10,12 @@ import { OptionDirective } from 'src/app/shared/components/selector/directives/o
 import { ConePersonsDirective } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.directive';
 import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
 import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
+import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
 
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IdentifierFormComponent, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, ConePersonsDirective, OptionDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IdentifierFormComponent, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, ConePersonsDirective, OptionDirective, PersonAutosuggestComponent],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })
@@ -102,7 +103,9 @@ export class CreatorFormComponent {
   }
 
   get organizations() {
+    //console.log("person.organizations:", this.creator_form.get('person.organizations') as FormArray<FormGroup<ControlType<OrganizationVO>>>)
     return this.creator_form.get('person.organizations') as FormArray<FormGroup<ControlType<OrganizationVO>>>;
+   
   }
 
   get identifier() {

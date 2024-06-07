@@ -3,11 +3,11 @@
 <div class="container-fluid">
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 px-3 align-items-center" formGroupName="context">
-            <label for="context" class="col-sm-2 col-form-label col-form-label-sm" >Context</label>
+            <label for="context" class="col-sm-2 col-form-label" >Context</label>
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-sm">
-                        <select id="contextFromSelect" class="form-select form-select-sm" formControlName="objectId" (change)="context_change(contextFromSelect.value)" #contextFromSelect>
+                        <select id="contextFromSelect" class="form-select" formControlName="objectId" (change)="context_change(contextFromSelect.value)" #contextFromSelect>
                             <option [value]="null" selected disabled>Context</option>
                             @for (contextObject of user_contexts; track contextObject) {
                             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -28,11 +28,11 @@
         <!--</div>-->
 
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 px-3 align-items-center">
-            <label for="title" class="col-sm-2 col-form-label col-form-label-sm">message</label>
+            <label for="title" class="col-sm-2 col-form-label">message</label>
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                     <div class="col-sm">
-                        <input type="text" class="form-control form-control-sm" id="message" name="message"
+                        <input type="text" class="form-control" id="message" name="message"
                             formControlName="message">
                     </div>
                     <div class="col-sm-1">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 px-3">
-            <label for="title" class="col-sm-2 col-form-label col-form-label-sm">local tags</label>
+            <label for="title" class="col-sm-2 col-form-label">local tags</label>
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                     <div class="col-sm">
@@ -59,7 +59,7 @@
                     <div class="d-sm-flex flex-sm-row gap-1 align-items-center"
                         [ngClass]="{'mb-1': i !== localTags.controls.length - 1}">
                         <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-sm" id="tag" [formControlName]="i"
+                            <input type="text" class="form-control" id="tag" [formControlName]="i"
                                 [value]="tag.value">
                         </div>
                         <div class="col-sm-1">
