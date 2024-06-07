@@ -2,7 +2,7 @@
     <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1 && multi}">
         <div class="col-sm-4">
             <label for="identifier_type" class="visually-hidden">type</label>
-            <select id="identifier_type" class="form-select form-select-sm" formControlName="type">
+            <select id="identifier_type" class="form-select" formControlName="type">
                 <option [ngValue]="null" selected disabled>type</option>
                 @for (t of identifier_types; track t) {
                 <option [ngValue]="t">{{t}}</option>
@@ -10,7 +10,7 @@
             </select>
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control form-control-sm" id="identifier_value" formControlName="id">
+            <input type="text" class="form-control" id="identifier_value" formControlName="id">
         </div>
         @if (multi) {
         <div class="col-sm-1">

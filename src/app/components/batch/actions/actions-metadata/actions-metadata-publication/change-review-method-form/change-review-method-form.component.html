@@ -10,7 +10,7 @@
         <label class=" col-form-label">Review types to be replaced</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select form-select-sm" formControlName="reviewMethodFrom">
+        <select class="form-select" formControlName="reviewMethodFrom">
           <option value="" selected disabled hidden>-</option>
           @for (method of reviewMethods; track method) {
             <option [value]="method">{{method | titlecase}}</option>
@@ -24,7 +24,7 @@
         <label class="col-form-label">Replacing review types</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select form-select-sm" formControlName="reviewMethodTo">
+        <select class="form-select" formControlName="reviewMethodTo">
           <option value="" selected disabled hidden>-</option>
           @for (method of reviewMethods; track method) {
             <option [value]="method">{{method | titlecase}}</option>

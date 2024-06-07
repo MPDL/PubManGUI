@@ -10,7 +10,7 @@
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsId && formForPersonsId.value" placeholder="Start typing..." />
   } @else if (formForPersonsGivenName && formForPersonsFamilyName) {
-    <input class="form-control form-control-sm" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
+    <input class="form-control" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsId && formForPersonsId.value" placeholder="Start typing..." />
   }
@@ -24,7 +24,7 @@
   }
   @if(formForPersonsId && formForPersonsId.value) {
   <button class="btn btn-outline-dark btn-sm" type="button" (click)="deleteFields()">
-    <span class="bi bi-x" style="font-size: 0.875rem;"></span>
+    <span class="bi bi-x"></span>
   </button>
   }
 </div>

@@ -9,7 +9,7 @@
             </button>
         </mat-chip-row>
         }
-        <input class="form-control form-control-sm" [placeholder]="'Add ' + control_name + ' ...'" 
+        <input class="form-control" [placeholder]="'Add ' + control_name + ' ...'" 
             [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" />
     </mat-chip-grid>

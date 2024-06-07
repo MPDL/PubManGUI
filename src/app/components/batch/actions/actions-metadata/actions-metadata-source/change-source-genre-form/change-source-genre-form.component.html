@@ -10,7 +10,7 @@
         <label class="col-form-label">Genre to be replaced</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select form-select-sm" formControlName="sourceGenreFrom">
+        <select class="form-select" formControlName="sourceGenreFrom">
           <option value="" selected disabled hidden>-</option>
           @for (genre of sourceGenres; track genre) {
             <option [value]="genre">{{genre | titlecase}}</option>
@@ -24,7 +24,7 @@
         <label class="col-form-label">Replacing genre</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select form-select-sm" formControlName="sourceGenreTo">
+        <select class="form-select" formControlName="sourceGenreTo">
           <option value="" selected disabled hidden>-</option>
           @for (genre of sourceGenres; track genre) {
             <option [value]="genre">{{genre | titlecase}}</option>

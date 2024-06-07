@@ -4,14 +4,14 @@
 
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
                 <div class="col-sm-auto">
-                  <label class="col-form-label col-form-label-sm text-end pe-2">&nbsp;</label>
+                  <label class="col-form-label text-end pe-2">&nbsp;</label>
                     <span class="material-symbols-outlined">
                         drag_indicator
                     </span>
                 </div>
                 <div class="col-sm-2">
-                    <label for="creator_type" class="col-form-label col-form-label-sm text-end pe-2">type</label>
-                    <select id="creator_type" class="form-select form-select-sm" formControlName="type"
+                    <label for="creator_type" class="col-form-label text-end pe-2">type</label>
+                    <select id="creator_type" class="form-select" formControlName="type"
                         (change)="type_change(type.value)">
                         <option [value]="null" selected disabled>type</option>
                         @for (t of creator_types; track t) {
@@ -20,8 +20,8 @@
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <label for="creator_role" class="col-form-label col-form-label-sm text-end pe-2">role</label>
-                    <select id="creator_role" class="form-select form-select-sm" formControlName="role">
+                    <label for="creator_role" class="col-form-label text-end pe-2">role</label>
+                    <select id="creator_role" class="form-select" formControlName="role">
                         <option [value]="null" selected disabled>role</option>
                         @for (r of creator_roles; track r) {
                         <option [value]="r">{{r}}</option>
@@ -30,7 +30,7 @@
                 </div>
                 @if (type.value === 'ORGANIZATION') {
                 <div class="col-sm" formGroupName="organization">
-                    <label for="name" class="col-form-label col-form-label-sm text-end pe-2">name</label>
+                    <label for="name" class="col-form-label text-end pe-2">name</label>
                     <pure-selector [form]="organization" [control_name]="'name'" (notice)="updateOU($event)" purePureOus
                         placeholder="search ous ...">
                         <ng-container *pureOption="let item">{{ item.text }}</ng-container>
@@ -48,8 +48,8 @@
                 @if (type.value === 'PERSON') {
                 <ng-container formGroupName="person">
                     <div class="col-sm-3">
-                        <label for="familyName" class="col-form-label col-form-label-sm text-end pe-2">family</label>
-                        <!--<input type="text" class="form-control form-control-sm" id="familyName"
+                        <label for="familyName" class="col-form-label text-end pe-2">family</label>
+                        <!--<input type="text" class="form-control" id="familyName"
                             formControlName="familyName">-->
                         <pure-person-autosuggest [formForPersonsGivenName]="$any(person.controls.givenName)"
                             [formForPersonsFamilyName]="$any(person.controls.familyName)"
@@ -63,8 +63,8 @@
                         -->
                     </div>
                     <div class="col-sm-3">
-                        <label for="givenName" class="col-form-label col-form-label-sm text-end pe-2">given</label>
-                        <input type="text" class="form-control form-control-sm" id="givenName"
+                        <label for="givenName" class="col-form-label text-end pe-2">given</label>
+                        <input type="text" class="form-control" id="givenName"
                             formControlName="givenName">
                     </div>
                     @if(person.controls.identifier.controls.type.value == 'CONE') {
@@ -92,11 +92,11 @@
                     </div>
                     }
                     <!-- Just in case
-                        <label for="orcid" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">orcid</label>
+                        <label for="orcid" class="col-sm-1 col-form-label text-end pe-2">orcid</label>
                         <div class="col-sm">
-                            <input type="text" class="form-control form-control-sm" id="orcid" formControlName="orcid">
+                            <input type="text" class="form-control" id="orcid" formControlName="orcid">
                         </div>
-                        <label for="id" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">id</label>
+                        <label for="id" class="col-sm-1 col-form-label text-end pe-2">id</label>
                         <div class="col-sm">
                             <pure-identifier-form [identifier_form]="identifier" [multi]="false"
                                 (notice)="handleIdentifierNotification($event)"></pure-identifier-form>
@@ -111,7 +111,7 @@
                 <div formArrayName="organizations">
                     @for (pou of organizations.controls; track pou; let i = $index) {
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center" [formGroupName]="i">
-                        <label for="ou_name" class="col-sm-1 col-form-label col-form-label-sm text-end pe-2">ou
+                        <label for="ou_name" class="col-sm-1 col-form-label text-end pe-2">ou
                             {{i+1}}</label>
                         <div class="col-sm">
                             <!--
@@ -120,7 +120,7 @@
                                     <ng-container *pureOption="let item">{{ item.text }}</ng-container>
                                 </pure-selector>
                             -->
-                            <input type="text" class="form-control form-control-sm" id="OuName" formControlName="name">
+                            <input type="text" class="form-control" id="OuName" formControlName="name">
                             <!--<pre class="col-sm">{{pou.value.name | json}}</pre>-->
                         </div>
                         <!--TODO link-->

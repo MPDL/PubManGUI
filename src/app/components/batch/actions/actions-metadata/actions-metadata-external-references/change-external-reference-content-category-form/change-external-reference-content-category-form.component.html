@@ -11,7 +11,7 @@
                     replaced</label>
             </div>
             <div class="col-sm-9">
-                <select class="form-select form-select-sm" formControlName="externalReferenceContentCategoryFrom">
+                <select class="form-select" formControlName="externalReferenceContentCategoryFrom">
                     <option value="" selected disabled hidden>-</option>
                     @for (category of contentCategories; track category) {
                         <option [value]="category">{{category | titlecase}}</option>
@@ -25,7 +25,7 @@
                 <label class="col-form-label">Replacing content category</label>
             </div>
             <div class="col-sm-9">
-                <select class="form-select form-select-sm" formControlName="externalReferenceContentCategoryTo">
+                <select class="form-select" formControlName="externalReferenceContentCategoryTo">
                     <option value="" selected disabled hidden>-</option>
                     @for (category of contentCategories; track category) {
                         <option [value]="category">{{category | titlecase}}</option>

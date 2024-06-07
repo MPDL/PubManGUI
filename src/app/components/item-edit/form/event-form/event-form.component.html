@@ -1,29 +1,29 @@
 <div [formGroup]="event_form" class="d-sm-flex flex-sm-row gap-1 mb-1">
-    <label class="col-sm-2 col-form-label col-form-label-sm">Event</label>
+    <label class="col-sm-2 col-form-label">Event</label>
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
-                <label class="col-form-label col-form-label-sm">Title</label>
-                <input type="text" class="form-control form-control-sm" formControlName="title">
+                <label class="col-form-label">Title</label>
+                <input type="text" class="form-control" formControlName="title">
             </div>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
             <div class="col-sm-2">
-                <label class="col-form-label col-form-label-sm">Start Date</label>
-                <input type="text" class="form-control form-control-sm" formControlName="startDate">
+                <label class="col-form-label">Start Date</label>
+                <input type="text" class="form-control" formControlName="startDate">
             </div>
             <div class="col-sm-2">
-                <label class="col-form-label col-form-label-sm">End Date</label>
-                <input type="text" class="form-control form-control-sm" formControlName="endDate">
+                <label class="col-form-label">End Date</label>
+                <input type="text" class="form-control" formControlName="endDate">
             </div>
             <div class="col-sm-2">
-                <label class="col-form-label col-form-label-sm">Place</label>
-                <input type="text" class="form-control form-control-sm" formControlName="place">
+                <label class="col-form-label">Place</label>
+                <input type="text" class="form-control" formControlName="place">
             </div>
             <div class="col-sm-2 form-check">
                 <input id="invitation-status" class="form-check-input mt-2 mx-1" type="checkbox" [formControl]="invitationBoolean"
                     (change)="change_invitation_status($event)">
-                <label class="form-check-label col-form-label-sm" for="invitation-status">Invited</label>
+                <label class="form-check-label" for="invitation-status">Invited</label>
             </div>
         </div>
     </div>
