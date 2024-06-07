@@ -13,10 +13,9 @@ import {
   OperatorFunction,
   switchMap, tap
 } from "rxjs";
-import {ConeService} from "../../../services/cone.service";
+import {ConeService, PersonResource} from "../../../services/cone.service";
 import {HttpParams} from "@angular/common/http";
 import { FormBuilderService } from 'src/app/components/item-edit/services/form-builder.service';
-import { ConePersonsService } from '../selector/services/cone-persons/cone-persons.service';
 import { IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
 
 @Component({
@@ -41,8 +40,6 @@ export class PersonAutosuggestComponent {
 
   @Input() formForPersonsId! : FormControl | undefined;
 
-  cone = inject(ConePersonsService);
-  
   searching: boolean = false;
 
   constructor(private coneService: ConeService, private fb: FormBuilder, private fbs: FormBuilderService) {
@@ -117,7 +114,8 @@ export class PersonAutosuggestComponent {
     const selected_ou = selected_person.substring(selected_person.indexOf('(') + 1, selected_person.lastIndexOf(','));
     console.log("Selected:", selected_person, selected_ou)
     console.log("ConeId", coneId)
-    this.cone.resource("cone/" + coneId).subscribe(
+    //this.cone.resource("cone/" + coneId).subscribe(
+    this.coneService.getPersonResource("cone/" + coneId).subscribe(
       (person: PersonResource) => {
         const patched: Partial<PersonVO> = {
           givenName: person.http_xmlns_com_foaf_0_1_givenname,
@@ -166,29 +164,4 @@ export class PersonAutosuggestComponent {
     console.log("formForPersonOrganization after delete",this.formForPersonOrganizations?.value);
     this.formForPersonsId?.setValue('');
   }
-
-
-  
-}
-
-export interface PersonResource {
-  id: string,
-  http_purl_org_escidoc_metadata_terms_0_1_degree: string,
-  http_purl_org_dc_elements_1_1_title: string,
-  http_xmlns_com_foaf_0_1_givenname: string,
-  http_purl_org_escidoc_metadata_terms_0_1_position: position_shite[] | position_shite,
-  http_xmlns_com_foaf_0_1_family_name: string,
-  http_purl_org_dc_terms_alternative: string,
-  http_purl_org_dc_elements_1_1_identifier: identifier_bunch[] | identifier_bunch
-}
-
-export interface position_shite {
-  http_purl_org_escidoc_metadata_terms_0_1_position_name: string,
-  http_purl_org_eprint_terms_affiliatedInstitution: string,
-  http_purl_org_dc_elements_1_1_identifier: string,
-}
-
-export interface identifier_bunch { 
-  http_www_w3_org_1999_02_22_rdf_syntax_ns_value: string,
-  http_www_w3_org_2001_XMLSchema_instance_type: string
 }
