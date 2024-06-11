@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
-import { ItemsService} from "../../../../../services/pubman-rest-client/items.service";
+import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -100,7 +100,7 @@ export class LogItemListComponent implements OnInit, DoCheck {
     private batchSvc: BatchService, 
     private activatedRoute: ActivatedRoute, 
     private router: Router, 
-    private is: ItemsService, 
+    private itemSvc: ItemsService, 
     private msgSvc: MessageService, 
     private fb: FormBuilder) {}
 
@@ -116,7 +116,7 @@ export class LogItemListComponent implements OnInit, DoCheck {
         if (LOGS.length === 0) return this.router.navigate(['/batch/logs']);
 
         LOGS.sort((a,b) => b.startDate.valueOf() - a.startDate.valueOf())
-          .forEach(element => this.is.retrieve(element.itemObjectId, this.batchSvc.token)
+          .forEach(element => this.itemSvc.retrieve(element.itemObjectId, this.batchSvc.token)
             .subscribe( actionResponse =>
                 {
                   this.detailLogs.push({item: element, title: actionResponse.metadata?.title});
