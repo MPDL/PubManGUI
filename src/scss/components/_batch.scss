@@ -2,10 +2,6 @@
 
     .batch-nav {
 
-        :hover {
-            box-shadow: 0 1px 9px 0 lightcyan;
-        }
-
         .nav-bottom-10 {
             position: fixed !important;
             bottom: 8%;
@@ -116,6 +112,10 @@
             color: color-mix(in srgb, var(--accent-bg-color), white 15%);
             font-style: italic;
         }
+
+        .mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
+            margin-left: 0 !important;
+        }
     }
 
     .logs {
@@ -178,6 +178,10 @@
             tr {
                 border-color: var(--bs-body-bg) !important;
             }
+        }
+
+        .spinner-border {
+            cursor: pointer;
         }
     }
 }

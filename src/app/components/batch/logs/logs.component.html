@@ -1,11 +1,9 @@
 @if(aaSvc.isLoggedIn) {
 <div class="batch">
-  <pure-batch-nav [areItemsSelected]="areItemsSelected()"/>
+  <pure-batch-nav [areItemsSelected]="areItemsSelected()" />
 
   <div class="logs mt-5">
-      <div class="fs-6">
-        <pure-batch-log-process-list></pure-batch-log-process-list>
-      </div>
+    <pure-batch-log-process-list></pure-batch-log-process-list>
   </div>
 
 </div>

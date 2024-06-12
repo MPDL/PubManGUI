@@ -24,7 +24,9 @@ export class ChipsComponent {
     const value = (event.value || '').trim();
 
     if (value) {
-      this.chips.push(value);
+      if (this.chips.indexOf(value) < 0) {
+        this.chips.push(value);
+      }
     }
 
     event.chipInput!.clear();

@@ -11,47 +11,19 @@
         <label class="col-form-label">New tag</label>
       </div>
       <div class="col-sm-10">
-        <div class="input-group">
-          <input type="text" class="form-control" [formControl]="localTag" placeholder="Add a new local tag">
-          <button (click)="onAddToNewTags()" class="input-group-text" type="button">
-            <span class="material-symbols-outlined">add</span>
-          </button>
-        </div>
+        <pure-chips [form]="addLocalTagsForm" [chips]="tagsToAdd.value" [control_name]="'localTags'"></pure-chips>
       </div>
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-2 col-sm-6">
-        @if (validSvc.notValidField(localTag)) {
+        @if (addLocalTagsForm.invalid) {
         <span class="form-text text-danger small">
-          Local tag {{ validSvc.getFieldError(localTag) }}
+          Local tag duplicated
         </span>
         } @else {
         <span>&nbsp;</span>
         }
       </div>
-    </div>
-
-    <div class="mb-3 row">
-      @if(tagsToAdd.length) {
-      <label class="col-sm-2 col-form-label">Tags to add</label>
-      <div class="col-sm-10" formArrayName="localTags">
-        @for(tag of tagsToAdd.controls; track tag; let i = $index) {
-        <div class="mb-1">
-          <div class="input-group">
-            <input [formControlName]="i" class="form-control">
-            <button (click)="onDeleteTag( i )" class="input-group-text" type="button">
-              <span class="material-symbols-outlined">remove</span>
-            </button>
-          </div>
-          @if(validSvc.notValidFieldInArray(tagsToAdd, i)) {
-          <span class="form-text text-danger small">
-            {{ validSvc.getFieldError(addLocalTagsForm.controls[i]) }}
-          </span>
-          }
-        </div>
-        }
-      </div>
-      }
     </div>
 
     <div class="mb-1 row">
@@ -62,9 +34,6 @@
         </button>
       </div>
     </div>
-
-
-
 
   </form>
 

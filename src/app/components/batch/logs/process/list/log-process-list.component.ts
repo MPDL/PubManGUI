@@ -5,10 +5,18 @@ import { RouterModule } from '@angular/router';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import * as resp from '../../../interfaces/actions-responses';
 
+import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
+import { BatchProcessLogHeaderState } from 'src/app/model/inge';
+
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule, NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
+
+type detail = {
+  'item': resp.getBatchProcessLogDetailsResponse,
+  'title': string
+ }
 
 @Component({
   selector: 'pure-batch-log-process-list',
@@ -29,14 +37,19 @@ export class LogProcessListComponent implements OnInit {
 	collectionSize = 0;
   inPage: resp.BatchProcessLogHeaderDbVO[] = [];
   processLogs: resp.BatchProcessLogHeaderDbVO[] = [];
+  
+  state = BatchProcessLogHeaderState;
+  detailLogs: detail[] = [];  
+  runningProcessed = 0;
+  runningTotal = 0;
 
-  constructor(private batchSvc: BatchService) {}
+  constructor(
+    private batchSvc: BatchService,
+    private itemSvc: ItemsService ) {}
 
   ngOnInit(): void {
-    this.batchSvc.getAllBatchProcessLogHeaders().subscribe( actionResponse => 
-      { console.log(actionResponse);
+    this.batchSvc.getAllBatchProcessLogHeaders().subscribe( actionResponse => { 
         this.processLogs = actionResponse.sort((b,a) => a.batchLogHeaderId - b.batchLogHeaderId);
-        console.log(actionResponse);
         this.collectionSize = this.processLogs.length;
         this.refreshLogs();
         return;
@@ -57,5 +70,22 @@ export class LogProcessListComponent implements OnInit {
 	formatInput(input: HTMLInputElement) {
 		input.value = input.value.replace(FILTER_PAG_REGEX, '');
 	}
+
+  getProcessed(batchLogHeaderId: number): number {
+    if (this.runningTotal === 0) this.updateProcess(batchLogHeaderId);
+    return  Math.floor(this.runningProcessed / (this.runningTotal > 0 ? this.runningTotal : 1) * 100);
+  }
+
+  updateProcess(batchLogHeaderId: number) {
+    this.batchSvc.getBatchProcessLogDetails(batchLogHeaderId)
+      .subscribe(LOGS => {
+        this.runningProcessed = 0;
+        this.runningTotal = 0;
+        LOGS.forEach(element => {
+            if (element.endDate) this.runningProcessed++;
+            this.runningTotal++;
+        })
+      })
+  }
 
 }
