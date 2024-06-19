@@ -1,4 +1,4 @@
 <div class="btn-group btn-group-sm d-flex justify-content-between">
-    <button type="button" class="btn btn-sm text-secondary btn-outline-secondary" name="add" [value]="add_value" (click)="add(index)"><strong>{{add_value}}</strong></button>
-    <button type="button" class="btn btn-sm text-secondary btn-outline-secondary" name="remove" [value]="del_value" (click)="remove(index)" [hidden]="del_value === 'hidden'"><strong>{{del_value}}</strong></button>
+    <button type="button" class="btn btn-sm text-secondary btn-outline-secondary" name="add" [innerHTML]="add_value" (click)="add(index)"></button>
+    <button type="button" class="btn btn-sm text-secondary btn-outline-secondary" name="remove" [innerHTML]="del_value" (click)="remove(index)" [hidden]="del_value === 'hidden'"></button>
 </div>
