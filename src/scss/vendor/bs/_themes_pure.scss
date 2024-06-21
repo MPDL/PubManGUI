@@ -82,6 +82,10 @@
         // transform: translateX(.5rem);
     }
 
+    .input-group-text {
+        background-color: $body-bg;
+    }
+
     .list-group-item {
         background-color: $body-secondary-bg;
     }
