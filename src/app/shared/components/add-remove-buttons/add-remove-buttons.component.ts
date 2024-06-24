@@ -18,8 +18,8 @@ export class AddRemoveButtonsComponent implements OnInit {
   del_value: string | undefined;
 
   ngOnInit() {
-    this.add_value = this.add_val ? this.add_val : '+';
-    this.del_value = this.del_val ? this.del_val : '-';
+    this.add_value = this.add_val ? this.add_val : '<i class="bi bi-plus"></i>';
+    this.del_value = this.del_val ? this.del_val : '<i class="bi bi-dash"></i>';
   }
 
   add(i: number) {

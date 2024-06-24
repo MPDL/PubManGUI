@@ -1,7 +1,25 @@
 .header {
-    min-height: 8vh;
+    //min-height: 8vh;
+  height:100px;
+  transition: all 0.3s ease;
 
+  &.scrolled {
+    //padding-top: 0.5rem;
+    //padding-bottom: 0.5rem;
+    //font-size: 0.9rem;
+    height:50px;
+  }
+
+  .navbar-brand {
+    &.scrolled {
+      img {
+        //height: 50px;
+      }
+
+    }
+  }
     img {
       vertical-align: middle;
+
     }
 }

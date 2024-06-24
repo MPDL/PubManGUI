@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { FundingInfoVO, FundingProgramVO, IdentifierVO, IdType } from 'src/app/model/inge';
-import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
+import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { Subscription } from 'rxjs';
 
 @Component({

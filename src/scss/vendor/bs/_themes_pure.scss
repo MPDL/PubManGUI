@@ -9,17 +9,14 @@
     --bs-body-tertiary-bg: #{$body-tertiary-bg};
     --bs-link-color: #{$mpg-gray};
 */
-    --bs-body-tertiary-color: #{body-tertiary-color-dark};
-
     --accent-bg-color: #{$mpg-slate-gray-0};
     --accent-color-contrast: #{$body-secondary-bg};
-    --input-bg-color: #{$body-tertiary-bg};
 
     .accordion {
 
         .accordion-button {
-            color: #{$mpg-light-gray};
-            background-color: #{$mpg-blue};
+            color: $body-secondary-bg;
+            background-color: $body-bg-dark;
         }
 
         .accordion-item {
@@ -28,17 +25,6 @@
             .accordion-body {
                 background: #{$body-secondary-bg};
 
-                input:not([type=checkbox]) {
-                    background-color: #{$body-tertiary-bg};
-                }
-
-                textarea {
-                    background-color: #{$body-tertiary-bg};
-                }
-
-                select {
-                    background-color: #{$body-tertiary-bg};
-                }
             }
         }
     }
@@ -60,7 +46,7 @@
   }
 
     .cdk-drag-preview {
-        background: #{$mpdl-iseo1};
+        background: $body-secondary-bg-dark;
         box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
             0 8px 10px 1px rgba(0, 0, 0, 0.14),
     }
@@ -72,12 +58,12 @@
     .form-control,
     .form-select {
         // background-color: #{shade-color($background-content, 2%)};
-        background-color: #{$body-tertiary-bg};
+        background-color: $body-bg;
     }
 
     .form-control:focus,
     .form-select:focus {
-        background-color: $body-secondary-bg;
+        background-color: $body-bg;
         border-color: #{tint-color($secondary, 10%)};
     }
 
@@ -96,6 +82,10 @@
         // transform: translateX(.5rem);
     }
 
+    .input-group-text {
+        background-color: $body-bg;
+    }
+
     .list-group-item {
         background-color: $body-secondary-bg;
     }
@@ -105,19 +95,19 @@
     }
 
     .material-symbols-outlined {
-        color: var(--bs-nav-link-color);
+        color: $link-color;
     }
 
     a:hover .material-symbols-outlined {
-        color: var(--bs-nav-link-hover-color);
+        color: $link-hover-color;
     }
 
     .nav-link {
-        color: var(--bs-nav-link-color);
+        color: $link-color;
     }
 
     .nav-link:hover {
-        color: var(--bs-nav-link-hover-color);
+        color: $link-hover-color;
     }
 
     .mat-mdc-chip.mat-mdc-standard-chip {
@@ -136,11 +126,11 @@
 
     .side_nav {
         a path {
-            fill: var(--bs-nav-link-color);
+            fill: $link-color;
         }
 
         a:hover path {
-            fill: var(--bs-nav-link-hover-color);
+            fill: $link-hover-color;
         }
     }
 
@@ -149,31 +139,32 @@
         ;
 
         a path {
-            fill: var(--bs-nav-link-color);
+            fill: $link-color;
         }
     }
 
     #topnav {
         a path {
-            fill: var(--bs-nav-link-color);
+            fill: $link-color;
         }
 
         a:hover path {
-            fill: var(--bs-nav-link-hover-color);
+            fill: $link-hover-color;
         }
 
         a.svg-bg-icon {
             circle {
-                fill: var(--bs-nav-link-color);
+                fill: $link-color;
             }
 
             path {
-                fill: var(--bs-body-bg);
+                //fill: var(--bs-body-bg);
+                fill: $body-bg;
             }
         }
         a:hover.svg-bg-icon {
             circle {
-                fill: var(--bs-nav-link-hover-color);
+                fill: $link-hover-color;
             }
         }
     }
@@ -181,8 +172,7 @@
 
 [data-bs-theme=dark] {
 
-    // $mpg-blue is possible but $body-bg-dark not why?
-    --bs-primary: #{$mpg-light-gray};
+    /**--bs-primary: $body-bg-dark;
     --bs-primary-rgb: 246, 246, 246; // rgb($mpg-light-gray)
     --bs-secondary: #{$mpg-bg-gray};
     --bs-secondary-rgb: 238, 238, 238; // rgb($mpg-bg-gray)
@@ -194,6 +184,7 @@
     --bs-body-tertiary-color: #{body-tertiary-color-dark}; // text color
     --bs-link-color: #{$body-color-dark};
     --bs-link-hover-color: #{$body-tertiary-color-dark};
+    */
     /*
     // NOT Working: variables from _variables_pure.scss
     --bs-primary:               #{$body-color-dark};
@@ -211,41 +202,31 @@
     */
     --accent-bg-color: #{$mpg-slate-gray-1};
     --accent-color-contrast: #{$body-secondary-bg-dark};
-    --input-bg-color: #{$body-tertiary-bg-dark};
 
+    button {
+        color: $body-color-dark;
+        border-color: $border-color-dark;
+        background-color: $body-bg-dark;
+    }
     .accordion {
 
         .accordion-button {
-            color: #{$mpg-light-gray};
-            background-color: #{$mpg-blue};
+            color: $body-color-dark;
         }
 
         .accordion-item {
 
             .accordion-header {
-                color: #{$body-color-dark};
-                background-color: #{$body-tertiary-color-dark};
+                color: $body-color-dark;
             }
 
             .accordion-button {
-                color: #{$mpg-light-gray};
-                background-color: #{$mpg-blue};
+                color: $body-color-dark;
+                background-color: $body-secondary-bg-dark;
             }
 
             .accordion-body {
-                background: #{$body-secondary-bg-dark};
-
-                input {
-                    background-color: #{$body-tertiary-bg-dark};
-                }
-
-                textarea {
-                    background-color:#{$body-tertiary-bg-dark};
-                }
-
-                select {
-                    background-color: #{$body-tertiary-bg-dark};
-                }
+                background: $body-tertiary-bg-dark;
             }
         }
     }
@@ -263,24 +244,23 @@
     }
 
     .cdk-drag-preview {
-        background: #{$mpg-bg-gray};
+        background: $body-secondary-color-dark;
         box-shadow: 0 5px 5px -3px rgba(238, 238, 238, 0.2),
             0 8px 10px 1px rgba(238, 238, 238, 0.14),
     }
 
     .dropdown-item {
-        --bs-dropdown-link-hover-bg: #{$body-secondary-color-dark};
+        --bs-dropdown-link-hover-bg: var($link-hover-color-dark);
     }
 
     .form-control,
     .form-select {
         // background-color: #{tint-color($body-bg-dark, 5%)};
-        background-color: #{$body-tertiary-bg-dark};
+        background-color: $body-bg-dark;
     }
 
     .form-control:focus,
     .form-select:focus {
-        background-color: #{$body-secondary-bg-dark};
         border-color: #{tint-color($info, 10%)};
     }
 
@@ -300,6 +280,10 @@
         // transform: translateX(.5rem);
     }
 
+    .input-group-text {
+        background-color: $body-bg-dark;
+    }
+
     .list-group-item {
         background-color: $body-secondary-bg-dark;
     }
@@ -309,25 +293,25 @@
     }
 
     .material-symbols-outlined {
-        color: var(--bs-nav-link-color);
+        color: $link-color-dark;
     }
 
     a:hover .material-symbols-outlined {
-        color: var(--bs-nav-link-hover-color);
+        color: $link-hover-color-dark;
     }
 
     .mat-mdc-chip.mat-mdc-standard-chip {
         --mdc-chip-container-height: 24px;
-        background-color: darkgray;
-        border: 1px solid gray;
+        background-color: $body-tertiary-bg-dark;
+        border: 1px solid $border-color-dark;
     }
 
     .overlay-backdrop {
-        background-color: rgba(238, 238, 238, 0.5);
+        background-color: $body-secondary-bg-dark;
     }
 
     .pure-dialog .cdk-dialog-container {
-        background: var(--bs-secondary-bg);
+        background: $body-secondary-bg-dark;
     }
 
     .scroll-to-top {
@@ -336,11 +320,11 @@
 
     .side_nav {
         a path {
-            fill: var(--bs-nav-link-color);
+            fill: $link-color-dark;
         }
 
         a:hover path {
-            fill: var(--bs-nav-link-hover-color);
+            fill: $link-hover-color-dark;
         }
     }
 
@@ -348,31 +332,31 @@
         background-color: $body-secondary-bg-dark;
 
         a path {
-            fill: var(--bs-nav-link-color);
+            fill: $link-color-dark;
         }
     }
 
     #topnav {
         a path {
-            fill: var(--bs-nav-link-color);
+            fill: $link-color-dark;
         }
 
         a:hover path {
-            fill: var(--bs-nav-link-hover-color);
+            fill: $link-hover-color-dark;
         }
 
         a.svg-bg-icon {
             circle {
-                fill: var(--bs-nav-link-color);
+                fill: $link-color-dark;
             }
 
             path {
-                fill: var(--bs-body-bg);
+                fill: $body-bg-dark;
             }
         }
         a:hover.svg-bg-icon {
             circle {
-                fill: var(--bs-nav-link-hover-color);
+                fill: $link-hover-color-dark;
             }
         }
     }

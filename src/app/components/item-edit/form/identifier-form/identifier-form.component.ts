@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdType } from 'src/app/model/inge';
-import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
+import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 
 @Component({
   selector: 'pure-identifier-form',

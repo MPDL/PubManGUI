@@ -5,7 +5,7 @@ import { ControlType, FormBuilderService } from '../../services/form-builder.ser
 import { AbstractVO, AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, SubjectVO } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
-import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
+import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { EventFormComponent } from '../event-form/event-form.component';
 import { LanguageFormComponent } from '../language-form/language-form.component';
 import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';

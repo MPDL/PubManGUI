@@ -1,7 +1,7 @@
 import {Component, Input, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgbHighlight, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
-import {FormArray, FormBuilder, FormControl, ReactiveFormsModule} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {
   catchError,
   debounceTime,
@@ -16,7 +16,7 @@ import {
 import {ConeService, PersonResource} from "../../../services/cone.service";
 import {HttpParams} from "@angular/common/http";
 import { FormBuilderService } from 'src/app/components/item-edit/services/form-builder.service';
-import { IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
+import { IdType, IdentifierVO, OrganizationVO, PersonVO } from 'src/app/model/inge';
 
 @Component({
   selector: 'pure-person-autosuggest',
@@ -38,7 +38,8 @@ export class PersonAutosuggestComponent {
   @Input() formForPersonsFamilyName? : FormControl;
   @Input() formForPersonOrganizations! : FormArray;
 
-  @Input() formForPersonsId! : FormControl | undefined;
+  @Input() formForPersonsIdValue! : FormControl;
+  @Input() formForPersonsIdType? : FormControl;
 
   searching: boolean = false;
 
@@ -77,9 +78,9 @@ export class PersonAutosuggestComponent {
   suggestPersonsSelector= (event: any) => {
     //console.log("setOU" + JSON.stringify(event));
     const coneId = event.item.id.substring(event.item.id.indexOf("/persons/"), event.item.id.length)
-    if(this.formForPersonsId) {
-      this.formForPersonsId.setValue(coneId);
-    }
+    // console.log("formForPersonId", JSON.stringify(this.formForPersonsId))
+    this.formForPersonsIdValue.setValue(coneId);
+    this.formForPersonsIdType?.setValue(IdType.CONE);
     console.log("Item",JSON.stringify(event.item));
     if(this.formForPersonsCompleteName) {
       this.formForPersonsCompleteName.setValue(event.item.value);
@@ -91,13 +92,7 @@ export class PersonAutosuggestComponent {
       this.formForPersonsFamilyName.setValue(event.item.value.substring(0, event.item.value.indexOf(", ")));
     }
     console.log("formForPersonOrganization before set",this.formForPersonOrganizations?.value);
-    if(this.formForPersonOrganizations) {
-      // this.formForPersonOrganizations.push(event.item.value.substring(event.item.value.indexOf("(") + 1, event.item.value.indexOf(")")));
-      this.formForPersonOrganizations.push(this.fbs.organization_FG({
-        identifier: "test",
-        name: event.item.value.substring(event.item.value.indexOf("(") + 1, event.item.value.indexOf(")"))
-      }));
-    } else {
+    if(!this.formForPersonOrganizations) {
       this.formForPersonOrganizations = this.fb.array([this.fbs.organization_FG(null)]);
       this.formForPersonOrganizations.insert(event.index + 1, this.fbs.organization_FG(null));
     }
@@ -114,18 +109,14 @@ export class PersonAutosuggestComponent {
     const selected_ou = selected_person.substring(selected_person.indexOf('(') + 1, selected_person.lastIndexOf(','));
     console.log("Selected:", selected_person, selected_ou)
     console.log("ConeId", coneId)
-    //this.cone.resource("cone/" + coneId).subscribe(
     this.coneService.getPersonResource("cone/" + coneId).subscribe(
       (person: PersonResource) => {
-        const patched: Partial<PersonVO> = {
-          givenName: person.http_xmlns_com_foaf_0_1_givenname,
-          familyName: person.http_xmlns_com_foaf_0_1_family_name,
-          identifier: {
-            type: IdType.CONE,
-            id: person.id.substring(24)
-          }
+        if(this.formForPersonsGivenName) {
+          this.formForPersonsGivenName.setValue(person.http_xmlns_com_foaf_0_1_givenname);
         }
-        //this.person.patchValue(patched, { emitEvent: false });
+        if(this.formForPersonsFamilyName) {
+          this.formForPersonsFamilyName.setValue(person.http_xmlns_com_foaf_0_1_family_name);
+        }
         let ou_id = '', ou_name = '';
         if (Array.isArray(person.http_purl_org_escidoc_metadata_terms_0_1_position)) {
           const ou_2_display = person.http_purl_org_escidoc_metadata_terms_0_1_position.filter(ou => ou.http_purl_org_eprint_terms_affiliatedInstitution.includes(selected_ou));
@@ -162,6 +153,9 @@ export class PersonAutosuggestComponent {
       this.formForPersonOrganizations.clear();
     }
     console.log("formForPersonOrganization after delete",this.formForPersonOrganizations?.value);
-    this.formForPersonsId?.setValue('');
+    this.formForPersonsIdValue.setValue(null);
+    this.formForPersonsIdType?.setValue(null);
+    //this.formForPersonsIdValue.get('id')?.setValue(null);
+    //this.formForPersonsIdValue.get('type')?.setValue(null);
   }
 }

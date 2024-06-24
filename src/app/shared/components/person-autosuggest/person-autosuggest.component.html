@@ -8,11 +8,11 @@
   @if(formForPersonsCompleteName) {
   <input class="form-control" type="text" [formControl]="formForPersonsCompleteName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
-    [readonly]="formForPersonsId && formForPersonsId.value" placeholder="Start typing..." />
+    [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." />
   } @else if (formForPersonsGivenName && formForPersonsFamilyName) {
     <input class="form-control" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
-    [readonly]="formForPersonsId && formForPersonsId.value" placeholder="Start typing..." />
+    [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." />
   }
 
   @if(searching) {
@@ -22,7 +22,7 @@
     <span class="visually-hidden">Loading...</span>
   </button>
   }
-  @if(formForPersonsId && formForPersonsId.value) {
+  @if(formForPersonsIdValue && formForPersonsIdValue.value) {
   <button class="btn btn-outline-dark btn-sm" type="button" (click)="deleteFields()">
     <span class="bi bi-x"></span>
   </button>

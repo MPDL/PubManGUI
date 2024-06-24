@@ -9,7 +9,7 @@ import { PureOusDirective } from 'src/app/shared/components/selector/services/pu
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
 import { ConePersonsDirective } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.directive';
 import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
-import { AddRemoveButtonsComponent } from '../add-remove-buttons/add-remove-buttons.component';
+import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
 
 @Component({

@@ -46,6 +46,7 @@
                 </a>
                 }
                 @if (type.value === 'PERSON') {
+                    
                 <ng-container formGroupName="person">
                     <div class="col-sm-3">
                         <label for="familyName" class="col-form-label text-end pe-2">family</label>
@@ -54,13 +55,9 @@
                         <pure-person-autosuggest [formForPersonsGivenName]="$any(person.controls.givenName)"
                             [formForPersonsFamilyName]="$any(person.controls.familyName)"
                             [formForPersonOrganizations]="$any(person.controls.organizations)"
-                            [formForPersonsId]="$any(person.controls.identifier.controls.id)" />
-                        <!--
-                        <pure-selector [form]="person" [control_name]="'familyName'" (notice)="updatePerson($event)"
-                            pureConePersons placeholder="search cone ...">
-                            <ng-container *pureOption="let item">{{ item.text }}</ng-container>
-                        </pure-selector>
-                        -->
+                            [formForPersonsIdValue]="$any(person.controls.identifier.controls.id)"
+                            [formForPersonsIdType]="$any(person.controls.identifier.controls.type)" />
+                        <!--{{person.controls.identifier.value | json}}-->
                     </div>
                     <div class="col-sm-3">
                         <label for="givenName" class="col-form-label text-end pe-2">given</label>

@@ -34,20 +34,20 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 $body-color:                $mpg-slate-gray-0;
 $body-bg:                   white;
-$body-secondary-color:      $mpg-slate-gray-1 !default;
-$body-secondary-bg:         $mpg-light-gray !default;
-$body-tertiary-color:       $mpg-slate-gray-2 !default;
-$body-tertiary-bg:          $mpg-bg-gray !default;
+$body-secondary-color:      $mpg-slate-gray-1;
+$body-secondary-bg:         $mpg-light-gray;
+$body-tertiary-color:       $mpg-slate-gray-2;
+$body-tertiary-bg:          $mpg-bg-gray;
 $link-color:                $mpg-slate-gray-0;
 $link-hover-color:          $mpg-slate-gray-2;
 $border-color:              $mpg-slate-gray-2;
 
 $body-color-dark:               $mpg-light-gray;
-$body-bg-dark:                  $mpg-blue !default; //make red
-$body-secondary-color-dark:     $mpg-bg-gray !default;
-$body-secondary-bg-dark:        $mpg-secondary-blue !default;
-$body-tertiary-color-dark:      $mpg-secondary-gray !default;
-$body-tertiary-bg-dark:         $mpg-slate-gray-0 !default;
+$body-bg-dark:                  $mpg-blue; //make red
+$body-secondary-color-dark:     $mpg-bg-gray;
+$body-secondary-bg-dark:        $mpg-secondary-blue;
+$body-tertiary-color-dark:      $mpg-secondary-gray ;
+$body-tertiary-bg-dark:         $mpg-slate-gray-0;
 $border-color-dark:             $mpg-light-gray;
 $link-color-dark:               $mpg-light-gray;
 $link-hover-color-dark:         $mpg-secondary-gray;
