@@ -6,6 +6,14 @@
   <div class="datasets">
     <div class="row align-items-center top_nav_pos bg-body">
       <nav class="col-12 col-xxl-4 navbar navbar-expand-lg nav bg-body">
+        <a class="nav-link">
+          <span class="material-symbols-outlined">sort_by_alpha</span>
+        </a>
+        <div class="vr"></div>
+        <a class="nav-link">
+          <span class="material-symbols-outlined">upload</span>
+        </a>
+        <div class="vr"></div>
         @if (number_of_results && number_of_results > 0) {
         <a class="nav-link" (click)="removeChecked()">
           <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -28,7 +36,7 @@
               transform="translate(4.652 19.1)" fill="#777" stroke="#777" stroke-width="0.5"></path>
           </svg>
         </a>
-        <div class="vr"></div>
+        
         }
       </nav>
 
