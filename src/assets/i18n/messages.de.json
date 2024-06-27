@@ -44,6 +44,7 @@
     "batch.logs.details.failed": "fehlgeschlagen",
     "batch.logs.details.succeded": "erfolgreich",
     "batch.logs.details.filter.failed": "Fehlgeschlagene Items anzeigen",
-    "batch.logs.details.filter.succeded": "Erfolgreiche Items anzeigen"
+    "batch.logs.details.filter.succeded": "Erfolgreiche Items anzeigen",
+    "batch.logs.details.back": "Zurück zu Logs"
   }
 }

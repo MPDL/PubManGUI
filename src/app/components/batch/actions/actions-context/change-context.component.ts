@@ -55,7 +55,7 @@ export class ActionsContextComponent {
     contextFrom: ['-',[ Validators.required ]],
     contextTo: ['-',[ Validators.required ]]
   }, 
-  { validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
+  //{ validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
   );
 
   get changeContextParams(): ChangeContextParams {

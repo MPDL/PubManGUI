@@ -41,8 +41,8 @@ export class ValidatorsService {
         case 'equals':
           return " do not match!";  
 
-        case 'notBeOn':
-          return " already given!";
+        case 'notDuplicates':
+          return " duplicate!";
       }
     }
     return null;
@@ -112,13 +112,15 @@ export class ValidatorsService {
     }
   }
 
-  notBeOnValidator(array: AbstractControl): ValidatorFn {
+  noDuplicatesValidator(array: AbstractControl): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (array instanceof FormArray && control instanceof FormControl && array.length > 0 && control.value) {
+      if (array instanceof FormArray && array.length > 0) {
         let valueList: any[] = array.value;
-        let match = valueList.indexOf(control.value.trim()) != -1;
-        return match ? { notBeOn: true } : null;
+        let match = ( new Set(valueList).size ) !== valueList.length;
+        control.setErrors({ noDuplicates: true });
+        return match ? { noDuplicates: true } : null;
       }
+      control.setErrors(null);
       return null;
     }
   }

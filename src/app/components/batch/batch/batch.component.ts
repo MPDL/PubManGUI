@@ -6,6 +6,7 @@ import { BatchNavComponent } from '../batch-nav/batch-nav.component';
 
 import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { BatchService } from '../services/batch.service';
 
 @Component({
   selector: 'pure-batch',
@@ -21,6 +22,7 @@ export default class BatchComponent implements OnInit {
 
   constructor(
     public aaSvc: AaService,
+    private batchSvc: BatchService,
     private msgSvc: MessageService,
     private router: Router
   ) { }
@@ -32,5 +34,12 @@ export default class BatchComponent implements OnInit {
         this.router.navigate(['/'])
       }) 
     }
+
+    if (this.batchSvc.areItemsSelected()) {
+      this.router.navigate(['/batch/datasets'])
+    } else {
+      this.router.navigate(['/batch/logs'])
+    }
+
   }
 }  
