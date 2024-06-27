@@ -85,7 +85,7 @@
                 @if (log.state === state.FINISHED) {
                 <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
                   [state]="{ method: log.method, started: log.startDate }">
-                  <span class="material-symbols-outlined text-secondary ms-3">
+                  <span class="material-symbols-outlined ms-3">
                     list
                   </span>
                 </a>
