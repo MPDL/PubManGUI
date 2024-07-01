@@ -11,7 +11,8 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="reviewMethodFrom">
-          <option value="" selected disabled hidden>-</option>
+          <option [value]="" selected>---</option>
+          <option [value]=null disabled>Review type</option>
           @for (method of reviewMethods; track method) {
             <option [value]="method">{{method | titlecase}}</option>
           }
@@ -25,7 +26,8 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="reviewMethodTo">
-          <option value="" selected disabled hidden>-</option>
+          <option [value]="" selected>---</option>
+          <option [value]=null disabled>Review type</option>
           @for (method of reviewMethods; track method) {
             <option [value]="method">{{method | titlecase}}</option>
           }
@@ -48,7 +50,7 @@
       <div class="col-sm-12">
         <button type="submit" [disabled]="changeReviewMethodForm.invalid || changeReviewMethodForm.pristine"
           class="btn btn-outline-secondary col-1 float-end">
-          Change
+          GO
         </button>
       </div>
     </div>

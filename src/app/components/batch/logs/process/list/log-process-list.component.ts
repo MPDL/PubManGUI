@@ -40,8 +40,6 @@ export class LogProcessListComponent implements OnInit {
   
   state = BatchProcessLogHeaderState;
   detailLogs: detail[] = [];  
-  runningProcessed = 0;
-  runningTotal = 0;
 
   constructor(
     private batchSvc: BatchService,
@@ -52,6 +50,7 @@ export class LogProcessListComponent implements OnInit {
         this.processLogs = actionResponse.sort((b,a) => a.batchLogHeaderId - b.batchLogHeaderId);
         this.collectionSize = this.processLogs.length;
         this.refreshLogs();
+
         return;
       });
   }
@@ -70,22 +69,5 @@ export class LogProcessListComponent implements OnInit {
 	formatInput(input: HTMLInputElement) {
 		input.value = input.value.replace(FILTER_PAG_REGEX, '');
 	}
-
-  getProcessed(batchLogHeaderId: number): number {
-    if (this.runningTotal === 0) this.updateProcess(batchLogHeaderId);
-    return  Math.floor(this.runningProcessed / (this.runningTotal > 0 ? this.runningTotal : 1) * 100);
-  }
-
-  updateProcess(batchLogHeaderId: number) {
-    this.batchSvc.getBatchProcessLogDetails(batchLogHeaderId)
-      .subscribe(LOGS => {
-        this.runningProcessed = 0;
-        this.runningTotal = 0;
-        LOGS.forEach(element => {
-            if (element.endDate) this.runningProcessed++;
-            this.runningTotal++;
-        })
-      })
-  }
 
 }

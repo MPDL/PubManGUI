@@ -1,25 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, ValidatorFn, FormControl, ReactiveFormsModule } from '@angular/forms';
-
+import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/actions-params';
-import { ipList }  from 'src/app/components/batch/interfaces/actions-responses';
+import { ipList } from 'src/app/components/batch/interfaces/actions-responses';
+
+import { AudienceFormComponent } from 'src/app/components/batch/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
+import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
+
 
 @Component({
   selector: 'pure-replace-file-audience-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AudienceFormComponent,
+    AddRemoveButtonsComponent
   ],
   templateUrl: './replace-file-audience-form.component.html',
 })
 export class ReplaceFileAudienceFormComponent implements OnInit {
+
+  index!: number;
+  index_length!: number;
 
   ous: ipList[] = [];
 
@@ -31,46 +39,52 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.batchSvc.getIpList()
-      .subscribe( ous => this.ous = ous );
+      .subscribe( ous => {
+        this.ous = ous.sort((a,b) => a.name.localeCompare(b.name) );
+      })
   }
 
   public replaceFileAudienceForm: FormGroup = this.fb.group({
     allowedAudienceIds: this.fb.array([])
+  },
+  {
+    //validators: this.validSvc.noDuplicatesValidator(this.allowedAudienceIds)
   });
 
-  public audienceId: FormControl = new FormControl('', [Validators.required, this.validSvc.notBeOnValidator( this.replaceFileAudienceForm.controls['allowedAudienceIds'] )] );
+    
+  get allowedAudienceIds() {
+    return this.replaceFileAudienceForm.get('allowedAudienceIds') as FormArray<FormControl>;
+  }
 
   get replaceFileAudienceParams(): ReplaceFileAudienceParams {
     const actionParams: ReplaceFileAudienceParams = {
       allowedAudienceIds: this.getIDsOfAudience(),
       itemIds: []
     }
+
     return actionParams;
   }
 
-
-  get AudiencesToAdd() {
-    return this.replaceFileAudienceForm.get('allowedAudienceIds') as FormArray;
+  handleAudienceNotification(event: any) {
+    if (event.action === 'add') {
+      this.addAudience(event.index);
+    } else if (event.action === 'remove') {
+      this.removeAudience(event.index);
+    }
   }
 
-  onAddToNewAudiences(): void {
-    if (this.audienceId.invalid) return;
-
-    this.AudiencesToAdd.push(
-      this.fb.control(this.audienceId.value, Validators.required)
-    );
-
-    this.audienceId.reset();
+  addAudience(index: number) {
+    this.allowedAudienceIds.insert(index + 1, this.fb.control(''));
   }
 
-  onDeleteAudience(index: number): void {
-    this.AudiencesToAdd.removeAt(index);
-  }
-
+  removeAudience(index: number) {
+    this.allowedAudienceIds.removeAt(index);
+  } 
+  
   getIDsOfAudience(): string[] {
     let Audiences = [];
 
-    for (let range of this.AudiencesToAdd.controls) {
+    for (let range of this.allowedAudienceIds.controls) {
       Audiences.push(this.ous.find(x => x.name === range.value)!.id);
     }
 
@@ -83,18 +97,12 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
       return;
     }
 
-    if (this.audienceId.valid) {
-      this.onAddToNewAudiences();
-    }
-
-    if (this.AudiencesToAdd.length === 0) return
+    if (this.allowedAudienceIds.length === 0) return
 
     this.batchSvc.replaceFileAudience(this.replaceFileAudienceParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
       this.msgSvc.info(`Action started!\n`);
       ( this.replaceFileAudienceForm.controls['allowedAudienceIds'] as FormArray ) = this.fb.array([]);
       this.replaceFileAudienceForm.reset();
-
     } );
 
   }

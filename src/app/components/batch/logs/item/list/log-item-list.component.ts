@@ -36,7 +36,7 @@ type detail = {
   templateUrl: './log-item-list.component.html',
 })
 
-export class LogItemListComponent implements OnInit, DoCheck {
+export default class LogItemListComponent implements OnInit, DoCheck {
   page = 1;
   pageSize = 10;
   collectionSize = 0;

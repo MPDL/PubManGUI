@@ -82,15 +82,15 @@
                 {{ log.endDate | date: "dd.MM.yyyy 'at' HH:mm":'':'en-EN'}}
               </td>
               <td class="col-1">
-                @if (log.state === state.FINISHED ) {
+                @if (log.state === state.FINISHED) {
                 <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
                   [state]="{ method: log.method, started: log.startDate }">
-                  <span class="material-symbols-outlined text-secondary ms-3">
+                  <span class="material-symbols-outlined ms-3">
                     list
                   </span>
                 </a>
                 } @else {
-                <span class="spinner-border ms-3" title='{{ getProcessed(log.batchLogHeaderId) }}%' (click)='updateProcess(log.batchLogHeaderId);' aria-hidden="true"></span>
+                <span class="spinner-border ms-3" aria-hidden="true"></span>
                 }
               </td>
             </tr>

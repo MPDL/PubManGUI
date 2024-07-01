@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryFrom">
-                    <option value="" selected disabled hidden>-</option>
+                    <option [value]=null selected disabled>Category</option>
                     @for (category of contentCategories; track category) {
                         <option [value]="category">{{category | titlecase}}</option>
                     }
@@ -26,7 +26,7 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryTo">
-                    <option value="" selected disabled hidden>-</option>
+                    <option [value]=null selected disabled>Category</option>
                     @for (category of contentCategories; track category) {
                         <option [value]="category">{{category | titlecase}}</option>
                     }
@@ -49,7 +49,7 @@
             <div class="col-sm-12">
                 <button type="submit" [disabled]="changeExternalReferenceContentCategoryForm.invalid || changeExternalReferenceContentCategoryForm.pristine"
                     class="btn btn-outline-secondary col-1 float-end">
-                    Change
+                    GO
                 </button>
             </div>
         </div>

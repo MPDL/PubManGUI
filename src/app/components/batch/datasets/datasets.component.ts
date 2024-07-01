@@ -26,7 +26,7 @@ import { NavigationEnd, Router } from '@angular/router';
   ],
   templateUrl: './datasets.component.html'
 })
-export class DatasetsComponent implements OnInit {
+export default class DatasetsComponent implements OnInit {
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
 
   results: ItemVersionVO[] = [];
@@ -51,29 +51,13 @@ export class DatasetsComponent implements OnInit {
   private isProcessing: boolean = false;
 
   constructor(
-    private batchSvc: BatchService,
+    public batchSvc: BatchService,
     private msgSvc: MessageService,
     public aaSvc: AaService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.batchSvc.getBatchProcessUserLock().subscribe({
-      next: () => this.isProcessing = true,
-      error: () => this.isProcessing = false
-    })
-
-    if (this.isProcessing) {
-      this.msgSvc.warning(`Please wait, a process is runnig!\n`);
-    };
-
-    if (!this.areItemsSelected()) {
-      this.msgSvc.warning(`The batch processing is empty!\n`);
-      /*this.msgSvc.dialog.afterAllClosed.subscribe(result => {
-        this.router.navigate(['batch/logs'])
-      })*/
-    } 
-
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       // required to work immediately.
@@ -81,10 +65,6 @@ export class DatasetsComponent implements OnInit {
     ).subscribe(() => {
       this.items(this.batchSvc.items);
     });
-  }
-
-  areItemsSelected(): boolean {
-    return this.batchSvc.items && this.batchSvc.items.length > 0;
   }
 
   items(itemList: string[]) {
@@ -162,13 +142,11 @@ export class DatasetsComponent implements OnInit {
     this.batchSvc.removeFromBatchDatasets(this.batchSvc.savedSelection);
     this.items(this.batchSvc.items);
     sessionStorage.removeItem(this.batchSvc.savedSelection);
-    if (this.batchSvc.items.length === 0) {
+    if (!this.batchSvc.areItemsSelected()) {
       this.msgSvc.warning(`The batch processing is empty!\n`);
-      /*
       this.msgSvc.dialog.afterAllClosed.subscribe(result => {
-        this.router.navigate(['list'])
+        this.router.navigate(['/batch'])
       })
-      */
     }
   }
 

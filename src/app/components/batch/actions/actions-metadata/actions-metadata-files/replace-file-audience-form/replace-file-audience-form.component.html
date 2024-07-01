@@ -6,69 +6,43 @@
   </div>
 
   <form [formGroup]="replaceFileAudienceForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="row">
-      <div class="col-sm-2">
-        <label class="col-form-label" for="audienceId">Assign IP range</label>
-      </div>
-      <div class="col-sm-10">
-        <div class="input-group">
-          <select class="form-select" [formControl]="audienceId">
-            @for (ou of ous; track ou) {
-            <option [value]="ou.name"> {{ou.name}}</option>
-            }
-          </select>
-          <button (click)="onAddToNewAudiences()" class="input-group-text" type="button">
-            <span class="material-symbols-outlined">add</span>
-          </button>
-        </div>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+      <label class="col-sm-3 col-form-label" for="audienceId">Assign IP ranges</label>
+
+      <div class="col-sm">
+        <ng-container formArrayName="allowedAudienceIds">
+          @for (audience of allowedAudienceIds.controls; track audience; let audienceIdx = $index) {
+          <ng-container [formGroupName]="audienceIdx">
+            <pure-audience-form [audienceId]="audience" [index]="audienceIdx"
+              [index_length]="allowedAudienceIds.controls.length" [ous]="ous"
+              (notice)="handleAudienceNotification($event)"></pure-audience-form>
+          </ng-container>
+          } @empty {
+          <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add IP range'"
+            (notice)="handleAudienceNotification($event)"></pure-add-remove-buttons>
+          }
+        </ng-container>
       </div>
     </div>
+
     <div class="mb-2 row">
-      <div class="offset-sm-2 col-sm-6">
-        @if (validSvc.notValidField(audienceId)) {
+      <!--div class="offset-sm-2 col-sm-6">
+        @if (validSvc.noDuplicatesValidator(allowedAudienceIds)) {
         <span class="form-text text-danger small">
-          IP range {{ validSvc.getFieldError(audienceId) }}
+          IP range {{ validSvc.getFieldError(allowedAudienceIds) }}
         </span>
         } @else {
         <span>&nbsp;</span>
         }
-      </div>
-    </div>
-
-    <div class="mb-3 row">
-      @if(AudiencesToAdd.length) {
-      <label class="col-sm-2 col-form-label">Selected IP range(s)</label>
-      <div class="col-sm-10" formArrayName="allowedAudienceIds">
-        @for (range of AudiencesToAdd.controls; track range; let i = $index) {
-        <div class="mb-1">
-          <div class="input-group">
-            <select class="form-select" [formControlName]="i">
-              @for (ou of ous; track ou) {
-              <option [value]="ou.name"> {{ou.name}}</option>
-              }
-            </select>
-            <button (click)="onDeleteAudience( i )" class="input-group-text" type="button">
-              <span class="material-symbols-outlined">remove</span>
-            </button>
-          </div>
-          @if (validSvc.notValidFieldInArray(AudiencesToAdd, i)) {
-          <span class="form-text text-danger small">
-            {{ validSvc.getFieldError(replaceFileAudienceForm.controls[i]) }}
-          </span>
-          } @else {
-          <span>&nbsp;</span>
-          }
-        </div>
-        }
-      </div>
-      }
+      </div-->
+      <span>&nbsp;</span>
     </div>
 
     <div class="row">
       <div class="offset-sm-9 col-sm-3">
-        <button type="submit" [disabled]="audienceId.invalid || replaceFileAudienceForm.invalid"
+        <button type="submit" [disabled]="replaceFileAudienceForm.invalid"
           class="btn btn-outline-secondary col-4 float-end">
-          Assign
+          GO
         </button>
       </div>
     </div>

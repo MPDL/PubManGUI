@@ -30,33 +30,19 @@ import { BatchService } from '../services/batch.service';
   ],
   templateUrl: './actions.component.html'
 })
-export class ActionsComponent {
+export default class ActionsComponent {
 
   public isProcessing: boolean = false;
 
   constructor(
-    private batchSvc: BatchService, 
+    public batchSvc: BatchService, 
     private msgSvc: MessageService,
     private router: Router,
     public aaSvc: AaService
   ) { }
 
   ngAfterViewInit() {
-    this.batchSvc.getBatchProcessUserLock().subscribe({
-      next: () => this.isProcessing = true,
-      error: () => this.isProcessing = false
-    })
-
-    if (this.isProcessing) {
-      this.msgSvc.warning(`Please wait, a process is runnig!\n`);
-    };
-
-    if (!this.areItemsSelected()) {
-      this.msgSvc.warning(`The batch processing is empty!\n`);
-    }
+ 
   }
 
-  areItemsSelected(): boolean {
-    return this.batchSvc.items && this.batchSvc.items.length > 0;
-  }
 }

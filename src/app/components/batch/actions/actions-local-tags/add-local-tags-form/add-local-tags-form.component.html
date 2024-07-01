@@ -11,7 +11,7 @@
         <label class="col-form-label">New tag</label>
       </div>
       <div class="col-sm-10">
-        <pure-chips [form]="addLocalTagsForm" [chips]="tagsToAdd.value" [control_name]="'localTags'"></pure-chips>
+        <pure-chips [form]="addLocalTagsForm" [chips]="tagsToAdd.value" [control_name]="'localTags'" />
       </div>
     </div>
     <div class="mb-2 row">
@@ -30,7 +30,7 @@
       <div class="offset-sm-9 col-sm-3">
         <button type="submit" [disabled]="addLocalTagsForm.invalid" 
           class="btn btn-outline-secondary col-4 float-end">
-          Add
+          GO
         </button>
       </div>
     </div>

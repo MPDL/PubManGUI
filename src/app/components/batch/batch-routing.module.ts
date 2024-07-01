@@ -6,27 +6,26 @@ const routes: Routes = [
   {
     path: 'datasets',
     loadComponent: () => import('./datasets/datasets.component')
-    .then(m => m.DatasetsComponent),
   },
   {
     path: 'actions',
     loadComponent: () => import('./actions/actions.component')
-    .then(m => m.ActionsComponent),
   },
   {
     path: 'logs',
     loadComponent: () => import('./logs/logs.component')
-      .then(m => m.LogsComponent),
   },
   {
     path: 'logs/:id', 
     loadComponent: () => import('./logs/item/list/log-item-list.component')
-      .then(m => m.LogItemListComponent)
   },
   {
     path: '',
+    loadComponent: () => import('./batch/batch.component')
+    /*
     redirectTo: 'datasets',
     pathMatch: 'full',
+    */
   }
 ];
 

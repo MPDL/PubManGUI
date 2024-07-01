@@ -1,10 +1,13 @@
 <div class="batch-nav">
     <div class="position-absolute start-50 translate-middle nav-bottom-10">
         <ul class="nav p-3 d-flex justify-content-around">
-            @for(option of navList; track option) {
-            <li [routerLink]="[ option.route ]" routerLinkActive="current"
-                [ngClass]="{'disabled' : !areItemsSelected && option.text !== 'logs'}"
-                data-bs-toggle="button">{{ option.text | titlecase}} 
+            @for(option of navList(); track option) {
+            <!--li [routerLink]="[ option.route ]" routerLinkActive="current" isActive="false"-->
+            <li id={{option.text}} [routerLink]="[ option.route ]" routerLinkActive="current" 
+                isActive="false" 
+                [ngClass]="{'disabled' : option.disabled}"
+                (click)="warning(option.text)"
+                data-bs-toggle="button">{{ option.text | titlecase }} 
             </li>
             }
         </ul>

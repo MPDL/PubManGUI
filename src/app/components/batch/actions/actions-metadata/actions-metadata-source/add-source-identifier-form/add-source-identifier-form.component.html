@@ -19,7 +19,7 @@
       <label class="col-sm-3 col-form-label">Type of ID</label>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceIdentifierType">
-          <option value="" selected disabled hidden>-</option>
+          <option [value]=null selected disabled>Type</option>
           @for (type of sourceIdTypes; track type) {
             <option [value]="type">{{type | titlecase}}</option>
           }
@@ -38,7 +38,7 @@
       <div class="col-sm-12">
         <button type="submit" [disabled]="addSourceIdentifierForm.invalid || addSourceIdentifierForm.pristine"
           class="btn btn-outline-secondary col-1 float-end">
-          Add
+          GO
         </button>
       </div>
     </div>
