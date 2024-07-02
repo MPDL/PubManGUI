@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { ChangeGenreParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ChangeGenreParams } from 'src/app/components/batch/interfaces/actions-params';
 import { MdsPublicationGenre, DegreeType, BatchProcessLogHeaderState } from 'src/app/model/inge';
 
 

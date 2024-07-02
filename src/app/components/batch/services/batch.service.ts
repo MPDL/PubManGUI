@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, Observable, throwError } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
 
-import * as params from '../interfaces/actions-params';
-import * as resp from '../interfaces/actions-responses';
+import type * as params from '../interfaces/actions-params';
+import type * as resp from '../interfaces/actions-responses';
 
 import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';

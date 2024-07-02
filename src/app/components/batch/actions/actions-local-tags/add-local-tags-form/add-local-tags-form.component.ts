@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { AddLocalTagsParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { AddLocalTagsParams } from 'src/app/components/batch/interfaces/actions-params';
 
 import { ControlType } from 'src/app/components/item-edit/services/form-builder.service';
 import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';

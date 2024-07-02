@@ -3,7 +3,7 @@ import { OnInit, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import * as resp from '../../../interfaces/actions-responses';
+import type * as resp from '../../../interfaces/actions-responses';
 
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 import { BatchProcessLogHeaderState } from 'src/app/model/inge';
