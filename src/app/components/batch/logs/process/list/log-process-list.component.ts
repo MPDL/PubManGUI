@@ -70,4 +70,8 @@ export class LogProcessListComponent implements OnInit {
 		input.value = input.value.replace(FILTER_PAG_REGEX, '');
 	}
 
+  calculateProcessedStep(numberOfItems: number): number {
+    return Math.floor(100/numberOfItems);
+  };
+
 }

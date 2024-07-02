@@ -75,6 +75,15 @@
               @if (log.state === state.RUNNING) {
                 <td class="col-2">
                   {{ batchSvc.getProcessLog().state | titlecase }}
+                  @if (log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId) {
+                    @if (batchSvc.isProcessRunning()) {
+                      {{batchSvc.getProcessLog().percentageOfProcessedItems - calculateProcessedStep(batchSvc.getProcessLog().numberOfItems) }}&percnt;
+                    }
+                  } @else {
+                    <span class="material-symbols-outlined" title="Something gone wrong!">
+                      error
+                    </span>
+                  }                       
                 </td>             
               } @else {
                 <td class="col-2">
@@ -91,7 +100,7 @@
                 @if (log.state === state.RUNNING 
                   && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId 
                   && batchSvc.isProcessRunning()) {
-                  <span class="spinner-border ms-3" aria-hidden="true">{{batchSvc.getProcessLog().percentageOfProcessedItems - (100/batchSvc.getProcessLog().numberOfItems)}}%</span>
+                  <span class="spinner-border ms-3" aria-hidden="true"></span>
                 } @else {
                   <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
                   [state]="{ method: log.method, started: log.startDate }">
