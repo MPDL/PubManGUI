@@ -28,6 +28,7 @@ export class ReleasePubItemsFormComponent {
   onSubmit(): void {
     this.batchSvc.releasePubItems(this.releasePubItemsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }

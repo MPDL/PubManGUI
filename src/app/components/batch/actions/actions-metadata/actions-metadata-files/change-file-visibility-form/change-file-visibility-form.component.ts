@@ -56,6 +56,7 @@ export class ChangeFileVisibilityFormComponent {
 
     this.batchSvc.changeFileVisibility(this.changeFileVisibilityParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }

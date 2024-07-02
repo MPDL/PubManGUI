@@ -45,6 +45,7 @@ export class AddKeywordsFormComponent {
 
     this.batchSvc.addKeywords(this.addKeywordsParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
       setTimeout(() => {this.addKeywordsForm.reset();},1000);
     });

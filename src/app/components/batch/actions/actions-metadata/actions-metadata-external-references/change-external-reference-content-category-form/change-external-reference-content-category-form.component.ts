@@ -50,6 +50,7 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
 
     this.batchSvc.changeExternalReferenceContentCategory(this.changeExternalReferenceContentCategoryParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }

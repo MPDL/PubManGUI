@@ -43,6 +43,7 @@ export class ReplaceKeywordsFormComponent {
 
     this.batchSvc.replaceKeywords(this.replaceKeywordsParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
       setTimeout(() => {this.replaceKeywordsForm.reset();},1000);
     });

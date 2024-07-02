@@ -100,6 +100,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
     if (this.allowedAudienceIds.length === 0) return
 
     this.batchSvc.replaceFileAudience(this.replaceFileAudienceParams).subscribe( actionResponse => {
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
       ( this.replaceFileAudienceForm.controls['allowedAudienceIds'] as FormArray ) = this.fb.array([]);
       this.replaceFileAudienceForm.reset();

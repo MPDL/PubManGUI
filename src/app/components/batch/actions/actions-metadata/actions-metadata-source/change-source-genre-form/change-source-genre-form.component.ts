@@ -53,6 +53,7 @@ export class ChangeSourceGenreFormComponent {
 
     this.batchSvc.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
       setTimeout(() => {this.changeSourceGenreForm.reset();},1000);
     });

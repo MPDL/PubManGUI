@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { OnInit, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, Observable, throwError, Observer, of } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
@@ -10,7 +10,7 @@ import * as resp from '../interfaces/actions-responses';
 import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ItemVersionVO } from 'src/app/model/inge';
+import { ItemVersionVO, BatchProcessLogHeaderState } from 'src/app/model/inge';
 
 @Injectable({
   providedIn: 'root'
@@ -75,95 +75,46 @@ export class BatchService {
   }
 
   set items(items: string[]) {
-    if(items.length > 0) this.areItemsSelected.set(true);
+    if (items.length > 0) this.areItemsSelected.set(true);
     sessionStorage.setItem(this.datasetList, JSON.stringify(items));
   }
 
   public areItemsSelected = signal(false);
 
   startProcess(id: number) {
-    this.getBatchProcessUserLock().subscribe(
-      () => {
-        console.log('on startProcess');
-        this.batchProcessLogHeaderId = id;
-        console.log('\tbatchProcessLogHeaderId: ' + this.batchProcessLogHeaderId);
-        this.isProcessRunning.set(true);
-        console.log('\tisProcessRunning: ' + this.isProcessRunning());
-        
-        //this.msgSvc.info(`Action started!\n`);
-      }
-    )
+    this.batchProcessLogHeaderId = id;
+    this.isProcessRunning.set(true);
+    this.items = [];
+
+    this.msgSvc.info(`Action started!\n`);
+    this.updateProcessProgress();
   }
 
   endProcess() {
-    this.deleteBatchProcessUserLock().subscribe(
-      () => {
-        console.log('on endProcess');
-        this.batchProcessLogHeaderId = -1;
-        console.log('\tbatchProcessLogHeaderId: ' + this.batchProcessLogHeaderId);
-        this.isProcessRunning.set(false);
-        console.log('\tisProcessRunning: ' + this.isProcessRunning());
-        //this.msgSvc.info(`Action finished!\n`);
-      }
-    )
+    this.batchProcessLogHeaderId = -1;
+    this.isProcessRunning.set(false);
+
+    this.msgSvc.info(`Action finished!\n`);
   }
 
   public isProcessRunning = signal(false);
 
-
-  // All you need is Love ****************************************************************************
-
-  public getProcessProgress = signal(100); 
+  public getProcessLog = signal({} as resp.BatchProcessLogHeaderDbVO);
 
   updateProcessProgress() {
-    if (this.isProcessRunning())  {
-      this.getBatchProcessLogHeaderId(this.batchProcessLogHeaderId).subscribe( resp => {
-          // TO_DO
+    if (this.isProcessRunning()) {
+      this.getBatchProcessLogHeaderId(this.batchProcessLogHeaderId).subscribe(resp => {
+        this.getProcessLog.set(resp);
+        if (resp.state === BatchProcessLogHeaderState.RUNNING) {
+          setTimeout(() => {
+            this.updateProcessProgress();
+          }, 5000);
+        } else {
+          this.endProcess();
+        }
       })
     }
-    
   }
-
-  __getProcessProgress = new Observable(this.processRunning);
-
-  processRunning(observer: Observer<number>) {
-    console.log('DEBUG on processRunning');
-
-    const id = setInterval(() => {
-      observer.next(10);
-    }, 1000);
-    observer.next(15);
-    observer.next(35);
-    observer.next(55);
-    observer.next(80);
-    observer.next(100);
-    observer.complete();
-
-    return { unsubscribe() { } };
-  };
-
-  // This function runs when subscribe() is called
-  __sequenceSubscriber(observer: Observer<number>) {
-    // synchronously deliver 1 then completes
-    observer.next(1);
-    observer.complete();
-
-    return { unsubscribe() { } };
-  }
-
-  // Create a new Observable that will deliver the above sequence
-  __sequence = new Observable(this.__sequenceSubscriber);
-
-  // Execute the Observable and print the result of each notification
-  /*
-    sequence.subscribe({
-    next(num: number) { console.log(num); },
-    complete() { console.log('Finished sequence'); }
-  });
-  */
-
-  // Let it be ****************************************************************************
-
 
   set batchProcessLogHeaderId(id: number) {
     sessionStorage.setItem('batchProcessLogHeaderId', id.toString());
@@ -181,43 +132,49 @@ export class BatchService {
   getIpList(): Observable<resp.ipList[]> {
     const url = `${this.#baseUrl}/miscellaneous/getIpList`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
+
     return this.http.get<resp.ipList[]>(url, { headers });
   }
 
-  // TO-DO: check if available on items service, needed for log details.
   getItem(id: string): Observable<ItemVersionVO> {
     const url = `${this.#baseUrl}/items/${id}`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
+
     return this.http.get<ItemVersionVO>(url, { headers });
   }
 
   getBatchProcessUserLock(): Observable<resp.getBatchProcessUserLockResponse> {
     const url = `${this.#baseUrl}/batchProcess/getBatchProcessUserLock`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
+
     return this.http.get<resp.getBatchProcessUserLockResponse>(url, { headers, context: ignoredStatuses([404]) });
   }
 
   deleteBatchProcessUserLock(): Observable<any> {
     const url = `${this.#baseUrl}/batchProcess/deleteBatchProcessUserLock/${this.user}`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
-    return this.http.get<any>(url, { headers });
+
+    return this.http.delete<any>(url, { headers });
   }
 
   getAllBatchProcessLogHeaders(): Observable<resp.BatchProcessLogHeaderDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/getAllBatchProcessLogHeaders`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
+
     return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { headers });
   }
 
   getBatchProcessLogHeaderId(batchLogHeaderId: number): Observable<resp.BatchProcessLogHeaderDbVO> {
     const url = `${this.#baseUrl}/batchProcess/${batchLogHeaderId}`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
+
     return this.http.get<resp.BatchProcessLogHeaderDbVO>(url, { headers });
   }
 
   getBatchProcessLogDetails(batchProcessLogDetailId: number): Observable<resp.getBatchProcessLogDetailsResponse[]> {
     const url = `${this.#baseUrl}/batchProcess/batchProcessLogDetails/${batchProcessLogDetailId}`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
+
     return this.http.get<resp.getBatchProcessLogDetailsResponse[]>(url, { headers });
   }
 

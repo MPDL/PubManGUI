@@ -28,6 +28,7 @@ export class WithdrawPubItemsFormComponent {
   onSubmit(): void {
     this.batchSvc.withdrawPubItems(this.withdrawPubItemsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     })
   }

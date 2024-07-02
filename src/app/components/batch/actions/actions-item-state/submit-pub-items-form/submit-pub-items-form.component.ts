@@ -29,6 +29,7 @@ export class SubmitPubItemsFormComponent {
   onSubmit(): void {
     this.batchSvc.submitPubItems(this.submitPubItemsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }

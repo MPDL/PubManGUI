@@ -29,6 +29,7 @@ export class DeletePubItemsFormComponent {
   onSubmit(): void {
     this.batchSvc.deletePubItems(this.deletePubItemsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }

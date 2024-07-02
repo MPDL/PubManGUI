@@ -51,6 +51,7 @@ export class ChangeReviewMethodFormComponent {
 
     this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }

@@ -42,7 +42,7 @@ export class LogProcessListComponent implements OnInit {
   detailLogs: detail[] = [];  
 
   constructor(
-    private batchSvc: BatchService,
+    public batchSvc: BatchService,
     private itemSvc: ItemsService ) {}
 
   ngOnInit(): void {

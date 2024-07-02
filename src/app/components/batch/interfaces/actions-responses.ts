@@ -19,6 +19,7 @@ export interface BatchProcessLogHeaderDbVO {
         userAccountObjectId: string,
         state: BatchProcessLogHeaderState,
         numberOfItems: number,
+        percentageOfProcessedItems: number,
         method: BatchProcessMethod,
         startDate: Date,
         endDate: Date,

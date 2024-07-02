@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { FormArray, FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { AddLocalTagsParams } from 'src/app/components/batch/interfaces/actions-params';
-import { MessageService } from 'src/app/shared/services/message.service';
 
 import { ControlType } from 'src/app/components/item-edit/services/form-builder.service';
 import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
@@ -27,7 +27,7 @@ export class AddLocalTagsFormComponent {
     private fb: FormBuilder, 
     public validSvc: ValidatorsService, 
     private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+    private router: Router) { }
 
   public addLocalTagsForm: FormGroup = this.fb.group({
     localTags: this.fb.array([])
@@ -52,10 +52,11 @@ export class AddLocalTagsFormComponent {
     }
 
     this.batchSvc.addLocalTags(this.addLocalTagsParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
-      this.msgSvc.info(`Action started!\n`);
+      // console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.addLocalTagsForm.reset();
       ( this.addLocalTagsForm.controls['localTags'] as FormArray ) = this.fb.array([]);
+      this.router.navigate(['/batch']);
     });
 
   }

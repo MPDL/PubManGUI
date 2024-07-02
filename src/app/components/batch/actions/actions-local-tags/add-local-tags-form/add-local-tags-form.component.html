@@ -28,7 +28,7 @@
 
     <div class="mb-1 row">
       <div class="offset-sm-9 col-sm-3">
-        <button type="submit" [disabled]="addLocalTagsForm.invalid" 
+        <button type="submit" [disabled]="tagsToAdd.value.length === 0 || addLocalTagsForm.invalid" 
           class="btn btn-outline-secondary col-4 float-end">
           GO
         </button>

@@ -72,9 +72,15 @@
           <tbody>
             @for (log of inPage; track log.batchLogHeaderId) {
             <tr class="border-bottom">
-              <td class="col-2">
-                {{ log.state | titlecase }}
-              </td>
+              @if (log.state === state.RUNNING) {
+                <td class="col-2">
+                  {{ batchSvc.getProcessLog().state | titlecase }}
+                </td>             
+              } @else {
+                <td class="col-2">
+                  {{ log.state | titlecase }}
+                </td>
+              }
               <td class="col-7">
                 {{ log.method | titlecase }}
               </td>
@@ -82,16 +88,18 @@
                 {{ log.endDate | date: "dd.MM.yyyy 'at' HH:mm":'':'en-EN'}}
               </td>
               <td class="col-1">
-                @if (log.state === state.FINISHED) {
-                <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
+                @if (log.state === state.RUNNING 
+                  && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId 
+                  && batchSvc.isProcessRunning()) {
+                  <span class="spinner-border ms-3" aria-hidden="true">{{batchSvc.getProcessLog().percentageOfProcessedItems - (100/batchSvc.getProcessLog().numberOfItems)}}%</span>
+                } @else {
+                  <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
                   [state]="{ method: log.method, started: log.startDate }">
                   <span class="material-symbols-outlined ms-3">
                     list
                   </span>
                 </a>
-                } @else {
-                <span class="spinner-border ms-3" aria-hidden="true"></span>
-                }
+                } 
               </td>
             </tr>
             }

@@ -50,6 +50,7 @@ export class ChangeFileContentCategoryFormComponent {
 
     this.batchSvc.changeFileContentCategory(this.changeFileContentCategoryParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }

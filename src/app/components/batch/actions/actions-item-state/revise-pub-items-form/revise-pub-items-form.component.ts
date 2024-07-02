@@ -28,6 +28,7 @@ export class RevisePubItemsFormComponent {
   onSubmit(): void {
     this.batchSvc.revisePubItems(this.revisePubItemsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.msgSvc.info(`Action started!\n`);
     });
   }
