@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ChangeExternalReferenceContentCategoryParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ChangeExternalReferenceContentCategoryParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-external-reference-content-category-form',

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ReleasePubItemsParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ReleasePubItemsParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-release-pub-items-form',

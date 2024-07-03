@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ChangeReviewMethodParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ChangeReviewMethodParams } from 'src/app/components/batch/interfaces/actions-params';
 import { ReviewMethod } from 'src/app/model/inge';
 
 @Component({

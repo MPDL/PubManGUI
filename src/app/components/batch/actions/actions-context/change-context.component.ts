@@ -11,7 +11,7 @@ import { SelectorComponent } from "src/app/shared/components/selector/selector.c
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { ChangeContextParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ChangeContextParams } from 'src/app/components/batch/interfaces/actions-params';
 import { AaService } from 'src/app/services/aa.service';
 
 @Component({

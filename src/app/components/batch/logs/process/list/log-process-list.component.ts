@@ -3,13 +3,13 @@ import { OnInit, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import * as resp from '../../../interfaces/actions-responses';
+import type * as resp from 'src/app/components/batch/interfaces/actions-responses';
 
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 import { BatchProcessLogHeaderState } from 'src/app/model/inge';
 
 import { FormsModule } from '@angular/forms';
-import { NgbPaginationModule, NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
+import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -25,7 +25,6 @@ type detail = {
     CommonModule, 
     RouterModule,
     FormsModule,
-    NgbTypeaheadModule, 
     NgbPaginationModule
   ],
   templateUrl: './log-process-list.component.html'

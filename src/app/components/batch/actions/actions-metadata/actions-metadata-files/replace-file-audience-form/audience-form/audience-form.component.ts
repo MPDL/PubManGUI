@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 
-import { ipList }  from 'src/app/components/batch/interfaces/actions-responses';
+import type { ipList }  from 'src/app/components/batch/interfaces/actions-responses';
 
 @Component({
   selector: 'pure-audience-form',

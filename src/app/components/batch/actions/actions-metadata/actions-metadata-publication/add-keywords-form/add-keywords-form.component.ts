@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { AddKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { AddKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-add-keywords-form',

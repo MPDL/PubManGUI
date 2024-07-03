@@ -7,7 +7,7 @@ import { IdType } from 'src/app/model/inge';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { AddSourceIdentiferParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-add-source-identifier-form',

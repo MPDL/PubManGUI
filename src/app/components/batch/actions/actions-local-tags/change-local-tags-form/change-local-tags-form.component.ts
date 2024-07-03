@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/actions-params';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({

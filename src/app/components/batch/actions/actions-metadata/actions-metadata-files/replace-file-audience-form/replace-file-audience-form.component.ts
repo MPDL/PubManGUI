@@ -6,8 +6,8 @@ import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/actions-params';
-import { ipList } from 'src/app/components/batch/interfaces/actions-responses';
+import type { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ipList } from 'src/app/components/batch/interfaces/actions-responses';
 
 import { AudienceFormComponent } from 'src/app/components/batch/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';

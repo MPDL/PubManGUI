@@ -1,11 +1,10 @@
-import { signal } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { signal, computed, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, Observable, throwError } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
 
-import * as params from '../interfaces/actions-params';
-import * as resp from '../interfaces/actions-responses';
+import type * as params from '../interfaces/actions-params';
+import type * as resp from '../interfaces/actions-responses';
 
 import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';
@@ -19,8 +18,6 @@ export class BatchService {
 
   readonly #baseUrl: string = inge_rest_uri;
 
-  #ouList: resp.ipList[] = [];
-
   datasetList = "dataset-list";
   savedSelection = "datasets-checked";
 
@@ -32,8 +29,6 @@ export class BatchService {
   get token(): string {
     return this.aa.token || '';
   }
-
-  public getUser = signal<string>(this.user);
 
   get user(): string {
     return this.aa.principal.getValue().user?.objectId || '';
@@ -66,24 +61,26 @@ export class BatchService {
     if (itemList) {
       const items = JSON.parse(itemList);
       if (items.length > 0) {
-        this.areItemsSelected.set(true);
+        this.#itemsSelected.set(true);
         return items;
       }
     }
-    this.areItemsSelected.set(false);
+    this.#itemsSelected.set(false);
     return [] as string[];
   }
 
   set items(items: string[]) {
-    if (items.length > 0) this.areItemsSelected.set(true);
+    if (items.length > 0) this.#itemsSelected.set(true);
     sessionStorage.setItem(this.datasetList, JSON.stringify(items));
   }
 
-  public areItemsSelected = signal(false);
+  #itemsSelected = signal(false);
+
+  public areItemsSelected = computed( () => this.#itemsSelected() );
 
   startProcess(id: number) {
     this.batchProcessLogHeaderId = id;
-    this.isProcessRunning.set(true);
+    this.#processRunning.set(true);
     this.items = [];
 
     this.msgSvc.info(`Action started!\n`);
@@ -92,23 +89,27 @@ export class BatchService {
 
   endProcess() {
     this.batchProcessLogHeaderId = -1;
-    this.isProcessRunning.set(false);
+    this.#processRunning.set(false);
 
     this.msgSvc.info(`Action finished!\n`);
   }
 
-  public isProcessRunning = signal(false);
+  #processRunning = signal(false);
 
-  public getProcessLog = signal({} as resp.BatchProcessLogHeaderDbVO);
+  public isProcessRunning = computed( () => this.#processRunning() );
+
+  #processLog = signal({} as resp.BatchProcessLogHeaderDbVO);
+
+  public getProcessLog = computed( () => this.#processLog() );
 
   updateProcessProgress() {
-    if (this.isProcessRunning()) {
+    if (this.#processRunning()) {
       this.getBatchProcessLogHeaderId(this.batchProcessLogHeaderId).subscribe(resp => {
-        this.getProcessLog.set(resp);
+        this.#processLog.set(resp);
         if (resp.state === BatchProcessLogHeaderState.RUNNING) {
           setTimeout(() => {
             this.updateProcessProgress();
-          }, 5000);
+          }, 5000); // 1000); on PROD
         } else {
           this.endProcess();
         }
@@ -151,7 +152,7 @@ export class BatchService {
   }
 
   deleteBatchProcessUserLock(): Observable<any> {
-    const url = `${this.#baseUrl}/batchProcess/deleteBatchProcessUserLock/${this.user}`;
+    const url = `${this.#baseUrl}/batchProcess/deleteBatchProcessUserLock/${ this.user }`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
 
     return this.http.delete<any>(url, { headers });
@@ -285,7 +286,6 @@ export class BatchService {
     const actionResponse: Observable<resp.actionGenericResponse> = this.http.put<resp.actionGenericResponse>(url, body, { headers })
       .pipe(
         tap((value: resp.actionGenericResponse) => {
-          console.log('Success: \n' + JSON.stringify(value));
           this.batchProcessLogHeaderId = value.batchLogHeaderId;
         }),
         catchError(err => throwError(() => err)),

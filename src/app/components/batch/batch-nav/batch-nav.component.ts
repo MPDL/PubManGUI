@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, OnChanges, Component, signal } from '@angular/core';
+import { OnInit, Component, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { AaService } from 'src/app/services/aa.service';

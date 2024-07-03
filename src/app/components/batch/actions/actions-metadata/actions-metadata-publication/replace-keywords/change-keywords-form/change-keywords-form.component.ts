@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ChangeKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
+import type { ChangeKeywordsParams } from 'src/app/components/batch/interfaces/actions-params';
 
 @Component({
   selector: 'pure-change-keywords-form',
