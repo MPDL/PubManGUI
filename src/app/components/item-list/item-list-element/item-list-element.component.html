@@ -1,4 +1,108 @@
-    <div class="card" [ngClass]="{'border-bottom': !last_item}">
+<div class="container-fluid d-flex flex-column px-0 py-2" style="min-height: 200px;"
+     [ngClass]="{'border-bottom': !last_item}">
+  <!-- Badges -->
+  <div class="row mt-1 mb-3">
+    <div class="col">
+      <span class="form-check float-start">
+          <input [formControl]="check_box" class="form-check-input" type="checkbox" value=""
+                 id="form_check1">
+      </span>
+
+      <span class="badge badge-blue me-2" style="font-weight: normal" [innerHtml]="item?.metadata?.genre"></span>
+      @if (item?.metadata?.dateCreated) {
+        <span class="badge badge-green me-2" style="font-weight: normal"
+              [innerHtml]="item?.metadata?.dateCreated"></span>
+      }
+      <span class="badge badge-yellow me-2" style="font-weight: normal" [innerHtml]="'OA Gold'"></span>
+      <span class="badge bg-secondary me-2 float-end" style="font-weight: normal"
+            [innerHtml]="item?.versionState"></span>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div class="row my-0">
+    <div class="col">
+      <a class="nav-link d-none d-lg-block" routerLink="/edit/{{item?.objectId}}" ngbTooltip="{{item?.metadata?.title}}">
+        <h4 class="text-truncate" style="font-weight: bold; font-size: 1.4rem"
+          >{{ item?.metadata?.title }}</h4>
+      </a>
+      <a class="nav-link d-lg-none d-block" routerLink="/edit/{{item?.objectId}}" ngbTooltip="{{item?.metadata?.title}}">
+        <h4 class="" style="font-weight: bold; font-size: 1.4rem"
+        >{{ item?.metadata?.title }}</h4>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="row my-0">
+    <div class="col-sm-9">
+      <div class="d-inline-flex">
+        @for (author of first_three_authors; track author; let i = $index) {
+          <div class="me-3">
+
+            {{ (author?.person?.familyName || no_name) + ' ' + (author?.person?.givenName || no_name) }}
+
+            @if (author?.person?.orcid) {
+              <sup>
+                <a [href]="author?.person?.orcid" target="_blank">
+                  <img alt="ORCID logo"
+                       src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                       width="16" height="16"/>
+                </a>
+              </sup>
+            }
+          </div>
+        }
+        @if (creators_length && creators_length > 3) {
+          <div class="">
+            <i>{{ (creators_length - 3) + ' more authors ...' }}</i>
+          </div>
+        }
+      </div>
+      @if (sourceCitation) {
+        <div class="row my-3">
+          <div class="col">
+            <small>Published in: {{ sourceCitation }}</small>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="col-sm-3">
+      @if (item?.files) {
+        @for (file of item?.files; track file) {
+          <div class="d-flex flex-sm-row align-items-start">
+            @if (file?.storage === 'EXTERNAL_URL') {
+              <i class="bi-link"></i>
+            } @else {
+              <i class="bi-file-earmark-text"></i>
+            }
+            <a class="btn btn-sm" href="file.content" [innerHtml]=" file.metadata.title.substring(0, 20)"
+               style="overflow-wrap: break-word;"></a>
+          </div>
+        }
+      }
+    </div>
+  </div>
+
+  <div class="row flex-grow-1 align-content-end">
+    <div class="d-inline-flex">
+
+      <a purePopover class="btn btn-sm" tabindex="0" [attr.title]="item?.metadata?.title!" data-bs-toggle="popover"
+         [attr.data-bs-content]="'Citation'" ngbTooltip="Citation"><i class="bi bi-quote"></i></a>
+      @if(abstract) {
+      <a purePopover pureTooltip class="btn btn-sm" tabindex="0" [attr.title]="item?.metadata?.title!"
+         data-bs-toggle="popover" ngbTooltip="Abstract"
+         [attr.data-bs-content]="abstract"><i class="bi bi-card-text"></i></a>
+      }
+    </div>
+  </div>
+
+</div>
+
+
+<!--
+<div class="card" [ngClass]="{'border-bottom': !last_item}">
         <div class="card-header pt-2">
             <div class="d-flex flex-sm-row align-items-center justify-content-start">
                 <form class="me-2">
@@ -29,7 +133,7 @@
             <div class="d-sm-flex flex-sm-row">
                 <div class="col-sm-9">
                 <div class="d-sm-flex flex-sm-row align-items-center">
-                        <!--TODO remove text-truncate for mobile-->
+
                         <h4 class="d-block d-lg-none col-10" [innerHtml]="item?.metadata?.title" (click)="show()"
                             style="cursor: pointer;"></h4>
                         <h4 class="d-none d-lg-block col-10 text-truncate" [innerHtml]="item?.metadata?.title" (click)="show()"
@@ -59,17 +163,14 @@
                         </div>
                         }
                     </div>
-                    <!--<div class="d-flex flex-sm-row">
-                        <small class="col-10 text-muted text-truncate" [innerHtml]="abstract"></small>
-                    </div>-->
+
                     <div class="d-flex flex-sm-row mt-3 align-items-baseline">
                         <i class="col-1 bi bi-quote text-center" style="font-size: 1.5rem; transform: rotate(0.5turn);"></i>
                         <small class="col-9 text-muted" style="font-size: .8rem;"
                             [innerHtml]="dummy_citation"></small>
                     </div>
                     <div class="d-flex flex-sm-row mt-2">
-                        <!-- non HTML attributes need to be prefixed with attr.
-                        purePopover is a directive in order to initialize the bootstrap Popover component -->
+
                         <a purePopover class="btn btn-sm" tabindex="0" [attr.title]="item?.metadata?.title" data-bs-toggle="popover" [attr.data-bs-content]="abstract">Abstract</a>
                     </div>
                 </div>
@@ -90,3 +191,4 @@
             </div>
         </div>
     </div>
+    -->
