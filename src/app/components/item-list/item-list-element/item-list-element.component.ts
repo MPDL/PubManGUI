@@ -1,15 +1,16 @@
 import { Component, Input, inject } from '@angular/core';
 import { ItemVersionVO } from 'src/app/model/inge';
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Router, ActivatedRoute, RouterLink} from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverDirective } from 'src/app/shared/directives/popover.directive';
 import { Subscription } from 'rxjs';
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective],
+  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })
@@ -48,7 +49,7 @@ export class ItemListElementComponent {
     if (this.item && this.item?.metadata?.abstracts?.length > 0) {
       return this.item?.metadata.abstracts[0].value;
     } else {
-      return 'n/a';
+      return undefined;
     }
   }
 
@@ -73,7 +74,7 @@ export class ItemListElementComponent {
     let fromSelection: string[] = [];
     if (sessionStorage.getItem(this.savedSelection)) {
       fromSelection = JSON.parse(sessionStorage.getItem(this.savedSelection) as string);
-    } 
+    }
 
     if (fromSelection.length > 0) {
       const pos = fromSelection.indexOf(this.item?.objectId as string);
@@ -86,9 +87,17 @@ export class ItemListElementComponent {
         }
       }
     } else {
-      if (isChecked) fromSelection.push(this.item?.objectId as string); 
+      if (isChecked) fromSelection.push(this.item?.objectId as string);
     }
 
     sessionStorage.setItem(this.savedSelection, JSON.stringify(fromSelection));
   }
+
+  get sourceCitation() {
+    if(this.item?.metadata?.sources && this.item.metadata.sources.length > 0) {
+      return this.item.metadata.sources[0].title;
+    }
+    else return undefined;
+  }
+
 }
