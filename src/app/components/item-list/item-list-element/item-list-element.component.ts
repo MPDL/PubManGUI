@@ -6,11 +6,12 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverDirective } from 'src/app/shared/directives/popover.directive';
 import { Subscription } from 'rxjs';
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink],
+  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })

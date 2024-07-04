@@ -8,27 +8,31 @@
                  id="form_check1">
       </span>
 
-      <span class="badge badge-blue me-2" style="font-weight: normal" [innerHtml]="item?.metadata?.genre"></span>
+      <span class="badge badge-blue me-2" style="font-weight: normal">{{item?.metadata?.genre}}</span>
       @if (item?.metadata?.dateCreated) {
-        <span class="badge badge-green me-2" style="font-weight: normal"
-              [innerHtml]="item?.metadata?.dateCreated"></span>
+        <span class="badge badge-green me-2" style="font-weight: normal">{{item?.metadata?.dateCreated}}</span>
       }
-      <span class="badge badge-yellow me-2" style="font-weight: normal" [innerHtml]="'OA Gold'"></span>
-      <span class="badge bg-secondary me-2 float-end" style="font-weight: normal"
-            [innerHtml]="item?.versionState"></span>
+      <span class="badge badge-yellow me-2" style="font-weight: normal">OA Gold</span>
+      <span class="badge bg-secondary me-2 float-end" style="font-weight: normal">{{item?.versionState}}</span>
     </div>
   </div>
 
   <!-- Title -->
   <div class="row my-0">
     <div class="col">
+      <!--
       <a class="nav-link d-none d-lg-block" routerLink="/edit/{{item?.objectId}}" ngbTooltip="{{item?.metadata?.title}}">
-        <h4 class="text-truncate" style="font-weight: bold; font-size: 1.4rem"
-          >{{ item?.metadata?.title }}</h4>
+        <h4 class="text-truncate" style="font-weight: bold; font-size: 1.4rem" [innerHTML]="item?.metadata?.title | sanitizeHtml"
+          ></h4>
       </a>
       <a class="nav-link d-lg-none d-block" routerLink="/edit/{{item?.objectId}}" ngbTooltip="{{item?.metadata?.title}}">
-        <h4 class="" style="font-weight: bold; font-size: 1.4rem"
-        >{{ item?.metadata?.title }}</h4>
+        <h4 class="" style="font-weight: bold; font-size: 1.4rem" [innerHTML]="item?.metadata?.title | sanitizeHtml"
+        ></h4>
+      </a>
+      -->
+      <a class="nav-link" routerLink="/edit/{{item?.objectId}}" ngbTooltip="{{item?.metadata?.title}}">
+        <h3 class="" style="font-weight: bold; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml"
+        ></h3>
       </a>
 
     </div>
@@ -77,8 +81,8 @@
             } @else {
               <i class="bi-file-earmark-text"></i>
             }
-            <a class="btn btn-sm" href="file.content" [innerHtml]=" file.metadata.title.substring(0, 20)"
-               style="overflow-wrap: break-word;"></a>
+            <a class="btn btn-sm" href="file.content"
+               style="overflow-wrap: break-word;"> {{file.metadata.title.substring(0, 20)}}</a>
           </div>
         }
       }
