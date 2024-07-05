@@ -30,7 +30,7 @@
         ></h4>
       </a>
       -->
-      <a class="nav-link" routerLink="/edit/{{item?.objectId}}">
+      <a class="nav-link" routerLink="/edit/{{item?.objectId}}" ngbTooltip="{{item?.metadata?.title}}">
         <h3 class="" style="font-weight: bold; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml"
         ></h3>
       </a>

@@ -649,7 +649,7 @@ export class ItemSearchAdvancedComponent {
 
     this.scListToElasticSearchQuery(this.prepareQuery())
       .subscribe(query => {
-        this.router.navigateByUrl('/list', {onSameUrlNavigation: 'reload', state: {query}})
+        this.router.navigateByUrl('/search', {onSameUrlNavigation: 'reload', state: {query}})
       });
 
   }

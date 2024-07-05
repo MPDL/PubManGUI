@@ -5,165 +5,174 @@
     alternative: use navbar-expand-lg (requires navbar-toggler and collapse navbar-collapse d-lg-flex)
 -->
 @if (!mobile) {
-<nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()">
-        <div class="container-fluid px-0">
-                <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#side_nav"
-            aria-controls="side_nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>-->
-                <div class="collapse navbar-collapse d-lg-flex" id="side_nav">
-                        <!--
-                        <nav class="nav flex-column">
-                                <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
-                                                <i
-                                                class="bi bi-file-earmark-plus"></i><small
-                                                class="nav-label ms-1">Eingabe</small>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()"><i
-                                                class="bi bi-folder-check"></i><small class="nav-label ms-1">Meine
-                                                Datensätze</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-award"></i><small
-                                                class="nav-label ms-1">QA-Bereich</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-download"></i><small
-                                                class="nav-label ms-1">Import</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()"><i
-                                                class="bi bi-clipboard-data"></i><small
-                                                class="nav-label ms-1">Batch-Verarbeitung</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-box2"></i><small class="nav-label ms-1">Ablage</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()"><i
-                                                class="bi bi-diagram-3"></i><small
-                                                class="nav-label ms-1">Organisationsstruktur</small></a>
-                                <a class="nav-link" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-geo-alt"></i><small class="nav-label ms-1"></small></a>
-                        </nav>
-                        -->
-                        <nav class="nav flex-column">
-                                <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">note_add</span>
-                                        <span class="nav-label ms-2">Eingabe</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">folder_shared</span>
-                                        <span class="nav-label ms-2">Meine Datensätze</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">workspace_premium</span>
-                                        <span class="nav-label ms-2">QA-Bereich</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">get_app</span>
-                                        <span class="nav-label ms-2">Import</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">web_stories</span>
-                                        <span class="nav-label ms-2">Batch-Verarbeitung</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg"
-                                                width="24" height="24" viewBox="0 0 24 24">
-                                                <g id="Gruppe_38" data-name="Gruppe 38">
-                                                        <g id="Gruppe_37" data-name="Gruppe 37">
-                                                                <path shape-rendering="geometricPrecision" stroke-widht="1px" id="Pfad_112" data-name="Pfad 112"
-                                                                        d="M20,2H4A2.074,2.074,0,0,0,2,4V7.01A2.02,2.02,0,0,0,3,8.7V20a2.149,2.149,0,0,0,2,2H19a2.149,2.149,0,0,0,2-2V8.7a2.02,2.02,0,0,0,1-1.69V4A2.074,2.074,0,0,0,20,2ZM19,20H5V9H19ZM20,7H4V4H20Z" />
-                                                        </g>
-                                                </g>
-                                        </svg>
-                                        <span class="nav-label ms-2">Ablage</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">account_tree</span>
-                                        <span class="nav-label ms-2">Organisationsstruktur</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">place</span>
-                                </a>
-                        </nav>
-                </div>
+  <nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()">
+    <div class="container-fluid px-0">
+      <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#side_nav"
+  aria-controls="side_nav" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>-->
+      <div class="collapse navbar-collapse d-lg-flex" id="side_nav">
+        <!--
+        <nav class="nav flex-column">
+                <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
+                                <i
+                                class="bi bi-file-earmark-plus"></i><small
+                                class="nav-label ms-1">Eingabe</small>
+                </a>
+                <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()"><i
+                                class="bi bi-folder-check"></i><small class="nav-label ms-1">Meine
+                                Datensätze</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-award"></i><small
+                                class="nav-label ms-1">QA-Bereich</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-download"></i><small
+                                class="nav-label ms-1">Import</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()"><i
+                                class="bi bi-clipboard-data"></i><small
+                                class="nav-label ms-1">Batch-Verarbeitung</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-box2"></i><small class="nav-label ms-1">Ablage</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()"><i
+                                class="bi bi-diagram-3"></i><small
+                                class="nav-label ms-1">Organisationsstruktur</small></a>
+                <a class="nav-link" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-geo-alt"></i><small class="nav-label ms-1"></small></a>
+        </nav>
+        -->
+        <nav class="nav flex-column">
+          @if (aaService.principal.getValue().isDepositor) {
+            <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
+              <span class="material-symbols-outlined">note_add</span>
+              <small class="nav-label ms-2">Eingabe</small>
+            </a>
+
+            <a class="nav-link border-bottom" [routerLink]="['my']" (click)="collapse()">
+              <span class="material-symbols-outlined">folder_shared</span>
+              <small class="nav-label ms-2">Meine Datensätze</small>
+            </a>
+          }
+          @if (aaService.principal.getValue().isModerator) {
+            <a class="nav-link border-bottom" [routerLink]="['qa']" (click)="collapse()">
+              <span class="material-symbols-outlined">workspace_premium</span>
+              <small class="nav-label ms-2">QA-Bereich</small>
+            </a>
+          }
+          @if (aaService.principal.getValue().isDepositor) {
+            <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+              <span class="material-symbols-outlined">get_app</span>
+              <small class="nav-label ms-2">Import</small>
+            </a>
+          }
+          @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
+            <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()">
+              <span class="material-symbols-outlined">web_stories</span>
+              <small class="nav-label ms-2">Batch-Verarbeitung</small>
+            </a>
+          }
+          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+            <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg"
+                 width="24" height="24" viewBox="0 0 24 24">
+              <g id="Gruppe_38" data-name="Gruppe 38">
+                <g id="Gruppe_37" data-name="Gruppe 37">
+                  <path stroke-widht="1px" id="Pfad_112" data-name="Pfad 112"
+                        d="M20,2H4A2.074,2.074,0,0,0,2,4V7.01A2.02,2.02,0,0,0,3,8.7V20a2.149,2.149,0,0,0,2,2H19a2.149,2.149,0,0,0,2-2V8.7a2.02,2.02,0,0,0,1-1.69V4A2.074,2.074,0,0,0,20,2ZM19,20H5V9H19ZM20,7H4V4H20Z"/>
+                </g>
+              </g>
+            </svg>
+            <small class="nav-label ms-2">Ablage</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()">
+            <span class="material-symbols-outlined">account_tree</span>
+            <small class="nav-label ms-2">Organisationsstruktur</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+            <span class="material-symbols-outlined">place</span>
+          </a>
+        </nav>
+      </div>
 
 
-        </div>
-</nav>
+    </div>
+  </nav>
 } @else {
-<nav id="sidenav" #sidenav class="navbar side_nav_mobile" (mouseenter)="expand()" (mouseleave)="collapse()">
-        <div class="container-fluid">
-                <button class="navbar-toggler .d-block .d-sm-none d-sm-flex" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#side_nav_mobile" aria-controls="side_nav" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="side_nav_mobile">
-                        <!--
-                        <nav class="nav flex-column">
-                                <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()"><i
-                                                class="bi bi-file-earmark-plus"></i><small
-                                                class="nav-label ms-1">Eingabe</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()"><i
-                                                class="bi bi-folder-check"></i><small class="nav-label ms-1">Meine
-                                                Datensätze</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-award"></i><small
-                                                class="nav-label ms-1">QA-Bereich</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-download"></i><small
-                                                class="nav-label ms-1">Import</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()"><i
-                                                class="bi bi-clipboard-data"></i><small
-                                                class="nav-label ms-1">Batch-Verarbeitung</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-box2"></i><small class="nav-label ms-1">Ablage</small></a>
-                                <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()"><i
-                                                class="bi bi-diagram-3"></i><small
-                                                class="nav-label ms-1">Organisationsstruktur</small></a>
-                                <a class="nav-link" [routerLink]="['']" (click)="collapse()"><i
-                                                class="bi bi-geo-alt"></i><small class="nav-label ms-1"></small></a>
-                        </nav>
-                        -->
-                        <nav class="nav flex-column">
-                                <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">note_add</span>
-                                        <span class="nav-label ms-2">Eingabe</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">folder_shared</span>
-                                        <span class="nav-label ms-2">Meine Datensätze</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">workspace_premium</span>
-                                        <span class="nav-label ms-2">QA-Bereich</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">get_app</span>
-                                        <span class="nav-label ms-2">Import</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">web_stories</span>
-                                        <span class="nav-label ms-2">Batch-Verarbeitung</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <!--materials "inventory_2" without a grip-->
-                                        <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg"
-                                                width="24" height="24" viewBox="0 0 24 24">
-                                                <g id="Gruppe_38" data-name="Gruppe 38">
-                                                        <g id="Gruppe_37" data-name="Gruppe 37">
-                                                                <path stroke-widht="1px" id="Pfad_112" data-name="Pfad 112"
-                                                                        d="M20,2H4A2.074,2.074,0,0,0,2,4V7.01A2.02,2.02,0,0,0,3,8.7V20a2.149,2.149,0,0,0,2,2H19a2.149,2.149,0,0,0,2-2V8.7a2.02,2.02,0,0,0,1-1.69V4A2.074,2.074,0,0,0,20,2ZM19,20H5V9H19ZM20,7H4V4H20Z" />
-                                                        </g>
-                                                </g>
-                                        </svg>
-                                        <span class="nav-label ms-2">Ablage</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">account_tree</span>
-                                        <span class="nav-label ms-2">Organisationsstruktur</span>
-                                </a>
-                                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-                                        <span class="material-symbols-outlined">place</span>
-                                </a>
-                        </nav>
-                </div>
-        </div>
-</nav>
+  <nav id="sidenav" #sidenav class="navbar side_nav_mobile" (mouseenter)="expand()" (mouseleave)="collapse()">
+    <div class="container-fluid">
+      <button class="navbar-toggler .d-block .d-sm-none d-sm-flex" type="button" data-bs-toggle="collapse"
+              data-bs-target="#side_nav_mobile" aria-controls="side_nav" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="side_nav_mobile">
+        <!--
+        <nav class="nav flex-column">
+                <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()"><i
+                                class="bi bi-file-earmark-plus"></i><small
+                                class="nav-label ms-1">Eingabe</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()"><i
+                                class="bi bi-folder-check"></i><small class="nav-label ms-1">Meine
+                                Datensätze</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-award"></i><small
+                                class="nav-label ms-1">QA-Bereich</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-download"></i><small
+                                class="nav-label ms-1">Import</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()"><i
+                                class="bi bi-clipboard-data"></i><small
+                                class="nav-label ms-1">Batch-Verarbeitung</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-box2"></i><small class="nav-label ms-1">Ablage</small></a>
+                <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()"><i
+                                class="bi bi-diagram-3"></i><small
+                                class="nav-label ms-1">Organisationsstruktur</small></a>
+                <a class="nav-link" [routerLink]="['']" (click)="collapse()"><i
+                                class="bi bi-geo-alt"></i><small class="nav-label ms-1"></small></a>
+        </nav>
+        -->
+        <nav class="nav flex-column">
+          <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
+            <span class="material-symbols-outlined">note_add</span>
+            <small class="nav-label ms-2">Eingabe</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['list']" (click)="collapse()">
+            <span class="material-symbols-outlined">folder_shared</span>
+            <small class="nav-label ms-2">Meine Datensätze</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+            <span class="material-symbols-outlined">workspace_premium</span>
+            <small class="nav-label ms-2">QA-Bereich</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+            <span class="material-symbols-outlined">get_app</span>
+            <small class="nav-label ms-2">Import</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+            <span class="material-symbols-outlined">web_stories</span>
+            <small class="nav-label ms-2">Batch-Verarbeitung</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+            <!--materials "inventory_2" without a grip-->
+            <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg"
+                 width="24" height="24" viewBox="0 0 24 24">
+              <g id="Gruppe_38" data-name="Gruppe 38">
+                <g id="Gruppe_37" data-name="Gruppe 37">
+                  <path stroke-widht="1px" id="Pfad_112" data-name="Pfad 112"
+                        d="M20,2H4A2.074,2.074,0,0,0,2,4V7.01A2.02,2.02,0,0,0,3,8.7V20a2.149,2.149,0,0,0,2,2H19a2.149,2.149,0,0,0,2-2V8.7a2.02,2.02,0,0,0,1-1.69V4A2.074,2.074,0,0,0,20,2ZM19,20H5V9H19ZM20,7H4V4H20Z"/>
+                </g>
+              </g>
+            </svg>
+            <small class="nav-label ms-2">Ablage</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()">
+            <span class="material-symbols-outlined">account_tree</span>
+            <small class="nav-label ms-2">Organisationsstruktur</small>
+          </a>
+          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+            <span class="material-symbols-outlined">place</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </nav>
 }

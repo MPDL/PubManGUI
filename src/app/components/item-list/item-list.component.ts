@@ -1,11 +1,11 @@
 import { AsyncPipe, CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { AfterViewInit, Component, QueryList, ViewChildren } from '@angular/core';
+import {AfterViewInit, Component, Input, QueryList, ViewChildren} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationDirective } from 'src/app/shared/directives/pagination.directive';
 import { ItemListElementComponent } from './item-list-element/item-list-element.component';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TopnavComponent } from 'src/app/shared/components/topnav/topnav.component';
-import { Observable, filter, map, startWith, tap } from 'rxjs';
+import {Observable, filter, map, startWith, tap, of} from 'rxjs';
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -32,6 +32,7 @@ import { ItemsService}  from "../../services/pubman-rest-client/items.service";
 })
 export class ItemListComponent implements AfterViewInit {
 
+  @Input() searchQuery: Observable<any> = of({});
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
 
   result_list: Observable<ItemVersionVO[]> | undefined;
@@ -57,7 +58,10 @@ export class ItemListComponent implements AfterViewInit {
     return {
       query,
       size: this.page_size,
-      from: 0
+      from: 0,
+      sort: [
+        {modificationDate: "desc"}
+      ]
     }
   }
 
@@ -70,33 +74,48 @@ export class ItemListComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
+
+    this.searchQuery.subscribe(q => {
+      console.log("Searching with query: " + q);
+      if (q) {
+        this.current_query = this.update_query(q);
+        this.items(this.current_query);
+      } else {
+        this.current_query = this.update_query({ bool: { filter: [] } });
+        this.items(this.current_query);
+      }
+    })
+
+    /*
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       // required to work immediately.
       startWith(this.router)
     ).subscribe(() => {
-      const query = history.state.query;
-      console.log(query)
-      if (query) {
-        this.current_query = this.update_query(query);
+      //const query = history.state.query;
+      console.log(this.searchQuery)
+      if (this.searchQuery) {
+        this.current_query = this.update_query(this.searchQuery);
         this.items(this.current_query);
       } else {
         this.current_query = this.update_query({ bool: { filter: [] } });
         this.items(this.current_query);
       }
     });
+
+     */
   }
 
   items(body: any) {
     let token = undefined;
     if (this.aa.token) token = this.aa.token;
-    this.result_list = this.service.search(body, token).pipe(
+    this.result_list = this.service.elasticSearch(body, token).pipe(
       tap(result => {
-        this.number_of_results = result.numberOfRecords;
+        this.number_of_results = result.hits.total.value as number;
         this.number_of_pages = Math.ceil(this.number_of_results / this.page_size)
         this.jump_to.addValidators(Validators.max(this.number_of_pages));
       }),
-      map(result => result.records?.map(record => record.data))
+      map(result => result.hits.hits.map((record:any) => record._source as ItemVersionVO))
     );
   }
 

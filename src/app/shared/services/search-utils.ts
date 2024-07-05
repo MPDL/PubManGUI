@@ -49,7 +49,7 @@ const baseElasticSearchQueryBuilderInt = (indexField : string, searchValue: stri
   const ef: ElasticSearchIndexField = elasticSearchFields[indexField];
 
   if(!ef) {
-    //TODO throw Exception
+    throw new Error("No index field " + indexField + " found in elasticsearch mapping")
   }
 
   switch(ef.type) {
@@ -94,8 +94,7 @@ export const baseElasticSearchSortBuilder = (indexField: string, order: string):
   let finalIndexField = indexField;
 
   if (!ef) {
-    //TODO throw Exception
-    //throw new  IngeTechnicalException("Index field " + index + " not found");
+    throw new Error("No index field " + indexField + " found in elasticsearch mapping")
   }
 
   switch (ef.type) {

@@ -13,8 +13,8 @@ export class Principal{
   isModerator: boolean = false;
   isDepositor: boolean = false;
   isAdmin: boolean = false;
-  moderatorContexts?: ContextDbVO[];
-  depositorContexts?: ContextDbVO[];
+  moderatorContexts: ContextDbVO[] = [];
+  depositorContexts: ContextDbVO[] = [];
 }
 
 @Injectable({

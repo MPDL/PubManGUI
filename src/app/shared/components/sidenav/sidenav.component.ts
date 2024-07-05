@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import {AaService} from "../../../services/aa.service";
 
 @Component({
   selector: 'pure-sidenav',
@@ -11,9 +12,12 @@ import { RouterLink } from '@angular/router';
 export class SidenavComponent implements AfterViewInit {
 
   @Input() mobile !: boolean;
-  
+
   @ViewChild('sidenav', {read: ElementRef}) nav!: ElementRef;
   renderer = inject(Renderer2);
+
+  constructor(protected aaService: AaService) {
+  }
 
   ngAfterViewInit(): void {
     this.collapse();
