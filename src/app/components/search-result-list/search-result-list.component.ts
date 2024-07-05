@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ItemListComponent} from "../item-list/item-list.component";
 import {filter, map, Observable, of, pipe, startWith, tap} from "rxjs";
 import {AaService} from "../../services/aa.service";
 import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Location} from "@angular/common";
+import {ItemStateFilterComponent} from "../item-list/filters/item-state-filter/item-state-filter.component";
+import {SortSelectorComponent} from "../item-list/filters/sort-selector/sort-selector.component";
 
 @Component({
   selector: 'pure-search-result-list',
   standalone: true,
-    imports: [
-        ItemListComponent
-    ],
+  imports: [
+    ItemListComponent,
+    ItemStateFilterComponent,
+    SortSelectorComponent
+  ],
   templateUrl: './search-result-list.component.html',
   styleUrl: './search-result-list.component.scss'
 })
 export class SearchResultListComponent {
 
+   //@ViewChild('child') child: ItemListComponent;
   searchQuery: Observable<any>;
 
   constructor(private aaService: AaService, private router: Router, private location: Location, private route:ActivatedRoute) {

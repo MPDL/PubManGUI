@@ -13,7 +13,7 @@
         <span class="badge badge-green me-2" style="font-weight: normal">{{item?.metadata?.dateCreated}}</span>
       }
       <span class="badge badge-yellow me-2" style="font-weight: normal">OA Gold</span>
-      <span class="badge bg-secondary me-2 float-end" style="font-weight: normal">{{item?.versionState}}</span>
+      <span class="badge bg-secondary me-2 float-end" style="font-weight: normal">{{item?.publicState?.valueOf() !== 'WITHDRAWN' ? item?.versionState : item?.publicState}}</span>
     </div>
   </div>
 

@@ -1,0 +1,10 @@
+<select class="form-select" (change)="handleInputChange($event)">
+  <option value="">
+    All
+  </option>
+  @for (val of itemStateOptions; track val) {
+    <option [value]="val">
+      {{ val }}
+    </option>
+  }
+</select>

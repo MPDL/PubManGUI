@@ -1,0 +1,7 @@
+<select class="form-select" (change)="handleInputChange($event)">
+  @for (val of sortOptionNames; track val) {
+    <option [value]="val">
+      {{ val }}
+    </option>
+  }
+</select><p>sort-selector works!</p>
