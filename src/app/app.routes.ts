@@ -9,6 +9,7 @@ import {ItemSearchAdvancedComponent} from "./components/item-search-advanced/ite
 import {itemResolver} from "./services/pubman-rest-client/item-resolver";
 import {MyItemsComponent} from "./components/my-items/my-items.component";
 import {QaWorkspaceComponent} from "./components/qa-workspace/qa-workspace.component";
+import {SearchResultListComponent} from "./components/search-result-list/search-result-list.component";
 
 export const routes: Routes = [
     {
@@ -31,6 +32,10 @@ export const routes: Routes = [
       {
         path: 'qa',
         component: QaWorkspaceComponent
+      },
+      {
+        path: 'search',
+        component: SearchResultListComponent
       },
       {
         path: 'ou_tree',

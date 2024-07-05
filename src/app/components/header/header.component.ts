@@ -45,7 +45,7 @@ export class HeaderComponent {
     const search_term = this.search_form.get('text')?.value;
     if (search_term) {
       const query = { query_string: { query: search_term } };
-      this.router.navigateByUrl('/list', {onSameUrlNavigation: 'reload', state: {query}});
+      this.router.navigateByUrl('/search', {onSameUrlNavigation: 'reload', state: {query}});
     }
     this.search_form.controls['text'].patchValue('');
   }

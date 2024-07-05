@@ -76,6 +76,7 @@ export class ItemListComponent implements AfterViewInit {
   ngAfterViewInit(): void {
 
     this.searchQuery.subscribe(q => {
+      console.log("Searching with query: " + q);
       if (q) {
         this.current_query = this.update_query(q);
         this.items(this.current_query);
