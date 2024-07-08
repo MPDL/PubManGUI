@@ -12,7 +12,6 @@ import { SidenavComponent } from 'src/app/shared/components/sidenav/sidenav.comp
 @Component({
     selector: 'pure-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
     standalone: true,
   imports: [RouterLink, FormsModule, ReactiveFormsModule, TooltipDirective, SwitchBsThemeComponent, LangSwitchComponent, AaComponent, SidenavComponent, NgClass]
 })

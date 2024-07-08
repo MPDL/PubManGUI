@@ -2,6 +2,8 @@
   "locale": "de",
   "translations": {
     "brand.name": "MPG.PüRee",
+    "footer.privacy": "Datenschutzerklärung",
+    "footer.cookies": "Cookie Einstellungen",
     "pagination.page": "Seite",
     "pagination.of": "von",
     "datasets": "datensätze",
@@ -45,6 +47,8 @@
     "batch.logs.details.succeded": "erfolgreich",
     "batch.logs.details.filter.failed": "Fehlgeschlagene Items anzeigen",
     "batch.logs.details.filter.succeded": "Erfolgreiche Items anzeigen",
-    "batch.logs.details.back": "Zurück zu Logs"
+    "batch.logs.details.back": "Zurück zu Logs",
+    "batch.datasets.remove": "Aus Batch entfernen",
+    "batch.datasets.add": "In Batch hinzufügen"
   }
 }

@@ -1,0 +1,63 @@
+.footer-wrap {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+
+  .footer {
+    position: relative;
+    bottom: 0;
+    width: auto;
+  }
+
+  .trngl-footer {
+    margin-top: 0;
+    position: relative;
+    height: 4em;
+    padding-bottom: 2em;
+    background-color: var(--footer-color) !important;
+
+    svg {
+      position: absolute;
+      width: 100%;
+      height: 4em;
+      top: -4em;
+      fill: var(--footer-color);
+      background-color: var(--bs-body-bg);
+      overflow: visible;
+    }
+  }
+
+  @media (min-width: 576px) {
+    .trngl-footer {
+      margin-top: 4em;
+    }
+  }
+
+  .subfooter {
+    background-color: var(--subfooter-bg-color);
+
+    img {
+      margin: 24px 64px 24px 0;
+
+      cursor: pointer;
+    }
+
+    .mpdl-logo {
+      height: 90px;
+    }
+
+    span {
+      display: inline;
+      margin: 0 2em;
+
+      font-family: Merriweather;
+      text-decoration: underline;
+      font-size: 0.9em;
+      color: white;
+      text-wrap: nowrap;
+
+      cursor: pointer;
+    }
+
+  }
+}

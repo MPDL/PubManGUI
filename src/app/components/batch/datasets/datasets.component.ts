@@ -13,6 +13,8 @@ import { PaginationDirective } from 'src/app/shared/directives/pagination.direct
 import { ItemListElementComponent } from 'src/app/components/item-list/item-list-element/item-list-element.component';
 import { NavigationEnd, Router } from '@angular/router';
 
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+
 @Component({
   selector: 'pure-batch-datasets',
   standalone: true,
@@ -22,7 +24,8 @@ import { NavigationEnd, Router } from '@angular/router';
     ReactiveFormsModule,
     BatchNavComponent,
     PaginationDirective,
-    ItemListElementComponent
+    ItemListElementComponent,
+    NgbTooltip
   ],
   templateUrl: './datasets.component.html'
 })

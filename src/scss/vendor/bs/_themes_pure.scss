@@ -11,6 +11,8 @@
 */
     --accent-bg-color: #{$mpg-slate-gray-0};
     --accent-color-contrast: #{$body-secondary-bg};
+    --footer-color: #{$mpg-secondary-blue};
+    --subfooter-bg-color: #{$mpg-blue};
 
     .accordion {
 
@@ -202,6 +204,8 @@
     */
     --accent-bg-color: #{$mpg-slate-gray-1};
     --accent-color-contrast: #{$body-secondary-bg-dark};
+    --footer-color: #{$mpg-secondary-blue};
+    --subfooter-bg-color: #{$mpg-blue};
 
     button {
         color: $body-color-dark;
