@@ -8,12 +8,14 @@
                  id="form_check1">
       </span>
 
-      <span class="badge badge-blue me-2" style="font-weight: normal">{{item?.metadata?.genre}}</span>
-      @if (item?.metadata?.dateCreated) {
-        <span class="badge badge-green me-2" style="font-weight: normal">{{item?.metadata?.dateCreated}}</span>
+      <span class="badge badge-blue me-2">{{item?.metadata?.genre}}</span>
+      @if (publicationState) {
+        <span class="badge badge-green me-2">{{publicationState}}</span>
       }
-      <span class="badge badge-yellow me-2" style="font-weight: normal">OA Gold</span>
-      <span class="badge bg-secondary me-2 float-end" style="font-weight: normal">{{item?.versionState}}</span>
+      @if (doi) {
+      <span class="badge badge-yellow me-2">DOI: {{doi}}</span>
+      }
+      <span class="badge bg-secondary me-2 float-end">{{item?.versionState}}</span>
     </div>
   </div>
 
@@ -30,7 +32,7 @@
         ></h4>
       </a>
       -->
-      <a class="nav-link" routerLink="/edit/{{item?.objectId}}" ngbTooltip="{{item?.metadata?.title}}">
+      <a class="nav-link" routerLink="/edit/{{item?.objectId}}">
         <h3 class="" style="font-weight: bold; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml"
         ></h3>
       </a>
@@ -44,7 +46,7 @@
         @for (author of first_three_authors; track author; let i = $index) {
           <div class="me-3">
 
-            {{ (author?.person?.familyName || no_name) + ' ' + (author?.person?.givenName || no_name) }}
+            {{ (author?.person?.familyName || no_name) + ', ' + (author?.person?.givenName || no_name) }}
 
             @if (author?.person?.orcid) {
               <sup>
@@ -66,7 +68,7 @@
       @if (sourceCitation) {
         <div class="row my-3">
           <div class="col">
-            <small>Published in: {{ sourceCitation }}</small>
+            Published in: {{ sourceCitation }}
           </div>
         </div>
       }
@@ -75,14 +77,14 @@
     <div class="col-sm-3">
       @if (item?.files) {
         @for (file of item?.files; track file) {
-          <div class="d-flex flex-sm-row align-items-start">
+          <div class="d-flex flex-sm-row align-items-start" [ngbTooltip]="file.metadata.title">
             @if (file?.storage === 'EXTERNAL_URL') {
               <i class="bi-link"></i>
             } @else {
               <i class="bi-file-earmark-text"></i>
             }
             <a class="btn btn-sm" href="file.content"
-               style="overflow-wrap: break-word;"> {{file.metadata.title.substring(0, 20)}}</a>
+               style="overflow-wrap: break-word;"> {{file.metadata.contentCategory}}</a>
           </div>
         }
       }

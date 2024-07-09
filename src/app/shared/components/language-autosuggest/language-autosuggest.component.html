@@ -1,0 +1,19 @@
+
+<div class="input-group">
+    <input class="form-control" type="text" [formControl]="formForLanguage" [ngbTypeahead]="suggestLanguage"
+      (selectItem)="suggestLanguageSelector($event)"  [readonly]="selected"
+      placeholder="Start typing..." />
+  
+    @if(searching) {
+  
+    <button class="btn btn-outline-dark btn-sm" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span class="visually-hidden">Loading...</span>
+    </button>
+    }
+    @if(formForLanguage && formForLanguage.value) {
+    <button class="btn btn-outline-dark btn-sm" type="button" (click)="deleteFields()">
+      <span class="bi bi-x"></span>
+    </button>
+    }
+  </div>

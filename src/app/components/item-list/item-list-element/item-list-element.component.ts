@@ -1,5 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
-import { ItemVersionVO } from 'src/app/model/inge';
+import {IdType, ItemVersionVO} from 'src/app/model/inge';
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {Router, ActivatedRoute, RouterLink} from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -99,6 +99,25 @@ export class ItemListElementComponent {
       return this.item.metadata.sources[0].title;
     }
     else return undefined;
+  }
+
+  get doi() {
+    return this.item?.metadata?.identifiers?.filter(i => i.type === IdType.DOI).map(i => i.id)[0]
+  }
+
+  get publicationState() {
+    if (this.item?.metadata.datePublishedInPrint) {
+      return "published-in-print: " + this.item?.metadata.datePublishedInPrint;
+    } else if (this.item?.metadata.datePublishedOnline) {
+      return "published-online: " + this.item?.metadata.datePublishedOnline;
+    } else if (this.item?.metadata.dateAccepted) {
+      return "accepted: " + this.item?.metadata.dateAccepted;
+    } else if (this.item?.metadata.dateSubmitted) {
+      return "submitted: " + this.item?.metadata.dateSubmitted;
+    } else {
+      return undefined;
+    }
+
   }
 
 }
