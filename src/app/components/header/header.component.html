@@ -17,17 +17,17 @@
 
     <!-- d-lg-flex reqired! correspondent to navbar-expand-lg -->
     <div class="collapse navbar-collapse d-lg-flex" id="header_nav">
-      <form class="col-6 d-flex justify-content-center align-items-center" role="search" [formGroup]="search_form"
+      <form id="search" class="col-6 d-flex justify-content-center align-items-center" role="search" [formGroup]="search_form"
         (ngSubmit)="search()">
-        <div class="input-group input-group-sm border w-50">
-          <div class="input-group-text border-0"><a pureTooltip class="btn" data-bs-toggle="tooltip"
+        <div class="input-group input-group-sm rounded border border-2 w-50">
+          <div class="input-group-text border-0 p-0"><a pureTooltip class="btn" data-bs-toggle="tooltip"
               data-bs-title="search" role="button" (click)="search()">
               <span class="material-symbols-outlined">search</span>
             </a>
           </div>
           <input id="text" class="form-control border-0" type="search" formControlName="text"
             placeholder="Search" aria-label="Search">
-          <div class="input-group-text border-0">
+          <div class="input-group-text border-0 p-0">
             <a pureTooltip class="btn" data-bs-toggle="tooltip" data-bs-title="advanced search" role="button"
               [routerLink]="['/as2']">
               <span class="material-symbols-outlined">tune</span>

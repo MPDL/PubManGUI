@@ -1,5 +1,4 @@
 .header {
-  //min-height: 8vh;
   height: 100px;
   transition: all 0.3s ease;
 
@@ -9,9 +8,6 @@
   }
 
   &.scrolled {
-    //padding-top: 0.5rem;
-    //padding-bottom: 0.5rem;
-    //font-size: 0.9rem;
     height: 50px;
 
     #logo {
@@ -21,12 +17,18 @@
     }
   }
 
-  img {
-    vertical-align: middle;
+  #brand {
+    font-size: 2.2rem; 
+    font-family: "Roboto", "Tahoma", Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    color: var(--bs-body-color);
   }
 
-  #brand {
-    font-size: 1.25rem; 
-    font-family: 'Arial';
+  #search {
+    
+    .input-group-text {
+      height: 2.2rem;
+    }
   }
 }
