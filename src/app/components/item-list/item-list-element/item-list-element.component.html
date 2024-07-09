@@ -10,7 +10,7 @@
 
       <span class="badge badge-blue me-2">{{item?.metadata?.genre}}</span>
       @if (publicationState) {
-        <span class="badge badge-green me-2">{{publicationState}}</span>
+        <span class="badge badge-green me-2">{{publicationState}}: {{publicationStateDate | dateToYear}}</span>
       }
       @if (doi) {
       <span class="badge badge-yellow me-2">DOI: {{doi}}</span>
