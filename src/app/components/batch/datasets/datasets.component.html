@@ -4,81 +4,85 @@
 
   @if(batchSvc.areItemsSelected()) {
   <div class="datasets">
-    <div class="row align-items-center top_nav_pos bg-body">
-      <nav class="col-12 col-xxl-4 navbar navbar-expand-lg nav bg-body">
-        <a class="nav-link">
-          <span class="material-symbols-outlined">sort_by_alpha</span>
-        </a>
-        <div class="vr"></div>
-        <a class="nav-link">
-          <span class="material-symbols-outlined">upload</span>
-        </a>
-        <div class="vr"></div>
-        @if (number_of_results && number_of_results > 0) {
-        <a class="nav-link" (click)="removeChecked()" i18n-ngbTooltip="@@batch.datasets.remove" ngbTooltip="Remove checked items from Batch.">
-          <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            viewBox="0 0 24 24">
-            <g id="Gruppe_43" data-name="Gruppe 43">
-              <rect id="Rechteck_95" data-name="Rechteck 95" width="24" height="24" fill="none"></rect>
-            </g>
-            <g id="Gruppe_45" data-name="Gruppe 45">
-              <g id="Gruppe_44" data-name="Gruppe 44">
-                <path id="Pfad_3488" data-name="Pfad 3488" d="M17,4V20a2.006,2.006,0,0,0,2-2V6A2.006,2.006,0,0,0,17,4Z"
-                  fill="currentColor"></path>
-                <path id="Pfad_3489" data-name="Pfad 3489"
-                  d="M13,2H4A2.006,2.006,0,0,0,2,4V20a2.006,2.006,0,0,0,2,2h9a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,13,2Zm0,18H4V4h9Z"
-                  fill="currentColor"></path>
-                <path id="Pfad_3490" data-name="Pfad 3490" d="M21,6V18a1.5,1.5,0,0,0,1.5-1.5v-9A1.5,1.5,0,0,0,21,6Z"
-                  fill="currentColor"></path>
-              </g>
-            </g>
-            <path id="Pfad_3494" data-name="Pfad 3494" d="M4.685-7.776H7.348v1.188H.686V-7.776h4Z"
-              transform="translate(4.652 19.1)" fill="currentColor" stroke="currentColor" stroke-width="0.5"></path>
-          </svg>
-        </a>
-        
-        }
-      </nav>
+    <div class="row top_nav_pos navbar bg-body">
+      <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
-      <nav class="col-12 col-xxl-5" purePagination #pagination="purePagination" [totalPages]="number_of_pages"
-        [pageNo]="current_page" (pageChange)="onPageChange($event)">
-        <div class="mpdl-pagination float-xxl-end">
-          <button type="button" class="btn btn-sm border border-0" (click)="pagination.first()"
-            [disabled]="pagination.isFirst">
-            <span class="material-symbols-outlined">
-              first_page
-            </span>
-          </button>
-          <button type="button" class="btn btn-sm border border-0" (click)="pagination.prev()"
-            [disabled]="pagination.isFirst">
-            <span class="material-symbols-outlined">
-              navigate_before
-            </span>
-          </button>
-          <span>Page</span>
-          <input type="text" class="form-control mx-2" [formControl]="jump_to" [value]="jump_to.value"
-            (keyup.enter)="jumpToPage()">
-          <span>of {{pagination.totalPages}}</span>
-          <button type="button" class="btn btn-sm border border-0" (click)="pagination.next()"
-            [disabled]="pagination.isLast">
-            <span class="material-symbols-outlined">
-              navigate_next
-            </span>
-          </button>
-          <button type="button" class="btn btn-sm border border-0" (click)="pagination.last()"
-            [disabled]="pagination.isLast">
-            <span class="material-symbols-outlined">
-              last_page
-            </span>
-          </button>
-          <select class="form-select" [formControl]="select_pages_2_display" (change)="pageSizeHandler($event)"
-            size="1">
-            @for (pages of pages_2_display; track pages) {
-            <option [selected]="pages.value === 10" [value]="pages.value">{{pages.label}}</option>
-            }
-          </select>
+        <div class="d-inline-flex justify-content-start align-items-center">
+          <a class="nav-link">
+            <span class="material-symbols-outlined">sort_by_alpha</span>
+          </a>
+          <div class="vr mx-2"></div>
+          <a class="nav-link">
+            <span class="material-symbols-outlined">upload</span>
+          </a>
+          <div class="vr mx-2"></div>
+          @if (number_of_results && number_of_results > 0) {
+          <a class="nav-link" (click)="removeChecked()" i18n-ngbTooltip="@@batch.datasets.remove"
+            ngbTooltip="Remove checked items from Batch.">
+            <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24">
+              <g id="Gruppe_43" data-name="Gruppe 43">
+                <rect id="Rechteck_95" data-name="Rechteck 95" width="24" height="24" fill="none"></rect>
+              </g>
+              <g id="Gruppe_45" data-name="Gruppe 45">
+                <g id="Gruppe_44" data-name="Gruppe 44">
+                  <path id="Pfad_3488" data-name="Pfad 3488"
+                    d="M17,4V20a2.006,2.006,0,0,0,2-2V6A2.006,2.006,0,0,0,17,4Z" fill="currentColor"></path>
+                  <path id="Pfad_3489" data-name="Pfad 3489"
+                    d="M13,2H4A2.006,2.006,0,0,0,2,4V20a2.006,2.006,0,0,0,2,2h9a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,13,2Zm0,18H4V4h9Z"
+                    fill="currentColor"></path>
+                  <path id="Pfad_3490" data-name="Pfad 3490" d="M21,6V18a1.5,1.5,0,0,0,1.5-1.5v-9A1.5,1.5,0,0,0,21,6Z"
+                    fill="currentColor"></path>
+                </g>
+              </g>
+              <path id="Pfad_3494" data-name="Pfad 3494" d="M4.685-7.776H7.348v1.188H.686V-7.776h4Z"
+                transform="translate(4.652 19.1)" fill="currentColor" stroke="currentColor" stroke-width="0.5"></path>
+            </svg>
+          </a>
+          }
         </div>
-      </nav>
+
+        <nav class="small" purePagination #pagination="purePagination" [totalPages]="number_of_pages" [pageNo]="current_page"
+          (pageChange)="onPageChange($event)">
+          <div class="mpdl-pagination float-xxl-end">
+            <button type="button" class="btn btn-sm border border-0" (click)="pagination.first()"
+              [disabled]="pagination.isFirst">
+              <span class="material-symbols-outlined">
+                first_page
+              </span>
+            </button>
+            <button type="button" class="btn btn-sm border border-0" (click)="pagination.prev()"
+              [disabled]="pagination.isFirst">
+              <span class="material-symbols-outlined">
+                navigate_before
+              </span>
+            </button>
+            <span>Page</span>
+            <input type="text" class="form-control mx-2" [formControl]="jump_to" [value]="jump_to.value"
+              (keyup.enter)="jumpToPage()">
+            <span>of {{pagination.totalPages}}</span>
+            <button type="button" class="btn btn-sm border border-0" (click)="pagination.next()"
+              [disabled]="pagination.isLast">
+              <span class="material-symbols-outlined">
+                navigate_next
+              </span>
+            </button>
+            <button type="button" class="btn btn-sm border border-0" (click)="pagination.last()"
+              [disabled]="pagination.isLast">
+              <span class="material-symbols-outlined">
+                last_page
+              </span>
+            </button>
+
+            <select class="form-select" [formControl]="select_pages_2_display" (change)="pageSizeHandler($event)"
+              size="1">
+              @for (pages of pages_2_display; track pages) {
+              <option [selected]="pages.value === 10" [value]="pages.value">{{pages.label}}</option>
+              }
+            </select>
+          </div>
+        </nav>
+      </div>
     </div>
 
     <div class="row mt-5">

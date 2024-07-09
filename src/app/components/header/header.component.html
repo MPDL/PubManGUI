@@ -3,11 +3,12 @@
     <div class="d-sm-block d-md-block d-lg-none">
       <pure-sidenav [mobile]="true"></pure-sidenav>
     </div>
+
     <a class="offset-1 navbar-brand d-flex align-items-center" [routerLink]="['/']">
       <div class="d-none d-lg-block">
-        <img id="logo" height="100%" width="auto" src="assets/images/mpg_blue.svg" />
+        <img id="logo" src="assets/images/mpg_blue.svg" />
       </div>
-      <span class="ms-3" style="font-size: 1.25rem; font-family: 'Arial';" i18n="@@brand.name">MPG.PuRe</span>
+      <span id="brand" class="ms-3" i18n="@@brand.name">MPG.PuRe</span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header_nav"
       aria-controls="header_nav" aria-expanded="false" aria-label="Toggle navigation">
