@@ -11,9 +11,15 @@
     height: 50px;
 
     #logo {
-      margin-left: 70px;
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
+      margin-left: 60px;
+      margin-top: -10px;
+      animation: turner .4s ease-out;
+    }
+
+    .navbar {
+      transform: translateY(-50px);
     }
   }
 
@@ -31,4 +37,16 @@
       height: 2.2rem;
     }
   }
+
+  @keyframes turner{
+    from{  transform: rotateY(0deg)   }
+    to  {  transform: rotateY(360deg) }
+  }
+
+  .material-symbols-outlined:hover {
+    transform:scale(1.1); 
+    border-radius: 40%; 
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+  }
+
 }
