@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { catchError, debounceTime, distinctUntilChanged, filter, map, Observable, of, OperatorFunction, switchMap, tap, } from 'rxjs';
 import { ConeService } from 'src/app/services/cone.service';
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {  NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'pure-language-autosuggest',
@@ -17,6 +17,7 @@ export class LanguageAutosuggestComponent {
 
   @Input() iso!: string;
   @Input() formForLanguage!: FormControl;
+  @Input() language!: string; //language that will be searched for the search term (e.g. en, de [ISO639-1])
 
   searching: boolean = false;
   selected: boolean = false;
