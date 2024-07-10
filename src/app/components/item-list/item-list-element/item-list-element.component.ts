@@ -7,11 +7,12 @@ import { PopoverDirective } from 'src/app/shared/directives/popover.directive';
 import { Subscription } from 'rxjs';
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
+import {DateToYearPipe} from "../../../shared/services/pipes/date-to-year.pipe";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe],
+  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, DateToYearPipe],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })
@@ -34,6 +35,10 @@ export class ItemListElementComponent {
   dummy_citation = `Eisner, D., Neher, E., Taschenberger, H., & Smith, G. (2023).
   Physiology of intracellular calcium buffering. Physiological Reviews, 103(4), 2767-2845.
   doi:10.1152/physrev.00042.2022. `
+
+
+  constructor() {
+  }
 
   ngAfterViewInit() {
     if (this.item?.objectId) {
@@ -107,13 +112,28 @@ export class ItemListElementComponent {
 
   get publicationState() {
     if (this.item?.metadata.datePublishedInPrint) {
-      return "published-in-print: " + this.item?.metadata.datePublishedInPrint;
+      return "published-in-print"
     } else if (this.item?.metadata.datePublishedOnline) {
-      return "published-online: " + this.item?.metadata.datePublishedOnline;
+      return "published-online"
     } else if (this.item?.metadata.dateAccepted) {
-      return "accepted: " + this.item?.metadata.dateAccepted;
+      return "accepted"
     } else if (this.item?.metadata.dateSubmitted) {
-      return "submitted: " + this.item?.metadata.dateSubmitted;
+      return "submitted"
+    } else {
+      return undefined;
+    }
+
+  }
+
+  get publicationStateDate() {
+    if (this.item?.metadata.datePublishedInPrint) {
+      return this.item?.metadata.datePublishedInPrint;
+    } else if (this.item?.metadata.datePublishedOnline) {
+      return this.item?.metadata.datePublishedOnline;
+    } else if (this.item?.metadata.dateAccepted) {
+      return this.item?.metadata.dateAccepted;
+    } else if (this.item?.metadata.dateSubmitted) {
+      return this.item?.metadata.dateSubmitted;
     } else {
       return undefined;
     }
