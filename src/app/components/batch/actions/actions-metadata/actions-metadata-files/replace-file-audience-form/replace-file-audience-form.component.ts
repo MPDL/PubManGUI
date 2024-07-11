@@ -40,7 +40,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   ngOnInit(): void {
     this.batchSvc.getIpList()
       .subscribe( ous => {
-        this.ous = ous.sort((a,b) => a.name.localeCompare(b.name) );
+        this.ous = ous.sort((a,b) => a.name.localeCompare(b.name));
       })
   }
 
