@@ -37,7 +37,16 @@
     }
   }
 
-  .material-symbols-outlined:hover {
+  .material-symbols-outlined,
+  i,
+  .bi,
+  span {
+    color: var(--bs-body-color);
+  }
+
+  .material-symbols-outlined:hover,
+  i:hover,
+  .bi:hover {
     border-radius: 40%; 
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05);
     background-color: rgba(0, 0, 0, 0.05);

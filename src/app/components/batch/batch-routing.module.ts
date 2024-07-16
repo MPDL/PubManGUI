@@ -35,7 +35,7 @@ const routes: Routes = [
     loadComponent: () => import('./logs/item/list/log-item-list.component'),
     data: {
       breadcrumb: {
-        label: 'Logs',
+        label: 'Log items',
       }
     },
   },

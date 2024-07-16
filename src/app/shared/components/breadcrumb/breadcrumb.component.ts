@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
 
 export interface Breadcrumb {
@@ -18,7 +18,7 @@ export interface Breadcrumb {
 
 export class BreadcrumbComponent { 
   breadcrumbs: Breadcrumb[] = [];
-  report: string = "";
+  isScrolled = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((ev) => {
@@ -54,6 +54,13 @@ export class BreadcrumbComponent {
     }
 
     console.log("breadcrumb :\n" + JSON.stringify(this.breadcrumbs));
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
+    console.log(this.isScrolled)
   }
 }
 

@@ -1,18 +1,23 @@
-:host {
-  display: block;
-}
-
 .breadcrumb {
   background: none;
   font-size: 0.9em;
+  position: fixed;
+  top: 110px;
+  height: 30px;
   margin: 0;
+
+  &.scrolled {
+    visibility: hidden;
+  }
+
+
   a,
   span {
     text-decoration: none;
     color: darkgrey;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    margin: auto 0.3rem;
   }
+
   a:hover,
   span:hover {
     color: dimgrey;
@@ -20,11 +25,7 @@
   }
 }
 
-._visible {
-  visibility: visible;
-}
-
-._hidden {
-  visibility: hidden;
+.bold {
+  font-weight: bold !important;
 }
 

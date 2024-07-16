@@ -1,11 +1,14 @@
-<div class="breadcrumb">
-  <a [ngClass]="(breadcrumbs.length && breadcrumbs[0].link === '/home') ? '_hidden' : '_visible'" [routerLink]="['/home']"> 
-      <span class="material-icons-outlined">home</span> 
+<div class="breadcrumb" [ngClass]="{ 'scrolled': isScrolled }">
+  <a [routerLink]="['/home']">
+    <span class="material-symbols-outlined" title="Home">Home</span>
   </a>
-  <ng-container *ngFor="let bc of breadcrumbs; let last = last">
 
-      <a [routerLink]="bc.link" [ngClass]="{ 'font-weight-bold': last }">{{ bc.label }}</a>
-      <span *ngIf="!last"> &gt; </span>
-
+  <ng-container *ngFor="let crumb of breadcrumbs; let last = last; let first = first">
+    @if(crumb.label !== 'Home') {
+    <span>&gt;</span>
+    <a [routerLink]="crumb.link">
+      <span [ngClass]="{'bold': last}">{{ crumb.label }}</span>
+    </a>
+    }
   </ng-container>
 </div>

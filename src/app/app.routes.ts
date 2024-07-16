@@ -22,21 +22,36 @@ export const routes: Routes = [
         component: HomeComponent,
         data: {
           breadcrumb: {
-            label: '',
+            label: 'Home',
           }
         },
       },
       {
         path: 'list',
-        component: ItemListComponent
+        component: ItemListComponent,
+        data: {
+          breadcrumb: {
+            label: 'Datasets',
+          }
+        },
       },
       {
         path: 'my',
-        component: MyItemsComponent
+        component: MyItemsComponent,
+        data: {
+          breadcrumb: {
+            label: 'My datasets',
+          }
+        },
       },
       {
         path: 'qa',
-        component: QaWorkspaceComponent
+        component: QaWorkspaceComponent,
+        data: {
+          breadcrumb: {
+            label: 'QA Area',
+          }
+        },
       },
       {
         path: 'search',
@@ -44,7 +59,12 @@ export const routes: Routes = [
       },
       {
         path: 'ou_tree',
-        component: OuTreeComponent
+        component: OuTreeComponent,
+        data: {
+          breadcrumb: {
+            label: 'Organizational units',
+          }
+        },
       },
       {
         path: 'as', component: ItemSearchComponent, data: {
@@ -60,7 +80,12 @@ export const routes: Routes = [
         path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver }
       },
       {
-        path: 'edit', component: ItemFormComponent
+        path: 'edit', component: ItemFormComponent,
+        data: {
+          breadcrumb: {
+            label: 'Edit',
+          }
+        },
       },
       {
         path: 'batch',
