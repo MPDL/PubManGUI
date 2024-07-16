@@ -12,15 +12,17 @@
 
 
   a,
-  span {
+  span,
+  .material-symbols-outlined {
     text-decoration: none;
-    color: darkgrey;
+    color: var(--bs-body-color);
     margin: auto 0.3rem;
   }
 
   a:hover,
-  span:hover {
-    color: dimgrey;
+  span:hover,
+  .material-symbols-outlined:hover {
+    color: black !important;
     text-decoration: none;
   }
 }
