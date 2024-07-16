@@ -1,11 +1,7 @@
-<div>
-    <a [routerLink]="[]" class="nav-link" (click)="switch_lang()">
-        @if (svc.locale.localeCompare('en') === 0) {
-            <img class="" height="16px" width="auto"
-            src="assets/images/flag_de.svg" />
-        } @else {
-            <img class="" height="16px" width="auto"
-            src="assets/images/flag_gb.svg" />
-        }
-    </a>
-  </div>
+<div style="white-space:nowrap">
+    @if (svc.locale().localeCompare('en') === 0) {
+        <a [routerLink]="[]" class="nav-link" (click)="switch_lang()" style="display:inline">en</a>&nbsp;|&nbsp;<b>de</b>
+    } @else {
+        <b>en</b>&nbsp;|&nbsp;<a [routerLink]="[]" class="nav-link" (click)="switch_lang()" style="display:inline">de</a>
+    }
+</div>

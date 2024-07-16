@@ -1,10 +1,11 @@
 import { HttpParams } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, computed, Input } from '@angular/core';
 import { catchError, debounceTime, distinctUntilChanged, filter, map, Observable, of, OperatorFunction, switchMap, tap, } from 'rxjs';
 import { ConeService } from 'src/app/services/cone.service';
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'pure-language-autosuggest',
@@ -17,13 +18,15 @@ export class LanguageAutosuggestComponent {
 
   @Input() iso!: string;
   @Input() formForLanguage!: FormControl;
-  @Input() language!: string; //language that will be searched for the search term (e.g. en, de [ISO639-1])
 
+  language = computed(() => {return this.i18nService.locale()}); //language that will be searched for the search term (e.g. en, de [ISO639-1])
   searching: boolean = false;
   selected: boolean = false;
+  
 
   //  constructor(private coneService: ConeService, private fb: FormBuilder, private fbs: FormBuilderService) {
-  constructor(private coneService: ConeService) {
+  constructor(private coneService: ConeService, private i18nService : I18nService) {
+    console.log("Language", this.language());
   }
 
 
@@ -33,7 +36,8 @@ export class LanguageAutosuggestComponent {
       distinctUntilChanged(),
       tap(() => (this.searching = true)),
       switchMap((term) => {
-        const params = new HttpParams().set('q', term).set('format', 'json');
+        const params = new HttpParams().set('q', term).set('format', 'json').set('language', this.language());
+        console.log("Language", this.language());
         return this.coneService.find('/' + this.iso + '/query', params).pipe(
           map(response => {
             console.log('ResponseSuggest', response)
