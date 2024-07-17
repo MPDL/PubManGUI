@@ -7,8 +7,7 @@ import { I18nService } from 'src/app/shared/services/i18n.service';
   selector: 'pure-lang-switch',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './lang-switch.component.html',
-  styleUrl: './lang-switch.component.scss'
+  templateUrl: './lang-switch.component.html'
 })
 export class LangSwitchComponent {
 
