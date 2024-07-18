@@ -4,12 +4,16 @@
       <pure-sidenav [mobile]="true"></pure-sidenav>
     </div>
 
-    <a class="offset-1 navbar-brand d-flex align-items-center" [routerLink]="['/']">
+    <div class="offset-1 navbar-brand d-flex align-items-center">
       <div class="d-none d-lg-block">
-        <img id="logo" src="assets/images/mpg_blue.svg" />
+        <a [routerLink]="['/']">
+          <img id="logo" src="assets/images/mpg_blue.svg" />
+        </a>
       </div>
-      <span id="brand" class="ms-3" i18n="@@brand.name">MPG.PuRe</span>
-    </a>
+      <a [routerLink]="['/']">
+        <span id="brand" class="ms-3" i18n="@@brand.name">MPG.PuRe</span>
+      </a>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header_nav"
       aria-controls="header_nav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

@@ -43,17 +43,17 @@ export class BreadcrumbComponent {
         currentBCLink = currentAR?.routeConfig?.path || '';
       }
 
-      this.breadcrumbs.push({
-        label: currentAR.snapshot.data['breadcrumb'].label,
-        link: lastBCLink + '/' + currentBCLink,
-      } as Breadcrumb);
+      if(currentAR.snapshot.data['breadcrumb'].label) {
+        this.breadcrumbs.push({
+          label: currentAR.snapshot.data['breadcrumb'].label,
+          link: lastBCLink + '/' + currentBCLink,
+        } as Breadcrumb);
+      }
     }
 
     if (currentAR.firstChild !== null) {
       this.buildBreadcrumb(currentAR.firstChild);
     }
-
-    console.log("breadcrumb :\n" + JSON.stringify(this.breadcrumbs));
   }
 
   @HostListener('window:scroll', ['$event'])

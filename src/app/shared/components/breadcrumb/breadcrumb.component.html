@@ -3,11 +3,11 @@
     <span class="material-symbols-outlined" title="Home">Home</span>
   </a>
 
-  <ng-container *ngFor="let crumb of breadcrumbs; let last = last; let first = first">
-    @if(crumb.label.length && crumb.label !== 'Home') {
+  <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+    @if(crumb.label !== 'Home') {
     <span class="text-muted">&gt;</span>
       @if(last) {
-        <span class="bold">{{ crumb.label }}</span>
+        <span class="last">{{ crumb.label }}</span>
       } @else {
       <a [routerLink]="crumb.link">
         <span>{{ crumb.label }}</span>

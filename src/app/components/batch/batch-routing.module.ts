@@ -34,7 +34,7 @@ const routes: Routes = [
         loadComponent: () => import('./logs/logs.component'),
         data: {
           breadcrumb: {
-            label: '',
+            //label: '',
           }
         },
       },
