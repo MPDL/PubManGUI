@@ -37,8 +37,8 @@ export class ActionsGenreComponent {
     genreFrom: [Object.keys(MdsPublicationGenre)[0], [Validators.required]],
     genreTo: [Object.keys(MdsPublicationGenre)[0], [Validators.required]],
     */
-    genreFrom: ['-', [Validators.required]],
-    genreTo: ['-', [Validators.required]],
+    genreFrom: ['Genre', [Validators.required]],
+    genreTo: ['Genre', [Validators.required]],
     degreeType: [{value: '', disabled: true}],
     }, 
     // { validators: this.valSvc.notEqualsValidator('genreFrom','genreTo') }

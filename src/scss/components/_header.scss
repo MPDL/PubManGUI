@@ -1,5 +1,4 @@
 .header {
-  //min-height: 8vh;
   height: 100px;
   transition: all 0.3s ease;
 
@@ -9,24 +8,48 @@
   }
 
   &.scrolled {
-    //padding-top: 0.5rem;
-    //padding-bottom: 0.5rem;
-    //font-size: 0.9rem;
     height: 50px;
 
     #logo {
-      margin-left: 70px;
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
+      margin-left: 60px;
+      margin-top: -10px;
+    }
+
+    .navbar {
+      transform: translateY(-50px);
     }
   }
 
-  img {
-    vertical-align: middle;
+  #brand {
+    font-size: 2.2rem; 
+    font-family: "Roboto", "Tahoma", Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    color: var(--bs-body-color);
   }
 
-  #brand {
-    font-size: 1.25rem; 
-    font-family: 'Arial';
+  #search {
+    
+    .input-group-text {
+      height: 2.2rem;
+    }
   }
+
+  span {
+    color: var(--bs-body-color);
+  }
+
+  .material-symbols-outlined,
+  i,
+  .bi {
+    &:hover {
+      border-radius: 40%; 
+      box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05);
+      background-color: rgba(0, 0, 0, 0.05);
+      color: black !important;
+    }
+  }
+
 }

@@ -75,7 +75,7 @@
                         background-color: var(--accent-color-contrast);
                     }
                 }
-                
+
             }
 
             .accordion-button {
@@ -161,7 +161,7 @@
             width: 4rem;
             height: 2rem;
             border-radius: 0.375rem;
-            font-size: 0.875rem; 
+            font-size: 0.875rem;
             padding: 0rem 1rem;
             margin-top: 0;
         }
@@ -188,5 +188,13 @@
         .spinner-border {
             cursor: wait;
         }
+
+        .material-symbols-outlined:hover {
+            border-radius: 40%;
+            box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05);
+            background-color: rgba(0, 0, 0, 0.05);
+            color: black !important;
+        }
+
     }
 }

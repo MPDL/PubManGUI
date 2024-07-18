@@ -28,8 +28,8 @@ export class ChangeFileContentCategoryFormComponent {
   contentCategories = Object.keys(ContentCategories);
 
   public changeFileContentCategoryForm: FormGroup = this.fb.group({
-    fileContentCategoryFrom: ['', [ Validators.required ]],
-    fileContentCategoryTo: ['', [ Validators.required ]],
+    fileContentCategoryFrom: ['Category', [ Validators.required ]],
+    fileContentCategoryTo: ['Category', [ Validators.required ]],
   }, 
   { validators: this.validSvc.notEqualsValidator('fileContentCategoryFrom','fileContentCategoryTo') });
 

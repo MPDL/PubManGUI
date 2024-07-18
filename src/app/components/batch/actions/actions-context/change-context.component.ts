@@ -51,8 +51,8 @@ export class ActionsContextComponent {
     contextFrom: [this.fb.group<ControlType<ContextDbRO>>,[ Validators.required ]],
     contextTo: [this.fb.group<ControlType<ContextDbRO>>,[ Validators.required ]]
     */
-    contextFrom: ['-',[ Validators.required ]],
-    contextTo: ['-',[ Validators.required ]]
+    contextFrom: ['Context',[ Validators.required ]],
+    contextTo: ['Context',[ Validators.required ]]
   }, 
   //{ validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
   );

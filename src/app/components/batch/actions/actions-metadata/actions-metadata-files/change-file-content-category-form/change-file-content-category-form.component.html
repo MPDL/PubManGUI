@@ -11,7 +11,7 @@
         </div>
         <div class="col-sm-9">
           <select class="form-select" formControlName="fileContentCategoryFrom">
-            <option [value]=null selected disabled>Category</option>
+            <option [value]=''  selected disabled>Category</option>
             @for (category of contentCategories; track category) {
               <option [value]="category"> {{category | titlecase}}</option>
             }
@@ -25,7 +25,7 @@
         </div>
         <div class="col-sm-9">
           <select class="form-select" formControlName="fileContentCategoryTo">
-            <option [value]=null selected disabled>Category</option>
+            <option [value]=''  selected disabled>Category</option>
             @for (category of contentCategories; track category) {
               <option [value]="category"> {{category | titlecase}}</option>
             }

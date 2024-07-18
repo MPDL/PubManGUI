@@ -34,8 +34,8 @@ export class ChangeFileVisibilityFormComponent {
     fileVisibilityFrom: [Object.keys(Visibility)[0], [Validators.required]],
     fileVisibilityTo: [Object.keys(Visibility)[0], [Validators.required]],
     */
-    fileVisibilityFrom: ['-', [Validators.required]],
-    fileVisibilityTo: ['-', [Validators.required]],
+    fileVisibilityFrom: ['Visibility', [Validators.required]],
+    fileVisibilityTo: ['Visibility', [Validators.required]],
   }, 
   { validators: this.validSvc.notEqualsValidator('fileVisibilityFrom','fileVisibilityTo') });
 

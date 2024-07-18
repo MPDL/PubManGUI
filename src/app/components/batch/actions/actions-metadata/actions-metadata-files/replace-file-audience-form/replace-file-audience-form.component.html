@@ -15,12 +15,10 @@
           <ng-container [formGroupName]="audienceIdx">
             <pure-audience-form [audienceId]="audience" [index]="audienceIdx"
               [index_length]="allowedAudienceIds.controls.length" [ous]="ous"
-              (notice)="handleAudienceNotification($event)"></pure-audience-form>
+              (notice)="handleAudienceNotification($event)">
+            </pure-audience-form>
           </ng-container>
-          } @empty {
-          <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add IP range'"
-            (notice)="handleAudienceNotification($event)"></pure-add-remove-buttons>
-          }
+          } 
         </ng-container>
       </div>
     </div>

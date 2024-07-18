@@ -28,8 +28,8 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
     private msgSvc: MessageService) { }
 
   public changeExternalReferenceContentCategoryForm: FormGroup = this.fb.group({
-    externalReferenceContentCategoryFrom: ['', [ Validators.required ]],
-    externalReferenceContentCategoryTo: ['', [ Validators.required ]],
+    externalReferenceContentCategoryFrom: ['Category', [ Validators.required ]],
+    externalReferenceContentCategoryTo: ['Category', [ Validators.required ]],
   }, 
   { validators: this.validSvc.notEqualsValidator('externalReferenceContentCategoryFrom','externalReferenceContentCategoryTo') });
 

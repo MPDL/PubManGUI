@@ -29,8 +29,8 @@ export class ChangeSourceGenreFormComponent {
   sourceGenres = Object.keys(SourceGenre);
 
   public changeSourceGenreForm: FormGroup = this.fb.group({
-    sourceGenreFrom: ['', [Validators.required]],
-    sourceGenreTo: ['', [Validators.required]],
+    sourceGenreFrom: ['Genre', [Validators.required]],
+    sourceGenreTo: ['Genre', [Validators.required]],
   },
     {
       validators: this.validSvc.notEqualsValidator('sourceGenreFrom', 'sourceGenreTo')

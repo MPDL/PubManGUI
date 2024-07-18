@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 
 import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
 
@@ -11,7 +11,6 @@ import type { ipList } from 'src/app/components/batch/interfaces/actions-respons
 
 import { AudienceFormComponent } from 'src/app/components/batch/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
-
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -40,12 +39,16 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   ngOnInit(): void {
     this.batchSvc.getIpList()
       .subscribe( ous => {
-        this.ous = ous.sort((a,b) => a.name.localeCompare(b.name) );
-      })
+        this.ous = ous.sort((a,b) => a.name.localeCompare(b.name));
+      }) 
   }
 
   public replaceFileAudienceForm: FormGroup = this.fb.group({
-    allowedAudienceIds: this.fb.array([])
+    allowedAudienceIds: this.fb.array([{
+      name: '',
+      id: '',
+      ipRanges: []
+    }])
   },
   {
     //validators: this.validSvc.noDuplicatesValidator(this.allowedAudienceIds)
