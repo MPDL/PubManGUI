@@ -79,11 +79,13 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-10 col-sm-12 d-flex justify-content-between mt-5">
-        <h4>{{ method }}</h4>
+      <div class="col-lg-10 col-sm-12 d-flex justify-content-between mt-5 mb-3 border-bottom">
         <div>
-          <span i18n="@@batch.logs.started.on">Started on</span><span> {{ started | date: "dd.MM.yyyy 'at'
-            HH:mm":'':'en-EN' }}</span>
+          <span i18n="@@batch.logs.details.for">Action</span>: <strong class="fw-bolder"> {{ method! | titlecase | separate }} </strong>
+        </div>
+        <div>
+          <span i18n="@@batch.logs.started.on">started on</span><span> {{ started | date:'fullDate':'':getLang() }} </span><span class="material-symbols-outlined">
+            schedule</span><span> {{ started | date: "HH:mm":'':getLang() }}</span>
         </div>
       </div>
     </div>

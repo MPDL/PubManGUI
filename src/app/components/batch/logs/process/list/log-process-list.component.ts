@@ -10,6 +10,7 @@ import { BatchProcessLogHeaderState } from 'src/app/model/inge';
 
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import { SeparateFilterPipe } from 'src/app/components/batch/pipes/separateFilter.pipe';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -25,7 +26,8 @@ type detail = {
     CommonModule, 
     RouterModule,
     FormsModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    SeparateFilterPipe
   ],
   templateUrl: './log-process-list.component.html'
 })
@@ -72,5 +74,16 @@ export class LogProcessListComponent implements OnInit {
   calculateProcessedStep(numberOfItems: number): number {
     return Math.floor(100/numberOfItems);
   };
+
+  getLang(): string {
+    const userLocale = localStorage.getItem('locale');
+    const browserLocale = navigator.language.slice(0, 2);
+
+    if (userLocale) {
+      return userLocale;
+    } else {
+      return browserLocale;
+    }
+  }
 
 }

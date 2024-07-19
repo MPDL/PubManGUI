@@ -14,6 +14,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
+import { SeparateFilterPipe } from 'src/app/components/batch/pipes/separateFilter.pipe';
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
@@ -32,7 +33,8 @@ type detail = {
     FormsModule,
     NgbPaginationModule,
     NgbTooltip,
-    StateFilterPipe
+    StateFilterPipe,
+    SeparateFilterPipe
   ],
   templateUrl: './log-item-list.component.html',
 })
@@ -106,8 +108,6 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    console.log("LogItemListComponent");
-
     if (this.getLang() === 'de') this.localeMessages = this.messagesDe;
 
     this.activatedRoute.params

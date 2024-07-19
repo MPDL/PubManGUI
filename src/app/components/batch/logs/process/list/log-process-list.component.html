@@ -93,11 +93,12 @@
                   {{ log.state | titlecase }}
                 </td>
               }
-              <td class="col-7">
-                {{ log.method | titlecase }}
+              <td class="col-6">
+                {{ log.method | titlecase | separate }}
               </td>
-              <td class="col-2">
-                {{ log.endDate | date: "dd.MM.yyyy 'at' HH:mm":'':'en-EN'}}
+              <td class="col-4">
+                {{  log.endDate | date:'fullDate':'':getLang() }} <span class="material-symbols-outlined">
+                  schedule</span> {{  log.endDate | date: "HH:mm":'':getLang() }}
               </td>
               <td class="col-1">
                 @if (log.state === state.RUNNING 

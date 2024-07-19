@@ -29,8 +29,8 @@ export class ChangeReviewMethodFormComponent {
     private msgSvc: MessageService) { }
 
   public changeReviewMethodForm: FormGroup = this.fb.group({
-    reviewMethodFrom: ['', [ Validators.required ]],
-    reviewMethodTo: ['', [ Validators.required ]],
+    reviewMethodFrom: ['Review type', [ Validators.required ]],
+    reviewMethodTo: ['Review type', [ Validators.required ]],
   }, 
   { validators: this.validSvc.notEqualsValidator('reviewMethodFrom','reviewMethodTo') });
 

@@ -77,7 +77,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   addAudience(index: number) {
-    this.allowedAudienceIds.insert(index + 1, this.fb.control(''));
+    this.allowedAudienceIds.insert(index + 1, this.fb.control('Range'));
   }
 
   removeAudience(index: number) {
