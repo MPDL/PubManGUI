@@ -26,19 +26,22 @@ export class FormBuilderService {
 
   item_FG(item: ItemVersionVO | null) {
     const item_form = this.fb.group<ControlType<ItemVersionVO>>({
-      publicState: this.fb.control(item?.publicState ? item.publicState : ItemVersionState.PENDING),
-      metadata: item?.metadata ? this.metadata_FG(item.metadata) : this.metadata_FG(null),
-      files: undefined,
       context: item?.context ? this.context_FG(item.context) : this.context_FG(null),
-      message: this.fb.control(item?.message ? item.message : null),
+      // files: undefined,
       localTags: this.fb.array(item?.localTags ? item.localTags.map(lt => this.fb.control(lt) as AbstractControl) : []),
+      metadata: item?.metadata ? this.metadata_FG(item.metadata) : this.metadata_FG(null),
+      message: this.fb.control(item?.message ? item.message : null),
+      modificationDate: this.fb.control(item?.modificationDate ? item.modificationDate : null),
+      objectId: this.fb.control(item?.objectId ? item.objectId : null),
+      publicState: this.fb.control(item?.publicState ? item.publicState : ItemVersionState.PENDING),
+      versionNumber :  this.fb.control(item?.versionNumber ? item.versionNumber : null),
     });
     return item_form;
   }
 
   context_FG(ctx: ContextDbRO | null) {
     const ctx_form = this.fb.group<ControlType<ContextDbRO>>({
-      objectId: this.fb.control(ctx?.objectId ? ctx.objectId : null),
+      objectId: this.fb.control(ctx?.objectId ? ctx.objectId : null, [Validators.required]),
       name: this.fb.control(ctx?.name ? ctx.name : null)
     });
     return ctx_form;

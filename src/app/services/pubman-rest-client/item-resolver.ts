@@ -3,11 +3,14 @@ import { ActivatedRouteSnapshot, ResolveFn, Router } from "@angular/router";
 import { of, mergeMap, EMPTY } from "rxjs";
 import { MessageService } from "src/app/shared/services/message.service";
 import { ItemsService } from "./items.service";
+import { AaService } from "../aa.service";
 
 export const itemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
+    const aaService = inject(AaService);
+    const message = inject(MessageService);
     const router = inject(Router);
     const service = inject(ItemsService);
-    const message = inject(MessageService);
+
     const item_id = route.paramMap.get('id');
 
     if (item_id == null) {
@@ -15,7 +18,7 @@ export const itemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
         router.navigate(['pure/pure']);
         return EMPTY
     } else {
-        return service.retrieve(item_id, undefined).pipe(
+        return service.retrieve(item_id, aaService.token ? aaService.token : undefined).pipe(
             mergeMap(item => {
                 if (item) {
                     return of(item);

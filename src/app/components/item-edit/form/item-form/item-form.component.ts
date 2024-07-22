@@ -5,7 +5,7 @@ import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } f
 import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
-import { ContextDbRO, ContextDbVO, MdsPublicationVO } from 'src/app/model/inge';
+import { ContextDbRO, ContextDbVO, ItemVersionVO, MdsPublicationVO } from 'src/app/model/inge';
 import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
 import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
@@ -13,7 +13,8 @@ import { AddRemoveButtonsComponent } from '../../../../shared/components/add-rem
 import { remove_null_empty, remove_objects } from 'src/app/shared/services/utils_final';
 import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
 import { AaService } from 'src/app/services/aa.service';
-import {ContextsService} from "../../../../services/pubman-rest-client/contexts.service";
+import { ContextsService } from "../../../../services/pubman-rest-client/contexts.service";
+import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
 
 @Component({
   selector: 'pure-item-form',
@@ -28,6 +29,7 @@ export class ItemFormComponent implements OnInit {
   route = inject(ActivatedRoute);
   aaService = inject(AaService);
   contextService = inject(ContextsService);
+  itemService = inject(ItemsService)
   form!: FormGroup;
   form_2_submit: any;
   user_contexts?: ContextDbRO[];
@@ -103,8 +105,14 @@ export class ItemFormComponent implements OnInit {
   submit() {
     this.form_2_submit = remove_null_empty(this.form.value);
     this.form_2_submit = remove_objects(this.form_2_submit);
-    // this.form.patchValue(final_form);
-    this.form.valid ? alert('done!') : alert(JSON.stringify(this.form.errors));
+    if (this.aaService.isLoggedIn && this.aaService.token) {
+      if (this.form_2_submit.objectId) {
+        this.form.valid ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO, this.aaService.token)) : alert(JSON.stringify(this.form.errors));
+      } else {
+        this.form.valid ? (this.itemService.create(this.form_2_submit as ItemVersionVO, this.aaService.token)).subscribe(result => console.log('Result', JSON.stringify(result))) : alert('ERROR: ' + JSON.stringify(this.form.errors));
+      }
+    }
+
   }
 }
 
