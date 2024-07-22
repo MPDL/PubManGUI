@@ -1,13 +1,15 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.metadata.source.replaceId">Replace Identifier</h2>
   <div class="mt-2 mb-5">
-    The values of specific identifiers (IDs) will be replaced within the sources
+    <span i18n="@@batch.actions.metadata.source.replaceId.info">
+      The values of specific identifiers (IDs) will be replaced within the sources
+    </span>
   </div>
 
   <form [formGroup]="changeSourceIdentifierForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label">Source to be adjusted</label>
+        <label class="col-form-label" i18n="@@batch.actions.metadata.source.adjust">Source to be adjusted</label>
       </div>
       <div class="col-sm-1">
         <select class="form-select" formControlName="sourceNumber">
@@ -19,7 +21,7 @@
 
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label">Type of ID</label>
+        <label class="col-form-label" i18n="@@batch.actions.metadata.source.replaceId.type">Type of ID</label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceIdentifierType">
@@ -34,7 +36,7 @@
 
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label">Value of ID to be replaced</label>
+        <label class="col-form-label" i18n="@@batch.actions.metadata.source.replaceId.from">Value of ID to be replaced</label>
       </div>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceIdentifierFrom">
@@ -43,7 +45,7 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <label class="col-form-label">Value of replacing ID</label>
+        <label class="col-form-label" i18n="@@batch.actions.metadata.source.replaceId.to">Value of replacing ID</label>
       </div>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceIdentifierTo">

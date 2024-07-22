@@ -1,14 +1,16 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.localTags.add">Add</h2>
   <div class="mt-2 mb-5">
-    The following tags will be added to all items
+    <span i18n="@@batch.actions.localTags.add.info">
+      The following tags will be added to all items
+    </span>
   </div>
 
   <form [formGroup]="addLocalTagsForm" (ngSubmit)="onSubmit()" autocomplete="off"
     (keydown.enter)="$event.preventDefault()">
     <div class="row">
       <div class="col-sm-2">
-        <label class="col-form-label">New tag</label>
+        <label class="col-form-label" i18n="@@batch.actions.localTags.replace.to">New tag</label>
       </div>
       <div class="col-sm-10">
         <pure-chips [form]="addLocalTagsForm" [chips]="tagsToAdd.value" [control_name]="'localTags'" />

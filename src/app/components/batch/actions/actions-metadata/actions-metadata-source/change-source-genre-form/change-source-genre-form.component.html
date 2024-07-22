@@ -1,13 +1,15 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.metadata.source.changeGenre">Change Genre</h2>
   <div class="mt-2 mb-5">
-    The genre of existing sources will be changed within the items
+    <span i18n="@@batch.actions.metadata.source.changeGenre.info">
+      The genre of existing sources will be changed within the items
+    </span>
   </div>
 
   <form [formGroup]="changeSourceGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label">Genre to be replaced</label>
+        <label class="col-form-label" i18n="@@batch.actions.metadata.source.changeGenre.from">Genre to be replaced</label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceGenreFrom">
@@ -21,7 +23,7 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <label class="col-form-label">Replacing genre</label>
+        <label class="col-form-label" i18n="@@batch.actions.metadata.source.changeGenre.to">Replacing genre</label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceGenreTo">

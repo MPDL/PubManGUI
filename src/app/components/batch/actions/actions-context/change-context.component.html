@@ -2,12 +2,14 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.context.change">Change context</h2>
   <div class="mt-2 mb-5">
-    The items will be connected with a new context, if their genre is admitted there, too
+    <span i18n="@@batch.actions.context.change.info">
+      The items will be connected with a new context, if their genre is admitted there, too
+    </span>
   </div>
 
   <form [formGroup]="changeContextForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label for="contextFrom" class="col-sm-3 col-form-label">Previous context</label>
+      <label for="contextFrom" class="col-sm-3 col-form-label" i18n="@@batch.actions.context.change.from">Previous context</label>
       <div class="col-sm-9">
         <select id="contextFrom" class="form-select" formControlName="contextFrom">
           <option [value]='' selected disabled>Context</option>
@@ -19,7 +21,7 @@
     </div>
 
     <div class="row">
-      <label for="contextTo" class="col-sm-3 col-form-label">New context</label>
+      <label for="contextTo" class="col-sm-3 col-form-label" i18n="@@batch.actions.context.change.to">New context</label>
       <div class="col-sm-9">
         <select id="contextTo" class="form-select" formControlName="contextTo">
           <option [value]=''  selected disabled>Context</option>

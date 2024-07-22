@@ -1,8 +1,10 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.metadata.orcid.add">Add ORCID</h2>
   <div class="mt-2 mb-5">
-    The ORCID stored in CoNE for the selected person will be added to the
-    items. Any existing values will be overwritten.
+    <span i18n="@@batch.actions.metadata.orcid.add.info">
+      The ORCID stored in CoNE for the selected person will be added to the
+      items. Any existing values will be overwritten.
+    </span>
   </div>
 
   <form [formGroup]="changeOrcidForm" (ngSubmit)="onSubmit()" autocomplete="off">

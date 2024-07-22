@@ -1,7 +1,11 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
     <h2 class="m-0" i18n="@@batch.actions.item.state.delete">Delete</h2>
-    <div class="my-2">The items will be deleted, if their current state allows it</div>
-
+    <div class="my-2">
+        <span i18n="@@batch.actions.item.state.delete.info">
+            The items will be deleted, if their current state allows it
+        </span>
+    </div>
+    
     <div class="row">
         <div class="col-sm-12">
             <button type="submit" value="delete" (click)="onSubmit();" class="btn btn-outline-secondary col-1 float-end">GO</button>

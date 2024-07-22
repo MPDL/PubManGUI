@@ -1,13 +1,14 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.metadata.files.ipRanges">IP Ranges</h2>
   <div class="mt-2 mb-5">
-    All files with the visibility "restricted" will be assigned to the following IP
-    range(s)
+    <span i18n="@@batch.actions.metadata.files.ipRanges.info">
+      All files with the visibility "restricted" will be assigned to the following IP range(s)
+    </span>
   </div>
 
   <form [formGroup]="replaceFileAudienceForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-      <label class="col-sm-3 col-form-label" for="audienceId">Assign IP ranges</label>
+      <label class="col-sm-3 col-form-label" for="audienceId" i18n="@@batch.actions.metadata.files.ipRanges.to">Assign IP ranges</label>
 
       <div class="col-sm">
         <ng-container formArrayName="allowedAudienceIds">
