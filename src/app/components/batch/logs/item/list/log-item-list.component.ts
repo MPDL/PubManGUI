@@ -165,7 +165,11 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     if (userLocale) {
       return userLocale;
     } else {
-      return browserLocale;
+      if (browserLocale === 'en') {
+        return browserLocale;
+      } else {
+        return 'de';
+      }
     }
   }
 

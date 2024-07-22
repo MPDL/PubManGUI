@@ -82,7 +82,11 @@ export class LogProcessListComponent implements OnInit {
     if (userLocale) {
       return userLocale;
     } else {
-      return browserLocale;
+      if (browserLocale === 'en') {
+        return browserLocale;
+      } else {
+        return 'de';
+      }
     }
   }
 

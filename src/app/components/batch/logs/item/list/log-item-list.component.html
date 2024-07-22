@@ -83,7 +83,7 @@
         <div>
           <span i18n="@@batch.logs.details.for">Action</span>: <strong class="fw-bolder"> {{ method! | titlecase | separate }} </strong>
         </div>
-        <div>
+        <div class="fw-light">
           <span i18n="@@batch.logs.started.on">started on</span><span> {{ started | date:'fullDate':'':getLang() }} </span><span class="material-symbols-outlined">
             schedule</span><span> {{ started | date: "HH:mm":'':getLang() }}</span>
         </div>
