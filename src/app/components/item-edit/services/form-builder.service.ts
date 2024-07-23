@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AbstractVO, AlternativeTitleVO, ContextDbRO, CreatorType, CreatorVO, EventVO, FundingInfoVO, FundingOrganizationVO, FundingProgramVO, IdentifierVO, InvitationStatus, ItemVersionState, ItemVersionVO, LegalCaseVO, MdsPublicationGenre, MdsPublicationVO, OrganizationVO, PersonVO, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, SubjectVO } from 'src/app/model/inge';
+import { AbstractVO, AlternativeTitleVO, ChecksumAlgorithm, ContextDbRO, CreatorType, CreatorVO, EventVO, FileDbVO, FormatVO, FundingInfoVO, FundingOrganizationVO, FundingProgramVO, IdentifierVO, InvitationStatus, ItemVersionState, ItemVersionVO, LegalCaseVO, MdsFileVO, MdsPublicationGenre, MdsPublicationVO, OA_STATUS, OrganizationVO, PersonVO, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, Storage, SubjectVO, Visibility } from 'src/app/model/inge';
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 
@@ -27,14 +27,14 @@ export class FormBuilderService {
   item_FG(item: ItemVersionVO | null) {
     const item_form = this.fb.group<ControlType<ItemVersionVO>>({
       context: item?.context ? this.context_FG(item.context) : this.context_FG(null),
-      // files: undefined,
+      files: this.fb.array(item?.files ? item.files.map(file => this.file_FG(file) as AbstractControl) : []),
       localTags: this.fb.array(item?.localTags ? item.localTags.map(lt => this.fb.control(lt) as AbstractControl) : []),
       metadata: item?.metadata ? this.metadata_FG(item.metadata) : this.metadata_FG(null),
       message: this.fb.control(item?.message ? item.message : null),
       modificationDate: this.fb.control(item?.modificationDate ? item.modificationDate : null),
       objectId: this.fb.control(item?.objectId ? item.objectId : null),
       publicState: this.fb.control(item?.publicState ? item.publicState : ItemVersionState.PENDING),
-      versionNumber :  this.fb.control(item?.versionNumber ? item.versionNumber : null),
+      versionNumber: this.fb.control(item?.versionNumber ? item.versionNumber : null),
     });
     return item_form;
   }
@@ -46,6 +46,53 @@ export class FormBuilderService {
     });
     return ctx_form;
   }
+
+  file_FG(file: FileDbVO | null) {
+    const file_form = this.fb.group<ControlType<FileDbVO>>({
+      objectId : this.fb.control(file?.objectId ? file.objectId : null),
+      name : this.fb.control(file?.name ? file.name : null),
+      visibility: this.fb.control(file?.visibility ? file.visibility : Visibility.PUBLIC),
+      pid: this.fb.control(file?.pid ? file.pid : null),
+      content: this.fb.control(file?.content ? file.content : null),
+      storage: this.fb.control(file?.storage ? file.storage : Storage.EXTERNAL_URL),
+      checksum: this.fb.control(file?.checksum ? file.checksum : null),
+      checksumAlgorithm: this.fb.control(file?.checksumAlgorithm ? file.checksumAlgorithm : ChecksumAlgorithm.MD5),
+      mimeType: this.fb.control(file?.mimeType ? file.mimeType : null),
+      size: this.fb.control(file?.size ? file.size : null),
+      metadata: file?.metadata ? this.mds_file_FG(file.metadata) : this.mds_file_FG(null),
+      allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.control(audiencId) as AbstractControl) : []),
+    });
+    return file_form;
+  }
+
+  mds_file_FG(fileMetadata: MdsFileVO | null) {
+    const mdsFile_form = this.fb.group<ControlType<MdsFileVO>>({
+      title: this.fb.control(fileMetadata?.title ? fileMetadata.title : null),
+      contentCategory: this.fb.control(fileMetadata?.contentCategory ? fileMetadata.contentCategory : null),
+      description: this.fb.control(fileMetadata?.description ? fileMetadata.description : null),
+      identifiers: this.fb.array(fileMetadata?.identifiers ? fileMetadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : []),
+      formats: this.fb.array(fileMetadata?.formats ? fileMetadata.formats.map(format => this.format_FG(format) as AbstractControl) : []),
+      /**
+       * @deprecated
+       */
+      size: this.fb.control(fileMetadata?.size ? fileMetadata.size : null),
+      embargoUntil: this.fb.control(fileMetadata?.embargoUntil ? fileMetadata.embargoUntil : null),
+      copyrightDate: this.fb.control(fileMetadata?.copyrightDate ? fileMetadata.copyrightDate : null),
+      rights: this.fb.control(fileMetadata?.rights ? fileMetadata.rights : null),
+      license: this.fb.control(fileMetadata?.license ? fileMetadata.license : null),
+      oaStatus: this.fb.control(fileMetadata?.oaStatus ? fileMetadata.oaStatus : OA_STATUS.NOT_SPECIFIED),
+    });
+    return mdsFile_form;
+  }
+
+  format_FG(format: FormatVO | null) {
+    const format_form = this.fb.group<ControlType<FormatVO>>({
+      value: this.fb.control(format?.value ? format.value : null),
+      type: this.fb.control(format?.type ? format.type : null),
+    });
+    return format_form;
+  }
+  
 
   alt_title_FG(at: AlternativeTitleVO | null) {
     const atf = this.fb.group<ControlType<AlternativeTitleVO>>({
