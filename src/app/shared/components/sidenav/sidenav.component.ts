@@ -6,8 +6,7 @@ import {AaService} from "../../../services/aa.service";
   selector: 'pure-sidenav',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+  templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {
 

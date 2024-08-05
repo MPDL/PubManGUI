@@ -62,7 +62,7 @@ export const routes: Routes = [
     component: OuTreeComponent,
     data: {
       breadcrumb: {
-        label: $localize`:@@ou_tree:Organizational units`,
+        label: $localize`:@@ouTree:Organizational units`,
       }
     },
   },

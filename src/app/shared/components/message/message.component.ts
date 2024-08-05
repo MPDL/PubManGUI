@@ -5,7 +5,6 @@ import { NgClass } from '@angular/common';
 @Component({
     selector: 'pure-message',
     templateUrl: './message.component.html',
-    styleUrls: ['./message.component.scss'],
     standalone: true,
     imports: [NgClass]
 })

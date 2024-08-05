@@ -44,18 +44,18 @@
           @if (aaService.principal.getValue().isDepositor) {
             <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
               <span class="material-symbols-outlined">note_add</span>
-              <small class="nav-label ms-2">Eingabe</small>
+              <small class="nav-label ms-2" i18n="@@edit">Entry</small>
             </a>
 
             <a class="nav-link border-bottom" [routerLink]="['my']" (click)="collapse()">
               <span class="material-symbols-outlined">folder_shared</span>
-              <small class="nav-label ms-2">Meine Datensätze</small>
+              <small class="nav-label ms-2" i18n="@@my">My datasets</small>
             </a>
           }
           @if (aaService.principal.getValue().isModerator) {
             <a class="nav-link border-bottom" [routerLink]="['qa']" (click)="collapse()">
               <span class="material-symbols-outlined">workspace_premium</span>
-              <small class="nav-label ms-2">QA-Bereich</small>
+              <small class="nav-label ms-2" i18n="@@qa">QA Area</small>
             </a>
           }
           @if (aaService.principal.getValue().isDepositor) {
@@ -67,7 +67,7 @@
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
             <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()">
               <span class="material-symbols-outlined">web_stories</span>
-              <small class="nav-label ms-2">Batch-Verarbeitung</small>
+              <small class="nav-label ms-2" i18n="@@batch">Batch processing</small>
             </a>
           }
           <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
@@ -80,11 +80,11 @@
                 </g>
               </g>
             </svg>
-            <small class="nav-label ms-2">Ablage</small>
+            <small class="nav-label ms-2" i18n="@@basket">Basket</small>
           </a>
           <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()">
             <span class="material-symbols-outlined">account_tree</span>
-            <small class="nav-label ms-2">Organisationsstruktur</small>
+            <small class="nav-label ms-2" i18n="@@ouTree">Organizational units</small>
           </a>
           <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
             <span class="material-symbols-outlined">place</span>
