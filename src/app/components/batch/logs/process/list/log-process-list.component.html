@@ -21,14 +21,14 @@
               @if (pages.length > 0) {
               <li class="ngb-custom-pages-item">
                 <div class="d-flex flex-nowrap px-2">
-                  <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
+                  <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1" i18n="@@pagination.page">Page</label>
                   <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
                     id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
                     (input)="formatInput($any($event).target)"
                     aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem"
                     max="collectionSize/pageSize" />
-                  <span id="paginationDescription" class="col-form-label text-nowrap px-2"> of {{ pages.length
-                    }}</span>
+                  <span id="paginationDescription" class="col-form-label text-nowrap px-2" i18n="@@pagination.of"> of </span><span class="col-form-label text-nowrap px-2">{{ pages.length
+                  }}</span>
                 </div>
               </li>
               }
