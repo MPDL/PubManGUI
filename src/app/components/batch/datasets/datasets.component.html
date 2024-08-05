@@ -57,10 +57,10 @@
                 navigate_before
               </span>
             </button>
-            <span>Page</span>
+            <span i18n="@@pagination.page">Page</span>
             <input type="text" class="form-control mx-2" [formControl]="jump_to" [value]="jump_to.value"
               (keyup.enter)="jumpToPage()">
-            <span>of {{pagination.totalPages}}</span>
+            <span i18n="@@pagination.of"> of </span><span> {{pagination.totalPages}}</span>
             <button type="button" class="btn btn-sm border border-0" (click)="pagination.next()"
               [disabled]="pagination.isLast">
               <span class="material-symbols-outlined">
