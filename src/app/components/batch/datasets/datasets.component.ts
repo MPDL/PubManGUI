@@ -52,6 +52,8 @@ export default class DatasetsComponent implements OnInit {
   jump_to = new FormControl<number>(this.current_page, [Validators.nullValidator, Validators.min(1)]);
 
   private isProcessing: boolean = false;
+  selectAll = $localize`:@@selectAll:select all`;
+  deselectAll = $localize`:@@deselectAll:deselect all`;
 
   constructor(
     public batchSvc: BatchService,

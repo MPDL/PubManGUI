@@ -6,6 +6,8 @@
     "footer.cookies": "Cookie Einstellungen",
     "pagination.page": "Seite",
     "pagination.of": "von",
+    "selectAll":"alles auswählen",
+    "deselectAll":"alles abwählen",
     "edit": "Eingabe",
     "my": "Meine Datensätze",
     "qa": "QA-Bereich",

@@ -54,6 +54,9 @@ export class ItemListComponent implements AfterViewInit {
   current_page = 1;
   jump_to = new FormControl<number>(this.current_page, [Validators.nullValidator, Validators.min(1)]);
 
+  selectAll = $localize`:@@selectAll:select all`;
+  deselectAll = $localize`:@@deselectAll:deselect all`;
+
   update_query = (query: any) => {
     return {
       query,
