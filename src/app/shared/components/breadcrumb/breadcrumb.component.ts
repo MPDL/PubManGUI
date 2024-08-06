@@ -16,7 +16,7 @@ export interface Breadcrumb {
   templateUrl: './breadcrumb.component.html'
 })
 
-export class BreadcrumbComponent { 
+export class BreadcrumbComponent {
   breadcrumbs: Breadcrumb[] = [];
   isScrolled = false;
 
@@ -43,9 +43,9 @@ export class BreadcrumbComponent {
         currentBCLink = currentAR?.routeConfig?.path || '';
       }
 
-      if(currentAR.snapshot.data['breadcrumb'].label) {
+      if (currentAR.snapshot.data['breadcrumb'].label) {
         this.breadcrumbs.push({
-          label: currentAR.snapshot.data['breadcrumb'].label,
+          label: this.getLocalizedLabel(currentAR.snapshot.data['breadcrumb'].label),
           link: lastBCLink + '/' + currentBCLink,
         } as Breadcrumb);
       }
@@ -54,6 +54,35 @@ export class BreadcrumbComponent {
     if (currentAR.firstChild !== null) {
       this.buildBreadcrumb(currentAR.firstChild);
     }
+  }
+
+  // interim fix
+  getLocalizedLabel(label: string): string {
+    let localizedlabel = label;
+    switch (label) {
+      case 'My datasets':
+        localizedlabel = $localize`:@@my:My datasets`;
+        break;
+      case 'QA Area':
+        localizedlabel = $localize`:@@qa:QA Area`;
+        break;
+      case 'Organizational units':
+        localizedlabel = $localize`:@@ouTree:Organizational units`;
+        break;
+      case 'Entry':
+        localizedlabel = $localize`:@@edit:Entry`;
+        break;
+      case 'Batch processing':
+        localizedlabel = $localize`:@@batch:Batch processing`;
+        break;
+      case 'Search':
+        localizedlabel = $localize`:@@search:Search`;
+        break;
+      case 'Advanced search':
+        localizedlabel = $localize`:@@advancedSearch:Advanced search`;
+    }
+
+    return localizedlabel;
   }
 
   @HostListener('window:scroll', ['$event'])

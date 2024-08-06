@@ -13,6 +13,8 @@
     "qa": "QA-Bereich",
     "basket": "Ablage",
     "ouTree": "Organisationsstruktur",
+    "search": "Suche",
+    "advancedSearch": "Erweiterte Suche",
     "batch": "Batch-Verarbeitung",
     "datasets": "Datensätze",
     "actions": "Aktionen",
@@ -116,7 +118,7 @@
     "batch.logs.details.succeded": "erfolgreich",
     "batch.logs.details.filter.failed": "Fehlgeschlagene Items anzeigen",
     "batch.logs.details.filter.succeded": "Erfolgreiche Items anzeigen",
-    "batch.logs.details.back": "Zurück zu Logs",
+    "batch.logs.details.back": "Zurück zu den Protokollen",
     "batch.datasets.remove": "Aus Batch entfernen",
     "batch.datasets.add": "In Batch hinzufügen"
   },

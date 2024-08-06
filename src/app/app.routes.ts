@@ -31,7 +31,7 @@ export const routes: Routes = [
     component: ItemListComponent,
     data: {
       breadcrumb: {
-        label: $localize`:@@datasets:Datasets`,
+        label: 'Datasets',
       }
     },
   },
@@ -40,7 +40,7 @@ export const routes: Routes = [
     component: MyItemsComponent,
     data: {
       breadcrumb: {
-        label: $localize`:@@my:My datasets`,
+        label: 'My datasets',
       }
     },
   },
@@ -49,31 +49,42 @@ export const routes: Routes = [
     component: QaWorkspaceComponent,
     data: {
       breadcrumb: {
-        label: $localize`:@@qa:QA Area`,
+        label: 'QA Area',
       }
     },
   },
   {
     path: 'search',
-    component: SearchResultListComponent
+    component: SearchResultListComponent,
+    data: {
+      breadcrumb: {
+        label: 'Search',
+      }
+    },
   },
   {
     path: 'ou_tree',
     component: OuTreeComponent,
     data: {
       breadcrumb: {
-        label: $localize`:@@ouTree:Organizational units`,
+        label: 'Organizational units',
       }
     },
   },
   {
     path: 'as', component: ItemSearchComponent, data: {
-      saveComponent: true
+      saveComponent: true,
+      breadcrumb: {
+        label: 'Advanced search',
+      }
     }
   },
   {
     path: 'as2', component: ItemSearchAdvancedComponent, data: {
-      saveComponent: true
+      saveComponent: true,
+      breadcrumb: {
+        label: 'Advanced search',
+      }
     }
   },
   {
@@ -83,7 +94,7 @@ export const routes: Routes = [
     path: 'edit', component: ItemFormComponent,
     data: {
       breadcrumb: {
-        label: $localize`:@@edit:Edit`,
+        label: 'Entry',
       }
     },
   },
@@ -92,7 +103,7 @@ export const routes: Routes = [
     loadChildren: () => import('./components/batch/batch-routing.module').then(m => m.BatchRoutingModule),
     data: {
       breadcrumb: {
-        label: $localize`:@@batch:Batch processing`,
+        label: 'Batch processing',
       }
     },
   },
