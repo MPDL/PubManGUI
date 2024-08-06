@@ -80,6 +80,9 @@ export class BreadcrumbComponent {
         break;
       case 'Advanced search':
         localizedlabel = $localize`:@@advancedSearch:Advanced search`;
+        break;
+      case 'Privacy Policy':
+        localizedlabel = $localize`:@@privacyPolicy:Privacy Policy`;
     }
 
     return localizedlabel;
