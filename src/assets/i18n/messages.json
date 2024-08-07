@@ -118,15 +118,15 @@
     "CHANGE_REVIEW_METHOD": "Change review method",
     "CHANGE_SOURCE_GENRE": "Change source genre",
     "CHANGE_SOURCE_IDENTIFIER": "Change source identifier",
-    "DELETE_PUBITEMS": "Delete pubitems",
-    "RELEASE_PUBITEMS": "Release pubitems",
+    "DELETE_PUBITEMS": "Delete items",
+    "RELEASE_PUBITEMS": "Release items",
     "REPLACE_FILE_AUDIENCE": "Replace file audience",
     "REPLACE_KEYWORDS": "Replace keywords",
     "REPLACE_ORCID": "Replace ORCID",
     "REPLACE_SOURCE_EDITION": "Replace source edition",
-    "REVISE_PUBITEMS": "Revise pubitems",
-    "SUBMIT_PUBITEMS": "Submit pubitems",
-    "WITHDRAW_PUBITEMS": "Withdraw pubitems"
+    "REVISE_PUBITEMS": "Send items back to Rework",
+    "SUBMIT_PUBITEMS": "Submit items",
+    "WITHDRAW_PUBITEMS": "Withdraw items"
   },
   "Visibility": {
     "PUBLIC": "Public",
