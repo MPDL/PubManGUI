@@ -111,10 +111,10 @@
                 <span class="spinner-border ms-3" aria-hidden="true"></span>
                 } @else {
                 <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
-                  [state]="{ method: log.method, started: log.startDate }">
-                  <span class="material-symbols-outlined ms-3">
-                    list
-                  </span>
+                  [state]="{ method: log.method, started: log.startDate }">     
+                    <span class="material-symbols-outlined ms-3 my-0 matBadge" matBadge='{{ log.numberOfItems }}'>
+                      list
+                    </span>
                 </a>
                 }
               </td>

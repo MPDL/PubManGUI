@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { SeparateFilterPipe } from 'src/app/components/batch/pipes/separateFilter.pipe';
 
+import { MatBadgeModule } from '@angular/material/badge';
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 type detail = {
@@ -27,7 +29,8 @@ type detail = {
     RouterModule,
     FormsModule,
     NgbPaginationModule,
-    SeparateFilterPipe
+    SeparateFilterPipe,
+    MatBadgeModule
   ],
   templateUrl: './log-process-list.component.html'
 })
