@@ -67,12 +67,10 @@
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
             <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()">
               <span class="material-symbols-outlined">web_stories</span>
+              <small class="nav-label ms-2" i18n="@@batch">Batch processing</small>
               @if ( batchSvc.areItemsSelected() ) {
-                <small class="nav-label ms-2 matBadge" matBadge='{{ batchSvc.getItemsCount() }}' i18n="@@batch">Batch processing</small>
-                } 
-                @else {
-                  <small class="nav-label ms-2" i18n="@@batch">Batch processing</small>
-                }
+                <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' i18n="@@batch"></div>
+              } 
             </a>
           }
           <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
