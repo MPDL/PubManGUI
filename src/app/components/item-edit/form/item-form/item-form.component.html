@@ -3,11 +3,12 @@
 <div class="container-fluid">
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 px-3 align-items-center" formGroupName="context">
-            <label for="context" class="col-sm-2 col-form-label" >Context</label>
+            <label for="context" class="col-sm-2 col-form-label">Context</label>
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-sm">
-                        <select id="contextFromSelect" class="form-select" formControlName="objectId" (change)="context_change(contextFromSelect.value)" #contextFromSelect>
+                        <select id="contextFromSelect" class="form-select" formControlName="objectId"
+                            (change)="context_change(contextFromSelect.value)" #contextFromSelect>
                             <option [value]="null" selected disabled>Context</option>
                             @for (contextObject of user_contexts; track contextObject) {
                             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -27,13 +28,70 @@
         </pure-metadata-form>
         <!--</div>-->
 
+        <div class="accordion" id="accordionPanelsMetadata">
+            <!--GROUP Files-->
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#accordionBodyFilesGroup" aria-expanded="true"
+                        aria-controls="accordionBodyFilesGroup">
+                        Files and Locators Group
+                    </button>
+                </h2>
+                <div id="accordionBodyFilesGroup" class="accordion-collapse collapse show">
+                    <div class="accordion-body mt-3 mb-3">
+                        <!-- TODO File upload -->
+                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                            <label class="col-sm-2 col-form-label">File Upload</label>
+                            <pure-file-upload></pure-file-upload>
+                        </div>
+                    </div>
+                    @if (files.controls.length > 0) {
+                    <ng-container formArrayName="files">
+                        <div class="accordion-body mt-3 mb-3">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                                <label class="col-sm-2 col-form-label">Files</label>
+                                <div class="col-sm">
+                                @for (file of files.controls; track file; let fileIndex = $index) {
+                                <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                                    
+                                    <div class="col-sm">
+                                        <ng-container [formGroupName]="fileIndex">
+                                            <pure-file-form [file_form]="file" [index]="fileIndex"
+                                                [index_length]="files.controls.length"
+                                                (notice)="handleFileNotification($event)"></pure-file-form>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                }
+                                <!--
+                        @empty {
+                            <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add file'"
+                                (notice)="handleFileNotification($event)"></pure-add-remove-buttons>
+                        }
+                         -->
+                        </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    }
+                    <div class="accordion-body mt-3 mb-3">
+                        <!-- TODO Locator upload -->
+                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                            <label class="col-sm-2 col-form-label">TODO: Locator Upload</label>
+                            <pure-file-upload></pure-file-upload>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 px-3 align-items-center">
             <label for="title" class="col-sm-2 col-form-label">message</label>
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                     <div class="col-sm">
-                        <input type="text" class="form-control" id="message" name="message"
-                            formControlName="message">
+                        <input type="text" class="form-control" id="message" name="message" formControlName="message">
                     </div>
                     <div class="col-sm-1">
                         <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -89,6 +147,6 @@
     <pre class="col-sm">{{form_2_submit | json}}</pre>
 </div>
 } @else {
-    <!--TODO No Depositor/Admin rights Page/Message-->
-    <p>No Depositor/Admin rights</p>
+<!--TODO No Depositor/Admin rights Page/Message-->
+<p>No Depositor/Admin rights</p>
 }
