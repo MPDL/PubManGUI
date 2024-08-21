@@ -2,7 +2,7 @@
   <h2 class="m-0" i18n="@@batch.actions.metadata.files.contentCategory">Content Category</h2>
     <div class="mt-2 mb-5">
       <span i18n="@@batch.actions.metadata.files.contentCategory.info">
-        The content category of files will be changed as follows
+        The file content category will be changed as follows:
       </span>
     </div>
 
@@ -13,9 +13,9 @@
         </div>
         <div class="col-sm-9">
           <select class="form-select" formControlName="fileContentCategoryFrom">
-            <option [value]=''  selected disabled>Category</option>
-            @for (category of contentCategories; track category) {
-              <option [value]="category"> {{category | titlecase}}</option>
+            <option [value]='' selected disabled i18n="@@batch.actions.metadata.files.contentCategory">Category</option>
+            @for (category of contentCategoriesOptions; track category) {
+              <option [value]="category.value"> {{category.option}}</option>
             }
           </select>
         </div>
@@ -27,9 +27,9 @@
         </div>
         <div class="col-sm-9">
           <select class="form-select" formControlName="fileContentCategoryTo">
-            <option [value]=''  selected disabled>Category</option>
-            @for (category of contentCategories; track category) {
-              <option [value]="category"> {{category | titlecase}}</option>
+            <option [value]='' selected disabled i18n="@@batch.actions.metadata.files.contentCategory">Category</option>
+            @for (category of contentCategoriesOptions; track category) {
+              <option [value]="category.value"> {{category.option}}</option>
             }
           </select>
         </div>

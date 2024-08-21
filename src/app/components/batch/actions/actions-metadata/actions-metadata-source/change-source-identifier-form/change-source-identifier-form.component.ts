@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import { IdType } from 'src/app/model/inge';
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeSourceIdentifierParams } from 'src/app/components/batch/interfaces/actions-params';
-import { IdType } from 'src/app/model/inge';
+
 
 @Component({
   selector: 'pure-change-source-identifier-form',
@@ -24,13 +26,40 @@ export class ChangeSourceIdentifierFormComponent {
     private fb: FormBuilder, 
     public validSvc: ValidatorsService, 
     private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+    private msgSvc: MessageService,
+    @Inject(LOCALE_ID) public locale: string) { }
 
   sourceIdTypes = Object.keys(IdType);
+  sourceIdTypesTranslations = {};
+  sourceIdTypesOptions: {value: string, option: string}[] = [];
+
+  ngOnInit(): void { 
+    this.loadTranslations(this.locale)
+      .then(() => {
+        this.sourceIdTypes.sort((a,b) => b[1].localeCompare(a[1])).forEach((value) => {
+          let keyT = value as keyof typeof this.sourceIdTypesTranslations;
+          if(this.sourceIdTypesTranslations[keyT]) {
+            this.sourceIdTypesOptions.push({'value': keyT, 'option': this.sourceIdTypesTranslations[keyT]})
+          }
+        })
+      })
+  }
+
+  async loadTranslations(lang: string) {
+    if (lang === 'de') {
+      await import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.sourceIdTypesTranslations = msgs.SourceIdType;
+      })
+    } else {
+      await import('src/assets/i18n/messages.json').then((msgs) => {
+        this.sourceIdTypesTranslations = msgs.SourceIdType;
+      })
+    } 
+  }
 
   public changeSourceIdentifierForm: FormGroup = this.fb.group({
     sourceNumber: ['1', [ Validators.required ]],
-    sourceIdentifierType: ['', [ Validators.required ]],
+    sourceIdentifierType: [$localize`:@@batch.actions.metadata.source.replaceId.default:Type`, [ Validators.required ]],
     sourceIdentifierFrom: ['', [ Validators.required ]],
     sourceIdentifierTo: ['', [ Validators.required ]], 
   },
@@ -58,13 +87,13 @@ export class ChangeSourceIdentifierFormComponent {
     this.batchSvc.changeSourceIdentifier(this.changeSourceIdentifierParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.msgSvc.info(`Action started!\n`);
+
       setTimeout(() => {
         this.changeSourceIdentifierForm.controls['sourceIdentifierFrom'].reset();
-      },1000);
+      }, 500);
       setTimeout(() => {
         this.changeSourceIdentifierForm.controls['sourceIdentifierTo'].reset();
-      },1000);
+      }, 500);
     });
   }
 }

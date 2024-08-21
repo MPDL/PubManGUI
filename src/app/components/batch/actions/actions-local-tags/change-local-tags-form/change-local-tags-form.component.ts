@@ -51,8 +51,8 @@ export class ChangeLocalTagsFormComponent {
 
     this.batchSvc.changeLocalTags(this.changeLocalTagsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
-      this.msgSvc.info(`Action started!\n`);
-      setTimeout(() => {this.changeLocalTagsForm.reset();},1000);
+      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+      setTimeout(() => {this.changeLocalTagsForm.reset();}, 500);
     });
   }
 

@@ -21,9 +21,9 @@
       <label class="col-sm-3 col-form-label" i18n="@@batch.actions.metadata.source.addId.type">Type of ID</label>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceIdentifierType">
-          <option [value]=''  selected disabled>Type</option>
-          @for (type of sourceIdTypes; track type) {
-            <option [value]="type">{{type | titlecase}}</option>
+          <option [value]='' selected disabled i18n="@@batch.actions.metadata.source.addId.default">Type</option>
+          @for (type of sourceIdTypesOptions; track type) {
+            <option [value]="type.value">{{type.option}}</option>
           }
         </select>
       </div>

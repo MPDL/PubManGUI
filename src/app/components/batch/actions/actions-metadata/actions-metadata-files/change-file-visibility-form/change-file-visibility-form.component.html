@@ -2,7 +2,7 @@
   <h2 class="m-0" i18n="@@batch.actions.metadata.files.visibility">Visibility</h2>
   <div class="mt-2 mb-5">
     <span i18n="@@batch.actions.metadata.files.visibility.info">
-      The visibility of files will be changed as follows
+      The file visibility will be changed as follows:
     </span>
   </div>
 
@@ -13,9 +13,9 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileVisibilityFrom">
-          <option [value]=''  selected disabled>Visibility</option>
-          @for (fileVisibility of visibilityTypes; track fileVisibility) {
-            <option [value]="fileVisibility"> {{fileVisibility | titlecase}}</option>
+          <option [value]=''  selected disabled i18n="@@batch.actions.metadata.files.visibility">Visibility</option>
+          @for (fileVisibility of visibilityOptions; track fileVisibility) {
+            <option [value]="fileVisibility.value"> {{fileVisibility.option}}</option>
           }
         </select>
       </div>
@@ -27,9 +27,9 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileVisibilityTo">
-          <option [value]=''  selected disabled>Visibility</option>
-          @for (fileVisibility of visibilityTypes; track fileVisibility) {
-            <option [value]="fileVisibility"> {{fileVisibility | titlecase}}</option>
+          <option [value]=''  selected disabled i18n="@@batch.actions.metadata.files.visibility">Visibility</option>
+          @for (fileVisibility of visibilityOptions; track fileVisibility) {
+            <option [value]="fileVisibility.value"> {{fileVisibility.option}}</option>
           }
         </select>
       </div>

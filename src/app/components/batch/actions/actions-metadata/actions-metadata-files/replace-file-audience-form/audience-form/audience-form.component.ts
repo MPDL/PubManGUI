@@ -26,7 +26,7 @@ export class AudienceFormComponent {
 
   ngOnInit() {
     if(this.audienceId.value.name === '') {
-      this.audienceId.setValue('Range');
+      this.audienceId.setValue($localize`:@@batch.actions.metadata.files.ipRanges.singular:Range`);
     }
   }
   

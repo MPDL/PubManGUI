@@ -2,11 +2,11 @@
     <div class="position-absolute start-50 translate-middle nav-bottom-10">
         <ul class="nav p-3 d-flex justify-content-around">
             @for(option of navList(); track option) {
-            <li id={{option.text}} [routerLink]="[ option.route ]" routerLinkActive="current" 
+            <li [routerLink]="[ option.route ]" routerLinkActive="current" 
                 isActive="false" 
                 [ngClass]="{'disabled' : option.disabled}"
-                (click)="warning(option.text)"
-                data-bs-toggle="button">{{ option.text | titlecase }} 
+                (click)="warning(option.route)"
+                data-bs-toggle="button">{{ option.label | titlecase }} 
             </li>
             }
         </ul>

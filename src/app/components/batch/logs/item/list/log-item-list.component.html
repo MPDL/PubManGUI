@@ -50,8 +50,8 @@
                     (input)="formatInput($any($event).target)"
                     aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem"
                     max="collectionSize/pageSize" />
-                  <span id="paginationDescription" class="col-form-label text-nowrap px-2"><span i18n="@@pagination.of">
-                      of </span> {{ pages.length }} </span>
+                  <span id="paginationDescription" class="col-form-label text-nowrap px-2" i18n="@@pagination.of"> of </span><span class="col-form-label text-nowrap px-2">{{ pages.length
+                  }}</span>
                 </div>
               </li>
               }
@@ -69,7 +69,6 @@
           </ngb-pagination>
 
           <select class="form-select page-size ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
-            <option [ngValue]="5">5</option>
             <option [ngValue]="10">10</option>
             <option [ngValue]="20">20</option>
             <option [ngValue]="30">30</option>
@@ -84,8 +83,8 @@
           <span i18n="@@batch.logs.details.for">Action</span>: <strong class="fw-bolder"> {{ method! | titlecase | separate }} </strong>
         </div>
         <div class="fw-light">
-          <span i18n="@@batch.logs.started.on">started on</span><span> {{ started | date:'fullDate':'':getLang() }} </span><span class="material-symbols-outlined">
-            schedule</span><span> {{ started | date: "HH:mm":'':getLang() }}</span>
+          <span i18n="@@batch.logs.started.on">started on</span><span> {{ started | date:'fullDate' }} </span><span class="material-symbols-outlined" style="cursor: auto">
+            schedule</span><span> {{ started | date: "HH:mm" }}</span>
         </div>
       </div>
     </div>
@@ -97,8 +96,8 @@
             @if((inPage | stateFilter:refreshFilters():'state').length > 0) {
             <tr class="border-bottom">
               <th scope="col" class="pe-2">Status</th>
-              <th scope="col" class="pe-2">Title</th>
-              <th scope="col">Message</th>
+              <th scope="col" class="pe-2" i18n="@@batch.logs.header.title">Title</th>
+              <th scope="col" i18n="@@batch.logs.header.message">Message</th>
             </tr>
             }
           </thead>
@@ -106,14 +105,14 @@
           <tbody>
             @for (log of inPage | stateFilter:refreshFilters():'state' ; track log.item.itemObjectId) {
             <tr class="border-bottom">
-              <td class="col-1">
-                <span>{{ log.item.state | titlecase }}</span>
+              <td class="col-2">
+                <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
               </td>
               <td>
                 <span>{{ log.title }}</span>
               </td>
               <td>
-                <span>{{ localeMessages.get(log.item.message) }}</span>
+                <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
               </td>
               <hr>
             </tr>

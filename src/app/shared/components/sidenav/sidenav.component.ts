@@ -2,12 +2,14 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChi
 import { RouterLink } from '@angular/router';
 import {AaService} from "../../../services/aa.service";
 
+import { MatBadgeModule } from '@angular/material/badge';
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
-  imports: [RouterLink],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+  imports: [RouterLink, MatBadgeModule],
+  templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {
 
@@ -16,7 +18,7 @@ export class SidenavComponent implements AfterViewInit {
   @ViewChild('sidenav', {read: ElementRef}) nav!: ElementRef;
   renderer = inject(Renderer2);
 
-  constructor(protected aaService: AaService) {
+  constructor(protected aaService: AaService, public batchSvc: BatchService) {
   }
 
   ngAfterViewInit(): void {
@@ -37,4 +39,5 @@ export class SidenavComponent implements AfterViewInit {
   collapse() {
     this.renderer.addClass(this.nav.nativeElement, 'collapsed');
   }
+
 }

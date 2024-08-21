@@ -42,10 +42,11 @@ export class ItemListComponent implements AfterViewInit {
   select_pages_2_display = new FormControl(10);
 
   pages_2_display = [
-    { value: 5, label: '5' },
     { value: 10, label: '10' },
-    { value: 20, label: '20' },
+    { value: 25, label: '25' },
     { value: 50, label: '50' },
+    { value: 100, label: '100' },
+    { value: 250, label: '250' },
   ];
 
   // Pagination:
@@ -53,6 +54,9 @@ export class ItemListComponent implements AfterViewInit {
   number_of_pages = 1;
   current_page = 1;
   jump_to = new FormControl<number>(this.current_page, [Validators.nullValidator, Validators.min(1)]);
+
+  selectAll = $localize`:@@selectAll:select all`;
+  deselectAll = $localize`:@@deselectAll:deselect all`;
 
   update_query = (query: any) => {
     return {

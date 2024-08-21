@@ -56,21 +56,34 @@ export class BatchService {
     return 0;
   }
 
+  #itemsCount = signal(0);
+
+  public getItemsCount = computed( () => this.#itemsCount() );
+
   get items(): string[] {
     const itemList = sessionStorage.getItem(this.datasetList);
     if (itemList) {
       const items = JSON.parse(itemList);
       if (items.length > 0) {
         this.#itemsSelected.set(true);
+        this.#itemsCount.set(items.length);
         return items;
       }
     }
     this.#itemsSelected.set(false);
+    this.#itemsCount.set(0);
     return [] as string[];
   }
 
   set items(items: string[]) {
-    if (items.length > 0) this.#itemsSelected.set(true);
+    if (items.length > 0) {
+      this.#itemsSelected.set(true);
+      this.#itemsCount.set(items.length);
+    } else {
+      this.#itemsSelected.set(false);
+      this.#itemsCount.set(0);
+    }
+
     sessionStorage.setItem(this.datasetList, JSON.stringify(items));
   }
 

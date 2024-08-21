@@ -2,13 +2,12 @@
     <h2 class="m-0" i18n="@@batch.actions.genre.change">Change Genre</h2>
     <div class="mt-2 mb-5">
       <p i18n="@@batch.actions.genre.change.info">
-        The items will be transformed from one genre to another.
+        The items will be changed from one genre to another.
       </p>
       <p>
         <strong>
       <span i18n="@@batch.actions.genre.change.note">
-          Please note that all metadata fields that are not allowed within the new genre will be deleted
-          automatically!
+          Please note that all metadata fields not permitted in the new genre will automatically be deleted!
         </span>
       </strong>
       </p>
@@ -22,8 +21,8 @@
         <div class="col-sm-10">
           <select class="form-select" formControlName="genreFrom">
             <option [value]='' selected disabled>Genre</option>
-            @for (genre of genres; track genre) {
-              <option [value]="genre">{{genre | titlecase}}</option>
+            @for (genre of genresOptions; track genre) {
+              <option [value]="genre.value">{{genre.option}}</option>
             }
           </select>
         </div>
@@ -36,8 +35,8 @@
         <div class="col-sm-10">
           <select class="form-select" formControlName="genreTo">
             <option [value]=''  selected disabled>Genre</option>
-            @for (genre of genres; track genre) {
-              <option [value]="genre">{{genre | titlecase}}</option>
+            @for (genre of genresOptions; track genre) {
+              <option [value]="genre.value">{{genre.option}}</option>
             }
           </select>
         </div>
@@ -60,8 +59,8 @@
         <div class="col-sm-10">
           <select class="form-select" formControlName="degreeType" [attr.disabled]="changeGenreForm.controls['genreTo'].value.includes('THESIS') ? null : ''">
             <option value=null selected disabled>Type</option>
-            @for (degreeType of degreeTypes; track degreeType) {
-              <option [value]="degreeType">{{degreeType | titlecase}}</option>
+            @for (degreeType of degreeTypesOptions; track degreeType) {
+              <option [value]="degreeType.value">{{degreeType.option}}</option>
             }
           </select>
         </div>

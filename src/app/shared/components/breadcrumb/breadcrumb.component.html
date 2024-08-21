@@ -9,9 +9,9 @@
       @if(last) {
         <span class="last">{{ crumb.label }}</span>
       } @else {
-      <a [routerLink]="crumb.link">
-        <span>{{ crumb.label }}</span>
-      </a>
+        <a [routerLink]="crumb.link">
+          <span>{{ crumb.label }}</span>
+        </a>
      }
     }
   </ng-container>

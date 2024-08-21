@@ -1,7 +1,7 @@
 <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1}">
   <div class="col-sm">
     <select class="form-select" [formControl]="audienceId">
-      <option [value]='' selected disabled>Range</option>
+      <option [value]='' selected disabled i18n="@@batch.actions.metadata.files.ipRanges.singular">Range</option>
       @for (ou of ous; track ou) {
       <option [ngValue]="ou.name"> {{ou.name}}</option>
       }

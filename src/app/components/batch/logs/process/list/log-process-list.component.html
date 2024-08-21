@@ -21,14 +21,14 @@
               @if (pages.length > 0) {
               <li class="ngb-custom-pages-item">
                 <div class="d-flex flex-nowrap px-2">
-                  <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
+                  <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1" i18n="@@pagination.page">Page</label>
                   <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
                     id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
                     (input)="formatInput($any($event).target)"
                     aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem"
                     max="collectionSize/pageSize" />
-                  <span id="paginationDescription" class="col-form-label text-nowrap px-2"> of {{ pages.length
-                    }}</span>
+                  <span id="paginationDescription" class="col-form-label text-nowrap px-2" i18n="@@pagination.of"> of </span><span class="col-form-label text-nowrap px-2">{{ pages.length
+                  }}</span>
                 </div>
               </li>
               }
@@ -46,7 +46,6 @@
           </ngb-pagination>
 
           <select class="form-select page-size ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
-            <option [ngValue]="5">5</option>
             <option [ngValue]="10">10</option>
             <option [ngValue]="20">20</option>
             <option [ngValue]="30">30</option>
@@ -66,9 +65,9 @@
           <thead>
             <tr class="border-bottom">
               <th scope="col" class="pe-2">Status</th>
-              <th scope="col" class="pe-2">Action</th>
-              <th scope="col" class="pe-2">Date</th>
-              <th scope="col">Details</th>
+              <th scope="col" class="pe-2" i18n="@@batch.logs.details.for">Action</th>
+              <th scope="col" class="pe-2" i18n="@@batch.logs.header.date">Date</th>
+              <th scope="col" i18n="@@batch.logs.header.details">Details</th>
             </tr>
           </thead>
 
@@ -76,43 +75,47 @@
             @for (log of inPage; track log.batchLogHeaderId) {
             <tr class="border-bottom">
               @if (log.state === state.RUNNING) {
-                <td class="col-2">
-                  {{ batchSvc.getProcessLog().state | titlecase }}
-                  @if (log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId) {
-                    @if (batchSvc.isProcessRunning()) {
-                      {{batchSvc.getProcessLog().percentageOfProcessedItems - calculateProcessedStep(batchSvc.getProcessLog().numberOfItems) }}&percnt;
-                    }
-                  } @else {
-                    <span class="material-symbols-outlined" title="Something gone wrong!">
-                      error
-                    </span>
-                  }                       
-                </td>             
+              <td class="col-2">
+                {{ batchSvc.getProcessLog().state | titlecase }}
+                @if (log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId) {
+                @if (batchSvc.isProcessRunning()) {
+                {{batchSvc.getProcessLog().percentageOfProcessedItems -
+                calculateProcessedStep(batchSvc.getProcessLog().numberOfItems) }}&percnt;
+                }
+                } @else {
+                <span class="material-symbols-outlined" title="Something gone wrong!">
+                  error
+                </span>
+                }
+              </td>
               } @else {
-                <td class="col-2">
-                  {{ log.state | titlecase }}
-                </td>
+              <td class="col-2">
+                {{ getProcessLogHeaderStateTranslation(log.state) }}
+              </td>
               }
-              <td class="col-6">
-                {{ log.method | titlecase | separate }}
+              <td class="col-5">
+                {{ getProcessMethodTranslation(log.method) }}
               </td>
               <td class="col-4">
-                {{  log.endDate | date:'fullDate':'':getLang() }} <span class="material-symbols-outlined">
-                  schedule</span> {{  log.endDate | date: "HH:mm":'':getLang() }}
+                <span>{{ log.endDate | date:'fullDate' }}</span>
+                <div class="float-end">
+                  <span class="material-symbols-outlined" style="cursor: auto">schedule</span>&nbsp;
+                  <span>{{ log.endDate | date: "HH:mm" }}</span>
+                </div>
               </td>
               <td class="col-1">
-                @if (log.state === state.RUNNING 
-                  && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId 
-                  && batchSvc.isProcessRunning()) {
-                  <span class="spinner-border ms-3" aria-hidden="true"></span>
+                @if (log.state === state.RUNNING
+                && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId
+                && batchSvc.isProcessRunning()) {
+                <span class="spinner-border ms-3" aria-hidden="true"></span>
                 } @else {
-                  <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
-                  [state]="{ method: log.method, started: log.startDate }">
-                  <span class="material-symbols-outlined ms-3">
-                    list
-                  </span>
+                <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]"
+                  [state]="{ method: log.method, started: log.startDate }">     
+                    <span class="material-symbols-outlined ms-3 my-0 matBadge" matBadge='{{ log.numberOfItems }}'>
+                      list
+                    </span>
                 </a>
-                } 
+                }
               </td>
             </tr>
             }

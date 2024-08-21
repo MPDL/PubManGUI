@@ -51,8 +51,8 @@ export class ChangeKeywordsFormComponent {
     this.batchSvc.changeKeywords(this.changeKeywordsParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.msgSvc.info(`Action started!\n`);
-      setTimeout(() => {this.changeKeywordsForm.reset();},1000);
+
+      setTimeout(() => {this.changeKeywordsForm.reset();}, 500);
     });
   }
 }

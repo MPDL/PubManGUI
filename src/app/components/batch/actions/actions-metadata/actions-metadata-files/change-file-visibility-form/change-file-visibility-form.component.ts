@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { OnInit, Component, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -25,17 +25,38 @@ export class ChangeFileVisibilityFormComponent {
     private fb: FormBuilder, 
     public validSvc: ValidatorsService, 
     private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+    private msgSvc: MessageService,
+    @Inject(LOCALE_ID) public locale: string) {}
 
-  visibilityTypes = Object.keys(Visibility);
+  visibility = Object.keys(Visibility);
+  visibilityTranslations = {};
+  visibilityOptions: {value: string, option: string}[] = [];
+
+  ngOnInit(): void { 
+    this.loadTranslations(this.locale)
+      .then(() => {
+        this.visibility.forEach((value) => {
+          let keyT = value as keyof typeof this.visibilityTranslations;
+          this.visibilityOptions.push({'value': keyT, 'option': this.visibilityTranslations[keyT]})
+        })
+      })
+  }
+
+  async loadTranslations(lang: string) {
+    if (lang === 'de') {
+      await import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.visibilityTranslations = msgs.Visibility;
+      })
+    } else {
+      await import('src/assets/i18n/messages.json').then((msgs) => {
+        this.visibilityTranslations = msgs.Visibility;
+      })
+    } 
+  }
 
   public changeFileVisibilityForm: FormGroup = this.fb.group({
-    /*
-    fileVisibilityFrom: [Object.keys(Visibility)[0], [Validators.required]],
-    fileVisibilityTo: [Object.keys(Visibility)[0], [Validators.required]],
-    */
-    fileVisibilityFrom: ['Visibility', [Validators.required]],
-    fileVisibilityTo: ['Visibility', [Validators.required]],
+    fileVisibilityFrom: [$localize`:@@batch.actions.metadata.files.visibility:Visibility`, [Validators.required]],
+    fileVisibilityTo: [$localize`:@@batch.actions.metadata.files.visibility:Visibility`, [Validators.required]],
   }, 
   { validators: this.validSvc.notEqualsValidator('fileVisibilityFrom','fileVisibilityTo') });
 
@@ -57,7 +78,6 @@ export class ChangeFileVisibilityFormComponent {
     this.batchSvc.changeFileVisibility(this.changeFileVisibilityParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.msgSvc.info(`Action started!\n`);
     });
   }
 }

@@ -46,8 +46,8 @@ export class ReplaceSourceEditionFormComponent {
     this.batchSvc.replaceSourceEdition(this.replaceSourceEditionParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.msgSvc.info(`Action started!\n`);
-      setTimeout(() => {this.replaceSourceEditionForm.controls['sourceEdition'].reset;},1000);
+
+      setTimeout(() => {this.replaceSourceEditionForm.controls['sourceEdition'].reset;}, 500);
     });
   }
  }

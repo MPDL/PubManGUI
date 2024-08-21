@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { OnInit, Component, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -20,17 +20,42 @@ import { ReviewMethod } from 'src/app/model/inge';
 })
 export class ChangeReviewMethodFormComponent {
 
-  reviewMethods = Object.keys(ReviewMethod);
-
   constructor(
     private fb: FormBuilder, 
     public validSvc: ValidatorsService, 
     private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+    private msgSvc: MessageService,
+    @Inject(LOCALE_ID) public locale: string) {}
+
+    reviewMethods = Object.keys(ReviewMethod);
+    reviewMethodsTranslations = {};
+    reviewMethodssOptions: {value: string, option: string}[] = [];
+  
+    ngOnInit(): void { 
+      this.loadTranslations(this.locale)
+        .then(() => {
+          this.reviewMethods.forEach((value) => {
+            let keyT = value as keyof typeof this.reviewMethodsTranslations;
+            this.reviewMethodssOptions.push({'value': keyT, 'option': this.reviewMethodsTranslations[keyT]})
+          })
+        })
+    }
+  
+    async loadTranslations(lang: string) {
+      if (lang === 'de') {
+        await import('src/assets/i18n/messages.de.json').then((msgs) => {
+          this.reviewMethodsTranslations = msgs.ReviewMethod;
+        })
+      } else {
+        await import('src/assets/i18n/messages.json').then((msgs) => {
+          this.reviewMethodsTranslations = msgs.ReviewMethod;
+        })
+      } 
+    }  
 
   public changeReviewMethodForm: FormGroup = this.fb.group({
-    reviewMethodFrom: ['Review type', [ Validators.required ]],
-    reviewMethodTo: ['Review type', [ Validators.required ]],
+    reviewMethodFrom: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
+    reviewMethodTo: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
   }, 
   { validators: this.validSvc.notEqualsValidator('reviewMethodFrom','reviewMethodTo') });
 
@@ -52,7 +77,6 @@ export class ChangeReviewMethodFormComponent {
     this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.msgSvc.info(`Action started!\n`);
     });
   }
  }

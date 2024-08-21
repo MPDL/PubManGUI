@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { OnInit, Component, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeGenreParams } from 'src/app/components/batch/interfaces/actions-params';
-import { MdsPublicationGenre, DegreeType, BatchProcessLogHeaderState } from 'src/app/model/inge';
-
+import { MdsPublicationGenre, DegreeType } from 'src/app/model/inge';
 
 @Component({
   selector: 'pure-batch-change-genre',
@@ -25,18 +24,46 @@ export class ActionsGenreComponent {
     private fb: FormBuilder, 
     public valSvc: ValidatorsService, 
     private batchSvc: BatchService,
-    private router: Router) { }
+    private msgSvc: MessageService,
+    @Inject(LOCALE_ID) public locale: string) {}
 
-  genres = Object.keys(MdsPublicationGenre);
+  genres = Object.keys(MdsPublicationGenre).sort();
+  genresTranslations = {};
+  genresOptions: {value: string, option: string}[] = [];
+
   degreeTypes = Object.keys(DegreeType); 
-  state = BatchProcessLogHeaderState;   
+  degreeTypesTranslations = {};
+  degreeTypesOptions: {value: string, option: string}[] = [];
 
+  ngOnInit(): void { 
+    this.loadTranslations(this.locale)
+      .then(() => {
+        this.genres.forEach((value) => {
+          let keyT = value as keyof typeof this.genresTranslations;
+          this.genresOptions.push({'value': keyT, 'option': this.genresTranslations[keyT]})
+        })
+        this.degreeTypes.forEach((value) => {
+          let keyT = value as keyof typeof this.degreeTypesTranslations;
+          this.degreeTypesOptions.push({'value': keyT, 'option': this.degreeTypesTranslations[keyT]})
+        })
+      })
+  }
+
+  async loadTranslations(lang: string) {
+    if (lang === 'de') {
+      await import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.genresTranslations = msgs.MdsPublicationGenre;
+        this.degreeTypesTranslations = msgs.DegreeType;
+      })
+    } else {
+      await import('src/assets/i18n/messages.json').then((msgs) => {
+        this.genresTranslations = msgs.MdsPublicationGenre;
+        this.degreeTypesTranslations = msgs.DegreeType;
+      })
+    } 
+  }
 
   public changeGenreForm: FormGroup = this.fb.group({
-    /*
-    genreFrom: [Object.keys(MdsPublicationGenre)[0], [Validators.required]],
-    genreTo: [Object.keys(MdsPublicationGenre)[0], [Validators.required]],
-    */
     genreFrom: ['Genre', [Validators.required]],
     genreTo: ['Genre', [Validators.required]],
     degreeType: [{value: '', disabled: true}],
@@ -64,13 +91,7 @@ export class ActionsGenreComponent {
     this.batchSvc.changeGenre(this.changeGenreParams).subscribe( actionResponse => {
       // console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      /*
-      if (actionResponse.state === this.state.FINISHED) {
-        this.msgSvc.info(`Action finished!\n`);
-      }
-      */
       setTimeout(() => { this.changeGenreForm.reset(); }, 500);
-      this.router.navigate(['/batch']);
     });
     
   }

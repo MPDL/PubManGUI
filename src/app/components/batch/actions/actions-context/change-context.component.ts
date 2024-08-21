@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { OnInit, Component } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,7 +27,7 @@ import { AaService } from 'src/app/services/aa.service';
   ],
   templateUrl: './change-context.component.html',
 })
-export class ActionsContextComponent {
+export class ActionsContextComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
@@ -43,16 +43,12 @@ export class ActionsContextComponent {
       p => {
         this.user_contexts = p.depositorContexts;
       }
-    )
+    );
   }
 
   public changeContextForm: FormGroup = this.fb.group({
-    /*
-    contextFrom: [this.fb.group<ControlType<ContextDbRO>>,[ Validators.required ]],
-    contextTo: [this.fb.group<ControlType<ContextDbRO>>,[ Validators.required ]]
-    */
-    contextFrom: ['Context',[ Validators.required ]],
-    contextTo: ['Context',[ Validators.required ]]
+    contextFrom: [$localize`:@@batch.actions.context:Context`, [Validators.required]],
+    contextTo: [$localize`:@@batch.actions.context:Context`, [Validators.required]]
   }, 
   //{ validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
   );
