@@ -70,7 +70,7 @@
               <span class="material-symbols-outlined">web_stories</span>
               <span class="nav-label ms-3" i18n="@@batch">Batch processing</span>
               @if ( batchSvc.areItemsSelected() ) {
-                <div class="matBadge" matBadge='{{ 1010 //batchSvc.getItemsCount() }}' i18n="@@batch"></div>
+                <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' i18n="@@batch"></div>
               } 
             </a>
             @if ( batchSvc.areItemsSelected() ) {
