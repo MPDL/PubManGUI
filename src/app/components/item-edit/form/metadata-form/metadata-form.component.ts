@@ -109,10 +109,6 @@ export class MetadataFormComponent{
     }
   }
 
-  handleNoAltTitles() {
-    this.alternativeTitles.push(this.fbs.alt_title_FG(null));
-  }
-
   addAltTitle(index: number) {
     this.alternativeTitles.insert(index + 1, this.fbs.alt_title_FG(null));
   }
@@ -127,10 +123,6 @@ export class MetadataFormComponent{
     } else if (event.action === 'remove') {
       this.removeCreator(event.index);
     }
-  }
-
-  handleNoCreators() {
-    this.creators.push(this.fbs.creator_FG(null));
   }
 
   addCreator(index: number) {
@@ -148,10 +140,6 @@ export class MetadataFormComponent{
     } else if (event.action === 'remove') {
       this.removeIdentifier(event.index);
     }
-  }
-
-  handleNoIdentifiers() {
-    this.identifiers.push(this.fbs.identifier_FG(null));
   }
 
   addIdentifier(index: number) {
@@ -186,10 +174,6 @@ export class MetadataFormComponent{
     }
   }
 
-  handleNoSources() {
-    this.sources.push(this.fbs.source_FG(null));
-  }
-
   addSource(index: number) {
     this.sources.insert(index + 1, this.fbs.source_FG(null));
   }
@@ -204,10 +188,6 @@ export class MetadataFormComponent{
     } else if (event.action === 'remove') {
       this.removeSubject(event.index);
     }
-  }
-
-  handleNoSubjects() {
-    this.subjects.push(this.fbs.subject_FG(null));
   }
 
   addSubject(index: number) {
@@ -226,10 +206,6 @@ export class MetadataFormComponent{
     }
   }
 
-  handleNoAbstracts() {
-    this.abstracts.push(this.fbs.abstract_FG(null));
-  }
-
   addAbstract(index: number) {
     this.abstracts.insert(index + 1, this.fbs.abstract_FG(null));
   }
@@ -244,10 +220,6 @@ export class MetadataFormComponent{
     } else if (event.action === 'remove') {
       this.removeProjectInfo(event.index);
     }
-  }
-
-  handleNoProjectInfo() {
-    this.projectInfo.push(this.fbs.project_info_FG(null));
   }
 
   addProjectInfo(index: number) {

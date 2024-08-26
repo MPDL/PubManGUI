@@ -5,7 +5,7 @@ import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } f
 import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
-import { ContextDbRO, ContextDbVO, ItemVersionVO, MdsPublicationVO } from 'src/app/model/inge';
+import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO } from 'src/app/model/inge';
 import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
 import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
@@ -15,11 +15,23 @@ import { ChipsComponent } from 'src/app/shared/components/chips/chips.component'
 import { AaService } from 'src/app/services/aa.service';
 import { ContextsService } from "../../../../services/pubman-rest-client/contexts.service";
 import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
+import { FileFormComponent } from '../file-form/file-form.component';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'pure-item-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ChipsComponent, MetadataFormComponent, AddRemoveButtonsComponent, SelectorComponent, PureCtxsDirective, OptionDirective],
+  imports: [CommonModule, 
+    FileFormComponent,
+    FileUploadComponent,
+    FormsModule, 
+    ReactiveFormsModule, 
+    ChipsComponent, 
+    MetadataFormComponent, 
+    AddRemoveButtonsComponent, 
+    SelectorComponent, 
+    PureCtxsDirective, 
+    OptionDirective],
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss']
 })
@@ -66,6 +78,10 @@ export class ItemFormComponent implements OnInit {
     return this.form.get('metadata') as FormGroup<ControlType<MdsPublicationVO>>
   }
 
+  get files() {
+    return this.form.get('files') as FormArray<FormGroup<ControlType<FileDbVO>>>;
+  }
+
   get context() {
     console.log('Context: ', JSON.stringify(this.form.get('context')))
     return this.form.get('context') as FormGroup<ControlType<ContextDbVO>>
@@ -96,6 +112,26 @@ export class ItemFormComponent implements OnInit {
   context_change(contextObjectId: string) {
     let selecteContext = this.user_contexts?.find((context) => context.objectId == contextObjectId)
     this.form.get('context')?.patchValue({ objectId: contextObjectId, name: selecteContext?.name });
+  }
+
+  handleFileNotification(event: any) {
+    if (event.action === 'add') {
+      this.addFile(event.index);
+    } else if (event.action === 'remove') {
+      this.removeFile(event.index);
+    }
+  }
+
+  handleNoFiles() {
+    this.files.push(this.fbs.file_FG(null));
+  }
+
+  addFile(index: number) {
+    this.files.insert(index + 1, this.fbs.file_FG(null));
+  }
+
+  removeFile(index: number) {
+    this.files.removeAt(index);
   }
 
   handleNotification(event: any) {
