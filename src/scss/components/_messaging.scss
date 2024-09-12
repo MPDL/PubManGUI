@@ -3,25 +3,20 @@ pure-messaging {
     font-size: 0.9em;
 
     .msg-header {
-        display: inline-block !important;
-        max-height: 2em;
+        line-height: 2em;
         overflow: hidden;
-
-        padding: 0.2em;
-        border-radius: 0.5rem;
+        border-radius: 0.4em;
         background-color: color-mix(in srgb, #{$mpdl-apricot}, transparent 60%);
     }
 
     .material-symbols-outlined {
         font-weight: var(--bs-body-font-weight);
-        padding-top: 0.2em;
+        margin: 0.2em;
         text-decoration: none;
         color: var(--bs-body-color);
     }
 
     .type {
-        position: absolute;
-        margin-right: 1em;
         opacity: 0.5;
         animation: blinker 1s ease infinite;
         cursor: not-allowed;
@@ -34,12 +29,9 @@ pure-messaging {
     }
 
     .title {
-        display: inline-block;
-        margin-left: 3em;
-        margin-right: 3em;
         max-height: 1.6em;
         overflow-y: scroll;
-        max-width: 90%;
+        //max-width: 85%;
         /* Hide scrollbar for Chrome, Safari and Opera */
         &::-webkit-scrollbar {
             display: none;
@@ -67,8 +59,6 @@ pure-messaging {
     }
 
     .close {
-        position: absolute;
-        margin-left: -1em;
         cursor: pointer;
 
         &:hover {

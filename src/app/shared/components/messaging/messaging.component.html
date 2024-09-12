@@ -1,6 +1,6 @@
 @if(message.text) {
-<div class="msg-header" [ngClass]="[bg_color, fg_color]">
-  <span class="material-symbols-outlined type">
+<div class="d-inline-flex msg-header" [ngClass]="[bg_color, fg_color]">
+  <span class="material-symbols-outlined float-start align-top type">
     {{ severity_icon }}
   </span>
 
@@ -14,6 +14,6 @@
     </span>
   }
 
-  <span class="material-symbols-outlined close" (click)="close()">close</span>
+  <span class="material-symbols-outlined float-end align-top close" (click)="close()">close</span>
 </div>
 }

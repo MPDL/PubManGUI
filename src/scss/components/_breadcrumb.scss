@@ -2,6 +2,10 @@ pure-breadcrumb {
   background: none;
   font-size: 0.9em;
 
+  span {
+    text-wrap: nowrap;
+  }
+  
   a,
   span,
   .material-symbols-outlined {

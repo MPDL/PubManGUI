@@ -8,11 +8,11 @@ $mpdl-blue-2: #00387d;
 $mpdl-purple: #5a117d;
 
 /* ISEO Draft */
-$mpdl-iseo1: #006699;
-$mpdl-iseo2: #00786c;
-$mpdl-iseo3: #ffa800;
-$mpdl-iseo4: whitesmoke;
-$mpdl-iseo5: #00445F;
+//$mpdl-iseo1: #006699; //-> $mpg-secondary-blue
+//$mpdl-iseo2: #00786c; //-> $mpg-secondary-green
+//$mpdl-iseo3: #ffa800; //~> $mpdl-yellow
+//$mpdl-iseo4: whitesmoke; //~> $mpg-bg-gray
+//$mpdl-iseo5: #00445F; //-> $mpg-blue
 
 /* MPG Web Styleguide */
 $mpg-blue: #00445F;
@@ -22,7 +22,7 @@ $mpg-secondary-green: #00786C;
 
 $mpg-gray: #666666;
 $mpg-secondary-gray: #777777;
-$mpg-bg-gray: #eeeeee;
+$mpg-bg-gray: rgb(238, 238, 238);
 $mpg-light-gray: #f6f6f6;
 
 $mpg-slate-gray-0: #29485d;
@@ -42,4 +42,4 @@ $mpdl-pink: #E42F8E;
 $mpdl-orange: #F47828;
 $mpdl-apricot: #FFD6C4;
 $mpdl-dark: #373A37;
-$mpdl-light: #E2E8E2;
+$mpdl-light: rgb(226, 232, 226);
