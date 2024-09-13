@@ -22,7 +22,7 @@ export class MessagingComponent {
   constructor(private messageSvc: MessageService) { }
 
   public onAreaMessage = effect(() => {
-    this.message = this.messageSvc.areaMessage();
+    this.message = this.messageSvc.lastMessage();
     this.show(this.message);
     return true;
   });
@@ -58,5 +58,4 @@ export class MessagingComponent {
   close(): void {
     this.message = {};
   }
-
 }

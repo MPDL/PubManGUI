@@ -13,7 +13,7 @@ export class MessageService {
   // confirmationDialogRef!: DialogRef<boolean>;
   confirmation = false;
 
-  public areaMessage = signal<any>({});
+  public lastMessage = signal<any>({});
 
   constructor(public dialog: Dialog) { }
 
@@ -38,7 +38,7 @@ export class MessageService {
   }
 
   displayOnArea(message?: { type: string; title?: string, text: string; }) {
-    this.areaMessage.set(message);
+    this.lastMessage.set(message);
   }
 
   info(message: string) {
@@ -64,6 +64,7 @@ export class MessageService {
     if (message.lastIndexOf('\n')>=0) {
       title = (message.substring(message.lastIndexOf('\n')));
       msg = { type: 'danger', title: title, text: message };
+      if (this.lastMessage().title && this.lastMessage().title === title) return;
     } else {
       msg = { type: 'danger', text: message };
     }
