@@ -1,16 +1,46 @@
 .side_nav {
-  left: 10%;
+  left: 9.7%;
   position: fixed;
-  top: 14%;
-  width: 12.8rem;
+  top: 150px;
+  width: 16.6rem;
   z-index: 16;
   overflow: hidden;
-  opacity: 0.96;
   border-radius: 0.4rem;
+  box-shadow: color-mix(in srgb, var(--bs-body-color), transparent 80%) 0.4rem 1rem 2rem 0;
+  transition: all 0.1s ease;
+  white-space: nowrap;
+
+  .nav-link {
+    max-width: 13.6rem;
+    overflow: visible;
+
+    &:not(disabled):hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+
+      span, path {
+        color: var(--accent-bg-color) !important;
+      }
+    }
+  }
+
+  ul li {
+    padding-top: .2rem;
+    padding-bottom: .2rem;
+    padding-left: 3.5rem !important;
+
+    &:last-of-type {
+      margin-bottom: 1rem;
+    }
+
+    &:hover {
+      color: var(--accent-bg-color) !important;
+    }
+  }
 }
 
 .side_nav.collapsed {
-  width: 8rem;
+  width: 6.5rem;
 }
 
 .side_nav.collapsed .bi {
@@ -22,7 +52,7 @@
 }
 
 .side_nav .matBadge {
-  top: -1.3rem;
+  top: -1.5rem;
 }
 
 .side_nav .mat-badge-content {
@@ -34,10 +64,10 @@
   text-overflow: ellipsis;
   pointer-events: none;
   border-radius: 50%;
-  opacity: 0.7;
+  //opacity: 0.7;
   box-shadow: 0 1px 6px 0 #{$mpdl-pale-purple};
   --mat-badge-background-color: var(--bs-body-background) !important;
-  --mat-badge-text-color: var(--bs-body-color);
+  --mat-badge-text-color: color-mix(in srgb, var(--bs-body-color), transparent 20%);
   --mat-badge-text-font: var(--bs-body-font-family);
   --mat-badge-text-size: x-small;
   --mat-badge-text-weight: bolder;

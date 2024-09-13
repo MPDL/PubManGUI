@@ -18,7 +18,6 @@ import { SeparateFilterPipe } from 'src/app/components/batch/pipes/separateFilte
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 
 
-
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 type detail = {

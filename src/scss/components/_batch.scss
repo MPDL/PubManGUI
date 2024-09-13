@@ -4,7 +4,7 @@
     .nav-link {
         cursor: pointer;
     }
-
+    /*
     .batch-nav {
 
         .nav-bottom-10 {
@@ -38,7 +38,7 @@
             //pointer-events: none;
         }
     }
-
+    */
     .datasets {
 
         #topnav {
@@ -155,6 +155,7 @@
                 cursor: pointer;
             }
 
+
         }
 
         .page-size {
@@ -224,4 +225,14 @@
               }
         }
     }
+
+    .tooltip-inner {
+        background-color: #{$mpdl-light};
+        color: #{$mpdl-dark};
+    }
+
+    .bs-tooltip-end .tooltip-arrow::before {
+        border-right-color: #{$mpdl-light};
+    }
+
 }

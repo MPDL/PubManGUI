@@ -19,6 +19,11 @@ export class MessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = this.data;
+    if (this.message.type === 'info' || this.message.type === 'success') {
+      setTimeout(() => {
+        this.close();
+      }, 15000);
+    }  
   }
 
   close(): void {
@@ -26,14 +31,18 @@ export class MessageComponent implements OnInit {
   }
 
   border_color(message_type: string) {
-    return `border-${message_type}`;
+    return `border-${message_type}-subtle`;
   }
 
   text_color(message_type: string) {
-    return `text-${message_type}`;
+    return `text-${message_type}-emphasis`;
   }
 
   btn_color(message_type: string) {
     return `btn-outline-${message_type}`;
+  }
+
+  bg_color(message_type: string) {
+    return `bg-${message_type}-subtle`;
   }
 }

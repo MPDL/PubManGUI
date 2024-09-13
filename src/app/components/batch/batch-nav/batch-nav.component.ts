@@ -41,6 +41,7 @@ export class BatchNavComponent implements OnInit {
     this.navList()[1].disabled = !this.batchSvc.areItemsSelected() || this.batchSvc.isProcessRunning();
   }
 
+  // TO-DO ???
   warning(option: string) {
     switch (option) {
       case '/batch/datasets':

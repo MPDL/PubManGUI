@@ -2,6 +2,7 @@
     overflow-y: hidden;
     overflow-x: hidden;
 
+    
     .modal-body {
         margin: $spacer;
         input {
@@ -16,4 +17,19 @@
     .modal-footer {
         margin: $spacer;
     }
+    
+
+    //border-radius: 0.5rem;
+
+    animation: pure-dialog-open 0.2s ease-in-out;
+    @keyframes pure-dialog-open {
+        from {
+          transform: scale(0) {opacity:0.5};
+        }
+      
+        to {
+          transform: none;
+        }
+    }   
+
 }

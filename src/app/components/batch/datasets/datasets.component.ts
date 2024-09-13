@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
+import { OnInit, Component, QueryList, ViewChildren, AfterViewInit, HostListener } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, filter, startWith, of, tap, map, timeInterval } from 'rxjs';
 
@@ -55,6 +55,7 @@ export default class DatasetsComponent implements OnInit {
   private isProcessing: boolean = false;
   selectAll = $localize`:@@selectAll:select all`;
   deselectAll = $localize`:@@deselectAll:deselect all`;
+  isScrolled = false;
 
   constructor(
     public batchSvc: BatchService,
@@ -156,4 +157,9 @@ export default class DatasetsComponent implements OnInit {
     }
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
+  }
 }

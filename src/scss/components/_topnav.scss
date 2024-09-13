@@ -1,7 +1,7 @@
 .top_nav_pos {
     position: sticky;
     top: 8vh;
-    z-index: 1031;
+    z-index: 15;
     overflow: hidden;
     box-shadow: 0 2px 10px #40404029;
 
@@ -11,5 +11,9 @@
 
     .material-symbols-outlined {
         top: 0px;
-      }
+    }
+
+    &.scrolled {
+        z-index: 1031;
+    }
 }

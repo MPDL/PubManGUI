@@ -104,7 +104,7 @@ export class BatchService {
     this.batchProcessLogHeaderId = -1;
     this.#processRunning.set(false);
 
-    this.msgSvc.info(`Action finished!\n`);
+    this.msgSvc.success(`Action finished!\n`);
   }
 
   #processRunning = signal(false);

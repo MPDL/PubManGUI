@@ -1,14 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {AaService} from "../../../services/aa.service";
 
 import { MatBadgeModule } from '@angular/material/badge';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { BatchNavComponent } from 'src/app/components/batch/batch-nav/batch-nav.component';
 
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
-  imports: [RouterLink, MatBadgeModule],
+  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent],
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {

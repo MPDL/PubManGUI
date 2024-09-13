@@ -1,11 +1,11 @@
 import { AsyncPipe, CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import {AfterViewInit, Component, Input, QueryList, ViewChildren} from '@angular/core';
+import { AfterViewInit, Component, Input, QueryList, ViewChildren, HostListener } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationDirective } from 'src/app/shared/directives/pagination.directive';
 import { ItemListElementComponent } from './item-list-element/item-list-element.component';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TopnavComponent } from 'src/app/shared/components/topnav/topnav.component';
-import {Observable, filter, map, startWith, tap, of} from 'rxjs';
+import { Observable, filter, map, startWith, tap, of} from 'rxjs';
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -70,6 +70,7 @@ export class ItemListComponent implements AfterViewInit {
   }
 
   current_query: any;
+  isScrolled = false;
 
   constructor(
     private service: ItemsService,
@@ -184,5 +185,11 @@ export class ItemListComponent implements AfterViewInit {
     } else {
       this.list_items.map(li => li.check_box.setValue(false));
     }
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
   }
 }
