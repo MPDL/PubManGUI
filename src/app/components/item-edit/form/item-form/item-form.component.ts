@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { of, switchMap } from 'rxjs';
+import { of, switchMap, filter } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
 import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO } from 'src/app/model/inge';
 import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
@@ -17,23 +17,25 @@ import { ContextsService } from "../../../../services/pubman-rest-client/context
 import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
 import { FileFormComponent } from '../file-form/file-form.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { FilterFilesPipe } from 'src/app/shared/services/pipes/filter-files.pipe';
 
 @Component({
   selector: 'pure-item-form',
   standalone: true,
-  imports: [CommonModule, 
+  imports: [CommonModule,
     FileFormComponent,
     FileUploadComponent,
-    FormsModule, 
-    ReactiveFormsModule, 
-    ChipsComponent, 
-    MetadataFormComponent, 
-    AddRemoveButtonsComponent, 
-    SelectorComponent, 
-    PureCtxsDirective, 
-    OptionDirective],
+    FormsModule,
+    ReactiveFormsModule,
+    ChipsComponent,
+    MetadataFormComponent,
+    AddRemoveButtonsComponent,
+    SelectorComponent,
+    PureCtxsDirective,
+    OptionDirective,
+    FilterFilesPipe],
   templateUrl: './item-form.component.html',
-  styleUrls: ['./item-form.component.scss']
+  styleUrls: ['./item-form.component.scss'],
 })
 export class ItemFormComponent implements OnInit {
 
@@ -80,6 +82,26 @@ export class ItemFormComponent implements OnInit {
 
   get files() {
     return this.form.get('files') as FormArray<FormGroup<ControlType<FileDbVO>>>;
+  }
+
+  get internalFiles() {
+    let internalFiles = this.files ;
+    for (let i = 0; i < internalFiles.length; i++) {
+      if(internalFiles.at(i).value.storage == 'EXTERNAL_URL') {
+        internalFiles.removeAt(i);
+      }
+    }
+    return internalFiles;
+  }
+
+  get externalReferences() {
+    let externalReferences = this.files ;
+    for (let i = 0; i < externalReferences.length; i++) {
+      if(externalReferences.at(i).value.storage == 'INTERNAL_MANAGED') {
+        externalReferences.removeAt(i);
+      }
+    }
+    return externalReferences;
   }
 
   get context() {

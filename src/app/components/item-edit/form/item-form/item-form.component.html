@@ -50,27 +50,47 @@
                     <ng-container formArrayName="files">
                         <div class="accordion-body mt-3 mb-3">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                                @if ((files.controls | filterFiles : 'INTERNAL_MANAGED').length > 0) {
                                 <label class="col-sm-2 col-form-label">Files</label>
                                 <div class="col-sm">
-                                @for (file of files.controls; track file; let fileIndex = $index) {
-                                <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                                    
-                                    <div class="col-sm">
-                                        <ng-container [formGroupName]="fileIndex">
-                                            <pure-file-form [file_form]="file" [index]="fileIndex"
-                                                [index_length]="files.controls.length"
-                                                (notice)="handleFileNotification($event)"></pure-file-form>
-                                        </ng-container>
+                                    @for (file of files.controls | filterFiles : 'INTERNAL_MANAGED'; track file; let
+                                    fileIndex = $index) {
+                                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                                        <div class="col-sm">
+                                            <ng-container [formGroupName]="fileIndex">
+                                                <pure-file-form [file_form]="file" [index]="fileIndex"
+                                                    [index_length]="files.controls.length"
+                                                    (notice)="handleFileNotification($event)"></pure-file-form>
+                                            </ng-container>
+                                        </div>
                                     </div>
+                                    }
+                                    <!--
+                                    <div class="col-sm">
+                                        @for (file of files.controls; track file; let fileIndex = $index) {
+                                            @if(file.controls.storage.value == 'INTERNAL_MANAGED') {
+                                            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                                                <div class="col-sm">
+                                                    <ng-container [formGroupName]="fileIndex">
+                                                        <pure-file-form [file_form]="file" [index]="fileIndex"
+                                                            [index_length]="files.controls.length"
+                                                            (notice)="handleFileNotification($event)"></pure-file-form>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                            }
+                                        }
+                                    </div>
+                                    -->
                                 </div>
                                 }
+
                                 <!--
                         @empty {
                             <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add file'"
                                 (notice)="handleFileNotification($event)"></pure-add-remove-buttons>
                         }
                          -->
-                        </div>
                             </div>
                         </div>
                     </ng-container>

@@ -1,6 +1,6 @@
 <div [formGroup]="file_form" class="">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. File - {{file_form.get('name')?.value}}</label>
+        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. File - {{file_form.get('name')?.value}} - {{index_length}}</label>
     </div>
     <ng-container formGroupName="metadata">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
