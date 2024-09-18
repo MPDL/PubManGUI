@@ -32,17 +32,4 @@
         }
     }   
 
-    .anchored {
-        background: none;
-        font-size: 0.9em;
-        position: fixed;
-        top: 110px;
-        right: 50%;
-        height: 30px;
-        margin: 0;
-    
-        &.scrolled {
-        visibility: hidden;
-        }
-    }
 }

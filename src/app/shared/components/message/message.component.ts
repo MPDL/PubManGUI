@@ -22,7 +22,7 @@ export class MessageComponent implements OnInit {
     if (this.message.type === 'info' || this.message.type === 'success') {
       setTimeout(() => {
         this.close();
-      }, 5000);
+      }, 15000);
     }  
   }
 

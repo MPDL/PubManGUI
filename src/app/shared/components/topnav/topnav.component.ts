@@ -28,7 +28,7 @@ export class TopnavComponent {
       sessionStorage.removeItem(savedSelection);
       this.resetCheckBoxes();
 
-      this.message.info(selected + ' items selected' + ((selected! - added) > 0 ? `, ${selected! - added} on batch duplicated were ignored.` : ''));
+      this.message.success(selected + ' items selected' + ((selected! - added) > 0 ? `, ${selected! - added} on batch duplicated were ignored.` : ''));
     } else {
       this.message.warning(`The batch processing is empty!\n`);
     }
@@ -43,7 +43,7 @@ export class TopnavComponent {
       sessionStorage.removeItem(savedSelection);
       this.resetCheckBoxes();
 
-      this.message.info(selected + ' items selected' + ((selected! - removed) > 0 ? `, ${selected! - removed} not on batch were ignored.` : ''));
+      this.message.success(selected + ' items selected' + ((selected! - removed) > 0 ? `, ${selected! - removed} not on batch were ignored.` : ''));
     } else {
       this.message.warning(`The batch processing is empty!\n`);
     }

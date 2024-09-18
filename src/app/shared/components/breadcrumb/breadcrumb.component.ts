@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
 
 export interface Breadcrumb {
@@ -16,11 +16,13 @@ export interface Breadcrumb {
   templateUrl: './breadcrumb.component.html'
 })
 
-export class BreadcrumbComponent {
+export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Breadcrumb[] = [];
-  isScrolled = false;
+  separator = '>';
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         this.breadcrumbs = [];
@@ -90,10 +92,4 @@ export class BreadcrumbComponent {
     return localizedlabel;
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isScrolled = scrollPosition > 50 ? true : false;
-  }
 }
-

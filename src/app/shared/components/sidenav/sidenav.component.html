@@ -74,7 +74,9 @@
               } 
             </a>
             @if ( batchSvc.areItemsSelected() ) {
+              @defer {
               <pure-batch-nav></pure-batch-nav>
+              }
             } 
           </div>
           }

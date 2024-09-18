@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Dialog } from '@angular/cdk/dialog';
 
 import { MessageComponent } from '../components/message/message.component';
 import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
-import { MessageReloadedComponent } from '../components/message-reloaded/message-reloaded.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +12,8 @@ export class MessageService {
   // messageDialogRef!: DialogRef<string>;
   // confirmationDialogRef!: DialogRef<boolean>;
   confirmation = false;
+
+  public lastMessage = signal<any>({});
 
   constructor(public dialog: Dialog) { }
 
@@ -36,34 +37,38 @@ export class MessageService {
     return ref;
   }
 
-  displayMessageReloaded(message?: { type: string; text: string; }) {
-    // this.messageDialogRef = this.dialog.open(MessageComponent, {
-      this.dialog.open(MessageReloadedComponent, {
-      // hasBackdrop: false,
-      autoFocus: false,
-      data: message,
-      panelClass: 'pure-dialog',
-    });
+  displayOnArea(message?: { type: string; title?: string, text: string; }) {
+    this.lastMessage.set(message);
   }
 
   info(message: string) {
     const msg = { type: 'info', text: message };
-    this.displayMessage(msg);
-    //this.displayMessageReloaded(msg);
+    //this.displayMessage(msg);
+    this.displayOnArea(msg);
   }
 
   success(message: string) {
     const msg = { type: 'success', text: message };
-    this.displayMessage(msg);
+    //this.displayMessage(msg);
+    this.displayOnArea(msg);
   }
 
   warning(message: string) {
     const msg = { type: 'warning', text: message };
     this.displayMessage(msg);
+    //this.displayOnArea(msg);
   }
 
   error(message: string) {
-    const msg = { type: 'danger', text: message };
-    this.displayMessage(msg);
+    let title, msg = null;
+    if (message.lastIndexOf('\n')>=0) {
+      title = (message.substring(message.lastIndexOf('\n')));
+      msg = { type: 'danger', title: title, text: message };
+      if (this.lastMessage().title && this.lastMessage().title === title) return;
+    } else {
+      msg = { type: 'danger', text: message };
+    }
+    //this.displayMessage(msg);
+    this.displayOnArea(msg);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler, Injectable } from '@angular/core';
 
 @Component({
     selector: 'pure-page-not-found',
