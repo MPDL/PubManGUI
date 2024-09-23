@@ -155,7 +155,10 @@
                 cursor: pointer;
             }
 
-
+            li.page-item.disabled a.page-link{
+                opacity: 40%;
+            }
+            
         }
 
         .page-size {

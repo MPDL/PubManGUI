@@ -3,7 +3,8 @@
     top: 8vh;
     z-index: 15;
     overflow: hidden;
-    box-shadow: 0 2px 10px #40404029;
+    //box-shadow: 0 2px 10px #40404029;
+    box-shadow: color-mix(in srgb, var(--bs-body-color), transparent 80%) 0 2px 10px 0;
 
     svg {
         vertical-align: middle;

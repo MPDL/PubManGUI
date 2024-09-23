@@ -6,6 +6,11 @@
         vertical-align: baseline;
     }
 
+    button:disabled,
+    button[disabled] {
+        opacity: 40%;
+    }
+
     input {
         padding: 0.1em 0.1em;
         width: 3em;
