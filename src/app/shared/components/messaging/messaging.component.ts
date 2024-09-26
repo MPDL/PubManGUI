@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect } from '@angular/core';
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { MessageService } from "src/app/shared/services/message.service";
 
 @Component({
   selector: 'pure-messaging',
   standalone: true,
   imports: [
-    CommonModule,
-    NgbTooltip
+    CommonModule
   ],
   templateUrl: './messaging.component.html',
 })
@@ -20,15 +18,15 @@ export class MessagingComponent {
   bg_color = 'bg-info-subtle';
   severity_icon: string = 'info';
 
-  constructor(private messageSvc: MessageService) { }
+  constructor( private messageSvc: MessageService) { }
 
   public onAreaMessage = effect(() => {
     this.message = this.messageSvc.lastMessage();
-    this.show(this.message);
+    this.dress(this.message);
     return true;
   });
 
-  public show(content: any): void {
+  dress(content: any): void {
     switch (content.type) {
       case 'error':
       case 'danger':
