@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID } from '@angular/core';
+import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -46,6 +46,8 @@ export class LogProcessListComponent implements OnInit {
   batchProcessLogHeaderStateTranslations = {};
   batchProcessMethodTranslations = {};
   detailLogs: detail[] = [];
+
+  isScrolled = false;
 
   constructor(
     public batchSvc: BatchService,
@@ -109,4 +111,9 @@ export class LogProcessListComponent implements OnInit {
     return this.batchProcessMethodTranslations[key];
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
+  }
 }

@@ -3,17 +3,18 @@ pure-info-panel {
     
     .row {
         position: fixed;
-        top: 105px;
+        top: 100px;
         z-index: 1032;
     
         &.scrolled {
             //visibility: hidden;
             position: fixed;
             top: 50px;
-            transition: all 0.1s ease;
+            transition: all 0.3s ease;
         }
 
-        height: 35px;
+        height: 45px;
+        padding-top: 5px;
         background-color: var(--bs-body-bg) !important;
     }
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, DoCheck, Inject, LOCALE_ID } from '@angular/core';
+import { Component, OnInit, DoCheck, Inject, LOCALE_ID, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 
@@ -60,6 +60,8 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     success: [true, Validators.requiredTrue],
     fail: [true, Validators.requiredTrue],
   });
+
+  isScrolled = false;
 
   constructor(
     private batchSvc: BatchService, 
@@ -169,4 +171,9 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     return filteredStatus;
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
+  }
 }
