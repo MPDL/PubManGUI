@@ -120,8 +120,8 @@
     "batch.logs.details.total": "insgesamt",
     "batch.logs.details.failed": "fehlgeschlagen",
     "batch.logs.details.succeded": "erfolgreich",
-    "batch.logs.details.filter.failed": "Fehlgeschlagene Items anzeigen",
-    "batch.logs.details.filter.succeded": "Erfolgreiche Items anzeigen",
+    "batch.logs.details.filter.failed": "fehlgeschlagen",
+    "batch.logs.details.filter.succeded": "erfolgreich",
     "batch.logs.details.back": "Zurück zu den Protokollen",
     "batch.datasets.remove": "Aus Batch entfernen",
     "batch.datasets.add": "In Batch hinzufügen"

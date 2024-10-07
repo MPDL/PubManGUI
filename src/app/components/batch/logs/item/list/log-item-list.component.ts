@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, DoCheck, Inject, LOCALE_ID, HostListener } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -16,6 +16,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
 import { SeparateFilterPipe } from 'src/app/components/batch/pipes/separateFilter.pipe';
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
+
+import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
 
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
@@ -35,7 +37,9 @@ type detail = {
     NgbPaginationModule,
     NgbTooltip,
     StateFilterPipe,
-    SeparateFilterPipe
+    SeparateFilterPipe,
+    RouterLink,
+    SanitizeHtmlPipe
   ],
   templateUrl: './log-item-list.component.html',
 })
