@@ -103,27 +103,29 @@
           </thead>
 
           <tbody>
-            @for (log of inPage | stateFilter:refreshFilters():'state' ; track log.item.itemObjectId) {
-            <tr class="border-bottom">
-              <td class="col-2">
-                <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
-              </td>
-              <td>
-                <span class="nav-link" routerLink="/edit/{{log.item.itemObjectId}}" [innerHTML]="log.title | sanitizeHtml"></span>
-              </td>
-              <td>
-                <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
-              </td>
-              <hr>
-            </tr>
-            }
-            @empty {
-            <tr>
-              <th colspan="3" class="text-center">
-                <span class="text-center" i18n="@@batch.logs.details.empty">No details to show</span>
-              </th>
-            </tr>
-            }
+            @if(collectionSize > 0) {
+              @for (log of inPage | stateFilter:refreshFilters():'state' ; track log.item.itemObjectId) {
+              <tr class="border-bottom">
+                <td class="col-2">
+                  <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
+                </td>
+                <td>
+                  <span class="nav-link" routerLink="/edit/{{log.item.itemObjectId}}" [innerHTML]="log.title | sanitizeHtml"></span>
+                </td>
+                <td>
+                  <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
+                </td>
+                <hr>
+              </tr>
+              }
+              @empty {
+              <tr>
+                <th colspan="3" class="text-center">
+                  <span class="text-center" i18n="@@batch.logs.details.empty">No details to show</span>
+                </th>
+              </tr>
+              }
+            } 
           </tbody>
         </table>
       </div>
