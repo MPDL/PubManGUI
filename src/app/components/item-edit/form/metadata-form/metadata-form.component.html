@@ -17,7 +17,7 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
-                                    <select id="genre" class="form-select" formControlName="genre">
+                                    <select id="genre" class="form-select" formControlName="genre" data-test="genre">
                                         <option [value]="null" selected disabled>genre</option>
                                         @for (g of genre_types; track g) {
                                         <option [value]="g">{{g}}</option>
@@ -35,7 +35,7 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                 <div class="col-sm">
-                                    <input type="text" class="form-control" formControlName="degree">
+                                    <input type="text" class="form-control" formControlName="degree" data-test="degree">
                                 </div>
                                 <div class="col-sm-1">
                                     <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -49,7 +49,7 @@
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
                                     <input type="text" class="form-control" id="title" name="title"
-                                        formControlName="title">
+                                        formControlName="title" data-test="title">
                                 </div>
                                 <div class="col-sm-1">
                                     <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -116,7 +116,7 @@
                                     <div class="col-sm">
                                         <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
                                             [add_val]="'add creator'"
-                                            (notice)="handleCreatorNotification($event)"></pure-add-remove-buttons>
+                                            (notice)="handleCreatorNotification($event)" data-test="add-remove-creators"></pure-add-remove-buttons>
                                     </div>
                                     }
                                 </div>
@@ -167,7 +167,7 @@
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Created</label>
                                     <input type="text" class="form-control"
-                                        formControlName="dateCreated" placeholder="YYYY-MM-DD">
+                                        formControlName="dateCreated" placeholder="YYYY-MM-DD" data-test="date-created">
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Modified</label>
