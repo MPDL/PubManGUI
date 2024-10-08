@@ -1,4 +1,4 @@
-import { CommonModule, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, DoCheck, Inject, LOCALE_ID, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -38,7 +38,6 @@ type detail = {
     NgbTooltip,
     StateFilterPipe,
     SeparateFilterPipe,
-    AsyncPipe,
     RouterLink,
     SanitizeHtmlPipe
   ],

@@ -1,22 +1,17 @@
 pure-info-panel {
-
-    
     .row {
         position: fixed;
         top: 100px;
-        z-index: 1032;
+        z-index: 1010;
+        height: 50px;
+        padding-top: 5px;  
     
         &.scrolled {
             //visibility: hidden;
             position: fixed;
             top: 50px;
-            transition: all 0.3s ease;
+            transition: all 0.1s ease;
+            background-color: var(--bs-body-bg) !important;
         }
-
-        height: 45px;
-        padding-top: 5px;
-        background-color: var(--bs-body-bg) !important;
     }
-
-
 }

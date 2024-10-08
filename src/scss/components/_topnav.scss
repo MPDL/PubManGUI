@@ -2,7 +2,7 @@
     position: sticky;
     top: 150px;
     //z-index: 15;
-    z-index: 1031; 
+    z-index: 1000; 
     overflow: hidden;
     border-radius: 0.2rem;
     box-shadow: color-mix(in srgb, var(--bs-body-color), transparent 80%) 0.2rem 0.5rem 1rem 0;
@@ -17,6 +17,6 @@
 
     &.scrolled {
         //z-index: 1031;
-        top: 95px;
+        top: 100px;
     }
 }
