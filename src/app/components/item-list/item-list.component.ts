@@ -39,10 +39,9 @@ export class ItemListComponent implements AfterViewInit {
   number_of_results: number | undefined;
 
   select_all = new FormControl(false);
-  select_pages_2_display = new FormControl(10);
+  select_pages_2_display = new FormControl(25);
 
   pages_2_display = [
-    { value: 10, label: '10' },
     { value: 25, label: '25' },
     { value: 50, label: '50' },
     { value: 100, label: '100' },
@@ -50,7 +49,7 @@ export class ItemListComponent implements AfterViewInit {
   ];
 
   // Pagination:
-  page_size = 10;
+  page_size = 25;
   number_of_pages = 1;
   current_page = 1;
   jump_to = new FormControl<number>(this.current_page, [Validators.nullValidator, Validators.min(1)]);

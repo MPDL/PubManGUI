@@ -151,7 +151,7 @@
         }
 
         a:hover path {
-            fill: $link-hover-color;
+            fill: var(--bs-body-color); // $link-hover-color;
         }
 
         a.svg-bg-icon {
@@ -166,7 +166,7 @@
         }
         a:hover.svg-bg-icon {
             circle {
-                fill: $link-hover-color;
+                fill: var(--bs-body-color); //$link-hover-color;
             }
         }
     }
