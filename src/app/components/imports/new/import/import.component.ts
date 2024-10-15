@@ -1,13 +1,53 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { OnInit, Component } from '@angular/core';
+
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { ContextDbRO } from 'src/app/model/inge';
+import { AaService } from 'src/app/services/aa.service';
 
 @Component({
   selector: 'pure-imports-new-import',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  templateUrl: './import.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './import.component.html'
 })
-export default class ImportComponent { }
+export default class ImportComponent implements OnInit { 
+
+  constructor(
+    private fb: FormBuilder, 
+    private aaSvc: AaService,
+    private router: Router) { }
+
+  user_contexts?: ContextDbRO[] = [];  
+
+  ngOnInit(): void {
+    this.aaSvc.principal.subscribe(
+      p => {
+        this.user_contexts = p.depositorContexts;
+      }
+    );
+  }
+
+  public importForm: FormGroup = this.fb.group({
+    context: [$localize`:@@batch.actions.context:Context`, [Validators.required]],
+    format: ['BMC_XML', [Validators.required]],
+    name: ['', [Validators.required]],
+    scheme: ['', [Validators.required]],
+    cone: ['', [Validators.required]],
+  });
+
+  onSubmit(): void {
+    if (this.importForm.invalid) {
+      this.importForm.markAllAsTouched();
+      return;
+    }
+
+    this.router.navigate(['/import']);
+  }
+}

@@ -46,7 +46,7 @@ const routes: Routes = [
     loadComponent: () => import('./imports.component'),
     data: {
       breadcrumb: {
-        label: $localize`:@@imports:Imports`,
+        label: 'Imports', //label: $localize`:@@imports:Imports`,
       }
     }
   }

@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 
 import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ImportsService } from 'src/app/components/imports/services/imports.service';
 
 interface NavOption {
   route: string;
@@ -29,36 +29,30 @@ export class ImportNavComponent implements OnInit {
 
   constructor(
     public aaSvc: AaService,
-    private batchSvc: BatchService,
+    private importsSvc: ImportsService,
     private msgSvc: MessageService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.batchSvc.items;
-    this.navList()[0].disabled = !this.batchSvc.areItemsSelected();
-    this.navList()[1].disabled = !this.batchSvc.areItemsSelected() || this.batchSvc.isProcessRunning();
+    this.navList()[0].disabled = !this.importsSvc.haveImports();
+    this.navList()[1].disabled = !this.importsSvc.haveImports();
   }
 
   // TO-DO ???
   warning(option: string) {
     switch (option) {
       case '/imports/myimports':
-        if (!this.batchSvc.areItemsSelected()) {
-          this.msgSvc.warning(`The batch processing is empty!\n`);
+        if (!this.importsSvc.haveImports()) {
+          this.msgSvc.warning(`No imports available!\n`);
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/imports'])
           })
         }
         break;
       case '/imports/new':
-        if (!this.batchSvc.areItemsSelected()) {
-          this.msgSvc.warning(`The batch processing is empty!\n`);
-          this.msgSvc.dialog.afterAllClosed.subscribe(result => {
-            this.router.navigate(['/imports'])
-          })
-        } else if (this.batchSvc.isProcessRunning()) {
-          this.msgSvc.warning(`Please wait, a process is runnig!\n`);
+        if (this.importsSvc.isImportRunning()) {
+          this.msgSvc.warning(`Please wait, a import is runnig!\n`);
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/imports'])
           })

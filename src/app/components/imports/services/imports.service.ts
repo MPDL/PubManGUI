@@ -10,4 +10,7 @@ export class ImportsService {
 
   public haveImports = computed( () => this.batchSvc.areItemsSelected() );
 
+  #importRunning = signal(false);
+  public isImportRunning = computed( () => this.#importRunning() );
+  
 }
