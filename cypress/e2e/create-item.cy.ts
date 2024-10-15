@@ -2,15 +2,15 @@ describe('Create Item', () => {
   const userName = Cypress.env('testUser').userName
   const password = Cypress.env('testUser').password
   const context = Cypress.env('testContext').name
-  let itemId;
+  let itemId: string;
 
   beforeEach(() => {
     cy.loginViaAPI(userName, password)
   })
 
   afterEach(() => {
+    cy.deleteItemViaAPI(itemId)
     cy.logoutViaAPI()
-    //TODO: Delete Item via REST API using itemId
   })
 
   it('Create Item', () => {
@@ -22,7 +22,7 @@ describe('Create Item', () => {
     cy.get('select[data-test="context"]').select(context)
     cy.get('select[data-test="genre"]').select('ARTICLE')
     //cy.get('input[data-test="degree"]').type("The Degree")
-    cy.get('input[data-test="title"]').type("Cypress Test Title 7")
+    cy.get('input[data-test="title"]').type("Cypress Test Create-Item")
 
     cy.get('[data-test="add-remove-creators"]').find('button[name="add"]').click()
     cy.get('select[data-test="creator"]').select('AUTHOR')
@@ -38,16 +38,13 @@ describe('Create Item', () => {
     cy.get('button[data-test="save"]').click()
 
     //Then
-    //cy.wait('@createItem').its('response.statusCode').should('eq', 201)
     cy.wait('@createItem').then((interception) => {
-      // 'interception' is an object with properties
-      // 'id', 'request' and 'response'
       // @ts-ignore
       expect(interception.response.statusCode).to.equal(201)
       // @ts-ignore
       itemId = interception.response.body['objectId']
     })
-    //TODO: Check successful creation in the GUI
+    //TODO: Check successful creation via REST & in the GUI
   })
 
 })

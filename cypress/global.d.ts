@@ -14,5 +14,10 @@ declare namespace Cypress {
      * Logout by clearing the Local Storage
      */
     logoutByClearingLocalStorage(): void
+
+    /**
+     * Delete Item using the REST API
+     */
+    deleteItemViaAPI(itemId: string): void
   }
 }

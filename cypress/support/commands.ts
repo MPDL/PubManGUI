@@ -70,3 +70,16 @@ Cypress.Commands.add('logoutViaAPI', () => {
 Cypress.Commands.add('logoutByClearingLocalStorage', () => {
   window.localStorage.clear()
 })
+
+Cypress.Commands.add('deleteItemViaAPI', (itemId) => {
+  cy.request({
+    'method': 'DELETE',
+    'url': Cypress.env('restUrl') + '/items/' + itemId,
+    //Existing (authentication) cookies are automatically send with requests
+    'body': {
+      lastModificationDate: ""
+    }
+  }).then((response) => {
+    expect(response.status).to.eq(200)
+  })
+})
