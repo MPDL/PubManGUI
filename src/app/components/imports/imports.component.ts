@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { OnInit, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
-import { ImportNavComponent } from './import-nav/import-nav.component';
+import { ImportsNavComponent } from './imports-nav/imports-nav.component';
 
 import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/shared/services/message.service';
@@ -14,7 +14,7 @@ import { ImportsService } from './services/imports.service';
   imports: [
     CommonModule,
     RouterModule,
-    ImportNavComponent
+    ImportsNavComponent
   ],
   templateUrl: './imports.component.html',
 })

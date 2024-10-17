@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { ContextDbRO } from 'src/app/model/inge';
 import { AaService } from 'src/app/services/aa.service';
 
+import { FileUploadComponent } from 'src/app/components/item-edit/form/file-upload/file-upload.component'
+
 @Component({
   selector: 'pure-imports-new-import',
   standalone: true,
@@ -14,6 +16,7 @@ import { AaService } from 'src/app/services/aa.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    FileUploadComponent
   ],
   templateUrl: './import.component.html'
 })
@@ -38,7 +41,7 @@ export default class ImportComponent implements OnInit {
     context: [$localize`:@@batch.actions.context:Context`, [Validators.required]],
     format: ['BMC_XML', [Validators.required]],
     name: ['', [Validators.required]],
-    scheme: ['', [Validators.required]],
+    schema: ['OTHER', [Validators.required]],
     cone: ['', [Validators.required]],
   });
 

@@ -1,15 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import DetailsComponent  from './details/details.component';
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+import { ImportsService } from '../services/imports.service';
 
 @Component({
   selector: 'pure-imports-list',
   standalone: true,
   imports: [
     CommonModule,
-    DetailsComponent
+    RouterModule
   ],
-  templateUrl: './list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './list.component.html'
 })
-export default class ListComponent { }
+export default class ListComponent { 
+
+  constructor(
+    private importsSvc: ImportsService) { }
+
+}

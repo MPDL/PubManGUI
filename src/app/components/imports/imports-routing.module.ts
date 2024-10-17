@@ -14,31 +14,30 @@ const routes: Routes = [
   },
   {
     path: 'myimports',
-    loadComponent: () => import('./list/list.component'),
     data: {
       breadcrumb: {
-        label: 'My imports', //label: $localize`:@@myimports:My imports`,
+        label: 'My imports', //$localize`:@@myimports:My imports`,
       }
     },
     children: [
       {
-        path: 'details:id',
-        loadComponent: () => import('./list/details/details.component'),
+        path: '',
+        loadComponent: () => import('./list/list.component'),
         data: {
           breadcrumb: {
-            label: $localize`:@@details:Import details`,
+            //label: '',
           }
         },
       },
-      { 
-        path: 'log:id', 
-        loadComponent: () => import('./list/details/log/log.component'),
+      {
+        path: ':id',
+        loadComponent: () => import('./list/details/details.component'),
         data: {
           breadcrumb: {
-            label: 'Log', //label: $localize`:@@details:Log details`,
+            label: 'Import details', //$localize`:@@details:Import details`,
           }
-        }
-      }, 
+        },
+      },
     ],
   },
   {

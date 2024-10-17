@@ -18,9 +18,9 @@ interface NavOption {
   imports: [
     CommonModule,
     RouterModule],
-  templateUrl: './import-nav.component.html'
+  templateUrl: './imports-nav.component.html'
 })
-export class ImportNavComponent implements OnInit {
+export class ImportsNavComponent implements OnInit {
 
   public navList = signal<NavOption[]>([
     { route: '/imports/new', label: $localize`:@@new:new`, disabled: false },
