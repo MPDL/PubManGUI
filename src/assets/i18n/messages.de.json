@@ -22,7 +22,7 @@
     "details": "Details",
     "imports": "Imports",
     "new": "Neu",
-    "myimports": "Meine Imports",
+    "myimports": "Meine Importe",
     "batch.actions":"Die gewählte Aktion wird auf alle jeweils im Arbeitsbereich hinterlegten Datensätze ausgeführt. Die meisten Aktionen sind mit einem regulären 'Speichern' verbunden: Bitte beachten Sie, dass sich der Status der einzelnen Datensätze dementsprechend ändert.",
     "batch.actions.item.state": "Datensatz-Status",
     "batch.actions.item.state.delete": "Löschen",
@@ -128,7 +128,11 @@
     "batch.logs.details.empty": "Keine Details zum Anzeigen",
     "batch.logs.details.back": "Zurück zu den Protokollen",
     "batch.datasets.remove": "Aus Batch entfernen",
-    "batch.datasets.add": "In Batch hinzufügen"
+    "batch.datasets.add": "In Batch hinzufügen",
+    "imports.list.details.remove": "Aus 'Meine Importe' entfernen",
+    "imports.list.details.delete": "Löschen",
+    "imports.list.details.set": "Einstellen",
+    "imports.list.details.release": "Freigeben"
   },
   "BatchProcessMessages": {
     "BATCH_AUTHENTICATION_ERROR": "Sie m\u00FCssen eingeloggt sein, um die Publikation zu ver\u00E4ndern.",

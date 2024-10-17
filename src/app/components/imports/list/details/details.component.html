@@ -11,23 +11,27 @@
             <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
                 <div class="d-inline-flex justify-content-start align-items-center">
-                    <a i18n-ngbTooltip="@@batch.logs.details.fill.all" ngbTooltip="Remove">
+                    <a i18n-ngbTooltip="@@imports.list.details.remove" ngbTooltip="Remove">
                         <span class="material-symbols-outlined">
-                            heart_minus
+                            comments_disabled
                         </span>
                     </a>
-                    <a class="ms-3" i18n-ngbTooltip="@@batch.logs.details.fill.errors" ngbTooltip="Delete">
+                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.delete" ngbTooltip="Delete">
                         <span class="material-symbols-outlined">
-                            delete
+                            delete_forever
                         </span>
                     </a>
-                    <a class="ms-3" i18n-ngbTooltip="@@batch.logs.details.fill.errors" ngbTooltip="Release">
+                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.set" ngbTooltip="Set">
                         <span class="material-symbols-outlined">
-                            cruelty_free
+                            workspace_premium
+                        </span>
+                    </a>
+                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.release" ngbTooltip="Release">
+                        <span class="material-symbols-outlined">
+                            public
                         </span>
                     </a>
                 </div>
-
 
                 <div class="small d-inline-flex align-items-end">
                     <span class="material-symbols-outlined p-1">
@@ -59,15 +63,17 @@
 
         <div class="row">
             <div class="col-lg-10 col-sm-12 d-flex justify-content-between mt-5 mb-3 border-bottom">
-              <div>
-                <span i18n="@@batch.logs.details.for">Import</span>: <strong class="fw-bolder"> Some mock import </strong>
-              </div>
-              <div class="fw-light">
-                <span i18n="@@batch.logs.started.on">started on</span><span> {{ '2024-10-17T08:47:43' | date:'fullDate' }} </span><span class="material-symbols-outlined" style="cursor: auto">
-                  schedule</span><span> {{ '2024-10-17T08:47:43' | date: "HH:mm" }}</span>
-              </div>
+                <div>
+                    <span i18n="@@batch.logs.details.for">Import</span>: <strong class="fw-bolder">Some mock import
+                    </strong>
+                </div>
+                <div class="fw-light">
+                    <span i18n="@@batch.logs.started.on">started on</span><span> {{ '2024-10-17T08:47:43' |
+                        date:'fullDate' }} </span><span class="material-symbols-outlined" style="cursor: auto">
+                        schedule</span><span> {{ '2024-10-17T08:47:43' | date: "HH:mm" }}</span>
+                </div>
             </div>
-          </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-10 col-sm-12">
@@ -75,9 +81,9 @@
                     <thead>
                         <tr class="border-bottom">
                             <th scope="col" class="pe-2">Status</th>
-                            <th scope="col" class="pe-2" i18n="@@batch.logs.details.for">Title</th>
-                            <th scope="col" class="pe-2" i18n="@@batch.logs.details.for">Report</th>
-                            <th scope="col" i18n="@@batch.logs.header.details">Log</th>
+                            <th scope="col" class="pe-2" i18n="@@batch.logs.header.title">Title</th>
+                            <th scope="col" class="pe-2" i18n="@@batch.logs.header.message">Report</th>
+                            <th scope="col">Log</th>
                         </tr>
                     </thead>
 
