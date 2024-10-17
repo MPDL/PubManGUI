@@ -196,7 +196,7 @@ export class BatchService {
     actionParams.itemIds = this.items;
 
     const headers = new HttpHeaders().set('Authorization', this.token!);
-    const url = `${this.#baseUrl}/batchProcess/submitPubItems`;
+    const url = `${this.#baseUrl}/batchProcess/deletePubItems`;
     const body = actionParams;
 
     const actionResponse: Observable<resp.actionGenericResponse> = this.http.put<resp.actionGenericResponse>(url, body, { headers })
