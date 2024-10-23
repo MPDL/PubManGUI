@@ -1,50 +1,105 @@
-<div [formGroup]="file_form">
-    <div class="custom-drag-placeholder" *cdkDragPlaceholder></div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1" cdkDragHandle>
-        <div class="py-1">
-            <span class="material-symbols-outlined containerShowOnSort">
-                drag_indicator
-            </span>
-        </div>
-        @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED') {
-        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. File -
-            {{file_form.get('name')?.value}}</label>
-        } @else if (file_form.get('storage')?.value == 'EXTERNAL_URL') {
-        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. External Reference -
-            {{file_form.get('metadata')?.get('title')?.value}}</label>
-        }
+<div [formGroup]="file_form" class="">
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. File - {{file_form.get('name')?.value}}</label>
     </div>
-    <div class="containerHideOnSort"><!-- #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed"> -->
-        <ng-container formGroupName="metadata">
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm">
-
-                    <label for="contentCategory" class="col-sm-2 col-form-label">ContentCategory</label>
-                    <select id="contentCategory" class="form-select" formControlName="contentCategory"
-                        (change)="contentCategory_change($event)">
-                        <option [value]="null" selected disabled>contentCategory</option>
-                        @for (contentCategoryType of contentCategory_types; track contentCategoryType) {
-                        <option [value]="contentCategoryType">{{contentCategoryType}}</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm">
-                    <label for="file_title" class="col-sm-2 col-form-label">Title</label>
-                    <input type="text" class="form-control" id="file_title" name="title" formControlName="title">
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-        </ng-container>
-        @if (file_form.get('storage')?.value == 'EXTERNAL_URL') {
+    <ng-container formGroupName="metadata">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
-                <label for="file_content" class="col-sm-2 col-form-label">URL</label>
-                <input type="text" class="form-control" id="file_content" name="content" formControlName="content">
+
+                <label for="contentCategory" class="col-sm-2 col-form-label">ContentCategory</label>
+                <select id="contentCategory" class="form-select" formControlName="contentCategory"
+                    (change)="contentCategory_change($event)">
+                    <option [value]="null" selected disabled>contentCategory</option>
+                    @for (contentCategoryType of contentCategory_types; track contentCategoryType) {
+                    <option [value]="contentCategoryType">{{contentCategoryType}}</option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+            </div>
+        </div>
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+            <div class="col-sm">
+                <label for="file_title" class="col-sm-2 col-form-label">Title</label>
+                <input type="text" class="form-control" id="file_title" name="title" formControlName="title">
+            </div>
+            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+            </div>
+        </div>
+    </ng-container>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <div class="col-sm">
+            <label for="visibility" class="col-sm-2 col-form-label">Visibility</label>
+            <select id="visibility" class="form-select" formControlName="visibility"
+                (change)="visibility_change($event)">
+                <option [value]="null" selected disabled>visibility</option>
+                @for (visibility of visibility_types; track visibility) {
+                <option [value]="visibility">{{visibility}}</option>
+                }
+            </select>
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        </div>
+    </div>
+    @if (file_form.get('visibility')?.value == 'AUDIENCE') {
+
+    <ng-container formArrayName="allowedAudienceIds">
+        @for (audienceId of allowedAudienceIds.controls; track audienceId; let audienceIdIndex = $index) {
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+            <div class="col-sm-2">
+                <label class="col-smcol-form-label">{{audienceIdIndex + 1}}. Audience IP</label>
+            </div>
+            <div class="col-sm">
+                <select id="audienceId" class="form-select" name="audienceIp[audienceIdIndex]"
+                    [formControl]="audienceId">
+                    <option [value]="null" selected disabled>Audience Id</option>
+                    @for (ipRange of ipRangeCompleteList; track ipRange) {
+                    <option [value]="ipRange.id">{{ipRange.name}}</option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <pure-add-remove-buttons [index]="index"
+                    (notice)="handleAllowedAudienceIdsNotification($event)"></pure-add-remove-buttons>
+            </div>
+        </div>
+        }
+        @empty {
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+            <div class="col-sm">
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add Audience'"
+                    (notice)="handleAllowedAudienceIdsNotification($event)"></pure-add-remove-buttons>
+            </div>
+        </div>
+        }
+    </ng-container>
+    }
+    <ng-container formGroupName="metadata">
+        @if (file_form.get('visibility')?.value == 'PRIVATE') {
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+            <div class="col-sm-2">
+                <label for="file_embargoUntil" class="col-sm-2 col-form-label">EmbargoUntil</label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" id="file_embargoUntil" name="embargoUntil"
+                    formControlName="embargoUntil" placeholder="YYYY-MM-DD">
+            </div>
+            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+            </div>
+        </div>
+        }
+        @if (file_form.get('visibility')?.value == 'PUBLIC') {
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+            <div class="col-sm-2">
+                <label for="oaStatus" class="col-sm-2 col-form-label">oaStatus</label>
+            </div>
+            <div class="col-sm">
+                <select id="oaStatus" class="form-select" formControlName="oaStatus">
+                    <option [value]="null" selected disabled>oaStatus</option>
+                    @for (oaStatusType of oaStatus_types; track oaStatusType) {
+                    <option [value]="oaStatusType">{{oaStatusType}}</option>
+                    }
+                </select>
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
@@ -52,145 +107,47 @@
         }
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
-                <label for="visibility" class="col-sm-2 col-form-label">Visibility</label>
-                <select id="visibility" class="form-select" formControlName="visibility"
-                    (change)="visibility_change($event)">
-                    <option [value]="null" selected disabled>visibility</option>
-                    @for (visibility of visibility_types; track visibility) {
-                    <option [value]="visibility">{{visibility}}</option>
-                    }
-                </select>
+                <label for="file_description" class="col-sm-2 col-form-label">Description</label>
+                <input type="text" class="form-control" id="file_description" name="description"
+                    formControlName="description">
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
         </div>
-        @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED') {
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+
+            <div class="col-sm-2"><!--NEEDED to keep the layout (first collumn for lable)-->
+            </div>
             <div class="col-sm">
-                <label for="visibility" class="col-sm-2 col-form-label">Visibility</label>
-                <select id="visibility" class="form-select" formControlName="visibility"
-                    (change)="visibility_change($event)">
-                    <option [value]="null" selected disabled>visibility</option>
-                    @for (visibility of visibility_types; track visibility) {
-                    <option [value]="visibility">{{visibility}}</option>
-                    }
-                </select>
+                <label for="file_license" class="col-sm col-form-label">License</label>
+                <input type="text" class="form-control" id="file_license" name="license" formControlName="license">
+            </div>
+            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+            </div>
+        </div>
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+            <div class="col-sm-2">
+                <label class="col-sm-2 col-form-label">Rights</label>
+            </div>
+            <div class="col-sm">
+                <label for="file_rights" class="col-sm col-form-label">Copyright statement</label>
+                <input type="text" class="form-control" id="file_rights" name="rights" formControlName="rights">
+            </div>
+            <div class="col-sm">
+                <label for="file_copyrightDate" class="col-sm col-form-label">Copyright Date</label>
+                <input type="text" class="form-control" id="file_copyrightDate" name="copyrightDate"
+                    formControlName="copyrightDate" placeholder="YYYY-MM-DD">
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
         </div>
 
-        @if (file_form.get('visibility')?.value == 'AUDIENCE') {
-
-        <ng-container formArrayName="allowedAudienceIds">
-            @for (audienceId of allowedAudienceIds.controls; track audienceId; let audienceIdIndex = $index) {
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm-2">
-                    <label class="col-smcol-form-label">{{audienceIdIndex + 1}}. Audience IP</label>
-                </div>
-                <div class="col-sm">
-                    <select id="audienceId" class="form-select" name="audienceIp[audienceIdIndex]"
-                        [formControl]="audienceId">
-                        <option [value]="null" selected disabled>Audience Id</option>
-                        @for (ipRange of ipRangeCompleteList; track ipRange) {
-                        <option [value]="ipRange.id">{{ipRange.name}}</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-sm-1">
-                    <pure-add-remove-buttons [index]="index"
-                        (notice)="handleAllowedAudienceIdsNotification($event)"></pure-add-remove-buttons>
-                </div>
-            </div>
-            }
-            @empty {
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm">
-                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add Audience'"
-                        (notice)="handleAllowedAudienceIdsNotification($event)"></pure-add-remove-buttons>
-                </div>
-            </div>
-            }
-        </ng-container>
-        }}
-        <ng-container formGroupName="metadata">
-            @if (file_form.get('visibility')?.value == 'PRIVATE' && file_form.get('storage')?.value ==
-            'INTERNAL_MANAGED') {
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm-2">
-                    <label for="file_embargoUntil" class="col-sm-2 col-form-label">EmbargoUntil</label>
-                </div>
-                <div class="col-sm">
-                    <input type="text" class="form-control" id="file_embargoUntil" name="embargoUntil"
-                        formControlName="embargoUntil" placeholder="YYYY-MM-DD">
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-            }
-            @if (file_form.get('visibility')?.value == 'PUBLIC' || file_form.get('storage')?.value == 'EXTERNAL_URL') {
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm-2">
-                    <label for="oaStatus" class="col-sm-2 col-form-label">OA-Status</label>
-                </div>
-                <div class="col-sm">
-                    <select id="oaStatus" class="form-select" formControlName="oaStatus">
-                        <option [value]="null" selected disabled>OA-Status</option>
-                        @for (oaStatusType of oaStatus_types; track oaStatusType) {
-                        <option [value]="oaStatusType">{{oaStatusType}}</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-            }
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm">
-                    <label for="file_description" class="col-sm-2 col-form-label">Description</label>
-                    <input type="text" class="form-control" id="file_description" name="description"
-                        formControlName="description">
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-            @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED') {
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-
-                <div class="col-sm-2"><!--NEEDED to keep the layout (first collumn for lable)-->
-                </div>
-                <div class="col-sm">
-                    <label for="file_license" class="col-sm col-form-label">License</label>
-                    <input type="text" class="form-control" id="file_license" name="license" formControlName="license">
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="col-sm-2">
-                    <label class="col-sm-2 col-form-label">Rights</label>
-                </div>
-                <div class="col-sm">
-                    <label for="file_rights" class="col-sm col-form-label">Copyright statement</label>
-                    <input type="text" class="form-control" id="file_rights" name="rights" formControlName="rights">
-                </div>
-                <div class="col-sm">
-                    <label for="file_copyrightDate" class="col-sm col-form-label">Copyright Date</label>
-                    <input type="text" class="form-control" id="file_copyrightDate" name="copyrightDate"
-                        formControlName="copyrightDate" placeholder="YYYY-MM-DD">
-                </div>
-                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                </div>
-            </div>
-            }
-        </ng-container>
-
-        <div class="d-sm-flex flex-sm-row gap-1 mb-1 d-none" [ngClass]="{'d-sm-none': index == index_length -1}">
-            <div class="col-sm">
-                <hr>
-            </div>
-            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-            </div>
+    </ng-container>
+    <div class="d-sm-flex flex-sm-row gap-1 mb-1 d-none" [ngClass]="{'d-sm-none': index == index_length -1}">
+        <div class="col-sm">
+            <hr>
+        </div>
+        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
         </div>
     </div>
 </div>

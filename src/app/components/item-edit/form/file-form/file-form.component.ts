@@ -1,12 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
 import { ControlType } from '../../services/form-builder.service';
 import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 import { AaService } from 'src/app/services/aa.service';
-import { CdkDragHandle, CdkDragPreview, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'pure-file-form',
@@ -15,9 +14,6 @@ import { CdkDragHandle, CdkDragPreview, CdkDragPlaceholder } from '@angular/cdk/
     AddRemoveButtonsComponent,
     CommonModule,
     ReactiveFormsModule,
-    CdkDragHandle,
-    CdkDragPreview,
-    CdkDragPlaceholder,
   ],
   templateUrl: './file-form.component.html',
   styleUrl: './file-form.component.scss'

@@ -84,7 +84,6 @@ export interface FileDbVO extends FileDbRO {
     size: number;
     metadata: MdsFileVO;
     allowedAudienceIds: string[];
-    sortkz: number;
 }
 
 export interface ItemRootVO extends Serializable {

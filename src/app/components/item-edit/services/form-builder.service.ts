@@ -61,7 +61,6 @@ export class FormBuilderService {
       size: this.fb.control(file?.size ? file.size : null),
       metadata: file?.metadata ? this.mds_file_FG(file.metadata) : this.mds_file_FG(null),
       allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.control(audiencId) as AbstractControl) : []),
-      sortkz: this.fb.control(file?.sortkz ? file.sortkz : null),
     });
     return file_form;
   }

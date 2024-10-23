@@ -51,6 +51,6 @@ export default class ImportComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(['/import']);
+    this.router.navigate(['/imports/myimports']);
   }
 }

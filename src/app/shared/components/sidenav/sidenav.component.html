@@ -64,7 +64,7 @@
                 <span class="material-symbols-outlined">get_app</span>
                 <span class="nav-label ms-3">Import</span>
                 @if ( importsSvc.haveImports() ) {
-                  <div class="matBadge" matBadge='9999'></div>
+                  <div class="matBadge" matBadge='{{ importsSvc.getImportsCount() }}'></div>
                 } 
               </a>
               @if ( importsSvc.haveImports() ) {
