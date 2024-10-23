@@ -29,6 +29,7 @@ export abstract class PubmanGenericRestClientService<modelType> {
   }
 
   create(obj: modelType, token:string) : Observable<modelType> {
+    console.log('Creating Item');
     return this.httpPost(this.subPath, obj, token);
   }
 
@@ -37,7 +38,8 @@ export abstract class PubmanGenericRestClientService<modelType> {
   }
 
   update(id: string, obj: modelType, token:string): Observable<modelType> {
-    return this.httpGet(this.subPath + '/' + id, token);
+    console.log('Updating item', id)
+    return this.httpPut(this.subPath + '/' + id, obj, token);
   }
 
   delete(id: string, token:string): Observable<number> {

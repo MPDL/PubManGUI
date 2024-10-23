@@ -1,14 +1,18 @@
-<div class="breadcrumb" [ngClass]="{ 'scrolled': isScrolled }">
+<nav>
   <a [routerLink]="['/home']">
-    <span class="material-symbols-outlined" title="Home">Home</span>
+    <span class="material-symbols-outlined">Home</span>
   </a>
 
-  <ng-container *ngFor="let crumb of breadcrumbs; let last = last; let first = first">
+  @for(crumb of breadcrumbs; track crumb.label; let last = $last) {
     @if(crumb.label !== 'Home') {
-    <span class="text-muted">&gt;</span>
-    <a [routerLink]="crumb.link">
-      <span [ngClass]="{'bold': last}">{{ crumb.label }}</span>
-    </a>
+      <span class="text-muted">{{ separator }}</span>
+      @if(last) {
+        <span class="last">{{ crumb.label }}</span>
+      } @else {
+        <a [routerLink]="crumb.link">
+          <span>{{ crumb.label }}</span>
+        </a>
+      }
     }
-  </ng-container>
-</div>
+  }
+</nav>

@@ -1,13 +1,15 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.metadata.source.adjustEdition">Adjust Edition</h2>
   <div class="mt-2 mb-5">
-    Adjusts the "Edition" field in all existing sources. Existing values will be
-    overwritten.
+    <span i18n="@@batch.actions.metadata.source.adjustEdition.info">
+      Adjusts the "Edition" field in all existing sources. Existing values will be
+      overwritten.
+    </span>
   </div>
 
   <form [formGroup]="replaceSourceEditionForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Source to be adjusted</label>
+      <label class="col-sm-3 col-form-label" i18n="@@batch.actions.metadata.source.adjust">Source to be adjusted</label>
       <div class="col-sm-1">
         <select class="form-select" formControlName="sourceNumber">
           <option value="1" selected>1</option>
@@ -16,7 +18,7 @@
       </div>
     </div>
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Add value</label>
+      <label class="col-sm-3 col-form-label"  i18n="@@batch.actions.metadata.source.adjustEdition.to">Add value</label>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceEdition">
       </div>

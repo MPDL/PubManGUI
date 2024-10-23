@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
+import { OnInit, Component, QueryList, ViewChildren, AfterViewInit, HostListener } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, filter, startWith, of, tap, map, timeInterval } from 'rxjs';
 
@@ -39,10 +39,11 @@ export default class DatasetsComponent implements OnInit {
   select_pages_2_display = new FormControl(10);
 
   pages_2_display = [
-    { value: 5, label: '5' },
     { value: 10, label: '10' },
-    { value: 20, label: '20' },
+    { value: 25, label: '25' },
     { value: 50, label: '50' },
+    { value: 100, label: '100' },
+    { value: 250, label: '250' },
   ];
 
   // Pagination:
@@ -52,6 +53,9 @@ export default class DatasetsComponent implements OnInit {
   jump_to = new FormControl<number>(this.current_page, [Validators.nullValidator, Validators.min(1)]);
 
   private isProcessing: boolean = false;
+  selectAll = $localize`:@@selectAll:select all`;
+  deselectAll = $localize`:@@deselectAll:deselect all`;
+  isScrolled = false;
 
   constructor(
     public batchSvc: BatchService,
@@ -153,4 +157,9 @@ export default class DatasetsComponent implements OnInit {
     }
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
+  }
 }

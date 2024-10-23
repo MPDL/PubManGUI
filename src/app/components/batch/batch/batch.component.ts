@@ -24,7 +24,7 @@ export default class BatchComponent implements OnInit {
     public aaSvc: AaService,
     private batchSvc: BatchService,
     private msgSvc: MessageService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {

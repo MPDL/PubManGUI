@@ -1,0 +1,35 @@
+@if(message.text) {
+<div [ngClass]="{'collapsed': !collapsed}">
+  <div class="rounded-1 p1" [ngClass]="[bg_color, fg_color]">
+    <div class="d-flex justify-content-between align-top">
+      <span class="material-symbols-outlined type">
+        {{ severity_icon }}
+      </span>
+
+      @if(message.title) {
+      <span class="title pt-1">
+        {{ message.title }}
+      </span>
+      <div>
+        @if(collapsed) {
+        <span class="material-symbols-outlined expand_content" (click)="slide()">expand_content</span>
+        } @else {
+        <span class="material-symbols-outlined collapse_content" (click)="slide()">collapse_content</span>
+        }
+      </div>
+      } @else {
+      <span class="title pt-1">
+        {{ message.text }}
+      </span>
+      }
+      <span class="material-symbols-outlined close" (click)="close()">close</span>
+    </div>
+
+    @if(message.title && !collapsed) {
+    <div class="d-flex justify-content-center align-bottom pb-1">
+      <span [ngClass]="[bg_color, fg_color]" [innerHTML]="message.text"></span>
+    </div>
+    }
+  </div>
+</div>
+}

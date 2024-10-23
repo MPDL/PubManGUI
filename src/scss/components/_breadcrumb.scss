@@ -1,29 +1,24 @@
-.breadcrumb {
+pure-breadcrumb {
   background: none;
   font-size: 0.9em;
-  position: fixed;
-  top: 110px;
-  height: 30px;
-  margin: 0;
 
-  &.scrolled {
-    visibility: hidden;
-  }
-
-  a,
-  span,
-  .material-symbols-outlined {
+  span {
+    text-wrap: nowrap;
     text-decoration: none;
     color: var(--bs-body-color);
     margin: auto 0.3rem;
 
-    &:hover {
+    &:hover:not(.last) {
       color: black !important;
       text-decoration: none;
     }
   }
 
-  .bold {
+  .material-symbols-outlined {
+    margin-left: 0;
+  }
+
+  .last {
     font-weight: bold !important;
   }
 

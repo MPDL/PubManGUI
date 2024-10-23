@@ -1,13 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {AaService} from "../../../services/aa.service";
 
+import { MatBadgeModule } from '@angular/material/badge';
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ImportsService } from 'src/app/components/imports/services/imports.service';
+import { BatchNavComponent } from 'src/app/components/batch/batch-nav/batch-nav.component';
+import { ImportsNavComponent } from 'src/app/components/imports/imports-nav/imports-nav.component';
+
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
-  imports: [RouterLink],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent],
+  templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {
 
@@ -16,7 +22,7 @@ export class SidenavComponent implements AfterViewInit {
   @ViewChild('sidenav', {read: ElementRef}) nav!: ElementRef;
   renderer = inject(Renderer2);
 
-  constructor(protected aaService: AaService) {
+  constructor(protected aaService: AaService, public batchSvc: BatchService, public importsSvc: ImportsService) {
   }
 
   ngAfterViewInit(): void {
@@ -37,4 +43,5 @@ export class SidenavComponent implements AfterViewInit {
   collapse() {
     this.renderer.addClass(this.nav.nativeElement, 'collapsed');
   }
+
 }

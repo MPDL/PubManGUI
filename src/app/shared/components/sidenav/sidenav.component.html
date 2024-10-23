@@ -40,37 +40,57 @@
                                 class="bi bi-geo-alt"></i><small class="nav-label ms-1"></small></a>
         </nav>
         -->
-        <nav class="nav flex-column">
+        <nav class="nav flex-column ps-4 py-2">
           @if (aaService.principal.getValue().isDepositor) {
-            <a class="nav-link border-bottom" [routerLink]="['edit']" (click)="collapse()">
+            <a class="nav-link border-bottom py-3" [routerLink]="['edit']" (click)="collapse()">
               <span class="material-symbols-outlined">note_add</span>
-              <small class="nav-label ms-2">Eingabe</small>
+              <span class="nav-label ms-3" i18n="@@edit">Entry</span>
             </a>
 
-            <a class="nav-link border-bottom" [routerLink]="['my']" (click)="collapse()">
+            <a class="nav-link border-bottom py-3" [routerLink]="['my']" (click)="collapse()">
               <span class="material-symbols-outlined">folder_shared</span>
-              <small class="nav-label ms-2">Meine Datensätze</small>
+              <span class="nav-label ms-3" i18n="@@my">My datasets</span>
             </a>
           }
           @if (aaService.principal.getValue().isModerator) {
-            <a class="nav-link border-bottom" [routerLink]="['qa']" (click)="collapse()">
+            <a class="nav-link border-bottom py-3" [routerLink]="['qa']" (click)="collapse()">
               <span class="material-symbols-outlined">workspace_premium</span>
-              <small class="nav-label ms-2">QA-Bereich</small>
-            </a>
-          }
-          @if (aaService.principal.getValue().isDepositor) {
-            <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
-              <span class="material-symbols-outlined">get_app</span>
-              <small class="nav-label ms-2">Import</small>
+              <span class="nav-label ms-3" i18n="@@qa">QA Area</span>
             </a>
           }
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
-            <a class="nav-link border-bottom" [routerLink]="['batch']" (click)="collapse()">
-              <span class="material-symbols-outlined">web_stories</span>
-              <small class="nav-label ms-2">Batch-Verarbeitung</small>
-            </a>
+            <div class="border-bottom">
+              <a class="nav-link py-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.haveImports()}" (click)="collapse()">
+                <span class="material-symbols-outlined">get_app</span>
+                <span class="nav-label ms-3">Import</span>
+                @if ( importsSvc.haveImports() ) {
+                  <div class="matBadge" matBadge='9999'></div>
+                } 
+              </a>
+              @if ( importsSvc.haveImports() ) {
+                @defer {
+                <pure-imports-nav></pure-imports-nav>
+                }
+              }
+          </div>
           }
-          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+          @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
+            <div class="border-bottom">
+              <a class="nav-link py-3" [routerLink]="['batch']" [ngClass]="{'disabled' : batchSvc.areItemsSelected()}" (click)="collapse()">
+                <span class="material-symbols-outlined">web_stories</span>
+                <span class="nav-label ms-3" i18n="@@batch">Batch processing</span>
+                @if ( batchSvc.areItemsSelected() ) {
+                  <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}'></div>
+                } 
+              </a>
+              @if ( batchSvc.areItemsSelected() ) {
+                @defer {
+                <pure-batch-nav></pure-batch-nav>
+                }
+              } 
+          </div>
+          }
+          <a class="nav-link border-bottom py-3" [routerLink]="['']" (click)="collapse()">
             <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg"
                  width="24" height="24" viewBox="0 0 24 24">
               <g id="Gruppe_38" data-name="Gruppe 38">
@@ -80,13 +100,13 @@
                 </g>
               </g>
             </svg>
-            <small class="nav-label ms-2">Ablage</small>
+            <span class="nav-label ms-3" i18n="@@basket">Basket</span>
           </a>
-          <a class="nav-link border-bottom" [routerLink]="['ou_tree']" (click)="collapse()">
+          <a class="nav-link border-bottom py-3" [routerLink]="['ou_tree']" (click)="collapse()">
             <span class="material-symbols-outlined">account_tree</span>
-            <small class="nav-label ms-2">Organisationsstruktur</small>
+            <span class="nav-label ms-3" i18n="@@ouTree">Organizational units</span>
           </a>
-          <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
+          <a class="nav-link py-3" [routerLink]="['']" (click)="collapse()">
             <span class="material-symbols-outlined">place</span>
           </a>
         </nav>

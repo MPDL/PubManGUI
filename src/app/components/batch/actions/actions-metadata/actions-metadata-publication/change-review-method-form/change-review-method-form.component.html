@@ -1,20 +1,22 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
   <h2 class="m-0" i18n="@@batch.actions.metadata.publication.reviewType">Review Type</h2>
   <div class="mt-2 mb-5">
-    The review type in all items will be changed as follows
+    <span i18n="@@batch.actions.metadata.publication.reviewType.info">
+      The review type in all items will be changed as follows
+    </span>
   </div>
 
   <form [formGroup]="changeReviewMethodForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class=" col-form-label">Review types to be replaced</label>
+        <label class=" col-form-label" i18n="@@batch.actions.metadata.publication.reviewType.from">Review types to be replaced</label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="reviewMethodFrom">
-          <option [value]="" selected>---</option>
-          <option [value]=null disabled>Review type</option>
-          @for (method of reviewMethods; track method) {
-            <option [value]="method">{{method | titlecase}}</option>
+          <option [value]='' selected disabled i18n="@@batch.actions.metadata.publication.reviewType">Review type</option>
+          <option [value]=''>---</option>
+          @for (method of reviewMethodssOptions; track method) {
+            <option [value]="method.value"> {{method.option}}</option>
           }
         </select>
       </div>
@@ -22,14 +24,14 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <label class="col-form-label">Replacing review types</label>
+        <label class="col-form-label" i18n="@@batch.actions.metadata.publication.reviewType.to">Replacing review types</label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="reviewMethodTo">
-          <option [value]="" selected>---</option>
-          <option [value]=null disabled>Review type</option>
-          @for (method of reviewMethods; track method) {
-            <option [value]="method">{{method | titlecase}}</option>
+          <option [value]='' selected disabled i18n="@@batch.actions.metadata.publication.reviewType">Review type</option>
+          <option [value]=''>---</option>
+          @for (method of reviewMethodssOptions; track method) {
+            <option [value]="method.value"> {{method.option}}</option>
           }
         </select>
       </div>

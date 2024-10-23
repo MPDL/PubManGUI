@@ -95,8 +95,7 @@ export class ReplaceOrcidFormComponent {
     this.batchSvc.replaceOrcid(this.changeOrcidParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.msgSvc.info(`Action started!\n`);
-      setTimeout(() => {this.changeOrcidForm.reset();},1000);
+      setTimeout(() => {this.changeOrcidForm.reset();}, 500);
     });
   }
 }

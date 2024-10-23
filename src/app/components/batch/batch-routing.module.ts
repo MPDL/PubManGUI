@@ -8,7 +8,7 @@ const routes: Routes = [
     loadComponent: () => import('./datasets/datasets.component'),
     data: {
       breadcrumb: {
-        label: 'Datasets',
+        label: $localize`:@@datasets:Datasets`,
       }
     },
   },
@@ -17,35 +17,46 @@ const routes: Routes = [
     loadComponent: () => import('./actions/actions.component'),
     data: {
       breadcrumb: {
-        label: 'Actions',
+        label: $localize`:@@actions:Actions`,
       }
     },
   },
   {
     path: 'logs',
-    loadComponent: () => import('./logs/logs.component'),
     data: {
       breadcrumb: {
-        label: 'Logs',
+        label: $localize`:@@logs:Logs`,
       }
     },
-  },
-  {
-    path: 'logs/:id', 
-    loadComponent: () => import('./logs/item/list/log-item-list.component'),
-    data: {
-      breadcrumb: {
-        label: 'Log items',
-      }
-    },
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./logs/logs.component'),
+        data: {
+          breadcrumb: {
+            //label: '',
+          }
+        },
+      },
+      { 
+        path: ':id', 
+        loadComponent: () => import('./logs/item/list/log-item-list.component'),
+        data: {
+          breadcrumb: {
+            label: $localize`:@@details:Log details`,
+          }
+        }
+      }, 
+    ],
   },
   {
     path: '',
-    loadComponent: () => import('./batch/batch.component')
-    /*
-    redirectTo: 'datasets',
-    pathMatch: 'full',
-    */
+    loadComponent: () => import('./batch/batch.component'),
+    data: {
+      breadcrumb: {
+        label: $localize`:@@batch:Batch processing`,
+      }
+    }
   }
 ];
 

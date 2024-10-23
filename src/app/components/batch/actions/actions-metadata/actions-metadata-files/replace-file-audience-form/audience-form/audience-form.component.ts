@@ -25,7 +25,9 @@ export class AudienceFormComponent {
   @Output() notice = new EventEmitter();
 
   ngOnInit() {
-    console.log(this.ous);
+    if(this.audienceId.value.name === '') {
+      this.audienceId.setValue($localize`:@@batch.actions.metadata.files.ipRanges.singular:Range`);
+    }
   }
   
   add_remove_audience(event: any) {

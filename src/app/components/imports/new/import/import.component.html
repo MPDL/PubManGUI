@@ -1,0 +1,105 @@
+<!--div class="d-flex flex-column justify-content-center pt-5 text-success">
+    <hr>
+    <p class="d-flex justify-content-center text-success">new-import works!</p>
+    <div>
+        <img class="float-start" src="/assets/images/mocks/Screenshot_import.png" aria-hidden="true" width="60%">
+        <img class="float-end" src="/assets/images/mocks/Screenshot_import_new.png" aria-hidden="true" width="20%">
+    </div>
+    <hr>
+</div-->
+
+<div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
+    <h3 class="m-0 mb-4" i18n="@@batch.actions.context.change">File Import</h3>
+  
+    <form [formGroup]="importForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div class="mb-1 row">
+        <label class="col-sm-3 col-form-label">Upload</label>
+        <div class="col-sm-9">
+          <pure-file-upload></pure-file-upload>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="context" class="col-sm-3 col-form-label" i18n="@@batch.actions.context">Context</label>
+        <div class="col-sm-9">
+          <select id="context" class="form-select" formControlName="context">
+            <option [value]='' selected disabled i18n="@@batch.actions.context">Context</option>
+            @for (contextObject of user_contexts; track contextObject) {
+            <option [value]="contextObject.objectId">{{contextObject.name}}</option>
+            }
+          </select>
+        </div>
+      </div>
+  
+      <div class="mb-3 row">
+        <div class="col-sm-3">
+          <label class="col-form-label">Format</label>
+        </div>
+        <div class="col-sm-2">
+          <select class="form-select" formControlName="format">
+            <option value="ENDNOTE_STRING">EndNote</option>
+            <option value="BIBTEX_STRING">BibTeX</option>
+            <option value="RIS_STRING">RIS</option>
+            <option value="WOS_STRING">WOS</option>
+            <option value="MAB_STRING">MAB</option>
+            <option value="EDOC_XML">eDoc_Xml</option>
+            <option value="ESCIDOC_ITEM_V3_XML">eSciDoc_Item_Xml</option>
+            <option value="ZFN_TEI_XML">ZfN_Tei_Xml</option>
+            <option value="MARC_21_STRING">Marc21</option>
+            <option value="MARC_XML">Marc_Xml</option>
+            <option value="BMC_XML">BMC_Xml</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <div class="col-sm-3">
+          <label class="col-form-label">Name</label>
+        </div>
+        <div class="col-sm-9">
+          <input class="form-control" formControlName="name">
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <div class="col-sm-3">
+          <label class="col-form-label">Schema</label>
+        </div>
+        <div class="col-sm-9">
+          <select class="form-select" formControlName="schema" size="1" >	
+            <option value="CAESAR">CAESAR</option>
+            <option value="ICE">ICE</option>
+            <option value="IPP">IPP</option>
+            <option value="BGC">BGC</option>
+            <option value="MPFI">MPFI</option>
+            <option value="MPIB">MPIB</option>
+            <option value="MPIEA">MPIEA</option>
+            <option value="MPIGEM">MPIGEM</option>
+            <option value="MPIMP">MPIMP</option>
+            <option value="MPIMPExt">MPIMPExt</option>
+            <option value="MPIO">MPIO</option>
+            <option value="OTHER" selected>OTHER</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <div class="offset-md-3 col-sm-3">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="cone" checked>
+            <label class="form-check-label" for="cone">CoNE</label>
+          </div>          
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="offset-sm-9 col-sm-3">
+          <button type="submit" [disabled]="importForm.invalid || importForm.pristine" 
+            class="btn btn-outline-secondary col-4 float-end">
+            GO
+          </button>
+        </div>
+      </div>
+    </form>
+  
+</div>

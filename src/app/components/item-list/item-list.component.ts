@@ -1,11 +1,11 @@
 import { AsyncPipe, CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import {AfterViewInit, Component, Input, QueryList, TemplateRef, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, Input, QueryList, TemplateRef, ViewChildren, HostListener} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationDirective } from 'src/app/shared/directives/pagination.directive';
 import { ItemListElementComponent } from './item-list-element/item-list-element.component';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TopnavComponent } from 'src/app/shared/components/topnav/topnav.component';
-import {Observable, filter, map, startWith, tap, of} from 'rxjs';
+import { Observable, filter, map, startWith, tap, of} from 'rxjs';
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -44,25 +44,38 @@ export class ItemListComponent implements AfterViewInit {
   filterEvents: Map<string, FilterEvent> = new Map();
 
   select_all = new FormControl(false);
-  select_pages_2_display = new FormControl(10);
+  select_pages_2_display = new FormControl(25);
 
   pages_2_display = [
-    { value: 5, label: '5' },
-    { value: 10, label: '10' },
-    { value: 20, label: '20' },
+    { value: 25, label: '25' },
     { value: 50, label: '50' },
+    { value: 100, label: '100' },
+    { value: 250, label: '250' },
   ];
 
   // Pagination:
-  page_size = 10;
+  page_size = 25;
   number_of_pages = 1;
   current_page = 1;
   jump_to = new FormControl<number>(this.current_page, [Validators.nullValidator, Validators.min(1)]);
 
+  selectAll = $localize`:@@selectAll:select all`;
+  deselectAll = $localize`:@@deselectAll:deselect all`;
 
+  update_query = (query: any) => {
+    return {
+      query,
+      size: this.page_size,
+      from: 0,
+      sort: [
+        {modificationDate: "desc"}
+      ]
+    }
+  }
 
   currentSortQuery: any;
   currentQuery: any;
+  isScrolled = false;
 
   constructor(
     private service: ItemsService,
@@ -204,6 +217,12 @@ export class ItemListComponent implements AfterViewInit {
     } else {
       this.list_items.map(li => li.check_box.setValue(false));
     }
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
   }
 
   updateFilter(fe: any) {

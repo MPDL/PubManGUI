@@ -5,6 +5,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import * as props from 'src/assets/properties.json';
 import {AccountUserDbVO, ContextDbVO} from "../model/inge";
 import {ContextsService} from "./pubman-rest-client/contexts.service";
+import {Router} from "@angular/router";
 
 
 export class Principal{
@@ -31,7 +32,8 @@ export class AaService {
   constructor(
     private http: HttpClient,
     private contextService: ContextsService,
-    private message: MessageService
+    private message: MessageService,
+    private router: Router
   ) {
     const principal: Principal = new Principal();
     this.principal = new BehaviorSubject<Principal>(principal);
@@ -188,6 +190,7 @@ export class AaService {
     sessionStorage.clear();
     localStorage.clear();
     this.principal.next(new Principal());
+    this.router.navigate(['/'])
   }
 
   private who(token: string | string[]): Observable<AccountUserDbVO> {

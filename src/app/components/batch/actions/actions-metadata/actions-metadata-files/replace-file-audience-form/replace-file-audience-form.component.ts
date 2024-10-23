@@ -77,7 +77,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   addAudience(index: number) {
-    this.allowedAudienceIds.insert(index + 1, this.fb.control(''));
+    this.allowedAudienceIds.insert(index + 1, this.fb.control('Range'));
   }
 
   removeAudience(index: number) {
@@ -104,7 +104,6 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
     this.batchSvc.replaceFileAudience(this.replaceFileAudienceParams).subscribe( actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.msgSvc.info(`Action started!\n`);
       ( this.replaceFileAudienceForm.controls['allowedAudienceIds'] as FormArray ) = this.fb.array([]);
       this.replaceFileAudienceForm.reset();
     } );

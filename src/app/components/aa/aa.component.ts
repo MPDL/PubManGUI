@@ -10,7 +10,6 @@ import {AsyncPipe, NgIf} from '@angular/common';
 @Component({
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
-    styleUrls: ['./aa.component.scss'],
     standalone: true,
   imports: [NgIf, RouterLink, AsyncPipe]
 })

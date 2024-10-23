@@ -12,9 +12,9 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryFrom">
-                    <option [value]=''  selected disabled>Category</option>
-                    @for (category of contentCategories; track category) {
-                        <option [value]="category">{{category | titlecase}}</option>
+                    <option [value]=''  selected disabled i18n="@@batch.actions.metadata.extRef.contentCategory">Category</option>
+                    @for (category of contentCategoriesOptions; track category) {
+                        <option [value]="category.value"> {{category.option}}</option>
                     }
                 </select>
             </div>
@@ -26,9 +26,9 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryTo">
-                    <option [value]=''  selected disabled>Category</option>
-                    @for (category of contentCategories; track category) {
-                        <option [value]="category">{{category | titlecase}}</option>
+                    <option [value]=''  selected disabled i18n="@@batch.actions.metadata.extRef.contentCategory">Category</option>
+                    @for (category of contentCategoriesOptions; track category) {
+                        <option [value]="category.value"> {{category.option}}</option>
                     }
                 </select>
             </div>

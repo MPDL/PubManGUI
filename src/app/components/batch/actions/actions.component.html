@@ -1,13 +1,9 @@
 @if(aaSvc.isLoggedIn) {
 <div class="batch col-lg-12 col-sm-12">
-  <pure-batch-nav />
-  
   @if (batchSvc.areItemsSelected() && !batchSvc.isProcessRunning()) {
   <div class="actions mt-5">
-    <span>
-      The selected action will be executed on all publications currently stored in the workspace.
-      Most actions are associated with a regular "save" operation. Please note, that the state of each item will
-      change accordingly.
+    <span i18n="@@batch.actions">
+      The selected action will be applied to all publications currently stored in the workspace. Most actions involve a regular 'save' operation. Please note that this will change the state of each item accordingly.
     </span>
 
     <div class="mt-5">
@@ -38,7 +34,9 @@
           <div id="collapseContext" class="accordion-collapse collapse" aria-labelledby="headingContext"
             data-bs-parent="#accordionActions">
             <div class="accordion-body p-0 my-3">
+              @defer {
               <pure-batch-change-context />
+              }
             </div>
           </div>
         </div>
@@ -54,7 +52,9 @@
           <div id="collapseTags" class="accordion-collapse collapse" aria-labelledby="headingTags"
             data-bs-parent="#accordionActions">
             <div class="accordion-body p-0 my-3">
+              @defer {
               <pure-batch-actions-local-tags />
+              }
             </div>
           </div>
         </div>
@@ -70,7 +70,9 @@
           <div id="collapseGenre" class="accordion-collapse collapse" aria-labelledby="headingGenre"
             data-bs-parent="#accordionActions">
             <div class="accordion-body p-0 my-3">
+              @defer {
               <pure-batch-change-genre />
+              }
             </div>
           </div>
         </div>
@@ -86,7 +88,9 @@
           <div id="collapseMetadata" class="accordion-collapse collapse" aria-labelledby="headingMetadata"
             data-bs-parent="#accordionActions">
             <div class="accordion-body p-0 my-3">
+              @defer {
               <pure-batch-actions-metadata />
+              }
             </div>
           </div>
         </div>

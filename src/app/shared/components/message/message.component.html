@@ -1,13 +1,12 @@
-<div class="container-fluid">
-    <div class="d-flex flex-row border p-0 justify-content-between align-items-center" [ngClass]="border_color(message.type)">
-        <div class="text-start me-auto ms-2 p-0">
-            <pre [ngClass]="text_color(message.type)">
-            <small>&#13;&#10;{{message.text}}</small></pre>
-        </div>
-        <button type="button" class="me-1 ms-2 btn btn-sm" [ngClass]="btn_color(message.type)" (click)="close()">
-            &times;
-        </button>
+<div class="d-flex flex-row-reverse p-1" [ngClass]="bg_color(message.type)">
+    <button type="button" class="btn-close" [ngClass]="btn_color(message.type)" (click)="close()">
+    </button>
+</div>
+
+<div class="d-flex flex-row p-4">
+    <div class="text-start p-0">
+        <span [ngClass]="text_color(message.type)">
+            {{message.text}}
+        </span>
     </div>
 </div>
-<!--applying this to pre removes all white spaces at any line-->
-<!--style="white-space: pre-line;"-->

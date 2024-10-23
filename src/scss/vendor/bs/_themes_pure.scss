@@ -40,7 +40,7 @@
     }
 
     .badge-yellow {
-        background-color: $mpdl-iseo3;
+        background-color: $mpdl-yellow;
     }
 
   .badge-gray {
@@ -151,7 +151,7 @@
         }
 
         a:hover path {
-            fill: $link-hover-color;
+            fill: var(--bs-body-color); // $link-hover-color;
         }
 
         a.svg-bg-icon {
@@ -166,7 +166,7 @@
         }
         a:hover.svg-bg-icon {
             circle {
-                fill: $link-hover-color;
+                fill: var(--bs-body-color); //$link-hover-color;
             }
         }
     }
@@ -244,7 +244,7 @@
     }
 
     .badge-yellow {
-        background-color: $mpdl-iseo3;
+        background-color: $mpdl-yellow;
     }
 
     .cdk-drag-preview {
@@ -269,7 +269,7 @@
     }
 
     .header_color {
-        // background-color: $mpdl-iseo5;
+        // background-color: $mpg-blue;
         background-color: $body-secondary-bg-dark;
     }
 

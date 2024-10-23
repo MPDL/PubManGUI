@@ -1,10 +1,8 @@
 @if(aaSvc.isLoggedIn) {
 <div class="batch">
-  <pure-batch-nav />
-
   @if(batchSvc.areItemsSelected()) {
   <div class="datasets">
-    <div class="row top_nav_pos navbar bg-body">
+    <div class="row top_nav_pos navbar bg-body py-2" [ngClass]="{ 'scrolled': isScrolled }">
       <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
         <div class="d-inline-flex justify-content-start align-items-center">
@@ -57,10 +55,10 @@
                 navigate_before
               </span>
             </button>
-            <span>Page</span>
+            <span i18n="@@pagination.page">Page</span>
             <input type="text" class="form-control mx-2" [formControl]="jump_to" [value]="jump_to.value"
               (keyup.enter)="jumpToPage()">
-            <span>of {{pagination.totalPages}}</span>
+            <span i18n="@@pagination.of"> of </span><span> {{pagination.totalPages}}</span>
             <button type="button" class="btn btn-sm border border-0" (click)="pagination.next()"
               [disabled]="pagination.isLast">
               <span class="material-symbols-outlined">
@@ -85,16 +83,16 @@
       </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row mt-2">
       <div class="col-lg-9 col-sm-12">
         @if (result_list | async; as list) {
         <div class="card">
           <div class="card-header">
-            <div class="form-check ms-4">
+            <div class="form-check m-3">
               <input #input [formControl]="select_all" class="form-check-input" type="checkbox" value="" id="form_check"
                 (change)="select_all_items($event)">
               <label for="form_check"><small
-                  [innerHTML]="input.checked ? 'deselect all' : 'select all'"></small></label>
+                  [innerHTML]="input.checked ? deselectAll  : selectAll"></small></label>
             </div>
           </div>
           <div class="list-group list-group-flush">
