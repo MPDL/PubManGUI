@@ -10,7 +10,6 @@ import { itemResolver } from "./services/pubman-rest-client/item-resolver";
 import { MyItemsComponent } from "./components/my-items/my-items.component";
 import { QaWorkspaceComponent } from "./components/qa-workspace/qa-workspace.component";
 import { SearchResultListComponent } from "./components/search-result-list/search-result-list.component";
-import { fetchItemResolver } from "./components/imports/services/fetch-item-resolver";
 
 export const routes: Routes = [
   {
@@ -89,26 +88,13 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver },
-    data: {
-      breadcrumb: {
-        label: 'Edit',
-      }
-    },
+    path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver }
   },
   {
     path: 'edit', component: ItemFormComponent,
     data: {
       breadcrumb: {
         label: 'Entry',
-      }
-    },
-  },
-  {
-    path: 'edit_import', component: ItemFormComponent, resolve: { item: fetchItemResolver },
-    data: {
-      breadcrumb: {
-        label: 'Edit import',
       }
     },
   },

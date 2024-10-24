@@ -46,13 +46,21 @@
                             <pure-file-upload></pure-file-upload>
                         </div>
                     </div>
-                    @if (files.controls.length > 0) {
-                    <ng-container formArrayName="files">
-                        <div class="accordion-body mt-3 mb-3">
-                            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                                <label class="col-sm-2 col-form-label">Files</label>
-                                <div class="col-sm">
-                                @for (file of files.controls; track file; let fileIndex = $index) {
+                    @if (internalFiles && internalFiles.controls.length > 0) {
+                    <div class="accordion-body mt-3 mb-3">
+                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                            <label class="col-sm-2 col-form-label">Files</label>
+                            <div class="form-check form-switch col-sm py-1">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
+                                [checked]="switchFileSortingMode" (change)="changeSortingMode()">
+                                <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
+                            </div>
+                        </div>
+                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                            <div class="col-sm-2"></div>
+                            <div cdkDropList class="col-sm drag-list" (cdkDropListDropped)="dropInternalFiles($event)">
+                                @for (file of internalFiles.controls; track file; let
+                                fileIndex = $index) {
                                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                     
                                     <div class="col-sm">
@@ -75,6 +83,7 @@
                         </div>
                     </ng-container>
                     }
+                    @if (externalReferences && externalReferences.controls.length > 0) {
                     <div class="accordion-body mt-3 mb-3">
                         <!-- TODO Locator upload -->
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
