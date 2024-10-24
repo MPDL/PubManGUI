@@ -41,7 +41,7 @@ export default class FetchComponent implements OnInit {
   public fetchForm: FormGroup = this.fb.group({
     contextId: ['ctx_persistent3', [Validators.required]],
     source: ['crossref', [Validators.required]],
-    identifier: ['10.1038%2Fs41586-021-04387-1', [Validators.required]],
+    identifier: ['10.1038/s41586-021-04387-1', [Validators.required]],
     fullText: ['FULLTEXT_DEFAULT']
   });
 
