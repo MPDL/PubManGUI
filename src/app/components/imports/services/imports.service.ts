@@ -4,7 +4,7 @@ import { catchError, tap, of, Observable, throwError, EMPTY } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
 
 import type * as params from '../interfaces/imports-params';
-import type * as resp from '../interfaces/imports-responses';
+//import type * as resp from '../interfaces/imports-responses';
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
