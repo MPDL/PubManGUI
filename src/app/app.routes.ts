@@ -10,6 +10,7 @@ import { itemResolver } from "./services/pubman-rest-client/item-resolver";
 import { MyItemsComponent } from "./components/my-items/my-items.component";
 import { QaWorkspaceComponent } from "./components/qa-workspace/qa-workspace.component";
 import { SearchResultListComponent } from "./components/search-result-list/search-result-list.component";
+import { fetchItemResolver } from "./components/imports/services/fetch-item-resolver";
 
 export const routes: Routes = [
   {
@@ -88,7 +89,12 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver }
+    path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver },
+    data: {
+      breadcrumb: {
+        label: 'Edit',
+      }
+    },
   },
   {
     path: 'edit', component: ItemFormComponent,
@@ -99,11 +105,28 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'edit_import', component: ItemFormComponent, resolve: { item: fetchItemResolver },
+    data: {
+      breadcrumb: {
+        label: 'Edit import',
+      }
+    },
+  },
+  {
     path: 'batch',
     loadChildren: () => import('./components/batch/batch-routing.module').then(m => m.BatchRoutingModule),
     data: {
       breadcrumb: {
         label: 'Batch processing',
+      }
+    },
+  },
+  {
+    path: 'imports',
+    loadChildren: () => import('./components/imports/imports-routing.module').then(m => m.ImportsRoutingModule),
+    data: {
+      breadcrumb: {
+        label: 'Imports',
       }
     },
   },

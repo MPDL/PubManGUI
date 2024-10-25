@@ -61,6 +61,7 @@ export class FormBuilderService {
       size: this.fb.control(file?.size ? file.size : null),
       metadata: file?.metadata ? this.mds_file_FG(file.metadata) : this.mds_file_FG(null),
       allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.control(audiencId) as AbstractControl) : []),
+      sortkz: this.fb.control(file?.sortkz ? file.sortkz : null),
     });
     return file_form;
   }
@@ -72,9 +73,6 @@ export class FormBuilderService {
       description: this.fb.control(fileMetadata?.description ? fileMetadata.description : null),
       identifiers: this.fb.array(fileMetadata?.identifiers ? fileMetadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : []),
       formats: this.fb.array(fileMetadata?.formats ? fileMetadata.formats.map(format => this.format_FG(format) as AbstractControl) : []),
-      /**
-       * @deprecated
-       */
       size: this.fb.control(fileMetadata?.size ? fileMetadata.size : null),
       embargoUntil: this.fb.control(fileMetadata?.embargoUntil ? fileMetadata.embargoUntil : null),
       copyrightDate: this.fb.control(fileMetadata?.copyrightDate ? fileMetadata.copyrightDate : null),

@@ -1,0 +1,119 @@
+<!--div class="d-flex flex-column justify-content-center pt-5 text-success">
+    <hr>
+    <p class="d-flex justify-content-center text-success">import-list works!</p>
+    <img class="mx-auto" src="/assets/images/mocks/Screenshot_list.png" aria-hidden="true" width="60%">
+    <hr>
+</div-->
+
+<div class="imports">
+    <div class="logs">
+        <div class="row top_nav_pos navbar bg-body">
+            <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-end">
+
+                <div class="small d-inline-flex align-items-end">
+                    <span class="material-symbols-outlined p-1">
+                        first_page
+                    </span>
+                    <span class="material-symbols-outlined p-1">
+                        navigate_before
+                    </span>
+                    <label class="col-form-label me-2 ms-1" i18n="@@pagination.page">Page</label>
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        [value]=1 size="3" />
+                    <span class="col-form-label text-nowrap px-2" i18n="@@pagination.of"> of </span>
+                    <span class="col-form-label text-nowrap px-2">999</span>
+                    <span class="material-symbols-outlined p-1">
+                        navigate_next
+                    </span>
+                    <span class="material-symbols-outlined p-1">
+                        last_page
+                    </span>
+                    <select class="form-select ms-3">
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="250">250</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="my-3"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-10 col-sm-12">
+                <table class="table table-responsive col-12 mt-1">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th scope="col" class="pe-2">Status</th>
+                            <th scope="col" class="pe-2">Import</th>
+                            <th scope="col" class="pe-2">Format</th>
+                            <th scope="col" class="pe-2" i18n="@@batch.logs.header.date">Started</th>
+                            <th scope="col" i18n="@@batch.logs.header.details">Details</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="border-bottom">
+                            <td class="col-1">
+                                Finished
+                            </td>
+                            <td class="col-4">
+                                Some mock import
+                            </td>
+                            <td class="col-1">
+                                WOS
+                            </td>
+                            <td class="col-4">
+                                <span>{{ '2024-10-15T08:47:43' | date:'fullDate' }}</span>
+                                <div class="float-end">
+                                    <span class="material-symbols-outlined" style="cursor: auto">schedule</span>&nbsp;
+                                    <span>{{ '2024-10-15T08:47:43' | date: "HH:mm" }}</span>
+                                </div>
+                            </td>
+                            <td class="col-1">
+                                <a [routerLink]="['/imports/myimports/',1]">
+                                    <span class="material-symbols-outlined ms-3 my-0">
+                                        list
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr class="border-bottom">
+                            <td class="col-1">
+                                Finished
+                            </td>
+                            <td class="col-5">
+                                Other mock import
+                            </td>
+                            <td class="col-1">
+                                WOS
+                            </td>
+                            <td class="col-4">
+                                <span>{{ '2024-10-16T08:47:43' | date:'fullDate' }}</span>
+                                <div class="float-end">
+                                    <span class="material-symbols-outlined" style="cursor: auto">schedule</span>&nbsp;
+                                    <span>{{ '2024-10-16T08:47:43' | date: "HH:mm" }}</span>
+                                </div>
+                            </td>
+                            <td class="col-1">
+                                <a [routerLink]="['/imports/myimports/', 2]">
+                                    <span class="material-symbols-outlined ms-3 my-0">
+                                        list
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-2 d-none d-lg-block">
+
+            </div>
+        </div>
+    </div>
+</div>

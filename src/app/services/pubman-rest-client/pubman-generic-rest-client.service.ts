@@ -29,7 +29,7 @@ export abstract class PubmanGenericRestClientService<modelType> {
   }
 
   create(obj: modelType, token:string) : Observable<modelType> {
-    console.log('Creating Item');
+    console.log('Creating: ', typeof obj);
     return this.httpPost(this.subPath, obj, token);
   }
 
@@ -38,7 +38,7 @@ export abstract class PubmanGenericRestClientService<modelType> {
   }
 
   update(id: string, obj: modelType, token:string): Observable<modelType> {
-    console.log('Updating item', id)
+    console.log('Updating:', id, typeof id)
     return this.httpPut(this.subPath + '/' + id, obj, token);
   }
 
