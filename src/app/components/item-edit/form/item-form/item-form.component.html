@@ -46,7 +46,7 @@
                             <pure-file-upload [file_upload_form]="internalFiles"></pure-file-upload>
                         </div>
                     </div>
-                    @if (internalFiles.controls.length > 0) {
+                    @if (internalFiles && internalFiles.controls.length > 0) {
                     <div class="accordion-body mt-3 mb-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label class="col-sm-2 col-form-label">Files</label>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     }
-                    @if (externalReferences.controls.length > 0) {
+                    @if (externalReferences && externalReferences.controls.length > 0) {
                     <div class="accordion-body mt-3 mb-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label class="col-sm-2 col-form-label">External References</label>

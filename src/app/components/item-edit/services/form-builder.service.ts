@@ -73,9 +73,6 @@ export class FormBuilderService {
       description: this.fb.control(fileMetadata?.description ? fileMetadata.description : null),
       identifiers: this.fb.array(fileMetadata?.identifiers ? fileMetadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : []),
       formats: this.fb.array(fileMetadata?.formats ? fileMetadata.formats.map(format => this.format_FG(format) as AbstractControl) : []),
-      /**
-       * @deprecated
-       */
       size: this.fb.control(fileMetadata?.size ? fileMetadata.size : null),
       embargoUntil: this.fb.control(fileMetadata?.embargoUntil ? fileMetadata.embargoUntil : null),
       copyrightDate: this.fb.control(fileMetadata?.copyrightDate ? fileMetadata.copyrightDate : null),

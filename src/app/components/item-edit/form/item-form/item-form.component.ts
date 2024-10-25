@@ -18,7 +18,7 @@ import { ItemsService } from 'src/app/services/pubman-rest-client/items.service'
 import { FileFormComponent } from '../file-form/file-form.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { FilterFilesPipe } from 'src/app/shared/services/pipes/filter-files.pipe';
-import { CdkDrag, CdkDragDrop, CdkDragMove, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'pure-item-form',
