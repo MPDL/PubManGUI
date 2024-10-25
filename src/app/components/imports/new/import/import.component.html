@@ -12,9 +12,9 @@
     <h3 class="m-0 mb-4" i18n="@@batch.actions.context.change">File Import</h3>
   
     <form [formGroup]="importForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-1 row">
+      <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label class="col-sm-3 col-form-label">Upload</label>
-        <div class="col-sm-9">
+        <div class="col-sm-4">
           <pure-file-upload></pure-file-upload>
         </div>
       </div>

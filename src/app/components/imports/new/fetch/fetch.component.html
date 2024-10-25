@@ -15,7 +15,7 @@
       <div class="mb-3 row">
         <label for="context" class="col-sm-3 col-form-label" i18n="@@batch.actions.context">Context</label>
         <div class="col-sm-9">
-          <select id="context" class="form-select" formControlName="context">
+          <select id="context" class="form-select" formControlName="contextId">
             <option [value]='' selected disabled i18n="@@batch.actions.context">Context</option>
             @for (contextObject of user_contexts; track contextObject) {
             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -30,8 +30,8 @@
         </div>
         <div class="col-sm-2">
           <select class="form-select" formControlName="source">
-            <option value="1" selected>Crossref-DOI</option>
-            <option value="2">arXiv</option>
+            <option value="crossref" selected>Crossref-DOI</option>
+            <option value="arxiv">arXiv</option>
           </select>
         </div>
         <div class="col-sm-7">
