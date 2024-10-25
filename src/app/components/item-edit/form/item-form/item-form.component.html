@@ -43,7 +43,7 @@
                         <!-- TODO File upload -->
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label class="col-sm-2 col-form-label">File Upload</label>
-                            <pure-file-upload></pure-file-upload>
+                            <pure-file-upload [file_upload_form]="internalFiles"></pure-file-upload>
                         </div>
                     </div>
                     @if (files.controls.length > 0) {
@@ -54,34 +54,53 @@
                                 <div class="col-sm">
                                 @for (file of files.controls; track file; let fileIndex = $index) {
                                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                                    
-                                    <div class="col-sm">
-                                        <ng-container [formGroupName]="fileIndex">
-                                            <pure-file-form [file_form]="file" [index]="fileIndex"
-                                                [index_length]="files.controls.length"
-                                                (notice)="handleFileNotification($event)"></pure-file-form>
-                                        </ng-container>
+                                    <div cdkDrag class="col-sm"> <!-- (cdkDragMoved)="onDragMove($event)" -->
+                                        <pure-file-form [file_form]="file" [index]="fileIndex"
+                                            [index_length]="internalFiles.controls.length"
+                                            (notice)="handleFileNotification($event)"></pure-file-form>
                                     </div>
                                 </div>
                                 }
-                                <!--
-                        @empty {
-                            <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add file'"
-                                (notice)="handleFileNotification($event)"></pure-add-remove-buttons>
-                        }
-                         -->
-                        </div>
                             </div>
                         </div>
-                    </ng-container>
+                    </div>
                     }
                     <div class="accordion-body mt-3 mb-3">
-                        <!-- TODO Locator upload -->
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                            <label class="col-sm-2 col-form-label">TODO: Locator Upload</label>
-                            <pure-file-upload></pure-file-upload>
+                            <label class="col-sm-2 col-form-label">External References</label>
+                            <div class="form-check form-switch col-sm py-1">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
+                                    [checked]="switchFileSortingMode" (change)="changeSortingMode()">
+                                <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
+                            </div>
+                        </div>
+                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                            <div class="col-sm-2"></div>
+                            <div cdkDropList class="col-sm drag-list"
+                                (cdkDropListDropped)="dropExternalReferences($event)">
+                                @for (externalUrl of externalReferences.controls; track externalUrl; let
+                                externalUrlIndex = $index) {
+                                <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                                    <div class="col-sm drag-list-box" cdkDrag>
+                                        <pure-file-form [file_form]="externalUrl" [index]="externalUrlIndex"
+                                            [index_length]="externalReferences.controls.length"
+                                            (notice)="handleExternalReferenceNotification($event)"></pure-file-form>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <pure-add-remove-buttons [index]="externalUrlIndex"
+                                            (notice)="handleExternalReferenceNotification($event)"></pure-add-remove-buttons>
+                                    </div>
+                                </div>
+                                }
+                                @empty {
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
+                                    [add_val]="'add externalReference'"
+                                    (notice)="handleExternalReferenceNotification($event)"></pure-add-remove-buttons>
+                                }
+                            </div>
                         </div>
                     </div>
+                    }
                 </div>
             </div>
         </div>
@@ -111,28 +130,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="col-sm">
-                <ng-container formArrayName="localTags">
-                    @for (tag of localTags.controls; track tag; let i = $index) {
-                    <div class="d-sm-flex flex-sm-row gap-1 align-items-center"
-                        [ngClass]="{'mb-1': i !== localTags.controls.length - 1}">
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="tag" [formControlName]="i"
-                                [value]="tag.value">
-                        </div>
-                        <div class="col-sm-1">
-                            <pure-add-remove-buttons [index]="i"
-                                (notice)="add_remove_local_tag($event)"></pure-add-remove-buttons>
-                        </div>
-                    </div>
-                    } @empty {
-                    <div class="col-sm-1">
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add tag'"
-                            (notice)="add_remove_local_tag($event)"></pure-add-remove-buttons>
-                    </div>
-                    }
-                </ng-container>
-            </div>-->
         </div>
         <div class="d-sm-flex flex-sm-row mb-3 px-3">
             <div class="col-sm offset-sm-2">
