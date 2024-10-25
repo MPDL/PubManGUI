@@ -19,7 +19,6 @@ import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
 import { ItemsService}  from "../../services/pubman-rest-client/items.service";
-import {ItemStateFilterComponent} from "./filters/item-state-filter/item-state-filter.component";
 
 
 @Component({

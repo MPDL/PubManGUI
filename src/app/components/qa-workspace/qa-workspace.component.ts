@@ -3,19 +3,23 @@ import {map, Observable} from "rxjs";
 import {AaService} from "../../services/aa.service";
 import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";
 import {ItemListComponent} from "../item-list/item-list.component";
-import {ItemStateFilterComponent} from "../item-list/filters/item-state-filter/item-state-filter.component";
 import {SortSelectorComponent} from "../item-list/filters/sort-selector/sort-selector.component";
-import {ItemContextFilterComponent} from "../item-list/filters/item-context-filter/item-context-filter.component";
+import {ItemFilterComponent} from "../item-list/filters/item-filter/item-filter.component";
+import {ItemContextFilterDirective} from "../item-list/filters/directives/item-context-filter.directive";
+import {ItemStateFilterDirective} from "../item-list/filters/directives/item-state-filter.directive";
+
 
 @Component({
   selector: 'pure-qa-workspace',
   standalone: true,
-    imports: [
-        ItemListComponent,
-        ItemStateFilterComponent,
-        SortSelectorComponent,
-      ItemContextFilterComponent
-    ],
+  imports: [
+    ItemListComponent,
+    SortSelectorComponent,
+    ItemFilterComponent,
+    //ItemStateFilterDirective,
+    ItemContextFilterDirective,
+    ItemStateFilterDirective
+  ],
   templateUrl: './qa-workspace.component.html',
   styleUrl: './qa-workspace.component.scss'
 })

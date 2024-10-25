@@ -1,4 +1,5 @@
 <pure-item-list [searchQuery]="searchQuery" #itemList>
   <pure-sort-selector [itemList]="itemList"/>
-  <pure-item-state-filter [itemList]="itemList"/>
+  <pure-item-filter [itemList]="itemList" pureItemStateFilter
+                    [label]="'State'" />
 </pure-item-list>

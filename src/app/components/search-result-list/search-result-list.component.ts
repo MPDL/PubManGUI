@@ -5,7 +5,6 @@ import {AaService} from "../../services/aa.service";
 import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Location} from "@angular/common";
-import {ItemStateFilterComponent} from "../item-list/filters/item-state-filter/item-state-filter.component";
 import {SortSelectorComponent} from "../item-list/filters/sort-selector/sort-selector.component";
 
 @Component({
@@ -13,7 +12,6 @@ import {SortSelectorComponent} from "../item-list/filters/sort-selector/sort-sel
   standalone: true,
   imports: [
     ItemListComponent,
-    ItemStateFilterComponent,
     SortSelectorComponent
   ],
   templateUrl: './search-result-list.component.html',
