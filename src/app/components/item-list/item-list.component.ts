@@ -128,7 +128,7 @@ export class ItemListComponent implements AfterViewInit{
 
   update_query(query: any, size:number, from:number, sortQuery?: any ) {
 
-    console.log("Query " + query);
+    console.log("Query " + JSON.stringify(query));
     console.log("sort Query " + sortQuery);
     if(this.filterEvents.size > 0) {
 
