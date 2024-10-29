@@ -7,14 +7,30 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {SortSelectorComponent} from "../item-list/filters/sort-selector/sort-selector.component";
 import {SearchStateService} from "./search-state.service";
+import {
+  ItemAggregationFilterComponent
+} from "../item-list/aggregations/aggregation-filter/item-aggregation-filter.component";
+import {
+    ItemContextAggregationDirective
+} from "../item-list/aggregations/aggregation-filter/directives/item-context-aggregation.directive";
+import {
+    ItemCreatorAggregationDirective
+} from "../item-list/aggregations/aggregation-filter/directives/item-creator-aggregation.directive";
+import {
+    ItemOuAggregationDirective
+} from "../item-list/aggregations/aggregation-filter/directives/item-ou-aggregation.directive";
 
 @Component({
   selector: 'pure-search-result-list',
   standalone: true,
-  imports: [
-    ItemListComponent,
-    SortSelectorComponent
-  ],
+    imports: [
+        ItemListComponent,
+        SortSelectorComponent,
+        ItemAggregationFilterComponent,
+        ItemContextAggregationDirective,
+        ItemCreatorAggregationDirective,
+        ItemOuAggregationDirective
+    ],
   templateUrl: './search-result-list.component.html',
   styleUrl: './search-result-list.component.scss'
 })

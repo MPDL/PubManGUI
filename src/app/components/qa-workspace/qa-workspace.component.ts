@@ -32,18 +32,22 @@ export class QaWorkspaceComponent {
 
     this.searchQuery = aaService.principal.pipe(map(p => {
 
+      if(p.loggedIn) {
         return {
           bool: {
             must: [
               baseElasticSearchQueryBuilder("context.objectId", p.moderatorContexts.map(con => con.objectId)),
-              baseElasticSearchQueryBuilder("versionState", [ItemVersionState.SUBMITTED,ItemVersionState.IN_REVISION, ItemVersionState.RELEASED])
+              baseElasticSearchQueryBuilder("versionState", [ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION, ItemVersionState.RELEASED])
             ]
           }
         }
 
-
+      }
+      return undefined;
       })
     )
 
   }
+
+
 }

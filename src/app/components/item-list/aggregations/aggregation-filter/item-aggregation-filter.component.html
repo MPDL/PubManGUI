@@ -1,0 +1,8 @@
+<div class="container pb-4">
+<h6>{{ label }}</h6>
+<div class="list-group">
+@for (val of resultView.values(); track val.selectionValue ) {
+  <button type="button" class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}" (click)="selectValue(val)">{{val.displayValue}} ({{val.docCount}})</button>
+}
+</div>
+</div>

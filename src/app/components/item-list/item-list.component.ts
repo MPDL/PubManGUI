@@ -4,7 +4,6 @@ import {
   Component,
   Input,
   QueryList,
-  TemplateRef,
   ViewChildren,
   HostListener,
   ViewChild, ViewContainerRef
@@ -14,9 +13,8 @@ import { PaginationDirective } from 'src/app/shared/directives/pagination.direct
 import { ItemListElementComponent } from './item-list-element/item-list-element.component';
 import {ActivatedRoute, NavigationEnd, Params, Router, RouterLink} from '@angular/router';
 import { TopnavComponent } from 'src/app/shared/components/topnav/topnav.component';
-import { Observable, filter, map, startWith, tap, of} from 'rxjs';
+import {Observable, filter, map, startWith, tap, of, BehaviorSubject} from 'rxjs';
 import { ItemVersionVO } from 'src/app/model/inge';
-
 import { AaService } from 'src/app/services/aa.service';
 import { ItemsService}  from "../../services/pubman-rest-client/items.service";
 
@@ -50,6 +48,7 @@ export class ItemListComponent implements AfterViewInit{
   result_list: Observable<ItemVersionVO[]> | undefined;
   number_of_results: number | undefined;
   filterEvents: Map<string, FilterEvent> = new Map();
+  aggregationEvents: Map<string, AggregationEvent> = new Map();
 
   select_all = new FormControl(false);
   select_pages_2_display = new FormControl(25);
@@ -90,11 +89,14 @@ export class ItemListComponent implements AfterViewInit{
       if (q) {
         this.currentQuery = q;
         this.update_query(this.currentQuery, this.page_size, this.getFromValue(), this.currentSortQuery);
-      } else {
+
+      } /*else {
         this.currentQuery = { bool: { filter: [] } };
         this.update_query(this.currentQuery, this.page_size, this.getFromValue(), this.currentSortQuery);
 
       }
+
+       */
     })
 
   }
@@ -141,13 +143,23 @@ export class ItemListComponent implements AfterViewInit{
       }
     }
 
+    let aggQueries = undefined;
+    let runtimeMappings = undefined;
+    if(this.aggregationEvents.size > 0) {
+      aggQueries = Object.assign({}, ...Array.from(this.aggregationEvents.values()).filter(fe => fe.query).map(fe => fe.query))
+      runtimeMappings = Object.assign({}, ...Array.from(this.aggregationEvents.values()).filter(fe => fe.runtimeMapping).map(fe => fe.runtimeMapping))
+    }
+
     const completeQuery = {
       query,
       size: size,
       from: from,
       ...sortQuery && {sort: [sortQuery
-      ]}
+      ]},
+      ...runtimeMappings && {runtime_mappings: runtimeMappings},
+      ...aggQueries && {aggs: aggQueries}
     }
+    //console.log(JSON.stringify(completeQuery))
     this.items(completeQuery);
 
     this.updateQueryParams();
@@ -158,12 +170,27 @@ export class ItemListComponent implements AfterViewInit{
     if (this.aa.token) token = this.aa.token;
     this.result_list = this.service.elasticSearch(body, token).pipe(
       tap(result => {
+        //console.log(JSON.stringify(result))
         this.number_of_results = result.hits.total.value as number;
         this.number_of_pages = Math.ceil(this.number_of_results / this.page_size)
         this.jump_to.addValidators(Validators.max(this.number_of_pages));
+
+        if(result.aggregations) {
+          this.applyAggregationResults(result.aggregations);
+        }
       }),
       map(result => result.hits.hits.map((record:any) => record._source as ItemVersionVO))
     );
+  }
+
+  applyAggregationResults(aggResult: object) {
+    this.aggregationEvents.forEach((ae, key) => {
+      // Use ends with, because PuRe currently returns aggregation names with typed_keys parameter enabled, see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html#return-agg-type
+      const aggKey = Object.keys(aggResult).find(k => k.endsWith(key)) as keyof typeof aggResult;
+      if(aggResult[aggKey]){
+        ae.result.next(aggResult[aggKey]);
+      }
+    })
   }
 
   jumpToPage() {
@@ -243,12 +270,12 @@ export class ItemListComponent implements AfterViewInit{
   }
 
   updateFilter(fe: FilterEvent) {
-
     this.filterEvents.set(fe.name,fe);
     this.onPageChange(1)
+  }
 
-
-
+  registerAggregation(ae: AggregationEvent) {
+    this.aggregationEvents.set(ae.name,ae);
   }
 
   registerSort(sortQuery: any) {
@@ -268,4 +295,11 @@ export class ItemListComponent implements AfterViewInit{
 export interface FilterEvent {
   name: string,
   query: object | undefined;
+}
+
+export interface AggregationEvent {
+  name: string,
+  query: any | undefined;
+  runtimeMapping: any | undefined;
+  result: BehaviorSubject<any | undefined>;
 }

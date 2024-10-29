@@ -168,7 +168,10 @@
             <div class="card-header">
             </div>
             <div class="card-body">
+              <div class="container pb-4">{{number_of_results}} items found</div>
+              <div class="row">
               <ng-content #sortAndFilter></ng-content>
+              </div>
 
             </div>
         </div>
