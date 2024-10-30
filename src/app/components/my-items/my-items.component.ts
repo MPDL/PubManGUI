@@ -27,6 +27,9 @@ import {
 import {
   ItemStatusAggregationDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-status-aggregation.directive";
+import {
+  ItemDateAggregationDirective
+} from "../item-list/aggregations/aggregation-filter/directives/item-date-aggregation.directive";
 
 @Component({
   selector: 'pure-my-items',
@@ -43,7 +46,9 @@ import {
     ItemOuAggregationDirective,
     ItemLocalTagAggregationDirective,
     ItemGenreAggregationDirective,
-    ItemStatusAggregationDirective
+    ItemStatusAggregationDirective,
+    ItemStatusAggregationDirective,
+    ItemDateAggregationDirective
   ],
   templateUrl: './my-items.component.html',
   styleUrl: './my-items.component.scss',
