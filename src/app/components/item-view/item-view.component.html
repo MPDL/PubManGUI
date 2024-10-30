@@ -1,0 +1,243 @@
+<div class="row align-items-center top_nav_pos bg-body">
+  <div class="col-12 col-xxl-4 ps-0">
+    <nav id="topnav" #sidenav class="navbar navbar-expand-lg bg-body">
+      <div class="container-fluid">
+        <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#top_nav"
+                aria-controls="top_nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-lg-flex" id="top_nav">-->
+        <nav class="nav bg-body">
+          <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
+            <span class="material-symbols-outlined">edit</span>
+          </a>
+        </nav>
+      </div>
+    </nav>
+  </div>
+  <div class="col-xxl-3 d-none d-xxl-block">
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-lg-9 col-sm-12 header_color p-3">
+    <div class="row">
+      <div class="col-2">
+        <div class="container">
+          <img id="placeholder" src="assets/images/minerva.png" class="img-fluid" width="100px">
+        </div>
+      </div>
+      <div class="col-10">
+        <!-- badges -->
+        <pure-item-badges [item]="item"/>
+        <!-- title -->
+        <h3>{{ item.metadata.title }}</h3>
+        <!-- alternative titles -->
+        @for (altTitle of item.metadata.alternativeTitles; track altTitle.value) {
+          <h4>{{ altTitle.value }}</h4>
+        }
+        <!-- author -->
+        <div class="d-inline-flex mt-2">
+          @for (author of item.metadata.creators; track author; let i = $index) {
+            <div class="me-3">
+              {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
+              @if (author?.person?.orcid) {
+                <sup>
+                  <a [href]="author?.person?.orcid" target="_blank">
+                    <img alt="ORCID logo"
+                         src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                         width="16" height="16"/>
+                  </a>
+                </sup>
+              }
+            </div>
+          }
+        </div>
+
+        <!--citation-->
+        <div class="mt-4">
+          <p><i class="bi bi-quote"></i>
+            @for (author of item.metadata.creators; track author; let i = $index) {
+              {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }};
+            }
+            . <i>{{ item.metadata.title }}</i>.
+          </p>
+        </div>
+
+
+      </div>
+
+
+      <!-- Tab navigation -->
+      <div class="row mt-5">
+        <ul class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Metadata</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Abstract</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Versions</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Metadata -->
+    <div class="row mt-5">
+      <!--Sub content-->
+      <!--Authors-->
+      <hr/>
+      <div class="row">
+        <div class="col-3">
+          Authors
+        </div>
+        <div class="col-9">
+          <div class="mt-2">
+            @for (author of item.metadata.creators; track author; let i = $index) {
+              <div class="mt-1 me-3">
+                {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
+                @if (author?.person?.orcid) {
+                  <sup>
+                    <a [href]="author?.person?.orcid" target="_blank">
+                      <img alt="ORCID logo"
+                           src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                           width="16" height="16"/>
+                    </a>
+                  </sup>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <hr/>
+
+      <div class="row">
+        <div class="col-3">
+          Details
+        </div>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-3">
+              Language
+            </div>
+            <div class="col-9">
+              @for (lang of item.metadata.languages; track lang) {
+                <div>{{ lang }}</div>
+              }
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-3">
+              Dates
+            </div>
+            <div class="col-9">
+              <div class="d-inline-flex">
+                <div class="me-3">
+                  Created: {{ item.metadata.dateCreated }}
+                </div>
+                <div class="me-3">
+                  Modified: {{ item.metadata.dateModified }}
+                </div>
+                <div class="me-3">
+                  Submitted: {{ item.metadata.dateSubmitted }}
+                </div>
+                <div class="me-3">
+                  Accepted: {{ item.metadata.dateAccepted }}
+                </div>
+                <div class="me-3">
+                  Published Online: {{ item.metadata.datePublishedOnline }}
+                </div>
+                <div class="me-3">
+                  Published in print: {{ item.metadata.datePublishedInPrint }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-3">
+              Identifiers
+            </div>
+            <div class="col-9">
+              @for (id of item.metadata.identifiers; track id) {
+                <div>{{id.type}}: {{ id.id }}</div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
+
+<!--Sources -->
+      @for(source of item.metadata.sources; track source; let i= $index) {
+      <div class="row">
+        <div class="col-3">
+          Source {{i+1}}
+        </div>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-3">
+              Title
+            </div>
+            <div class="col-9">
+              {{source.title}}
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-3">
+              Genre
+            </div>
+            <div class="col-9">
+              {{source.genre}}
+            </div>
+          </div>
+          <hr/>
+        </div>
+      </div>
+      <hr/>
+      }
+
+
+
+    </div>
+
+
+  </div>
+  <div class="col-lg-3 d-none d-lg-block">
+    <div class="mt-2">
+    <h4>Files</h4>
+    @for (file of item?.files; track file) {
+      @if (file?.storage === 'INTERNAL_MANAGED') {
+      <div class="d-inline-flex align-items-start" [ngbTooltip]="file.metadata.title">
+        <i class="bi-file-earmark-text"></i>
+        <a class="btn" href="file.content"
+           style="overflow-wrap: break-word;"> {{file.metadata.title}}</a>
+
+      </div>
+        ({{file.metadata.contentCategory}})
+      }
+    }
+    </div>
+
+    <div class="mt-4">
+    <h4>Links</h4>
+      @for (file of item?.files; track file) {
+        @if (file?.storage === 'EXTERNAL_URL') {
+          <div class="d-inline-flex align-items-start" [ngbTooltip]="file.metadata.title">
+            <i class="bi-link"></i>
+            <a class="btn" href="file.content"
+               style="overflow-wrap: break-word;"> {{file.metadata.title}}</a>
+
+          </div>
+          ({{file.metadata.contentCategory}})
+        }
+      }
+    </div>
+
+</div>
+        </div>

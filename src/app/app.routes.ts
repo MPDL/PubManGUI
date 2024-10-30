@@ -11,6 +11,7 @@ import { MyItemsComponent } from "./components/my-items/my-items.component";
 import { QaWorkspaceComponent } from "./components/qa-workspace/qa-workspace.component";
 import { SearchResultListComponent } from "./components/search-result-list/search-result-list.component";
 import { fetchItemResolver } from "./components/imports/services/fetch-item-resolver";
+import {ItemViewComponent} from "./components/item-view/item-view.component";
 
 export const routes: Routes = [
   {
@@ -93,6 +94,15 @@ export const routes: Routes = [
     data: {
       breadcrumb: {
         label: 'Edit',
+      }
+    },
+  },
+  {
+    path: 'view/:id', component: ItemViewComponent,
+
+    data: {
+      breadcrumb: {
+        label: 'View',
       }
     },
   },
