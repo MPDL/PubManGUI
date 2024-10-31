@@ -90,10 +90,27 @@
                     <tbody>
                         <tr class="border-bottom">
                             <td class="col-1">
-                                Finished
+                                Finished 
                             </td>
                             <td class="col-5">
                                 Some mock imported item
+                            </td>
+                            <td class="col-4">
+                                Success
+                            </td>
+                            <td class="col-1">
+                                <span class="material-symbols-outlined" (click)="open(log)">
+                                    list
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="border-bottom">
+                            <td class="col-1 text-nowrap">
+                                <span class="material-symbols-outlined">error</span> Failed 
+                            </td>
+                            <td class="col-5">
+                                Other mock imported item
                             </td>
                             <td class="col-4">
                                 Error
@@ -106,14 +123,14 @@
                         </tr>
 
                         <tr class="border-bottom">
-                            <td class="col-1">
-                                Finished
+                            <td class="col-1 text-nowrap">
+                                <span class="material-symbols-outlined">warning</span> Warning 
                             </td>
                             <td class="col-5">
                                 Other mock imported item
                             </td>
                             <td class="col-4">
-                                Error
+                                Somme items with warnings
                             </td>
                             <td class="col-1">
                                 <span class="material-symbols-outlined" (click)="open(log)">

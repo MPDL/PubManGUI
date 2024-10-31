@@ -47,7 +47,10 @@
                                 <span class="material-symbols-outlined">web_stories</span>
                         </a>
                         
-                        <a [routerLink]="[]" class="nav-link px-2" (click)="addToBatchDatasets()">
+                        <a [routerLink]="[]" class="nav-link px-2" (click)="addToBatchDatasets()"
+                                i18n-ngbTooltip="@@batch.datasets.add"
+                                ngbTooltip="Add checked items to Batch"
+                                placement="bottom-left">
                                 <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <g id="Gruppe_43" data-name="Gruppe 43">
                                                 <rect id="Rechteck_95" data-name="Rechteck 95" width="24" height="24" fill="none"></rect>
@@ -68,7 +71,10 @@
                                                 transform="translate(4.652 19.1)" fill="#777" stroke="#777" stroke-width="0.5"></path>
                                 </svg>
                         </a>
-                        <a [routerLink]="[]" class="nav-link px-2" (click)="removeFromBatchDatasets()">
+                        <a [routerLink]="[]" class="nav-link px-2" (click)="removeFromBatchDatasets()" 
+                                i18n-ngbTooltip="@@batch.datasets.remove"
+                                ngbTooltip="Remove checked items from Batch"
+                                placement="bottom-left">
                                 <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <g id="Gruppe_43" data-name="Gruppe 43">
                                                 <rect id="Rechteck_95" data-name="Rechteck 95" width="24" height="24" fill="none"></rect>
