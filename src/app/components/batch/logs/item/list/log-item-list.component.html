@@ -113,7 +113,7 @@
                   <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
                 </td>
                 <td>
-                  <span class="nav-link" routerLink="/edit/{{log.item.itemObjectId}}" [innerHTML]="log.title | sanitizeHtml"></span>
+                  <span class="nav-link" routerLink="/view/{{log.item.itemObjectId}}" [innerHTML]="log.title | sanitizeHtml"></span>
                 </td>
                 <td>
                   <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
