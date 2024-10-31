@@ -32,7 +32,7 @@
       <span content>
          @for (aff of affiliations; track aff; let i = $index) {
            <div class="mt-1 me-3">
-           {{i+1}}: {{aff.name}}
+           {{i+1}}: {{aff.name}} ({{aff.identifier}})
            </div>
          }
       </span>
