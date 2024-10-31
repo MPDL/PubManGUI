@@ -4,7 +4,7 @@
     <span label>Creators</span>
     <span content>
 @if (item) {
-    <pure-item-view-creators [creators]="item?.metadata?.creators"/>
+    <pure-item-view-creators [creators]="item.metadata.creators"/>
 }
     </span>
 </pure-item-view-metadata-element>
@@ -264,9 +264,9 @@
     <pure-item-view-metadata-element [sub]="true">
         <span label>Publishing Info</span>
         <span content>
-          {{ source.publishingInfo?.place }} :
-            {{ source.publishingInfo?.publisher }},
-            {{ source.publishingInfo?.edition }}
+          {{ source.publishingInfo.place }} :
+            {{ source.publishingInfo.publisher }},
+            {{ source.publishingInfo.edition }}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true">
