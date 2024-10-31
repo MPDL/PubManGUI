@@ -5,6 +5,19 @@
         cursor: pointer;
     }
 
+    .top_nav_pos {
+        overflow: visible;
+    }
+
+    .tooltip-inner {
+        background-color: #{$mpdl-light};
+        color: #{$mpdl-dark};
+    }
+
+    .bs-tooltip-bottom .tooltip-arrow::before {
+        border-bottom-color: #{$mpdl-light};
+    }
+
     .action-card {
         background-color: var(--accent-color-contrast);
     }
@@ -120,14 +133,4 @@
             }
         }
     }
-
-    .tooltip-inner {
-        background-color: #{$mpdl-light};
-        color: #{$mpdl-dark};
-    }
-
-    .bs-tooltip-end .tooltip-arrow::before {
-        border-right-color: #{$mpdl-light};
-    }
-
 }
