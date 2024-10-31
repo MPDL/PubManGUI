@@ -9,14 +9,14 @@
 </div-->
 
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
-    <h3 class="m-0 mb-4" i18n="@@batch.actions.context.change">ID Fetch</h3>
+    <h3 class="m-0 mb-4" i18n="@@imports.fetch">ID Fetch</h3>
   
     <form [formGroup]="fetchForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <div class="mb-3 row">
-        <label for="context" class="col-sm-3 col-form-label" i18n="@@batch.actions.context">Context</label>
+        <label for="context" class="col-sm-3 col-form-label" i18n="@@imports.context">Context</label>
         <div class="col-sm-9">
           <select id="context" class="form-select" formControlName="contextId">
-            <option [value]='' selected disabled i18n="@@batch.actions.context">Context</option>
+            <option [value]='' selected disabled i18n="@@imports.context">Context</option>
             @for (contextObject of user_contexts; track contextObject) {
             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
             }
@@ -26,7 +26,7 @@
   
       <div class="mb-3 row">
         <div class="col-sm-3">
-          <label class="col-form-label">Source</label>
+          <label class="col-form-label" i18n="@@imports.fetch.source">Source</label>
         </div>
         <div class="col-sm-2">
           <select class="form-select" formControlName="source">

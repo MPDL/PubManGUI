@@ -8,14 +8,9 @@
                  id="form_check1">
       </span>
 
-      <span class="badge badge-blue me-2">{{item?.metadata?.genre}}</span>
-      @if (publicationState) {
-        <span class="badge badge-green me-2">{{publicationState}}: {{publicationStateDate | dateToYear}}</span>
-      }
-      @if (doi) {
-      <a class="badge badge-yellow me-2" href="https://doi.org/{{doi}}" target="_blank">DOI: {{doi}}</a>
-      }
-      <span class="badge bg-secondary me-2 float-end">{{item?.versionState}}</span>
+      <pure-item-badges [item] = "item"/>
+      <span class="badge bg-secondary me-2 float-end">{{item?.publicState !== 'WITHDRAWN' ? item?.versionState : item?.publicState}}</span>
+
     </div>
   </div>
 
@@ -32,7 +27,7 @@
         ></h4>
       </a>
       -->
-      <a class="nav-link" routerLink="/edit/{{item?.objectId}}">
+      <a class="nav-link" routerLink="/view/{{item?.objectId}}">
         <h3 class="" style="font-weight: bold; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml"
         ></h3>
       </a>

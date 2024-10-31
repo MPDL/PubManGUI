@@ -8,17 +8,18 @@ import { Subscription } from 'rxjs';
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
 import {DateToYearPipe} from "../../../shared/services/pipes/date-to-year.pipe";
+import {ItemBadgesComponent} from "../../../shared/components/item-badges/item-badges.component";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, DateToYearPipe],
+  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, DateToYearPipe, ItemBadgesComponent],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })
 export class ItemListElementComponent {
 
-  @Input() item: ItemVersionVO | undefined;
+  @Input() item!: ItemVersionVO;
   @Input() last_item!: boolean;
   @Input()
   authenticated = false;
@@ -104,40 +105,6 @@ export class ItemListElementComponent {
       return this.item.metadata.sources[0].title;
     }
     else return undefined;
-  }
-
-  get doi() {
-    return this.item?.metadata?.identifiers?.filter(i => i.type === IdType.DOI).map(i => i.id)[0]
-  }
-
-  get publicationState() {
-    if (this.item?.metadata.datePublishedInPrint) {
-      return "published-in-print"
-    } else if (this.item?.metadata.datePublishedOnline) {
-      return "published-online"
-    } else if (this.item?.metadata.dateAccepted) {
-      return "accepted"
-    } else if (this.item?.metadata.dateSubmitted) {
-      return "submitted"
-    } else {
-      return undefined;
-    }
-
-  }
-
-  get publicationStateDate() {
-    if (this.item?.metadata.datePublishedInPrint) {
-      return this.item?.metadata.datePublishedInPrint;
-    } else if (this.item?.metadata.datePublishedOnline) {
-      return this.item?.metadata.datePublishedOnline;
-    } else if (this.item?.metadata.dateAccepted) {
-      return this.item?.metadata.dateAccepted;
-    } else if (this.item?.metadata.dateSubmitted) {
-      return this.item?.metadata.dateSubmitted;
-    } else {
-      return undefined;
-    }
-
   }
 
 }

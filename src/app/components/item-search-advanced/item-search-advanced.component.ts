@@ -33,6 +33,7 @@ import {ItemStateListSearchCriterion} from "./criterions/ItemStateListSearchCrit
 import {SavedSearchService} from "../../services/pubman-rest-client/saved-search.service";
 import {Component, HostListener, ViewEncapsulation} from "@angular/core";
 import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterion";
+import {SearchStateService} from "../search-result-list/search-state.service";
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -80,7 +81,8 @@ export class ItemSearchAdvancedComponent {
     private fb: FormBuilder,
     protected aaService: AaService,
     private savedSearchService: SavedSearchService,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private searchStateService: SearchStateService
 ) {
     this.initializeGenres();
   }
@@ -649,7 +651,8 @@ export class ItemSearchAdvancedComponent {
 
     this.scListToElasticSearchQuery(this.prepareQuery())
       .subscribe(query => {
-        this.router.navigateByUrl('/search', {onSameUrlNavigation: 'reload', state: {query}})
+        this.searchStateService.$currentQuery.next(query);
+        this.router.navigateByUrl('/search')
       });
 
   }

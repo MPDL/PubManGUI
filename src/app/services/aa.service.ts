@@ -16,6 +16,7 @@ export class Principal{
   isAdmin: boolean = false;
   moderatorContexts: ContextDbVO[] = [];
   depositorContexts: ContextDbVO[] = [];
+  allContexts: ContextDbVO[] = [];
 }
 
 @Injectable({
