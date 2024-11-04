@@ -10,6 +10,10 @@ import {ItemBadgesComponent} from "../../shared/components/item-badges/item-badg
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {ItemViewMetadataComponent} from "./item-view-metadata/item-view-metadata.component";
 import {BehaviorSubject, Observable} from "rxjs";
+import * as props from "../../../assets/properties.json";
+import {
+  ItemViewMetadataElementComponent
+} from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -22,23 +26,33 @@ import {BehaviorSubject, Observable} from "rxjs";
     RouterOutlet,
     NgbTooltip,
     RouterLink,
-    ItemViewMetadataComponent
+    ItemViewMetadataComponent,
+    ItemViewMetadataElementComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
 })
 export class ItemViewComponent {
+  protected ingeUri = props.inge_uri;
+  currentSubMenuSelection = "metadata";
+  versionSubject: BehaviorSubject<any | undefined> = new BehaviorSubject<any | undefined>(undefined);
+
 
   //@Input() id:string | undefined = undefined;
 
 
   itemSubject: BehaviorSubject<ItemVersionVO | undefined> = new BehaviorSubject<ItemVersionVO | undefined>(undefined);
 
-  constructor(private itemsService: ItemsService, private aaService: AaService, private route: ActivatedRoute) {
+  constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute) {
     const id = this.route.snapshot.paramMap.get('id');
     console.log(id);
     if (id)
-      this.itemsService.retrieve(id, this.aaService.token ? this.aaService.token : undefined).subscribe(this.itemSubject);
+      this.itemsService.retrieve(id, this.aaService.token).subscribe(this.itemSubject);
+      this.itemSubject.subscribe(i => {
+        if (i && i.objectId) {
+          this.itemsService.retrieveHistory(i.objectId, this.aaService.token).subscribe(this.versionSubject)
+        }
+      })
       //this.itemObservable.subscribe(item => {
       //this.item = item;
    //})
@@ -50,8 +64,24 @@ export class ItemViewComponent {
     return this.itemSubject.value;
   }
 
-  ngOnInit() {
+  get storedFiles() {
+   return this.item?.files?.filter(f => f.storage === 'INTERNAL_MANAGED');
+  }
 
+  get externalReferences() {
+    return this.item?.files?.filter(f => f.storage === 'EXTERNAL_URL');
+  }
+
+  get versions() {
+    return this.versionSubject.value;
+  }
+
+
+  changeSubMenu(val: string) {
+    this.currentSubMenuSelection = val;
+  }
+
+  ngOnInit() {
 
   }
 

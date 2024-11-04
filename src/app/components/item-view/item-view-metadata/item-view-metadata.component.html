@@ -12,13 +12,13 @@
 <pure-item-view-metadata-element>
     <span label>Content</span>
     <span content>
-    <pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true">
         <span label>Free keywords</span>
         <span content>
           {{ item?.metadata?.freeKeywords }},
         </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true">
         <span label>DDC</span>
         <span content>
             @for (sub of item?.metadata?.subjects; track sub; let i = $index) {
@@ -27,7 +27,7 @@
         </span>
     </pure-item-view-metadata-element>
         @for (abs of item?.metadata?.abstracts; track abs; ) {
-            <pure-item-view-metadata-element>
+            <pure-item-view-metadata-element [sub]="true" >
         <span label>Abstract ({{ abs.language }})</span>
         <span content>
             {{ abs.value }}
@@ -200,25 +200,25 @@
     <span label>Project Information</span>
     <span content>
         @for (pi of item?.metadata?.projectInfo; track pi) {
-            <pure-item-view-metadata-element>
+            <pure-item-view-metadata-element [sub]="true">
                 <span label>Project name</span>
                 <span content>
                     {{ pi.title }}
                 </span>
             </pure-item-view-metadata-element>
-            <pure-item-view-metadata-element>
+            <pure-item-view-metadata-element [sub]="true">
                 <span label>Grant ID</span>
                 <span content>
                     {{ pi.grantIdentifier.id }}
                 </span>
             </pure-item-view-metadata-element>
-            <pure-item-view-metadata-element>
+            <pure-item-view-metadata-element [sub]="true">
                 <span label>Funding program</span>
                 <span content>
                     {{ pi.fundingInfo.fundingProgram.title }} {{ pi.fundingInfo.fundingProgram.identifiers ? '(' + pi.fundingInfo.fundingProgram.identifiers![0].id + ')' : '' }}
                 </span>
             </pure-item-view-metadata-element>
-            <pure-item-view-metadata-element>
+            <pure-item-view-metadata-element [sub]="true">
                 <span label>Funding organization</span>
                 <span content>
                     {{ pi.fundingInfo.fundingOrganization.title }} {{ pi.fundingInfo.fundingOrganization.identifiers ? '(' + pi.fundingInfo.fundingOrganization.identifiers![0].id + ')' : '' }}

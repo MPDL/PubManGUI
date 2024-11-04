@@ -44,8 +44,11 @@ export class AaService {
 
 
 
-  get token(): string | null {
-      return localStorage.getItem('token');
+  get token(): string | undefined {
+    const t = localStorage.getItem('token');
+    if(t!=null)
+      return t
+    else return undefined;
   }
 
   set token(token2set) {

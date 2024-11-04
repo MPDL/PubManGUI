@@ -366,3 +366,20 @@
     }
 
 }
+
+#item-view-subnav {
+  .nav-pills {
+    font-family: $headings-font-family;
+    font-size: 1.1em;
+
+  }
+
+  .nav-pills .active {
+    font-weight: bold;
+    background-color: transparent;
+    color: $mpg-blue;
+    border-bottom: $mpg-blue 3px solid;
+    border-radius: unset;
+
+  }
+}
