@@ -90,6 +90,10 @@
 
     .list-group-item {
         background-color: $body-secondary-bg;
+
+      &.mark {
+        background-color: $body-tertiary-bg;
+      }
     }
 
     .list-group-item:hover {

@@ -1,12 +1,14 @@
 import {Component, Input} from '@angular/core';
 import {ItemViewMetadataElementComponent} from "../item-view-metadata-element/item-view-metadata-element.component";
 import {CreatorVO, OrganizationVO} from "../../../../model/inge";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'pure-item-view-creators',
   standalone: true,
   imports: [
-    ItemViewMetadataElementComponent
+    ItemViewMetadataElementComponent,
+    NgClass
   ],
   templateUrl: './item-view-creators.component.html',
   styleUrl: './item-view-creators.component.scss'
@@ -18,6 +20,9 @@ export class ItemViewCreatorsComponent {
   affiliationMap: Map<string, OrganizationVO> = new Map();
   creatorMap: Map<CreatorVO, number[]> = new Map();
 
+  currentAffiliationHighlights: number[] = [];
+
+  maxDisplay = 20;
 
   ngOnInit() {
     this.sortCreatorsAndAffiliations()
@@ -61,4 +66,40 @@ export class ItemViewCreatorsComponent {
 
 }
 
+  highlightAffiliations(param: number[] | undefined) {
+    this.currentAffiliationHighlights = param ? param : [];
+  }
+
+  unhighlightAffiliations() {
+    this.currentAffiliationHighlights= [];
+  }
+
+  isIncludedInCurrrentHighlights(param: number[] | undefined) {
+    if(param)
+      return this.currentAffiliationHighlights.some(affIndex => param.includes(affIndex))
+    return false;
+  }
+
+  showMore(amount: number) {
+    this.maxDisplay = this.maxDisplay + amount
+    if (this.maxDisplay > this.creatorMap.size) {
+      this.maxDisplay = this.creatorMap.size;
+    }
+  }
+
+  showLess() {
+    /*
+    if(number) {
+      this.maxDisplay = this.maxDisplay - number;
+      if(number<1) {
+        this.maxDisplay = 20;
+      }
+    }
+    else
+      this.maxDisplay = 20;
+  }
+
+     */
+    this.maxDisplay = 20;
+  }
 }

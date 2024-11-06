@@ -40,7 +40,7 @@
         <!-- author -->
         <div class="d-flex flex-wrap mt-2 align-content-stretch">
           @for (author of firstAuthors; track author; let i = $index) {
-            <div class="me-5">
+            <div class="me-5 mb-1">
               {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
               @if (author?.person?.orcid) {
                 <sup>
@@ -55,7 +55,7 @@
           }
           @if (item.metadata.creators && item.metadata.creators.length > 3) {
             <div class="me-5">
-              <button type="button" class="btn btn-link">{{ (item.metadata.creators.length - 3) + ' more authors ...' }}</button>
+              <button type="button" class="btn btn-link p-0 align-baseline" (click)="scrollToCreators()">{{ (item.metadata.creators.length - 10) + ' more authors ...' }}</button>
             </div>
           }
         </div>
@@ -238,11 +238,14 @@
     </div>
 
     <div class="container mt-5">
+
       <h5>Dataset Permalink</h5>
+      <div class="row">
       <a class="icon-link" href="https://hdl.handle.net/{{item.objectPid?.substring(4)}}" target="_blank" >
         <i class="bi-link"></i>
         <span class="text-truncate">{{item.objectPid}}</span>
       </a>
+      </div>
     </div>
 
     <div class="container mt-5">

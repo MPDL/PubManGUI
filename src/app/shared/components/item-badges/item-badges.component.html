@@ -1,3 +1,5 @@
+<div class="row">
+<div class="col-9">
 
   <span class="badge badge-blue me-2">{{item?.metadata?.genre}}</span>
   @if (publicationState) {
@@ -6,5 +8,13 @@
   @if (doi) {
     <a class="badge badge-yellow me-2" href="https://doi.org/{{doi}}" target="_blank">DOI: {{doi}}</a>
   }
-
+</div>
+<div class="col-3">
+  @if(aaService.principal.value.loggedIn) {
+  <div class="float-end">
+  <span class="badge bg-secondary me-2">{{item?.publicState !== 'WITHDRAWN' ? item?.versionState : item?.publicState}}</span>
+</div>
+  }
+</div>
+</div>
 

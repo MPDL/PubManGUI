@@ -1,0 +1,14 @@
+
+#collapseExample.collapse:not(.show) {
+  display: block;
+  height: 10rem;
+  overflow: hidden;
+}
+
+#collapseExample.collapsing {
+  height: 10rem;
+}
+
+#module a:not(.collapsed):after {
+  content: '- Show Less';
+}

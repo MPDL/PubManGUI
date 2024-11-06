@@ -4,6 +4,7 @@ import {ItemViewMetadataElementComponent} from "./item-view-metadata-element/ite
 import {BehaviorSubject} from "rxjs";
 import {ItemViewCreatorsComponent} from "./item-view-creators/item-view-creators.component";
 import {AsyncPipe} from "@angular/common";
+import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 
 @Component({
   selector: 'pure-item-view-metadata',
@@ -11,7 +12,8 @@ import {AsyncPipe} from "@angular/common";
   imports: [
     ItemViewMetadataElementComponent,
     ItemViewCreatorsComponent,
-    AsyncPipe
+    AsyncPipe,
+    EmptyPipe
   ],
   templateUrl: './item-view-metadata.component.html',
   styleUrl: './item-view-metadata.component.scss'
@@ -23,26 +25,6 @@ export class ItemViewMetadataComponent {
   affiliations: OrganizationVO[] = [];
   affiliationMap: Map<string, OrganizationVO> = new Map();
   creatorMap: Map<CreatorVO, number[]> = new Map();
-
-
-  constructor() {
-
-
-  }
-
-  ngOnInit() {
-    console.log("item" + this.item.metadata.title)
-    /*
-    this.itemSubject.subscribe(item => {
-      if(item) {
-        this.sortCreatorsAndAffiliations()
-      }
-    })
-
-     */
-
-  }
-
 
 
   get publicationState() {

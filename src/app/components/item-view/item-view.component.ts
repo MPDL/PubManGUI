@@ -4,7 +4,7 @@ import {AaService} from "../../services/aa.service";
 import {ItemVersionVO} from "../../model/inge";
 import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
 import {TopnavComponent} from "../../shared/components/topnav/topnav.component";
-import {AsyncPipe, NgClass} from "@angular/common";
+import {AsyncPipe, NgClass, ViewportScroller} from "@angular/common";
 import {DateToYearPipe} from "../../shared/services/pipes/date-to-year.pipe";
 import {ItemBadgesComponent} from "../../shared/components/item-badges/item-badges.component";
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
@@ -44,13 +44,14 @@ export class ItemViewComponent {
 
   item!: ItemVersionVO;
 
-  constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute) {
+  constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute,
+  private scroller: ViewportScroller) {
 
   }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
+    //console.log(id);
     if (id)
       this.item$ = this.itemsService.retrieve(id, this.aaService.token);
       this.item$
@@ -80,4 +81,9 @@ export class ItemViewComponent {
   }
 
 
+  scrollToCreators() {
+    this.currentSubMenuSelection = "metadata"
+    this.scroller.scrollToAnchor("creators")
+
   }
+}
