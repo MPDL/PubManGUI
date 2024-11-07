@@ -11,22 +11,22 @@
             <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
                 <div class="d-inline-flex justify-content-start align-items-center">
-                    <a i18n-ngbTooltip="@@imports.list.details.remove" ngbTooltip="Remove">
+                    <a i18n-ngbTooltip="@@imports.list.details.remove" ngbTooltip="Remove" placement="bottom-left">
                         <span class="material-symbols-outlined">
                             comments_disabled
                         </span>
                     </a>
-                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.delete" ngbTooltip="Delete">
+                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.delete" ngbTooltip="Delete" placement="bottom-left">
                         <span class="material-symbols-outlined">
                             delete_forever
                         </span>
                     </a>
-                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.set" ngbTooltip="Set">
+                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.set" ngbTooltip="Set" placement="bottom-left">
                         <span class="material-symbols-outlined">
                             workspace_premium
                         </span>
                     </a>
-                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.release" ngbTooltip="Release">
+                    <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.release" ngbTooltip="Release" placement="bottom-left">
                         <span class="material-symbols-outlined">
                             public
                         </span>
@@ -64,11 +64,11 @@
         <div class="row">
             <div class="col-lg-10 col-sm-12 d-flex justify-content-between mt-5 mb-3 border-bottom">
                 <div>
-                    <span i18n="@@batch.logs.details.for">Import</span>: <strong class="fw-bolder">Some mock import
+                    <span i18n="@@imports.list.details.for">Import</span>: <strong class="fw-bolder">Some mock import
                     </strong>
                 </div>
                 <div class="fw-light">
-                    <span i18n="@@batch.logs.started.on">started on</span><span> {{ '2024-10-17T08:47:43' |
+                    <span i18n="@@imports.list.started.on">started on</span><span> {{ '2024-10-17T08:47:43' |
                         date:'fullDate' }} </span><span class="material-symbols-outlined" style="cursor: auto">
                         schedule</span><span> {{ '2024-10-17T08:47:43' | date: "HH:mm" }}</span>
                 </div>
@@ -81,8 +81,8 @@
                     <thead>
                         <tr class="border-bottom">
                             <th scope="col" class="pe-2">Status</th>
-                            <th scope="col" class="pe-2" i18n="@@batch.logs.header.title">Title</th>
-                            <th scope="col" class="pe-2" i18n="@@batch.logs.header.message">Report</th>
+                            <th scope="col" class="pe-2" i18n="@@imports.list.header.title">Title</th>
+                            <th scope="col" class="pe-2" i18n="@@imports.list.header.message">Report</th>
                             <th scope="col">Log</th>
                         </tr>
                     </thead>
@@ -90,10 +90,27 @@
                     <tbody>
                         <tr class="border-bottom">
                             <td class="col-1">
-                                Finished
+                                Finished 
                             </td>
                             <td class="col-5">
                                 Some mock imported item
+                            </td>
+                            <td class="col-4">
+                                Success
+                            </td>
+                            <td class="col-1">
+                                <span class="material-symbols-outlined" (click)="open(log)">
+                                    list
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="border-bottom">
+                            <td class="col-1 text-nowrap">
+                                <span class="material-symbols-outlined">error</span> Failed 
+                            </td>
+                            <td class="col-5">
+                                Other mock imported item
                             </td>
                             <td class="col-4">
                                 Error
@@ -106,14 +123,14 @@
                         </tr>
 
                         <tr class="border-bottom">
-                            <td class="col-1">
-                                Finished
+                            <td class="col-1 text-nowrap">
+                                <span class="material-symbols-outlined">warning</span> Warning 
                             </td>
                             <td class="col-5">
                                 Other mock imported item
                             </td>
                             <td class="col-4">
-                                Error
+                                Somme items with warnings
                             </td>
                             <td class="col-1">
                                 <span class="material-symbols-outlined" (click)="open(log)">

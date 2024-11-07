@@ -46,16 +46,19 @@ export class ContextsService extends PubmanSearchableGenericRestClientService<Co
     var termCounter = 0;
     for (var i = 0; i < user.grantList.length; i++) {
       var grant = user.grantList[i];
+      /*
       console.log("userGrantType: " + grant.grantType
         + " | userGrantObjectRef: " + grant.objectRef
         + " | userGrantObjectRole: " + grant.role);
+
+       */
       if (grant.role === role) {
         body.query.bool.should.push({"term" : {"objectId" : grant.objectRef}})
       }
     }
 
-    console.log('Body: ' + JSON.stringify(body));
-    console.log('Token: ' + token);
+    //console.log('Body: ' + JSON.stringify(body));
+    //console.log('Token: ' + token);
     if(body.query.bool.should.length) {
       return (this.search(body, token));
     }

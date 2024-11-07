@@ -1,0 +1,269 @@
+@if (item) {
+<div class="row align-items-center top_nav_pos bg-body">
+  <div class="col-12 col-xxl-4 ps-0">
+    <nav id="topnav" #sidenav class="navbar navbar-expand-lg bg-body">
+      <div class="container-fluid">
+        <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#top_nav"
+                aria-controls="top_nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-lg-flex" id="top_nav">-->
+        <nav class="nav bg-body">
+          <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
+            <span class="material-symbols-outlined">edit</span>
+          </a>
+        </nav>
+      </div>
+    </nav>
+  </div>
+  <div class="col-xxl-3 d-none d-xxl-block">
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-lg-9 col-sm-12 header_color p-3">
+    <div class="row">
+      <div class="col-2">
+        <div class="container">
+          <img id="placeholder" src="assets/images/minerva.png" class="img-fluid" width="100px">
+        </div>
+      </div>
+      <div class="col-10">
+        <!-- badges -->
+        <pure-item-badges [item]="item"/>
+        <!-- title -->
+        <h3 class="mt-3" [innerHTML]="item.metadata.title | sanitizeHtml" >{{ item.metadata.title }}</h3>
+        <!-- alternative titles -->
+        @for (altTitle of item.metadata.alternativeTitles; track altTitle.value) {
+          <h5>{{ altTitle.value }}</h5>
+        }
+        <!-- author -->
+        <div class="d-flex flex-wrap mt-2 align-content-stretch">
+          @for (author of firstAuthors; track author; let i = $index) {
+            <div class="me-5 mb-1">
+              {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
+              @if (author?.person?.orcid) {
+                <sup>
+                  <a [href]="author?.person?.orcid" target="_blank">
+                    <img alt="ORCID logo"
+                         src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                         width="16" height="16"/>
+                  </a>
+                </sup>
+              }
+            </div>
+          }
+          @if (item.metadata.creators && item.metadata.creators.length > 3) {
+            <div class="me-5">
+              <button type="button" class="btn btn-link p-0 align-baseline" (click)="scrollToCreators()">{{ (item.metadata.creators.length - 10) + ' more authors ...' }}</button>
+            </div>
+          }
+        </div>
+
+        <!--citation-->
+        <div class="mt-4">
+          <p><i class="bi bi-quote"></i>
+            @for (author of firstAuthors; track author; let i = $index) {
+              {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }};
+            }
+            . <i>{{ item.metadata.title }}</i>.
+          </p>
+        </div>
+
+
+      </div>
+
+
+      <!-- Tab navigation -->
+      <div class="row mt-5" id="item-view-subnav">
+        <ul  class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'abstract' ? 'active' : ''}}" href="#" (click)="changeSubMenu('abstract')">Abstract</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'metadata' ? 'active' : ''}}" (click)="changeSubMenu('metadata')">Metadata</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'versions' ? 'active' : ''}}" href="#" (click)="changeSubMenu('versions')">Versions</button>
+          </li>
+          @if(aaService.principal.value.loggedIn) {
+          <li class="nav-item">
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'admin' ? 'active' : ''}}" href="#" (click)="changeSubMenu('admin')">Admin</button>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Metadata -->
+    <div class="row mt-3">
+      <!--Sub content-->
+      @if(currentSubMenuSelection ===  'metadata') {
+        <pure-item-view-metadata [item]="item"/>
+      }
+     @else if(currentSubMenuSelection ===  'abstract') {
+       @if(item.metadata.abstracts) {
+       @for (abs of item.metadata.abstracts; track abs; ) {
+         <pure-item-view-metadata-element>
+           <span label>Abstract ({{ abs.language }})</span>
+           <span content [innerHTML]="abs.value | sanitizeHtml" >
+
+        </span>
+         </pure-item-view-metadata-element>
+       }
+       } @else {
+         n/a
+       }
+
+      }
+     @else if(currentSubMenuSelection ===  'versions') {
+
+       @if (versions$ | async; as versions) {
+         @for(ve of versions; track ve) {
+           <pure-item-view-metadata-element>
+             <span label><a href="/view/{{ve.pubItem.objectId}}_{{ve.pubItem.versionNumber}}">Version {{ ve.pubItem.versionNumber }}</a></span>
+
+             <span content>
+               <pure-item-view-metadata-element [sub]="true">
+                 <span label>Date</span>
+                 <span content>{{ve.modificationDate}}</span>
+               </pure-item-view-metadata-element>
+               <pure-item-view-metadata-element [sub]="true">
+                 <span label>Event</span>
+                 <span content>{{ve.event}}</span>
+               </pure-item-view-metadata-element>
+               <pure-item-view-metadata-element [sub]="true">
+                 <span label>Comment</span>
+                 <span content>{{ve.commet}}</span>
+               </pure-item-view-metadata-element>
+             </span>
+           </pure-item-view-metadata-element>
+
+        }
+       }
+     }
+
+      @else if(currentSubMenuSelection ===  'admin') {
+        <pure-item-view-metadata-element>
+          <span label>ID</span>
+          <span content>
+            {{item.objectId + '_' + item.versionNumber}}
+          </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element>
+          <span label>Context</span>
+          <span content>
+            {{item.context.name}}
+          </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element>
+          <span label>Created</span>
+          <span content>
+            {{item.creationDate}}
+          </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element>
+          <span label>Created by</span>
+          <span content>
+            {{item.creator?.name}}
+          </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element>
+          <span label>Modifier</span>
+          <span content>
+            {{item.modificationDate}}
+          </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element>
+          <span label>Modified by</span>
+          <span content>
+            {{item.modifier?.name}}
+          </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element>
+          <span label>Last comment</span>
+          <span content>
+            {{item.message}}
+          </span>
+        </pure-item-view-metadata-element>
+
+      }
+
+    </div>
+
+
+  </div>
+
+  <!-- Files and references -->
+  <div class="col-lg-3">
+
+
+    <div class="container">
+    <h5>Files</h5>
+      @if(storedFiles && storedFiles.length) {
+    @for (file of storedFiles; track file) {
+      @if (file?.storage === 'INTERNAL_MANAGED') {
+        <div class="row mt-2">
+        <a class="icon-link" href="{{ingeUri + file.content}}" target="_blank">
+          <i class="bi-file-earmark-text"></i>
+          <span class="text-truncate">{{file.metadata.title}}</span>
+        </a>
+          <div><small>Type: {{file.metadata.contentCategory}}</small></div>
+          <div><small>License: {{file.metadata.license}}</small></div>
+        </div>
+      }
+    }
+      } @else {
+        n/a
+      }
+    </div>
+
+    <div class="container mt-5">
+    <h5>Links</h5>
+      @if(externalReferences && externalReferences.length) {
+      @for (file of item.files; track file) {
+        @if (file?.storage === 'EXTERNAL_URL') {
+          <div class="row mt-2" [ngbTooltip]="file.metadata.title">
+            <a class="icon-link" href="{{file.content}}" target="_blank" >
+              <i class="bi-link"></i>
+              <span class="text-truncate">{{file.metadata.title}}</span>
+            </a>
+            <div><small>({{file.metadata.contentCategory}})</small></div>
+          </div>
+        }
+      }
+      } @else {
+      n/a
+    }
+    </div>
+
+    <div class="container mt-5">
+
+      <h5>Dataset Permalink</h5>
+      <div class="row">
+      <a class="icon-link" href="https://hdl.handle.net/{{item.objectPid?.substring(4)}}" target="_blank" >
+        <i class="bi-link"></i>
+        <span class="text-truncate">{{item.objectPid}}</span>
+      </a>
+      </div>
+    </div>
+
+    <div class="container mt-5">
+
+      <h5>Version Info</h5>
+      <div class="row">
+      <a class="icon-link" href="https://hdl.handle.net/{{item.versionPid?.substring(4)}}" target="_blank" >
+        <i class="bi-link"></i>
+        <span class="text-truncate">{{item.versionPid}}</span>
+      </a>
+        </div>
+      <div class="row">
+Version Number: {{item.versionNumber}}
+      </div>
+
+    </div>
+
+</div>
+        </div>
+
+}

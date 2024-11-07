@@ -11,14 +11,16 @@
           </a>
           <div class="vr mx-2"></div-->
           <a i18n-ngbTooltip="@@batch.logs.details.fill.all"
-            ngbTooltip="Fill batch with all items from the log" (click)="fillWithAll()">
+            ngbTooltip="Fill batch with all items from the log" 
+            placement="bottom-left" (click)="fillWithAll()">
             <span class="material-symbols-outlined">
               list_alt <!--ist_alt_add-->
             </span>
           </a>
           @if(failed > 0) {
           <a class="ms-3" i18n-ngbTooltip="@@batch.logs.details.fill.errors"
-            ngbTooltip="Fill batch with errors only" (click)="fillWithFailed()">
+            ngbTooltip="Fill batch with errors only" 
+            placement="bottom-left"(click)="fillWithFailed()">
             <span class="material-symbols-outlined">
               breaking_news_alt_1 <!--report_gmailerrorred-->
             </span>
@@ -111,7 +113,7 @@
                   <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
                 </td>
                 <td>
-                  <span class="nav-link" routerLink="/edit/{{log.item.itemObjectId}}" [innerHTML]="log.title | sanitizeHtml"></span>
+                  <span class="nav-link" routerLink="/view/{{log.item.itemObjectId}}" [innerHTML]="log.title | sanitizeHtml"></span>
                 </td>
                 <td>
                   <span>{{ getProcessMessageTranslation(log.item.message) }}</span>

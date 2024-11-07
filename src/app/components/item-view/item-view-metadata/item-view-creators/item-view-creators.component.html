@@ -1,0 +1,64 @@
+
+    <pure-item-view-metadata-element [sub]="true" [condition]="creatorMap.size > 0">
+      <span label>Creators</span>
+      <span content>
+        <div class="list-group" id="collapseExample">
+          @for (author of creatorMap.keys(); track author; let i = $index) {
+
+            <div class="
+            list-group-item
+            {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'mark' : ''}}
+            {{i >= maxDisplay ? 'd-none' : ''}}"
+
+                 (mouseenter)="highlightAffiliations(creatorMap.get(author))"
+                 (mouseleave)="unhighlightAffiliations()">
+              @if(author.person) {
+                {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
+                <sup>{{creatorMap.get(author)}}</sup>
+                @if (author?.person?.orcid) {
+                  <sup>
+                    <a [href]="author?.person?.orcid" target="_blank">
+                      <img alt="ORCID logo"
+                           src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                           width="16" height="16"/>
+                    </a>
+                  </sup>
+                }
+              }
+              @else {
+                {{ author?.organization?.name }}
+              }
+            </div>
+          }
+          @if(creatorMap.size > maxDisplay) {
+          <div class="container float-start">
+            <button type="button" class="btn btn-sm btn-link p-0 me-3" (click)="showMore(20)">show more...</button>
+            <button type="button" class="btn btn-sm btn-link p-0 me-3" (click)="showMore(creatorMap.size)">show all {{creatorMap.size}}...</button>
+          </div>
+          } @else if (creatorMap.size === maxDisplay) {
+            <div class="container float-start">
+          <button type="button" class="btn btn-sm btn-link p-0" (click)="showLess()">show less...</button>
+          </div>
+          }
+        </div>
+      </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="affiliations.length > 0">
+      <span label>Affiliations</span>
+      <span content>
+        <div class="list-group">
+         @for (aff of affiliations; track aff; let i = $index) {
+           <div class="list-group-item {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'mark' : ''}}"
+                data-affiliation-id="i+1"
+                (mouseenter)="highlightAffiliations([i+1])"
+                (mouseleave)="unhighlightAffiliations()">
+             <div class="row">
+               <div class="col-1">{{i+1}}</div>
+               <div class="col">{{aff.name}} ({{aff.identifier}})</div>
+               </div>
+           </div>
+         }
+          </div>
+      </span>
+    </pure-item-view-metadata-element>
+

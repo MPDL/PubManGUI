@@ -38,7 +38,7 @@ export default class ImportComponent implements OnInit {
   }
 
   public importForm: FormGroup = this.fb.group({
-    context: [$localize`:@@batch.actions.context:Context`, [Validators.required]],
+    context: [$localize`:@@imports.context:Context`, [Validators.required]],
     format: ['BMC_XML', [Validators.required]],
     name: ['', [Validators.required]],
     schema: ['OTHER', [Validators.required]],

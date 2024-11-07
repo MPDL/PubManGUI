@@ -168,7 +168,11 @@
             <div class="card-header">
             </div>
             <div class="card-body">
-                facets or filters or whatever else ya wanna display here ...
+              <div class="container pb-4">{{number_of_results}} items found</div>
+              <div class="row">
+              <ng-content #sortAndFilter></ng-content>
+              </div>
+
             </div>
         </div>
     </div>

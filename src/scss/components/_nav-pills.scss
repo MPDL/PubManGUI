@@ -1,0 +1,17 @@
+
+  .nav-pills .nav-link {
+    background-color: transparent;
+    font-family: $headings-font-family;
+    font-size: 1.1em;
+
+  }
+
+  .nav-pills .nav-link.active {
+    font-weight: bold;
+    background-color: transparent;
+    //color: $mpg-blue;
+    border-bottom: 3px solid;
+    border-radius: unset;
+
+  }
+

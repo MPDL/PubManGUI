@@ -25,15 +25,16 @@
   }
 
   #brand {
-    font-size: 2.2rem; 
+    font-size: 2.2rem;
     font-family: "Roboto", "Tahoma", Arial, sans-serif;
     font-weight: 500;
     letter-spacing: 0.1rem;
     color: var(--bs-body-color);
+    text-decoration: none;
   }
 
   #search {
-    
+
     .input-group-text {
       height: 2.2rem;
     }
@@ -47,7 +48,7 @@
   i,
   .bi {
     &:hover {
-      border-radius: 40%; 
+      border-radius: 40%;
       box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05);
       background-color: rgba(0, 0, 0, 0.05);
       color: black !important;

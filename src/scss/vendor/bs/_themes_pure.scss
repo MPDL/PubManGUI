@@ -90,6 +90,10 @@
 
     .list-group-item {
         background-color: $body-secondary-bg;
+
+      &.mark {
+        background-color: $body-tertiary-bg;
+      }
     }
 
     .list-group-item:hover {
@@ -99,13 +103,20 @@
     .material-symbols-outlined {
         color: $link-color;
     }
-
-    a:hover .material-symbols-outlined {
+/*
+    a {
+      color : $link-color;
+    }
+    a:hover {
         color: $link-hover-color;
     }
-
+*/
     .nav-link {
         color: $link-color;
+    }
+
+    .nav-link.active {
+      color: $mpg-blue;
     }
 
     .nav-link:hover {
@@ -300,10 +311,6 @@
         color: $link-color-dark;
     }
 
-    a:hover .material-symbols-outlined {
-        color: $link-hover-color-dark;
-    }
-
     .mat-mdc-chip.mat-mdc-standard-chip {
         --mdc-chip-container-height: 24px;
         background-color: $body-tertiary-bg-dark;
@@ -366,3 +373,5 @@
     }
 
 }
+
+

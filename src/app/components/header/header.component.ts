@@ -8,6 +8,7 @@ import {DOCUMENT, NgClass} from '@angular/common';
 import { AaService } from 'src/app/services/aa.service';
 import { LangSwitchComponent } from 'src/app/shared/components/lang-switch/lang-switch.component';
 import { SidenavComponent } from 'src/app/shared/components/sidenav/sidenav.component';
+import {SearchStateService} from "../search-result-list/search-state.service";
 
 @Component({
     selector: 'pure-header',
@@ -37,14 +38,17 @@ export class HeaderComponent {
   constructor(
     private form_builder: FormBuilder,
     public aa: AaService,
-    private router: Router
+    private router: Router,
+    private searchState: SearchStateService
     ) { }
 
   search(): void {
     const search_term = this.search_form.get('text')?.value;
     if (search_term) {
       const query = { query_string: { query: search_term } };
-      this.router.navigateByUrl('/search', {onSameUrlNavigation: 'reload', state: {query}});
+      this.searchState.$currentQuery.next(query);
+      //sessionStorage.setItem('currentQuery', JSON.stringify(query));
+      this.router.navigateByUrl('/search');
     }
     this.search_form.controls['text'].patchValue('');
   }
