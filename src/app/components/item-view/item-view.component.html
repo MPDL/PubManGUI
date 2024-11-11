@@ -53,7 +53,7 @@
               }
             </div>
           }
-          @if (item.metadata.creators && item.metadata.creators.length > 3) {
+          @if (item.metadata.creators && item.metadata.creators.length > 10) {
             <div class="me-5">
               <button type="button" class="btn btn-link p-0 align-baseline" (click)="scrollToCreators()">{{ (item.metadata.creators.length - 10) + ' more authors ...' }}</button>
             </div>
@@ -105,7 +105,7 @@
        @if(item.metadata.abstracts) {
        @for (abs of item.metadata.abstracts; track abs; ) {
          <pure-item-view-metadata-element>
-           <span label>Abstract ({{ abs.language }})</span>
+           <span label>Abstract {{abs.language ? '(' + abs.language + ')' : '' }}</span>
            <span content [innerHTML]="abs.value | sanitizeHtml" >
 
         </span>
