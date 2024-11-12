@@ -144,35 +144,35 @@
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Published in Print</label>
-                                    <input type="text" class="form-control"
-                                        formControlName="datePublishedInPrint" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="form-control" formControlName="datePublishedInPrint"
+                                        placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Published Online</label>
-                                    <input type="text" class="form-control"
-                                        formControlName="datePublishedOnline" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="form-control" formControlName="datePublishedOnline"
+                                        placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Accepted</label>
-                                    <input type="text" class="form-control"
-                                        formControlName="dateAccepted" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="form-control" formControlName="dateAccepted"
+                                        placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Submitted</label>
-                                    <input type="text" class="form-control"
-                                        formControlName="dateSubmitted" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="form-control" formControlName="dateSubmitted"
+                                        placeholder="YYYY-MM-DD">
                                 </div>
                             </div>
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Created</label>
-                                    <input type="text" class="form-control"
-                                        formControlName="dateCreated" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="form-control" formControlName="dateCreated"
+                                        placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Date Modified</label>
-                                    <input type="text" class="form-control"
-                                        formControlName="dateModified" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="form-control" formControlName="dateModified"
+                                        placeholder="YYYY-MM-DD">
                                 </div>
                             </div>
                             <div class="col-sm-1">
@@ -218,8 +218,7 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
-                                    <input type="text" class="form-control"
-                                        formControlName="totalNumberOfPages">
+                                    <input type="text" class="form-control" formControlName="totalNumberOfPages">
                                 </div>
                                 <div class="col-sm-1">
                                     <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -233,10 +232,9 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
-                                    <select id="reviewMethod" class="form-select"
-                                        formControlName="reviewMethod">
+                                    <select id="reviewMethod" class="form-select" formControlName="reviewMethod">
                                         <option [value]="null" selected disabled>Review Method</option>
-                                        <option [value]="null" >---</option>
+                                        <option [value]="null">---</option>
                                         @for (rm of review_method_types; track rm) {
                                         <option [value]="rm">{{rm}}</option>
                                         }
@@ -350,8 +348,8 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
-                                    <textarea class="form-control" id="tableOfContents"
-                                        name="tableOfContents" formControlName="tableOfContents"></textarea>
+                                    <textarea class="form-control" id="tableOfContents" name="tableOfContents"
+                                        formControlName="tableOfContents"></textarea>
                                 </div>
                                 <div class="col-sm-1">
                                     <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -396,7 +394,8 @@
                     $index) {
                     <div class="accordion-body mt-3 mb-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                            <label for="projectInfos" class="col-sm-2 col-form-label">{{projectInfoIndex + 1}}. Project-Info</label>
+                            <label for="projectInfos" class="col-sm-2 col-form-label">{{projectInfoIndex + 1}}.
+                                Project-Info</label>
                             <div class="col-sm" id="projectInfo">
                                 <ng-container [formGroupName]="projectInfoIndex">
                                     <pure-project-info-form [project_info_form]="projectInfoElement"
@@ -452,11 +451,9 @@
                             <label for="sources" class="col-sm-2 col-form-label">{{sourcesIndex + 1}}.
                                 Source</label>
                             <div class="col-sm">
-                                <ng-container [formGroupName]="sourcesIndex">
-                                    <pure-source-form [source_form]="source" [index]="sourcesIndex"
-                                        [index_length]="sources.controls.length"
-                                        (notice)="handleSourceNotification($event)"></pure-source-form>
-                                </ng-container>
+                                <pure-source-form [source_form]="source" [index]="sourcesIndex"
+                                    [index_length]="sources.controls.length"
+                                    (notice)="handleSourceNotification($event)"></pure-source-form>
                             </div>
                         </div>
                     </div>
