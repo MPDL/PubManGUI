@@ -1,0 +1,97 @@
+
+
+
+  @if (files && files.length) {
+    @for (file of files; track file; let i = $index) {
+
+        <div class="row mt-3">
+          <div class="col-9 text-truncate">
+
+            @if(file.storage==='EXTERNAL_URL' || fileAccessGranted(file)) {
+            <a class="icon-link" href="{{ingeUri + file.content}}" target="_blank" [ngbTooltip]="file.metadata.title">
+              <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}}"></i>
+              {{ file.metadata.title }}
+            </a>
+            }
+            @else {
+              <span [ngbTooltip]="file.metadata.title">
+                <i class="bi-eye-slash-fill"></i> {{ file.metadata.title }}
+              </span>
+            }
+            <div>
+              ({{ file.metadata.contentCategory }})
+            </div>
+
+
+          </div>
+          <div class="col-3">
+            <button class="float-end btn" type="button" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapse'+file.objectId" aria-expanded="true" aria-controls="collapseOne">
+              <i class="bi bi-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="collapse{{file.objectId}}" class="collapse header_color" aria-labelledby="headingOne">
+          <div class="container p-2">
+            @if(file.storage==='INTERNAL_MANAGED') {
+            <div>
+              <strong>Name</strong>
+            </div>
+            <div class="text-break">
+              {{ file.name }}
+            </div>
+              <div>
+                <strong>Visibility</strong>
+              </div>
+              <div>
+                {{ file.visibility }}
+              </div>
+              @if(file.allowedAudienceIds | empty) {
+              <div>
+                {{ file.allowedAudienceIds }}
+              </div>
+              }
+            }
+            @if(file.metadata.description | empty) {
+            <div>
+              <strong>Description</strong>
+            </div>
+            <div>
+              {{ file.metadata.description }}
+            </div>
+            }
+              @if(file.metadata.license | empty) {
+              <div>
+                <strong>License</strong>
+              </div>
+              <div>
+                {{ file.metadata.license }}
+              </div>
+              }
+              @if(file.metadata.copyrightDate | empty) {
+              <div>
+                <strong>Copyright Date</strong>
+              </div>
+              <div>
+                {{ file.metadata.copyrightDate }}
+              </div>
+              }
+              @if(file.metadata.rights | empty) {
+              <div>
+                <strong>Copyright</strong>
+              </div>
+              <div>
+                {{ file.metadata.rights }}
+              </div>
+              }
+
+          </div>
+
+        </div>
+
+    }
+  }
+ @else {
+   n/a
+ }

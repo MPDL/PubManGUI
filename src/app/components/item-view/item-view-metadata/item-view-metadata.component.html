@@ -167,7 +167,17 @@
       <span label>Identifiers</span>
         <span content>
           @for (id of item.metadata?.identifiers; track id) {
-            <div>{{ id.type }}: {{ id.id }}</div>
+            <pure-item-view-metadata-element [sub]="true">
+
+              <span label>{{ id.type }}:</span>
+              <span content>
+            @if(identifierUrl(id) | empty) {
+              <a href="{{identifierUrl(id)}}" target="_blank">{{id.id}}</a>
+            } @else {
+              {{ id.id }}
+            }
+             </span>
+              </pure-item-view-metadata-element>
           }
         </span>
     </pure-item-view-metadata-element>
@@ -341,7 +351,17 @@
       <span label>Identifiers</span>
         <span content>
           @for (id of source.identifiers; track id) {
-            <div>{{ id.type }}: {{ id.id }}</div>
+            <pure-item-view-metadata-element [sub]="true">
+
+              <span label>{{ id.type }}</span>
+              <span content>
+            @if(identifierUrl(id) | empty) {
+              <a href="{{identifierUrl(id)}}" target="_blank">{{id.id}}</a>
+            } @else {
+              {{ id.id }}
+            }
+             </span>
+              </pure-item-view-metadata-element>
           }
         </span>
     </pure-item-view-metadata-element>

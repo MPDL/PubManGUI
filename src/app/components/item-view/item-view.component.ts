@@ -15,6 +15,7 @@ import {
   ItemViewMetadataElementComponent
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
 import {SanitizeHtmlPipe} from "../../shared/services/pipes/sanitize-html.pipe";
+import {ItemViewFileComponent} from "./item-view-file/item-view-file.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -30,7 +31,8 @@ import {SanitizeHtmlPipe} from "../../shared/services/pipes/sanitize-html.pipe";
     ItemViewMetadataComponent,
     ItemViewMetadataElementComponent,
     AsyncPipe,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    ItemViewFileComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'

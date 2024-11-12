@@ -17,4 +17,8 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     return this.httpGet(this.subPath + '/' + id + '/history', token);
   }
 
+  checkFileAudienceAccess(itemId: string, fileId: string) {
+    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/content');
+  }
+
 }
