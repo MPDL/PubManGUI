@@ -2,7 +2,7 @@
 <div class="batch">
   @if(batchSvc.areItemsSelected()) {
   <div class="datasets">
-    <div class="row top_nav_pos navbar bg-body" [ngClass]="{ 'scrolled': isScrolled }">
+    <div class="row top_nav_pos navbar bg-body py-2" [ngClass]="{ 'scrolled': isScrolled }">
       <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
         <div class="d-inline-flex justify-content-start align-items-center">
@@ -16,7 +16,8 @@
           <div class="vr mx-2"></div>
           @if (number_of_results && number_of_results > 0) {
           <a class="nav-link" (click)="removeChecked()" i18n-ngbTooltip="@@batch.datasets.remove"
-            ngbTooltip="Remove checked items from Batch.">
+            ngbTooltip="Remove checked items from Batch"
+            placement="bottom-left">
             <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               viewBox="0 0 24 24">
               <g id="Gruppe_43" data-name="Gruppe 43">
@@ -83,12 +84,12 @@
       </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row mt-2">
       <div class="col-lg-9 col-sm-12">
         @if (result_list | async; as list) {
         <div class="card">
           <div class="card-header">
-            <div class="form-check ms-4">
+            <div class="form-check m-3">
               <input #input [formControl]="select_all" class="form-check-input" type="checkbox" value="" id="form_check"
                 (change)="select_all_items($event)">
               <label for="form_check"><small

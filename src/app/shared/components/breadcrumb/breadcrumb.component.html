@@ -1,16 +1,18 @@
-<a [routerLink]="['/home']">
-  <span class="material-symbols-outlined" title="Home">Home</span>
-</a>
+<nav>
+  <a [routerLink]="['/home']">
+    <span class="material-symbols-outlined">Home</span>
+  </a>
 
-@for(crumb of breadcrumbs; track crumb.label; let last = $last) {
-  @if(crumb.label !== 'Home') {
-    <span class="text-muted">{{ separator }}</span>
-    @if(last) {
-      <span class="last">{{ crumb.label }}</span>
-    } @else {
-      <a [routerLink]="crumb.link">
-        <span>{{ crumb.label }}</span>
-      </a>
+  @for(crumb of breadcrumbs; track crumb.label; let last = $last) {
+    @if(crumb.label !== 'Home') {
+      <span class="text-muted">{{ separator }}</span>
+      @if(last) {
+        <span class="last">{{ crumb.label }}</span>
+      } @else {
+        <a [routerLink]="crumb.link">
+          <span>{{ crumb.label }}</span>
+        </a>
+      }
     }
   }
-}
+</nav>

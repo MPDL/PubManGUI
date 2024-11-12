@@ -7,7 +7,7 @@
         <small>{{current_page}} / {{number_of_pages}}</small>
     </div>
     -->
-    <nav class="col-12 col-xxl-5" purePagination #pagination="purePagination" [totalPages]="number_of_pages"
+    <nav class="col-12 col-xxl-8" purePagination #pagination="purePagination" [totalPages]="number_of_pages"
         [pageNo]="current_page" (pageChange)="onPageChange($event)">
         <!--
         <ul class="pagination pagination-sm">
@@ -131,7 +131,7 @@
             <select class="form-select" [formControl]="select_pages_2_display"
                 (change)="pageSizeHandler($event)" size="1">
                 @for (pages of pages_2_display; track pages) {
-                <option [selected]="pages.value === 10" [value]="pages.value">{{pages.label}}</option>
+                <option [selected]="pages.value === 25" [value]="pages.value">{{pages.label}}</option>
                 }
             </select>
         </div>
@@ -145,7 +145,7 @@
         @if (result_list | async; as list) {
         <div class="card">
             <div class="card-header">
-                <div class="form-check ms-4">
+                <div class="form-check m-3">
                     <input #input [formControl]="select_all" class="form-check-input" type="checkbox" value=""
                         id="form_check" (change)="select_all_items($event)">
                     <label for="form_check"><small
@@ -168,7 +168,11 @@
             <div class="card-header">
             </div>
             <div class="card-body">
-                facets or filters or whatever else ya wanna display here ...
+              <div class="container pb-4">{{number_of_results}} items found</div>
+              <div class="row">
+              <ng-content #sortAndFilter></ng-content>
+              </div>
+
             </div>
         </div>
     </div>

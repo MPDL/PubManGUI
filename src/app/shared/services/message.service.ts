@@ -62,8 +62,9 @@ export class MessageService {
   error(message: string) {
     let title, msg = null;
     if (message.lastIndexOf('\n')>=0) {
-      title = (message.substring(message.lastIndexOf('\n')));
-      msg = { type: 'danger', title: title, text: message };
+      title = message.substring(message.lastIndexOf('\n'));
+      const message_filtered = message.substring(0, message.lastIndexOf('\n'));
+      msg = { type: 'danger', title: title, text: message_filtered };
       if (this.lastMessage().title && this.lastMessage().title === title) return;
     } else {
       msg = { type: 'danger', text: message };

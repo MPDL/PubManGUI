@@ -1,0 +1,12 @@
+<ul>
+    @for(option of navList(); track option) {
+    <li [routerLink]="[ option.route ]" 
+        routerLinkActive="current" 
+        isActive="false"
+        [ngClass]="{'disabled' : option.disabled}" (click)="warning(option.route)" 
+        data-bs-toggle="button"
+        class="nav-link nav-label ps-5">
+        {{ option.label | titlecase }}
+    </li>
+    }
+</ul>

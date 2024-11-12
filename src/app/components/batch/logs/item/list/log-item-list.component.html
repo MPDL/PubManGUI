@@ -1,26 +1,28 @@
 <div class="batch">
   <div class="logs">
-    <div class="row top_nav_pos navbar bg-body">
+    <div class="row top_nav_pos navbar bg-body" [ngClass]="{ 'scrolled': isScrolled }">
       <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
         <div class="d-inline-flex justify-content-start align-items-center">
-          <a class="pt-0 pe-0" (click)="goBack()" i18n-ngbTooltip="@@batch.logs.details.back" ngbTooltip="Back to Logs">
+          <!--a class="pt-0 pe-0" (click)="goBack()" i18n-ngbTooltip="@@batch.logs.details.back" ngbTooltip="Back to Logs">
             <span class="material-symbols-outlined fs-3">
               door_back
             </span>
           </a>
-          <div class="vr mx-2"></div>
+          <div class="vr mx-2"></div-->
           <a i18n-ngbTooltip="@@batch.logs.details.fill.all"
-            ngbTooltip="Fill batch with all items from the log" (click)="fillWithAll()">
+            ngbTooltip="Fill batch with all items from the log" 
+            placement="bottom-left" (click)="fillWithAll()">
             <span class="material-symbols-outlined">
-              keyboard_double_arrow_left
+              list_alt <!--ist_alt_add-->
             </span>
           </a>
           @if(failed > 0) {
           <a class="ms-3" i18n-ngbTooltip="@@batch.logs.details.fill.errors"
-            ngbTooltip="Fill batch with errors only" (click)="fillWithFailed()">
+            ngbTooltip="Fill batch with errors only" 
+            placement="bottom-left"(click)="fillWithFailed()">
             <span class="material-symbols-outlined">
-              report_gmailerrorred
+              breaking_news_alt_1 <!--report_gmailerrorred-->
             </span>
           </a>
           }
@@ -69,9 +71,10 @@
           </ngb-pagination>
 
           <select class="form-select page-size ms-3" [(ngModel)]="pageSize" (ngModelChange)="refreshLogs()">
-            <option [ngValue]="10">10</option>
-            <option [ngValue]="20">20</option>
-            <option [ngValue]="30">30</option>
+            <option [ngValue]="25">25</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+            <option [ngValue]="250">250</option>
           </select>
         </div>
       </div>
@@ -80,7 +83,7 @@
     <div class="row">
       <div class="col-lg-10 col-sm-12 d-flex justify-content-between mt-5 mb-3 border-bottom">
         <div>
-          <span i18n="@@batch.logs.details.for">Action</span>: <strong class="fw-bolder"> {{ method! | titlecase | separate }} </strong>
+          <span i18n="@@batch.logs.details.for">Action</span>: <strong class="fw-bolder"> {{ getProcessMethodTranslation(method!) }} </strong>
         </div>
         <div class="fw-light">
           <span i18n="@@batch.logs.started.on">started on</span><span> {{ started | date:'fullDate' }} </span><span class="material-symbols-outlined" style="cursor: auto">
@@ -103,27 +106,29 @@
           </thead>
 
           <tbody>
-            @for (log of inPage | stateFilter:refreshFilters():'state' ; track log.item.itemObjectId) {
-            <tr class="border-bottom">
-              <td class="col-2">
-                <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
-              </td>
-              <td>
-                <span>{{ log.title }}</span>
-              </td>
-              <td>
-                <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
-              </td>
-              <hr>
-            </tr>
-            }
-            @empty {
-            <tr>
-              <th colspan="3" class="text-center">
-                <span class="text-center">No items to see</span>
-              </th>
-            </tr>
-            }
+            @if(collectionSize > 0) {
+              @for (log of inPage | stateFilter:refreshFilters():'state' ; track log.item.itemObjectId) {
+              <tr class="border-bottom">
+                <td class="col-2">
+                  <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
+                </td>
+                <td>
+                  <span class="nav-link" routerLink="/view/{{log.item.itemObjectId}}" [innerHTML]="log.title | sanitizeHtml"></span>
+                </td>
+                <td>
+                  <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
+                </td>
+                <hr>
+              </tr>
+              }
+              @empty {
+              <tr>
+                <th colspan="3" class="text-center">
+                  <span class="text-center" i18n="@@batch.logs.details.empty">No details to show</span>
+                </th>
+              </tr>
+              }
+            } 
           </tbody>
         </table>
       </div>
@@ -148,7 +153,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="success" formControlName="success" checked>
             <label class="form-check-label" for="success" i18n="@@batch.logs.details.filter.succeded">
-              Show successful items
+              success
             </label>
           </div>
           }
@@ -156,7 +161,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="fail" formControlName="fail" checked>
             <label class="form-check-label lh-lg" for="fail" i18n="@@batch.logs.details.filter.failed">
-              Show failed items
+              failed
             </label>
           </div>
           }

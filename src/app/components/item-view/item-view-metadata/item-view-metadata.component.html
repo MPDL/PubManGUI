@@ -1,0 +1,356 @@
+<hr/>
+
+<!-- Subtitle -->
+<pure-item-view-metadata-element
+  [condition]="(item.metadata?.alternativeTitles?.length | empty)">
+  <span label>Subtitle</span>
+  <span content>
+    @for (sub of item.metadata?.alternativeTitles; track sub; let i = $index) {
+      <div> {{ sub.value }}</div>
+    }
+  </span>
+</pure-item-view-metadata-element>
+
+
+<!--Authors-->
+<pure-item-view-metadata-element>
+  <span label id="creators">Creators</span>
+  <span content>
+  @if (item) {
+    <pure-item-view-creators [creators]="item.metadata?.creators"/>
+  }
+    </span>
+</pure-item-view-metadata-element>
+
+<!--Content -->
+<pure-item-view-metadata-element
+  [condition]="(item.metadata?.freeKeywords  | empty) ||
+  (item.metadata?.subjects?.length  | empty) ||
+  (item.metadata?.abstracts?.length  | empty)">
+  <span label>Content</span>
+  <span content>
+    <pure-item-view-metadata-element [sub]="true" [condition]="item.metadata?.freeKeywords | empty">
+        <span label>Free keywords</span>
+        <span content>
+          {{ item.metadata?.freeKeywords }},
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="item.metadata?.subjects?.length | empty">
+        <span label>DDC</span>
+        <span content>
+            @for (sub of item.metadata?.subjects; track sub; let i = $index) {
+              <div> {{ sub.value }}</div>
+            }
+        </span>
+    </pure-item-view-metadata-element>
+    @for (abs of item.metadata?.abstracts; track abs; ) {
+      <pure-item-view-metadata-element [sub]="true">
+        <span label>Abstract ({{ abs.language }})</span>
+        <span content>
+          <p [innerHTML]="(abs.value | sanitizeHtml)" ></p>
+        </span>
+    </pure-item-view-metadata-element>
+    }
+  </span>
+</pure-item-view-metadata-element>
+
+<pure-item-view-metadata-element [condition]="
+ (item.metadata?.languages?.length | empty) ||
+ (item.metadata?.dateCreated | empty) ||
+ (item.metadata?.dateModified | empty) ||
+ (item.metadata?.dateSubmitted | empty) ||
+ (item.metadata?.dateAccepted | empty) ||
+ (item.metadata?.datePublishedOnline | empty) ||
+ (item.metadata?.datePublishedInPrint | empty) ||
+ (publicationState | empty) ||
+ (item.metadata?.totalNumberOfPages | empty) ||
+ (item.metadata?.publishingInfo | empty) ||
+ (item.metadata?.tableOfContents | empty) ||
+ (item.metadata?.reviewMethod | empty) ||
+ (item.metadata?.identifiers?.length | empty) ||
+ (item.metadata?.degree | empty)
+">
+  <span label>Details</span>
+  <span content>
+    <pure-item-view-metadata-element [sub]="true" [condition]=" (item.metadata?.languages | empty)">
+      <span label>Language</span>
+        <span content>
+          @for (lang of item.metadata?.languages; track lang) {
+            <div>{{ lang }}</div>
+          }
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true">
+      <span label>Dates</span>
+        <span content>
+            @if (item.metadata?.dateCreated) {
+              <pure-item-view-metadata-element [sub]="true">
+              <span label>Created</span>
+             <span content>
+              {{ item.metadata?.dateCreated }}
+             </span>
+              </pure-item-view-metadata-element>
+            }
+          @if (item.metadata?.dateModified) {
+            <pure-item-view-metadata-element [sub]="true">
+              <span label>Modified</span>
+             <span content>
+              {{ item.metadata?.dateModified }}
+             </span>
+              </pure-item-view-metadata-element>
+          }
+          @if (item.metadata?.dateSubmitted) {
+            <pure-item-view-metadata-element [sub]="true">
+              <span label>Submitted</span>
+             <span content>
+              {{ item.metadata?.dateSubmitted }}
+             </span>
+              </pure-item-view-metadata-element>
+          }
+          @if (item.metadata?.dateAccepted) {
+            <pure-item-view-metadata-element [sub]="true">
+              <span label>Accepted</span>
+             <span content>
+              {{ item.metadata?.dateAccepted }}
+             </span>
+              </pure-item-view-metadata-element>
+          }
+          @if (item.metadata?.datePublishedOnline) {
+            <pure-item-view-metadata-element [sub]="true">
+              <span label>Published online</span>
+             <span content>
+              {{ item.metadata?.datePublishedOnline }}
+             </span>
+              </pure-item-view-metadata-element>
+          }
+          @if (item.metadata?.datePublishedInPrint) {
+            <pure-item-view-metadata-element [sub]="true">
+              <span label>Published in print</span>
+             <span content>
+              {{ item.metadata?.datePublishedInPrint }}
+             </span>
+              </pure-item-view-metadata-element>
+          }
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(publicationState  | empty)">
+      <span label>Publication Status</span>
+        <span content>
+          {{ publicationState }}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.totalNumberOfPages | empty)">
+      <span label>Pages</span>
+        <span content>
+          {{ item.metadata?.totalNumberOfPages }}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.publishingInfo | empty)">
+      <span label>Publishing Info</span>
+        <span content>
+          {{publishingInfoString(item.metadata.publishingInfo)}}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.tableOfContents | empty)">
+      <span label>Table of Contents</span>
+        <span content>
+          <p style="white-space: pre;" [innerHTML]="(item.metadata.tableOfContents | sanitizeHtml)"></p>
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.reviewMethod | empty)">
+      <span label>Review Type</span>
+        <span content>
+          {{ item.metadata?.reviewMethod }}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.identifiers | empty)">
+      <span label>Identifiers</span>
+        <span content>
+          @for (id of item.metadata?.identifiers; track id) {
+            <div>{{ id.type }}: {{ id.id }}</div>
+          }
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.degree | empty)">
+      <span label>Degree</span>
+        <span content>
+          {{ item.metadata?.degree }}
+        </span>
+    </pure-item-view-metadata-element>
+
+  </span>
+</pure-item-view-metadata-element>
+
+<pure-item-view-metadata-element [condition]="(item.metadata.event | empty)">
+  <span label>Event</span>
+  <span content>
+        <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.event?.title | empty)">
+            <span label>Title</span>
+            <span content>
+                {{ item.metadata?.event?.title }}
+            </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.event?.place | empty)">
+            <span label>Place of Event</span>
+            <span content>
+                {{ item.metadata?.event?.place }}
+            </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.event?.startDate | empty) || (item.metadata.event?.endDate | empty)">
+            <span label>Start / End Date</span>
+            <span content>
+                {{ item.metadata?.event?.startDate }} - {{ item.metadata?.event?.endDate }}
+            </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element [sub]="true">
+            <span label>Invited</span>
+            <span content>
+                {{ item.metadata?.event?.invitationStatus === 'INVITED' ? 'Yes' : 'No' }}
+            </span>
+        </pure-item-view-metadata-element>
+    </span>
+</pure-item-view-metadata-element>
+
+<pure-item-view-metadata-element [condition]="(item.metadata.legalCase | empty)">
+  <span label>Legal Case</span>
+  <span content>
+        <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.title | empty)">
+            <span label>Title</span>
+            <span content>
+                {{ item.metadata?.legalCase?.title }}
+            </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.courtName | empty)">
+            <span label>Court Name</span>
+            <span content>
+                {{ item.metadata?.legalCase?.courtName }}
+            </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.datePublished | empty)">
+            <span label>Date Published</span>
+            <span content>
+                {{ item.metadata?.legalCase?.datePublished }}
+            </span>
+        </pure-item-view-metadata-element>
+        <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.identifier | empty)">
+            <span label>Identifier</span>
+            <span content>
+                {{ item.metadata?.legalCase?.identifier }}
+            </span>
+        </pure-item-view-metadata-element>
+    </span>
+</pure-item-view-metadata-element>
+
+
+<pure-item-view-metadata-element [condition]="(item.metadata.projectInfo | empty)">
+  <span label>Project Information</span>
+  <span content>
+        @for (pi of item.metadata?.projectInfo; track pi) {
+          <pure-item-view-metadata-element [sub]="true" [condition]="(pi.title | empty)">
+                <span label>Project name</span>
+                <span content>
+                    {{ pi.title }}
+                </span>
+            </pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [condition]="(pi.grantIdentifier?.id | empty)">
+                <span label>Grant ID</span>
+                <span content>
+                    {{ pi.grantIdentifier?.id }}
+                </span>
+            </pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [condition]="(pi.fundingInfo?.fundingProgram | empty)">
+                <span label>Funding program</span>
+                <span content>
+                    {{ pi.fundingInfo?.fundingProgram?.title }} {{ pi.fundingInfo?.fundingProgram?.identifiers ? '(' + pi.fundingInfo.fundingProgram?.identifiers![0].id + ')' : '' }}
+                </span>
+            </pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [condition]="(pi.fundingInfo?.fundingOrganization | empty)">
+                <span label>Funding organization</span>
+                <span content>
+                    {{ pi.fundingInfo?.fundingOrganization?.title }} {{ pi.fundingInfo?.fundingOrganization?.identifiers ? '(' + pi.fundingInfo?.fundingOrganization?.identifiers![0].id + ')' : '' }}
+                </span>
+            </pure-item-view-metadata-element>
+          <hr/>
+        }
+
+    </span>
+</pure-item-view-metadata-element>
+
+<!--Sources -->
+@for (source of item.metadata?.sources; track source; let i = $index) {
+  <pure-item-view-metadata-element>
+    <span label>Source {{ i + 1 }}</span>
+    <span content>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(source.title | empty)">
+      <span label>Title</span>
+      <span content>
+        {{ source.title }}
+      </span>
+    </pure-item-view-metadata-element>
+
+          @for (altTitle of source.alternativeTitles; track altTitle) {
+            <pure-item-view-metadata-element [sub]="true">
+              <span label>{{altTitle.type}}</span>
+              <span content>
+                {{ altTitle.value }}
+              </span>
+            </pure-item-view-metadata-element>
+          }
+
+      <pure-item-view-metadata-element [sub]="true" [condition]="(source.genre | empty)">
+      <span label>Genre</span>
+      <span content>
+        {{ source.genre }}
+      </span>
+    </pure-item-view-metadata-element>
+
+      <pure-item-view-creators [creators]="source.creators"/>
+
+
+    <pure-item-view-metadata-element [sub]="true" [condition]="(source.publishingInfo | empty)">
+        <span label>Publishing Info</span>
+        <span content>
+          {{publishingInfoString(source.publishingInfo)}}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(source.totalNumberOfPages | empty)">
+        <span label>Pages</span>
+        <span content>
+          {{ source.totalNumberOfPages }}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(source.volume | empty) || (source.issue | empty)">
+        <span label>Volume / Issue</span>
+        <span content>
+          {{ source.volume }} {{(source.issue | empty) ? '(' + source.issue + ')' : ''}}
+        </span>
+    </pure-item-view-metadata-element>
+     <pure-item-view-metadata-element [sub]="true" [condition]="(source.sequenceNumber | empty)">
+        <span label>Sequence Number</span>
+        <span content>
+          {{ source.sequenceNumber }}
+        </span>
+    </pure-item-view-metadata-element>
+     <pure-item-view-metadata-element [sub]="true" [condition]="(source.startPage | empty) || (source.endPage | empty)">
+        <span label>Start / End Page</span>
+        <span content>
+          {{ source.startPage }}{{ (source.endPage | empty) ? ' - ' + source.endPage : ''}}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(source.identifiers | empty)">
+      <span label>Identifiers</span>
+        <span content>
+          @for (id of source.identifiers; track id) {
+            <div>{{ id.type }}: {{ id.id }}</div>
+          }
+        </span>
+    </pure-item-view-metadata-element>
+
+
+        </span>
+  </pure-item-view-metadata-element>
+
+
+}
+
+

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, DoCheck, Inject, LOCALE_ID } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, DoCheck, Inject, LOCALE_ID, HostListener } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -16,6 +16,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
 import { SeparateFilterPipe } from 'src/app/components/batch/pipes/separateFilter.pipe';
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
+
+import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
 
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
@@ -35,14 +37,16 @@ type detail = {
     NgbPaginationModule,
     NgbTooltip,
     StateFilterPipe,
-    SeparateFilterPipe
+    SeparateFilterPipe,
+    RouterLink,
+    SanitizeHtmlPipe
   ],
   templateUrl: './log-item-list.component.html',
 })
 
 export default class LogItemListComponent implements OnInit, DoCheck {
   page = 1;
-  pageSize = 10;
+  pageSize = 25;
   collectionSize = 0;
   inPage: detail[] = [];
 
@@ -55,11 +59,14 @@ export default class LogItemListComponent implements OnInit, DoCheck {
 
   batchProcessLogDetailStateTranslations = {};
   batchProcessMessageTranslations = {};
+  batchProcessMethodTranslations = {};
 
   public filterForm: FormGroup = this.fb.group({
     success: [true, Validators.requiredTrue],
     fail: [true, Validators.requiredTrue],
   });
+
+  isScrolled = false;
 
   constructor(
     private batchSvc: BatchService, 
@@ -71,17 +78,7 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
-    if (this.locale === 'de') {
-      import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.batchProcessLogDetailStateTranslations = msgs.BatchProcessLogDetailState;
-        this.batchProcessMessageTranslations = msgs.BatchProcessMessages;
-      })
-    } else {
-      import('src/assets/i18n/messages.json').then((msgs) => {
-        this.batchProcessLogDetailStateTranslations = msgs.BatchProcessLogDetailState;
-        this.batchProcessMessageTranslations = msgs.BatchProcessMessages;
-      })
-    }
+    this.loadTranslations(this.locale);
 
     this.activatedRoute.params
       .pipe(
@@ -106,7 +103,22 @@ export default class LogItemListComponent implements OnInit, DoCheck {
 
     this.method = history.state.method;
     this.started = history.state.started;
+  }
 
+  async loadTranslations(lang: string) {
+    if (lang === 'de') {
+      import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.batchProcessLogDetailStateTranslations = msgs.BatchProcessLogDetailState;
+        this.batchProcessMessageTranslations = msgs.BatchProcessMessages;
+        this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
+      })
+    } else {
+      import('src/assets/i18n/messages.json').then((msgs) => {
+        this.batchProcessLogDetailStateTranslations = msgs.BatchProcessLogDetailState;
+        this.batchProcessMessageTranslations = msgs.BatchProcessMessages;
+        this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
+      })
+    }
   }
 
   ngDoCheck(): void {
@@ -142,6 +154,11 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     return this.batchProcessMessageTranslations[key];
   }
 
+  getProcessMethodTranslation(txt: string):string {
+    let key = txt as keyof typeof this.batchProcessMethodTranslations;
+    return this.batchProcessMethodTranslations[key];
+  }
+
   fillWithAll() {
     const toFill: string[] = [];
     this.detailLogs.forEach(element => { if (element.item.itemObjectId) toFill.push(element.item.itemObjectId) });
@@ -169,4 +186,9 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     return filteredStatus;
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
+  }
 }

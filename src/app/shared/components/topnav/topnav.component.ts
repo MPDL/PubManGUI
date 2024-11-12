@@ -3,10 +3,15 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+
 @Component({
   selector: 'pure-topnav',
   standalone: true,
-  imports: [RouterLink],
+  imports: [
+    RouterLink,
+    NgbTooltip
+  ],
   templateUrl: './topnav.component.html'
 })
 export class TopnavComponent {

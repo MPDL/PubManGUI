@@ -1,8 +1,8 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
-import { ControlType } from '../../services/form-builder.service';
+import { ControlType} from '../../services/form-builder.service';
 import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 import { AaService } from 'src/app/services/aa.service';
@@ -24,7 +24,9 @@ export class FileFormComponent {
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
 
-  contentCategory_types = Object.keys(ContentCategories).map(key => key.replaceAll('_', '-'));
+  fb = inject(FormBuilder);
+
+  contentCategory_types = Object.keys(ContentCategories);
   visibility_types = Object.keys(Visibility);
   oaStatus_types = Object.keys(OA_STATUS);
 
@@ -49,8 +51,7 @@ export class FileFormComponent {
   }
 
   contentCategory_change(event: any) {
-    this.metadata.get('contentCategory')?.setValue(event.target.value.replaceAll('-', '_'))
-    console.log('changed content category', event.target.value)
+    this.metadata.get('contentCategory')?.setValue(event.target.value)
   }
 
   visibility_change(event: any) {
@@ -62,15 +63,19 @@ export class FileFormComponent {
   }
 
   handleAllowedAudienceIdsNotification(event: any) {
+    console.log('audience notification', event.action);
+    console.log('audience json', this.allowedAudienceIds);
     if (event.action === 'add') {
+      console.log('add audience');
       this.addAllowedAudienceId(event.index);
     } else if (event.action === 'remove') {
+      console.log('remove audience');
       this.removeAllowedAudienceIds(event.index);
     }
   }
 
   addAllowedAudienceId(index: number) {
-    this.allowedAudienceIds.insert(index + 1, {} as FormControl);
+    this.allowedAudienceIds.insert(index + 1, this.fb.control({}));
   }
 
   removeAllowedAudienceIds(index: number) {

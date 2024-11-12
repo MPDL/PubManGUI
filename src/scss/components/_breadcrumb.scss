@@ -4,23 +4,22 @@ pure-breadcrumb {
 
   span {
     text-wrap: nowrap;
-  }
-  
-  a,
-  span,
-  .material-symbols-outlined {
     text-decoration: none;
     color: var(--bs-body-color);
     margin: auto 0.3rem;
 
-    &:hover {
+    &:hover:not(.last) {
       color: black !important;
       text-decoration: none;
     }
   }
 
+  .material-symbols-outlined {
+    margin-left: 0;
+  }
+
   .last {
     font-weight: bold !important;
-    cursor: not-allowed;
   }
+
 }

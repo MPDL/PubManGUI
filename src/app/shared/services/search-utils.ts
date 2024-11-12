@@ -93,6 +93,10 @@ export const baseElasticSearchSortBuilder = (indexField: string, order: string):
   const ef: ElasticSearchIndexField = elasticSearchFields[indexField];
   let finalIndexField = indexField;
 
+  if (indexField==='_score' || indexField==='_doc') {
+    return {[finalIndexField] : {order: order}};
+  }
+
   if (!ef) {
     throw new Error("No index field " + indexField + " found in elasticsearch mapping")
   }

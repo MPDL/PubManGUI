@@ -77,6 +77,9 @@ export class BreadcrumbComponent implements OnInit {
       case 'Entry':
         localizedlabel = $localize`:@@edit:Entry`;
         break;
+      case 'My imports':
+          localizedlabel = $localize`:@@myimports:My imports`;
+          break;  
       case 'Batch processing':
         localizedlabel = $localize`:@@batch:Batch processing`;
         break;

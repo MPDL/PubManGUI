@@ -13,4 +13,8 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     super('/items');
   }
 
+  retrieveHistory(id: string, token?:string): Observable<any> {
+    return this.httpGet(this.subPath + '/' + id + '/history', token);
+  }
+
 }
