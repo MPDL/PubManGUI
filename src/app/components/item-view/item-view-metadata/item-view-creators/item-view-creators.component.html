@@ -12,17 +12,30 @@
 
                  (mouseenter)="highlightAffiliations(creatorMap.get(author))"
                  (mouseleave)="unhighlightAffiliations()">
+
               @if(author.person) {
                 {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
-                <sup>{{creatorMap.get(author)}}</sup>
+                <span class="me-2"><sup>{{creatorMap.get(author)}}</sup></span>
                 @if (author?.person?.orcid) {
-                  <sup>
+                  <span class="me-2" style="vertical-align: center">
                     <a [href]="author?.person?.orcid" target="_blank">
+
                       <img alt="ORCID logo"
-                           src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                           src="/assets/images/ORCID-iD_icon_BW_vector.svg"
                            width="16" height="16"/>
+
                     </a>
-                  </sup>
+                  </span>
+
+                }
+                @if (author?.person?.identifier?.id) {
+                  <span class="me-2">
+                    <a [href]="'/cone' + author?.person?.identifier?.id" target="_blank">
+                      <i class="bi-person-vcard"></i>
+
+                    </a>
+                  </span>
+
                 }
               }
               @else {
@@ -54,11 +67,47 @@
                 (mouseleave)="unhighlightAffiliations()">
              <div class="row">
                <div class="col-1">{{i+1}}</div>
-               <div class="col">{{aff.name}} ({{aff.identifier}})</div>
+               <div class="col">
+                 {{aff.name}}
+                 @if(aff.identifier | empty) {
+                   ({{aff.identifier}})
+                   <span class="me-2">
+                      <button class="btn btn-link p-0"
+                              [ngbPopover]="affPopover"
+                              triggers="manual"
+                              #p = ngbPopover
+                              (click)="toggleAffPopover(p, aff)">
+                        <i class="bi-building"></i>
+
+                      </button>
+                 </span>
+                 }
+
+               </div>
                </div>
            </div>
+
          }
           </div>
       </span>
+
     </pure-item-view-metadata-element>
+
+    <ng-template #affPopover>
+      <div class="row">
+        <b>{{selectedAffiliationForPopover?.name}}</b>
+      </div>
+      <div class="row">
+        {{selectedAffiliationForPopover?.objectId}}
+      </div>
+      <div class="row">
+        {{selectedAffiliationForPopover?.metadata?.alternativeNames}}
+      </div>
+      <div class="row">
+        {{selectedAffiliationForPopover?.metadata?.descriptions}}
+      </div>
+      <div class="row">
+        {{selectedAffiliationForPopover?.metadata?.city}} {{selectedAffiliationForPopover?.metadata?.countryCode}}
+      </div>
+    </ng-template>
 

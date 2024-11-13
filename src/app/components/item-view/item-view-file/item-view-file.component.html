@@ -19,6 +19,11 @@
               </span>
             }
             <div>
+              @if(oaStatusIcon(file)) {
+              <img alt="OA logo"
+                   src="/assets/images/{{oaStatusIcon(file)}}"
+                   width="16" height="16"/>
+              }
               ({{ file.metadata.contentCategory }})
             </div>
 
@@ -61,6 +66,19 @@
               {{ file.metadata.description }}
             </div>
             }
+            @if(file.metadata.oaStatus | empty) {
+              <div>
+                <strong>OA-Status</strong>
+              </div>
+              <div>
+                @if(oaStatusIcon(file)) {
+                  <img alt="OA logo"
+                       src="/assets/images/{{oaStatusIcon(file)}}"
+                       width="16" height="16"/>
+                }
+                {{ file.metadata.oaStatus }}
+              </div>
+            }
               @if(file.metadata.license | empty) {
               <div>
                 <strong>License</strong>
@@ -93,5 +111,5 @@
     }
   }
  @else {
-   n/a
+   -
  }

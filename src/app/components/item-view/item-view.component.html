@@ -1,5 +1,5 @@
 @if (item) {
-  <div class="row align-items-center top_nav_pos bg-body">
+  <div class="row align-items-center top_nav_pos bg-body {{isScrolled ? 'scrolled' : ''}}">
     <div class="col-12 col-xxl-4 ps-0">
       <nav id="topnav" #sidenav class="navbar navbar-expand-lg bg-body">
         <div class="container-fluid">
@@ -43,13 +43,26 @@
               <div class="me-5 mb-1">
                 {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
                 @if (author?.person?.orcid) {
+                  <span class="me-2">
                   <sup>
                     <a [href]="author?.person?.orcid" target="_blank">
                       <img alt="ORCID logo"
-                           src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                           src="/assets/images/ORCID-iD_icon_BW_vector.svg"
                            width="16" height="16"/>
                     </a>
                   </sup>
+                  </span>
+                }
+                @if (author?.person?.identifier?.id) {
+                  <span class="me-2">
+                    <sup>
+                    <a [href]="'/cone'+author?.person?.identifier?.id" target="_blank">
+                      <i class="bi-person-vcard"></i>
+
+                    </a>
+                      </sup>
+                  </span>
+
                 }
               </div>
             }
@@ -105,12 +118,16 @@
         </div>
       </div>
 
+      <hr/>
       <!-- Metadata -->
       <div class="row mt-3">
+
         <!--Sub content-->
         @if (currentSubMenuSelection === 'metadata') {
+
           <pure-item-view-metadata [item]="item"/>
-        } @else if (currentSubMenuSelection === 'abstract') {
+        }
+        @else if (currentSubMenuSelection === 'abstract') {
           @if (item.metadata.abstracts) {
             @for (abs of item.metadata.abstracts; track abs; ) {
               <pure-item-view-metadata-element>
@@ -121,7 +138,10 @@
               </pure-item-view-metadata-element>
             }
           } @else {
-            n/a
+            <pure-item-view-metadata-element>
+              <span label>Abstract</span>
+              <span content>-</span>
+            </pure-item-view-metadata-element>
           }
 
         } @else if (currentSubMenuSelection === 'versions') {

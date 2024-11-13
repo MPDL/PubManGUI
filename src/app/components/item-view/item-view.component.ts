@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostListener, Input} from '@angular/core';
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
 import {AaService} from "../../services/aa.service";
 import {ItemVersionVO} from "../../model/inge";
@@ -45,6 +45,7 @@ export class ItemViewComponent {
   item$!: Observable<ItemVersionVO>;
 
   item!: ItemVersionVO;
+  isScrolled: boolean = false;
 
   constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute,
   private scroller: ViewportScroller) {
@@ -63,6 +64,17 @@ export class ItemViewComponent {
         this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
       }
     })
+
+    const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
+    if(subMenu) {
+      this.currentSubMenuSelection = subMenu;
+    }
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
   }
 
   get firstAuthors() {
@@ -80,11 +92,14 @@ export class ItemViewComponent {
 
   changeSubMenu(val: string) {
     this.currentSubMenuSelection = val;
+    if(this.currentSubMenuSelection!='admin') {
+      sessionStorage.setItem('selectedSubMenuItemView', this.currentSubMenuSelection);
+    }
   }
 
 
   scrollToCreators() {
-    this.currentSubMenuSelection = "metadata"
+    this.changeSubMenu("metadata")
     this.scroller.scrollToAnchor("creators")
 
   }

@@ -1,4 +1,4 @@
-<hr/>
+
 
 <!-- Subtitle -->
 <pure-item-view-metadata-element
@@ -45,7 +45,7 @@
     </pure-item-view-metadata-element>
     @for (abs of item.metadata?.abstracts; track abs; ) {
       <pure-item-view-metadata-element [sub]="true">
-        <span label>Abstract ({{ abs.language }})</span>
+        <span label>Abstract {{ abs.language ? '(' + abs.language + ')' : '' }}</span>
         <span content>
           <p [innerHTML]="(abs.value | sanitizeHtml)" ></p>
         </span>
@@ -154,7 +154,7 @@
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.tableOfContents | empty)">
       <span label>Table of Contents</span>
         <span content>
-          <p style="white-space: pre;" [innerHTML]="(item.metadata.tableOfContents | sanitizeHtml)"></p>
+          <p style="white-space: pre-wrap;" [innerHTML]="(item.metadata.tableOfContents | sanitizeHtml)"></p>
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.reviewMethod | empty)">

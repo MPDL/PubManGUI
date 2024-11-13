@@ -1,14 +1,20 @@
 import {Component, Input} from '@angular/core';
 import {ItemViewMetadataElementComponent} from "../item-view-metadata-element/item-view-metadata-element.component";
-import {CreatorVO, OrganizationVO} from "../../../../model/inge";
+import {AffiliationDbVO, CreatorVO, OrganizationVO} from "../../../../model/inge";
 import {NgClass} from "@angular/common";
+import * as props from "../../../../../assets/properties.json";
+import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {OrganizationsService} from "../../../../services/pubman-rest-client/organizations.service";
+import {EmptyPipe} from "../../../../shared/services/pipes/empty.pipe";
 
 @Component({
   selector: 'pure-item-view-creators',
   standalone: true,
   imports: [
     ItemViewMetadataElementComponent,
-    NgClass
+    NgClass,
+    NgbPopover,
+    EmptyPipe
   ],
   templateUrl: './item-view-creators.component.html',
   styleUrl: './item-view-creators.component.scss'
@@ -23,6 +29,15 @@ export class ItemViewCreatorsComponent {
   currentAffiliationHighlights: number[] = [];
 
   maxDisplay = 20;
+
+  coneUrl = props.cone_instance_uri;
+
+  selectedAffiliationForPopover: AffiliationDbVO | undefined;
+
+  constructor(private ouService: OrganizationsService) {
+
+  }
+
 
   ngOnInit() {
     this.sortCreatorsAndAffiliations()
@@ -101,5 +116,18 @@ export class ItemViewCreatorsComponent {
 
      */
     this.maxDisplay = 20;
+  }
+
+  toggleAffPopover(popover: NgbPopover, aff: OrganizationVO) {
+    if (popover.isOpen()) {
+      popover.close();
+    } else {
+      this.selectedAffiliationForPopover = undefined;
+      this.ouService.retrieve(aff.identifier).subscribe(ou => {
+        this.selectedAffiliationForPopover = ou;
+      })
+      popover.open();
+    }
+
   }
 }
