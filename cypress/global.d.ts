@@ -24,5 +24,10 @@ declare namespace Cypress {
      * Get Item using the REST API
      */
     getItemViaAPI(itemId: string):  Chainable<Cypress.Response<any>>
+
+    /**
+     * Create Item using the REST API
+     */
+    createItemViaAPI(itemMetadata: string):  Chainable<Cypress.Response<any>>
   }
 }

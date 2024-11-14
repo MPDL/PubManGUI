@@ -95,3 +95,14 @@ Cypress.Commands.add('getItemViaAPI', (itemId):  Chainable<Cypress.Response<any>
     expect(response.status).to.eq(200)
   })
 })
+
+Cypress.Commands.add('createItemViaAPI', (itemMetadata):  Chainable<Cypress.Response<any>> => {
+  return cy.request({
+    'method': 'POST',
+    'url': Cypress.env('restUrl') + '/items',
+    //Existing (authentication) cookies are automatically send with requests
+    'body': itemMetadata
+  }).then((response) => {
+    expect(response.status).to.eq(201)
+  })
+})
