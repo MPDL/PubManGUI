@@ -77,14 +77,14 @@
                 <span class="material-symbols-outlined">web_stories</span>
                 <span class="nav-label ms-3" i18n="@@batch">Batch processing</span>
                 @if ( batchSvc.areItemsSelected() ) {
-                  <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}'></div>
-                } 
+                  <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' data-test="batch-badge"></div>
+                }
               </a>
               @if ( batchSvc.areItemsSelected() ) {
                 @defer {
                 <pure-batch-nav></pure-batch-nav>
                 }
-              } 
+              }
           </div>
           }
           <a class="nav-link border-bottom py-3" [routerLink]="['']" (click)="collapse()">

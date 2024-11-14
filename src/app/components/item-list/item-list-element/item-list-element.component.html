@@ -27,7 +27,7 @@
       </a>
       -->
       <a class="nav-link" routerLink="/view/{{item?.objectId}}">
-        <h3 class="" style="font-weight: normal; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml"
+        <h3 class="" style="font-weight: normal; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml" data-test="item-title"
         ></h3>
       </a>
 
