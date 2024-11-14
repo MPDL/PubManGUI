@@ -16,6 +16,8 @@ export class ItemBadgesComponent {
 
   @Input() item: ItemVersionVO | undefined;
 
+  @Input() showVersion: boolean = false;
+
   constructor(protected aaService: AaService) {
   }
 

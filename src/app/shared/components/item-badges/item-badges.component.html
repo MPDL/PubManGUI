@@ -10,11 +10,16 @@
   }
 </div>
 <div class="col-3">
-  @if(aaService.principal.value.loggedIn) {
+
   <div class="float-end">
+    @if(showVersion) {
+    <span class="badge bg-secondary me-2">v{{item?.versionNumber}}</span>
+    }
+    @if(aaService.principal.value.loggedIn) {
   <span class="badge bg-secondary me-2">{{item?.publicState !== 'WITHDRAWN' ? item?.versionState : item?.publicState}}</span>
+    }
 </div>
-  }
+
 </div>
 </div>
 
