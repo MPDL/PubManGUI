@@ -9,9 +9,33 @@
           </button>
           <div class="collapse navbar-collapse d-lg-flex" id="top_nav">-->
           <nav class="nav bg-body">
-            <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
-              <span class="material-symbols-outlined">edit</span>
-            </a>
+            @if(authorizationInfo && authorizationInfo['EDIT'] && isLatestVersion) {
+              <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
+                <span class="material-symbols-outlined">edit</span>
+              </a>
+            }
+            @if(authorizationInfo && authorizationInfo['SUBMIT'] && isLatestVersion) {
+              <button class="btn btn-outline-primary" (click)="submit()">submit</button>
+
+            }
+
+            @if(authorizationInfo && authorizationInfo['REVISE'] && isLatestVersion) {
+              <button class="btn btn-outline-primary" (click)="revise()">revise</button>
+
+            }
+            @if(authorizationInfo && authorizationInfo['RELEASE'] && isLatestVersion) {
+              <button class="btn btn-outline-primary" (click)="release()">release</button>
+
+            }
+            @if(authorizationInfo && authorizationInfo['DELETE'] && isLatestVersion) {
+              <button class="btn btn-outline-primary" (click)="delete()">delete</button>
+
+            }
+            @if(authorizationInfo && authorizationInfo['WITHDRAW'] && isLatestVersion) {
+              <button class="btn btn-outline-primary" (click)="withdraw()">withdraw</button>
+
+            }
+
           </nav>
         </div>
       </nav>
@@ -233,8 +257,12 @@
         <pure-item-view-file [files]="externalReferences" [item]="item"/>
       </div>
 
+
       <div class="container mt-5">
-        <h5>Dataset Permalink</h5>
+      <h5>Item Information</h5>
+
+      <div class="mt-3">
+        <h6>Dataset Permalink</h6>
         <div class="row">
           <a class="icon-link" href="https://hdl.handle.net/{{item.objectPid?.substring(4)}}" target="_blank">
             <i class="bi-link"></i>
@@ -243,9 +271,9 @@
         </div>
       </div>
 
-      <div class="container mt-5">
+      <div class="mt-3">
 
-        <h5>Version {{ item.versionNumber }} Permalink</h5>
+        <h6>Version {{ item.versionNumber }} Permalink</h6>
         <div>
         <a class="icon-link" href="https://hdl.handle.net/{{item.versionPid?.substring(4)}}" target="_blank">
           <i class="bi-link"></i>
@@ -255,6 +283,35 @@
 
       </div>
 
+      @if((item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber) {
+      <div class="mt-3">
+        <h6>Latest Release</h6>
+        <div>
+          <a class="icon-link" href="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}" target="_blank">
+            <i class="bi-link"></i>
+            <span class="text-truncate">Version {{item.latestRelease?.versionNumber}}</span>
+          </a>
+        </div>
+
+      </div>
+      }
+
+      @if((item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
+      latestVersionAuthorizationInfo && latestVersionAuthorizationInfo['GET'] &&
+      !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber)  ) {
+        <div class="mt-3">
+          <h6>Latest Version</h6>
+          <div>
+            <a class="icon-link" href="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}" target="_blank">
+              <i class="bi-link"></i>
+              <span class="text-truncate">Version {{item.latestVersion?.versionNumber}}</span>
+            </a>
+          </div>
+
+        </div>
+      }
+
+    </div>
     </div>
   </div>
 

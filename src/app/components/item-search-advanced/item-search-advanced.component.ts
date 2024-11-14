@@ -690,7 +690,7 @@ export class ItemSearchAdvancedComponent {
   }
 
   deleteSavedSearch(value: number) {
-    this.savedSearchService.delete(this.savedSearches[value].objectId, this.aaService.token == null ? "" : this.aaService.token).subscribe(search => {
+    this.savedSearchService.delete(this.savedSearches[value].objectId, undefined, this.aaService.token == null ? "" : this.aaService.token).subscribe(search => {
       console.log("Successfully deleted search!");
       this.updateSavedSearchList();
 
