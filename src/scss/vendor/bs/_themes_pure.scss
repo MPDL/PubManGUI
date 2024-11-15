@@ -43,8 +43,12 @@
         background-color: $mpdl-yellow;
     }
 
+  .badge-red {
+    background-color: $mpdl-red;
+  }
+
   .badge-gray {
-    background-color: $mpg-slate-gray-0;
+    background-color: $mpg-secondary-gray;
   }
 
     .cdk-drag-preview {
@@ -257,6 +261,15 @@
     .badge-yellow {
         background-color: $mpdl-yellow;
     }
+  .badge-red {
+    background-color: $mpdl-red;
+  }
+
+  .badge-gray {
+    background-color: $mpg-secondary-gray;
+  }
+
+
 
     .cdk-drag-preview {
         background: $body-secondary-color-dark;

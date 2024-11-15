@@ -54,6 +54,8 @@ export class ItemViewComponent {
 
   latestVersionAuthorizationInfo: any;
 
+  citation: string | undefined
+
   constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService) {
 
@@ -122,6 +124,10 @@ export class ItemViewComponent {
               })
             }
           }
+        })
+
+        this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined,undefined,this.aaService.token).subscribe(citation => {
+          this.citation = citation;
         })
       }
     })

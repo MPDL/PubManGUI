@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {ItemVersionVO} from "../../model/inge";
 import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,18 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
 
   retrieveAuthorizationInfo(itemId: string, token?: string): Observable<any> {
     return this.httpGet(this.subPath + '/' + itemId + '/authorization', token);
+  }
+
+  retrieveSingleCitation(id: string, format?: string, citation?:string, cslConeId?:string, token?:string): Observable<string> {
+    const params: HttpParams = new HttpParams()
+    .set('format', format ? format : 'json_citation')
+    .set('citation', citation ? citation : 'APA6');
+    if(cslConeId) params.set('cslConeId', cslConeId);
+    return this.httpGet(this.subPath + '/' + id + '/export', token, params).pipe(
+      map(jsonCitation => {
+        return jsonCitation.records[0].data.bibliographicCitation;
+      })
+    );
   }
 
   checkFileAudienceAccess(itemId: string, fileId: string) {

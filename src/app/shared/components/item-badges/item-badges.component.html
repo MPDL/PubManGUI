@@ -13,10 +13,10 @@
 
   <div class="float-end">
     @if(showVersion) {
-    <span class="badge bg-secondary me-2">v{{item?.versionNumber}}</span>
+    <span class="badge badge-gray me-2">v{{item?.versionNumber}}</span>
     }
-    @if(aaService.principal.value.loggedIn) {
-  <span class="badge bg-secondary me-2">{{item?.publicState !== 'WITHDRAWN' ? item?.versionState : item?.publicState}}</span>
+    @if(aaService.principal.value.loggedIn || state==='WITHDRAWN') {
+  <span class="badge {{state==='WITHDRAWN' ? 'badge-red' : 'badge-gray' }} me-2">{{state}}</span>
     }
 </div>
 

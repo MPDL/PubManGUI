@@ -90,9 +90,10 @@ export class ItemStatusAggregationDirective extends ItemAggregationBaseDirective
         }
 
 
-      return query;
+
 
     }
+    return query;
   }
 
 

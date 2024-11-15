@@ -57,10 +57,11 @@ export abstract class PubmanGenericRestClientService<modelType> {
 
   private httpRequest(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<modelType> {
     const requestUrl = this.restUri + path;
+    console.log(params)
     return this.httpClient.request(method, requestUrl, {
       body,
       headers,
-      params,
+      params: params,
     }).pipe(
       map((response: any) => response),
       catchError((error) => {
