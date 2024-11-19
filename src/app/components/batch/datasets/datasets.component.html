@@ -15,7 +15,7 @@
           </a>
           <div class="vr mx-2"></div>
           @if (number_of_results && number_of_results > 0) {
-          <a class="nav-link" (click)="removeChecked()" i18n-ngbTooltip="@@batch.datasets.remove"
+          <a class="nav-link" (click)="removeChecked()" i18n-ngbTooltip="@@batch.datasets.remove" data-test="remove-from-batch"
             ngbTooltip="Remove checked items from Batch"
             placement="bottom-left">
             <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
