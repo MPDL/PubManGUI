@@ -47,6 +47,8 @@ export default class ItemsComponent implements OnInit {
   import: string | undefined;
   started: Date | undefined;
   
+  itemsCount: number = 0;
+  itemsFine: number = 0;
   error: number = 0;
   fatal: number = 0;
   fine: number = 0;
@@ -82,22 +84,28 @@ export default class ItemsComponent implements OnInit {
 
         importsResponse.sort((a, b) => a.id - b.id)
           .forEach(element => {
-            switch(element.errorLevel) {
+            if (element.itemId) {
+              if (element.errorLevel === resp.ImportErrorLevel.FINE) {
+                this.itemsFine++;
+              }
+              this.itemsCount++;
+            }
+            switch (element.errorLevel) {
               case resp.ImportErrorLevel.FINE:
                 this.fine++;
-              break;
+                break;
               case resp.ImportErrorLevel.WARNING:
                 this.warning++;
-              break;
+                break;
               case resp.ImportErrorLevel.PROBLEM:
                 this.problem++;
-              break;
+                break;
               case resp.ImportErrorLevel.ERROR:
                 this.error++;
-              break;
+                break;
               case resp.ImportErrorLevel.FATAL:
                 this.fatal++;
-              break;                                    
+                break;
             }
           });
         this.logs = importsResponse;

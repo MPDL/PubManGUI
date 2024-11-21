@@ -125,7 +125,6 @@
                   {{ item.errorLevel }}
                 </td>
                 <td class="col-1">
-                  <!--(click)="open(_log)"-->
                   <a [routerLink]="['details']"
                     [state]="{ item: item }">     
                       <span class="material-symbols-outlined my-0" >
@@ -150,14 +149,14 @@
       <div class="col-lg-2 d-none d-lg-block mt-4">
         <div class="border rounded p-3 m-1">
           @if(collectionSize > 0) {
-          <span class="me-0"> {{ fine }}/{{ collectionSize }} <span class="me-0">
-            fine</span>
+          <span class="me-0"> {{ itemsFine }}/{{ itemsCount }} <span class="me-0">
+            items fine</span>
           </span>
           }
           @if((problem + error + fatal) > 0) {
           <br>
           <span class="fw-bold"> {{ warning + problem + error + fatal }} <span>
-            notices</span>
+            import notices</span>
           </span>
           }
         </div>
