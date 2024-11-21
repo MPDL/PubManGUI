@@ -10,7 +10,7 @@ const routes: Routes = [
     loadComponent: () => import('./new/new.component'),
     data: {
       breadcrumb: {
-        label: 'New', //label: $localize`:@@new:New`,
+        label: $localize`:@@new:New`,
       }
     },
   },
@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'myimports',
     data: {
       breadcrumb: {
-        label: 'My imports', //$localize`:@@myimports:My imports`,
+        label: $localize`:@@myimports:My imports`,
       }
     },
     children: [
@@ -33,34 +33,31 @@ const routes: Routes = [
       },
       {
         path: ':id',
-        loadComponent: () => import('./logs/items/items.component'),
         data: {
           breadcrumb: {
-            label: 'Import items', //$localize`:@@details:Import details`,
+            label: $localize`:@@imports.list.items:Details`,
           }
         },
-        /*
         children: [
+          {
+            path: '',
+            loadComponent: () => import('./logs/items/items.component'),
+            data: {
+              breadcrumb: {              
+                //label: '',
+              }
+            },
+          },
           {
             path: 'details',
             loadComponent: () => import('./logs/items/details/details.component'),
             data: {
               breadcrumb: {
-                label: 'Import log',
+                label: $localize`:@@imports.list.details:Log`,
               }
             },
           },
         ],
-        */
-      },
-      {
-        path: ':id/details',
-        loadComponent: () => import('./logs/items/details/details.component'),
-        data: {
-          breadcrumb: {
-            label: 'Import details', //$localize`:@@details:Import details`,
-          }
-        }
       },
 ],
   },
@@ -69,7 +66,7 @@ const routes: Routes = [
     loadComponent: () => import('./imports.component'),
     data: {
       breadcrumb: {
-        label: 'Imports', //label: $localize`:@@imports:Imports`,
+        label: $localize`:@@imports:Imports`,
       }
     }
   }

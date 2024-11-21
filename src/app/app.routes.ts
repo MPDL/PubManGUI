@@ -128,6 +128,7 @@ export const routes: Routes = [
     data: {
       breadcrumb: {
         label: 'Batch processing',
+        active: false
       }
     },
   },
@@ -137,6 +138,7 @@ export const routes: Routes = [
     data: {
       breadcrumb: {
         label: 'Imports',
+        active: false
       }
     },
   },

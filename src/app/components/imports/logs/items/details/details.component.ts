@@ -14,6 +14,7 @@ import { StateFilterPipe } from 'src/app/components/imports/pipes/stateFilter.pi
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 
 //import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
+import xmlFormat from 'xml-formatter';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -60,8 +61,6 @@ export default class DetailsComponent { //implements OnInit {
 
   isScrolled = false;
 
-  parser = new DOMParser();
-
   constructor(
     private importsSvc: ImportsService,
     private activatedRoute: ActivatedRoute,
@@ -77,7 +76,7 @@ export default class DetailsComponent { //implements OnInit {
         switchMap(({ id }) => */this.importsSvc.getImportLogItemDetails(Number(this.item?.id)) // (2970743) //
       //)
       .subscribe(importsResponse => {
-        if (importsResponse.length === 0) return this.router.navigate(['/imports/myimports']);
+        if (importsResponse.length === 0) return this.router.navigate(['../'], { relativeTo: this.activatedRoute });
 
         importsResponse.sort((a, b) => a.id - b.id)
           .forEach(element => {
@@ -98,7 +97,6 @@ export default class DetailsComponent { //implements OnInit {
                 this.fatal++;
               break;                                    
             }
-            console.log(this.parser.parseFromString(element.message, "application/xml"));
           });
         this.logs = importsResponse;
         this.collectionSize = this.logs.length;
@@ -108,6 +106,15 @@ export default class DetailsComponent { //implements OnInit {
     );
 
     //this.loadTranslations(this.locale);
+  }
+
+  formatXml(message: string):string {
+    console.log(message);
+    return xmlFormat(message, {
+      indentation: '    ',
+      collapseContent: true,
+      throwOnFailure: false
+    });
   }
 
   refreshLogs() {

@@ -91,14 +91,14 @@
             @if(collectionSize > 0) {
               @for (detail of inPage; track detail.id) {
               <tr class="border-bottom">
-                <td class="col-2">
+                <td class="col-2 align-text-top">
                   {{ detail.status }}
                 </td>
-                <td class="col-2">
+                <td class="col-2 align-text-top">
                   {{ detail.errorLevel }}
                 </td>
-                <td class="col-8">
-                  {{ detail.message }} <small class="text-muted">({{ detail.id }})</small>
+                <td class="col-8 align-text-top">
+                  <pre>{{ formatXml(detail.message) }}</pre>
                 </td>
               </tr>
               }
