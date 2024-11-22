@@ -17,7 +17,7 @@ import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 
 import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
-import {PaginatorComponent} from "../../../../shared/components/paginator/paginator.component";
+import {PaginatorComponent} from "src/app/shared/components/paginator/paginator.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 

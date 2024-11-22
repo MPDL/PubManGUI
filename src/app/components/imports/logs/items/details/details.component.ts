@@ -7,15 +7,13 @@ import { ImportsService } from 'src/app/components/imports/services/imports.serv
 import * as resp from 'src/app/components/imports/interfaces/imports-responses';
 
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
-//import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { StateFilterPipe } from 'src/app/components/imports/pipes/stateFilter.pipe';
-import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
+import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-//import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
 import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -28,16 +26,12 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
     ReactiveFormsModule,
     FormsModule,
     NgbPaginationModule,
-    //RouterLink,
-    //NgbTooltip,
-    ///StateFilterPipe,
-    //SeparateFilterPipe,
-    //SanitizeHtmlPipe,
-    NgbCollapseModule
+    NgbCollapseModule,
+    PaginatorComponent
   ],
   templateUrl: './details.component.html'
 })
-export default class DetailsComponent { //implements OnInit {
+export default class DetailsComponent implements OnInit {
 
   page = 1;
   pageSize = 25;

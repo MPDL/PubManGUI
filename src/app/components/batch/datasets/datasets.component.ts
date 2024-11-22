@@ -7,7 +7,7 @@ import { ItemVersionVO } from 'src/app/model/inge';
 import { AaService } from 'src/app/services/aa.service';
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 import { MessageService } from 'src/app/shared/services/message.service';
-import { BatchNavComponent } from '../batch-nav/batch-nav.component';
+//import { BatchNavComponent } from '../batch-nav/batch-nav.component';
 import { BatchService } from '../services/batch.service';
 
 import { PaginationDirective } from 'src/app/shared/directives/pagination.directive';
@@ -15,6 +15,7 @@ import { ItemListElementComponent } from 'src/app/components/item-list/item-list
 import { NavigationEnd, Router } from '@angular/router';
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {PaginatorChangeEvent, PaginatorComponent} from "src/app/shared/components/paginator/paginator.component";
 
 @Component({
   selector: 'pure-batch-datasets',
@@ -23,10 +24,11 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BatchNavComponent,
+    //BatchNavComponent,
     PaginationDirective,
     ItemListElementComponent,
-    NgbTooltip
+    NgbTooltip,
+    PaginatorComponent
   ],
   templateUrl: './datasets.component.html'
 })
@@ -34,8 +36,8 @@ export default class DatasetsComponent implements OnInit {
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
 
   results: ItemVersionVO[] = [];
-  result_list: Observable<ItemVersionVO[]> | undefined;
-  number_of_results: number | undefined;
+  result_list: ItemVersionVO[] = [];
+  number_of_results = 0;
   select_all = new FormControl(false);
   select_pages_2_display = new FormControl(10);
 
@@ -85,7 +87,7 @@ export default class DatasetsComponent implements OnInit {
         })
       }
     };
-    this.result_list = of(this.results);
+    this.result_list = this.results;
     this.number_of_results = itemList.length;
     this.number_of_pages = Math.ceil(this.number_of_results / this.page_size);
     this.jump_to.addValidators(Validators.max(this.number_of_pages));
@@ -124,7 +126,7 @@ export default class DatasetsComponent implements OnInit {
     this.jump_to.setValue(page_number);
     const from = page_number * this.page_size - this.page_size;
     const to = page_number * this.page_size;
-    this.result_list = of(this.results.slice(from, to));
+    this.result_list = this.results.slice(from, to);
   }
 
   pageSizeHandler(event: any) {
@@ -163,5 +165,12 @@ export default class DatasetsComponent implements OnInit {
   onWindowScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
+  }
+
+  paginatorChanged() {
+    this.results = this.result_list.map((_item, i) => ({ _id: i + 1, ..._item })).slice(
+      (this.current_page - 1) * this.page_size,
+      (this.current_page - 1) * this.page_size + (this.page_size),
+    );
   }
 }

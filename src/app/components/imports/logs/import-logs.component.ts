@@ -8,6 +8,8 @@ import * as resp from '../interfaces/imports-responses';
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
+import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
@@ -18,6 +20,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
     RouterModule,
     FormsModule,
     NgbPaginationModule,
+    PaginatorComponent
   ],
   templateUrl: './import-logs.component.html'
 })

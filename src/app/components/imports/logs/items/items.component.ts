@@ -12,9 +12,8 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StateFilterPipe } from 'src/app/components/imports/pipes/stateFilter.pipe';
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
-import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 
-import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
+import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
@@ -32,7 +31,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
     NgbTooltip,
     StateFilterPipe,
     SeparateFilterPipe,
-    //SanitizeHtmlPipe,
+    PaginatorComponent
   ],
   templateUrl: './items.component.html'
 })
@@ -139,7 +138,7 @@ export default class ItemsComponent implements OnInit {
   refreshFilters():resp.ImportErrorLevel[] {
     const filteredStatus = [];
     if (this.filterForm.get('fine')?.value) {
-      filteredStatus.push(resp.ImportErrorLevel.FINE); // TO-DO enhance with valid enum values
+      filteredStatus.push(resp.ImportErrorLevel.FINE);
     } else 
     if (this.filterForm.get('warning')?.value) {
       filteredStatus.push(resp.ImportErrorLevel.WARNING);
