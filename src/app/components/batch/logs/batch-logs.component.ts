@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { MatBadgeModule } from '@angular/material/badge';
+import {PaginatorComponent} from "../../../shared/components/paginator/paginator.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -27,7 +28,8 @@ type detail = {
     RouterModule,
     FormsModule,
     NgbPaginationModule,
-    MatBadgeModule
+    MatBadgeModule,
+    PaginatorComponent
   ],
   templateUrl: './batch-logs.component.html'
 })
@@ -62,7 +64,7 @@ export default class LogProcessListComponent implements OnInit {
     );
 
     this.loadTranslations(this.locale);
-   
+
   }
 
   async loadTranslations(lang: string) {
@@ -77,7 +79,7 @@ export default class LogProcessListComponent implements OnInit {
         this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
       })
     }
-  } 
+  }
 
   refreshLogs() {
     this.inPage = this.processLogs.map((log, i) => ({ _id: i + 1, ...log })).slice(

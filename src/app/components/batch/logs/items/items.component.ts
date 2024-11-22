@@ -17,6 +17,7 @@ import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 
 import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
+import {PaginatorComponent} from "../../../../shared/components/paginator/paginator.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -36,7 +37,8 @@ type detail = {
     NgbTooltip,
     StateFilterPipe,
     RouterLink,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    PaginatorComponent
   ],
   templateUrl: './items.component.html',
 })
@@ -66,11 +68,11 @@ export default class LogItemListComponent implements OnInit, DoCheck {
   isScrolled = false;
 
   constructor(
-    private batchSvc: BatchService, 
-    private activatedRoute: ActivatedRoute, 
-    private router: Router, 
-    private itemSvc: ItemsService, 
-    private msgSvc: MessageService, 
+    private batchSvc: BatchService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private itemSvc: ItemsService,
+    private msgSvc: MessageService,
     private fb: FormBuilder,
     @Inject(LOCALE_ID) public locale: string) {}
 
@@ -123,6 +125,7 @@ export default class LogItemListComponent implements OnInit, DoCheck {
   }
 
   refreshLogs() {
+    console.log('Refresh ' +this.pageSize + '  ' + this.page)
     this.inPage = this.detailLogs.map((log, i) => ({ id: i + 1, ...log })).slice(
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + this.pageSize,

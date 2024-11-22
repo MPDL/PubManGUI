@@ -41,7 +41,7 @@ export class ItemListComponent implements AfterViewInit{
   @Input() searchQuery: Observable<any> = of({});
   //@Input() filterSectionTemplate?: TemplateRef<any> | undefined;
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
-  @ViewChild(PaginatorComponent) paginator!: PaginatorComponent
+  //@ViewChild(PaginatorComponent) paginator!: PaginatorComponent
 
   result_list: Observable<ItemVersionVO[]> | undefined;
   number_of_results: number = 0;
@@ -49,7 +49,9 @@ export class ItemListComponent implements AfterViewInit{
   filterEvents: Map<string, FilterEvent> = new Map();
   aggregationEvents: Map<string, AggregationEvent> = new Map();
 
-  currentPaginatorEvent!: PaginatorChangeEvent;
+  protected currentPage!:number;
+  protected size!:number
+  //currentPaginatorEvent!: PaginatorChangeEvent;
   select_all = new FormControl(false);
 
   selectAll = $localize`:@@selectAll:select all`;
@@ -69,14 +71,20 @@ export class ItemListComponent implements AfterViewInit{
 
   }
 
+  ngOnInit() {
+    console.log("OnInit ItemList")
+    console.log(this.size)
+    console.log(this.currentPage)
+  }
+
   ngAfterViewInit(): void {
 
-    this.currentPaginatorEvent = this.paginator.fromToValues();
+    //this.currentPaginatorEvent = this.paginator.fromToValues();
+
     this.searchQuery.subscribe(q => {
       if (q) {
         this.currentQuery = q;
         this.updateList();
-
       } /*else {
         this.currentQuery = { bool: { filter: [] } };
         this.update_query(this.currentQuery, this.page_size, this.getFromValue(), this.currentSortQuery);
@@ -118,8 +126,8 @@ export class ItemListComponent implements AfterViewInit{
 
     const completeQuery = {
       query: query,
-      size: this.currentPaginatorEvent.size,
-      from: this.currentPaginatorEvent.from,
+      size: this.size,
+      from: (this.currentPage-1)*this.size,
       ...this.currentSortQuery && {sort: [this.currentSortQuery
       ]},
       ...runtimeMappings && {runtime_mappings: runtimeMappings},
@@ -182,7 +190,8 @@ export class ItemListComponent implements AfterViewInit{
   updateFilter(fe: FilterEvent) {
     //console.log("Update Filter: " + fe.name + ' - ' + fe.query)
     this.filterEvents.set(fe.name,fe);
-    this.paginator.first();
+    this.currentPage=1;
+    this.updateList();
     //this.onPageChange(1)
   }
 
@@ -197,17 +206,21 @@ export class ItemListComponent implements AfterViewInit{
 
   updateSort(sortQuery: any) {
     this.currentSortQuery = sortQuery
-    this.paginator.first();
+    this.currentPage=1
+    this.updateList();
     //this.onPageChange(1)
 
   }
 
 
-  paginatorChanged($event: PaginatorChangeEvent) {
-    this.currentPaginatorEvent = $event;
+
+  paginatorChanged() {
+    //this.currentPaginatorEvent = $event;
     this.updateList();
 
   }
+
+
 }
 
 export interface FilterEvent {

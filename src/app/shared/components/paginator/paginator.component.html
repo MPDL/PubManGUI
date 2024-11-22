@@ -14,7 +14,7 @@
                 </span>
     </button>
     <span>Page</span>
-    <input type="text" class="form-control mx-2" [formControl]="jumptoField" [value]="jumptoField.value"
+    <input type="text" class="form-control mx-2" [formControl]="pageNumberField"
            (keyup.enter)="jumpToPage()">
     <span>of {{totalNumberOfPages}}</span>
     <button type="button" class="btn btn-sm border border-0" (click)="next()"
@@ -29,10 +29,10 @@
                     last_page
                 </span>
     </button>
-    <select class="form-select" [formControl]="selectedItemsPerPageField"
+    <select class="form-select" [formControl]="sizeField"
             (change)="itemPerPageChange($event)" size="1">
       @for (pages of itemPerPageOptions; track pages) {
-        <option [selected]="pages.value === 25" [value]="pages.value">{{pages.label}}</option>
+        <option [value]="pages.value">{{pages.label}}</option>
       }
     </select>
   </div>

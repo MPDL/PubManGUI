@@ -4,7 +4,7 @@
     </div>
   <div class="col-xl ps-0">
     <div class="float-end">
-      <pure-paginator [totalNumberOfItems]="number_of_results" (paginatorChanged)="paginatorChanged($event)"/>
+      <pure-paginator [totalNumberOfItems]="number_of_results" [(size)]="size" [(pageNumber)]="currentPage" (paginatorChanged)="paginatorChanged()"/>
     </div>
   </div>
 
