@@ -6,7 +6,6 @@ import { switchMap } from 'rxjs';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 
-import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 import { ItemVersionVO } from 'src/app/model/inge';
@@ -17,9 +16,8 @@ import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 
 import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
-import {PaginatorComponent} from "src/app/shared/components/paginator/paginator.component";
+import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
-const FILTER_PAG_REGEX = /[^0-9]/g;
 
 type detail = {
  'item': resp.BatchProcessLogDetailDbVO,
@@ -33,7 +31,6 @@ type detail = {
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbPaginationModule,
     NgbTooltip,
     StateFilterPipe,
     RouterLink,
@@ -125,20 +122,11 @@ export default class LogItemListComponent implements OnInit, DoCheck {
   }
 
   refreshLogs() {
-    console.log('Refresh ' +this.pageSize + '  ' + this.page)
     this.inPage = this.detailLogs.map((log, i) => ({ id: i + 1, ...log })).slice(
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + this.pageSize,
     );
   }
-
-  selectPage(page: string) {
-		this.page = parseInt(page, this.pageSize) || 1;
-	}
-
-	formatInput(input: HTMLInputElement) {
-		input.value = input.value.replace(FILTER_PAG_REGEX, '');
-	}
 
   getProcessLogDetailStateTranslation(txt: string):string {
     let key = txt as keyof typeof this.batchProcessLogDetailStateTranslations;

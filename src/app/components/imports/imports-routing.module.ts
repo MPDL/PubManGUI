@@ -49,11 +49,20 @@ const routes: Routes = [
             },
           },
           {
-            path: 'details',
+            path: 'log',
             loadComponent: () => import('./logs/items/details/details.component'),
             data: {
               breadcrumb: {
-                label: $localize`:@@imports.list.details:Log`,
+                label: 'Log', 
+              }
+            },
+          },
+          {
+            path: 'datasets',
+            loadComponent: () => import('./datasets/datasets.component'),
+            data: {
+              breadcrumb: {
+                label: 'Datasets', 
               }
             },
           },

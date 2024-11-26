@@ -8,12 +8,10 @@ import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 
 import { FormsModule } from '@angular/forms';
-import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { MatBadgeModule } from '@angular/material/badge';
-import {PaginatorComponent} from "../../../shared/components/paginator/paginator.component";
+import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
-const FILTER_PAG_REGEX = /[^0-9]/g;
 
 type detail = {
   'item': resp.BatchProcessLogDetailDbVO,
@@ -27,7 +25,6 @@ type detail = {
     CommonModule,
     RouterModule,
     FormsModule,
-    NgbPaginationModule,
     MatBadgeModule,
     PaginatorComponent
   ],
@@ -86,14 +83,6 @@ export default class LogProcessListComponent implements OnInit {
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + (this.pageSize),
     );
-  }
-
-  selectPage(page: string) {
-    this.page = parseInt(page, this.pageSize) || 1;
-  }
-
-  formatInput(input: HTMLInputElement) {
-    input.value = input.value.replace(FILTER_PAG_REGEX, '');
   }
 
   calculateProcessedStep(numberOfItems: number): number {

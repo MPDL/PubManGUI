@@ -33,7 +33,14 @@
                                 {{ log.status }}
                               </td>
                               <td class="col-4">
-                                {{ log.name }} <small>({{ log.id }})</small>
+
+                                @if( isFinished(log.status) ) {
+                                <span class="nav-link" (click)='toDatasets(log.id);'>     
+                                  {{ log.name }} 
+                                </span>
+                              } @else {
+                                {{ log.name }}
+                              }
                               </td>
                               <td class="col-1">
                                 {{ log.format }}

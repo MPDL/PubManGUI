@@ -4,18 +4,15 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import * as resp from 'src/app/components/imports/interfaces/imports-responses';
-
-import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import { ImportLogItemDbVO, ImportLogItemDetailDbVO } from 'src/app/model/inge';
 
 import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 
 import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
-
-const FILTER_PAG_REGEX = /[^0-9]/g;
 
 
 @Component({
@@ -25,7 +22,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbPaginationModule,
+    SeparateFilterPipe,
     NgbCollapseModule,
     PaginatorComponent
   ],
@@ -36,10 +33,10 @@ export default class DetailsComponent implements OnInit {
   page = 1;
   pageSize = 25;
   collectionSize = 0;
-  inPage: resp.ImportLogItemDetailDbVO[] = [];
-  logs: resp.ImportLogItemDetailDbVO[] = [];
+  inPage: ImportLogItemDetailDbVO[] = [];
+  logs: ImportLogItemDetailDbVO[] = [];
 
-  item: resp.ImportLogItemDbVO | undefined;
+  item: ImportLogItemDbVO | undefined;
   
   isCollapsed: boolean[] = [];
   isScrolled = false;
@@ -85,14 +82,6 @@ export default class DetailsComponent implements OnInit {
       (this.page - 1) * this.pageSize + this.pageSize,
     );
   }
-
-  selectPage(page: string) {
-    this.page = parseInt(page, this.pageSize) || 1;
-  }
-
-  formatInput(input: HTMLInputElement) {
-		input.value = input.value.replace(FILTER_PAG_REGEX, '');
-	}
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {

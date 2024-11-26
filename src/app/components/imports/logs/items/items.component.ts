@@ -4,9 +4,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { ImportsService } from '../../services/imports.service';
-import * as resp from '../../interfaces/imports-responses';
+import { ImportLogItemDbVO, ImportErrorLevel } from 'src/app/model/inge';
 
-import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -16,9 +15,6 @@ import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFil
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
 
-const FILTER_PAG_REGEX = /[^0-9]/g;
-
-
 @Component({
   selector: 'pure-import-log-items',
   standalone: true,
@@ -26,7 +22,6 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbPaginationModule,
     RouterLink,
     NgbTooltip,
     StateFilterPipe,
@@ -40,8 +35,8 @@ export default class ItemsComponent implements OnInit {
   page = 1;
   pageSize = 25;
   collectionSize = 0;
-  inPage: resp.ImportLogItemDbVO[] = [];
-  logs: resp.ImportLogItemDbVO[] = [];
+  inPage: ImportLogItemDbVO[] = [];
+  logs: ImportLogItemDbVO[] = [];
 
   import: string | undefined;
   started: Date | undefined;
@@ -62,7 +57,6 @@ export default class ItemsComponent implements OnInit {
     fatal: [true, Validators.requiredTrue],  
   });
 
-  public importErrorLevel = resp.ImportErrorLevel;
 
   isScrolled = false;  
 
@@ -72,6 +66,7 @@ export default class ItemsComponent implements OnInit {
     private router: Router, 
     private fb: FormBuilder,
     @Inject(LOCALE_ID) public locale: string) { }
+
 
   ngOnInit(): void {
     this.activatedRoute.params
@@ -84,25 +79,25 @@ export default class ItemsComponent implements OnInit {
         importsResponse.sort((a, b) => a.id - b.id)
           .forEach(element => {
             if (element.itemId) {
-              if (element.errorLevel === resp.ImportErrorLevel.FINE) {
+              if (element.errorLevel === ImportErrorLevel.FINE) {
                 this.itemsFine++;
               }
               this.itemsCount++;
             }
             switch (element.errorLevel) {
-              case resp.ImportErrorLevel.FINE:
+              case ImportErrorLevel.FINE:
                 this.fine++;
                 break;
-              case resp.ImportErrorLevel.WARNING:
+              case ImportErrorLevel.WARNING:
                 this.warning++;
                 break;
-              case resp.ImportErrorLevel.PROBLEM:
+              case ImportErrorLevel.PROBLEM:
                 this.problem++;
                 break;
-              case resp.ImportErrorLevel.ERROR:
+              case ImportErrorLevel.ERROR:
                 this.error++;
                 break;
-              case resp.ImportErrorLevel.FATAL:
+              case ImportErrorLevel.FATAL:
                 this.fatal++;
                 break;
             }
@@ -120,6 +115,22 @@ export default class ItemsComponent implements OnInit {
     this.started = history.state.started;
   }
 
+  itemHasError(errorLevel: ImportErrorLevel):boolean {
+    if( errorLevel === ImportErrorLevel.PROBLEM 
+      || errorLevel === ImportErrorLevel.ERROR 
+      || errorLevel === ImportErrorLevel.FATAL) {
+        return true;
+      }
+    return false;
+  }
+
+  itemHasWarning(errorLevel: ImportErrorLevel):boolean {
+    if( errorLevel === ImportErrorLevel.WARNING) {
+        return true;
+      }
+    return false;
+  }
+
   refreshLogs() {
     this.inPage = this.logs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.page - 1) * this.pageSize,
@@ -127,30 +138,22 @@ export default class ItemsComponent implements OnInit {
     );
   }
 
-  selectPage(page: string) {
-    this.page = parseInt(page, this.pageSize) || 1;
-  }
-
-  formatInput(input: HTMLInputElement) {
-		input.value = input.value.replace(FILTER_PAG_REGEX, '');
-	}
-
-  refreshFilters():resp.ImportErrorLevel[] {
+  refreshFilters():ImportErrorLevel[] {
     const filteredStatus = [];
     if (this.filterForm.get('fine')?.value) {
-      filteredStatus.push(resp.ImportErrorLevel.FINE);
+      filteredStatus.push(ImportErrorLevel.FINE);
     } else 
     if (this.filterForm.get('warning')?.value) {
-      filteredStatus.push(resp.ImportErrorLevel.WARNING);
+      filteredStatus.push(ImportErrorLevel.WARNING);
     }
     if (this.filterForm.get('problem')?.value) {
-      filteredStatus.push(resp.ImportErrorLevel.PROBLEM); 
+      filteredStatus.push(ImportErrorLevel.PROBLEM); 
     }
     if (this.filterForm.get('error')?.value) {
-      filteredStatus.push(resp.ImportErrorLevel.ERROR);
+      filteredStatus.push(ImportErrorLevel.ERROR);
     }
     if (this.filterForm.get('fatal')?.value) {
-      filteredStatus.push(resp.ImportErrorLevel.FATAL);
+      filteredStatus.push(ImportErrorLevel.FATAL);
     }
     return filteredStatus;
   }

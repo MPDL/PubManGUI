@@ -4,7 +4,8 @@ import { catchError, tap, of, Observable, throwError, EMPTY } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
 
 import type * as params from '../interfaces/imports-params';
-import type * as resp from '../interfaces/imports-responses';
+// import type * as resp from '../interfaces/imports-responses';
+import { ImportLogDbVO, ImportLogItemDbVO, ImportLogItemDetailDbVO } from 'src/app/model/inge';
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -71,24 +72,24 @@ export class ImportsService {
     return importResponse;
   }
 
-  getImportLogs(): Observable<resp.ImportLogDbVO[]> {
+  getImportLogs(): Observable<ImportLogDbVO[]> {
     const url = `${this.#baseUrl}/import/getImportLogs`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<resp.ImportLogDbVO[]>(url, { headers });
+    return this.http.get<ImportLogDbVO[]>(url, { headers });
   }
 
-  getImportLogItems(id: number): Observable<resp.ImportLogItemDbVO[]> {
+  getImportLogItems(id: number): Observable<ImportLogItemDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItems/${id}`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<resp.ImportLogItemDbVO[]>(url, { headers });
+    return this.http.get<ImportLogItemDbVO[]>(url, { headers });
   }
 
-  getImportLogItemDetails(id: number): Observable<resp.ImportLogItemDetailDbVO[]> {
+  getImportLogItemDetails(id: number): Observable<ImportLogItemDetailDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItemDetails/${id}`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<resp.ImportLogItemDetailDbVO[]>(url, { headers });
+    return this.http.get<ImportLogItemDetailDbVO[]>(url, { headers });
   }
 }

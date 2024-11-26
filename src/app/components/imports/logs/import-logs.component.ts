@@ -1,16 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationExtras  } from '@angular/router';
 
 import { ImportsService } from '../services/imports.service';
-import * as resp from '../interfaces/imports-responses';
+import { ImportLogDbVO, ImportStatus } from 'src/app/model/inge';
 
 import { FormsModule } from '@angular/forms';
-import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
-const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
   selector: 'pure-import-logs',
@@ -19,7 +17,6 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
     CommonModule,
     RouterModule,
     FormsModule,
-    NgbPaginationModule,
     PaginatorComponent
   ],
   templateUrl: './import-logs.component.html'
@@ -29,15 +26,14 @@ export default class ListComponent implements OnInit {
   page = 1;
   pageSize = 25;
   collectionSize = 0;
-  inPage: resp.ImportLogDbVO[] = [];
-  logs: resp.ImportLogDbVO[] = [];
-
-  status = resp.ImportStatus;
+  inPage: ImportLogDbVO[] = [];
+  logs: ImportLogDbVO[] = [];
 
   isScrolled = false;
 
   constructor(
     private importsSvc: ImportsService,
+    private router: Router, 
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
@@ -64,17 +60,32 @@ export default class ListComponent implements OnInit {
     );
   }
 
-  selectPage(page: string) {
-    this.page = parseInt(page, this.pageSize) || 1;
-  }
-
-  formatInput(input: HTMLInputElement) {
-    input.value = input.value.replace(FILTER_PAG_REGEX, '');
-  }
-
   calculateProcessedStep(numberOfItems: number): number {
     return Math.floor(100 / numberOfItems);
   };
+
+  isFinished(status: ImportStatus):boolean {
+    if( status === ImportStatus.FINISHED) {
+        return true;
+      }
+    return false;
+  } 
+
+  toDatasets(id: any): void {
+    let items: string[] = [];
+    this.importsSvc.getImportLogItems(id).subscribe(importsResponse => {
+      if (importsResponse.length === 0) return;
+      
+      importsResponse.sort((a, b) => a.id - b.id)
+        .forEach(element => { 
+          if (element.itemId) {
+            items.push(element.itemId);
+          }
+        });
+      if (items.length === 0) return;              
+      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state:{ itemList: items }});
+    }) 
+  }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {

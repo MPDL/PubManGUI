@@ -59,11 +59,9 @@
               <tr class="border-bottom">
                 <td class="col-2 text-nowrap">
                   {{ item.status }}
-                  @if( item.errorLevel === importErrorLevel.PROBLEM 
-                    || item.errorLevel === importErrorLevel.ERROR 
-                    || item.errorLevel === importErrorLevel.FATAL ) {
+                  @if(itemHasError(item.errorLevel)) {
                   <span class="material-symbols-outlined">error</span>
-                  } @else if (item.errorLevel === importErrorLevel.WARNING) {
+                  } @else if (itemHasWarning(item.errorLevel)) {
                   <span class="material-symbols-outlined">warning</span>
                   } 
                 </td>
@@ -78,7 +76,7 @@
                   {{ item.errorLevel }}
                 </td>
                 <td class="col-1">
-                  <a [routerLink]="['details']"
+                  <a [routerLink]="['log']"
                     [state]="{ item: item }">     
                       <span class="material-symbols-outlined my-0" >
                         integration_instructions
