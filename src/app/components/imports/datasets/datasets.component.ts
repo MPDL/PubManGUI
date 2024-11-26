@@ -34,7 +34,7 @@ export default class DatasetsComponent implements OnInit, DoCheck {
   collectionSize = 0;
   inPage: ItemVersionVO[] = [];
 
-  itemList: string[] = []; //history.state['itemList'];
+  itemList: string[] = []; 
   select_all = new FormControl(false);
 
   isScrolled = false;
@@ -54,8 +54,6 @@ export default class DatasetsComponent implements OnInit, DoCheck {
       startWith(this.router)
     ).subscribe(() => {
       this.itemList = history.state['itemList'];
-      console.log('ngOnInit: ');
-
       this.items(this.itemList);
     });
   }
@@ -70,8 +68,6 @@ export default class DatasetsComponent implements OnInit, DoCheck {
       }
     };
     this.collectionSize = this.itemList.length;
-    console.log('on items: ');
-    console.log('datasets collectionSize: ' + this.collectionSize);
   }
 
 

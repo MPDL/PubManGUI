@@ -49,7 +49,7 @@ const routes: Routes = [
             },
           },
           {
-            path: 'details',
+            path: 'log',
             loadComponent: () => import('./logs/items/details/details.component'),
             data: {
               breadcrumb: {
