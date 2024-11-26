@@ -6,12 +6,14 @@
                 </button>
                 <div class="collapse navbar-collapse d-lg-flex" id="top_nav">-->
                 <nav class="nav bg-body">
+                  <!--
                         <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('first')">
                                 <span class="material-symbols-outlined">sort_by_alpha</span>
                         </a>
                         <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('second')">
                                 <span class="material-symbols-outlined">manage_search</span>
                         </a>
+                        -->
                         <!--
                         <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('third')">
                                 <span class="material-symbols-outlined">public</span>
@@ -19,13 +21,14 @@
                         <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('fourth')">
                                 <span class="material-symbols-outlined">public_off</span>
                         </a>    Je248PkX
-                        -->
                         <div class="vr"></div>
+                        -->
+
                         <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('fivth')">
                                 <span class="material-symbols-outlined">upload</span>
                         </a>
                         <div class="vr"></div>
-                        <a [routerLink]="[]" class="svg-icon nav-link px-2" (click)="do_some_navigation('sixth')" style="vertical-align: baseline;">
+                        <a [routerLink]="[]" class="svg-icon nav-link px-2" (click)="addSelectedToCart()" style="vertical-align: baseline;">
                                 <!--materials "inventor_2" with a "+" sign-->
                                 <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24">
@@ -40,13 +43,18 @@
                                                 transform="translate(7.929 21)" stroke="#777" stroke-width="0.5" />
                                 </svg>
                         </a>
+
+
                         <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('seventh')">
                                 <span class="material-symbols-outlined">inventory_2</span>
                         </a>
+                  <!--
                         <a [routerLink]="[]" class="nav-link px-2" (click)="do_some_navigation('eighth')">
                                 <span class="material-symbols-outlined">web_stories</span>
                         </a>
-                        
+                        -->
+                  @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
+                    <div class="vr"></div>
                         <a [routerLink]="[]" class="nav-link px-2" (click)="addToBatchDatasets()"
                                 i18n-ngbTooltip="@@batch.datasets.add"
                                 ngbTooltip="Add checked items to Batch"
@@ -71,7 +79,7 @@
                                                 transform="translate(4.652 19.1)" fill="#777" stroke="#777" stroke-width="0.5"></path>
                                 </svg>
                         </a>
-                        <a [routerLink]="[]" class="nav-link px-2" (click)="removeFromBatchDatasets()" 
+                        <a [routerLink]="[]" class="nav-link px-2" (click)="removeFromBatchDatasets()"
                                 i18n-ngbTooltip="@@batch.datasets.remove"
                                 ngbTooltip="Remove checked items from Batch"
                                 placement="bottom-left">
@@ -94,10 +102,12 @@
                                                 transform="translate(4.652 19.1)" fill="#777" stroke="#777" stroke-width="0.5"></path>
                                 </svg>
                         </a>
-                        
+                  }
+
+                  <!--
                         <div class="vr"></div>
                         <a [routerLink]="[]" class="svg-bg-icon nav-link px-2 align-items-start" (click)="do_some_navigation('nineth')">
-                                <!--DOI icon-->
+
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <g id="DOI_logo" transform="translate(-1 -1)">
                                                 <circle id="Ellipse_3" data-name="Ellipse 3" cx="12" cy="12" r="12"
@@ -111,6 +121,7 @@
                                         </g>
                                 </svg>
                         </a>
+                  -->
                 </nav>
                 <!--</div>-->
         </div>

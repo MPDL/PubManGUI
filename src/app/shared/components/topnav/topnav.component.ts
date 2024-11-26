@@ -4,6 +4,8 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {CartService} from "../../services/cart.service";
+import {AaService} from "../../../services/aa.service";
 
 @Component({
   selector: 'pure-topnav',
@@ -17,9 +19,11 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 export class TopnavComponent {
 
   constructor(
-    private activatedRoute: ActivatedRoute, 
-    private message: MessageService, 
-    private bs: BatchService) {}
+    private activatedRoute: ActivatedRoute,
+    private message: MessageService,
+    private bs: BatchService,
+    private cartService: CartService,
+  protected aaService: AaService) {}
 
   do_some_navigation(target: string) {
     alert('navigating 2 ' + target);
@@ -58,6 +62,20 @@ export class TopnavComponent {
     const checkBoxList = document.getElementsByClassName('form-check-input');
     for (let i = 0; i < checkBoxList.length; i++) {
       (checkBoxList[i] as HTMLInputElement).checked = false;
+    }
+  }
+
+  addSelectedToCart() {
+    const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
+    const selected: string[] = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!) : [];
+    if (selected.length) {
+      const added = this.cartService.addItems(selected)
+      sessionStorage.removeItem(savedSelection);
+      this.resetCheckBoxes();
+
+      this.message.success(selected + ' items selected' + ((selected.length! - added) > 0 ? `, ${selected.length! - added} on cart duplicated were ignored.` : ''));
+    } else {
+      this.message.warning(`The cart is empty!\n`);
     }
   }
 

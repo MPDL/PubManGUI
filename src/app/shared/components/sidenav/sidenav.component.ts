@@ -8,11 +8,13 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import { BatchNavComponent } from 'src/app/components/batch/batch-nav/batch-nav.component';
 import { ImportsNavComponent } from 'src/app/components/imports/imports-nav/imports-nav.component';
+import {CartService} from "../../services/cart.service";
+import {EmptyPipe} from "../../services/pipes/empty.pipe";
 
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
-  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent],
+  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent, EmptyPipe],
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {
@@ -22,7 +24,7 @@ export class SidenavComponent implements AfterViewInit {
   @ViewChild('sidenav', {read: ElementRef}) nav!: ElementRef;
   renderer = inject(Renderer2);
 
-  constructor(protected aaService: AaService, public batchSvc: BatchService, public importsSvc: ImportsService) {
+  constructor(protected aaService: AaService, public batchSvc: BatchService, public importsSvc: ImportsService, protected cartService: CartService) {
   }
 
   ngAfterViewInit(): void {

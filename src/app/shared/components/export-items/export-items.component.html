@@ -8,39 +8,39 @@
       <label for="formatSelect">Format</label>
       <select class="form-select" [(ngModel)]="selectedExportType" (change)="handleFormatChange($event)" id="formatSelect" name="selectFormat">
         <optgroup label="Format Exports">
-        <option value="{{exportTypes.ENDNOTE}}">
+        <option [ngValue]="exportTypes.ENDNOTE">
           {{ exportTypes.ENDNOTE }}
         </option>
-        <option value="{{exportTypes.BIBTEX}}">
+        <option [ngValue]="exportTypes.BIBTEX">
           {{ exportTypes.BIBTEX }}
         </option>
-        <option value="{{exportTypes.JSON}}">
+        <option [ngValue]="exportTypes.JSON">
           {{ exportTypes.JSON }}
         </option>
-        <option value="{{exportTypes.ESCIDOC_ITEMLIST_XML}}">
+        <option [ngValue]="exportTypes.ESCIDOC_ITEMLIST_XML">
           {{ exportTypes.ESCIDOC_ITEMLIST_XML }}
         </option>
-        <option value="{{exportTypes.MARC_XML}}">
+        <option [ngValue]="exportTypes.MARC_XML">
           {{ exportTypes.MARC_XML }}
         </option>
         </optgroup>
         <optgroup label="Citation Exports">
-          <option value="{{exportTypes.PDF }}">
+          <option [ngValue]="exportTypes.PDF">
             {{ exportTypes.PDF }}
           </option>
-          <option value="{{exportTypes.DOCX}}">
+          <option [ngValue]="exportTypes.DOCX">
             {{ exportTypes.DOCX }}
           </option>
-          <option value="{{exportTypes.HTML_PLAIN}}">
+          <option [ngValue]="exportTypes.HTML_PLAIN">
             {{ exportTypes.HTML_PLAIN }}
           </option>
-          <option value="{{exportTypes.HTML_LINKED}}">
+          <option [ngValue]="exportTypes.HTML_LINKED">
             {{ exportTypes.HTML_LINKED }}
           </option>
-          <option value="{{exportTypes.JSON_CITATION}}">
+          <option [ngValue]="exportTypes.JSON_CITATION">
             {{ exportTypes.JSON_CITATION }}
           </option>
-          <option value="{{exportTypes.ESCIDOC_SNIPPET}}">
+          <option [ngValue]="exportTypes.ESCIDOC_SNIPPET">
             {{ exportTypes.ESCIDOC_SNIPPET }}
           </option>
 

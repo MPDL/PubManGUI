@@ -12,6 +12,7 @@ import { QaWorkspaceComponent } from "./components/qa-workspace/qa-workspace.com
 import { SearchResultListComponent } from "./components/search-result-list/search-result-list.component";
 import { fetchItemResolver } from "./components/imports/services/fetch-item-resolver";
 import {ItemViewComponent} from "./components/item-view/item-view.component";
+import {CartListComponent} from "./components/cart-list/cart-list.component";
 
 export const routes: Routes = [
   {
@@ -61,6 +62,15 @@ export const routes: Routes = [
     data: {
       breadcrumb: {
         label: 'Search',
+      }
+    },
+  },
+  {
+    path: 'cart',
+    component: CartListComponent,
+    data: {
+      breadcrumb: {
+        label: 'Cart',
       }
     },
   },

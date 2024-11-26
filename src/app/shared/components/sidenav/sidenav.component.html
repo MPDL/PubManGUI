@@ -78,16 +78,16 @@
                 <span class="nav-label ms-3" i18n="@@batch">Batch processing</span>
                 @if ( batchSvc.areItemsSelected() ) {
                   <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}'></div>
-                } 
+                }
               </a>
               @if ( batchSvc.areItemsSelected() ) {
                 @defer {
                 <pure-batch-nav></pure-batch-nav>
                 }
-              } 
+              }
           </div>
           }
-          <a class="nav-link border-bottom py-3" [routerLink]="['']" (click)="collapse()">
+          <a class="nav-link border-bottom py-3" [routerLink]="['cart']" (click)="collapse()">
             <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg"
                  width="24" height="24" viewBox="0 0 24 24">
               <g id="Gruppe_38" data-name="Gruppe 38">
@@ -97,6 +97,11 @@
                 </g>
               </g>
             </svg>
+            @if(cartService.objectIds.length > 0) {
+              <div class="matBadge" matBadge='{{ cartService.objectIds.length }}'></div>
+            }
+
+
             <span class="nav-label ms-3" i18n="@@basket">Basket</span>
           </a>
           <a class="nav-link border-bottom py-3" [routerLink]="['ou_tree']" (click)="collapse()">

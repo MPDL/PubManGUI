@@ -36,7 +36,6 @@
 
             }
             <button class="btn" (click)="openModal(exportItemModal)"><span class="material-symbols-outlined">upload</span></button>
-            <button class="btn" [ngbPopover]="exportPopOver" [autoClose]="false"><span class="material-symbols-outlined">upload</span></button>
 
           </nav>
         </div>
@@ -186,7 +185,7 @@
                </pure-item-view-metadata-element>
                <pure-item-view-metadata-element [sub]="true">
                  <span label>Comment</span>
-                 <span content>{{ ve.commet }}</span>
+                 <span content>{{ ve.comment }}</span>
                </pure-item-view-metadata-element>
              </span>
               </pure-item-view-metadata-element>
