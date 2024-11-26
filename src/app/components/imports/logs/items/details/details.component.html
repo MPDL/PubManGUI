@@ -62,7 +62,7 @@
                       <pre>{{ formatXml(detail.message).slice(detail.message.indexOf('>')+3) }}</pre>
                     </div>
                   } @else {
-                    {{ detail.message }}
+                    {{ detail.message | separate | titlecase }}
                   }
                 </td>
               </tr>
