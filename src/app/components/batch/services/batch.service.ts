@@ -1,6 +1,6 @@
 import { signal, computed, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap, Observable, throwError } from 'rxjs';
+import { catchError, tap, Observable, throwError, of } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
 
 import type * as params from '../interfaces/batch-params';
@@ -8,7 +8,8 @@ import * as resp from '../interfaces/batch-responses';
 
 import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
+import { ItemVersionVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 @Injectable({
@@ -24,7 +25,7 @@ export class BatchService {
   constructor(
     private http: HttpClient,
     public aa: AaService,
-    private miscSvc: MiscellaneousService,
+    private itemSvc: ItemsService, 
     private msgSvc: MessageService) { }
 
   get token(): string {
@@ -144,6 +145,20 @@ export class BatchService {
     }
   }
 
+  getSelectedItems(): ItemVersionVO[] {
+    let datasets: ItemVersionVO[] = [];
+    for (var id of this.items) {
+        this.itemSvc.retrieve(id, this.token)
+          .subscribe( actionResponse => {
+            datasets.push(actionResponse);
+            console.log(id);
+          })
+    };
+    return datasets;
+  }
+
+  // Workflow
+
   getBatchProcessUserLock(): Observable<resp.BatchProcessUserLockDbVO> {
     const url = `${this.#baseUrl}/batchProcess/getBatchProcessUserLock`;
     const headers = new HttpHeaders().set('Authorization', this.token!);
@@ -157,6 +172,8 @@ export class BatchService {
 
     return this.http.delete<any>(url, { headers });
   }
+
+  // Logs
 
   getAllBatchProcessLogHeaders(): Observable<resp.BatchProcessLogHeaderDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/getAllBatchProcessLogHeaders`;
@@ -178,6 +195,8 @@ export class BatchService {
 
     return this.http.get<resp.BatchProcessLogDetailDbVO[]>(url, { headers });
   }
+
+  // Actions
 
   deletePubItems(actionParams: params.DeletePubItemsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;

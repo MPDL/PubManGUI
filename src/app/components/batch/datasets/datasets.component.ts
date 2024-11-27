@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, DoCheck, Component, QueryList, ViewChildren, HostListener } from '@angular/core';
+import { OnInit, Component, QueryList, ViewChildren, HostListener, AfterViewChecked } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { filter, startWith } from 'rxjs';
 
 import { ItemVersionVO } from 'src/app/model/inge';
 import { AaService } from 'src/app/services/aa.service';
@@ -10,7 +9,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { BatchService } from '../services/batch.service';
 
 import { ItemListElementComponent } from 'src/app/components/item-list/item-list-element/item-list-element.component';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { PaginatorComponent} from "src/app/shared/components/paginator/paginator.component";
@@ -28,50 +27,37 @@ import { PaginatorComponent} from "src/app/shared/components/paginator/paginator
   ],
   templateUrl: './datasets.component.html'
 })
-export default class DatasetsComponent implements OnInit, DoCheck {
+export default class DatasetsComponent implements OnInit, AfterViewChecked { 
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
 
-  page = 1;
-  pageSize = 25;
+  protected currentPage = 1;
+  protected pageSize = 25;
   datasets: ItemVersionVO[] = [];
   collectionSize = 0;
   inPage: ItemVersionVO[] = [];
 
-  select_all = new FormControl(false);
+  select_all = new FormControl(false, {
+    nonNullable: true,
+  });
 
-  private isProcessing: boolean = false;
   selectAll = $localize`:@@selectAll:select all`;
   deselectAll = $localize`:@@deselectAll:deselect all`;
   isScrolled = false;
 
   constructor(
     public batchSvc: BatchService,
-    private itemSvc: ItemsService, 
     private msgSvc: MessageService,
     public aaSvc: AaService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      // required to work immediately.
-      startWith(this.router)
-    ).subscribe(() => {
-      this.items(this.batchSvc.items);
-    });
+    this.datasets = this.batchSvc.getSelectedItems();
   }
 
-  items(itemList: string[]) {
-    this.datasets = [];
-    for (var itemObjectId of itemList) {
-      if (itemObjectId) {
-        this.itemSvc.retrieve(itemObjectId, this.aaSvc.token).subscribe( actionResponse => {
-          this.datasets.push(actionResponse);
-        })
-      }
-    };
-    this.collectionSize = itemList.length;
+  ngAfterViewChecked(): void {
+    this.collectionSize = this.datasets.length;
+    this.paginatorChanged();
   }
 
   select_all_items(event: any) {
@@ -84,7 +70,7 @@ export default class DatasetsComponent implements OnInit, DoCheck {
 
   removeChecked() {
     this.batchSvc.removeFromBatchDatasets(this.batchSvc.savedSelection);
-    this.items(this.batchSvc.items);
+    this.datasets = this.batchSvc.getSelectedItems();
     sessionStorage.removeItem(this.batchSvc.savedSelection);
     if (!this.batchSvc.areItemsSelected()) {
       this.msgSvc.warning(`The batch processing is empty!\n`);
@@ -100,14 +86,10 @@ export default class DatasetsComponent implements OnInit, DoCheck {
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 
-  ngDoCheck(): void {
-    this.paginatorChanged();
-  }
-
   paginatorChanged() {
     this.inPage = this.datasets.map((_item, i) => ({ _id: i + 1, ..._item })).slice(
-      (this.page - 1) * this.pageSize,
-      (this.page - 1) * this.pageSize + (this.pageSize),
+      (this.currentPage - 1) * this.pageSize,
+      (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
   }
 }
