@@ -24,6 +24,13 @@
               <pure-item-list-element [item]="item" [last_item]="last" />
             </div>
             }
+            @empty {
+              <tr>
+                <th colspan="3" class="text-center">
+                  <span class="text-center">Please, wait ...</span>
+                </th>
+              </tr>
+            }
           </div>
         </div>
         }
