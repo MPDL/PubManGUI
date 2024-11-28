@@ -47,7 +47,6 @@
 
     <div class="row mt-2">
       <div class="col-lg-9 col-sm-12">
-        @if (inPage; as list) {
         <div class="card">
           <div class="card-header">
             <div class="form-check m-3">
@@ -58,7 +57,7 @@
             </div>
           </div>
           <div class="list-group list-group-flush">
-            @for (item of list; track item.objectId; let last = $last) {
+            @for (item of inPage; track item.objectId; let last = $last) {
             <div class="list-group-item py-0">
               <pure-item-list-element [item]="item" [last_item]="last" />
             </div>
@@ -72,7 +71,6 @@
             }
           </div>
         </div>
-        }
       </div>
       <div class="col-lg-3 d-none d-lg-block">
       </div>

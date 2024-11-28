@@ -25,11 +25,11 @@ import { PaginatorComponent} from "src/app/shared/components/paginator/paginator
   ],
   templateUrl: './datasets.component.html'
 })
-export default class DatasetsComponent implements OnInit, DoCheck {
+export default class DatasetsComponent implements OnInit, AfterViewChecked { 
   @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
 
-  page = 1;
-  pageSize = 25;
+  protected currentPage = 1;
+  protected pageSize = 25;
   datasets: ItemVersionVO[] = [];
   collectionSize = 0;
   inPage: ItemVersionVO[] = [];
@@ -48,28 +48,23 @@ export default class DatasetsComponent implements OnInit, DoCheck {
 
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      // required to work immediately.
-      startWith(this.router)
-    ).subscribe(() => {
       this.itemList = history.state['itemList'];
       this.items(this.itemList);
-    });
+      this.collectionSize = this.itemList.length;
   }
 
   items(itemList: string[]) {
     this.datasets = [];
-    for (var itemObjectId of itemList) {
-      if (itemObjectId) {
-        this.itemSvc.retrieve(itemObjectId, this.aaSvc.token).subscribe( importResponse => {
+    for (var itemId of itemList) {
+        this.itemSvc.retrieve(itemId, this.aaSvc.token).subscribe( importResponse => {
           this.datasets.push(importResponse);
         })
-      }
     };
-    this.collectionSize = this.itemList.length;
   }
 
+  ngAfterViewChecked(): void {
+    this.paginatorChanged();
+  }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -77,14 +72,10 @@ export default class DatasetsComponent implements OnInit, DoCheck {
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 
-  ngDoCheck(): void {
-    this.paginatorChanged();
-  }
-
   paginatorChanged() {
     this.inPage = this.datasets.map((_item, i) => ({ _id: i + 1, ..._item })).slice(
-      (this.page - 1) * this.pageSize,
-      (this.page - 1) * this.pageSize + (this.pageSize),
+      (this.currentPage - 1) * this.pageSize,
+      (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
   }
 }

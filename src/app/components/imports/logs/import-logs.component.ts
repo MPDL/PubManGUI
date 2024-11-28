@@ -23,7 +23,7 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
 })
 export default class ListComponent implements OnInit { 
 
-  page = 1;
+  currentPage = 1;
   pageSize = 25;
   collectionSize = 0;
   inPage: ImportLogDbVO[] = [];
@@ -55,8 +55,8 @@ export default class ListComponent implements OnInit {
 
   refreshLogs() {
     this.inPage = this.logs.map((log, i) => ({ _id: i + 1, ...log })).slice(
-      (this.page - 1) * this.pageSize,
-      (this.page - 1) * this.pageSize + (this.pageSize),
+      (this.currentPage - 1) * this.pageSize,
+      (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
   }
 

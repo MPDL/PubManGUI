@@ -22,7 +22,7 @@
         </div>
 
         <div class="small d-inline-flex justify-content-end align-items-center">
-          <pure-paginator [totalNumberOfItems]="collectionSize" [(pageNumber)]="page" [(size)]="pageSize" (paginatorChanged)="refreshLogs()" />
+          <pure-paginator [totalNumberOfItems]="collectionSize" [(pageNumber)]="currentPage" [(size)]="pageSize" (paginatorChanged)="refreshLogs()" />
         </div>
       </div>
     </div>
@@ -84,13 +84,6 @@
                   </a>
                 </td>
               </tr>
-              }
-              @empty {
-                <tr>
-                  <th colspan="3" class="text-center">
-                    <span class="text-center">Please, wait ...</span>
-                  </th>
-                </tr>
               }
             }
           </tbody>
