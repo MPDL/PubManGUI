@@ -62,6 +62,10 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     return this.httpGet(this.subPath + '/' + itemId + '/authorization', token);
   }
 
+  retrieveFileAuthorizationInfo(itemId: string, fileId:string, token?: string): Observable<any> {
+    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/authorization', token);
+  }
+
   retrieveSingleExport(id: string, format?: string, citation?:string, cslConeId?:string, token?:string, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
     let params: HttpParams = new HttpParams()
     .set('format', format ? format : 'json_citation')

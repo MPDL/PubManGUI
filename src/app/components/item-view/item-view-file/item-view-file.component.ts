@@ -1,11 +1,12 @@
 import {Component, Input} from '@angular/core';
-import {FileDbVO, ItemVersionVO, OA_STATUS} from "../../../model/inge";
+import {FileDbVO, ItemVersionVO, OA_STATUS, Visibility} from "../../../model/inge";
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import * as props from "../../../../assets/properties.json";
 import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 import {AaService} from "../../../services/aa.service";
-import {checkFileAccess} from "../../../shared/services/item-utils";
-import {NgTemplateOutlet} from "@angular/common";
+import {checkFileAccess, getFullItemId} from "../../../shared/services/item-utils";
+import {KeyValuePipe, NgTemplateOutlet} from "@angular/common";
+import {ItemsService} from "../../../services/pubman-rest-client/items.service";
 
 @Component({
   selector: 'pure-item-view-file',
@@ -13,7 +14,8 @@ import {NgTemplateOutlet} from "@angular/common";
   imports: [
     NgbTooltip,
     EmptyPipe,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    KeyValuePipe
   ],
   templateUrl: './item-view-file.component.html',
   styleUrl: './item-view-file.component.scss'
@@ -24,11 +26,35 @@ export class ItemViewFileComponent {
   @Input({required: true}) files: FileDbVO[] | undefined = [];
   @Input({required: true}) item!: ItemVersionVO;
 
-  constructor(private aaService: AaService) {
+  audienceInfos: Map<string, any> = new Map;
+
+  constructor(private aaService: AaService, private itemsService: ItemsService) {
+  }
+
+  ngOnInit() {
+
+    // Get authorization info for each AUDIENCE file
+    this.files?.filter(f => f.visibility=== Visibility.AUDIENCE).forEach(f => {
+      this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), f.objectId, this.aaService.token).subscribe(authInfo => {
+        this.audienceInfos.set(f.objectId, authInfo);
+        //console.log(this.audienceInfos)
+      })
+    })
+  }
+
+  ipOrganizations(file: FileDbVO) {
+    //console.log(JSON.stringify(this.audienceInfos))
+    return Object.values(this.audienceInfos?.get(file.objectId)?.ipInfo || {});
   }
 
   fileAccessGranted(file: FileDbVO) {
-    return checkFileAccess(file, this.item, this.aaService.principal.value);
+
+    const genericFileAccess = checkFileAccess(file, this.item, this.aaService.principal.value);
+    if(file.visibility=== Visibility.AUDIENCE) {
+      const audienceAccess:boolean = this.audienceInfos?.get(file.objectId)?.actions?.READ_FILE || false;
+      return genericFileAccess || audienceAccess;
+    }
+    return genericFileAccess;
   }
 
   oaStatusIcon(file: FileDbVO): string | undefined {

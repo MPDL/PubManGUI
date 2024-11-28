@@ -56,6 +56,9 @@
               <div>
                 {{ file.allowedAudienceIds }}
               </div>
+                @for(ouName of ipOrganizations(file); track ouName) {
+                  {{ouName}}
+              }
               }
             }
             @if(file.metadata.description | empty) {
