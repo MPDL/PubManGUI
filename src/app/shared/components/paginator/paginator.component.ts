@@ -81,35 +81,6 @@ ngOnInit() {
     //this.updateQueryParams();
   }
 
-/*
-  private updateQueryParams() {
-    const queryParams: Params = {
-      p: this.pageNumber,
-      s: this.selectedItemsPerPageField.value
-    };
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams,
-        queryParamsHandling: 'merge', // remove to replace all query params by provided
-      }
-    );
-  }
-
-  private readQueryParams() {
-    const page = this.route.snapshot.queryParamMap.get('p');
-    if(page) {
-      this.pageNumber = Number(page);
-      this.jumptoField.setValue(this.pageNumber)
-    }
-    const size = this.route.snapshot.queryParamMap.get('s');
-    if(size) {
-      this.selectedItemsPerPageField.setValue(Number(size))
-    }
-  }
-
- */
 
   private calculateValues() {
     //const relocate = this.currentPageNumber * this.selectedItemsPerPage;
@@ -164,11 +135,13 @@ ngOnInit() {
   }
 
   prev() {
-    this.changePage(Math.max(1, this.pageNumber - 1));
+
+    this.changePage(Math.max(1, this.pageNumber as number - 1));
   }
 
   next() {
-    this.changePage(Math.min(this.totalNumberOfPages, this.pageNumber + 1));
+    console.log(typeof this.pageNumber)
+    this.changePage(Math.min(this.totalNumberOfPages, (this.pageNumberField.getRawValue() as number || 1) + 1));
   }
 
   last() {

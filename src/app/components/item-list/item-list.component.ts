@@ -18,6 +18,8 @@ import { ItemVersionVO } from 'src/app/model/inge';
 import { AaService } from 'src/app/services/aa.service';
 import { ItemsService}  from "../../services/pubman-rest-client/items.service";
 import {PaginatorChangeEvent, PaginatorComponent} from "../../shared/components/paginator/paginator.component";
+import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
+import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 
 
 @Component({
@@ -31,7 +33,9 @@ import {PaginatorChangeEvent, PaginatorComponent} from "../../shared/components/
     ItemListElementComponent,
     AsyncPipe,
     TopnavComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    TopnavCartComponent,
+    TopnavBatchComponent
   ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss'
@@ -59,7 +63,7 @@ export class ItemListComponent implements AfterViewInit{
 
   currentSortQuery: any;
   currentQuery: any;
-  isScrolled = false;
+
 
   constructor(
     private service: ItemsService,
@@ -174,11 +178,6 @@ export class ItemListComponent implements AfterViewInit{
     }
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isScrolled = scrollPosition > 50 ? true : false;
-  }
 
   registerFilter(fe: FilterEvent) {
     //const filterEvent : FilterEvent = fe as FilterEvent;
@@ -217,6 +216,14 @@ export class ItemListComponent implements AfterViewInit{
   paginatorChanged() {
     //this.currentPaginatorEvent = $event;
     this.updateList();
+
+  }
+
+  checkAll() {
+
+  }
+
+  uncheckAll() {
 
   }
 

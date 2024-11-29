@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, HostListener, Input} from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
@@ -6,17 +6,26 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import {CartService} from "../../services/cart.service";
 import {AaService} from "../../../services/aa.service";
+import {TopnavCartComponent} from "./topnav-cart/topnav-cart.component";
+import {TopnavBatchComponent} from "./topnav-batch/topnav-batch.component";
+import {PaginatorComponent} from "../paginator/paginator.component";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'pure-topnav',
   standalone: true,
   imports: [
     RouterLink,
-    NgbTooltip
+    NgbTooltip,
+    TopnavCartComponent,
+    TopnavBatchComponent,
+    PaginatorComponent,
+    NgClass
   ],
   templateUrl: './topnav.component.html'
 })
 export class TopnavComponent {
+  protected isScrolled: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,54 +38,15 @@ export class TopnavComponent {
     alert('navigating 2 ' + target);
   }
 
-  addToBatchDatasets() {
-    const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
-    const selected = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!).length : 0;
-    if (selected) {
-      const added = this.bs.addToBatchDatasets(savedSelection);
-      sessionStorage.removeItem(savedSelection);
-      this.resetCheckBoxes();
 
-      this.message.success(selected + ' items selected' + ((selected! - added) > 0 ? `, ${selected! - added} on batch duplicated were ignored.` : ''));
-    } else {
-      this.message.warning(`The batch processing is empty!\n`);
-    }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isScrolled = scrollPosition > 50 ? true : false;
   }
 
-  removeFromBatchDatasets() {
-    const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
-    const selected = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!).length : 0;
-    if (selected) {
-      const removed = this.bs.removeFromBatchDatasets(savedSelection);
-      sessionStorage.removeItem(savedSelection);
-      this.resetCheckBoxes();
 
-      this.message.success(selected + ' items selected' + ((selected! - removed) > 0 ? `, ${selected! - removed} not on batch were ignored.` : ''));
-    } else {
-      this.message.warning(`The batch processing is empty!\n`);
-    }
-  }
 
-  resetCheckBoxes() {
-    const checkBoxList = document.getElementsByClassName('form-check-input');
-    for (let i = 0; i < checkBoxList.length; i++) {
-      (checkBoxList[i] as HTMLInputElement).checked = false;
-    }
-  }
-
-  addSelectedToCart() {
-    const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
-    const selected: string[] = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!) : [];
-    if (selected.length) {
-      const added = this.cartService.addItems(selected)
-      sessionStorage.removeItem(savedSelection);
-      this.resetCheckBoxes();
-
-      this.message.success(selected + ' items selected' + ((selected.length! - added) > 0 ? `, ${selected.length! - added} on cart duplicated were ignored.` : ''));
-    } else {
-      this.message.warning(`The cart is empty!\n`);
-    }
-  }
 
 }

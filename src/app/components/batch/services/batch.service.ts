@@ -25,7 +25,7 @@ export class BatchService {
   constructor(
     private http: HttpClient,
     public aa: AaService,
-    private itemSvc: ItemsService, 
+    private itemSvc: ItemsService,
     private msgSvc: MessageService) { }
 
   get token(): string {
@@ -36,23 +36,23 @@ export class BatchService {
     return this.aa.principal.getValue().user?.objectId || '';
   }
 
-  addToBatchDatasets(selection: string): number {
-    const fromSelection = sessionStorage.getItem(selection);
+  addToBatchDatasets(selection: string[]): number {
+    //const fromSelection = sessionStorage.getItem(selection);
     let datasets: string[] = this.items;
     const prev = datasets.length;
-    if (fromSelection) {
-      this.items = datasets.concat(JSON.parse(fromSelection).filter((element: string) => !datasets.includes(element)));
+    if (selection) {
+      this.items = datasets.concat(selection.filter((element: string) => !datasets.includes(element)));
       return Math.abs(this.items.length - prev); // added
     }
     return 0;
   }
 
-  removeFromBatchDatasets(selection: string): number {
-    const fromSelection = sessionStorage.getItem(selection);
+  removeFromBatchDatasets(selection: string[]): number {
+    //const fromSelection = sessionStorage.getItem(selection);
     let datasets: string[] = this.items;
     const prev = datasets.length;
-    if (fromSelection && prev > 0) {
-      this.items = datasets.filter((element: string) => !fromSelection.includes(element));
+    if (selection && prev > 0) {
+      this.items = datasets.filter((element: string) => !selection.includes(element));
       return Math.abs(prev - this.items.length); // removed
     }
     return 0;
@@ -61,6 +61,17 @@ export class BatchService {
   #itemsCount = signal(0);
 
   public getItemsCount = computed( () => this.#itemsCount() );
+
+  get objectIds() {
+    const itemList = sessionStorage.getItem(this.datasetList);
+    if (itemList) {
+      const items = JSON.parse(itemList);
+      if (items.length > 0) {
+        return items;
+      }
+    }
+    return [] as string[];
+  }
 
   get items(): string[] {
     const itemList = sessionStorage.getItem(this.datasetList);

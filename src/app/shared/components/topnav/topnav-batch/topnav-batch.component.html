@@ -1,0 +1,51 @@
+@if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
+<div class="navbar-nav">
+<button class="btn btn-link nav-link px-2" (click)="addToBatchDatasets()" [disabled]="!isAdd"
+   i18n-ngbTooltip="@@batch.datasets.add"
+   ngbTooltip="Add checked items to Batch"
+   placement="bottom-left">
+  <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="Gruppe_43" data-name="Gruppe 43">
+      <rect id="Rechteck_95" data-name="Rechteck 95" width="24" height="24" fill="none"></rect>
+    </g>
+    <g id="Gruppe_45" data-name="Gruppe 45">
+      <g id="Gruppe_44" data-name="Gruppe 44">
+        <path id="Pfad_3488" data-name="Pfad 3488"
+              d="M17,4V20a2.006,2.006,0,0,0,2-2V6A2.006,2.006,0,0,0,17,4Z" fill="#777"></path>
+        <path id="Pfad_3489" data-name="Pfad 3489"
+              d="M13,2H4A2.006,2.006,0,0,0,2,4V20a2.006,2.006,0,0,0,2,2h9a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,13,2Zm0,18H4V4h9Z"
+              fill="#777"></path>
+        <path id="Pfad_3490" data-name="Pfad 3490"
+              d="M21,6V18a1.5,1.5,0,0,0,1.5-1.5v-9A1.5,1.5,0,0,0,21,6Z" fill="#777"></path>
+      </g>
+    </g>
+    <path id="Pfad_3493" data-name="Pfad 3493"
+          d="M4.685-7.776H7.348v1.188H4.685v3.064H3.369V-6.587H.686V-7.776H3.369V-10.6H4.685Z"
+          transform="translate(4.652 19.1)" fill="#777" stroke="#777" stroke-width="0.5"></path>
+  </svg>
+</button>
+<button class="btn btn-link nav-link px-2" (click)="removeFromBatchDatasets()" [disabled]="!isRemove"
+   i18n-ngbTooltip="@@batch.datasets.remove"
+   ngbTooltip="Remove checked items from Batch"
+   placement="bottom-left">
+  <svg id="web_stories_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="Gruppe_43" data-name="Gruppe 43">
+      <rect id="Rechteck_95" data-name="Rechteck 95" width="24" height="24" fill="none"></rect>
+    </g>
+    <g id="Gruppe_45" data-name="Gruppe 45">
+      <g id="Gruppe_44" data-name="Gruppe 44">
+        <path id="Pfad_3488" data-name="Pfad 3488"
+              d="M17,4V20a2.006,2.006,0,0,0,2-2V6A2.006,2.006,0,0,0,17,4Z" fill="#777"></path>
+        <path id="Pfad_3489" data-name="Pfad 3489"
+              d="M13,2H4A2.006,2.006,0,0,0,2,4V20a2.006,2.006,0,0,0,2,2h9a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,13,2Zm0,18H4V4h9Z"
+              fill="#777"></path>
+        <path id="Pfad_3490" data-name="Pfad 3490"
+              d="M21,6V18a1.5,1.5,0,0,0,1.5-1.5v-9A1.5,1.5,0,0,0,21,6Z" fill="#777"></path>
+      </g>
+    </g>
+    <path id="Pfad_3494" data-name="Pfad 3494" d="M4.685-7.776H7.348v1.188H.686V-7.776h4Z"
+          transform="translate(4.652 19.1)" fill="#777" stroke="#777" stroke-width="0.5"></path>
+  </svg>
+</button>
+</div>
+}

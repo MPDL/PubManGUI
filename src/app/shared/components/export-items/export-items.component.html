@@ -2,8 +2,9 @@
   <h4 class="modal-title" id="modal-basic-title">Export Item(s)</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
 </div>
+
 <div class="modal-body">
-  <form>
+
     <div class="mb-3">
       <label for="formatSelect">Format</label>
       <select class="form-select" [(ngModel)]="selectedExportType" (change)="handleFormatChange($event)" id="formatSelect" name="selectFormat">
@@ -84,18 +85,8 @@
       <h6>Citation Example</h6>
       <p [innerHTML]="currentCitation"></p>
     }
-
-
-
-
-      <!--
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" [value]="currentCitation" readonly>
-
-      </textarea>
-      -->
-
-  </form>
 </div>
+
 <div class="modal-footer">
   <a class="btn btn-outline-primary" href="{{downloadLink}}" target="_blank">Download</a>
   <!--<button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Download</button>-->

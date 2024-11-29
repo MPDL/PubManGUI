@@ -13,6 +13,10 @@ import { Router } from '@angular/router';
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { PaginatorComponent} from "src/app/shared/components/paginator/paginator.component";
+import {ItemListComponent} from "../../item-list/item-list.component";
+import {Observable, of, Subject} from "rxjs";
+import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
+import {toObservable} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'pure-batch-datasets',
@@ -23,73 +27,31 @@ import { PaginatorComponent} from "src/app/shared/components/paginator/paginator
     ReactiveFormsModule,
     ItemListElementComponent,
     NgbTooltip,
-    PaginatorComponent
+    PaginatorComponent,
+    ItemListComponent
   ],
   templateUrl: './datasets.component.html'
 })
-export default class DatasetsComponent implements OnInit, AfterViewChecked { 
-  @ViewChildren(ItemListElementComponent) list_items!: QueryList<ItemListElementComponent>;
+export default class DatasetsComponent {
 
-  protected currentPage = 1;
-  protected pageSize = 25;
-  datasets: ItemVersionVO[] = [];
-  collectionSize = 0;
-  inPage: ItemVersionVO[] = [];
 
-  select_all = new FormControl(false, {
-    nonNullable: true,
-  });
+  searchQuery!: Subject<any>;
 
-  selectAll = $localize`:@@selectAll:select all`;
-  deselectAll = $localize`:@@deselectAll:deselect all`;
-  isScrolled = false;
 
   constructor(
     public batchSvc: BatchService,
     private msgSvc: MessageService,
     public aaSvc: AaService,
     private router: Router
-  ) { }
+  ) {
+    //this.datasets = this.batchSvc.getSelectedItems();
+    this.searchQuery = new Subject();
+    this.searchQuery.next(baseElasticSearchQueryBuilder("objectId", this.batchSvc.items));
+    toObservable(this.batchSvc.getItemsCount).subscribe(o => {
+      console.log("itemscount changes")
+      this.searchQuery.next(baseElasticSearchQueryBuilder("objectId", this.batchSvc.items));
+    })
 
-  ngOnInit(): void {
-    this.datasets = this.batchSvc.getSelectedItems();
   }
 
-  ngAfterViewChecked(): void {
-    this.collectionSize = this.datasets.length;
-    this.paginatorChanged();
-  }
-
-  select_all_items(event: any) {
-    if (event.target.checked) {
-      this.list_items.map(li => li.check_box.setValue(true));
-    } else {
-      this.list_items.map(li => li.check_box.setValue(false));
-    }
-  }
-
-  removeChecked() {
-    this.batchSvc.removeFromBatchDatasets(this.batchSvc.savedSelection);
-    this.datasets = this.batchSvc.getSelectedItems();
-    sessionStorage.removeItem(this.batchSvc.savedSelection);
-    if (!this.batchSvc.areItemsSelected()) {
-      this.msgSvc.warning(`The batch processing is empty!\n`);
-      this.msgSvc.dialog.afterAllClosed.subscribe(result => {
-        this.router.navigate(['/batch'])
-      })
-    }
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isScrolled = scrollPosition > 50 ? true : false;
-  }
-
-  paginatorChanged() {
-    this.inPage = this.datasets.map((_item, i) => ({ _id: i + 1, ..._item })).slice(
-      (this.currentPage - 1) * this.pageSize,
-      (this.currentPage - 1) * this.pageSize + (this.pageSize),
-    );
-  }
 }

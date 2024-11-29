@@ -19,6 +19,9 @@ import {ItemViewFileComponent} from "./item-view-file/item-view-file.component";
 import {EmptyPipe} from "../../shared/services/pipes/empty.pipe";
 import {MessageService} from "../../shared/services/message.service";
 import {ExportItemsComponent} from "../../shared/components/export-items/export-items.component";
+import {PaginatorComponent} from "../../shared/components/paginator/paginator.component";
+import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
+import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -38,7 +41,10 @@ import {ExportItemsComponent} from "../../shared/components/export-items/export-
     ItemViewFileComponent,
     EmptyPipe,
     ExportItemsComponent,
-    NgbPopover
+    NgbPopover,
+    PaginatorComponent,
+    TopnavBatchComponent,
+    TopnavCartComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
@@ -51,7 +57,6 @@ export class ItemViewComponent {
   item$!: Observable<ItemVersionVO>;
 
   item!: ItemVersionVO;
-  isScrolled: boolean = false;
 
   authorizationInfo: any;
 
@@ -134,12 +139,6 @@ export class ItemViewComponent {
         })
       }
     })
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isScrolled = scrollPosition > 50 ? true : false;
   }
 
   openModal(content: TemplateRef<any>) {

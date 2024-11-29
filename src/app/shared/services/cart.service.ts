@@ -6,6 +6,7 @@ const CART_STORAGE_KEY = "cart-items"
 })
 export class CartService {
 
+  //objectIds:string[] = [];
 
   addItems(ids: string[]): number {
     const currentIds = this.objectIds;
@@ -14,6 +15,27 @@ export class CartService {
     sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(currentIds));
     return newIds.length;
   }
+
+  removeItems(ids: string[]): number {
+    let currentIds: string[] = this.objectIds;
+    const prev = this.objectIds.length;
+    if (ids && prev > 0) {
+      currentIds = currentIds.filter((element: string) => !ids.includes(element));
+      sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(currentIds));
+      return Math.abs(prev - currentIds.length); // removed
+    }
+    return 0;
+
+    /*
+    const currentIds = this.objectIds;
+    const idsToRemove = ids.filter(id => !currentIds.includes(id))
+    currentIds.push(...newIds);
+    sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(currentIds));
+    return newIds.length;
+
+     */
+  }
+
 
   get objectIds(): string[] {
     if (sessionStorage.getItem(CART_STORAGE_KEY)) {
@@ -24,4 +46,6 @@ export class CartService {
       return [];
     }
   }
+
+
 }

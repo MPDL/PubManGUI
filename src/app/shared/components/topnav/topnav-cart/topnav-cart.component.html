@@ -1,0 +1,22 @@
+<div class="navbar-nav">
+<button class="btn btn-link svg-icon nav-link px-2" (click)="addSelectedToCart()" style="vertical-align: baseline;" [disabled]="!isAdd">
+  <!--materials "inventor_2" with a "+" sign-->
+  <svg id="inventory_2_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24"
+       height="24" viewBox="0 0 24 24">
+    <g id="Gruppe_38" data-name="Gruppe 38">
+      <g id="Gruppe_37" data-name="Gruppe 37">
+        <path id="Pfad_112" data-name="Pfad 112"
+              d="M20,2H4A2.074,2.074,0,0,0,2,4V7.01A2.02,2.02,0,0,0,3,8.7V20a2.149,2.149,0,0,0,2,2H19a2.149,2.149,0,0,0,2-2V8.7a2.02,2.02,0,0,0,1-1.69V4A2.074,2.074,0,0,0,20,2ZM19,20H5V9H19ZM20,7H4V4H20Z" />
+      </g>
+    </g>
+    <path id="Pfad_3495" data-name="Pfad 3495"
+          d="M4.685-7.776H7.348v1.188H4.685v3.064H3.369V-6.587H.686V-7.776H3.369V-10.6H4.685Z"
+          transform="translate(7.929 21)" stroke="#777" stroke-width="0.5" />
+  </svg>
+</button>
+
+
+<button  class=" btn btn-link nav-link px-2" [disabled]="!isRemove" (click)="removeSelectedFromCart()">
+  <span class="material-symbols-outlined">inventory_2</span>
+</button>
+</div>
