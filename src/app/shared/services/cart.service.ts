@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {BehaviorSubject} from "rxjs";
 
 const CART_STORAGE_KEY = "cart-items"
 @Injectable({
@@ -6,13 +7,19 @@ const CART_STORAGE_KEY = "cart-items"
 })
 export class CartService {
 
-  //objectIds:string[] = [];
+  objectIds$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+
+
+  constructor() {
+    this.objectIds$.next(this.objectIds);
+  }
 
   addItems(ids: string[]): number {
     const currentIds = this.objectIds;
     const newIds = ids.filter(id => !currentIds.includes(id))
     currentIds.push(...newIds);
     sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(currentIds));
+    this.objectIds$.next(currentIds);
     return newIds.length;
   }
 
@@ -22,6 +29,7 @@ export class CartService {
     if (ids && prev > 0) {
       currentIds = currentIds.filter((element: string) => !ids.includes(element));
       sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(currentIds));
+      this.objectIds$.next(currentIds);
       return Math.abs(prev - currentIds.length); // removed
     }
     return 0;

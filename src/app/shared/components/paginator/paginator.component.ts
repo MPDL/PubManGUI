@@ -136,12 +136,12 @@ ngOnInit() {
 
   prev() {
 
-    this.changePage(Math.max(1, this.pageNumber as number - 1));
+    this.changePage(Math.max(1,  + this.pageNumber - 1));
   }
 
   next() {
-    console.log(typeof this.pageNumber)
-    this.changePage(Math.min(this.totalNumberOfPages, (this.pageNumberField.getRawValue() as number || 1) + 1));
+    // Plus sign is required, otherwise field returns a string value when a value was manually added to the input field before
+    this.changePage(Math.min(this.totalNumberOfPages, + this.pageNumber + 1));
   }
 
   last() {

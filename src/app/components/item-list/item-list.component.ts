@@ -88,6 +88,7 @@ export class ItemListComponent implements AfterViewInit{
     this.searchQuery.subscribe(q => {
       if (q) {
         this.currentQuery = q;
+        this.currentPage = 1
         this.updateList();
       } /*else {
         this.currentQuery = { bool: { filter: [] } };
