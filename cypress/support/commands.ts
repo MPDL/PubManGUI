@@ -106,3 +106,24 @@ Cypress.Commands.add('createItemViaAPI', (itemMetadata):  Chainable<Cypress.Resp
     expect(response.status).to.eq(201)
   })
 })
+
+Cypress.Commands.add('repeatedWait', (alias, responseBodyKey, responseBodyValue, waitTimeout, maxNumberOfWaits): Chainable<Cypress.Response<any>> => {
+  // @ts-ignore
+  function recursiveWait () {
+    maxNumberOfWaits--
+    return cy.wait(alias, {timeout: waitTimeout}).then( interception => {
+      // @ts-ignore
+      if (interception.response.body[responseBodyKey] === responseBodyValue || maxNumberOfWaits >= 0) {
+        return interception.response;
+      } else {
+        return recursiveWait();
+      }
+    });
+  }
+
+  if(maxNumberOfWaits >= 1){
+    return recursiveWait();
+  } else {
+    throw new Error('maxNumberOfWaits < 1')
+  }
+})

@@ -23,11 +23,16 @@ declare namespace Cypress {
     /**
      * Get Item using the REST API
      */
-    getItemViaAPI(itemId: string):  Chainable<Cypress.Response<any>>
+    getItemViaAPI(itemId: string): Chainable<Cypress.Response<any>>
 
     /**
      * Create Item using the REST API
      */
-    createItemViaAPI(itemMetadata: string):  Chainable<Cypress.Response<any>>
+    createItemViaAPI(itemMetadata: string): Chainable<Cypress.Response<any>>
+
+    /**
+     * Repeat cy.wait until the response of a request for the given alias contains the given responseBodyValue
+     */
+    repeatedWait(alias: string, responseBodyKey: string, responseBodyValue: string, waitTimeout: number, maxNumberOfWaits: number): Chainable<Cypress.Response<any>>
   }
 }
