@@ -28,11 +28,7 @@ import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/to
   standalone: true,
   imports: [
     TopnavComponent,
-    NgClass,
-    DateToYearPipe,
     ItemBadgesComponent,
-    RouterOutlet,
-    NgbTooltip,
     RouterLink,
     ItemViewMetadataComponent,
     ItemViewMetadataElementComponent,
@@ -40,11 +36,7 @@ import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/to
     SanitizeHtmlPipe,
     ItemViewFileComponent,
     EmptyPipe,
-    ExportItemsComponent,
-    NgbPopover,
-    PaginatorComponent,
-    TopnavBatchComponent,
-    TopnavCartComponent
+    ExportItemsComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
