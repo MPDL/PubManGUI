@@ -7,7 +7,7 @@ import { ControlType, FormBuilderService } from '../../services/form-builder.ser
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
 import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { Observable } from 'rxjs';
+import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({
   selector: 'pure-file-upload',
@@ -20,13 +20,18 @@ export class FileUploadComponent {
 
   @Input() file_upload_form!: FormArray<FormGroup<ControlType<FileDbVO>>>;
 
+  aaService = inject(AaService);
   fbs = inject(FormBuilderService);
   fileStagingService = inject(FileStagingService);
-  aaService = inject(AaService);
   messageService = inject(MessageService)
+  miscellaneousService = inject(MiscellaneousService);
 
   files: FileDbVO[] = [{} as FileDbVO];
   fileReader: any;
+
+  get genreSpecificProperties() {
+    return this.miscellaneousService.genreSpecficProperties();
+  }
 
   onDropFiles(files: FileDbVO[]): void {
     console.log("Event Drop Files")

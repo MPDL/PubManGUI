@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
-import { LanguageFormComponent } from '../language-form/language-form.component';
 import { SubjectClassification } from 'src/app/model/inge';
+import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { SubjectClassification } from 'src/app/model/inge';
   standalone: true,
   imports: [
     AddRemoveButtonsComponent,
-    LanguageFormComponent,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -24,10 +25,16 @@ export class SubjectFormComponent {
   @Input() multi !: boolean;
   @Output() notice = new EventEmitter();
 
+  miscellaneousService = inject(MiscellaneousService);
+
   subject_classification_types = Object.keys(SubjectClassification);
 
   add_remove_subject(event: any) {
     this.notice.emit(event);
+  }
+
+  get genreSpecificProperties() {
+    return this.miscellaneousService.genreSpecficProperties();
   }
 
 }

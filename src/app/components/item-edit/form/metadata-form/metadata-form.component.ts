@@ -16,22 +16,23 @@ import { SubjectFormComponent } from '../subject-form/subject-form.component';
 import { AbstractFormComponent } from '../abstract-form/abstract-form.component';
 import { ProjectInfoFormComponent } from '../project-info-form/project-info-form.component';
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { GenrePresentationObject, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({
   selector: 'pure-metadata-form',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     AbstractFormComponent,
     AddRemoveButtonsComponent,
-    AltTitleFormComponent, 
-    CreatorFormComponent, 
-    EventFormComponent, 
+    AltTitleFormComponent,
+    CreatorFormComponent,
+    EventFormComponent,
     IdentifierFormComponent,
     LanguageFormComponent,
-    LegalCaseFormComponent, 
+    LegalCaseFormComponent,
     PublishingInfoFormComponent,
     SourceFormComponent,
     SubjectFormComponent,
@@ -42,20 +43,28 @@ import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
   templateUrl: './metadata-form.component.html',
   styleUrls: ['./metadata-form.component.scss']
 })
-export class MetadataFormComponent{
-
-  constructor(
-    private fb: FormBuilder,
-  ) { }
+export class MetadataFormComponent {
 
   @Input() meta_form!: FormGroup;
   @Output() notice = new EventEmitter();
 
   fbs = inject(FormBuilderService);
+  miscellaneousService = inject(MiscellaneousService);
 
   genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
-  hoverDragList:any;
+
+
+  constructor(
+    private fb: FormBuilder,
+  ) { 
+  }
+
+  ngOnInit() {
+    let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
+    console.log('Genre', genre)
+    this.miscellaneousService.setGenreSpecificProperties(genre);
+  }
 
   get alternativeTitles() {
     return this.meta_form.get('alternativeTitles') as FormArray<FormGroup<ControlType<AlternativeTitleVO>>>;
@@ -69,12 +78,13 @@ export class MetadataFormComponent{
     return this.meta_form.get('event') as FormGroup<ControlType<EventVO>>;
   }
 
+  
   get identifiers() {
     return this.meta_form.get('identifiers') as FormArray<FormGroup<ControlType<IdentifierVO>>>;
   }
 
   get languages() {
-    return this.meta_form.get('languages') as  FormArray<FormControl>;
+    return this.meta_form.get('languages') as FormArray<FormControl>;
   }
 
   get legalCase() {
@@ -98,7 +108,15 @@ export class MetadataFormComponent{
   }
 
   get projectInfo() {
-    return this.meta_form.get('projectInfo') as  FormArray<FormGroup<ControlType<ProjectInfoVO>>>;
+    return this.meta_form.get('projectInfo') as FormArray<FormGroup<ControlType<ProjectInfoVO>>>;
+  }
+
+  get genreSpecificProperties() {
+    return this.miscellaneousService.genreSpecficProperties();
+  }
+
+  changeGenre() {
+    this.miscellaneousService.setGenreSpecificProperties(this.meta_form.get('genre')?.value);
   }
 
   handleAltTitleNotification(event: any) {
@@ -127,7 +145,7 @@ export class MetadataFormComponent{
 
   addCreator(index: number) {
     // console.log('current index', index, 'length', this.creators.length)
-    this.creators.insert( index + 1, this.fbs.creator_FG(null));
+    this.creators.insert(index + 1, this.fbs.creator_FG(null));
   }
 
   removeCreator(index: number) {
@@ -143,7 +161,7 @@ export class MetadataFormComponent{
   }
 
   addIdentifier(index: number) {
-    this.identifiers.insert( index + 1, this.fbs.identifier_FG(null));
+    this.identifiers.insert(index + 1, this.fbs.identifier_FG(null));
   }
 
   removeIdentifier(index: number) {
@@ -229,14 +247,14 @@ export class MetadataFormComponent{
   removeProjectInfo(index: number) {
     this.projectInfo.removeAt(index);
   }
-  
+
   dropCreator(event: CdkDragDrop<string[]>) {
     this.moveItemInArray(this.creators, event.previousIndex, event.currentIndex);
   }
 
   /** Copied from Angular CDK to make our FormArrays work with drag and drop */
   moveItemInArray<T = any>(array: FormArray<FormGroup<ControlType<T>>>, fromIndex: number, toIndex: number): void {
-    let object:any = array.at(fromIndex);
+    let object: any = array.at(fromIndex);
     array.removeAt(fromIndex);
     array.insert(toIndex, object);
   }
