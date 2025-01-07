@@ -1,4 +1,4 @@
-<div [formGroup]="abstract_form" class="">
+<div [formGroup]="abstract_form" [ngClass]="{'d-none' : !genreSpecificProperties.properties.content_item_abstract.display}">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label for="abstracts" class="col-sm-2 col-form-label">{{index + 1}}. Abstract</label>
         <div class="col-sm"></div>

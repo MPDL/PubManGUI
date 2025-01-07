@@ -25,6 +25,7 @@ export class FileFormComponent {
   @Output() notice = new EventEmitter();
 
   fb = inject(FormBuilder);
+  miscellaneousService = inject(MiscellaneousService);
 
   contentCategory_types = Object.keys(ContentCategories);
   visibility_types = Object.keys(Visibility);
@@ -39,15 +40,17 @@ export class FileFormComponent {
     console.log("Complete IPList", JSON.stringify(this.ipRangeCompleteList))
   }
 
-
-
-  get metadata() {
-    return this.file_form.get('metadata') as FormGroup<ControlType<MdsFileVO>>;
-  }
-
   get allowedAudienceIds() {
     //console.log('Allowed Audiences: ', this.file_form.get('allowedAudienceIds'));
     return this.file_form.get('allowedAudienceIds') as FormArray<FormControl>;
+  }
+
+  get genreSpecificProperties() {
+    return this.miscellaneousService.genreSpecficProperties();
+  }
+
+  get metadata() {
+    return this.file_form.get('metadata') as FormGroup<ControlType<MdsFileVO>>;
   }
 
   contentCategory_change(event: any) {
