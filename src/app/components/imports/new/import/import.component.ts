@@ -27,6 +27,7 @@ import { AaService } from 'src/app/services/aa.service';
 export default class ImportComponent implements OnInit {
   formatObject: any = null;
   lastFormat: string = '';
+  data: any = '';
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +45,7 @@ export default class ImportComponent implements OnInit {
     format: ['ENDNOTE_STRING', [Validators.required]],
     formatConfig: [''],
     cone: [''],
-    file: [ null ]
+    fileName: ['']
   });
 
   ngOnInit(): void {
@@ -103,12 +104,43 @@ export default class ImportComponent implements OnInit {
     this.importForm.get('formatConfig')?.setValue(defaultValue);
   }
 
-  onDropFiles($event: any): void {
-    console.log("Event Drop File: " + $event);
+  onDragOver($event: any): void {
+    $event.preventDefault();
+  }
+
+  onFileDrop($event: any): void {
+    $event.preventDefault();
+    if ($event.dataTransfer?.files && $event.dataTransfer.files[0]) {
+      this.getData($event.dataTransfer.files[0]);
+    }
   }
 
   onChange($event: any): void {
-    console.log("Event Change File: " + $event);
+    $event.preventDefault();
+    if ($event.target.files && $event.target.files[0]) {
+      this.getData($event.target.files[0]);
+    }
+  }
+
+  getData(file: File) {
+    let element = document.getElementById('selectedFile') as HTMLElement;
+    element.innerHTML = `<span class="material-symbols-outlined">description</span> <strong> ${file?.name} </strong>`;
+
+    const reader = file.stream().getReader();
+    let result: any = null;
+  
+    reader.read().then(
+      function processData({ done, value }):any {
+        if (done) {
+          return;
+        }
+    
+        const chunk = value;
+        result += new TextDecoder().decode(chunk);
+
+        return reader.read().then(processData);
+      }
+    ).finally(() => { this.data = result; });  
   }
 
   get getImportParams(): PostImportParams {
@@ -126,7 +158,10 @@ export default class ImportComponent implements OnInit {
       this.importForm.markAllAsTouched();
       return;
     }
-    // TO-DO request
-    this.router.navigate(['/imports/myimports']);
+
+    this.importSvc.postImport(this.getImportParams, this.data).subscribe(importResponse => {
+      this.router.navigate(['/imports/myimports']);
+    });
+
   }
 }

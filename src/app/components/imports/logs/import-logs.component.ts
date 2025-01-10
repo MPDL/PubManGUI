@@ -64,7 +64,7 @@ export default class ListComponent implements OnInit {
     return Math.floor(100 / numberOfItems);
   };
 
-  isFinished(status: ImportStatus):boolean {
+  isFinished(status: ImportStatus): boolean {
     if( status === ImportStatus.FINISHED) {
         return true;
       }

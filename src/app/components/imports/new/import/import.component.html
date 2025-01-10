@@ -6,15 +6,15 @@
         <label class="col-sm-3 col-form-label" i18n="@@imports.fileImport.upload">Upload</label>
         <div class="col-sm-4">
           <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-            <div class="dropzone col-sm" pureFileImport (dropFiles)="onDropFiles($event)">
+            <div class="dropzone col-sm" pureFileImport (drop)="onFileDrop($event)" (dragover)="onDragOver($event)">
               <i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
-              <p>Drag and drop file here</p>
-              <div class="mb-3">
-                <input class="form-control" formControlName="file" type="file" id="file" (change)="onChange($event)">
-              </div>
+              <p>Drag and drop file here or</p>
+	            <label for="fileName" class="form-control">Browse file</label>
+              <input type="file" id="fileName" formControlName="fileName" (change)="onChange($event)" style="opacity: 0;">
             </div>
           </div>
         </div>
+        <div><p id="selectedFile" class="ms-4"></p></div>
       </div>
 
       <div class="mb-3 row">
