@@ -21,7 +21,7 @@ export class ImportsService {
     private http: HttpClient,
     public aa: AaService
   ) { 
-    this.checkImports();
+    //this.checkImports();
   } 
 
   get token(): string {

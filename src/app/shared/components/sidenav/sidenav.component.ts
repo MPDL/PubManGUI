@@ -14,7 +14,7 @@ import {EmptyPipe} from "../../services/pipes/empty.pipe";
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
-  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent, EmptyPipe],
+  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent],
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {
@@ -39,6 +39,7 @@ export class SidenavComponent implements AfterViewInit {
   */
 
   expand() {
+    this.importsSvc.checkImports();
     this.renderer.removeClass(this.nav.nativeElement, 'collapsed');
   }
 

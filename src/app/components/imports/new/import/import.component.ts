@@ -22,7 +22,7 @@ import { AaService } from 'src/app/services/aa.service';
     SeparateFilterPipe
   ],
   templateUrl: './import.component.html',
-  styles: [" .dropzone { width: 100%; padding: 0.5rem 1.5rem 0.5rem 1.5rem; text-align: center; border: dashed 2px;}"], // TO-DO
+  styles: [".dropzone { width: 100%; padding: 0.5rem 1.5rem 0.5rem 1.5rem; text-align: center; border: dashed 2px; }"], // TO-DO move to scss
 })
 export default class ImportComponent implements OnInit {
   formatObject: any = null;

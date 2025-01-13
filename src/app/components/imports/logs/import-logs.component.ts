@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
+import { OnInit, Component, Inject, LOCALE_ID, HostListener} from '@angular/core';
 import { RouterModule, Router, NavigationExtras  } from '@angular/router';
 
 import { ImportsService } from '../services/imports.service';
 import { ImportLogDbVO, ImportStatus } from 'src/app/model/inge';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormsModule } from '@angular/forms';
 
@@ -33,6 +34,7 @@ export default class ListComponent implements OnInit {
 
   constructor(
     private importsSvc: ImportsService,
+    private msgSvc: MessageService,
     private router: Router, 
     @Inject(LOCALE_ID) public locale: string) { }
 
@@ -82,7 +84,11 @@ export default class ListComponent implements OnInit {
             items.push(element.itemId);
           }
         });
-      if (items.length === 0) return;              
+      if (items.length === 0) {
+        const msg = `This import has no items available!\n`;
+        this.msgSvc.info(msg);
+        return; 
+      }             
       this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state:{ itemList: items }});
     }) 
   }
