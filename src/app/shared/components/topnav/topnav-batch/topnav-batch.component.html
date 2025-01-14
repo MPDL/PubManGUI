@@ -1,0 +1,20 @@
+@if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
+<div class="navbar-nav">
+<button class="btn btn-link nav-link px-2" (click)="addToBatchDatasets()" [disabled]="!isAdd"
+   i18n-ngbTooltip="@@batch.datasets.add"
+   ngbTooltip="Add checked items to Batch"
+   placement="bottom-left">
+    <svg fill="currentColor" height="24px" width="24px">
+        <use href="/assets/icons/icons.svg#batch-add"></use>
+    </svg>
+</button>
+<button class="btn btn-link nav-link px-2" (click)="removeFromBatchDatasets()" [disabled]="!isRemove"
+   i18n-ngbTooltip="@@batch.datasets.remove"
+   ngbTooltip="Remove checked items from Batch"
+   placement="bottom-left">
+    <svg fill="currentColor" height="24px" width="24px">
+        <use href="/assets/icons/icons.svg#batch-remove"></use>
+    </svg>
+</button>
+</div>
+}

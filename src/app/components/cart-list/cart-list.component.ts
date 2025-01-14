@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Observable, of} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {AaService} from "../../services/aa.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
@@ -35,8 +35,11 @@ export class CartListComponent {
 
     //baseElasticSearchQueryBuilder("objectId", cartService.objectIds);
 
-    this.searchQuery =
-      of(baseElasticSearchQueryBuilder("objectId", cartService.objectIds));
+    this.searchQuery = cartService.objectIds$.pipe(
+      map(objIds => {
+      return baseElasticSearchQueryBuilder("objectId", cartService.objectIds);
+    }))
+
 
   }
 

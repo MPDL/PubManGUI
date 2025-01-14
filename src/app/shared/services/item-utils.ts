@@ -22,3 +22,7 @@ export const isUrl = (urlString: string) => {
     return false;
   }
 }
+
+export const getFullItemId = (item: ItemVersionVO) => {
+  return item.objectId + '_' + item.versionNumber;
+}

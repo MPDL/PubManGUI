@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-
-import { AaService } from 'src/app/services/aa.service';
 
 import { Router } from '@angular/router';
 
@@ -16,8 +13,6 @@ import { SortSelectorComponent } from "../../item-list/filters/sort-selector/sor
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     ItemListComponent,
     SortSelectorComponent
 ],
@@ -28,7 +23,6 @@ export default class DatasetsComponent {
   searchQuery: Observable<any>;
 
   constructor(
-    public aaSvc: AaService,
     private router: Router,
   ) {
     const ids = router.getCurrentNavigation()?.extras?.state?.['itemList'] || [];

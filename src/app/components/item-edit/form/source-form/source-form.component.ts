@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
@@ -8,12 +9,14 @@ import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
 import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({
   selector: 'pure-source-form',
   standalone: true,
   imports: [AddRemoveButtonsComponent, 
     AltTitleFormComponent, 
+    CommonModule,
     CreatorFormComponent, 
     IdentifierFormComponent,
     PublishingInfoFormComponent,
@@ -32,6 +35,7 @@ export class SourceFormComponent {
   @Output() notice = new EventEmitter();
 
   fbs = inject(FormBuilderService);
+  miscellaneousService = inject(MiscellaneousService);
 
   genre_types = Object.keys(MdsPublicationGenre);
 
@@ -45,6 +49,10 @@ export class SourceFormComponent {
 
   get identifiers() {
     return this.source_form.get('identifiers') as FormArray<FormGroup<ControlType<IdentifierVO>>>;
+  }
+
+  get genreSpecificProperties() {
+    return this.miscellaneousService.genreSpecficProperties();
   }
 
   get publishingInfo() {

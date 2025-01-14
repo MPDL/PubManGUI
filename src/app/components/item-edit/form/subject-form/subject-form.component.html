@@ -1,4 +1,4 @@
-<div [formGroup]="subject_form" class="">
+<div [formGroup]="subject_form" [ngClass]="{'d-none' : !genreSpecificProperties.properties.content_item_subject.display}">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             
             <div class="col-sm-2">

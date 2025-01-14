@@ -1,12 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { MessageService } from 'src/app/shared/services/message.service'
-import { AaService } from 'src/app/services/aa.service';
-
-import { BatchNavComponent } from '../batch-nav/batch-nav.component';
-
+import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+
 import { ActionsItemStateComponent } from './actions-item-state/actions-item-state.component';
 import { ActionsContextComponent } from './actions-context/change-context.component';
 import { ActionsLocalTagsComponent } from './actions-local-tags/actions-local-tags.component';
@@ -20,7 +15,6 @@ import { BatchService } from '../services/batch.service';
   standalone: true,
   imports: [
     CommonModule,
-    BatchNavComponent,
     ReactiveFormsModule,
     ActionsItemStateComponent,
     ActionsContextComponent,
@@ -30,19 +24,16 @@ import { BatchService } from '../services/batch.service';
   ],
   templateUrl: './actions.component.html'
 })
-export default class ActionsComponent {
+export default class ActionsComponent implements OnInit {
 
-  public isProcessing: boolean = false;
+  public isReady: boolean = false;
 
   constructor(
     public batchSvc: BatchService, 
-    private msgSvc: MessageService,
-    private router: Router,
-    public aaSvc: AaService
   ) { }
 
-  ngAfterViewInit() {
- 
+  ngOnInit() {
+    this.isReady =  (this.batchSvc.areItemsSelected() && !this.batchSvc.isProcessRunning()) ? true : false;
   }
 
 }

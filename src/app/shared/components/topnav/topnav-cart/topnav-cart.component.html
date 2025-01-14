@@ -1,0 +1,14 @@
+<div class="navbar-nav" xmlns="http://www.w3.org/1999/html">
+<button class="btn btn-link svg-icon nav-link px-2" (click)="addSelectedToCart()" style="vertical-align: baseline;" [disabled]="!isAdd">
+    <svg fill="currentColor" height="24px" width="24px">
+        <use href="/assets/icons/icons.svg#cart-add"></use>
+    </svg>
+</button>
+
+
+<button  class=" btn btn-link nav-link px-2" [disabled]="!isRemove" (click)="removeSelectedFromCart()">
+    <svg fill="currentColor" height="24px" width="24px">
+        <use href="/assets/icons/icons.svg#cart-remove"></use>
+    </svg>
+</button>
+</div>

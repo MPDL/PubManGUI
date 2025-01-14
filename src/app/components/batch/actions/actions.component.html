@@ -1,6 +1,5 @@
-@if(aaSvc.isLoggedIn) {
 <div class="batch col-lg-12 col-sm-12">
-  @if (batchSvc.areItemsSelected() && !batchSvc.isProcessRunning()) {
+  @if (isReady) {
   <div class="actions mt-5">
     <span i18n="@@batch.actions">
       The selected action will be applied to all publications currently stored in the workspace. Most actions involve a regular 'save' operation. Please note that this will change the state of each item accordingly.
@@ -100,4 +99,3 @@
   </div>
   }
 </div>
-}

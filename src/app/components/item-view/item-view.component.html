@@ -1,49 +1,38 @@
 @if (item) {
-  <div class="row align-items-center top_nav_pos bg-body {{isScrolled ? 'scrolled' : ''}}">
-    <div class="col-12 col-xxl-4 ps-0">
-      <nav id="topnav" #sidenav class="navbar navbar-expand-lg bg-body">
-        <div class="container-fluid">
-          <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#top_nav"
-                  aria-controls="top_nav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse d-lg-flex" id="top_nav">-->
-          <nav class="nav bg-body">
-            @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
-              <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
-                <span class="material-symbols-outlined">edit</span>
-              </a>
-            }
-            @if(authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
-              <button class="btn btn-outline-primary" (click)="submit()">submit</button>
 
-            }
+  <pure-topnav>
+    <div class="navbar-nav" start>
+      @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
+        <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
+          <span class="material-symbols-outlined">edit</span>
+        </a>
+      }
+      @if(authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
+        <button class="btn btn-outline-primary" (click)="submit()">submit</button>
 
-            @if(authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
-              <button class="btn btn-outline-primary" (click)="revise()">revise</button>
+      }
 
-            }
-            @if(authorizationInfo && authorizationInfo.actions['RELEASE'] && isLatestVersion) {
-              <button class="btn btn-outline-primary" (click)="release()">release</button>
+      @if(authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
+        <button class="btn btn-outline-primary" (click)="revise()">revise</button>
 
-            }
-            @if(authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
-              <button class="btn btn-outline-primary" (click)="delete()">delete</button>
+      }
+      @if(authorizationInfo && authorizationInfo.actions['RELEASE'] && isLatestVersion) {
+        <button class="btn btn-outline-primary" (click)="release()">release</button>
 
-            }
-            @if(authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
-              <button class="btn btn-outline-primary" (click)="withdraw()">withdraw</button>
+      }
+      @if(authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
+        <button class="btn btn-outline-primary" (click)="delete()">delete</button>
 
-            }
-            <button class="btn" (click)="openModal(exportItemModal)"><span class="material-symbols-outlined">upload</span></button>
+      }
+      @if(authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
+        <button class="btn btn-outline-primary" (click)="withdraw()">withdraw</button>
 
-          </nav>
-        </div>
-      </nav>
+      }
+      <button class="btn" (click)="openModal(exportItemModal)"><span class="material-symbols-outlined">upload</span></button>
+
     </div>
-    <div class="col-xxl-3 d-none d-xxl-block">
-    </div>
-  </div>
+  </pure-topnav>
+
 
   <div class="row mt-5">
     <div class="col-lg-9 col-sm-12 header_color p-3">

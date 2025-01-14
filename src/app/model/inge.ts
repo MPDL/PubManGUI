@@ -611,32 +611,49 @@ export interface ImportLogItemDetailDbVO extends ImportLog {
 }
 
 export const enum ImportStatus {
-  FINISHED = "FINISHED",
-  PENDING = "PENDING",
-  SUSPENDED = "SUSPENDED",
+    FINISHED = "FINISHED",
+    PENDING = "PENDING",
+    SUSPENDED = "SUSPENDED",
 }
 
 export const enum ImportErrorLevel {
-  ERROR = "ERROR",
-  FATAL = "FATAL",
-  FINE = "FINE",
-  PROBLEM = "PROBLEM",
-  WARNING = "WARNING",
+    ERROR = "ERROR",
+    FATAL = "FATAL",
+    FINE = "FINE",
+    PROBLEM = "PROBLEM",
+    WARNING = "WARNING",
 }
 
-export const enum ImportFormat {
-  BIBTEX_STRING = "BIBTEX_STRING",
-  BMC_XML = "BMC_XML",
-  EDOC_XML = "EDOC_XML",
-  ENDNOTE_STRING = "ENDNOTE_STRING",
-  ESCIDOC_ITEM_V3_XML = "ESCIDOC_ITEM_V3_XML",
-  MARC_XML = "MARC_XML",
-  RIS_STRING = "RIS_STRING",
-  WOS_STRING = "WOS_STRING",
+export enum ImportFormat {
+    BIBTEX_STRING = "BIBTEX_STRING",
+    BMC_XML = "BMC_XML",
+    EDOC_XML = "EDOC_XML",
+    ENDNOTE_STRING = "ENDNOTE_STRING",
+    ESCIDOC_ITEM_V3_XML = "ESCIDOC_ITEM_V3_XML",
+    MAB_STRING = "MAB_STRING",
+    MARC_XML = "MARC_XML",
+    MARC_21_STRING = "MARC_21_STRING",
+    RIS_STRING = "RIS_STRING",
+    WOS_STRING = "WOS_STRING",
+}
+
+export enum ImportSchema {
+    CAESAR = "CAESAR",
+    ICE = "ICE",
+    IPP = "IPP",
+    BGC = "BGC",
+    MPFI = "MPFI",
+    MPIB = "MPIB",
+    MPIEA = "MPIEA",
+    MPIGEM = "MPIGEM",
+    MPIMP = "MPIMP",
+    MPIMPExt = "MPIMPExt",
+    MPIO = "MPIO",
+    OTHER = "OTHER"
 }
 
 export enum exportTypes {
-  JSON = "json",
+    JSON = "json",
     ESCIDOC_ITEMLIST_XML = "eSciDoc_Itemlist_Xml",
     BIBTEX = "BibTeX",
     ENDNOTE = "EndNote",
@@ -649,16 +666,12 @@ export enum exportTypes {
     ESCIDOC_SNIPPET = "escidoc_snippet"
 }
 
-export enum citationTypes{
-
-  APA="APA",
-  CSL="CSL",
-  APA_CJK="APA(CJK)",
-  APA6="APA6",
-  AJP="AJP",
-  JUS="JUS",
-  JUS_Report="JUS_Report"
+export enum citationTypes {
+    APA = "APA",
+    CSL = "CSL",
+    APA_CJK = "APA(CJK)",
+    APA6 = "APA6",
+    AJP = "AJP",
+    JUS = "JUS",
+    JUS_Report = "JUS_Report"
 }
-
-
-

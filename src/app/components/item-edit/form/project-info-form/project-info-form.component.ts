@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, Output, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { FundingInfoVO, FundingProgramVO, IdentifierVO, IdType } from 'src/app/model/inge';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { Subscription } from 'rxjs';
+import { ControlType, FormBuilderService } from '../../services/form-builder.service';
+import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({
   selector: 'pure-project-info-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, IdentifierFormComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent],
   templateUrl: './project-info-form.component.html',
   styleUrl: './project-info-form.component.scss'
 })
@@ -21,6 +22,7 @@ export class ProjectInfoFormComponent {
   @Output() notice = new EventEmitter();
 
   fbs = inject(FormBuilderService);
+  miscellaneousService = inject(MiscellaneousService);
 
   private grantIdentiferSubscription: Subscription | undefined;
   private fundingOrganizationIdentifierSubscription: Subscription | undefined;
@@ -69,6 +71,10 @@ export class ProjectInfoFormComponent {
 
   get fundingProgramIdentifier() {
     return this.fundingProgramIdentifiers.at(0) as FormGroup<ControlType<IdentifierVO>>;
+  }
+
+  get genreSpecificProperties() {
+    return this.miscellaneousService.genreSpecficProperties();
   }
 
   add_remove_projectInfo(event: any) {

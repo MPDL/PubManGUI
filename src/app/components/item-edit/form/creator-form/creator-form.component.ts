@@ -11,6 +11,7 @@ import { ConePersonsDirective } from 'src/app/shared/components/selector/service
 import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
+import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({
   selector: 'pure-creator-form',
@@ -25,15 +26,37 @@ export class CreatorFormComponent {
   @Input() index!: number;
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
-
-  fbs = inject(FormBuilderService);
+  
   cone = inject(ConePersonsService);
-
-  creator_types = Object.keys(CreatorType);
+  fbs = inject(FormBuilderService);
+  miscellaneousService = inject(MiscellaneousService);
+  
   creator_roles = Object.keys(CreatorRole);
+  creator_types = Object.keys(CreatorType);
 
   get type() {
     return this.creator_form.get('type') as FormControl<ControlType<CreatorType>>;
+  }
+
+  get genreSpecificProperties() {
+    return this.miscellaneousService.genreSpecficProperties();
+  }
+
+  get identifier() {
+    return this.creator_form.get('person.identifier') as FormGroup<ControlType<IdentifierVO>>;
+  }
+
+  get organization() {
+    return this.creator_form.get('organization') as FormGroup<ControlType<OrganizationVO>>;
+  }
+
+  get organizations() {
+    //console.log("person.organizations:", this.creator_form.get('person.organizations') as FormArray<FormGroup<ControlType<OrganizationVO>>>)
+    return this.creator_form.get('person.organizations') as FormArray<FormGroup<ControlType<OrganizationVO>>>;
+  }
+
+  get person() {
+    return this.creator_form.get('person') as FormGroup<ControlType<PersonVO>>;
   }
 
   type_change(val: string) {
@@ -92,24 +115,6 @@ export class CreatorFormComponent {
 
   updatePersonOU(event: any, index: number) {
     this.organizations.at(index).patchValue({ identifier: event.id }, { emitEvent: false });
-  }
-
-  get organization() {
-    return this.creator_form.get('organization') as FormGroup<ControlType<OrganizationVO>>;
-  }
-
-  get person() {
-    return this.creator_form.get('person') as FormGroup<ControlType<PersonVO>>;
-  }
-
-  get organizations() {
-    //console.log("person.organizations:", this.creator_form.get('person.organizations') as FormArray<FormGroup<ControlType<OrganizationVO>>>)
-    return this.creator_form.get('person.organizations') as FormArray<FormGroup<ControlType<OrganizationVO>>>;
-   
-  }
-
-  get identifier() {
-    return this.creator_form.get('person.identifier') as FormGroup<ControlType<IdentifierVO>>;
   }
 
   /*

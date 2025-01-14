@@ -6,9 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
 import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO } from 'src/app/model/inge';
-import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
-import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
-import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { remove_null_empty, remove_objects } from 'src/app/shared/services/utils_final';
 import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
@@ -17,7 +14,6 @@ import { ContextsService } from "../../../../services/pubman-rest-client/context
 import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
 import { FileFormComponent } from '../file-form/file-form.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
-import { FilterFilesPipe } from 'src/app/shared/services/pipes/filter-files.pipe';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -31,10 +27,6 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
     ChipsComponent,
     MetadataFormComponent,
     AddRemoveButtonsComponent,
-    SelectorComponent,
-    PureCtxsDirective,
-    OptionDirective,
-    FilterFilesPipe,
     CdkDropList,
     CdkDrag],
   templateUrl: './item-form.component.html',
@@ -42,19 +34,19 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 })
 export class ItemFormComponent implements OnInit {
 
-  fb = inject(FormBuilder);
-  fbs = inject(FormBuilderService);
-  route = inject(ActivatedRoute);
   aaService = inject(AaService);
   contextService = inject(ContextsService);
-  itemService = inject(ItemsService)
+  fb = inject(FormBuilder);
+  fbs = inject(FormBuilderService);
+  itemService = inject(ItemsService);
+  route = inject(ActivatedRoute);
+  
+  externalReferences!: FormArray<FormGroup<ControlType<FileDbVO>>>;
   form!: FormGroup;
   form_2_submit: any;
-  user_contexts?: ContextDbRO[];
   internalFiles!: FormArray<FormGroup<ControlType<FileDbVO>>>;
-  externalReferences!: FormArray<FormGroup<ControlType<FileDbVO>>>;
-
   switchFileSortingMode: boolean = false;
+  user_contexts?: ContextDbRO[];
 
   @Output() onChangeSwitchMode: EventEmitter<any> = new EventEmitter();
 
@@ -83,21 +75,21 @@ export class ItemFormComponent implements OnInit {
      */
   }
 
-  get localTags() {
-    return this.form.get('localTags') as FormArray<FormControl<ControlType<string>>>
-  }
-
-  get metadata_form() {
-    return this.form.get('metadata') as FormGroup<ControlType<MdsPublicationVO>>
+  get context() {
+    console.log('Context: ', JSON.stringify(this.form.get('context')))
+    return this.form.get('context') as FormGroup<ControlType<ContextDbVO>>
   }
 
   get files() {
     return this.form.get('files') as FormArray<FormGroup<ControlType<FileDbVO>>>;
   }
 
-  get context() {
-    console.log('Context: ', JSON.stringify(this.form.get('context')))
-    return this.form.get('context') as FormGroup<ControlType<ContextDbVO>>
+  get localTags() {
+    return this.form.get('localTags') as FormArray<FormControl<ControlType<string>>>
+  }
+
+  get metadata_form() {
+    return this.form.get('metadata') as FormGroup<ControlType<MdsPublicationVO>>
   }
 
   get message() {
@@ -138,8 +130,6 @@ export class ItemFormComponent implements OnInit {
     let selecteContext = this.user_contexts?.find((context) => context.objectId == contextObjectId)
     this.form.get('context')?.patchValue({ objectId: contextObjectId, name: selecteContext?.name });
   }
-
-
 
   changeSortingMode() {
     this.switchFileSortingMode = !this.switchFileSortingMode;
