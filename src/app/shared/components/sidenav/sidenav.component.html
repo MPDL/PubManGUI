@@ -60,7 +60,7 @@
           }
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
             <div class="border-bottom">
-              <a class="nav-link py-3" [routerLink]="['imports']" [ngClass]="{'disabled pb-2' : importsSvc.hasImports()}" (click)="collapse()">
+              <a class="nav-link py-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.hasImports()}" (click)="collapse()">
                 <span class="material-symbols-outlined">get_app</span>
                 <span class="nav-label ms-3">Import</span>
               </a>
