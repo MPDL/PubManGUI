@@ -30,7 +30,7 @@
                         @for (log of inPage; track log.id) {
                             <tr class="border-bottom">
                               <td class="col-1 text-nowrap">
-                                {{ log.status }}
+                                {{ getImportStatusTranslation(log.status) }}
                               </td>
                               <td class="col-4">
                               @if( isFinished(log.status) ) { <!-- TODO: Enhance conditions for number of imported items > 0 -->

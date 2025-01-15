@@ -30,6 +30,8 @@ export default class ListComponent implements OnInit {
   inPage: ImportLogDbVO[] = [];
   logs: ImportLogDbVO[] = [];
 
+  importStatusTranslations = {};
+
   isScrolled = false;
 
   constructor(
@@ -48,11 +50,19 @@ export default class ListComponent implements OnInit {
       }
     );
 
-    //this.loadTranslations(this.locale);
+    this.loadTranslations(this.locale);
   }
 
   async loadTranslations(lang: string) {
-    // TO-DO ...
+    if (lang === 'de') {
+      await import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.importStatusTranslations = msgs.ImportStatus;
+      })
+    } else {
+      await import('src/assets/i18n/messages.json').then((msgs) => {
+        this.importStatusTranslations = msgs.ImportStatus;
+      })
+    }
   }
 
   refreshLogs() {
@@ -89,8 +99,13 @@ export default class ListComponent implements OnInit {
         this.msgSvc.info(msg);
         return; 
       }             
-      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state:{ itemList: items }});
+      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state: { itemList: items }});
     }) 
+  }
+
+  getImportStatusTranslation(txt: string):string {
+    let key = txt as keyof typeof this.importStatusTranslations;
+    return this.importStatusTranslations[key];
   }
 
   @HostListener('window:scroll', ['$event'])

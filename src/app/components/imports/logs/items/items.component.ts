@@ -57,6 +57,8 @@ export default class ItemsComponent implements OnInit {
     fatal: [true, Validators.requiredTrue],  
   });
 
+  importStatusTranslations = {};
+  importErrorLevelTranslations = {};
 
   isScrolled = false;  
 
@@ -109,10 +111,24 @@ export default class ItemsComponent implements OnInit {
       }
     );
 
-    //this.loadTranslations(this.locale);
+    this.loadTranslations(this.locale);
 
     this.import = history.state.import;
     this.started = history.state.started;
+  }
+
+  async loadTranslations(lang: string) {
+    if (lang === 'de') {
+      await import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.importStatusTranslations = msgs.ImportStatus;
+        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+      })
+    } else {
+      await import('src/assets/i18n/messages.json').then((msgs) => {
+        this.importStatusTranslations = msgs.ImportStatus;
+        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+      })
+    }
   }
 
   itemHasError(errorLevel: ImportErrorLevel):boolean {
@@ -156,6 +172,16 @@ export default class ItemsComponent implements OnInit {
       filteredStatus.push(ImportErrorLevel.FATAL);
     }
     return filteredStatus;
+  }
+
+  getImportStatusTranslation(txt: string):string {
+    let key = txt as keyof typeof this.importStatusTranslations;
+    return this.importStatusTranslations[key];
+  }
+
+  getImportErrorLevelTranslation(txt: string):string {
+    let key = txt as keyof typeof this.importErrorLevelTranslations;
+    return this.importErrorLevelTranslations[key];
   }
 
   @HostListener('window:scroll', ['$event'])

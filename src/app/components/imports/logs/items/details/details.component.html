@@ -45,10 +45,10 @@
               @for (detail of inPage; track detail.id; let idx = $index) {
               <tr class="border-bottom">
                 <td class="align-text-top">
-                  {{ detail.status }}
+                  {{ getImportStatusTranslation(detail.status) }}
                 </td>
                 <td class="align-text-top">
-                  {{ detail.errorLevel }}
+                  {{ getImportErrorLevelTranslation(detail.errorLevel) }}
                 </td>
                 <td class="align-text-top">
                   @if(detail.message.length > 80) {

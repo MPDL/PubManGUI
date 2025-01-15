@@ -112,8 +112,6 @@
     "batch.actions.metadata.source.replaceId.default": "Typ",
     "batch.actions.metadata.source.replaceId.from": "Bisheriger Wert der ID",
     "batch.actions.metadata.source.replaceId.to": "Neuer Wert der ID",
-    "batch.actions.metadata.source.type.other": "Andere",
-    "batch.actions.metadata.source.type.report": "Report Nr.",
     "batch.logs.started.on": "gestarted am",
     "batch.logs.header.date":"Datum",
     "batch.logs.header.details":"Details",
@@ -141,7 +139,7 @@
     "imports.list.header.title":"Titel",
     "imports.list.header.message":"Nachricht",
     "imports.list.details": "Log",    
-    "imports.list.details.for": "Aktion",
+    "imports.list.details.for": "Item",
     "imports.list.details.remove": "Aus 'Meine Importe' entfernen",
     "imports.list.details.delete": "Löschen",
     "imports.list.details.set": "Einstellen",
@@ -316,6 +314,17 @@
     "URI": "URI",
     "URN": "URN",
     "ZDB": "ZDB"
+  },
+  "ImportStatus": {
+    "FINISHED": "Abgeschlossen",
+    "PENDING": "Ausstehend",
+    "SUSPENDED": "Ausgesetzt"
+  },
+  "ImportErrorLevel": {
+    "ERROR": "Fehler",
+    "FATAL": "Schwerwiegend",
+    "FINE": "Gut",
+    "PROBLEM": "Problem",
+    "WARNING": "Warnung"
   }
-
 }
