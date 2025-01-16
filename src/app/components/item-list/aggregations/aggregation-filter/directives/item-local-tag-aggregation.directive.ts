@@ -20,17 +20,7 @@ export class ItemLocalTagAggregationDirective extends ItemAggregationBaseDirecti
   getAggregationQuery(): any {
     const aggQuery= {
       [this.getName()]: {
-        terms: {"field": "localTags.keyword"},
-        aggs: {
-          otherFields: {
-            top_hits: {
-              _source: {
-                includes: ["localTags"]
-              },
-              size: 1
-            }
-          }
-        }
+        terms: {"field": "localTags.keyword_default"}
       }
     }
     return aggQuery;
