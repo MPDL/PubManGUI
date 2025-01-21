@@ -9,17 +9,17 @@ import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 })
 export class ConfirmationComponent {
 
-  title = 'CONFIRMATION REQUIRED';
+  //title = 'Confirmation required';
 
   constructor(
     private dialogRef: DialogRef<boolean>,
-    @Inject(DIALOG_DATA) public message: string
+    @Inject(DIALOG_DATA) public message: any
     ) { }
 
-  yes(): void {
+  confirm(): void {
     this.dialogRef.close(true);
   }
-  no(): void {
+  reject(): void {
     this.dialogRef.close(false);
   }
 

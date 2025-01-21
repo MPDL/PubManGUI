@@ -1,28 +1,14 @@
-<!--
-<div class="modal-dialog">
-  <div class="modal-content border-info w-100">
-    <div class="modal-header text-center bg-info border-0">
-      <h5 class="modal-title text-dark w-100">{{title}}</h5>
-    </div>
-    <div class="modal-body bg-dark">
-      <pre class="text-info">{{message}}</pre>
-    </div>
-    <div class="modal-footer bg-dark border-0">
-      <button type="button" class="btn btn-outline-secondary btn-sm" tabindex="-1" (click)="yes()">YES</button>
-      <button type="button" class="btn btn-outline-info btn-sm" data-dismiss="modal" (click)="no()">NO</button>
-    </div>
+<div class="modal-content bg-light-subtle p-4">
+  @if (message.title) {
+  <div class="modal-header bg-info-subtle text-center p-1">
+    <h5 class="modal-title">{{message.title}}</h5>
   </div>
-</div>
--->
-<div class="card bg-dark text-center">
-  <div class="card-header bg-warning">
-    <h5 class="card-title">{{title}}</h5>
+  }
+  <div class="modal-body">
+    <span class="text-info-emphasis">{{message.text}}</span>
   </div>
-  <div class="card-body">
-    <p class="card-text text-info">{{message}}</p>
-  </div>
-  <div class="card-footer">
-    <button type="button" class="btn btn-outline-secondary btn-sm" tabindex="-1" (click)="yes()">YES</button>
-    <button type="button" class="btn btn-outline-info btn-sm" (click)="no()">NO</button>
+  <div class="modal-footer d-flex justify-content-center">
+    <button type="button" class="btn btn-outline-secondary btn-sm me-3" (click)="confirm()">{{message.confirm}}</button>
+    <button type="button" class="btn btn-outline-info btn-sm" (click)="reject()">{{message.reject}}</button>
   </div>
 </div>

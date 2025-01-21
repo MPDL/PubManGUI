@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener} from '@angular/core';
-import { RouterModule, Router, NavigationExtras  } from '@angular/router';
+import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
+import { RouterModule, Router, NavigationExtras } from '@angular/router';
 
 import { ImportsService } from '../services/imports.service';
 import { ImportLogDbVO, ImportStatus, ImportErrorLevel } from 'src/app/model/inge';
@@ -23,7 +23,7 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
   ],
   templateUrl: './import-logs.component.html'
 })
-export default class ListComponent implements OnInit { 
+export default class ListComponent implements OnInit {
 
   currentPage = 1;
   pageSize = 25;
@@ -40,7 +40,7 @@ export default class ListComponent implements OnInit {
   constructor(
     private importsSvc: ImportsService,
     private msgSvc: MessageService,
-    private router: Router, 
+    private router: Router,
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export default class ListComponent implements OnInit {
         this.refreshLogs();
         return;
       }
-    );
+      );
 
     this.loadTranslations(this.locale);
   }
@@ -80,19 +80,19 @@ export default class ListComponent implements OnInit {
   };
 
   isFinished(status: ImportStatus): boolean {
-    if( status === ImportStatus.FINISHED) {
-        return true;
-      }
+    if (status === ImportStatus.FINISHED) {
+      return true;
+    }
     return false;
-  } 
+  }
 
   toDatasets(id: any): void {
     let items: string[] = [];
     this.importsSvc.getImportLogItems(id).subscribe(importsResponse => {
       if (importsResponse.length === 0) return;
-      
+
       importsResponse.sort((a, b) => a.id - b.id)
-        .forEach(element => { 
+        .forEach(element => {
           if (element.itemId) {
             items.push(element.itemId);
           }
@@ -100,28 +100,32 @@ export default class ListComponent implements OnInit {
       if (items.length === 0) {
         const msg = `This import has no items available!\n`;
         this.msgSvc.info(msg);
-        return; 
-      }             
-      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state: { itemList: items }});
-    }) 
+        return;
+      }
+      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state: { itemList: items } });
+    })
   }
 
   deleteImportLog(log: any): void {
-    let element = document.getElementById(log.id) as HTMLElement;
-    element.remove();
+    let ref = this.msgSvc.displayConfirmation({ text: 'Confirm to remove this import Log', confirm: 'Remove', reject: 'Cancel' });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
+          console.log(importsResponse);
+        })
 
-    this.logs = this.logs.filter(item => item.id != log.id);
-    this.collectionSize = this.logs.length;
-    this.refreshLogs();
-
-    this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
-      console.log(importsResponse);
-      return;
-    })
-
+        let element = document.getElementById(log.id) as HTMLElement;
+        element.remove();
+    
+        this.logs = this.logs.filter(item => item.id != log.id);
+        this.collectionSize = this.logs.length;
+        this.refreshLogs();
+      }
+    });
+    return; 
   }
 
-  getImportStatusTranslation(txt: string):string {
+  getImportStatusTranslation(txt: string): string {
     let key = txt as keyof typeof this.importStatusTranslations;
     return this.importStatusTranslations[key];
   }
