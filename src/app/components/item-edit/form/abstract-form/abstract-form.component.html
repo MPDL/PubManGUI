@@ -1,18 +1,12 @@
-<div [formGroup]="abstract_form" [ngClass]="{'d-none' : !genreSpecificProperties.properties.content_item_abstract.display}">
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label for="abstracts" class="col-sm-2 col-form-label">{{index + 1}}. Abstract</label>
-        <div class="col-sm"></div>
-        <div class="col-sm-1">
-            <pure-add-remove-buttons [index]="index" (notice)="add_remove_abstract($event)"></pure-add-remove-buttons>
-        </div>
-    </div>
+<div [formGroup]="abstract_form">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm">
             <label for="abstract_language" class="col-sm-2 col-form-label">Language</label>
             <input type="text" class="form-control" id="abstract_language" name="abstract_language"
                 formControlName="language">
         </div>
-        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        <div class="col-sm-1">
+            <pure-add-remove-buttons [index]="index" (notice)="add_remove_abstract($event)"></pure-add-remove-buttons>
         </div>
     </div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">

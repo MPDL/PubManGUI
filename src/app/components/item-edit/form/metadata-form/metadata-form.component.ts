@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, computed, effect, inject, resource } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
@@ -16,7 +16,8 @@ import { SubjectFormComponent } from '../subject-form/subject-form.component';
 import { AbstractFormComponent } from '../abstract-form/abstract-form.component';
 import { ProjectInfoFormComponent } from '../project-info-form/project-info-form.component';
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { GenrePresentationObject, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -33,6 +34,7 @@ import { GenrePresentationObject, MiscellaneousService } from 'src/app/services/
     IdentifierFormComponent,
     LanguageFormComponent,
     LegalCaseFormComponent,
+    LoadingComponent,
     PublishingInfoFormComponent,
     SourceFormComponent,
     SubjectFormComponent,
@@ -50,10 +52,10 @@ export class MetadataFormComponent {
 
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
+  genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
   genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
-
 
   constructor(
     private fb: FormBuilder,
@@ -63,7 +65,8 @@ export class MetadataFormComponent {
   ngOnInit() {
     let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
     console.log('Genre', genre)
-    this.miscellaneousService.setGenreSpecificProperties(genre);
+    this.miscellaneousService.selectedGenre.set(genre);
+    console.log('metadata-form GenreSpecificProperties', this.miscellaneousService.genreSpecficProperties());
   }
 
   get alternativeTitles() {
@@ -110,13 +113,13 @@ export class MetadataFormComponent {
   get projectInfo() {
     return this.meta_form.get('projectInfo') as FormArray<FormGroup<ControlType<ProjectInfoVO>>>;
   }
-
+/*
   get genreSpecificProperties() {
     return this.miscellaneousService.genreSpecficProperties();
   }
-
+*/
   changeGenre() {
-    this.miscellaneousService.setGenreSpecificProperties(this.meta_form.get('genre')?.value);
+    this.miscellaneousService.selectedGenre.set(this.meta_form.get('genre')?.value);
   }
 
   handleAltTitleNotification(event: any) {
