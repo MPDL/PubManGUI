@@ -1,6 +1,5 @@
 <div [formGroup]="alt_title_form">
-    <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1, 
-        'd-none' : genreSpecificProperties.properties.item_basic_item_title_alternative.display}">
+    <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1}">
         <div class="col-sm">
             <label for="alt_title_type" class="visually-hidden">type</label>
             <select id="alt_title_type" class="form-select" formControlName="type">

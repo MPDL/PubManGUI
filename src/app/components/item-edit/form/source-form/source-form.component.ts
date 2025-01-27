@@ -36,6 +36,7 @@ export class SourceFormComponent {
 
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
+  genrePropertiesResource  = this.miscellaneousService.genrePropertiesResource;
 
   genre_types = Object.keys(MdsPublicationGenre);
 
@@ -49,10 +50,6 @@ export class SourceFormComponent {
 
   get identifiers() {
     return this.source_form.get('identifiers') as FormArray<FormGroup<ControlType<IdentifierVO>>>;
-  }
-
-  get genreSpecificProperties() {
-    return this.miscellaneousService.genreSpecficProperties();
   }
 
   get publishingInfo() {

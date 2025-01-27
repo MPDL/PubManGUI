@@ -1,5 +1,5 @@
+@if (genreSpecificResource.value()) {
 <div [formGroup]="meta_form">
-
     <div class="accordion" id="accordionPanelsMetadata">
         <!--GROUP Standard-->
         <div class="accordion-item border-0">
@@ -17,7 +17,8 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
-                                    <select id="genre" class="form-select" formControlName="genre" (change)="changeGenre()">
+                                    <select id="genre" class="form-select" formControlName="genre"
+                                        (change)="changeGenre()">
                                         <option [value]="null" selected disabled>genre</option>
                                         @for (g of genre_types; track g) {
                                         <option [value]="g">{{g}}</option>
@@ -30,12 +31,13 @@
                             </div>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.details_item_degree.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.details_item_degree.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
                         <label class="col-sm-2 col-form-label">Degree</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                 <div class="col-sm">
-                                    <input type="text" class="form-control" formControlName="degree" >
+                                    <input type="text" class="form-control" formControlName="degree">
                                 </div>
                                 <div class="col-sm-1">
                                     <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -43,7 +45,8 @@
                             </div>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.item_basic_item_title.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.item_basic_item_title.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
                         <label for="title" class="col-sm-2 col-form-label">Title</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
@@ -57,14 +60,16 @@
                             </div>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.item_basic_item_title_alternative.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.item_basic_item_title_alternative.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
                         <label for="alt_titles" class="col-sm-2 col-form-label">Alternative
                             Titles</label>
                         <div class="col-sm">
                             <ng-container formArrayName="alternativeTitles">
                                 @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
                                 <ng-container [formGroupName]="ati">
-                                    <pure-alt-title-form [alt_title_form]="alt" [index]="ati"
+                                    <pure-alt-title-form [alt_title_form]="alt"
+                                        [index]="ati"
                                         [index_length]="alternativeTitles.controls.length"
                                         (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
                                 </ng-container>
@@ -84,7 +89,8 @@
 
 
         <!--GROUP Creator-->
-        <div [ngClass]="genreSpecificProperties.properties.creator_person_organization.display ? 'accordion-item border-0' : 'd-none'">
+        <div
+            [ngClass]="genreSpecificResource.value().properties.creator_person_organization.display ? 'accordion-item border-0' : 'd-none'">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyCreatorGroup" aria-expanded="true"
@@ -128,7 +134,8 @@
         </div>
 
         <!--GROUP Dates-->
-        <div class="accordion-item border-0" [ngClass]="{'d-none' : !genreSpecificProperties.properties.details_item_details_dates.display}">
+        <div class="accordion-item border-0"
+            [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates.display}">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyDatesGroup" aria-expanded="true"
@@ -142,22 +149,26 @@
                         <label class="col-sm-2 col-form-label">Dates</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
-                                <div class="col-sm-2" [ngClass]="{'d-none' : !genreSpecificProperties.properties.details_item_details_dates_item_date_issued.display}">
+                                <div class="col-sm-2"
+                                    [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_issued.display}">
                                     <label class="col-form-label">Date Published in Print</label>
                                     <input type="text" class="form-control" formControlName="datePublishedInPrint"
                                         placeholder="YYYY-MM-DD">
                                 </div>
-                                <div class="col-sm-2" [ngClass]="{'d-none' : !genreSpecificProperties.properties.details_item_details_dates_item_published_online.display}">
+                                <div class="col-sm-2"
+                                    [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_published_online.display}">
                                     <label class="col-form-label">Date Published Online</label>
                                     <input type="text" class="form-control" formControlName="datePublishedOnline"
                                         placeholder="YYYY-MM-DD">
                                 </div>
-                                <div class="col-sm-2" [ngClass]="{'d-none' : !genreSpecificProperties.properties.details_item_details_dates_item_date_accepted.display}">
+                                <div class="col-sm-2"
+                                    [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_accepted.display}">
                                     <label class="col-form-label">Date Accepted</label>
                                     <input type="text" class="form-control" formControlName="dateAccepted"
                                         placeholder="YYYY-MM-DD">
                                 </div>
-                                <div class="col-sm-2" [ngClass]="{'d-none' : !genreSpecificProperties.properties.details_item_details_dates_item_date_submitted.display}">
+                                <div class="col-sm-2"
+                                    [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_submitted.display}">
                                     <label class="col-form-label">Date Submitted</label>
                                     <input type="text" class="form-control" formControlName="dateSubmitted"
                                         placeholder="YYYY-MM-DD">
@@ -185,7 +196,8 @@
         </div>
 
         <!--GROUP Details-->
-        <div class="accordion-item border-0" [ngClass]="{'d-none' : !genreSpecificProperties.properties.details.display}">
+        <div class="accordion-item border-0"
+            [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details.display}">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyDetailsGroup" aria-expanded="true"
@@ -195,7 +207,8 @@
             </h2>
             <div id="accordionBodyDetailsGroup" class="accordion-collapse collapse">
                 <div class="accordion-body mt-3 mb-3">
-                    <div  [ngClass]="genreSpecificProperties.properties.details_item_language.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.details_item_language.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
                         <label for="languages" class="col-sm-2 col-form-label">Languages</label>
                         <div class="col-sm" id="languages">
                             <ng-container formArrayName="languages">
@@ -213,7 +226,8 @@
                             </ng-container>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.details_total_number_of_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.details_total_number_of_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
                         <label class="col-sm-2 col-form-label">Total number of pages</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
@@ -226,7 +240,8 @@
                             </div>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.details_review_method.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.details_review_method.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
                         <label for="reviewMethod" class="col-sm-2 col-form-label">Review
                             Method</label>
                         <div class="col-sm">
@@ -246,7 +261,8 @@
                             </div>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.details_publishing_info.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.details_publishing_info.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
                         <label for="reviewMethod" class="col-sm-2 col-form-label">Publishing
                             Info</label>
                         <div class="col-sm">
@@ -270,7 +286,8 @@
         </div>
     </div>
     -->
-                    <div [ngClass]="genreSpecificProperties.properties.details_identifiers.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.details_identifiers.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
                         <label class="col-sm-2 col-form-label">Identifiers</label>
                         <div class="col-sm">
                             <ng-container formArrayName="identifiers">
@@ -290,25 +307,29 @@
                         </div>
                     </div>
                 </div>
-                <div [ngClass]="genreSpecificProperties.properties.content_item_abstract.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                        <label for="abstracts" class="col-sm-2 col-form-label">Abstracts</label>
-                        <div class="col-sm" id="abstract">
-                            <ng-container formArrayName="abstracts">
-                                @for (abstract of abstracts.controls; track abstractIndex; let abstractIndex = $index) {
+                <div class="accordion-body mt-3 mb-3">
+                    <ng-container formArrayName="abstracts">
+                        @for (abstract of abstracts.controls; track abstractIndex; let abstractIndex = $index) {
+                        <div
+                            [ngClass]="genreSpecificResource.value().properties.content_item_abstract.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                            <label for="abstracts" class="col-sm-2 col-form-label">{{abstractIndex + 1}}. Abstract</label>
+                            <div class="col-sm" id="abstract">
+
                                 <ng-container [formGroupName]="abstractIndex">
                                     <pure-abstract-form [abstract_form]="abstract" [index]="abstractIndex"
                                         [multi]="true" [index_length]="abstracts.controls.length"
                                         (notice)="handleAbstractNotification($event)"></pure-abstract-form>
                                 </ng-container>
-                                }
-                                @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add abstract'"
-                                    (notice)="handleAbstractNotification($event)"></pure-add-remove-buttons>
-                                }
-                            </ng-container>
+
+
+                            </div>
                         </div>
-                    </div>
+                        }
+                        @empty {
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add abstract'"
+                            (notice)="handleAbstractNotification($event)"></pure-add-remove-buttons>
+                        }
+                    </ng-container>
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                         <label for="freeKeywords" class="col-sm-2 col-form-label">Free
                             Keywords</label>
@@ -324,7 +345,8 @@
                             </div>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.content_item_subject.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.content_item_subject.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
                         <label for="subjects" class="col-sm-2 col-form-label">Subjects</label>
                         <div class="col-sm" id="subjects">
                             <ng-container formArrayName="subjects">
@@ -342,7 +364,8 @@
                             </ng-container>
                         </div>
                     </div>
-                    <div [ngClass]="genreSpecificProperties.properties.details_item_toc.display ? 'd-sm-flex flex-sm-row gap-1 mb-' : 'd-none'">
+                    <div
+                        [ngClass]="genreSpecificResource.value().properties.details_item_toc.display ? 'd-sm-flex flex-sm-row gap-1 mb-' : 'd-none'">
                         <label for="tableOfContents" class="col-sm-2 col-form-label">Table of
                             Contents</label>
                         <div class="col-sm">
@@ -362,7 +385,8 @@
         </div>
 
         <!--GROUP Event-->
-        <div class="accordion-item border-0" [ngClass]="{'d-none' : !genreSpecificProperties.properties.events.display}">
+        <div class="accordion-item border-0"
+            [ngClass]="{'d-none' : !genreSpecificResource.value().properties.events.display}">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyEventGroup" aria-expanded="true"
@@ -378,7 +402,8 @@
         </div>
 
         <!--GROUP Project Info-->
-        <div class="accordion-item border-0" [ngClass]="{'d-none' : !genreSpecificProperties.properties.project_info.display}">
+        <div class="accordion-item border-0"
+            [ngClass]="{'d-none' : !genreSpecificResource.value().properties.project_info.display}">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyProjectInfoGroup" aria-expanded="true"
@@ -419,7 +444,8 @@
         </div>
 
         <!--GROUP Legal Case-->
-        <div class="accordion-item border-0" [ngClass]="{'d-none' : !genreSpecificProperties.properties.legal_case.display}">
+        <div class="accordion-item border-0"
+            [ngClass]="{'d-none' : !genreSpecificResource.value().properties.legal_case.display}">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyLegalCaseGroup" aria-expanded="true"
@@ -435,7 +461,8 @@
         </div>
 
         <!--GROUP Sources-->
-        <div class="accordion-item border-0 mb-3" [ngClass]="{'d-none' : !genreSpecificProperties.properties.sources.display}">
+        <div class="accordion-item border-0 mb-3"
+            [ngClass]="{'d-none' : !genreSpecificResource.value().properties.sources.display}">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodySourcesGroup" aria-expanded="true"
@@ -468,3 +495,6 @@
         </div>
     </div>
 </div>
+} @else if (!genreSpecificResource.value()) {
+    <pure-loading></pure-loading>
+}

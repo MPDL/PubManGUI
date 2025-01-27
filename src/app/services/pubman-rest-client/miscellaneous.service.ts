@@ -3,6 +3,7 @@ import { PubmanGenericRestClientService } from './pubman-generic-rest-client.ser
 import { Observable } from 'rxjs';
 import { AaService } from '../aa.service';
 import { MdsPublicationGenre } from 'src/app/model/inge';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 const ipListPath = 'getIpList';
 const genrePropertiesPath = 'getGenreProperties';
@@ -16,8 +17,15 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
 
   private aaService = inject(AaService);
 
-  public genreProperties : GenrePresentationObject[] = [{}] as Array<GenrePresentationObject>;
-  public genreSpecficProperties = signal<GenrePresentationObject>({} as GenrePresentationObject) ;
+  // Can and will be set by connected Components
+  public selectedGenre = signal('ARTICLE');
+  public genreProperties: GenrePresentationObject[] = [{}] as Array<GenrePresentationObject>;
+  public genreSpecficProperties = signal<GenrePresentationObject>({} as GenrePresentationObject);
+
+  public genrePropertiesResource = rxResource({
+    request: () => this.selectedGenre(),
+    loader: ({ request: genre }) => { return this.getGenreProperties(genre) },
+  });
 
   constructor(aaService: AaService) {
     console.log('starting MISCELLANEOUS Service');
@@ -25,31 +33,23 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
     for (var i = 0; i < this.genre_types.length; i++) {
       let genre = this.genre_types.at(i);
       if (genre) {
-        this.getGenreProperties(genre).subscribe(genreJson => this.genreProperties.push(genreJson));
+        this.getGenreProperties(genre).subscribe(genreJson => {
+          this.genreProperties.push(genreJson);
+          console.log('NEW GENRE JSON SET', genreJson.genre);
+          if (genreJson.genre == 'ARTICLE') {
+            this.genreSpecficProperties.set(genreJson as GenrePresentationObject);
+          }
+        });
       }
     }
-    console.log(this.genreProperties);
-    this.setGenreSpecificProperties('ARTICLE');
-    console.log(this.genreSpecficProperties());
     console.log('started MISCELLANEOUS Service');
   }
 
   retrieveIpList(): Observable<IpEntry[]> {
     return this.httpGet(this.subPath + '/' + ipListPath, this.aaService.token ? this.aaService.token : undefined);
   }
-
   getGenreProperties(genre: string): Observable<any> {
     return this.httpGet(this.subPath + '/' + genrePropertiesPath + '?genre=' + genre, this.aaService.token ? this.aaService.token : undefined);
-  }
-
-  setGenreSpecificProperties(genre: string) {
-    for (let i = 0; i < this.genreProperties.length; i++) {
-      let element = this.genreProperties.at(i);
-      if (element?.genre == genre) {
-        this.genreSpecficProperties.set(element as GenrePresentationObject);
-        console.log('NEW GerneSpecificProperties', this.genreSpecficProperties())
-      }
-    }
   }
 }
 

@@ -1,5 +1,6 @@
-<div [formGroup]="source_form" [ngClass]="{'d-none' : genreSpecificProperties.properties.sources.display}">
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+<div [formGroup]="source_form">
+    <div
+        [ngClass]="genrePropertiesResource.value().properties.sources_source_basic_source_genre.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
             <label for="genre" class="col-sm-2 col-form-label">genre</label>
             <select id="genre" class="form-select" formControlName="genre" (change)="genre_change($event)">
@@ -13,7 +14,8 @@
             <pure-add-remove-buttons [index]="index" (notice)="add_remove_source($event)"></pure-add-remove-buttons>
         </div>
     </div>
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+    <div
+        [ngClass]="genrePropertiesResource.value().properties.sources_source_basic_source_title.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
             <label for="source_title" class="col-sm-2 col-form-label">Title</label>
             <input type="text" class="form-control" id="source_title" name="title" formControlName="title">
@@ -22,7 +24,7 @@
         </div>
     </div>
     <div
-        [ngClass]="genreSpecificProperties.properties.sources_source_basic_source_title_alternative.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+        [ngClass]="genrePropertiesResource.value().properties.sources_source_basic_source_title_alternative.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
             <label for="alt_titles" class="col-sm-2 col-form-label">alternative titles</label>
             <ng-container formArrayName="alternativeTitles">
@@ -42,7 +44,7 @@
         </div>
     </div>
     <div
-        [ngClass]="genreSpecificProperties.properties.sources_source_person_organization.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+        [ngClass]="genrePropertiesResource.value().properties.sources_source_person_organization.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
             <label for="creatures" class="col-sm-2 col-form-label">Creators</label>
             <ng-container formArrayName="creators">
@@ -66,11 +68,13 @@
         <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
         </div>
     </div>
-    <ng-container [ngClass]="{'d-none' : genreSpecificProperties.properties.sources_source_publishing_info.display}">
+    <ng-container>
+        <div [ngClass]="{'d-none' : !genrePropertiesResource.value().properties.sources_source_publishing_info.display}">
         <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
+        </div>
     </ng-container>
-    <ng-container [ngClass]="{'d-none' : genreSpecificProperties.properties.sources_source_publishing_info.display}">
-        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+    <ng-container>
+        <div class="genrePropertiesResource.value().properties.sources_source_identifiers.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
             <label class="col-sm-2 col-form-label">Identifiers</label>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
@@ -94,39 +98,51 @@
             </div>
         </div>
     </ng-container>
-    <div [ngClass]="genreSpecificProperties.properties.sources_source_volume_issue_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-end' : 'd-none'">
-        <div class="col-sm-2">
+    <div
+        [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-end' : 'd-none'">
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_volume.display ? 'col-sm-2' : 'd-none'">
             <label for="source_volume" class="col-form-label">Volume</label>
             <input type="text" class="form-control" id="source_volume" name="volume" formControlName="volume">
         </div>
-        <div class="col-sm-2">
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_issue.display ? 'col-sm-2' : 'd-none'">
             <label for="source_issue" class="col-form-label">Issue</label>
             <input type="text" class="form-control" id="source_issue" name="issue" formControlName="issue">
         </div>
-        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_volume.display || genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_issue.display ? 'col-sm-1' : 'd-none'">
+            <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
         </div>
     </div>
-    <div [ngClass]="genreSpecificProperties.properties.sources_source_volume_issue_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-end' : 'd-none'">
-        <div class="col-sm-2">
+    <div
+        [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-end' : 'd-none'">
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_start_page.display ? 'col-sm-2' : 'd-none'">
             <label for="source_startPage" class="col-form-label">Start page</label>
             <input type="text" class="form-control" id="source_startPage" name="startPage" formControlName="startPage">
         </div>
-        <div class="col-sm-2">
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_end_page.display ? 'col-sm-2' : 'd-none'">
             <label for="source_endPage" class="col-form-label">End page</label>
             <input type="text" class="form-control" id="source_endPage" name="endPage" formControlName="endPage">
         </div>
-        <div class="col-sm-2">
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_sequence_number_source_sequence_number.display ? 'col-sm-2' : 'd-none'">
             <label for="source_sequenceNumber" class="col-form-label">Sequence number</label>
             <input type="text" class="form-control" id="source_sequenceNumber" name="sequenceNumber"
                 formControlName="sequenceNumber">
         </div>
-        <div class="col-sm-2">
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_total_number_of_pages.display ? 'col-sm-2' : 'd-none'">
             <label for="source_totalNumberOfPages" class="col-form-label">Total number of
                 Pages</label>
             <input type="text" class="form-control" id="source_totalNumberOfPages" name="totalNumberOfPages"
                 formControlName="totalNumberOfPages">
         </div>
-        <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+        <div
+            [ngClass]="genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_start_page.display || genrePropertiesResource.value().properties.sources_source_volume_issue_pages_source_end_page.display || genrePropertiesResource.value().properties.sources_source_sequence_number_source_sequence_number.display || genrePropertiesResource.value().properties.sources_source_total_number_of_pages.display ? 'col-sm-1' : 'd-none'">
+            <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
         </div>
     </div>
 </div>
