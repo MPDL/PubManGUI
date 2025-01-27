@@ -51,6 +51,9 @@ export class MessagingComponent {
         this.fg_color = 'text-info-emphasis';
         this.bg_color = 'bg-info-subtle';
         this.severity_icon = 'info';
+        setTimeout(() => {
+          this.close();
+        }, 15000);
     }
   }
 
