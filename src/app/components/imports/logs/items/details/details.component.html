@@ -19,6 +19,8 @@
           @if( item?.itemId ) {
           <span i18n="@@imports.list.details.for">Item</span>: <strong class="fw-bolder">{{ item?.itemId }}
           </strong>
+          } @else if (item?.message) {
+            <span>{{ item!.message | separate | titlecase }}</span> 
           }
         </div>
         <div class="fw-light">
@@ -45,21 +47,21 @@
               @for (detail of inPage; track detail.id; let idx = $index) {
               <tr class="border-bottom">
                 <td class="align-text-top">
-                  {{ detail.status }}
+                  {{ getImportStatusTranslation(detail.status) }}
                 </td>
                 <td class="align-text-top">
-                  {{ detail.errorLevel }}
+                  {{ getImportErrorLevelTranslation(detail.errorLevel) }}
                 </td>
-                <td class="align-text-top">
+                <td class="align-text-top d-table-cell">
                   @if(detail.message.length > 80) {
-                    {{ detail.message.slice(0,detail.message.indexOf('>')+1) }}
+                    <pre class="d-inline">{{ firstContentFrom(detail.message) }}</pre>
                     <button type="button"class="border-0 bg-transparent float-end"
                       (click)="collapse.toggle()"
                       [attr.aria-expanded]="!isCollapsed[idx]">
                       <span class="material-symbols-outlined">unfold_more</span>
                     </button>
                     <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[idx]">
-                      <pre>{{ formatXml(detail.message).slice(detail.message.indexOf('>')+3) }}</pre>
+                      <pre class="d-inline">{{ moreContentFrom(detail.message) }}</pre>
                     </div>
                   } @else {
                     {{ detail.message | separate | titlecase }}

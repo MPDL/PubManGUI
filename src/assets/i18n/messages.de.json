@@ -112,9 +112,7 @@
     "batch.actions.metadata.source.replaceId.default": "Typ",
     "batch.actions.metadata.source.replaceId.from": "Bisheriger Wert der ID",
     "batch.actions.metadata.source.replaceId.to": "Neuer Wert der ID",
-    "batch.actions.metadata.source.type.other": "Andere",
-    "batch.actions.metadata.source.type.report": "Report Nr.",
-    "batch.logs.started.on": "gestarted am",
+    "batch.logs.started.on": "gestartet am",
     "batch.logs.header.date":"Datum",
     "batch.logs.header.details":"Details",
     "batch.logs.header.title":"Titel",
@@ -135,17 +133,21 @@
     "imports.fileImport": "Datei Import",
     "imports.fileImport.upload": "Hochladen",
     "imports.list.items": "Details",
-    "imports.list.started.on": "gestarted am",
+    "imports.list.started.on": "gestartet am",
     "imports.list.header.date":"Datum",
     "imports.list.header.details":"Details",
     "imports.list.header.title":"Titel",
     "imports.list.header.message":"Nachricht",
+    "imports.list.items.for": "Import",
     "imports.list.details": "Log",    
-    "imports.list.details.for": "Aktion",
+    "imports.list.details.for": "Datensatz",
+    "imports.list.details.count": "items importiert",
+    "imports.list.details.notes": "Import mit Notizen",
     "imports.list.details.remove": "Aus 'Meine Importe' entfernen",
     "imports.list.details.delete": "Löschen",
     "imports.list.details.set": "Einstellen",
-    "imports.list.details.release": "Freigeben"
+    "imports.list.details.release": "Freigeben",
+    "imports.list.details.view": "Sicht"
   },
   "BatchProcessMessages": {
     "BATCH_AUTHENTICATION_ERROR": "Sie m\u00FCssen eingeloggt sein, um die Publikation zu ver\u00E4ndern.",
@@ -316,6 +318,17 @@
     "URI": "URI",
     "URN": "URN",
     "ZDB": "ZDB"
+  },
+  "ImportStatus": {
+    "FINISHED": "Abgeschlossen",
+    "PENDING": "Ausstehend",
+    "SUSPENDED": "Ausgesetzt"
+  },
+  "ImportErrorLevel": {
+    "ERROR": "Fehler",
+    "FATAL": "Schwerwiegend",
+    "FINE": "Fehlerfrei",
+    "PROBLEM": "Problem",
+    "WARNING": "Warnung"
   }
-
 }

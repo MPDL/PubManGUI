@@ -1,13 +1,15 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
     <h2 class="m-0" i18n="@@batch.actions.metadata.extRef.contentCategory">Content Category</h2>
     <div class="mt-2 mb-5">
-        The content category of file locators will be changed as follows
+        <p i18n="@@batch.actions.metadata.extRef.contentCategory.info">
+            The content category of file locators will be changed as follows
+        </p>
     </div>
 
     <form [formGroup]="changeExternalReferenceContentCategoryForm" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="mb-3 row">
             <div class="col-sm-3">
-                <label class="col-form-label">Content category to be
+                <label class="col-form-label" i18n="@@batch.actions.metadata.extRef.contentCategory.from">Content category to be
                     replaced</label>
             </div>
             <div class="col-sm-9">
@@ -22,7 +24,7 @@
 
         <div class="row">
             <div class="col-sm-3">
-                <label class="col-form-label">Replacing content category</label>
+                <label class="col-form-label" i18n="@@batch.actions.metadata.extRef.contentCategory.to">Replacing content category</label>
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryTo">

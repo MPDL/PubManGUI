@@ -9,7 +9,7 @@ import { baseElasticSearchQueryBuilder} from "../../../shared/services/search-ut
 import { SortSelectorComponent } from "../../item-list/filters/sort-selector/sort-selector.component";
 
 @Component({
-  selector: 'pure-batch-datasets',
+  selector: 'pure-import-datasets',
   standalone: true,
   imports: [
     CommonModule,

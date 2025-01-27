@@ -1,6 +1,6 @@
 import { signal, computed, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap, of, Observable, throwError, EMPTY } from 'rxjs';
+import { catchError, map, tap, of, Observable, throwError, EMPTY } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
 
 import type * as params from '../interfaces/imports-params';
@@ -9,8 +9,6 @@ import { ImportLogDbVO, ImportLogItemDbVO, ImportLogItemDetailDbVO } from 'src/a
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
-import { MessageService } from 'src/app/shared/services/message.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +19,17 @@ export class ImportsService {
 
   constructor(
     private http: HttpClient,
-    public aa: AaService,
-    private msgSvc: MessageService,
-    private batchSvc: BatchService) { } // Mock
+    public aa: AaService
+  ) { 
+    //this.checkImports();
+  } 
 
   get token(): string {
     return this.aa.token || '';
   }
 
-  public haveImports = computed( () => this.batchSvc.areItemsSelected() ); // Mock
-
-  #importsCount = signal(666); // Mock
-  public getImportsCount = computed( () => this.#importsCount() );
+  #hasImports = signal(false);
+  public hasImports = computed( () => this.#hasImports()); 
 
   #importRunning = signal(false);
   public isImportRunning = computed( () => this.#importRunning() );
@@ -42,13 +39,21 @@ export class ImportsService {
     this.#lastFetch()
   );
 
+  checkImports() {
+    this.getImportLogs()
+      .subscribe(response => { 
+        this.#hasImports.set( response.length ? true : false );
+      } 
+    );  
+  }
+
   getCrossref(importParams: params.GetCrossrefParams): Observable<ItemVersionVO> {
     const headers = new HttpHeaders()
       .set('Authorization', this.token!);
     const url = `${this.#baseUrl}/dataFetch/getCrossref`;
     const query = `?contextId=${importParams.contextId}&identifier=${importParams.identifier}`;
 
-  return this.getDataFetch(url, query, headers);
+    return this.getDataFetch(url, query, headers);
   }
 
   getArxiv(importParams: params.GetArxivParams): Observable<ItemVersionVO> {
@@ -92,4 +97,31 @@ export class ImportsService {
 
     return this.http.get<ImportLogItemDetailDbVO[]>(url, { headers });
   }
+
+  deleteImportLog(id: number): Observable<any> {
+    const url = `${this.#baseUrl}/import/importLog/${id}`;
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+
+    return this.http.delete<any>(url, { headers });
+  }
+
+  getFormatConfiguration(format: string): Observable<any> {
+    const url = `${this.#baseUrl}/import/getFormatConfiguration`;
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+    const query = `?format=${format}`;
+
+    return this.http.get<any>(url + query, { headers })
+  }
+
+  postImport(importParams: params.PostImportParams, data: any): Observable<any> {
+    const headers = new HttpHeaders()
+      .set('Authorization', this.token!)
+      .set('Content-Type', 'application/octet-stream')
+      .set('Content-Disposition', 'attachment');
+    const url = `${this.#baseUrl}/import/import`;
+    const query = `?contextId=${importParams.contextId}&importName=${importParams.importName}&format=${importParams.format}`;
+
+    return this.http.post<any>(url + query, data, { headers });
+  }
+  
 }

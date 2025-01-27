@@ -23,7 +23,7 @@ export default class ImportsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.importsSvc.haveImports()) {
+    if (this.importsSvc.hasImports()) {
       this.router.navigate(['/imports/myimports'])
     } else {
       this.router.navigate(['/imports/new'])

@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
-import { RouterModule, Router, NavigationExtras  } from '@angular/router';
+import { RouterModule, Router, NavigationExtras } from '@angular/router';
 
 import { ImportsService } from '../services/imports.service';
-import { ImportLogDbVO, ImportStatus } from 'src/app/model/inge';
+import { ImportLogDbVO, ImportStatus, ImportErrorLevel } from 'src/app/model/inge';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormsModule } from '@angular/forms';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
-
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-import-logs',
@@ -17,11 +18,12 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
     CommonModule,
     RouterModule,
     FormsModule,
-    PaginatorComponent
+    PaginatorComponent,
+    NgbTooltip
   ],
   templateUrl: './import-logs.component.html'
 })
-export default class ListComponent implements OnInit { 
+export default class ListComponent implements OnInit {
 
   currentPage = 1;
   pageSize = 25;
@@ -29,11 +31,16 @@ export default class ListComponent implements OnInit {
   inPage: ImportLogDbVO[] = [];
   logs: ImportLogDbVO[] = [];
 
+  importStatusTranslations = {};
+
+  importErrorLevel: typeof ImportErrorLevel = ImportErrorLevel;
+
   isScrolled = false;
 
   constructor(
     private importsSvc: ImportsService,
-    private router: Router, 
+    private msgSvc: MessageService,
+    private router: Router,
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
@@ -44,13 +51,21 @@ export default class ListComponent implements OnInit {
         this.refreshLogs();
         return;
       }
-    );
+      );
 
-    //this.loadTranslations(this.locale);
+    this.loadTranslations(this.locale);
   }
 
   async loadTranslations(lang: string) {
-    // TO-DO ...
+    if (lang === 'de') {
+      await import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.importStatusTranslations = msgs.ImportStatus;
+      })
+    } else {
+      await import('src/assets/i18n/messages.json').then((msgs) => {
+        this.importStatusTranslations = msgs.ImportStatus;
+      })
+    }
   }
 
   refreshLogs() {
@@ -64,27 +79,55 @@ export default class ListComponent implements OnInit {
     return Math.floor(100 / numberOfItems);
   };
 
-  isFinished(status: ImportStatus):boolean {
-    if( status === ImportStatus.FINISHED) {
-        return true;
-      }
+  isFinished(status: ImportStatus): boolean {
+    if (status === ImportStatus.FINISHED) {
+      return true;
+    }
     return false;
-  } 
+  }
 
   toDatasets(id: any): void {
     let items: string[] = [];
     this.importsSvc.getImportLogItems(id).subscribe(importsResponse => {
       if (importsResponse.length === 0) return;
-      
+
       importsResponse.sort((a, b) => a.id - b.id)
-        .forEach(element => { 
+        .forEach(element => {
           if (element.itemId) {
             items.push(element.itemId);
           }
         });
-      if (items.length === 0) return;              
-      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state:{ itemList: items }});
-    }) 
+      if (items.length === 0) {
+        const msg = `This import has no items available!\n`;
+        this.msgSvc.info(msg);
+        return;
+      }
+      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state: { itemList: items } });
+    })
+  }
+
+  deleteImportLog(log: any): void {
+    let ref = this.msgSvc.displayConfirmation({ text: 'Confirm to remove this import Log', confirm: 'Remove', reject: 'Cancel' });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
+          console.log(importsResponse);
+        })
+
+        let element = document.getElementById(log.id) as HTMLElement;
+        element.remove();
+    
+        this.logs = this.logs.filter(item => item.id != log.id);
+        this.collectionSize = this.logs.length;
+        this.refreshLogs();
+      }
+    });
+    return; 
+  }
+
+  getImportStatusTranslation(txt: string): string {
+    let key = txt as keyof typeof this.importStatusTranslations;
+    return this.importStatusTranslations[key];
   }
 
   @HostListener('window:scroll', ['$event'])

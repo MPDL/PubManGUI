@@ -18,25 +18,35 @@
                 <table class="table table-responsive col-12 mt-1">
                     <thead>
                         <tr class="border-bottom">
-                            <th scope="col" class="pe-2">Status</th>
-                            <th scope="col" class="pe-2">Import</th>
-                            <th scope="col" class="pe-2">Format</th>
-                            <th scope="col" class="pe-2" i18n="@@imports.list.header.date">Started</th>
-                            <th scope="col" i18n="@@imports.list.header.details">Items</th>
+                          <th scope="col" class="pe-2">Status</th>
+                          <th scope="col" class="pe-2">Import</th>
+                          <th scope="col" class="pe-2">Format</th>
+                          <th scope="col" class="pe-2" i18n="@@imports.list.header.date">Started</th>
+                          <th scope="col" i18n="@@imports.list.header.details">Items</th>
+                          <th scope="col"></th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @for (log of inPage; track log.id) {
-                            <tr class="border-bottom">
-                              <td class="col-1 text-nowrap">
-                                {{ log.status }}
+                            <tr class="border-bottom" id="{{ log.id }}">
+                              <td class="col-2">
+                                {{ getImportStatusTranslation(log.status) }}
+                                <div class="float-end ms-1 my-0">
+                                  @switch (log.errorLevel) {
+                                    @case (importErrorLevel.FINE) { 
+                                      <span class="material-symbols-outlined text-success" style="cursor: default">check_circle</span> }
+                                    @case (importErrorLevel.WARNING) { 
+                                      <span class="material-symbols-outlined text-black-50" style="cursor: default">error</span> }
+                                    @default { 
+                                      <span class="material-symbols-outlined text-danger" style="cursor: default">cancel</span>
+                                     }
+                                  }
+                                  </div>
                               </td>
-                              <td class="col-4">
+                              <td class="col-4 d-inline-flex">
                               @if( isFinished(log.status) ) { <!-- TODO: Enhance conditions for number of imported items > 0 -->
-                                <span class="nav-link text-decoration-underline" (click)='toDatasets(log.id);'>     
-                                  {{ log.name }} 
-                                </span>
+                                <span class="nav-link text-decoration-underline text-nowrap" (click)='toDatasets(log.id);'>{{ log.name }}</span>
                               } @else {
                                 {{ log.name }}
                               }
@@ -48,16 +58,23 @@
                                 <span>{{ log.startDate | date:'fullDate' }}</span>
                                 <div class="float-end">
                                   <span class="material-symbols-outlined" style="cursor: auto">schedule</span>&nbsp;
-                                  <span>{{ log.startDate | date: "HH:mm" }}</span>
+                                  <span class="me-3">{{ log.startDate | date: "HH:mm" }}</span>
                                 </div>
                               </td>
                               <td class="col-1">
                                 <a [routerLink]="['/imports/myimports/', log.id]"
-                                  [state]="{ import: log.name, started: log.startDate }">     
-                                    <span class="material-symbols-outlined ms-3 my-0" >
+                                  [state]="{ import: log.name, started: log.startDate, format: log.format }">     
+                                    <span class="material-symbols-outlined ms-2 my-0" >
                                       list
                                     </span>
                                 </a>
+                              </td>
+                              <td>
+                                <button type="button" class="border-0 bg-transparent float-end" (click)="deleteImportLog(log)">
+                                  <span class="material-symbols-outlined ms-2 my-0" ngbTooltip="Remove from log" placement="bottom-right">
+                                    delete
+                                  </span>
+                                </button>
                               </td>
                             </tr>
                         }
