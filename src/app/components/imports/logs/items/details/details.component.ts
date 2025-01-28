@@ -57,13 +57,13 @@ export default class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.item = history.state.item;
+
     this.importsSvc.getImportLogItemDetails(Number(this.item?.id))
       .subscribe(importsResponse => {
         if (importsResponse.length === 0) {
           const msg = `This item has no details available!\n`;
-          this.msgSvc.info(msg);
-  
-          return this.router.navigate(['/imports/myimports/', this.item?.parent.id], {state:{ import: this.item?.parent.name, started: this.item?.parent.startDate, format: this.item?.parent.format }});
+          this.msgSvc.info(msg);       
+          return this.router.navigate(['/imports/myimports/', this.item?.parent.id]);
         }
         importsResponse.sort((a, b) => a.id - b.id);
           

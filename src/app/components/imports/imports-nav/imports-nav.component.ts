@@ -39,7 +39,6 @@ export class ImportsNavComponent implements OnInit {
     this.navList()[1].disabled = !this.importsSvc.hasImports();
   }
 
-  // TO-DO ???
   warning(option: string) {
     switch (option) {
       case '/imports/myimports':

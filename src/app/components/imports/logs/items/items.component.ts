@@ -107,16 +107,15 @@ export default class ItemsComponent implements OnInit {
           });
         this.logs = importsResponse;
         this.collectionSize = this.logs.length;
+        this.import = this.logs[0].parent.name;
+        this.started = this.logs[0].parent.startDate;
+        this.format = this.logs[0].parent.format;
         this.refreshLogs();
         return;
       }
     );
 
     this.loadTranslations(this.locale);
-
-    this.import = history.state.import;
-    this.started = history.state.started;
-    this.format = history.state.format;
   }
 
   async loadTranslations(lang: string) {
