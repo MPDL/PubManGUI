@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
@@ -26,6 +26,7 @@ export class FileFormComponent {
 
   fb = inject(FormBuilder);
   miscellaneousService = inject(MiscellaneousService);
+  genreSpecificResource = this.miscellaneousService.genrePropertiesResource
 
   contentCategory_types = Object.keys(ContentCategories);
   visibility_types = Object.keys(Visibility);
@@ -43,10 +44,6 @@ export class FileFormComponent {
   get allowedAudienceIds() {
     //console.log('Allowed Audiences: ', this.file_form.get('allowedAudienceIds'));
     return this.file_form.get('allowedAudienceIds') as FormArray<FormControl>;
-  }
-
-  get genreSpecificProperties() {
-    return this.miscellaneousService.genreSpecficProperties();
   }
 
   get metadata() {

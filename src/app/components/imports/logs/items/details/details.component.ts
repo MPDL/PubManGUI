@@ -45,6 +45,8 @@ export default class DetailsComponent implements OnInit {
   isCollapsed: boolean[] = [];
   isScrolled = false;
 
+  BOM = '239,187,191';
+
   constructor(
     private importsSvc: ImportsService,
     private msgSvc: MessageService,
@@ -55,13 +57,13 @@ export default class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.item = history.state.item;
+
     this.importsSvc.getImportLogItemDetails(Number(this.item?.id))
       .subscribe(importsResponse => {
         if (importsResponse.length === 0) {
           const msg = `This item has no details available!\n`;
-          this.msgSvc.info(msg);
-  
-          return this.router.navigate(['/imports/myimports/', this.item?.parent.id], {state:{ import: this.item?.parent.name, started: this.item?.parent.startDate, format: this.item?.parent.format }});
+          this.msgSvc.info(msg);       
+          return this.router.navigate(['/imports/myimports/', this.item?.parent.id]);
         }
         importsResponse.sort((a, b) => a.id - b.id);
           
@@ -91,12 +93,35 @@ export default class DetailsComponent implements OnInit {
     }
   }
 
-  formatLongMessage(message: string):string {
+  firstContentFrom(message: string): string {
+    message = message.replace('null', '').slice(0, 80);
+
+    if (message.indexOf('\n') > 0) {
+      message = message.slice(0, message.indexOf('\n'));
+    } else if (message.indexOf('\n') === 0) {
+      message = message.slice(1, message.indexOf('\n',1));
+    }
+    
+    if (message.indexOf(this.BOM) === 0) {
+      message = message.slice(0, message.lastIndexOf(',')+1) + '...';
+    }
+
+    return message;
+  }
+
+  moreContentFrom(message: string):string {
+    message = message.replace('null', '');
+    if (message.lastIndexOf('\n') === message.length-1) message = message.slice(0, -1);
+    if (message.indexOf('\n') === 0) message = message.slice(message.indexOf('\n',1));
+
+    if (message.search("Exception") >= 0) {
+      message = message.replaceAll('(', ' (');
+    }
     if (message.search("xml") >= 0) {
       return this.formatFromXml(message.slice(message.indexOf('\n')+1));
     } 
-    if (message.search(" - ") >= 0) {
-      return this.formatFromString(message.slice(message.indexOf('\n')+1));
+    if (message.indexOf(this.BOM) === 0 ) {
+      return this.formatFromBytes(message.slice(message.indexOf(',',75)+1));
     }
 
     return message.slice(message.indexOf('\n')+1);
@@ -110,9 +135,12 @@ export default class DetailsComponent implements OnInit {
     });
   }
 
-  formatFromString(message: string):string {
-    if (message.lastIndexOf('\n') === message.length-1) message = message.slice(0, -1);
-    return message.replace("null", "");
+  formatFromBytes(message: string):string {
+    /* To make it readable:
+    let readableMessage = String.fromCharCode(...(message.replace(this.BOM, '')).split(',').map(Number));
+    return readableMessage;
+    */
+    return message.replaceAll(',', ', ');
   }
 
   refreshLogs() {

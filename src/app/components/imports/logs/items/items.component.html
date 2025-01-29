@@ -67,7 +67,7 @@
                 </td>
                 <td class="col-5">
                   @if(item.itemId) {                 
-                    <span class="nav-link text-decoration-underline" [routerLink]="['/view', item.itemId]">{{ item.itemId }} </span>
+                    <span class="nav-link text-decoration-underline" [routerLink]="['view', item.itemId]">{{ item.itemId }} </span>
                   } @else {
                     {{ item.message | separate | titlecase }}
                   }
@@ -93,14 +93,14 @@
       <div class="col-lg-2 d-none d-lg-block mt-4">
         <div class="border rounded p-3 m-1">
           @if(collectionSize > 0) {
-          <span class="me-0"> {{ itemsFine }}/{{ itemsCount }} <span class="me-0">
-            items fine</span>
+          <span class="me-0"> {{ itemsFine }}/{{ itemsCount }} <span class="me-0" i18n="@@imports.list.details.count">
+            items imported</span>
           </span>
           }
           @if((problem + error + fatal) > 0) {
           <br>
-          <span class="fw-bold"> {{ warning + problem + error + fatal }} <span>
-            import notices</span>
+          <span class="fw-bold"> {{ warning + problem + error + fatal }} <span i18n="@@imports.list.details.notes">
+            import with notes</span>
           </span>
           }
         </div>
@@ -110,7 +110,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="fine" formControlName="fine" checked>
             <label class="form-check-label" for="fine">
-              fine
+              {{ getImportErrorLevelTranslation('FINE') }}
             </label>
           </div>
           }
@@ -118,7 +118,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="warning" formControlName="warning" checked>
             <label class="form-check-label" for="warning">
-              warning
+              {{ getImportErrorLevelTranslation('WARNING') }}
             </label>
           </div>
           }
@@ -126,7 +126,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="problem" formControlName="problem" checked>
             <label class="form-check-label" for="problem">
-              problem
+              {{ getImportErrorLevelTranslation('PROBLEM') }}
             </label>
           </div>
           }
@@ -134,7 +134,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="error" formControlName="error" checked>
             <label class="form-check-label" for="error">
-              error
+              {{ getImportErrorLevelTranslation('ERROR') }}
             </label>
           </div>
           }
@@ -142,7 +142,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="fatal" formControlName="fatal" checked>
             <label class="form-check-label" for="fatal">
-              fatal
+              {{ getImportErrorLevelTranslation('FATAL') }}
             </label>
           </div>
           }

@@ -30,23 +30,23 @@
                     <tbody>
                         @for (log of inPage; track log.id) {
                             <tr class="border-bottom" id="{{ log.id }}">
-                              <td class="col-1">
+                              <td class="col-2">
                                 {{ getImportStatusTranslation(log.status) }}
+                                <div class="float-end ms-1 my-0">
+                                  @switch (log.errorLevel) {
+                                    @case (importErrorLevel.FINE) { 
+                                      <span class="material-symbols-outlined text-success" style="cursor: default">check_circle</span> }
+                                    @case (importErrorLevel.WARNING) { 
+                                      <span class="material-symbols-outlined text-black-50" style="cursor: default">error</span> }
+                                    @default { 
+                                      <span class="material-symbols-outlined text-danger" style="cursor: default">cancel</span>
+                                     }
+                                  }
+                                  </div>
                               </td>
                               <td class="col-4 d-inline-flex">
                               @if( isFinished(log.status) ) { <!-- TODO: Enhance conditions for number of imported items > 0 -->
                                 <span class="nav-link text-decoration-underline text-nowrap" (click)='toDatasets(log.id);'>{{ log.name }}</span>
-                                <div class="float-end ms-3 my-0">
-                                @switch (log.errorLevel) {
-                                  @case (importErrorLevel.FINE) { 
-                                    <span class="material-symbols-outlined text-success" style="cursor: default">check_circle</span> }
-                                  @case (importErrorLevel.WARNING) { 
-                                    <span class="material-symbols-outlined text-black-50" style="cursor: default">error</span> }
-                                  @default { 
-                                    <span class="material-symbols-outlined text-danger" style="cursor: default">cancel</span>
-                                   }
-                                }
-                              </div>
                               } @else {
                                 {{ log.name }}
                               }

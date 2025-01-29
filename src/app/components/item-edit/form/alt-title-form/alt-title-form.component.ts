@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlternativeTitleType } from 'src/app/model/inge';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({
   selector: 'pure-alt-title-form',
@@ -19,7 +18,6 @@ export class AltTitleFormComponent {
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
 
-  miscellaneousService = inject(MiscellaneousService);
 
   alt_title_types = Object.keys(AlternativeTitleType);
   alt_title_langs = ['bay', 'deu', 'eng', 'fra', 'esp'];
@@ -27,8 +25,6 @@ export class AltTitleFormComponent {
   add_remove_alt_title(event: any) {
     this.notice.emit(event);
   }
-
-  get genreSpecificProperties() {
-    return this.miscellaneousService.genreSpecficProperties();
-  }
 }
+
+

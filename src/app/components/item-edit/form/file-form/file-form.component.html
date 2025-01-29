@@ -1,4 +1,4 @@
-<div [formGroup]="file_form" [ngClass]="{'d-none' : genreSpecificProperties.properties.files.display}">
+<div [formGroup]="file_form" [ngClass]="{'d-none' : genreSpecificResource.value().properties.files.display}">
     <div class="custom-drag-placeholder" *cdkDragPlaceholder></div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1" cdkDragHandle>
         <div class="py-1">

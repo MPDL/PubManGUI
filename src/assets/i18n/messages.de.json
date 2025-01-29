@@ -133,7 +133,7 @@
     "imports.fileImport": "Datei Import",
     "imports.fileImport.upload": "Hochladen",
     "imports.list.items": "Details",
-    "imports.list.started.on": "gestarted am",
+    "imports.list.started.on": "gestartet am",
     "imports.list.header.date":"Datum",
     "imports.list.header.details":"Details",
     "imports.list.header.title":"Titel",
@@ -141,10 +141,13 @@
     "imports.list.items.for": "Import",
     "imports.list.details": "Log",    
     "imports.list.details.for": "Datensatz",
+    "imports.list.details.count": "items importiert",
+    "imports.list.details.notes": "Import mit Notizen",
     "imports.list.details.remove": "Aus 'Meine Importe' entfernen",
     "imports.list.details.delete": "Löschen",
     "imports.list.details.set": "Einstellen",
-    "imports.list.details.release": "Freigeben"
+    "imports.list.details.release": "Freigeben",
+    "imports.list.details.view": "Sicht"
   },
   "BatchProcessMessages": {
     "BATCH_AUTHENTICATION_ERROR": "Sie m\u00FCssen eingeloggt sein, um die Publikation zu ver\u00E4ndern.",
@@ -324,7 +327,7 @@
   "ImportErrorLevel": {
     "ERROR": "Fehler",
     "FATAL": "Schwerwiegend",
-    "FINE": "Gut",
+    "FINE": "Fehlerfrei",
     "PROBLEM": "Problem",
     "WARNING": "Warnung"
   }

@@ -139,12 +139,15 @@
     "imports.list.header.title":"Title",
     "imports.list.header.message":"Report",
     "imports.list.items.for": "Import",
-    "imports.list.details": "Log",    
-    "imports.list.details.for": "Item",
+    "imports.list.details": "Log",
+    "imports.list.details.for": "Datensatz",
+    "imports.list.details.count": "items imported",       
+    "imports.list.details.notes": "import with notes",
     "imports.list.details.remove": "Remove from 'My Imports'",
     "imports.list.details.delete": "Delete",
     "imports.list.details.set": "Set",
-    "imports.list.details.release": "Release"
+    "imports.list.details.release": "Release",
+    "imports.list.details.view": "View"
   },
   "BatchProcessMessages": {
     "BATCH_AUTHENTICATION_ERROR": "You need to be logged in, to change the publication.",

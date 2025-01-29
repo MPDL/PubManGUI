@@ -1,4 +1,4 @@
-<div [formGroup]="project_info_form" [ngClass]="genreSpecificProperties.properties.project_info.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
+<div [formGroup]="project_info_form" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
@@ -10,79 +10,42 @@
                     (notice)="add_remove_projectInfo($event)"></pure-add-remove-buttons>
             </div>
         </div>
-        <div [formGroup]="grantIdentifier" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+        <div formGroupName="grantIdentifier" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
                 <label class="col-form-label">Grant Identifier</label>
                 <input type="text" class="form-control" id="grant_identifier_type" formControlName="type" hidden>
                 <input type="text" class="form-control" id="grant_identifier_value" formControlName="id">
-                <!--
-                    <pure-identifier-form [identifier_form]="grantIdentifier" [multi]="false"></pure-identifier-form>
-                -->
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
         </div>
-        <div [formGroup]="fundingProgram" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-            <div class="col-sm-4">
-                <label class="col-form-label">Funding Program</label>
-                <input type="text" class="form-control" formControlName="title">
+        <ng-container formGroupName="fundingInfo">
+            <div formGroupName="fundingProgram" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm-4">
+                    <label class="col-form-label">Funding Program</label>
+                    <input type="text" class="form-control" formControlName="title">
+                </div>
+                <div [formGroup]="fundingProgramIdentifier" class="col-sm">
+                    <label class="col-sm col-form-label">Program Identifier</label>
+                    <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
+                    <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
+                </div>
+                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                </div>
             </div>
-            <div [formGroup]="fundingProgramIdentifier" class="col-sm">
-                <label class="col-sm col-form-label">Program Identifier</label>
-                <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
-                <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
-                <!--
-                <ng-container formArrayName="identifiers">
-                    @for (fundingProgramIdentifier of fundingProgramIdentifiers.controls; track
-                    fundingProgramIdentifier; let fundingProgramIdentifierIndex =
-                    $index) {
-                    <ng-container [formGroupName]="fundingProgramIdentifierIndex">
-                        <pure-identifier-form [identifier_form]="fundingProgramIdentifier"
-                            [index]="fundingProgramIdentifierIndex" [multi]="true"
-                            [index_length]="fundingProgramIdentifiers.controls.length"
-                            (notice)="handleFundingProgramIdentifierNotification($event)"></pure-identifier-form>
-                    </ng-container>
-                    }
-                    @empty {
-                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add fundingProgramIdentifier'"
-                        (notice)="handleFundingProgramIdentifierNotification($event)"></pure-add-remove-buttons>
-                    }
-                </ng-container>
-                -->
+            <div formGroupName="fundingOrganization" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+                <div class="col-sm-4">
+                    <label class="col-form-label">Funding Organization</label>
+                    <input type="text" class="form-control" formControlName="title">
+                </div>
+                <div [formGroup]="fundingOrganizationIdentifier" class="col-sm">
+                    <label class="col-sm col-form-label">Organization Identifier</label>
+                    <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
+                    <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
+                </div>
+                <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                </div>
             </div>
-            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-            </div>
-        </div>
-        <div [formGroup]="fundingOrganization" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-            <div class="col-sm-4">
-                <label class="col-form-label">Funding Organization</label>
-                <input type="text" class="form-control" formControlName="title">
-            </div>
-            <div [formGroup]="fundingOrganizationIdentifier" class="col-sm">
-                <label class="col-sm col-form-label">Organization Identifier</label>
-                <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
-                <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
-                <!--
-                <ng-container formArrayName="identifiers">
-                    @for (fundingOrganizationIdentifier of fundingOrganizationIdentifiers.controls; track
-                    fundingOrganizationIdentifier; let fundingOrganizationIdentifierIndex =
-                    $index) {
-                    <ng-container [formGroupName]="fundingOrganizationIdentifierIndex">
-                        <pure-identifier-form [identifier_form]="fundingOrganizationIdentifier"
-                            [index]="fundingOrganizationIdentifierIndex" [multi]="true"
-                            [index_length]="fundingOrganizationIdentifiers.controls.length"
-                            (notice)="handleFundingOrganizationIdentifierNotification($event)"></pure-identifier-form>
-                    </ng-container>
-                    }
-                    @empty {
-                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                        [add_val]="'add fundingOrganizationIdentifier'"
-                        (notice)="handleFundingOrganizationIdentifierNotification($event)"></pure-add-remove-buttons>
-                    }
-                </ng-container>
-                -->
-            </div>
-            <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-            </div>
-        </div>
+        </ng-container>
+    </div>
 </div>

@@ -52,16 +52,16 @@
                 <td class="align-text-top">
                   {{ getImportErrorLevelTranslation(detail.errorLevel) }}
                 </td>
-                <td class="align-text-top">
+                <td class="align-text-top d-table-cell">
                   @if(detail.message.length > 80) {
-                    <pre style="display: inline;">{{ detail.message.slice(0,detail.message.indexOf('\n')).replace('null', '') }}</pre>
+                    <pre class="d-inline">{{ firstContentFrom(detail.message) }}</pre>
                     <button type="button"class="border-0 bg-transparent float-end"
                       (click)="collapse.toggle()"
                       [attr.aria-expanded]="!isCollapsed[idx]">
                       <span class="material-symbols-outlined">unfold_more</span>
                     </button>
                     <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[idx]">
-                      <pre style="display: inline;">{{ formatLongMessage(detail.message) }}</pre>
+                      <pre class="d-inline">{{ moreContentFrom(detail.message) }}</pre>
                     </div>
                   } @else {
                     {{ detail.message | separate | titlecase }}

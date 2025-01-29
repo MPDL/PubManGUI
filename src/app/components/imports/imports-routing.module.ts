@@ -63,6 +63,15 @@ const routes: Routes = [
               }
             },
           },
+          {
+            path: 'view/:id',
+            loadComponent: () => import('src/app/components/item-view/item-view.component').then(c => c.ItemViewComponent),
+            data: {
+              breadcrumb: {
+                label: 'View',
+              }
+            },
+          },
         ],
       },
 ],
