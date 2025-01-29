@@ -136,6 +136,8 @@
     "imports.fetch.source": "Quelle",
     "imports.fileImport": "Datei Import",
     "imports.fileImport.upload": "Hochladen",
+    "imports.fileImport.running": "Bitte warten, es läuft ein Import!",
+    "imports.list.empty": "Keine Importe verfügbar!",
     "imports.list.items": "Details",
     "imports.list.started.on": "gestartet am",
     "imports.list.header.date":"Datum",

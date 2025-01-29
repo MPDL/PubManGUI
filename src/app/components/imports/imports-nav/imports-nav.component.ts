@@ -43,7 +43,7 @@ export class ImportsNavComponent implements OnInit {
     switch (option) {
       case '/imports/myimports':
         if (!this.importsSvc.hasImports()) {
-          this.msgSvc.warning(`No imports available!\n`);
+          this.msgSvc.warning($localize`:@@imports.list.empty:No imports available!`+'\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/imports'])
           })
@@ -51,7 +51,7 @@ export class ImportsNavComponent implements OnInit {
         break;
       case '/imports/new':
         if (this.importsSvc.isImportRunning()) {
-          this.msgSvc.warning(`Please wait, an import is running!\n`);
+          this.msgSvc.warning($localize`:@@imports.fileImport.running:Please wait, an import is running!`+'\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/imports'])
           })
