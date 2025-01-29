@@ -84,13 +84,13 @@
       <div class="col-lg-2 d-none d-lg-block mt-4">
         <div class="border rounded p-3 m-1">
           @if(collectionSize > 0) {
-          <span class="me-0"> {{ collectionSize-failed }}/{{ collectionSize }} <span class="me-0" i18n="@@batch.logs.details.succeded">
+          <span class="me-0"> {{ collectionSize-failed }}/{{ collectionSize }} <span class="me-0" i18n="@@succeded">
               success</span>
           </span>
           }
           @if(failed > 0) {
           <br>
-          <span class="fw-bold"> {{ failed }} <span i18n="@@batch.logs.details.failed">
+          <span class="fw-bold"> {{ failed }} <span i18n="@@failed">
               failed</span>
           </span>
           }
@@ -101,7 +101,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="success" formControlName="success" checked>
             <label class="form-check-label" for="success" i18n="@@batch.logs.details.filter.succeded">
-              success
+              Show successful items
             </label>
           </div>
           }
@@ -109,7 +109,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="fail" formControlName="fail" checked>
             <label class="form-check-label" for="fail" i18n="@@batch.logs.details.filter.failed">
-              failed
+              Show failed items
             </label>
           </div>
           }

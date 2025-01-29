@@ -19,7 +19,7 @@ export class ConfirmationComponent {
   confirm(): void {
     this.dialogRef.close(true);
   }
-  reject(): void {
+  cancel(): void {
     this.dialogRef.close(false);
   }
 

@@ -27,7 +27,7 @@ export class MessageService {
     });
   }
 
-  displayConfirmation(message?: { title?: string, text: string, confirm: string, reject: string }) {
+  displayConfirmation(message?: { title?: string, text: string, confirm: string, cancel: string }) {
     const ref = this.dialog.open(ConfirmationComponent, {
       hasBackdrop: false,
       // autoFocus: false,

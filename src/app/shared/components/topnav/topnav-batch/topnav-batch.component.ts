@@ -11,7 +11,7 @@ import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
   standalone: true,
   imports: [
     NgbTooltip,
-    RouterLink
+    //RouterLink
   ],
   templateUrl: './topnav-batch.component.html',
 })

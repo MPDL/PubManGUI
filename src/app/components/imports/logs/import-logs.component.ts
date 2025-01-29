@@ -107,7 +107,7 @@ export default class ListComponent implements OnInit {
   }
 
   deleteImportLog(log: any): void {
-    let ref = this.msgSvc.displayConfirmation({ text: 'Confirm to remove this import Log', confirm: 'Remove', reject: 'Cancel' });
+    let ref = this.msgSvc.displayConfirmation({ text: 'Do you really want to remove this import log?', confirm: 'Confirm', cancel: 'Cancel' });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
