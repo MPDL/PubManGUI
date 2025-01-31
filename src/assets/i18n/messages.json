@@ -156,7 +156,6 @@
     "imports.list.details.empty": "This detail has no logs available!",
     "imports.list.details.for": "Datensatz",
     "imports.list.details.count": "items imported",       
-    "imports.list.details.notification": "Import notification",
     "imports.list.details.remove": "Remove from 'My Imports'",
     "imports.list.details.delete": "Delete",
     "imports.list.details.set": "Set",
@@ -343,6 +342,19 @@
     "FINE": "Success",
     "PROBLEM": "Problem",
     "WARNING": "Warning"
+  },
+  "ImportMessage": {
+    "import_process_started": "Import process started",
+    "Import Process Initializing": "Initializing",
+    "import_process_validate": "Validating item",
+    "import_process_format_available": "Format Available",
+    "import_process_inputstream_available": "Inputstream Available",
+    "import_process_start_import": "Starting import",
+    "import_process_import_item": "Importing item",
+    "Item preparation finished": "Item preparation finished",
+    "import_process_finished": "Import process finished",
+    "Initializing deletion process": "Initializing deletion process",
+    "Deletion completed":"Deletion completed"
   }
 
 }

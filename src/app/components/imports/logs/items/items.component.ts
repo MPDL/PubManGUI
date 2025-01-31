@@ -60,6 +60,7 @@ export default class ItemsComponent implements OnInit {
 
   importStatusTranslations = {};
   importErrorLevelTranslations = {};
+  importMessageTranslations = {};
 
   isScrolled = false;  
 
@@ -122,29 +123,24 @@ export default class ItemsComponent implements OnInit {
       await import('src/assets/i18n/messages.de.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
         this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     } else {
       await import('src/assets/i18n/messages.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     }
   }
 
-  itemHasError(errorLevel: ImportErrorLevel):boolean {
-    if( errorLevel === ImportErrorLevel.PROBLEM 
-      || errorLevel === ImportErrorLevel.ERROR 
-      || errorLevel === ImportErrorLevel.FATAL) {
-        return true;
-      }
-    return false;
-  }
-
-  itemHasWarning(errorLevel: ImportErrorLevel):boolean {
-    if( errorLevel === ImportErrorLevel.WARNING) {
-        return true;
-      }
-    return false;
+  getAssorted(txt: string):string {
+    switch(txt) {
+      case 'FINE':
+      case 'WARNING':
+        return txt;
+      default:
+        return 'ERROR';
+    }
   }
 
   refreshLogs() {
@@ -184,14 +180,9 @@ export default class ItemsComponent implements OnInit {
     return this.importErrorLevelTranslations[key];
   }
 
-  getAssorted(txt: string):string {
-    switch(txt) {
-      case 'FINE':
-      case 'WARNING':
-        return txt;
-      default:
-        return 'ERROR';
-    }
+  getImportMessageTranslation(txt: string):string {
+    let key = txt as keyof typeof this.importMessageTranslations;
+    return this.importMessageTranslations[key];
   }
 
   @HostListener('window:scroll', ['$event'])

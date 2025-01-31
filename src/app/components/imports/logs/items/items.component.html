@@ -64,7 +64,7 @@
                   @if(item.itemId) {                 
                     <span class="nav-link text-decoration-underline" [routerLink]="['view', item.itemId]">{{ item.itemId }} </span>
                   } @else {
-                    {{ item.message | separate | titlecase }}
+                    {{ getImportMessageTranslation(item.message) }}
                   }
                 </td>
                 <td class="col-3">
