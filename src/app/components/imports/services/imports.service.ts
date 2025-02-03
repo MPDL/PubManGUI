@@ -34,6 +34,8 @@ export class ImportsService {
   #importRunning = signal(false);
   public isImportRunning = computed( () => this.#importRunning() );
 
+  lastPageNumFrom = signal({myImports: 1, details: 1, log: 1});
+
   #lastFetch = signal<Observable<ItemVersionVO>>(of());
   public getLastFetch = computed( () => 
     this.#lastFetch()

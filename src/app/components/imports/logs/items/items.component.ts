@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, LOCALE_ID, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
@@ -30,7 +30,12 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
 })
 export default class ItemsComponent implements OnInit {
 
-  currentPage = 1;
+  importsSvc = inject(ImportsService);
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  fb = inject(FormBuilder);
+
+  currentPage = this.importsSvc.lastPageNumFrom().details;
   pageSize = 25;
   collectionSize = 0;
   inPage: ImportLogItemDbVO[] = [];
@@ -63,12 +68,7 @@ export default class ItemsComponent implements OnInit {
   isScrolled = false;  
 
   constructor(
-    private importsSvc: ImportsService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router, 
-    private fb: FormBuilder,
-    @Inject(LOCALE_ID) public locale: string) { }
-
+    @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
     this.activatedRoute.params
@@ -126,6 +126,7 @@ export default class ItemsComponent implements OnInit {
     } else {
       await import('src/assets/i18n/messages.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
+        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
         this.importMessageTranslations = msgs.ImportMessage;
       })
     }
@@ -146,6 +147,7 @@ export default class ItemsComponent implements OnInit {
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + this.pageSize,
     );
+    this.importsSvc.lastPageNumFrom().details = this.currentPage;
   }
 
   refreshFilters():ImportErrorLevel[] {

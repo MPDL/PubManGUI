@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, LOCALE_ID, HostListener } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import { ImportLogItemDbVO, ImportLogItemDetailDbVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
-import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
-
 import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,8 +18,6 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
     SeparateFilterPipe,
     NgbCollapseModule,
     PaginatorComponent
@@ -31,7 +26,12 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
 })
 export default class DetailsComponent implements OnInit {
 
-  currentPage = 1;
+  importsSvc = inject(ImportsService);
+  msgSvc = inject(MessageService);
+  router = inject(Router);
+  
+  currentPage = this.importsSvc.lastPageNumFrom().log;
+
   pageSize = 25;
   collectionSize = 0;
   inPage: ImportLogItemDetailDbVO[] = [];
@@ -48,12 +48,7 @@ export default class DetailsComponent implements OnInit {
   BOM = '239,187,191';
 
   constructor(
-    private importsSvc: ImportsService,
-    private msgSvc: MessageService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router, 
-    private fb: FormBuilder,
-    @Inject(LOCALE_ID) public locale: string) { }
+    @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
     this.item = history.state.item;
@@ -148,6 +143,7 @@ export default class DetailsComponent implements OnInit {
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + this.pageSize,
     );
+    this.importsSvc.lastPageNumFrom().log = this.currentPage;
   }
 
   getImportStatusTranslation(txt: string):string {

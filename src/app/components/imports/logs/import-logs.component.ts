@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
+import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
 import { RouterModule, Router, NavigationExtras } from '@angular/router';
 
 import { ImportsService } from '../services/imports.service';
@@ -25,7 +25,11 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 })
 export default class ListComponent implements OnInit {
 
-  currentPage = 1;
+  importsSvc = inject(ImportsService);
+  msgSvc = inject(MessageService);
+  router = inject(Router);
+
+  currentPage = this.importsSvc.lastPageNumFrom().myImports;
   pageSize = 25;
   collectionSize = 0;
   inPage: ImportLogDbVO[] = [];
@@ -39,10 +43,7 @@ export default class ListComponent implements OnInit {
   isScrolled = false;
 
   constructor(
-    private importsSvc: ImportsService,
-    private msgSvc: MessageService,
-    private router: Router,
-    @Inject(LOCALE_ID) public locale: string) { }
+    @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
     this.importsSvc.getImportLogs()
@@ -76,6 +77,7 @@ export default class ListComponent implements OnInit {
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
+    this.importsSvc.lastPageNumFrom().myImports = this.currentPage;
   }
 
   calculateProcessedStep(numberOfItems: number): number {
