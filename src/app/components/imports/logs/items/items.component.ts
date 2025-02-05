@@ -142,11 +142,18 @@ export default class ItemsComponent implements OnInit {
   }
 
   refreshLogs() {
+    this.pageSize = this.getPreferredPageSize();
     this.inPage = this.logs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + this.pageSize,
     );
     this.importsSvc.lastPageNumFrom().details = this.currentPage;
+  }
+
+  getPreferredPageSize():number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize;
   }
 
   refreshFilters():ImportErrorLevel[] {

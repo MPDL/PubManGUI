@@ -124,11 +124,18 @@ export default class LogItemListComponent implements OnInit, DoCheck {
   }
 
   refreshLogs() {
+    this.pageSize = this.getPreferredPageSize();
     this.inPage = this.detailLogs.map((log, i) => ({ id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + this.pageSize,
     );
     this.batchSvc.lastPageNumFrom().details = this.currentPage;
+  }
+
+  getPreferredPageSize():number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize;
   }
 
   getProcessLogDetailStateTranslation(txt: string):string {

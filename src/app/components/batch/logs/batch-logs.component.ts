@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 
-import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
-
 import { FormsModule } from '@angular/forms';
 
 import { MatBadgeModule } from '@angular/material/badge';
@@ -48,7 +46,6 @@ export default class LogProcessListComponent implements OnInit {
   isScrolled = false;
 
   constructor(
-    private itemSvc: ItemsService,
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
@@ -80,11 +77,18 @@ export default class LogProcessListComponent implements OnInit {
   }
 
   refreshLogs() {
+    this.pageSize = this.getPreferredPageSize();
     this.inPage = this.processLogs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
     this.batchSvc.lastPageNumFrom().logs = this.currentPage;
+  }
+
+  getPreferredPageSize():number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize;
   }
 
   calculateProcessedStep(numberOfItems: number): number {

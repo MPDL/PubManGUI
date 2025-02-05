@@ -53,7 +53,6 @@ export default class ListComponent implements OnInit {
         this.logs = importsResponse.sort((b, a) => a.id - b.id);
         this.collectionSize = this.logs.length;
         this.refreshLogs();
-        console.log(this.logs)
         return;
       }
       );
@@ -76,11 +75,18 @@ export default class ListComponent implements OnInit {
   }
 
   refreshLogs() {
+    this.pageSize = this.getPreferredPageSize();
     this.inPage = this.logs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
     this.importsSvc.lastPageNumFrom().myImports = this.currentPage;
+  }
+
+  getPreferredPageSize():number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize;
   }
 
   calculateProcessedStep(numberOfItems: number): number {
