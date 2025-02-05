@@ -13,7 +13,6 @@ import { StateFilterPipe } from 'src/app/components/imports/pipes/stateFilter.pi
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
-
 @Component({
   selector: 'pure-import-log-items',
   standalone: true,

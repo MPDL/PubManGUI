@@ -64,7 +64,7 @@
                               <td class="col-1">
                                 <a [routerLink]="['/imports/myimports/', log.id]"
                                   [state]="{ import: log.name, started: log.startDate, format: log.format }">     
-                                    <span class="material-symbols-outlined ms-2 my-0" >
+                                    <span class="material-symbols-outlined ms-2 my-0 matBadge" matBadge='{{ log.anzItems }}'>
                                       list
                                     </span>
                                 </a>

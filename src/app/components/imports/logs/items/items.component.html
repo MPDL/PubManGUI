@@ -71,12 +71,18 @@
                   {{ getImportErrorLevelTranslation(getAssorted(item.errorLevel)) }}
                 </td>
                 <td class="col-1">
+                  @if(item.anzDetails) {
                   <a [routerLink]="['log']"
                     [state]="{ item: item }">     
-                      <span class="material-symbols-outlined my-0" >
+                      <span class="material-symbols-outlined my-0">
                         integration_instructions
                       </span>
                   </a>
+                  } @else {
+                  <span class="material-symbols-outlined my-0 text-secondary pe-none">
+                    content_paste_off
+                  </span>
+                  }
                 </td>
               </tr>
               }

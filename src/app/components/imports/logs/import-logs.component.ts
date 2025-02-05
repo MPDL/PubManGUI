@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'pure-import-logs',
@@ -19,7 +20,8 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     RouterModule,
     FormsModule,
     PaginatorComponent,
-    NgbTooltip
+    NgbTooltip,
+    MatBadgeModule
   ],
   templateUrl: './import-logs.component.html'
 })
@@ -51,6 +53,7 @@ export default class ListComponent implements OnInit {
         this.logs = importsResponse.sort((b, a) => a.id - b.id);
         this.collectionSize = this.logs.length;
         this.refreshLogs();
+        console.log(this.logs)
         return;
       }
       );
