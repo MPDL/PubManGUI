@@ -135,7 +135,7 @@ export default class LogItemListComponent implements OnInit, DoCheck {
   getPreferredPageSize():number {
     if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
       return +sessionStorage.getItem('preferredPageSize')!;
-    } else return this.pageSize;
+    } else return this.pageSize || 25;
   }
 
   getProcessLogDetailStateTranslation(txt: string):string {

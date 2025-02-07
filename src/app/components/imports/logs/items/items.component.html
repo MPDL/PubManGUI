@@ -4,17 +4,17 @@
       <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
         <div class="d-inline-flex justify-content-start align-items-center">
-          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.delete" ngbTooltip="Delete" placement="bottom-left">
+          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.delete" ngbTooltip="Delete" placement="bottom-left" (click)='doDelete();'>
             <span class="material-symbols-outlined">
               delete_forever
             </span>
           </a>
-          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.set" ngbTooltip="Set" placement="bottom-left">
+          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.set" ngbTooltip="Set" placement="bottom-left" (click)='doSet();'>
             <span class="material-symbols-outlined">
               workspace_premium
             </span>
           </a>
-          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.release" ngbTooltip="Release" placement="bottom-left">
+          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.release" ngbTooltip="Release" placement="bottom-left" (click)='doRelease();'>
             <span class="material-symbols-outlined">
               public
             </span>
@@ -30,13 +30,13 @@
     <div class="row">
       <div class="col-lg-10 col-sm-12 d-flex justify-content-between mt-5 mb-3 border-bottom">
         <div>
-          <span i18n="@@imports.list.items.for">Import</span>: <strong class="fw-bolder">{{ import }}
-          </strong><span class="fw-light">( {{ format }} )</span>
+          <span i18n="@@imports.list.items.for">Import</span>: <strong class="fw-bolder">{{ import.name }}
+          </strong><span class="fw-light">(  {{ getImportFormatTranslation(import.format) }} )</span>
         </div>
         <div class="fw-light">
-          <span i18n="@@imports.list.started.on">started on</span><span> {{ started | date:'fullDate' }} </span><span
+          <span i18n="@@imports.list.started.on">started on</span><span> {{ import.startDate | date:'fullDate'}} </span><span
             class="material-symbols-outlined" style="cursor: auto">
-            schedule</span><span> {{ started | date: "HH:mm" }}</span>
+            schedule</span><span> {{ import.startDate | date: "HH:mm" }}</span>
         </div>
       </div>
     </div>
@@ -78,11 +78,7 @@
                         integration_instructions
                       </span>
                   </a>
-                  } @else {
-                  <span class="material-symbols-outlined my-0 text-secondary pe-none">
-                    content_paste_off
-                  </span>
-                  }
+                  } 
                 </td>
               </tr>
               }

@@ -29,7 +29,7 @@ const routes: Routes = [
         },
       },
       {
-        path: ':id',
+        path: ':importId',
         data: {
           breadcrumb: {
             label: $localize`:@@imports.list.items:Details`,
@@ -64,7 +64,7 @@ const routes: Routes = [
             },
           },
           {
-            path: 'view/:id',
+            path: 'view/:itemId',
             loadComponent: () => import('src/app/components/item-view/item-view.component').then(c => c.ItemViewComponent),
             data: {
               breadcrumb: {

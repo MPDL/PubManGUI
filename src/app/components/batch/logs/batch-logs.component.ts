@@ -88,7 +88,7 @@ export default class LogProcessListComponent implements OnInit {
   getPreferredPageSize():number {
     if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
       return +sessionStorage.getItem('preferredPageSize')!;
-    } else return this.pageSize;
+    } else return this.pageSize || 25;
   }
 
   calculateProcessedStep(numberOfItems: number): number {

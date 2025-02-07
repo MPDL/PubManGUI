@@ -79,6 +79,13 @@ export class ImportsService {
     return importResponse;
   }
 
+  getImportLog(id: number): Observable<ImportLogDbVO> {
+    const url = `${this.#baseUrl}/import/importLog/${id}`;
+    const headers = new HttpHeaders().set('Authorization', this.token!);
+
+    return this.http.get<ImportLogDbVO>(url, { headers });
+  }
+
   getImportLogs(): Observable<ImportLogDbVO[]> {
     const url = `${this.#baseUrl}/import/getImportLogs`;
     const headers = new HttpHeaders().set('Authorization', this.token!);

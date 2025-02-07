@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
-import { RouterModule, Router, NavigationExtras } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+
 
 import { ImportsService } from '../services/imports.service';
 import { ImportLogDbVO, ImportStatus, ImportErrorLevel } from 'src/app/model/inge';
@@ -53,9 +54,7 @@ export default class ListComponent implements OnInit {
         this.logs = importsResponse.sort((b, a) => a.id - b.id);
         this.collectionSize = this.logs.length;
         this.refreshLogs();
-        return;
-      }
-      );
+      });
 
     this.loadTranslations(this.locale);
   }
@@ -86,7 +85,7 @@ export default class ListComponent implements OnInit {
   getPreferredPageSize():number {
     if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
       return +sessionStorage.getItem('preferredPageSize')!;
-    } else return this.pageSize;
+    } else return this.pageSize || 25;
   }
 
   calculateProcessedStep(numberOfItems: number): number {

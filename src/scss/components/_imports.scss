@@ -87,5 +87,12 @@
                 --mat-badge-container-padding:0.3rem;
             }
         }
+
+        /* anchor focus */
+        :target {
+            display: block;
+            position: relative;
+            top: -200px; 
+        }
     }
 }
