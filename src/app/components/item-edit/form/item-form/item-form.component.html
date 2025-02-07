@@ -7,7 +7,7 @@
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-sm">
-                        <select id="contextFromSelect" class="form-select" formControlName="objectId"
+                        <select id="contextFromSelect" class="form-select" formControlName="objectId" data-test="context"
                             (change)="context_change(contextFromSelect.value)" #contextFromSelect>
                             <option [value]="null" selected disabled>Context</option>
                             @for (contextObject of user_contexts; track contextObject) {
@@ -142,7 +142,7 @@
         </div>
         <div class="d-sm-flex flex-sm-row mb-3 px-3">
             <div class="col-sm offset-sm-2">
-                <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="submit" value="save">S A V E</button>
+                <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="submit" value="save" data-test="save">S A V E</button>
             </div>
         </div>
     </form>

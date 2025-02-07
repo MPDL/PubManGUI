@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-sm-2">
                     <label for="creator_role" class="col-form-label text-end pe-2">role</label>
-                    <select id="creator_role" class="form-select" formControlName="role">
+                    <select id="creator_role" class="form-select" formControlName="role" data-test="creator">
                         <option [value]="null" selected disabled>role</option>
                         @for (r of creator_roles; track r) {
                         <option [value]="r">{{r}}</option>
@@ -46,7 +46,7 @@
                 </a>
                 }
                 @if (type.value === 'PERSON') {
-                    
+
                 <ng-container formGroupName="person">
                     <div class="col-sm-3">
                         <label for="familyName" class="col-form-label text-end pe-2">family</label>
@@ -56,13 +56,13 @@
                             [formForPersonsFamilyName]="$any(person.controls.familyName)"
                             [formForPersonOrganizations]="$any(person.controls.organizations)"
                             [formForPersonsIdValue]="$any(person.controls.identifier.controls.id)"
-                            [formForPersonsIdType]="$any(person.controls.identifier.controls.type)" />
+                            [formForPersonsIdType]="$any(person.controls.identifier.controls.type)" data-test="familyname-autosuggest"/>
                         <!--{{person.controls.identifier.value | json}}-->
                     </div>
                     <div class="col-sm-3">
                         <label for="givenName" class="col-form-label text-end pe-2">given</label>
                         <input type="text" class="form-control" id="givenName"
-                            formControlName="givenName">
+                            formControlName="givenName" data-test="givenname">
                     </div>
                     @if(person.controls.identifier.controls.type.value == 'CONE') {
                     <div class="col-sm-auto">
@@ -136,7 +136,7 @@
                     } @empty {
                     <div class="col-sm offset-sm-1">
                         <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add organization'"
-                            (notice)="add_remove_person_ou($event)"></pure-add-remove-buttons>
+                            (notice)="add_remove_person_ou($event)" data-test="add-remove-organizations"></pure-add-remove-buttons>
                     </div>
                     }
                 </div>

@@ -44,3 +44,6 @@ Thumbs.db
 # Sass
 *.css
 *.css.map
+
+# Cypress
+/cypress.env.json
