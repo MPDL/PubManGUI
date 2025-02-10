@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
 
 import { ImportsService } from '../../services/imports.service';
 import { ImportLogItemDbVO, ImportErrorLevel, ImportLogDbVO } from 'src/app/model/inge';
@@ -28,8 +27,6 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
   templateUrl: './items.component.html'
 })
 export default class ItemsComponent implements OnInit {
-  @Input() importId?: string;
-
   importsSvc = inject(ImportsService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
@@ -70,13 +67,13 @@ export default class ItemsComponent implements OnInit {
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
-    if (this.importId) {
-      this.importsSvc.getImportLog(Number(this.importId))
-        .subscribe(importsResponse => {
-          this.import = importsResponse;
-        });
+    this.activatedRoute.data.subscribe(value => {
+      this.import = value['import'];
+    });
 
-      this.importsSvc.getImportLogItems(Number(this.importId))
+    if (this.import.id) {
+
+      this.importsSvc.getImportLogItems(Number(this.import.id))
         .subscribe(importsResponse => {
           if (importsResponse.length === 0) return this.router.navigate(['/import/myimports']);
 

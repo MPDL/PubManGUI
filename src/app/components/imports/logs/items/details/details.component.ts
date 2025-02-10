@@ -51,6 +51,7 @@ export default class DetailsComponent implements OnInit {
     @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
+
     this.item = history.state.item;
 
     this.importsSvc.getImportLogItemDetails(Number(this.item?.id))

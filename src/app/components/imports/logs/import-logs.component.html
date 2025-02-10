@@ -29,7 +29,7 @@
 
                     <tbody>
                         @for (log of inPage; track log.id) {
-                            <tr class="border-bottom" id="{{ log.id }}">
+                            <tr class="border-bottom" id="{{ log.id }}" [attr.autoFocus]="log.id === 4403575">
                               <td class="col-2">
                                 {{ getImportStatusTranslation(log.status) }}
                                 <div class="float-end ms-1 my-0">
@@ -79,6 +79,7 @@
                         }
                     </tbody>
                 </table>
+                <p  [autofocus]="true">HOLA</p>
             </div>
 
             <div class="col-lg-2 d-none d-lg-block">
