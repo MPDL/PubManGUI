@@ -2,7 +2,7 @@
 <nav>
 
   <div class="mpdl-pagination">
-    @if(true) {
+    @if(totalNumberOfPages > 0) {
     <button type="button" class="btn btn-sm border border-0" (click)="first()"
             [disabled]="isFirst">
                 <span class="material-symbols-outlined">
@@ -17,8 +17,8 @@
     </button>
     <span i18n="@@pagination.page">Page</span>
     <input type="text" class="form-control mx-2" [formControl]="pageNumberField"
-           (keyup.enter)="jumpToPage()" [attr.disabled]="totalNumberOfPages === 0">
-    <span i18n="@@pagination.of">of</span><span> {{totalNumberOfPages > 0 ? totalNumberOfPages : 1}}</span>
+           (keyup.enter)="jumpToPage()">
+    <span i18n="@@pagination.of">of</span><span> {{totalNumberOfPages}}</span>
     <button type="button" class="btn btn-sm border border-0" (click)="next()"
             [disabled]="isLast">
                 <span class="material-symbols-outlined">
