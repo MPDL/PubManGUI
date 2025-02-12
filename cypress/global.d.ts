@@ -1,6 +1,11 @@
 declare namespace Cypress {
   interface Chainable {
     /**
+     * Set the language in the Local Storage (set locale to "en" or "de")
+     */
+    setLanguage(locale: string): void
+
+    /**
      * Login using the REST API & Setting the token in the Local Storage
      */
     loginViaAPI(username: string, password: string): void

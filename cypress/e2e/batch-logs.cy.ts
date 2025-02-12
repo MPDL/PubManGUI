@@ -5,6 +5,7 @@ describe('Check Batch Logs', () => {
   let itemTitle: string;
 
   beforeEach(() => {
+    cy.setLanguage('en')
     cy.loginViaAPI(userName, password)
     cy.fixture('itemMetadataMinimal').then((itemMetadata) => {
       cy.createItemViaAPI(itemMetadata).then((response) => {
@@ -32,7 +33,7 @@ describe('Check Batch Logs', () => {
     //cy.visit('/batch/logs')
     //TODO: Remove this workaround (Navigating to the logs via buttons). Use cy.visit('/batch/logs') as soon as it works.
     cy.visit('/batch/datasets')
-    cy.get('pure-batch-nav').contains('Logs').click({force: true})
+    cy.get('pure-batch-nav li').eq(2).click({force: true})
 
     //When
     cy.get('@addLocalTags').then(response => {

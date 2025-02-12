@@ -49,7 +49,7 @@ describe('Add and Remove Item to/from Batch', () => {
 
     //Then
     //TODO: Check the exact confirmation/empty-batch message is displayed
-    cy.get('pure-message').should('exist')
+    cy.get('pure-messaging').should('exist')
     cy.contains(itemTitle).should('not.exist');
   })
 
