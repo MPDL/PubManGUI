@@ -104,7 +104,7 @@ export default class ItemsComponent implements OnInit {
                   break;
               }
             });
-          this.logs, this.unfilteredLogs = importsResponse;
+          this.logs = this.unfilteredLogs = importsResponse;
           this.collectionSize = this.logs.length;
 
           this.refreshLogs();
@@ -184,7 +184,7 @@ export default class ItemsComponent implements OnInit {
       this.executeOnceTimeout = true;
       setTimeout(() => {
         this.logs = this.unfilteredLogs.filter(item => activeFilters.includes(item.errorLevel));
-        this.collectionSize = this.logs.length;
+        //this.collectionSize = this.logs.length;
         this.refreshLogs();
 
         this.executeOnceTimeout = false;
