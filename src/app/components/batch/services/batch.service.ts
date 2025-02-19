@@ -42,8 +42,8 @@ export class BatchService {
   
     public setLogFilters(filter: resp.BatchProcessLogDetailState[]) {
       this.#logFilters.set(filter);
-      console.log('set: ' + JSON.stringify(this.#logFilters()));
     }
+    
     public getLogFilters = computed( () => this.#logFilters() );
 
   addToBatchDatasets(selection: string[]): number {

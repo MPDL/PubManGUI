@@ -149,8 +149,6 @@ export default class LogItemListComponent implements OnInit {
   }
 
   refreshLogs() {
-    console.log('\ton refreshLogs ');
-
     this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
     this.pageSize = this.getPreferredPageSize();
     this.inPage = this.filteredLogs.map((log, i) => ({ id: i + 1, ...log })).slice(
@@ -198,7 +196,6 @@ export default class LogItemListComponent implements OnInit {
   }
 
   refreshFilters(): void {
-    console.log('\ton refreshFilters ');
     this.activeFilters = [];
     if (this.filterForm.get('success')?.value) {
       this.activeFilters.push(resp.BatchProcessLogDetailState.SUCCESS);

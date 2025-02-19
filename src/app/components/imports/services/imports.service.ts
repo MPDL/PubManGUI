@@ -43,8 +43,8 @@ export class ImportsService {
 
   public setLogFilters(filters: ImportErrorLevel[]) {
     this.#logFilters.set(filters);
-    console.log('set: ' + JSON.stringify(this.#logFilters()));
   }
+  
   public getLogFilters = computed( () => this.#logFilters() );
 
   checkImports() {
