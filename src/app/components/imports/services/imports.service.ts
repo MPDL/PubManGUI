@@ -5,7 +5,7 @@ import { inge_rest_uri } from 'src/assets/properties.json';
 
 import type * as params from '../interfaces/imports-params';
 // import type * as resp from '../interfaces/imports-responses';
-import { ImportLogDbVO, ImportLogItemDbVO, ImportLogItemDetailDbVO, ImportErrorLevel } from 'src/app/model/inge';
+import { ImportLogDbVO, ImportLogItemDbVO, ImportLogItemDetailDbVO, ImportStatus, ImportErrorLevel } from 'src/app/model/inge';
 import { ItemVersionVO } from 'src/app/model/inge';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -31,8 +31,8 @@ export class ImportsService {
   #hasImports = signal(false);
   public hasImports = computed( () => this.#hasImports()); 
 
-  #importRunning = signal(false);
-  public isImportRunning = computed( () => this.#importRunning() );
+  #importRunning = signal(false); // Deprecated
+  public isImportRunning = computed( () => this.#importRunning() ); // Deprecated
 
   lastPageNumFrom = signal({myImports: 1, details: 1, log: 1});
 

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { CommonModule, ViewportScroller } from '@angular/common';
+import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject, viewChild } from '@angular/core'
 import { RouterModule, Router } from '@angular/router';
 
 
@@ -32,15 +32,20 @@ export default class ListComponent implements OnInit {
   msgSvc = inject(MessageService);
   router = inject(Router);
 
+  viewportScroller = inject(ViewportScroller);
+  scrollingRef = viewChild<HTMLElement>('scrolling');
+
   currentPage = this.importsSvc.lastPageNumFrom().myImports;
   pageSize = 25;
   collectionSize = 0;
   inPage: ImportLogDbVO[] = [];
   logs: ImportLogDbVO[] = [];
+  runningImports: Map<number, number> = new Map();
 
   importStatusTranslations = {};
   importFormatTranslations = {};
 
+  importStatus: typeof ImportStatus = ImportStatus;
   importErrorLevel: typeof ImportErrorLevel = ImportErrorLevel;
 
   isScrolled = false;
@@ -54,6 +59,13 @@ export default class ListComponent implements OnInit {
         this.logs = importsResponse.sort((b, a) => a.id - b.id);
         this.collectionSize = this.logs.length;
         this.refreshLogs();
+
+        this.logs.forEach((importLog, idx) => {
+          if( !this.isFinished(importLog.status)) {
+            this.runningImports.set(importLog.id, idx);
+          }
+        });
+        this.updateForRunningImports();
       });
 
     this.loadTranslations(this.locale);
@@ -89,15 +101,30 @@ export default class ListComponent implements OnInit {
     } else return this.pageSize || 25;
   }
 
-  calculateProcessedStep(numberOfItems: number): number {
-    return Math.floor(100 / numberOfItems);
-  };
-
   isFinished(status: ImportStatus): boolean {
     if (status === ImportStatus.FINISHED) {
       return true;
     }
     return false;
+  }
+
+  updateForRunningImports() {
+    this.runningImports.forEach((idx, logId) => {
+      this.importsSvc.getImportLog(logId)
+      .subscribe(importLog => {
+        this.logs[idx].status = importLog.status;
+        this.logs[idx].percentage = importLog.percentage;
+        if (this.isFinished(importLog.status)) {
+          this.runningImports.delete(logId);
+        }
+      })
+    })
+    if (this.runningImports.size > 0) {
+      setTimeout(() => {
+        this.updateForRunningImports();
+        this.refreshLogs()
+      }, 1000); 
+    } 
   }
 
   toDatasets(id: any): void {

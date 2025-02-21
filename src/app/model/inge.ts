@@ -612,7 +612,7 @@ export interface ImportLogItemDetailDbVO extends ImportLog {
   message: string;
 }
 
-export const enum ImportStatus {
+export enum ImportStatus {
     FINISHED = "FINISHED",
     PENDING = "PENDING",
     SUSPENDED = "SUSPENDED",
