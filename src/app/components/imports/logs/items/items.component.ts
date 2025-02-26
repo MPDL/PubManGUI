@@ -7,6 +7,7 @@ import { ImportLogItemDbVO, ImportErrorLevel, ImportLogDbVO } from 'src/app/mode
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
+import { MessageService } from 'src/app/shared/services/message.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 // import { StateFilterPipe } from 'src/app/components/imports/pipes/stateFilter.pipe';
 
@@ -31,6 +32,7 @@ export default class ItemsComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
   fb = inject(FormBuilder);
+  msgSvc = inject(MessageService);
 
   currentPage = this.importsSvc.lastPageNumFrom().details;
   pageSize = 25;
@@ -42,6 +44,8 @@ export default class ItemsComponent implements OnInit {
   filteredLogs: ImportLogItemDbVO[] = [];
 
   import!: ImportLogDbVO;
+  isStandardWorkflow: boolean = false;
+  isSimpleWorkflow: boolean = false;
 
   itemsFailed: number = 0;
   itemsImported: number = 0;
@@ -87,7 +91,7 @@ export default class ItemsComponent implements OnInit {
     if (this.import.id) {
       this.importsSvc.getImportLogItems(Number(this.import.id))
         .subscribe(importsResponse => {
-          if (importsResponse.length === 0) return this.router.navigate(['/import/myimports']);
+          if (importsResponse.length === 0) return this.router.navigate(['/imports/myimports']);
 
           importsResponse.sort((a, b) => a.id - b.id)
             .forEach(element => {
@@ -134,10 +138,25 @@ export default class ItemsComponent implements OnInit {
               });
               this.updateFilteredLogs();
             }
-          }  
+          }
           this.refreshLogs();
           return;
         });
+      if (this.import.contextId) {
+        this.importsSvc.getContexts(this.import.contextId)
+          .subscribe(ctxRespoonse => {
+            if (ctxRespoonse.workflow === "STANDARD") {
+              this.isStandardWorkflow = true;
+            } else {
+              this.isStandardWorkflow = false;
+              if (ctxRespoonse.workflow === "SIMPLE") {
+                this.isSimpleWorkflow = true;
+              } else {
+                this.isSimpleWorkflow = false;
+              }
+            }
+          })
+      }
     }
 
     this.loadTranslations(this.locale);
@@ -227,10 +246,10 @@ export default class ItemsComponent implements OnInit {
     };
   }
 
-  updateFilteredLogs():void {
+  updateFilteredLogs(): void {
     this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel));
     this.filteredSize = this.filteredLogs.length;
-  } 
+  }
 
   getImportStatusTranslation(txt: string): string {
     let key = txt as keyof typeof this.importStatusTranslations;
@@ -253,18 +272,79 @@ export default class ItemsComponent implements OnInit {
   }
 
   doDelete(): void {
-    console.log('Delete done');
-    // TO DO
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.remove.confirmation:Do you really want to remove this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        this.importsSvc.deleteImportedItems(this.import.id).subscribe(importsResponse => {
+          console.log(importsResponse); 
+          const msg = $localize`:@@imports.list.details.delete:Delete` + ' ' + $localize`:@@completed:completed` + '!\n';
+          this.msgSvc.success(msg);   
+          setTimeout(() => {
+            this.router.navigate(['/imports/myimports']);
+          }, 1000);
+        })
+      }
+    });
   }
 
-  doSet(): void {
-    console.log('Set done');
-    // TO DO
+  caseSubmit(): boolean {
+    if (!this.importsSvc.isModerator && this.importsSvc.isDepositor && this.isStandardWorkflow) {  
+      return true;
+    } else return false;
+  }
+
+  caseSubmitAndRelease(): boolean {
+    if (this.importsSvc.isModerator && this.isStandardWorkflow) { 
+      return true;
+    } else return false;
+  }
+
+  caseRelease(): boolean {
+    if (this.importsSvc.isModerator && this.isSimpleWorkflow) { 
+      return true;
+    } else return false;
+  }
+
+  doSubmit(): void {
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.submit.confirmation:Do you really want to submit this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        let submitModus = 'SUBMIT';
+        this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
+          console.log(importsResponse);
+          const msg = $localize`:@@imports.list.details.submit:Submit` + ' ' + $localize`:@@completed:completed` + '!\n';
+          this.msgSvc.success(msg);  
+
+          let element = document.getElementById('submit') as HTMLButtonElement;
+          element.ariaDisabled = 'true';
+          element.tabIndex=-1;
+          element.classList.add('disabled');
+
+          console.log(`${submitModus} done`);
+        })
+      }
+    });
   }
 
   doRelease(): void {
-    console.log('Release done');
-    // TO DO
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.release.confirmation:Do you really want to release this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        let submitModus = this.caseSubmitAndRelease() ? 'SUBMIT_AND_RELEASE' : 'RELEASE';
+        this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
+          console.log(importsResponse);
+          const msg = $localize`:@@imports.list.details.release:Release` + ' ' + $localize`:@@completed:completed` + '!\n';
+          this.msgSvc.success(msg);  
+
+          let element = document.getElementById('release') as HTMLButtonElement;
+          element.ariaDisabled = 'true';
+          element.tabIndex=-1;
+          element.classList.add('disabled');
+
+          console.log(`${submitModus} done`);
+        })
+      }
+    });
   }
 
   @HostListener('window:scroll', ['$event'])

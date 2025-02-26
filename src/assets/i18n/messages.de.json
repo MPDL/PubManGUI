@@ -27,6 +27,7 @@
     "myimports": "Meine Importe",
     "failed": "fehlgeschlagen",
     "succeded": "erfolgreich",
+    "completed": "abgeschlossen",
     "batch.datasets.remove": "Aus Batch entfernen",
     "batch.datasets.add": "In Batch hinzufügen",
     "batch.datasets.filled": "Items zu Batch",
@@ -156,9 +157,12 @@
     "imports.list.details.count": "Datens\u00E4tze importiert",
     "imports.list.details.remove": "Aus 'Meine Importe' entfernen",
     "imports.list.details.delete": "Löschen",
-    "imports.list.details.set": "Einstellen",
+    "imports.list.details.submit": "Einstellen",
     "imports.list.details.release": "Freigeben",
-    "imports.list.details.view": "Sicht"
+    "imports.list.details.view": "Sicht",
+    "imports.remove.confirmation": "Möchten Sie diesen Import wirklich entfernen?",
+    "imports.submit.confirmation": "Möchten Sie diesen Import wirklich einstellen?",
+    "imports.release.confirmation": "Möchten Sie diesen Import wirklich freigeben?"
   },
   "BatchProcessMessages": {
     "BATCH_AUTHENTICATION_ERROR": "Sie m\u00FCssen eingeloggt sein, um die Publikation zu ver\u00E4ndern.",

@@ -27,6 +27,7 @@
     "myimports": "My imports",
     "failed": "failed",
     "succeded": "succeded",
+    "completed": "completed",
     "batch.datasets.remove": "Remove checked items from Batch",
     "batch.datasets.add": "Add checked items to Batch",
     "batch.datasets.filled": "items to batch!",
@@ -158,9 +159,12 @@
     "imports.list.details.count": "items imported",       
     "imports.list.details.remove": "Remove from 'My Imports'",
     "imports.list.details.delete": "Delete",
-    "imports.list.details.set": "Set",
+    "imports.list.details.submit": "Submit",
     "imports.list.details.release": "Release",
-    "imports.list.details.view": "View"
+    "imports.list.details.view": "View",
+    "imports.remove.confirmation": "Do you really want to remove this import?",
+    "imports.submit.confirmation": "Do you really want to submit this import?",
+    "imports.release.confirmation": "Do you really want to release this import?"
   },
   "BatchProcessMessages": {
     "BATCH_AUTHENTICATION_ERROR": "You need to be logged in, to change the publication.",
