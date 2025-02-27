@@ -44,11 +44,11 @@
                 <div class="float-end ms-1 my-0">
                   @switch (log.errorLevel) {
                   @case (importErrorLevel.FINE) {
-                  <span class="material-symbols-outlined text-success" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(log.errorLevel) }}' placement="bottom-left">check_circle</span> }
+                  <span class="material-symbols-outlined text-success" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}' placement="bottom-left">check_circle</span> }
                   @case (importErrorLevel.WARNING) {
-                  <span class="material-symbols-outlined text-black-50" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(log.errorLevel) }}' placement="bottom-left">error</span> }
+                  <span class="material-symbols-outlined text-black-50" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}' placement="bottom-left">error</span> }
                   @default {
-                  <span class="material-symbols-outlined text-danger" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(log.errorLevel) }}' placement="bottom-left">cancel</span>
+                  <span class="material-symbols-outlined text-danger" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}' placement="bottom-left">cancel</span>
                   }
                   }
                 </div>
