@@ -48,7 +48,6 @@ export default class ItemsComponent implements OnInit {
   isSimpleWorkflow: boolean = false;
 
   itemsFailed: number = 0;
-  itemsImported: number = 0;
   error: number = 0;
   fatal: number = 0;
   fine: number = 0;
@@ -86,6 +85,7 @@ export default class ItemsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(value => {
       this.import = value['import'];
+      console.log('this.import: ' + JSON.stringify(this.import));
     });
 
     if (this.import.id) {
@@ -95,9 +95,7 @@ export default class ItemsComponent implements OnInit {
 
           importsResponse.sort((a, b) => a.id - b.id)
             .forEach(element => {
-              if (element.itemId) {
-                this.itemsImported++;
-              } else if (element.message.includes("item")) {
+              if (!element.itemId && element.message.includes("item")) {
                 this.itemsFailed++;
               }
               switch (element.errorLevel) {
@@ -118,6 +116,7 @@ export default class ItemsComponent implements OnInit {
                   break;
               }
             });
+            
           this.filteredLogs = this.unfilteredLogs = importsResponse;
           this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
 
