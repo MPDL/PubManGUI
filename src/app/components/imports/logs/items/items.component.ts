@@ -85,7 +85,6 @@ export default class ItemsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(value => {
       this.import = value['import'];
-      console.log('this.import: ' + JSON.stringify(this.import));
     });
 
     if (this.import.id) {
@@ -95,7 +94,9 @@ export default class ItemsComponent implements OnInit {
 
           importsResponse.sort((a, b) => a.id - b.id)
             .forEach(element => {
-              if (!element.itemId && element.message.includes("item")) {
+              if (!element.itemId 
+                && element.message.includes("item")
+                && (element.errorLevel === ImportErrorLevel.PROBLEM || element.errorLevel === ImportErrorLevel.ERROR || element.errorLevel === ImportErrorLevel.FATAL)) {
                 this.itemsFailed++;
               }
               switch (element.errorLevel) {

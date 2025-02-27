@@ -43,6 +43,7 @@ export default class ListComponent implements OnInit {
   runningImports: Map<number, number> = new Map();
 
   importStatusTranslations = {};
+  importErrorLevelTranslations = {};
   importFormatTranslations = {};
 
   importStatus: typeof ImportStatus = ImportStatus;
@@ -75,11 +76,13 @@ export default class ListComponent implements OnInit {
     if (lang === 'de') {
       await import('src/assets/i18n/messages.de.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
+        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
         this.importFormatTranslations = msgs.ImportFormat;
       })
     } else {
       await import('src/assets/i18n/messages.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
+        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
         this.importFormatTranslations = msgs.ImportFormat;
       })
     }
@@ -175,6 +178,11 @@ export default class ListComponent implements OnInit {
   getImportFormatTranslation(txt: string):string {
     let key = txt as keyof typeof this.importFormatTranslations;
     return this.importFormatTranslations[key];
+  }
+
+  getImportErrorLevelTranslation(txt: string): string {
+    let key = txt as keyof typeof this.importErrorLevelTranslations;
+    return this.importErrorLevelTranslations[key];
   }
 
   @HostListener('window:scroll', ['$event'])
