@@ -184,6 +184,7 @@ export default class ItemsComponent implements OnInit {
     switch (txt) {
       case 'FINE':
       case 'WARNING':
+      case 'FATAL':        
         return txt;
       default:
         return 'ERROR';
@@ -214,11 +215,9 @@ export default class ItemsComponent implements OnInit {
       if (this.filterForm.get('warning')?.value) {
         this.activeFilters.push(ImportErrorLevel.WARNING);
       }
-    if (this.filterForm.get('problem')?.value) {
-      this.activeFilters.push(ImportErrorLevel.PROBLEM);
-    }
     if (this.filterForm.get('error')?.value) {
       this.activeFilters.push(ImportErrorLevel.ERROR);
+      this.activeFilters.push(ImportErrorLevel.PROBLEM);
     }
     if (this.filterForm.get('fatal')?.value) {
       this.activeFilters.push(ImportErrorLevel.FATAL);

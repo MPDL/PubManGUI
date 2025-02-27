@@ -127,15 +127,7 @@
             </label>
           </div>
           }
-          @if(problem > 0) {
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="problem" formControlName="problem">
-            <label class="form-check-label" for="problem">
-              {{ getImportErrorLevelTranslation('PROBLEM') }}
-            </label>
-          </div>
-          }
-          @if(error > 0) {
+          @if(problem > 0 || error > 0) {
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="error" formControlName="error">
             <label class="form-check-label" for="error">
