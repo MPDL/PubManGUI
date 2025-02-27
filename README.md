@@ -26,7 +26,27 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+PubManGUI uses [Cypress](https://www.cypress.io/) for end-to-end testing. The tests are located in the [cypress](https://github.com/MPDL/PubManGUI/tree/main/cypress) folder.
+
+### Prerequisites
+
+1. Backend Setup
+   - As a precondition for the end-to-end tests a **User** and a **Context** must exist in the PubMan instance under test.
+2. Environment Settings
+   - Set the _baseUrl_ in [cypress.config.json](https://github.com/MPDL/PubManGUI/blob/main/cypress.config.ts)
+   - Set the values for the required _environment variables_ in [cypress.env.json](https://github.com/MPDL/PubManGUI/blob/main/cypress.env.json)
+3. PubManGUI Project Setup
+   - Checkout the main Branch: `git checkout main`
+   - Build the project: `ng build`
+
+### Execution
+
+To execute the end-to-end tests open the PubManGUI project in the CLI, then run one of the following commands:
+- `ng e2e` (Build & Serve the application + Open Cypress UI)
+- `npm run cypress:run` (Run Cypress in CLI)
+- `npm run cypress:open` (Open Cypress UI)
+
+Use the CLI argument `CYPRESS_baseUrl=NEW_BASE_URL` to set a different baseUrl (default is: `http://localhost:4200`).
 
 ## Further help
 
