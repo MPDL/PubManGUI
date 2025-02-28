@@ -361,6 +361,7 @@
     "WARNING": "Warnung"
   },
   "ImportMessage": {
+    "import_process_aborted_unexpectedly":"Der Import wurde unerwartet abgebrochen",
     "import_process_default_validation_successful": "Validierung (basierend auf den Standardregeln) war erfolgreich",
     "import_process_delete_failed": "Beim L\u00F6schen des Datensatzes ist ein Fehler aufgetreten",
     "import_process_delete_finished": "Die L\u00F6schung ist nun abgeschlossen",

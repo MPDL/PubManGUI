@@ -41,6 +41,7 @@ export default class DetailsComponent implements OnInit {
 
   importStatusTranslations = {};
   importErrorLevelTranslations = {};
+  importMessageTranslations = {};
   
   isCollapsed: boolean[] = [];
   isScrolled = false;
@@ -80,11 +81,13 @@ export default class DetailsComponent implements OnInit {
       await import('src/assets/i18n/messages.de.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
         this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     } else {
       await import('src/assets/i18n/messages.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
         this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     }
   }
@@ -162,6 +165,11 @@ export default class DetailsComponent implements OnInit {
   getImportErrorLevelTranslation(txt: string):string {
     let key = txt as keyof typeof this.importErrorLevelTranslations;
     return this.importErrorLevelTranslations[key];
+  }
+
+  getImportMessageTranslation(txt: string): string {
+    let key = txt as keyof typeof this.importMessageTranslations;
+    return this.importMessageTranslations[key];
   }
 
   @HostListener('window:scroll', ['$event'])

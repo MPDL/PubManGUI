@@ -361,6 +361,7 @@
     "WARNING": "Warning"
   },
   "ImportMessage": {
+    "import_process_aborted_unexpectedly":"The import was aborted unexpectedly",
     "import_process_default_validation_successful": "Validation (default rules) was successful",
     "import_process_delete_failed": "An error occurred while deleting the item",
     "import_process_delete_finished": "Deletion completed",
