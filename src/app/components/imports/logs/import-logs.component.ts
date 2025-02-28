@@ -88,6 +88,17 @@ export default class ListComponent implements OnInit {
     }
   }
 
+  getAssorted(txt: string): string {
+    switch (txt) {
+      case 'FINE':
+      case 'WARNING':
+      case 'FATAL':        
+        return txt;
+      default:
+        return 'ERROR';
+    }
+  }
+
   refreshLogs() {
     this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
     this.pageSize = this.getPreferredPageSize();

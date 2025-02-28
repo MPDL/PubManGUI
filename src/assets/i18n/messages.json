@@ -148,6 +148,7 @@
     "imports.list.header.details":"Items",
     "imports.list.header.title":"Title",
     "imports.list.header.message":"Report",
+    "imports.list.header.finished":"Finished",
     "imports.list.remove.confirmation": "Do you really want to remove this import log?",
     "imports.list.items.empty": "This import has no items available!",
     "imports.list.items.for": "Import",

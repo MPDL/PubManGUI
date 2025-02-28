@@ -148,6 +148,7 @@
     "imports.list.header.details":"Details",
     "imports.list.header.title":"Titel",
     "imports.list.header.message":"Nachricht",
+    "imports.list.header.finished":"Beendet",
     "imports.list.remove.confirmation": "Möchten Sie dieses Importprotokoll wirklich entfernen?",
     "imports.list.items.empty": "Für diesen Import sind keine Datens\u00E4tze verfügbar!",
     "imports.list.items.for": "Import",
