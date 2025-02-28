@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { AddLocalTagsParams } from 'src/app/components/batch/interfaces/batch-params';
 
@@ -25,7 +25,7 @@ export class AddLocalTagsFormComponent {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService, 
+    public validSvc: BatchValidatorsService, 
     private batchSvc: BatchService,
     private router: Router) { }
 

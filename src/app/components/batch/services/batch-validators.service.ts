@@ -6,7 +6,7 @@ import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, F
 @Injectable({
   providedIn: 'root'
 })
-export class ValidatorsService {
+export class BatchValidatorsService {
 
   constructor() { }
 

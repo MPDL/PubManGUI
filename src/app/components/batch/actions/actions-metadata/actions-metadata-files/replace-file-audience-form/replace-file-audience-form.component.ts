@@ -3,14 +3,14 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 
 import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MiscellaneousService, IpEntry } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/batch-params';
 
 import { AudienceFormComponent } from 'src/app/components/batch/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
-import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
+//import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -19,7 +19,7 @@ import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-
     CommonModule,
     ReactiveFormsModule,
     AudienceFormComponent,
-    AddRemoveButtonsComponent
+    //AddRemoveButtonsComponent
   ],
   templateUrl: './replace-file-audience-form.component.html',
 })
@@ -32,7 +32,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService,
+    public validSvc: BatchValidatorsService,
     private batchSvc: BatchService,
     private miscSvc: MiscellaneousService,
     private msgSvc: MessageService) { }

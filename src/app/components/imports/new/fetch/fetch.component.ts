@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 import { Router } from '@angular/router';
 
 import { ContextDbRO } from 'src/app/model/inge';
+import { ImportValidatorsService } from 'src/app/components/imports/services/import-validators.service';
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import type { GetCrossrefParams, GetArxivParams } from 'src/app/components/imports/interfaces/imports-params';
 import { AaService } from 'src/app/services/aa.service';
@@ -23,6 +24,7 @@ export default class FetchComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    public validSvc: ImportValidatorsService, 
     private aaSvc: AaService,
     private importsSvc: ImportsService,
     private router: Router) { }
@@ -37,11 +39,10 @@ export default class FetchComponent implements OnInit {
     );
   }
 
-  // Initialized for Development ... TO-CLEAR
   public fetchForm: FormGroup = this.fb.group({
     contextId: [$localize`:@@imports.context:Context`, [Validators.required]],
     source: ['crossref', [Validators.required]],
-    identifier: ['', [Validators.required]],
+    identifier: ['', [Validators.required, this.validSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']
   });
 
@@ -70,6 +71,13 @@ export default class FetchComponent implements OnInit {
 
     const source = this.fetchForm.controls['source'].value;
 
+    let element = document.getElementById('go') as HTMLButtonElement;
+    element.ariaDisabled = 'true';
+    element.tabIndex = -1;
+    element.classList.add('disabled');
+    element.classList.replace('border-2', 'border-0');
+    element.innerHTML = '<span class="spinner-border spinner-border-sm text-secondary" aria-hidden="true"></span>'
+
     switch (source) {
       case 'crossref':
         this.importsSvc.getCrossref(this.getCrossrefParams).subscribe(importResponse => {
@@ -80,7 +88,7 @@ export default class FetchComponent implements OnInit {
         this.importsSvc.getArxiv(this.getArxivParams).subscribe(importResponse => {
           this.router.navigateByUrl('/edit_import');
         });
-    }
+    }       
   }
 
 }

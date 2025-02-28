@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 
 import { IdType } from 'src/app/model/inge';
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeSourceIdentifierParams } from 'src/app/components/batch/interfaces/batch-params';
@@ -24,7 +24,7 @@ export class ChangeSourceIdentifierFormComponent {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService, 
+    public validSvc: BatchValidatorsService, 
     private batchSvc: BatchService,
     private msgSvc: MessageService,
     @Inject(LOCALE_ID) public locale: string) { }

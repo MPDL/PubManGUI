@@ -9,7 +9,7 @@ import { PureCtxsDirective } from 'src/app/shared/components/selector/services/p
 import { OptionDirective } from "src/app/shared/components/selector/directives/option.directive";
 import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeContextParams } from 'src/app/components/batch/interfaces/batch-params';
 import { AaService } from 'src/app/services/aa.service';
@@ -31,7 +31,7 @@ export class ActionsContextComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService, 
+    public validSvc: BatchValidatorsService, 
     private aaSvc: AaService, 
     private batchSvc: BatchService,
     private router: Router) { }

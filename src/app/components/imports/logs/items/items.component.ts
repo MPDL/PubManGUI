@@ -318,8 +318,6 @@ export default class ItemsComponent implements OnInit {
           element.ariaDisabled = 'true';
           element.tabIndex=-1;
           element.classList.add('disabled');
-
-          console.log(`${submitModus} done`);
         })
       }
     });

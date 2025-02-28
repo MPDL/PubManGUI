@@ -138,6 +138,7 @@
     "imports.context": "Kontext",
     "imports.fetch": "ID holen",
     "imports.fetch.source": "Quelle",
+    "imports.fetch.id.error": "Ungültige Eingabe: Der Identifier darf keine URL sein.",
     "imports.fileImport": "Datei Import",
     "imports.fileImport.upload": "Hochladen",
     "imports.fileImport.running": "Bitte warten, es läuft ein Import!",

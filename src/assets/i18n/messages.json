@@ -138,6 +138,7 @@
     "imports.context": "Context",
     "imports.fetch": "ID Fetch",
     "imports.fetch.source": "Source",
+    "imports.fetch.id.error": "Invalid input: The identifier must not be a URL.",
     "imports.fileImport": "File Import",
     "imports.list.empty": "No imports available!",
     "imports.fileImport.upload": "Upload",

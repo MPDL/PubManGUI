@@ -3,7 +3,7 @@ import { OnInit, Component, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeReviewMethodParams } from 'src/app/components/batch/interfaces/batch-params';
@@ -22,7 +22,7 @@ export class ChangeReviewMethodFormComponent {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService, 
+    public validSvc: BatchValidatorsService, 
     private batchSvc: BatchService,
     private msgSvc: MessageService,
     @Inject(LOCALE_ID) public locale: string) {}
