@@ -17,8 +17,6 @@
           @if( item?.itemId ) {
           <span i18n="@@imports.list.details.for">Item</span>: <strong class="fw-bolder">{{ item?.itemId }}
           </strong>
-          } @else if (item?.message) {
-            <span>{{ item!.message | separate | titlecase }}</span> 
           }
         </div>
         <div class="fw-light">
