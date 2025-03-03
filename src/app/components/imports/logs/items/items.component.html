@@ -117,11 +117,13 @@
       <div class="col-lg-3 d-none d-lg-block mt-4">
         <div class="border rounded p-3 m-1">
           @if(unfilteredSize > 0) {
-          <span class="me-0"> {{ this.import.anzFrom }}/{{ this.import.anzImportedItems }} <span class="me-0" i18n="@@imports.list.details.count">
+          <span class="me-0"> {{ this.import.anzImportedItems }}/{{ this.import.anzFrom }} <span class="me-0" i18n="@@imports.list.details.count">
             items imported</span>
           </span>
           }
         </div>
+        <br>
+        <span i18n="@@imports.list.details.filter">Reports to show</span>
         <br>
         <form [formGroup]="filterForm" (change)="onFilterChange()">
           @if(fine > 0) {
