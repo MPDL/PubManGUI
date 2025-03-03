@@ -47,7 +47,6 @@ export default class ItemsComponent implements OnInit {
   isStandardWorkflow: boolean = false;
   isSimpleWorkflow: boolean = false;
 
-  itemsFailed: number = 0;
   error: number = 0;
   fatal: number = 0;
   fine: number = 0;
@@ -94,11 +93,6 @@ export default class ItemsComponent implements OnInit {
 
           importsResponse.sort((a, b) => a.id - b.id)
             .forEach(element => {
-              if (!element.itemId 
-                && element.message.includes("item")
-                && (element.errorLevel === ImportErrorLevel.PROBLEM || element.errorLevel === ImportErrorLevel.ERROR || element.errorLevel === ImportErrorLevel.FATAL)) {
-                this.itemsFailed++;
-              }
               switch (element.errorLevel) {
                 case ImportErrorLevel.FINE:
                   this.fine++;

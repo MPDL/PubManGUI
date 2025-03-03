@@ -128,7 +128,7 @@ export default class ListComponent implements OnInit {
       .subscribe(importLog => {
         this.logs[idx].status = importLog.status;
         this.logs[idx].percentage = importLog.percentage;
-        this.logs[idx].anzItems = importLog.anzItems;
+        this.logs[idx].anzImportedItems = importLog.anzImportedItems;
         if (this.isFinished(importLog.status)) {
           this.runningImports.delete(logId);
         }

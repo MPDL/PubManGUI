@@ -19,38 +19,30 @@ export class TopnavBatchComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private message: MessageService,
-    private bs: BatchService,
+    private batchSvc: BatchService,
     protected aaService: AaService,
     private itemSelectionService:ItemSelectionService) {}
 
   addToBatchDatasets() {
-    //const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
-    //const selected = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!).length : 0;
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+   const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected) {
-      const added = this.bs.addToBatchDatasets(selected);
-      //sessionStorage.removeItem(savedSelection);
+      const added = this.batchSvc.addToBatchDatasets(selected);
       this.itemSelectionService.resetList();
-
-      this.message.success(selected + ' items selected' + ((selected.length! - added) > 0 ? `, ${selected.length! - added} on batch duplicated were ignored.` : ''));
+      this.message.success(selected.length + ' ' + $localize`:@@batch.datasets.selected:item/items selected` + '\n' + added + ' ' + $localize`:@@batch.datasets.filled:item/items added to batch processing` + ((selected.length! - added) > 0 ? ", " + `${selected.length! - added} ` + $localize`:@@batch.datasets.duplicated:on batch duplicated were ignored` + "." : ''));
     } else {
-      this.message.warning(`The batch processing is empty!\n`);
+      this.message.warning($localize`:@@batch.datasets.empty:The batch processing is empty`+'!');
     }
 
   }
 
   removeFromBatchDatasets() {
-    //const savedSelection = this.activatedRoute.snapshot.routeConfig?.path + "-checked";
-    //const selected = sessionStorage.getItem(savedSelection) ? JSON.parse(sessionStorage.getItem(savedSelection)!).length : 0;
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+   const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected) {
-      const removed = this.bs.removeFromBatchDatasets(selected);
-      //sessionStorage.removeItem(savedSelection);
+      const removed = this.batchSvc.removeFromBatchDatasets(selected);
       this.itemSelectionService.resetList();
-
-      this.message.success(selected + ' items selected' + ((selected.length! - removed) > 0 ? `, ${selected.length! - removed} not on batch were ignored.` : ''));
+      this.message.success(selected.length + ' ' + $localize`:@@batch.datasets.selected:item/items selected` + '\n' + removed + ' ' + $localize`:@@batch.datasets.removed:item/items removed from batch processing` + ((selected.length! - removed) > 0 ? ", " + `${selected.length! - removed} ` + $localize`:@@batch.datasets.missing:not on batch were ignored` + "." : ''));
     } else {
-      this.message.warning(`The batch processing is empty!\n`);
+      this.message.warning($localize`:@@batch.datasets.empty:The batch processing is empty`+'!');
     }
   }
 
@@ -58,7 +50,7 @@ export class TopnavBatchComponent {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if(selected.length > 0)
     {
-      return selected.some(id => !this.bs.objectIds.includes(id))
+      return selected.some(id => !this.batchSvc.objectIds.includes(id))
     }
     return false;
     //console.log("isAdd: " + isAdd)
@@ -67,7 +59,7 @@ export class TopnavBatchComponent {
   get isRemove() {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if(selected.length > 0) {
-      return selected.some(id => this.bs.objectIds.includes(id))
+      return selected.some(id => this.batchSvc.objectIds.includes(id))
     }
     return false;
   }

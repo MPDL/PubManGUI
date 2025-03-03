@@ -596,7 +596,8 @@ export interface ImportLogDbVO extends ImportLog {
   format: ImportFormat;
   contextId: string;
   percentage: number;
-  anzItems: number;
+  anzImportedItems: number;
+  anzFrom: number;
 }
 
 export interface ImportLogItemDbVO extends ImportLog {

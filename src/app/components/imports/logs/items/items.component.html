@@ -1,10 +1,10 @@
 <div class="imports">
   <div class="logs">
-    @if(this.import.anzItems || filteredSize > 25) {
+    @if(this.import.anzImportedItems || filteredSize > 25) {
     <div class="row top_nav_pos navbar bg-body" [ngClass]="{ 'scrolled': isScrolled }">
 
-      <div class="col-lg-12 col-sm-12 d-inline-flex" [ngClass]="this.import.anzItems ? 'justify-content-between': 'justify-content-end' ">
-        @if(this.import.anzItems) {
+      <div class="col-lg-12 col-sm-12 d-inline-flex" [ngClass]="this.import.anzImportedItems ? 'justify-content-between': 'justify-content-end' ">
+        @if(this.import.anzImportedItems) {
         <div class="d-inline-flex justify-content-start align-items-center">
           <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.delete" ngbTooltip="Delete" placement="bottom-left" (click)='doDelete();'>
             <span class="material-symbols-outlined">
@@ -117,7 +117,7 @@
       <div class="col-lg-3 d-none d-lg-block mt-4">
         <div class="border rounded p-3 m-1">
           @if(unfilteredSize > 0) {
-          <span class="me-0"> {{ this.import.anzItems ? (this.import.anzItems - itemsFailed) : 0 }}/{{ this.import.anzItems }} <span class="me-0" i18n="@@imports.list.details.count">
+          <span class="me-0"> {{ this.import.anzFrom }}/{{ this.import.anzImportedItems }} <span class="me-0" i18n="@@imports.list.details.count">
             items imported</span>
           </span>
           }
