@@ -1,4 +1,4 @@
-<div class="modal-content bg-light-subtle p-4">
+<div class="modal-content border border-secondary-subtle border-2 rounded bg-light-subtle p-4">
   @if (message.title) {
   <div class="modal-header bg-info-subtle text-center p-1">
     <h5 class="modal-title">{{message.title}}</h5>
@@ -8,7 +8,7 @@
     <span class="text-info-emphasis">{{message.text}}</span>
   </div>
   <div class="modal-footer d-flex justify-content-center">
-    <button type="button" class="btn btn-outline-secondary btn-sm me-3" (click)="confirm()">{{message.confirm}}</button>
-    <button type="button" class="btn btn-outline-info btn-sm" (click)="reject()">{{message.reject}}</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm me-3 border-2" (click)="confirm()">{{message.confirm}}</button>
+    <button type="button" class="btn btn-outline-info btn-sm border-2" (click)="cancel()">{{message.cancel}}</button>
   </div>
 </div>

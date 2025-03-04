@@ -46,5 +46,8 @@ Thumbs.db
 *.css
 *.css.map
 
+# Cypress
+/cypress.env.json
+
 # GIT
 .gitignore

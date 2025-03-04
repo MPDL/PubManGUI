@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, LOCALE_ID, HostListener } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import { ImportLogItemDbVO, ImportLogItemDetailDbVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
-import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
-
 import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,8 +18,6 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
     SeparateFilterPipe,
     NgbCollapseModule,
     PaginatorComponent
@@ -31,7 +26,12 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
 })
 export default class DetailsComponent implements OnInit {
 
-  currentPage = 1;
+  importsSvc = inject(ImportsService);
+  msgSvc = inject(MessageService);
+  router = inject(Router);
+  
+  currentPage = this.importsSvc.lastPageNumFrom().log;
+
   pageSize = 25;
   collectionSize = 0;
   inPage: ImportLogItemDetailDbVO[] = [];
@@ -41,6 +41,7 @@ export default class DetailsComponent implements OnInit {
 
   importStatusTranslations = {};
   importErrorLevelTranslations = {};
+  importMessageTranslations = {};
   
   isCollapsed: boolean[] = [];
   isScrolled = false;
@@ -48,22 +49,18 @@ export default class DetailsComponent implements OnInit {
   BOM = '239,187,191';
 
   constructor(
-    private importsSvc: ImportsService,
-    private msgSvc: MessageService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router, 
-    private fb: FormBuilder,
-    @Inject(LOCALE_ID) public locale: string) { }
+    @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
+    if (!history.state.item) history.back();
     this.item = history.state.item;
+
     this.importsSvc.getImportLogItemDetails(Number(this.item?.id))
       .subscribe(importsResponse => {
         if (importsResponse.length === 0) {
-          const msg = `This item has no details available!\n`;
-          this.msgSvc.info(msg);
-  
-          return this.router.navigate(['/imports/myimports/', this.item?.parent.id], {state:{ import: this.item?.parent.name, started: this.item?.parent.startDate, format: this.item?.parent.format }});
+          const msg = $localize`:@@imports.list.details.empty:This detail has no logs available!` + '\n';
+          this.msgSvc.info(msg);       
+          return this.router.navigate(['/imports/myimports/', this.item?.parent.id]);
         }
         importsResponse.sort((a, b) => a.id - b.id);
           
@@ -84,11 +81,13 @@ export default class DetailsComponent implements OnInit {
       await import('src/assets/i18n/messages.de.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
         this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     } else {
       await import('src/assets/i18n/messages.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
         this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     }
   }
@@ -144,10 +143,18 @@ export default class DetailsComponent implements OnInit {
   }
 
   refreshLogs() {
+    this.pageSize = this.getPreferredPageSize();
     this.inPage = this.logs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + this.pageSize,
     );
+    this.importsSvc.lastPageNumFrom().log = this.currentPage;
+  }
+
+  getPreferredPageSize():number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize;
   }
 
   getImportStatusTranslation(txt: string):string {
@@ -160,9 +167,14 @@ export default class DetailsComponent implements OnInit {
     return this.importErrorLevelTranslations[key];
   }
 
+  getImportMessageTranslation(txt: string): string {
+    let key = txt as keyof typeof this.importMessageTranslations;
+    return this.importMessageTranslations[key];
+  }
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 

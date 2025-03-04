@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { RouteReuseStrategy, provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
+import { RouteReuseStrategy, provideRouter, withInMemoryScrolling, withRouterConfig, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { httpInterceptorProviders } from './services/interceptors';
@@ -10,7 +10,7 @@ import { provideLocale, provideLocaleId } from './shared/services/i18n.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withInMemoryScrolling({scrollPositionRestoration: 'enabled'})),
+    provideRouter(routes, withInMemoryScrolling({scrollPositionRestoration: 'enabled'}), withComponentInputBinding()),
     httpInterceptorProviders,
     {
       provide: RouteReuseStrategy,

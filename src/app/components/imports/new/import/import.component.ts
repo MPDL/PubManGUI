@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
+import { OnInit, Component, ChangeDetectorRef, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -29,12 +29,15 @@ export default class ImportComponent implements OnInit {
   lastFormat: string = '';
   data: any = '';
 
+  importFormatTranslations = {};
+
   constructor(
     private fb: FormBuilder,
     private aaSvc: AaService,
     private importSvc: ImportsService,
     private changeDetector: ChangeDetectorRef,
-    private router: Router) { }
+    private router: Router,
+    @Inject(LOCALE_ID) public locale: string) { }
 
   importFormat = Object.keys(ImportFormat);
   user_contexts?: ContextDbRO[] = [];
@@ -54,6 +57,20 @@ export default class ImportComponent implements OnInit {
         this.user_contexts = p.depositorContexts;
       }
     );
+
+    this.loadTranslations(this.locale);
+  }
+
+  async loadTranslations(lang: string) {
+    if (lang === 'de') {
+      await import('src/assets/i18n/messages.de.json').then((msgs) => {
+        this.importFormatTranslations = msgs.ImportFormat;
+      })
+    } else {
+      await import('src/assets/i18n/messages.json').then((msgs) => {
+        this.importFormatTranslations = msgs.ImportFormat;
+      })
+    }
   }
 
   ngDoCheck() {
@@ -69,6 +86,11 @@ export default class ImportComponent implements OnInit {
         this.lastFormat = format;
       };
     });
+  }
+
+  getImportFormatTranslation(txt: string):string {
+    let key = txt as keyof typeof this.importFormatTranslations;
+    return this.importFormatTranslations[key];
   }
 
   hasConfig(): boolean {
@@ -127,14 +149,14 @@ export default class ImportComponent implements OnInit {
     element.innerHTML = `<span class="material-symbols-outlined">description</span> <strong> ${file?.name} </strong>`;
 
     const reader = file.stream().getReader();
-    let result: any = null;
+    let result: any = '';
   
     reader.read().then(
       function processData({ done, value }):any {
         if (done) {
           return;
         }
-    
+
         const chunk = value;
         result += new TextDecoder().decode(chunk);
 
@@ -162,6 +184,5 @@ export default class ImportComponent implements OnInit {
     this.importSvc.postImport(this.getImportParams, this.data).subscribe(importResponse => {
       this.router.navigate(['/imports/myimports']);
     });
-
   }
 }

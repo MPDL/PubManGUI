@@ -27,7 +27,7 @@ export class MessageService {
     });
   }
 
-  displayConfirmation(message?: { title?: string, text: string, confirm: string, reject: string }) {
+  displayConfirmation(message?: { title?: string, text: string, confirm: string, cancel: string }) {
     const ref = this.dialog.open(ConfirmationComponent, {
       hasBackdrop: false,
       // autoFocus: false,
@@ -48,7 +48,14 @@ export class MessageService {
   }
 
   success(message: string) {
-    const msg = { type: 'success', text: message };
+    let title, msg = null;
+    if (message.lastIndexOf('\n')>=0) {
+      const multilines = this.splitMessage(message);
+      msg = { type: 'success', title: multilines.title, text: multilines.content };
+      if (this.lastMessage().title && this.lastMessage().title === title) return;
+    } else {    
+      msg = { type: 'success', text: message };
+    }
     //this.displayMessage(msg);
     this.displayOnArea(msg);
   }
@@ -60,16 +67,32 @@ export class MessageService {
   }
 
   error(message: string) {
-    let title, msg = null;
+    let msg = null;
     if (message.lastIndexOf('\n')>=0) {
-      title = message.substring(message.lastIndexOf('\n'));
-      const message_filtered = message.substring(0, message.lastIndexOf('\n'));
-      msg = { type: 'danger', title: title, text: message_filtered };
-      if (this.lastMessage().title && this.lastMessage().title === title) return;
+      const formattedMsg = this.splitRawError(message);
+      msg = { type: 'danger', title: formattedMsg.title, text: formattedMsg.content };
+      if (this.lastMessage().title && this.lastMessage().title === formattedMsg.title) return;
     } else {
       msg = { type: 'danger', text: message };
     }
     //this.displayMessage(msg);
     this.displayOnArea(msg);
+  }
+
+  splitMessage(message: string): { title: string, content: string } {
+    const title = message.substring(0,message.indexOf('\n'));
+    const content = message.substring(message.indexOf('\n')+1);
+    return { title: title, content: content };
+  }
+
+  splitRawError(message: string): { title: string, content: string } {
+    let title = null;
+    if (message.substring(message.lastIndexOf('\n')).length < 3) {
+      title = message.substring(0, message.indexOf('\n'));
+    } else {
+      title = message.substring(message.lastIndexOf('\n'));
+    }
+    const content = message.substring(0, message.lastIndexOf('\n'));
+    return { title: title, content: content };
   }
 }

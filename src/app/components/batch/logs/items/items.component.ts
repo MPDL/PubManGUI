@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, DoCheck, Inject, LOCALE_ID, HostListener } from '@angular/core';
+import { Component, OnInit, DoCheck, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
@@ -12,16 +12,16 @@ import { ItemVersionVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
-import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
+//import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
+import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 
 import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
 
 type detail = {
- 'item': resp.BatchProcessLogDetailDbVO,
- 'title': string
+  'item': resp.BatchProcessLogDetailDbVO,
+  'title': string
 }
 
 @Component({
@@ -32,7 +32,7 @@ type detail = {
     ReactiveFormsModule,
     FormsModule,
     NgbTooltip,
-    StateFilterPipe,
+    //StateFilterPipe,
     RouterLink,
     SanitizeHtmlPipe,
     PaginatorComponent
@@ -40,65 +40,104 @@ type detail = {
   templateUrl: './items.component.html',
 })
 
-export default class LogItemListComponent implements OnInit, DoCheck {
-  page = 1;
+export default class LogItemListComponent implements OnInit {
+
+  batchSvc = inject(BatchService);
+  itemSvc = inject(ItemsService);
+  msgSvc = inject(MessageService);
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  fb = inject(FormBuilder);
+
+  currentPage = this.batchSvc.lastPageNumFrom().details;
   pageSize = 25;
-  collectionSize = 0;
+
   inPage: detail[] = [];
 
-  detailLogs: detail[] = [];
+  unfilteredSize = 0;
+  filteredSize = 0;
+
+  unfilteredLogs: detail[] = [];
+  filteredLogs: detail[] = [];
+
   items: ItemVersionVO[] = [];
 
-  method: string | undefined;
-  started: Date | undefined;
+  batchLogHeader!: resp.BatchProcessLogHeaderDbVO;
   failed: number = 0;
-
-  batchProcessLogDetailStateTranslations = {};
-  batchProcessMessageTranslations = {};
-  batchProcessMethodTranslations = {};
 
   public filterForm: FormGroup = this.fb.group({
     success: [true, Validators.requiredTrue],
     fail: [true, Validators.requiredTrue],
   });
 
+  activeFilters: resp.BatchProcessLogDetailState[] = [
+    resp.BatchProcessLogDetailState.SUCCESS,
+    resp.BatchProcessLogDetailState.ERROR
+  ];
+
+  batchProcessLogDetailStateTranslations = {};
+  batchProcessMessageTranslations = {};
+  batchProcessMethodTranslations = {};
+
   isScrolled = false;
 
   constructor(
-    private batchSvc: BatchService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private itemSvc: ItemsService,
-    private msgSvc: MessageService,
-    private fb: FormBuilder,
-    @Inject(LOCALE_ID) public locale: string) {}
+    @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
-    this.loadTranslations(this.locale);
+    this.activatedRoute.data.subscribe(value => {
+      this.batchLogHeader = value['log'];
+    });
 
-    this.activatedRoute.params
-      .pipe(
-        switchMap(({ id }) => this.batchSvc.getBatchProcessLogDetails(id)),
-      )
-      .subscribe(LOGS => {
-        if (LOGS.length === 0) return this.router.navigate(['/batch/logs']);
+    if (this.batchLogHeader.batchLogHeaderId) {
+      this.batchSvc.getBatchProcessLogDetails(Number(this.batchLogHeader.batchLogHeaderId))
+        .subscribe(batchResponse => {
+          if (batchResponse.length === 0) this.router.navigate(['/batch/logs']);
 
-        LOGS.sort((a,b) => b.startDate.valueOf() - a.startDate.valueOf())
-          .forEach(element => this.itemSvc.retrieve(element.itemObjectId, this.batchSvc.token)
-            .subscribe( actionResponse =>
-                {
-                  this.detailLogs.push({item: element, title: actionResponse.metadata?.title});
-                  this.collectionSize++;
-                  if(element.state === resp.BatchProcessLogDetailState.ERROR) this.failed++;
-                  return
+          batchResponse.sort((a, b) => b.startDate.valueOf() - a.startDate.valueOf())
+            .forEach((element, index) => {
+              if (element.state === resp.BatchProcessLogDetailState.ERROR) this.failed++;
+              var title = '';
+              this.batchSvc.getItem(element.itemObjectId)
+                .subscribe({
+                  next: (value) => {
+                    title = value.metadata?.title;
+                  },
+                  error: () => {
+                    this.unfilteredLogs.push({ item: element, title: '404' });
+                  },
+                  complete: () => {
+                    this.unfilteredLogs.push({ item: element, title: title });
+                    if (index === batchResponse.length - 1) {
+                      this.filteredLogs = this.unfilteredLogs;
+                      this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
+
+                      this.refreshLogs();
+                    }
+                  }
                 })
-            );
+            })
 
-        return;
-      })
+          if (this.batchSvc.getLogFilters().length > 0) {
+            if (this.activeFilters.length === this.batchSvc.getLogFilters().length
+              && (this.activeFilters.every((element_1) =>
+                this.batchSvc.getLogFilters().some((element_2) =>
+                  Object.keys(element_1).every((key: any) => element_1[key] === element_2[key])
+                )))) {
+            } else {
+              this.activeFilters = this.batchSvc.getLogFilters();
+              this.filterForm.patchValue({
+                success: this.activeFilters.includes(resp.BatchProcessLogDetailState.SUCCESS),
+                fail: this.activeFilters.includes(resp.BatchProcessLogDetailState.ERROR),
+              });
+              this.updateFilteredLogs();
+            }
+          }
+          //return;
+        });
+    }
 
-    this.method = history.state.method;
-    this.started = history.state.started;
+    this.loadTranslations(this.locale);
   }
 
   async loadTranslations(lang: string) {
@@ -117,62 +156,84 @@ export default class LogItemListComponent implements OnInit, DoCheck {
     }
   }
 
-  ngDoCheck(): void {
-    this.refreshLogs();
-  }
-
   refreshLogs() {
-    this.inPage = this.detailLogs.map((log, i) => ({ id: i + 1, ...log })).slice(
-      (this.page - 1) * this.pageSize,
-      (this.page - 1) * this.pageSize + this.pageSize,
+    this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
+    this.pageSize = this.getPreferredPageSize();
+    this.inPage = this.filteredLogs.map((log, i) => ({ id: i + 1, ...log })).slice(
+      (this.currentPage - 1) * this.pageSize,
+      (this.currentPage - 1) * this.pageSize + this.pageSize,
     );
+    this.batchSvc.lastPageNumFrom().details = this.currentPage;
   }
 
-  getProcessLogDetailStateTranslation(txt: string):string {
+  getPreferredPageSize(): number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize || 25;
+  }
+
+  getProcessLogDetailStateTranslation(txt: string): string {
     let key = txt as keyof typeof this.batchProcessLogDetailStateTranslations;
     return this.batchProcessLogDetailStateTranslations[key];
   }
 
-  getProcessMessageTranslation(txt: string):string {
+  getProcessMessageTranslation(txt: string): string {
     let key = txt as keyof typeof this.batchProcessMessageTranslations;
     return this.batchProcessMessageTranslations[key];
   }
 
-  getProcessMethodTranslation(txt: string):string {
+  getProcessMethodTranslation(txt: string): string {
     let key = txt as keyof typeof this.batchProcessMethodTranslations;
     return this.batchProcessMethodTranslations[key];
   }
 
   fillWithAll() {
     const toFill: string[] = [];
-    this.detailLogs.forEach(element => { if (element.item.itemObjectId) toFill.push(element.item.itemObjectId) });
+    this.unfilteredLogs.forEach(element => { if (element.item.itemObjectId) toFill.push(element.item.itemObjectId) });
     this.batchSvc.items = toFill;
-    const msg = `${ toFill.length } items to batch!\n`;
+    const msg = `${toFill.length} ` + $localize`:@@batch.datasets.filled:items to batch!` + '\n';
     this.msgSvc.info(msg);
   }
 
   fillWithFailed() {
     const toFill: string[] = [];
-    this.detailLogs.forEach(element => { if (element.item.itemObjectId && element.item.state === resp.BatchProcessLogDetailState.ERROR) toFill.push(element.item.itemObjectId) });
+    this.unfilteredLogs.forEach(element => { if (element.item.itemObjectId && element.item.state === resp.BatchProcessLogDetailState.ERROR) toFill.push(element.item.itemObjectId) });
     this.batchSvc.items = toFill;
-    const msg = `${ toFill.length } items to batch!\n`;
+    const msg = `${toFill.length} ` + $localize`:@@batch.datasets.filled:items to batch!` + '\n';
     this.msgSvc.info(msg);
   }
 
-  refreshFilters():resp.BatchProcessLogDetailState[] {
-    const filteredStatus = [];
+  refreshFilters(): void {
+    this.activeFilters = [];
     if (this.filterForm.get('success')?.value) {
-      filteredStatus.push(resp.BatchProcessLogDetailState.SUCCESS); // TO-DO enhance with valid enum values
+      this.activeFilters.push(resp.BatchProcessLogDetailState.SUCCESS);
     }
     if (this.filterForm.get('fail')?.value) {
-      filteredStatus.push(resp.BatchProcessLogDetailState.ERROR);
+      this.activeFilters.push(resp.BatchProcessLogDetailState.ERROR);
     }
-    return filteredStatus;
+  }
+
+  saveFilters(): void {
+    this.batchSvc.setLogFilters(this.activeFilters);
+  }
+
+  onFilterChange(): void {
+    this.refreshFilters();
+    this.saveFilters();
+
+    this.updateFilteredLogs();
+    this.currentPage = 1;
+    this.refreshLogs();
+  }
+
+  updateFilteredLogs():void {
+    this.filteredLogs = this.unfilteredLogs.filter(element => this.activeFilters.includes(element.item.state));
+    this.filteredSize = this.filteredLogs.length;
   }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 }

@@ -1,11 +1,9 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, ResolveFn, Router } from "@angular/router";
 import { of, mergeMap, EMPTY } from "rxjs";
-import { MessageService } from "src/app/shared/services/message.service";
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 
 export const fetchItemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
-    const message = inject(MessageService);
     const router = inject(Router);
     const importsSvc = inject(ImportsService);
 

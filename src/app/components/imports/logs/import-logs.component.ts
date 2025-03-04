@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
-import { RouterModule, Router, NavigationExtras } from '@angular/router';
+import { CommonModule, ViewportScroller } from '@angular/common';
+import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject, viewChild } from '@angular/core'
+import { RouterModule, Router } from '@angular/router';
+
 
 import { ImportsService } from '../services/imports.service';
 import { ImportLogDbVO, ImportStatus, ImportErrorLevel } from 'src/app/model/inge';
@@ -10,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'pure-import-logs',
@@ -19,29 +21,38 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     RouterModule,
     FormsModule,
     PaginatorComponent,
-    NgbTooltip
+    NgbTooltip,
+    MatBadgeModule
   ],
   templateUrl: './import-logs.component.html'
 })
 export default class ListComponent implements OnInit {
 
-  currentPage = 1;
+  importsSvc = inject(ImportsService);
+  msgSvc = inject(MessageService);
+  router = inject(Router);
+
+  viewportScroller = inject(ViewportScroller);
+  scrollingRef = viewChild<HTMLElement>('scrolling');
+
+  currentPage = this.importsSvc.lastPageNumFrom().myImports;
   pageSize = 25;
   collectionSize = 0;
   inPage: ImportLogDbVO[] = [];
   logs: ImportLogDbVO[] = [];
+  runningImports: Map<number, number> = new Map();
 
   importStatusTranslations = {};
+  importErrorLevelTranslations = {};
+  importFormatTranslations = {};
 
+  importStatus: typeof ImportStatus = ImportStatus;
   importErrorLevel: typeof ImportErrorLevel = ImportErrorLevel;
 
   isScrolled = false;
 
   constructor(
-    private importsSvc: ImportsService,
-    private msgSvc: MessageService,
-    private router: Router,
-    @Inject(LOCALE_ID) public locale: string) { }
+    @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
     this.importsSvc.getImportLogs()
@@ -49,9 +60,14 @@ export default class ListComponent implements OnInit {
         this.logs = importsResponse.sort((b, a) => a.id - b.id);
         this.collectionSize = this.logs.length;
         this.refreshLogs();
-        return;
-      }
-      );
+
+        this.logs.forEach((importLog, idx) => {
+          if( !this.isFinished(importLog.status)) {
+            this.runningImports.set(importLog.id, idx);
+          }
+        });
+        this.updateForRunningImports();
+      });
 
     this.loadTranslations(this.locale);
   }
@@ -60,30 +76,70 @@ export default class ListComponent implements OnInit {
     if (lang === 'de') {
       await import('src/assets/i18n/messages.de.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
+        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importFormatTranslations = msgs.ImportFormat;
       })
     } else {
       await import('src/assets/i18n/messages.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
+        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importFormatTranslations = msgs.ImportFormat;
       })
     }
   }
 
+  getAssorted(txt: string): string {
+    switch (txt) {
+      case 'FINE':
+      case 'WARNING':
+      case 'FATAL':        
+        return txt;
+      default:
+        return 'ERROR';
+    }
+  }
+
   refreshLogs() {
+    this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
+    this.pageSize = this.getPreferredPageSize();
     this.inPage = this.logs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
       (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
+    this.importsSvc.lastPageNumFrom().myImports = this.currentPage;
   }
 
-  calculateProcessedStep(numberOfItems: number): number {
-    return Math.floor(100 / numberOfItems);
-  };
+  getPreferredPageSize():number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize || 25;
+  }
 
   isFinished(status: ImportStatus): boolean {
     if (status === ImportStatus.FINISHED) {
       return true;
     }
     return false;
+  }
+
+  updateForRunningImports() {
+    this.runningImports.forEach((idx, logId) => {
+      this.importsSvc.getImportLog(logId)
+      .subscribe(importLog => {
+        this.logs[idx].status = importLog.status;
+        this.logs[idx].percentage = importLog.percentage;
+        this.logs[idx].anzImportedItems = importLog.anzImportedItems;
+        if (this.isFinished(importLog.status)) {
+          this.runningImports.delete(logId);
+        }
+      })
+    })
+    if (this.runningImports.size > 0) {
+      setTimeout(() => {
+        this.updateForRunningImports();
+        this.refreshLogs()
+      }, 1000); 
+    } 
   }
 
   toDatasets(id: any): void {
@@ -98,7 +154,7 @@ export default class ListComponent implements OnInit {
           }
         });
       if (items.length === 0) {
-        const msg = `This import has no items available!\n`;
+        const msg = $localize`:@@imports.list.items.empty:This import has no items available!` + '\n';
         this.msgSvc.info(msg);
         return;
       }
@@ -107,7 +163,7 @@ export default class ListComponent implements OnInit {
   }
 
   deleteImportLog(log: any): void {
-    let ref = this.msgSvc.displayConfirmation({ text: 'Confirm to remove this import Log', confirm: 'Remove', reject: 'Cancel' });
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.list.remove.confirmation:Do you really want to remove this import log?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
@@ -130,9 +186,19 @@ export default class ListComponent implements OnInit {
     return this.importStatusTranslations[key];
   }
 
+  getImportFormatTranslation(txt: string):string {
+    let key = txt as keyof typeof this.importFormatTranslations;
+    return this.importFormatTranslations[key];
+  }
+
+  getImportErrorLevelTranslation(txt: string): string {
+    let key = txt as keyof typeof this.importErrorLevelTranslations;
+    return this.importErrorLevelTranslations[key];
+  }
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 }

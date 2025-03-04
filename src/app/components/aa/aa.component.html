@@ -1,15 +1,15 @@
 <div *ngIf="!aa.isLoggedIn" class="nav-item">
   <!-- empty array as routerLink value enables hand pointer -->
-  <a [routerLink]="[]" class="nav-link" (click)="sign_in()"><i class="bi-person-lock"></i></a>
+  <a [routerLink]="[]" class="nav-link" (click)="sign_in()" data-test="user-login"><i class="bi-person-lock"></i></a>
 </div>
 <div *ngIf="aa.isLoggedIn" class="nav-item dropdown-center">
   <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button"
-    data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="bi bi-person"></span><span>{{aa.principal.getValue().user?.loginname}}</span>
+    data-bs-toggle="dropdown" aria-expanded="false" data-test="user">
+    <span class="bi bi-person"></span><span data-test="username">{{aa.principal.getValue().user?.loginname}}</span>
   </a>
   <ul class="dropdown-menu m-0" aria-labelledby="navbarDropdown">
     <li><a class="dropdown-item" [routerLink]="['/']">profile</a></li>
     <li><a class="dropdown-item" [routerLink]="[]">settings</a></li>
-    <li><a class="dropdown-item" [routerLink]="[]" (click)="sign_out()">sign out</a></li>
+    <li><a class="dropdown-item" [routerLink]="[]" (click)="sign_out()" data-test="sign-out">sign out</a></li>
   </ul>
 </div>

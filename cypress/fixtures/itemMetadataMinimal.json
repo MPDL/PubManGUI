@@ -1,0 +1,38 @@
+{
+  "context": {
+    "objectId": "ctx_persistent3",
+    "name": "",
+    "lastModificationDate": "",
+    "creationDate": "",
+    "creator": {
+      "objectId": ""
+    },
+    "modifier": {
+      "objectId": ""
+    }
+  },
+  "metadata": {
+    "title": "Test Item via REST - Cypress",
+    "creators": [
+      {
+        "person": {
+          "givenName": "GivenName",
+          "familyName": "FamilyName",
+          "organizations": [
+            {
+              "identifier": "ou_persistent22",
+              "name": "Test-Organization",
+              "identifierPath": [
+                "ou_persistent22"
+              ]
+            }
+          ]
+        },
+        "role": "AUTHOR",
+        "type": "PERSON"
+      }
+    ],
+    "datePublishedInPrint": "2024-11-14",
+    "genre": "REPORT"
+  }
+}

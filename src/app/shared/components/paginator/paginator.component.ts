@@ -149,6 +149,7 @@ ngOnInit() {
   }
 
   protected itemPerPageChange(event: any) {
+    sessionStorage.setItem('preferredPageSize', this.size.toString());
     //this.selectedItemsPerPage = Number.parseInt(event.target.value);
     this.calculateValues();
     this.changePage(1);

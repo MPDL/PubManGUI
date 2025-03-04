@@ -9,7 +9,7 @@ import { PureCtxsDirective } from 'src/app/shared/components/selector/services/p
 import { OptionDirective } from "src/app/shared/components/selector/directives/option.directive";
 import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeContextParams } from 'src/app/components/batch/interfaces/batch-params';
 import { AaService } from 'src/app/services/aa.service';
@@ -21,9 +21,9 @@ import { AaService } from 'src/app/services/aa.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    PureCtxsDirective,
-    OptionDirective,
-    SelectorComponent
+    //PureCtxsDirective,
+    //OptionDirective,
+    //SelectorComponent
   ],
   templateUrl: './change-context.component.html',
 })
@@ -31,7 +31,7 @@ export class ActionsContextComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService, 
+    public validSvc: BatchValidatorsService, 
     private aaSvc: AaService, 
     private batchSvc: BatchService,
     private router: Router) { }
@@ -47,10 +47,10 @@ export class ActionsContextComponent implements OnInit {
   }
 
   public changeContextForm: FormGroup = this.fb.group({
-    contextFrom: [$localize`:@@batch.actions.context:Context`, [Validators.required]],
-    contextTo: [$localize`:@@batch.actions.context:Context`, [Validators.required]]
+    contextFrom: [$localize`:@@batch.actions.context:Context`, Validators.required],
+    contextTo: [$localize`:@@batch.actions.context:Context`, Validators.required]
   }, 
-  //{ validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
+  { validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
   );
 
   get changeContextParams(): ChangeContextParams {
@@ -68,7 +68,6 @@ export class ActionsContextComponent implements OnInit {
       return;
     }
     this.batchSvc.changeContext(this.changeContextParams).subscribe(actionResponse => {
-      // console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       setTimeout(() => {this.changeContextForm.reset();}, 500);
       this.router.navigate(['/batch']);

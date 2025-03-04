@@ -1,6 +1,6 @@
 @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
 <div class="navbar-nav">
-<button class="btn btn-link nav-link px-2" (click)="addToBatchDatasets()" [disabled]="!isAdd"
+<button class="btn btn-link nav-link px-2" (click)="addToBatchDatasets()" [disabled]="!isAdd" data-test="add-to-batch"
    i18n-ngbTooltip="@@batch.datasets.add"
    ngbTooltip="Add checked items to Batch"
    placement="bottom-left">
@@ -8,7 +8,7 @@
         <use href="/assets/icons/icons.svg#batch-add"></use>
     </svg>
 </button>
-<button class="btn btn-link nav-link px-2" (click)="removeFromBatchDatasets()" [disabled]="!isRemove"
+<button class="btn btn-link nav-link px-2" (click)="removeFromBatchDatasets()" [disabled]="!isRemove" data-test="remove-from-batch"
    i18n-ngbTooltip="@@batch.datasets.remove"
    ngbTooltip="Remove checked items from Batch"
    placement="bottom-left">

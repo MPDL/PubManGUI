@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener } from '@angular/core';
+import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import * as resp from 'src/app/components/batch/interfaces/batch-responses';
-
-import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 
 import { FormsModule } from '@angular/forms';
 
@@ -32,7 +30,9 @@ type detail = {
 })
 export default class LogProcessListComponent implements OnInit {
 
-  page = 1;
+  batchSvc = inject(BatchService);
+
+  currentPage = this.batchSvc.lastPageNumFrom().logs;
   pageSize = 25;
   collectionSize = 0;
   inPage: resp.BatchProcessLogHeaderDbVO[] = [];
@@ -46,8 +46,6 @@ export default class LogProcessListComponent implements OnInit {
   isScrolled = false;
 
   constructor(
-    public batchSvc: BatchService,
-    private itemSvc: ItemsService,
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
@@ -79,10 +77,19 @@ export default class LogProcessListComponent implements OnInit {
   }
 
   refreshLogs() {
+    this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
+    this.pageSize = this.getPreferredPageSize();
     this.inPage = this.processLogs.map((log, i) => ({ _id: i + 1, ...log })).slice(
-      (this.page - 1) * this.pageSize,
-      (this.page - 1) * this.pageSize + (this.pageSize),
+      (this.currentPage - 1) * this.pageSize,
+      (this.currentPage - 1) * this.pageSize + (this.pageSize),
     );
+    this.batchSvc.lastPageNumFrom().logs = this.currentPage;
+  }
+
+  getPreferredPageSize():number {
+    if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
+      return +sessionStorage.getItem('preferredPageSize')!;
+    } else return this.pageSize || 25;
   }
 
   calculateProcessedStep(numberOfItems: number): number {
@@ -101,7 +108,7 @@ export default class LogProcessListComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 }

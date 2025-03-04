@@ -1,42 +1,53 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card">
-    <h3 class="m-0 mb-4" i18n="@@imports.fetch">ID Fetch</h3>
-  
-    <form [formGroup]="fetchForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-3 row">
-        <label for="context" class="col-sm-3 col-form-label" i18n="@@imports.context">Context</label>
-        <div class="col-sm-9">
-          <select id="context" class="form-select" formControlName="contextId">
-            <option [value]='' selected disabled i18n="@@imports.context">Context</option>
-            @for (contextObject of user_contexts; track contextObject) {
-            <option [value]="contextObject.objectId">{{contextObject.name}}</option>
-            }
-          </select>
-        </div>
+  <h3 class="m-0 mb-4" i18n="@@imports.fetch">ID Fetch</h3>
+
+  <form [formGroup]="fetchForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="mb-3 row">
+      <label for="context" class="col-sm-3 col-form-label" i18n="@@imports.context">Context</label>
+      <div class="col-sm-9">
+        <select id="context" class="form-select" formControlName="contextId">
+          <option [value]='' selected disabled i18n="@@imports.context">Context</option>
+          @for (contextObject of user_contexts; track contextObject) {
+          <option [value]="contextObject.objectId">{{contextObject.name}}</option>
+          }
+        </select>
       </div>
-  
-      <div class="mb-3 row">
-        <div class="col-sm-3">
-          <label class="col-form-label" i18n="@@imports.fetch.source">Source</label>
-        </div>
-        <div class="col-sm-2">
-          <select class="form-select" formControlName="source">
-            <option value="crossref" selected>Crossref-DOI</option>
-            <option value="arxiv">arXiv</option>
-          </select>
-        </div>
-        <div class="col-sm-7">
-            <input class="form-control" formControlName="identifier" placeholder="Id">
-          </div>
+    </div>
+
+    <div class="mb-3 row">
+      <div class="col-sm-3">
+        <label class="col-form-label" i18n="@@imports.fetch.source">Source</label>
       </div>
-  
-      <div class="row">
-        <div class="offset-sm-9 col-sm-3">
-          <button type="submit" [disabled]="fetchForm.invalid || fetchForm.pristine" 
-            class="btn btn-outline-secondary col-4 float-end">
-            GO
-          </button>
-        </div>
+      <div class="col-sm-2">
+        <select class="form-select" formControlName="source">
+          <option value="crossref" selected>Crossref-DOI</option>
+          <option value="arxiv">arXiv-ID</option>
+        </select>
       </div>
-    </form>
-  
-  </div>
+      <div class="col-sm-7">
+        <input class="form-control" formControlName="identifier" placeholder="Identifier" required minlength="4"
+          forbiddenTxt="http">
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-5 col-sm-6">
+        @if(fetchForm.controls['identifier'].errors?.['forbiddenURL']) {
+        <span class="form-text text-danger small" i18n="@@imports.fetch.id.error">
+          Invalid input: The identifier must not be a URL.
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset-sm-9 col-sm-3">
+        <button id="go" type="submit" [disabled]="fetchForm.invalid || fetchForm.pristine"
+          class="btn btn-outline-secondary border-2 col-4 float-end">
+          GO
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

@@ -19,7 +19,7 @@
           <label class="col-form-label" i18n="@@batch.actions.genre.change.from">Genre to be replaced</label>
         </div>
         <div class="col-sm-10">
-          <select class="form-select" formControlName="genreFrom">
+          <select class="form-select" formControlName="genreFrom" data-test="genre-to-be-replaced">
             <option [value]='' selected disabled>Genre</option>
             @for (genre of genresOptions; track genre) {
               <option [value]="genre.value">{{genre.option}}</option>
@@ -33,7 +33,7 @@
           <label class="col-form-label" i18n="@@batch.actions.genre.change.to">Replacing genre</label>
         </div>
         <div class="col-sm-10">
-          <select class="form-select" formControlName="genreTo">
+          <select class="form-select" formControlName="genreTo" data-test="replacing-genre">
             <option [value]=''  selected disabled>Genre</option>
             @for (genre of genresOptions; track genre) {
               <option [value]="genre.value">{{genre.option}}</option>
@@ -68,8 +68,8 @@
 
       <div class="row">
         <div class="offset-sm-9 col-sm-3">
-          <button type="submit" [disabled]="changeGenreForm.invalid || changeGenreForm.pristine" 
-            class="btn btn-outline-secondary col-4 float-end">
+          <button type="submit" [disabled]="changeGenreForm.invalid || changeGenreForm.pristine"
+            class="btn btn-outline-secondary border-2 col-4 float-end">
             GO
           </button>
         </div>

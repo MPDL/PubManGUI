@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { importLogResolver } from "./services/import-log.resolver";
+import { fetchItemResolver } from './services/fetch-item-resolver';
 
 const routes: Routes = [
   {
@@ -29,16 +31,16 @@ const routes: Routes = [
         },
       },
       {
-        path: ':id',
+        path: ':importId',
         data: {
           breadcrumb: {
-            label: $localize`:@@imports.list.items:Details`,
+            label: $localize`:@@imports.list.items:Details`, 
           }
         },
         children: [
           {
             path: '',
-            loadComponent: () => import('./logs/items/items.component'),
+            loadComponent: () => import('./logs/items/items.component'), resolve: { import: importLogResolver },
             data: {
               breadcrumb: {              
                 //label: '',
@@ -47,7 +49,7 @@ const routes: Routes = [
           },
           {
             path: 'log',
-            loadComponent: () => import('./logs/items/details/details.component'),
+            loadComponent: () => import('./logs/items/details/details.component'), 
             data: {
               breadcrumb: {
                 label: 'Log', 

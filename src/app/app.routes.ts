@@ -141,8 +141,7 @@ export const routes: Routes = [
         label: 'Batch processing',
         active: false
       }
-    },
-    canActivate: [AuthGuard],
+    }
   },
   {
     path: 'imports',
@@ -152,8 +151,7 @@ export const routes: Routes = [
         label: 'Imports',
         active: false
       }
-    },
-    canActivate: [AuthGuard],
+    }
   },
   {
     path: '**',

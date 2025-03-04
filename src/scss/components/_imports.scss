@@ -84,8 +84,15 @@
                 --mat-badge-text-weight: bolder;
                 --mat-badge-container-size:1.4rem;
                 --mat-badge-container-overlap-offset:-0.8rem -0.4rem;
-                --mat-badge-container-padding:0 0.3rem;
+                --mat-badge-container-padding:0.3rem;
             }
+        }
+
+        /* anchor focus */
+        :target {
+            display: block;
+            position: relative;
+            top: -200px; 
         }
     }
 }

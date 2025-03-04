@@ -42,25 +42,25 @@
         -->
         <nav class="nav flex-column ps-4 py-2">
           @if (aaService.principal.getValue().isDepositor) {
-            <a class="nav-link border-bottom py-3" [routerLink]="['edit']" (click)="collapse()">
+            <a class="nav-link border-bottom py-3" [routerLink]="['edit']" (click)="collapse()" data-test="sidenav-entry">
               <span class="material-symbols-outlined">note_add</span>
               <span class="nav-label ms-3" i18n="@@edit">Entry</span>
             </a>
 
-            <a class="nav-link border-bottom py-3" [routerLink]="['my']" (click)="collapse()">
+            <a class="nav-link border-bottom py-3" [routerLink]="['my']" (click)="collapse()" data-test="sidenav-my-datasets">
               <span class="material-symbols-outlined">folder_shared</span>
               <span class="nav-label ms-3" i18n="@@my">My datasets</span>
             </a>
           }
           @if (aaService.principal.getValue().isModerator) {
-            <a class="nav-link border-bottom py-3" [routerLink]="['qa']" (click)="collapse()">
+            <a class="nav-link border-bottom py-3" [routerLink]="['qa']" (click)="collapse()" data-test="sidenav-qa-area">
               <span class="material-symbols-outlined">workspace_premium</span>
               <span class="nav-label ms-3" i18n="@@qa">QA Area</span>
             </a>
           }
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
             <div class="border-bottom">
-              <a class="nav-link py-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.hasImports()}" (click)="collapse()">
+              <a class="nav-link py-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.hasImports()}" (click)="collapse()" data-test="sidenav-import">
                 <span class="material-symbols-outlined">get_app</span>
                 <span class="nav-label ms-3">Import</span>
               </a>
@@ -73,11 +73,11 @@
           }
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
             <div class="border-bottom">
-              <a class="nav-link py-3" [routerLink]="['batch']" [ngClass]="{'disabled pb-2' : batchSvc.areItemsSelected()}" (click)="collapse()">
+              <a class="nav-link py-3" [routerLink]="['batch']" [ngClass]="{'disabled pb-2' : batchSvc.areItemsSelected()}" (click)="collapse()" data-test="sidenav-batch">
                 <span class="material-symbols-outlined">web_stories</span>
                 <span class="nav-label ms-3" i18n="@@batch">Batch processing</span>
                 @if ( batchSvc.areItemsSelected() ) {
-                  <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}'></div>
+                  <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' data-test="batch-badge"></div>
                 }
               </a>
               @if ( batchSvc.areItemsSelected() ) {
@@ -87,7 +87,7 @@
               }
           </div>
           }
-          <a class="nav-link border-bottom py-3" [routerLink]="['cart']" (click)="collapse()">
+          <a class="nav-link border-bottom py-3" [routerLink]="['cart']" (click)="collapse()" data-test="sidenav-basket">
             <svg fill="currentColor" height="24px" width="24px">
               <use href="/assets/icons/icons.svg#cart"></use>
             </svg>
@@ -98,11 +98,11 @@
 
             <span class="nav-label ms-3" i18n="@@basket">Basket</span>
           </a>
-          <a class="nav-link border-bottom py-3" [routerLink]="['ou_tree']" (click)="collapse()">
+          <a class="nav-link border-bottom py-3" [routerLink]="['ou_tree']" (click)="collapse()" data-test="sidenav-organizational-units">
             <span class="material-symbols-outlined">account_tree</span>
             <span class="nav-label ms-3" i18n="@@ouTree">Organizational units</span>
           </a>
-          <a class="nav-link py-3" [routerLink]="['']" (click)="collapse()">
+          <a class="nav-link py-3" [routerLink]="['']" (click)="collapse()" data-test="sidenav-place">
             <span class="material-symbols-outlined">place</span>
           </a>
         </nav>

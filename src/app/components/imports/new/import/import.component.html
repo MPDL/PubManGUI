@@ -37,7 +37,7 @@
           <select class="form-select" formControlName="format">
             <option [value]='' selected disabled>Format</option>
             @for (format of importFormat; track format) {
-              <option [value]="format">{{ format }}</option>
+              <option [value]="format">{{ getImportFormatTranslation(format) }}</option>
             }
           </select>
         </div>
@@ -83,7 +83,7 @@
       <div class="row">
         <div class="offset-sm-9 col-sm-3">
           <button type="submit" [disabled]="importForm.invalid || importForm.pristine" 
-            class="btn btn-outline-secondary col-4 float-end">
+            class="btn btn-outline-secondary border-2 col-4 float-end">
             GO
           </button>
         </div>
