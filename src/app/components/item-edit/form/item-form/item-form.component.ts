@@ -5,7 +5,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFo
 import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
-import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO } from 'src/app/model/inge';
+import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO, Storage } from 'src/app/model/inge';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { remove_null_empty, remove_objects } from 'src/app/shared/services/utils_final';
 import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
@@ -15,6 +15,8 @@ import { ItemsService } from 'src/app/services/pubman-rest-client/items.service'
 import { FileFormComponent } from '../file-form/file-form.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'pure-item-form',
@@ -38,7 +40,9 @@ export class ItemFormComponent implements OnInit {
   contextService = inject(ContextsService);
   fb = inject(FormBuilder);
   fbs = inject(FormBuilderService);
+  fileStagingService = inject(FileStagingService);
   itemService = inject(ItemsService);
+  messageService = inject(MessageService);
   route = inject(ActivatedRoute);
   
   externalReferences!: FormArray<FormGroup<ControlType<FileDbVO>>>;
@@ -98,24 +102,21 @@ export class ItemFormComponent implements OnInit {
 
   initInternalAndExternalFiles() {
     for (let i = 0; i < this.files.length; i++) {
-      console.log('init File', i);
       if (this.files.at(i).value.storage == 'INTERNAL_MANAGED') {
-        console.log('internal file added', i);
         if (!this.internalFiles) {
-          this.internalFiles = this.fb.array([this.fbs.file_FG(this.files.at(i).value as FileDbVO)]);
+          this.internalFiles = this.fb.array([this.files.at(i)]);
         } else {
           this.internalFiles.push(this.files.at(i));
         }
       }
       if (this.files.at(i).value.storage == 'EXTERNAL_URL') {
         if (!this.externalReferences) {
-          this.externalReferences = this.fb.array([this.fbs.file_FG(this.files.at(i).value as FileDbVO)]);
+          this.externalReferences = this.fb.array([this.files.at(i)]);
         } else {
           this.externalReferences.push(this.files.at(i));
         }
       }
     }
-
   }
 
   add_remove_local_tag(event: any) {
@@ -133,11 +134,7 @@ export class ItemFormComponent implements OnInit {
 
   changeSortingMode() {
     this.switchFileSortingMode = !this.switchFileSortingMode;
-    //this.onChangeSwitchMode.emit({switchfileSortingMode: this.switchFileSortingMode});
-    console.log("IN SORTING MODE");
     const elements = (document.getElementsByClassName('containerHideOnSort')) as any
-    //elements.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-    console.log("this.switchFileSortingMode", this.switchFileSortingMode);
     if (this.switchFileSortingMode == true) {
       for (let i = 0; i < elements.length; i++) {
         elements[i].style.display = 'none'
@@ -150,24 +147,24 @@ export class ItemFormComponent implements OnInit {
 
   }
 
-  handleFileNotification(event: any) {
-    if (event.action === 'add') {
-      this.addFile(event.index);
-    } else if (event.action === 'remove') {
-      this.removeFile(event.index);
+  handleFileUploadNotification(files: FileDbVO[]) {
+    for (let file of files) {
+      file.storage = Storage.INTERNAL_MANAGED;
+      if (this.aaService.token) {
+        this.fileStagingService.createStageFile(file, this.aaService.token)
+          .subscribe(stagedFileId => {
+            file.content = stagedFileId.toString();
+            if (!this.internalFiles) {
+              this.internalFiles = this.fb.array([this.fbs.file_FG(file)]);
+            } else {
+              this.internalFiles.push(this.fbs.file_FG(file));
+            }
+          })
+
+      } else {
+        this.messageService.error('Authentication error. You need to be logged in, to stage a file');
+      }
     }
-  }
-
-  handleNoFiles() {
-    this.files.push(this.fbs.file_FG(null));
-  }
-
-  addFile(index: number) {
-    this.files.insert(index + 1, this.fbs.file_FG(null));
-  }
-
-  removeFile(index: number) {
-    this.files.removeAt(index);
   }
 
   handleInternalFileNotification(event: any) {
@@ -248,17 +245,21 @@ export class ItemFormComponent implements OnInit {
   submit() {
     // reassembling files in "files" from "internalFiles" and externalReferences 
     this.files.clear();
-    this.internalFiles.controls.forEach(internalFileControl => {
-      this.files.push(internalFileControl);
-    })
-    this.externalReferences.controls.forEach(externalReferenceControl => {
-      this.files.push(externalReferenceControl);
-    })
+    if (this.internalFiles) {
+      this.internalFiles.controls.forEach(internalFileControl => {
+        this.files.push(internalFileControl);
+      })
+    }
+    if (this.externalReferences) {
+      this.externalReferences.controls.forEach(externalReferenceControl => {
+        this.files.push(externalReferenceControl);
+      });
+    }
     // set sorting (sortkz) for files
     for (let i = 0; i < this.files.length; i++) {
-      console.log("Setting new sortkz: ", i);
+      //console.log("Setting new sortkz: ", i);
       this.files.at(i).get('sortkz')?.setValue(i);
-      console.log("Setting new sortkz: ", this.files.at(i).get('sortkz'));
+      //console.log("Setting new sortkz: ", this.files.at(i).get('sortkz'));
     }
     // cleanup form
     this.form_2_submit = remove_null_empty(this.form.value);

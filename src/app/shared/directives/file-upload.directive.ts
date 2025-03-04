@@ -62,6 +62,7 @@ export class FileUploadDirective {
         files.push({ name : file.name, content: url } as FileDbVO);
       }
     }
+    event
     console.log(files)
     if (files.length > 0) {
       this.dropFiles.emit(files);

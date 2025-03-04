@@ -28,21 +28,19 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
   });
 
   constructor(aaService: AaService) {
-    console.log('starting MISCELLANEOUS Service');
     super('/miscellaneous');
     for (var i = 0; i < this.genre_types.length; i++) {
       let genre = this.genre_types.at(i);
       if (genre) {
         this.getGenreProperties(genre).subscribe(genreJson => {
           this.genreProperties.push(genreJson);
-          console.log('NEW GENRE JSON SET', genreJson.genre);
+          // console.log('NEW GENRE JSON SET', genreJson.genre);
           if (genreJson.genre == 'ARTICLE') {
             this.genreSpecficProperties.set(genreJson as GenrePresentationObject);
           }
         });
       }
     }
-    console.log('started MISCELLANEOUS Service');
   }
 
   retrieveIpList(): Observable<IpEntry[]> {
