@@ -366,7 +366,9 @@
     "WARNING": "Warning"
   },
   "ImportMessage": {
-    "import_process_aborted_unexpectedly":"The import was aborted unexpectedly",
+    "import_process_aborted_unexpectedly": "The import was aborted unexpectedly",
+    "import_process_default_validation": "Validating item (default rules)",
+    "import_process_default_validation_failed": "Validation (default rules) failed",
     "import_process_default_validation_successful": "Validation (default rules) was successful",
     "import_process_delete_failed": "An error occurred while deleting the item",
     "import_process_delete_finished": "Deletion completed",
@@ -479,8 +481,8 @@
     "NoMaxPlanckAffiliation": "At least one creator must have an affiliation within the Max Planck Society",
     "NoSequenceInformationGiven": "The sequence number or startpage and endpage can be specified.",
     "NoUtf8CharInAbstract": "In the abstract the non conformable UTF-8 character was removed: $1",
-    "NoUtf8CharInAlternativeTitle": "In the alternative title the non conformable UTF-8 character was removed:",
-    "NoUtf8CharInTitle": "In the title the non conformable UTF-8 character was removed:",
+    "NoUtf8CharInAlternativeTitle": "In the alternative title the non conformable UTF-8 character was removed: $1",
+    "NoUtf8CharInTitle": "In the title the non conformable UTF-8 character was removed: $1",
     "OrganizationalMetadataNotProvided": "At least one creator needs an organizational unit.",
     "OrganizationNameNotProvided": "Organization data was entered without an organization's name.",
     "PublisherNotProvided": "A publisher can be provided.",
