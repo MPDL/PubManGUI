@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
@@ -27,14 +27,11 @@ import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/bat
   templateUrl: './replace-orcid-form.component.html',
 })
 export class ReplaceOrcidFormComponent {
-
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    private batchSvc: BatchService, 
-    private cone: ConePersonsService,
-    //private msgSvc: MessageService
-  ) { }
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  batchSvc = inject(BatchService);
+  cone = inject(ConePersonsService);
+  //msgSvc = inject(MessageService);
 
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
     completeName: this.fb.control(''),

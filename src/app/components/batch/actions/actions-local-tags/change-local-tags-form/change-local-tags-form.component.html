@@ -17,9 +17,9 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-2 col-sm-6">
-      @if(validSvc.notValidField(changeLocalTagsForm.controls['localTagFrom'])) {
+      @if(valSvc.notValidField(changeLocalTagsForm.controls['localTagFrom'])) {
       <span class="form-text text-danger small">
-        {{ validSvc.getFieldError(changeLocalTagsForm.controls['localTagFrom']) }}
+        {{ valSvc.getFieldError(changeLocalTagsForm.controls['localTagFrom']) }}
       </span>
       } @else {
         <span>&nbsp;</span>
@@ -37,9 +37,9 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-2 col-sm-6">
-        @if(validSvc.notValidField(changeLocalTagsForm.controls['localTagTo'])) {
+        @if(valSvc.notValidField(changeLocalTagsForm.controls['localTagTo'])) {
         <span class="form-text text-danger small">
-          Previous and new local tags {{ validSvc.getFieldError(changeLocalTagsForm.controls['localTagTo']) }}
+          Previous and new local tags {{ valSvc.getFieldError(changeLocalTagsForm.controls['localTagTo']) }}
         </span>
         } @else {
           <span>&nbsp;</span>

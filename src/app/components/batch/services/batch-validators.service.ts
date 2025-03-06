@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, FormControl, Validators } from '@angular/forms';
 
 
 @Injectable({
@@ -8,7 +7,7 @@ import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, F
 })
 export class BatchValidatorsService {
 
-  constructor() { }
+  constructor() {}
 
   notValidField(control: AbstractControl): boolean | null {
     return control.errors
@@ -43,6 +42,9 @@ export class BatchValidatorsService {
 
         case 'notDuplicates':
           return " duplicate!";
+
+        case 'allRequired':
+          return " not all required values!";
       }
     }
     return null;
@@ -121,6 +123,25 @@ export class BatchValidatorsService {
         return match ? { noDuplicates: true } : null;
       }
       control.setErrors(null);
+      return null;
+    }
+  }
+
+  allRequiredValidator(): ValidatorFn { 
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control instanceof FormGroup) {
+        let error = false;
+        Object.keys(control.controls).forEach(key => {
+          const field = control.get(key);
+          if(field!.hasValidator(Validators.required) && !(field!.dirty || field!.touched)) { 
+            error = true;
+            return;
+          }
+        });
+        control.setErrors(error ? { allRequired: true } : null );
+        return error ? { allRequired: true } : null;
+      }
+      
       return null;
     }
   }

@@ -31,7 +31,7 @@ export class ActionsContextComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: BatchValidatorsService, 
+    public valSvc: BatchValidatorsService, 
     private aaSvc: AaService, 
     private batchSvc: BatchService,
     private router: Router) { }
@@ -44,13 +44,15 @@ export class ActionsContextComponent implements OnInit {
         this.user_contexts = p.depositorContexts;
       }
     );
+    this.changeContextForm.get('contextFrom')?.markAsPristine();
+    this.changeContextForm.get('contextTo')?.markAsPristine();
   }
 
   public changeContextForm: FormGroup = this.fb.group({
     contextFrom: [$localize`:@@batch.actions.context:Context`, Validators.required],
     contextTo: [$localize`:@@batch.actions.context:Context`, Validators.required]
   }, 
-  { validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
+  { validators: [this.valSvc.notEqualsValidator('contextFrom','contextTo'), this.valSvc.allRequiredValidator()] }
   );
 
   get changeContextParams(): ChangeContextParams {

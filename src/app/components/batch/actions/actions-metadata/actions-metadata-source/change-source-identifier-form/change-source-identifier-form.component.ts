@@ -66,7 +66,7 @@ export class ChangeSourceIdentifierFormComponent {
     sourceIdentifierTo: ['', [ Validators.required ]], 
   },
   {
-    validators: this.validSvc.notEqualsValidator('sourceIdentifierFrom', 'sourceIdentifierTo')
+    validators: [this.validSvc.notEqualsValidator('sourceIdentifierFrom', 'sourceIdentifierTo'), this.validSvc.allRequiredValidator()]
   });
 
   get changeSourceIdentifierParams(): ChangeSourceIdentifierParams {

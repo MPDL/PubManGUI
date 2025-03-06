@@ -60,7 +60,7 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
     externalReferenceContentCategoryFrom: [$localize`:@@batch.actions.metadata.extRef.contentCategory:Category`, [ Validators.required ]],
     externalReferenceContentCategoryTo: [$localize`:@@batch.actions.metadata.extRef.contentCategory:Category`, [ Validators.required ]],
   }, 
-  { validators: this.validSvc.notEqualsValidator('externalReferenceContentCategoryFrom','externalReferenceContentCategoryTo') });
+  { validators: [this.validSvc.notEqualsValidator('externalReferenceContentCategoryFrom','externalReferenceContentCategoryTo'), this.validSvc.allRequiredValidator()] });
 
   get changeExternalReferenceContentCategoryParams(): ChangeExternalReferenceContentCategoryParams {
     const actionParams: ChangeExternalReferenceContentCategoryParams = {

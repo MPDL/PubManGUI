@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, inject, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeGenreParams } from 'src/app/components/batch/interfaces/batch-params';
 import { MdsPublicationGenre, DegreeType } from 'src/app/model/inge';
 
@@ -20,14 +20,15 @@ import { MdsPublicationGenre, DegreeType } from 'src/app/model/inge';
   templateUrl: './change-genre.component.html',
 })
 export class ActionsGenreComponent { 
+    router = inject(Router);
+    fb = inject(FormBuilder);
+    batchSvc = inject(BatchService);
+    valSvc = inject(BatchValidatorsService); 
+    //msgSvc = inject(MessageService);
 
   constructor(
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService, 
-    private batchSvc: BatchService,
-    private msgSvc: MessageService,
-    private router: Router,
-    @Inject(LOCALE_ID) public locale: string) {}
+    @Inject(LOCALE_ID) public locale: string
+  ) {}
 
   genres = Object.keys(MdsPublicationGenre).sort();
   genresTranslations = {};
@@ -70,7 +71,7 @@ export class ActionsGenreComponent {
     genreTo: ['Genre', [Validators.required]],
     degreeType: [{value: '', disabled: true}],
     }, 
-    { validators: this.valSvc.notEqualsValidator('genreFrom','genreTo') }
+    { validators: [this.valSvc.notEqualsValidator('genreFrom','genreTo'), this.valSvc.allRequiredValidator()] }
   );
 
   get changeGenreParams(): ChangeGenreParams {
@@ -88,12 +89,11 @@ export class ActionsGenreComponent {
       this.changeGenreForm.markAllAsTouched();
       return;
     }
-
     this.batchSvc.changeGenre(this.changeGenreParams).subscribe( actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.changeGenreForm.reset();
       this.router.navigate(['/batch/logs']);
-    });   
+    });       
   }
 
 }

@@ -59,7 +59,7 @@ export class ChangeReviewMethodFormComponent {
     reviewMethodFrom: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
     reviewMethodTo: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
   }, 
-  { validators: this.validSvc.notEqualsValidator('reviewMethodFrom','reviewMethodTo') });
+  { validators: [this.validSvc.notEqualsValidator('reviewMethodFrom','reviewMethodTo'), this.validSvc.allRequiredValidator()] });
 
   get changeReviewMethodParams(): ChangeReviewMethodParams {
     const actionParams: ChangeReviewMethodParams = {

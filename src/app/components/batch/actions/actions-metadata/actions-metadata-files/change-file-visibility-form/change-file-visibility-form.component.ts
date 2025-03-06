@@ -60,7 +60,7 @@ export class ChangeFileVisibilityFormComponent {
     fileVisibilityFrom: [$localize`:@@batch.actions.metadata.files.visibility:Visibility`, [Validators.required]],
     fileVisibilityTo: [$localize`:@@batch.actions.metadata.files.visibility:Visibility`, [Validators.required]],
   }, 
-  { validators: this.validSvc.notEqualsValidator('fileVisibilityFrom','fileVisibilityTo') });
+  { validators: [this.validSvc.notEqualsValidator('fileVisibilityFrom','fileVisibilityTo'), this.validSvc.allRequiredValidator()] });
 
   get changeFileVisibilityParams(): ChangeFileVisibilityParams {
     const actionParams: ChangeFileVisibilityParams = {

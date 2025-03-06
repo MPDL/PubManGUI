@@ -570,7 +570,8 @@ export class BatchService {
     actionParams.itemIds = this.items;
 
     const headers = new HttpHeaders().set('Authorization', this.token!);
-    const url = `${this.#baseUrl}/batchProcess/addSourceIdentifer`;
+    headers.set('Access-Control-Allow-Origin', this.#baseUrl);
+    const url = `${this.#baseUrl}/batchProcess/addSourceIdentifier`;
     const query = `?sourceNumber=${actionParams.sourceNumber}&sourceIdentifierType=${actionParams.sourceIdentifierType}&sourceIdentifier=${actionParams.sourceIdentifier}`;
     const body = { itemIds: actionParams.itemIds };
 

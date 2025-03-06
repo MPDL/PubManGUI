@@ -23,7 +23,7 @@ export class ChangeLocalTagsFormComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder, 
-    public validSvc: BatchValidatorsService, 
+    public valSvc: BatchValidatorsService, 
     private batchSvc: BatchService,
     //private msgSvc: MessageService
   ) { }
@@ -33,7 +33,7 @@ export class ChangeLocalTagsFormComponent {
     localTagTo: ['', [Validators.required]],
   },
     {
-      validators: this.validSvc.notEqualsValidator('localTagFrom', 'localTagTo')
+      validators: [this.valSvc.notEqualsValidator('localTagFrom', 'localTagTo'), this.valSvc.allRequiredValidator()]
     });
 
 

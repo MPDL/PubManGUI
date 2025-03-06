@@ -59,7 +59,7 @@ export class ChangeFileContentCategoryFormComponent {
     fileContentCategoryFrom: [$localize`:@@batch.actions.metadata.files.contentCategory:Category`, [ Validators.required ]],
     fileContentCategoryTo: [$localize`:@@batch.actions.metadata.files.contentCategory:Category`, [ Validators.required ]],
   }, 
-  { validators: this.validSvc.notEqualsValidator('fileContentCategoryFrom','fileContentCategoryTo') });
+  { validators: [this.validSvc.notEqualsValidator('fileContentCategoryFrom','fileContentCategoryTo'), this.validSvc.allRequiredValidator()] });
 
   get changeFileContentCategoryParams(): ChangeFileContentCategoryParams {
     const actionParams: ChangeFileContentCategoryParams = {
