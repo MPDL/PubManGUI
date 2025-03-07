@@ -39,7 +39,7 @@ export default class FetchComponent implements OnInit {
 
   public fetchForm: FormGroup = this.fb.group({
     contextId: [$localize`:@@imports.context:Context`, Validators.required],
-    source: ['crossref', Validators.required],
+    source: ['crossref'],
     identifier: ['', [Validators.required, this.valSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']
   },
