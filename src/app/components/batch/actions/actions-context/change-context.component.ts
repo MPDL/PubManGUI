@@ -44,8 +44,6 @@ export class ActionsContextComponent implements OnInit {
         this.user_contexts = p.depositorContexts;
       }
     );
-    this.changeContextForm.get('contextFrom')?.markAsPristine();
-    this.changeContextForm.get('contextTo')?.markAsPristine();
   }
 
   public changeContextForm: FormGroup = this.fb.group({

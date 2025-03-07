@@ -134,7 +134,7 @@ export class BatchValidatorsService {
         let error = false;
         Object.keys(control.controls).forEach(key => {
           const field = control.get(key);
-          if(field!.hasValidator(Validators.required) && !(field!.dirty || field!.touched)) { 
+          if(field!.hasValidator(Validators.required) && !(field!.dirty)) { 
             error = true;
             return;
           }

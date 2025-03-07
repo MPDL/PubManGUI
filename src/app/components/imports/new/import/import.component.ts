@@ -186,7 +186,7 @@ export default class ImportComponent implements OnInit {
       return;
     }
 
-    this.importsSvc.postImport(this.getImportParams, this.data).subscribe(importResponse => {
+    this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
       this.router.navigate(['/imports/myimports']);
     });
   }
