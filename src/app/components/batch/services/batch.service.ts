@@ -24,16 +24,16 @@ export class BatchService {
 
   constructor(
     private http: HttpClient,
-    public aa: AaService,
+    public aaSvc: AaService,
     private itemSvc: ItemsService,
     private msgSvc: MessageService) { }
 
   get token(): string {
-    return this.aa.token || '';
+    return this.aaSvc.token || '';
   }
 
   get user(): string {
-    return this.aa.principal.getValue().user?.objectId || '';
+    return this.aaSvc.principal.getValue().user?.objectId || '';
   }
 
   lastPageNumFrom = signal({logs: 1, details: 1});
@@ -47,7 +47,7 @@ export class BatchService {
   public getLogFilters = computed( () => this.#logFilters() );
 
   addToBatchDatasets(selection: string[]): number {
-    //const fromSelection = sessionStorage.getItem(selection);
+    //const fromSelection = localStorage.getItem(selection);
     let datasets: string[] = this.items;
     const prev = datasets.length;
     if (selection) {
@@ -58,7 +58,7 @@ export class BatchService {
   }
 
   removeFromBatchDatasets(selection: string[]): number {
-    //const fromSelection = sessionStorage.getItem(selection);
+    //const fromSelection = localStorage.getItem(selection);
     let datasets: string[] = this.items;
     const prev = datasets.length;
     if (selection && prev > 0) {
@@ -73,7 +73,7 @@ export class BatchService {
   public getItemsCount = computed( () => this.#itemsCount() );
 
   get objectIds() {
-    const itemList = sessionStorage.getItem(this.datasetList);
+    const itemList = localStorage.getItem(this.datasetList);
     if (itemList) {
       const items = JSON.parse(itemList);
       if (items.length > 0) {
@@ -84,7 +84,7 @@ export class BatchService {
   }
 
   get items(): string[] {
-    const itemList = sessionStorage.getItem(this.datasetList);
+    const itemList = localStorage.getItem(this.datasetList);
     if (itemList) {
       const items = JSON.parse(itemList);
       if (items.length > 0) {
@@ -107,7 +107,7 @@ export class BatchService {
       this.#itemsCount.set(0);
     }
 
-    sessionStorage.setItem(this.datasetList, JSON.stringify(items));
+    localStorage.setItem(this.datasetList, JSON.stringify(items));
   }
 
   #itemsSelected = signal(false);
@@ -154,11 +154,11 @@ export class BatchService {
   }
 
   set batchProcessLogHeaderId(id: number) {
-    sessionStorage.setItem('batchProcessLogHeaderId', id.toString());
+    localStorage.setItem('batchProcessLogHeaderId', id.toString());
   }
 
   get batchProcessLogHeaderId(): number {
-    const batchProcessLogHeaderId = sessionStorage.getItem('batchProcessLogHeaderId');
+    const batchProcessLogHeaderId = localStorage.getItem('batchProcessLogHeaderId');
     if (batchProcessLogHeaderId) {
       return JSON.parse(batchProcessLogHeaderId);
     } else {
