@@ -5,7 +5,7 @@ import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/mod
 import { ControlType} from '../../services/form-builder.service';
 import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
-import { AaService } from 'src/app/services/aa.service';
+import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
 
 @Component({
   selector: 'pure-file-form',
@@ -13,6 +13,7 @@ import { AaService } from 'src/app/services/aa.service';
   imports: [
     AddRemoveButtonsComponent,
     CommonModule,
+    LoadingComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './file-form.component.html',
@@ -26,7 +27,7 @@ export class FileFormComponent {
 
   fb = inject(FormBuilder);
   miscellaneousService = inject(MiscellaneousService);
-  genreSpecificResource = this.miscellaneousService.genrePropertiesResource
+  genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
   contentCategory_types = Object.keys(ContentCategories);
   visibility_types = Object.keys(Visibility);
@@ -34,11 +35,10 @@ export class FileFormComponent {
 
   ipRangeCompleteList: IpEntry[] = [] as IpEntry[];
 
-  constructor(miscellaneousService: MiscellaneousService, aaService: AaService) {
+  constructor(miscellaneousService: MiscellaneousService) {
     miscellaneousService.retrieveIpList().subscribe(
-      result => { this.ipRangeCompleteList = result; console.log('Miscellaneous IPList: ', this.ipRangeCompleteList) }
+      result => { this.ipRangeCompleteList = result; /* console.log('Miscellaneous IPList: ', this.ipRangeCompleteList) */ }
     )
-    console.log("Complete IPList", JSON.stringify(this.ipRangeCompleteList))
   }
 
   get allowedAudienceIds() {

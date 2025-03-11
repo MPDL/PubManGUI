@@ -24,11 +24,14 @@ export class SidenavComponent implements AfterViewInit {
   @ViewChild('sidenav', {read: ElementRef}) nav!: ElementRef;
   renderer = inject(Renderer2);
 
-  constructor(protected aaService: AaService, public batchSvc: BatchService, public importsSvc: ImportsService, protected cartService: CartService) {
-  }
+  aaService = inject(AaService); 
+  batchSvc = inject(BatchService);
+  importsSvc = inject(ImportsService); 
+  cartService = inject(CartService);
 
   ngAfterViewInit(): void {
     this.collapse();
+    this.batchSvc.items;
   }
 
   /*

@@ -34,9 +34,9 @@
 
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        @if (validSvc.notValidField(changeContextForm.controls['contextTo'])) {
+        @if (valSvc.notValidField(changeContextForm.controls['contextTo'])) {
           <span class="form-text text-danger small">
-            Previous and new contexts {{ validSvc.getFieldError(changeContextForm.controls['contextTo']) }}
+            Previous and new contexts {{ valSvc.getFieldError(changeContextForm.controls['contextTo']) }}
           </span>
         } @else {
           <span>&nbsp;</span>

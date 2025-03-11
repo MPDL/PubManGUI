@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MiscellaneousService, IpEntry } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/batch-params';
 
 import { AudienceFormComponent } from 'src/app/components/batch/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
-import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
+//import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -19,7 +20,7 @@ import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-
     CommonModule,
     ReactiveFormsModule,
     AudienceFormComponent,
-    AddRemoveButtonsComponent
+    //AddRemoveButtonsComponent
   ],
   templateUrl: './replace-file-audience-form.component.html',
 })
@@ -31,11 +32,13 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   ous: IpEntry[] = [];
 
   constructor(
+    private router: Router,
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService,
+    public valSvc: BatchValidatorsService,
     private batchSvc: BatchService,
     private miscSvc: MiscellaneousService,
-    private msgSvc: MessageService) { }
+    //private msgSvc: MessageService
+  ) { }
 
   ngOnInit(): void {
     this.miscSvc.retrieveIpList()
@@ -52,7 +55,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
     }])
   },
   {
-    //validators: this.validSvc.noDuplicatesValidator(this.allowedAudienceIds)
+    //validators: this.valSvc.noDuplicatesValidator(this.allowedAudienceIds)
   });
 
     
@@ -96,19 +99,17 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   onSubmit(): void {    
-    if (this.replaceFileAudienceForm.invalid) {
+    if (this.replaceFileAudienceForm.invalid || this.allowedAudienceIds.length <= 1) {
       this.replaceFileAudienceForm.markAllAsTouched();
       return;
     }
 
-    if (this.allowedAudienceIds.length === 0) return
-
     this.batchSvc.replaceFileAudience(this.replaceFileAudienceParams).subscribe( actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      ( this.replaceFileAudienceForm.controls['allowedAudienceIds'] as FormArray ) = this.fb.array([]);
-      this.replaceFileAudienceForm.reset();
+      // ( this.replaceFileAudienceForm.controls['allowedAudienceIds'] as FormArray ) = this.fb.array([]);
+      //this.replaceFileAudienceForm.reset();
+      this.router.navigate(['/batch/logs']);
     } );
-
   }
 
 }

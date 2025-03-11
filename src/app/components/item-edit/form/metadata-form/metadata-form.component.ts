@@ -64,9 +64,7 @@ export class MetadataFormComponent {
 
   ngOnInit() {
     let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
-    console.log('Genre', genre)
     this.miscellaneousService.selectedGenre.set(genre);
-    console.log('metadata-form GenreSpecificProperties', this.miscellaneousService.genreSpecficProperties());
   }
 
   get alternativeTitles() {

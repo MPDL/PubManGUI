@@ -46,7 +46,7 @@ export class BatchNavComponent implements OnInit {
     switch (option) {
       case '/batch/datasets':
         if (!this.batchSvc.areItemsSelected()) {
-          this.msgSvc.warning($localize`:@@batch.datasets.empty:The batch processing is empty!`+'\n');
+          this.msgSvc.warning($localize`:@@batch.datasets.empty:The batch processing is empty`+'!\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/batch'])
           })
@@ -54,12 +54,12 @@ export class BatchNavComponent implements OnInit {
         break;
       case '/batch/actions':
         if (!this.batchSvc.areItemsSelected()) {
-          this.msgSvc.warning($localize`:@@batch.datasets.empty:The batch processing is empty!`+'\n');
+          this.msgSvc.warning($localize`:@@batch.datasets.empty:The batch processing is empty`+'!\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/batch'])
           })
         } else if (this.batchSvc.isProcessRunning()) {
-          this.msgSvc.warning($localize`:@@batch.actions.running:Please wait, a process is running!`+'\n');
+          this.msgSvc.warning($localize`:@@batch.actions.running:Please wait, a process is running`+'!\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/batch'])
           })

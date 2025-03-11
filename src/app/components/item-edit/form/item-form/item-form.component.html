@@ -43,7 +43,7 @@
                         <!-- TODO File upload -->
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label class="col-sm-2 col-form-label">File Upload</label>
-                            <pure-file-upload [file_upload_form]="internalFiles"></pure-file-upload>
+                            <pure-file-upload [file_upload_form]="internalFiles" (fileUploadNotice)="handleFileUploadNotification($event)"></pure-file-upload>
                         </div>
                     </div>
                     @if (internalFiles && internalFiles.controls.length > 0) {
@@ -65,10 +65,19 @@
                                     <div cdkDrag class="col-sm"> <!-- (cdkDragMoved)="onDragMove($event)" -->
                                         <pure-file-form [file_form]="file" [index]="fileIndex"
                                             [index_length]="internalFiles.controls.length"
-                                            (notice)="handleFileNotification($event)"></pure-file-form>
+                                            (notice)="handleInternalFileNotification($event)"></pure-file-form>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <pure-add-remove-buttons [index]="fileIndex" [hiddenAddButton]="true"
+                                            (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
                                     </div>
                                 </div>
                                 }
+                                @empty {
+                                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
+                                        [add_val]="'add fileIndex'"
+                                        (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
+                                    }
                             </div>
                         </div>
                     </div>
@@ -91,12 +100,12 @@
                                 externalUrlIndex = $index) {
                                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                     <div class="col-sm drag-list-box" cdkDrag>
-                                        <pure-file-form [file_form]="externalUrl" [index]="externalUrlIndex"
+                                        <pure-file-form [file_form]="externalUrl" [index]="externalUrlIndex" 
                                             [index_length]="externalReferences.controls.length"
                                             (notice)="handleExternalReferenceNotification($event)"></pure-file-form>
                                     </div>
                                     <div class="col-sm-1">
-                                        <pure-add-remove-buttons [index]="externalUrlIndex"
+                                        <pure-add-remove-buttons [index]="externalUrlIndex" 
                                             (notice)="handleExternalReferenceNotification($event)"></pure-add-remove-buttons>
                                     </div>
                                 </div>

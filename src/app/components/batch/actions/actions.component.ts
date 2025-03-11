@@ -33,6 +33,7 @@ export default class ActionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.batchSvc.items;
     this.isReady =  (this.batchSvc.areItemsSelected() && !this.batchSvc.isProcessRunning()) ? true : false;
   }
 

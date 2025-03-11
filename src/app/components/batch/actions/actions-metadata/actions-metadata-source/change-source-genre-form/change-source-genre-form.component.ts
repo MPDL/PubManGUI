@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { ValidatorsService } from 'src/app/components/batch/services/validators.service';
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeSourceGenreParams } from 'src/app/components/batch/interfaces/batch-params';
 import { SourceGenre } from 'src/app/model/inge';
 
@@ -18,13 +19,14 @@ import { SourceGenre } from 'src/app/model/inge';
   ],
   templateUrl: './change-source-genre-form.component.html',
 })
-export class ChangeSourceGenreFormComponent implements OnInit {
+export class ChangeSourceGenreFormComponent {
 
   constructor(
+    private router: Router,
     private fb: FormBuilder, 
-    public validSvc: ValidatorsService, 
+    public valSvc: BatchValidatorsService, 
     private batchSvc: BatchService,
-    private msgSvc: MessageService,
+    //private msgSvc: MessageService,
     @Inject(LOCALE_ID) public locale: string) {}
 
   sourceGenres = Object.keys(SourceGenre).sort();
@@ -57,7 +59,7 @@ export class ChangeSourceGenreFormComponent implements OnInit {
     sourceGenreFrom: ['Genre', [Validators.required]],
     sourceGenreTo: ['Genre', [Validators.required]],
   },
-    { validators: this.validSvc.notEqualsValidator('sourceGenreFrom', 'sourceGenreTo') });
+    { validators: [this.valSvc.notEqualsValidator('sourceGenreFrom', 'sourceGenreTo'), this.valSvc.allRequiredValidator()] });
 
   get changeSourceGenreParams(): ChangeSourceGenreParams {
     const actionParams: ChangeSourceGenreParams = {
@@ -77,8 +79,8 @@ export class ChangeSourceGenreFormComponent implements OnInit {
     this.batchSvc.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-
-      setTimeout(() => {this.changeSourceGenreForm.reset();}, 500);
+      //setTimeout(() => {this.changeSourceGenreForm.reset();}, 500);
+      this.router.navigate(['/batch/logs']);
     });
 
   }

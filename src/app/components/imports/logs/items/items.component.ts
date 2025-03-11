@@ -7,8 +7,9 @@ import { ImportLogItemDbVO, ImportErrorLevel, ImportLogDbVO } from 'src/app/mode
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
+import { MessageService } from 'src/app/shared/services/message.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { StateFilterPipe } from 'src/app/components/imports/pipes/stateFilter.pipe';
+// import { StateFilterPipe } from 'src/app/components/imports/pipes/stateFilter.pipe';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 
@@ -21,7 +22,7 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
     FormsModule,
     RouterLink,
     NgbTooltip,
-    StateFilterPipe,
+    // StateFilterPipe,
     PaginatorComponent
   ],
   templateUrl: './items.component.html'
@@ -31,19 +32,21 @@ export default class ItemsComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
   fb = inject(FormBuilder);
+  msgSvc = inject(MessageService);
 
   currentPage = this.importsSvc.lastPageNumFrom().details;
   pageSize = 25;
+  inPage: ImportLogItemDbVO[] = [];
+
   unfilteredSize = 0;
   filteredSize = 0;
-  inPage: ImportLogItemDbVO[] = [];
   unfilteredLogs: ImportLogItemDbVO[] = [];
   filteredLogs: ImportLogItemDbVO[] = [];
 
   import!: ImportLogDbVO;
+  isStandardWorkflow: boolean = false;
+  isSimpleWorkflow: boolean = false;
 
-  itemsFailed: number = 0;
-  itemsImported: number = 0;
   error: number = 0;
   fatal: number = 0;
   fine: number = 0;
@@ -57,6 +60,14 @@ export default class ItemsComponent implements OnInit {
     error: [true, Validators.requiredTrue],
     fatal: [true, Validators.requiredTrue],
   });
+
+  activeFilters: ImportErrorLevel[] = [
+    ImportErrorLevel.FINE,
+    ImportErrorLevel.WARNING,
+    ImportErrorLevel.PROBLEM,
+    ImportErrorLevel.ERROR,
+    ImportErrorLevel.FATAL
+  ];
 
   executeOnceTimeout = false;
 
@@ -78,15 +89,10 @@ export default class ItemsComponent implements OnInit {
     if (this.import.id) {
       this.importsSvc.getImportLogItems(Number(this.import.id))
         .subscribe(importsResponse => {
-          if (importsResponse.length === 0) return this.router.navigate(['/import/myimports']);
+          if (importsResponse.length === 0) return this.router.navigate(['/imports/myimports']);
 
           importsResponse.sort((a, b) => a.id - b.id)
             .forEach(element => {
-              if (element.itemId) {
-                this.itemsImported++;
-              } else if (element.message.includes("item")) {
-                this.itemsFailed++;
-              }
               switch (element.errorLevel) {
                 case ImportErrorLevel.FINE:
                   this.fine++;
@@ -105,12 +111,46 @@ export default class ItemsComponent implements OnInit {
                   break;
               }
             });
+            
           this.filteredLogs = this.unfilteredLogs = importsResponse;
-          this.filteredSize = this.unfilteredSize = this.filteredLogs.length;
+          this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
 
+          if (this.importsSvc.getLogFilters().length > 0) {
+            if (this.activeFilters.length === this.importsSvc.getLogFilters().length
+              && (this.activeFilters.every((element_1) =>
+                this.importsSvc.getLogFilters().some((element_2) =>
+                  Object.keys(element_1).every((key: any) => element_1[key] === element_2[key])
+                )))) {
+            } else {
+              this.activeFilters = this.importsSvc.getLogFilters();
+              this.filterForm.patchValue({
+                fine: this.activeFilters.includes(ImportErrorLevel.FINE),
+                warning: this.activeFilters.includes(ImportErrorLevel.WARNING),
+                problem: this.activeFilters.includes(ImportErrorLevel.PROBLEM),
+                error: this.activeFilters.includes(ImportErrorLevel.ERROR),
+                fatal: this.activeFilters.includes(ImportErrorLevel.FATAL),
+              });
+              this.updateFilteredLogs();
+            }
+          }
           this.refreshLogs();
           return;
         });
+      if (this.import.contextId) {
+        this.importsSvc.getContexts(this.import.contextId)
+          .subscribe(ctxRespoonse => {
+            if (ctxRespoonse.workflow === "STANDARD") {
+              this.isStandardWorkflow = true;
+            } else {
+              this.isStandardWorkflow = false;
+              if (ctxRespoonse.workflow === "SIMPLE") {
+                this.isSimpleWorkflow = true;
+              } else {
+                this.isSimpleWorkflow = false;
+              }
+            }
+          })
+      }
     }
 
     this.loadTranslations(this.locale);
@@ -134,10 +174,11 @@ export default class ItemsComponent implements OnInit {
     }
   }
 
-  getAssorted(txt: string): string { // para la agrupación antes de traducir
+  getAssorted(txt: string): string {
     switch (txt) {
       case 'FINE':
       case 'WARNING':
+      case 'FATAL':        
         return txt;
       default:
         return 'ERROR';
@@ -145,6 +186,7 @@ export default class ItemsComponent implements OnInit {
   }
 
   refreshLogs() {
+    this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
     this.pageSize = this.getPreferredPageSize();
     this.inPage = this.filteredLogs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
@@ -159,38 +201,47 @@ export default class ItemsComponent implements OnInit {
     } else return this.pageSize || 25;
   }
 
-  refreshFilters(): ImportErrorLevel[] { // comprobamos que filtros están seleccionados
-    const filteredStatus = [];
+  refreshFilters(): void {
+    this.activeFilters = [];
     if (this.filterForm.get('fine')?.value) {
-      filteredStatus.push(ImportErrorLevel.FINE);
-    } else
-      if (this.filterForm.get('warning')?.value) {
-        filteredStatus.push(ImportErrorLevel.WARNING);
-      }
-    if (this.filterForm.get('problem')?.value) {
-      filteredStatus.push(ImportErrorLevel.PROBLEM);
+      this.activeFilters.push(ImportErrorLevel.FINE);
+    }
+    if (this.filterForm.get('warning')?.value) {
+      this.activeFilters.push(ImportErrorLevel.WARNING);
     }
     if (this.filterForm.get('error')?.value) {
-      filteredStatus.push(ImportErrorLevel.ERROR);
+      this.activeFilters.push(ImportErrorLevel.ERROR);
+      this.activeFilters.push(ImportErrorLevel.PROBLEM);
     }
     if (this.filterForm.get('fatal')?.value) {
-      filteredStatus.push(ImportErrorLevel.FATAL);
+      this.activeFilters.push(ImportErrorLevel.FATAL);
     }
-    return filteredStatus;
+  }
+
+  saveFilters(): void {
+    this.importsSvc.setLogFilters(this.activeFilters);
   }
 
   onFilterChange(): void {
-    var activeFilters = this.refreshFilters();
+    this.refreshFilters();
+    this.saveFilters();
+
     if (!this.executeOnceTimeout) {
       this.executeOnceTimeout = true;
       setTimeout(() => {
-        this.filteredLogs = this.unfilteredLogs.filter(item => activeFilters.includes(item.errorLevel));
-        this.filteredSize = this.filteredLogs.length;
+
+        this.updateFilteredLogs();
+        this.currentPage = 1;
         this.refreshLogs();
 
         this.executeOnceTimeout = false;
-      }, 100); 
+      }, 100);
     };
+  }
+
+  updateFilteredLogs(): void {
+    this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel));
+    this.filteredSize = this.filteredLogs.length;
   }
 
   getImportStatusTranslation(txt: string): string {
@@ -214,23 +265,82 @@ export default class ItemsComponent implements OnInit {
   }
 
   doDelete(): void {
-    console.log('Delete done');
-    // TO DO
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.remove.confirmation:Do you really want to remove this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        this.importsSvc.deleteImportedItems(this.import.id).subscribe(importsResponse => {
+          console.log(importsResponse); 
+          const msg = $localize`:@@imports.list.details.delete:Delete` + ' ' + $localize`:@@completed:completed` + '!\n';
+          this.msgSvc.success(msg);   
+          setTimeout(() => {
+            this.router.navigate(['/imports/myimports']);
+          }, 1000);
+        })
+      }
+    });
   }
 
-  doSet(): void {
-    console.log('Set done');
-    // TO DO
+  caseSubmit(): boolean {
+    if (!this.importsSvc.isModerator && this.importsSvc.isDepositor && this.isStandardWorkflow) {  
+      return true;
+    } else return false;
+  }
+
+  caseSubmitAndRelease(): boolean {
+    if (this.importsSvc.isModerator && this.isStandardWorkflow) { 
+      return true;
+    } else return false;
+  }
+
+  caseRelease(): boolean {
+    if (this.importsSvc.isModerator && this.isSimpleWorkflow) { 
+      return true;
+    } else return false;
+  }
+
+  doSubmit(): void {
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.submit.confirmation:Do you really want to submit this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        let submitModus = 'SUBMIT';
+        this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
+          console.log(importsResponse);
+          const msg = $localize`:@@imports.list.details.submit:Submit` + ' ' + $localize`:@@completed:completed` + '!\n';
+          this.msgSvc.success(msg);  
+
+          let element = document.getElementById('submit') as HTMLButtonElement;
+          element.ariaDisabled = 'true';
+          element.tabIndex=-1;
+          element.classList.add('disabled');
+        })
+      }
+    });
   }
 
   doRelease(): void {
-    console.log('Release done');
-    // TO DO
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.release.confirmation:Do you really want to release this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        let submitModus = this.caseSubmitAndRelease() ? 'SUBMIT_AND_RELEASE' : 'RELEASE';
+        this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
+          console.log(importsResponse);
+          const msg = $localize`:@@imports.list.details.release:Release` + ' ' + $localize`:@@completed:completed` + '!\n';
+          this.msgSvc.success(msg);  
+
+          let element = document.getElementById('release') as HTMLButtonElement;
+          element.ariaDisabled = 'true';
+          element.tabIndex=-1;
+          element.classList.add('disabled');
+
+          console.log(`${submitModus} done`);
+        })
+      }
+    });
   }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 

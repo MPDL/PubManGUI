@@ -77,6 +77,7 @@ export default class LogProcessListComponent implements OnInit {
   }
 
   refreshLogs() {
+    this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
     this.pageSize = this.getPreferredPageSize();
     this.inPage = this.processLogs.map((log, i) => ({ _id: i + 1, ...log })).slice(
       (this.currentPage - 1) * this.pageSize,
@@ -107,7 +108,7 @@ export default class LogProcessListComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 }

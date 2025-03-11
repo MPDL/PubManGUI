@@ -18,9 +18,9 @@
   </div>
   <div class="mb-2 row">
     <div class="offset-sm-3 col-sm-6">
-      @if(validSvc.notValidField(changeKeywordsForm.controls['keywordsTo'])) {
+      @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsTo'])) {
       <span class="form-text text-danger small">
-        Previous and new keywords {{ validSvc.getFieldError(changeKeywordsForm.controls['keywordsTo']) }}
+        Previous and new keywords {{ valSvc.getFieldError(changeKeywordsForm.controls['keywordsTo']) }}
       </span>
       } @else {
       <span>&nbsp;</span>

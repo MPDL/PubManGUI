@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceSourceEditionParams } from 'src/app/components/batch/interfaces/batch-params';
 
 @Component({
@@ -19,9 +20,11 @@ import type { ReplaceSourceEditionParams } from 'src/app/components/batch/interf
 export class ReplaceSourceEditionFormComponent {
 
   constructor(
+    private router: Router,
     private fb: FormBuilder, 
     private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+    //private msgSvc: MessageService
+  ) { }
 
   public replaceSourceEditionForm: FormGroup = this.fb.group({
     sourceNumber: ['1', [ Validators.required ]],
@@ -46,8 +49,8 @@ export class ReplaceSourceEditionFormComponent {
     this.batchSvc.replaceSourceEdition(this.replaceSourceEditionParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-
-      setTimeout(() => {this.replaceSourceEditionForm.controls['sourceEdition'].reset;}, 500);
+      //setTimeout(() => {this.replaceSourceEditionForm.controls['sourceEdition'].reset;}, 500);
+      this.router.navigate(['/batch/logs']);
     });
   }
  }

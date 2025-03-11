@@ -1,31 +1,41 @@
 <div class="imports">
   <div class="logs">
+    @if(this.import.anzImportedItems || filteredSize > 25) {
     <div class="row top_nav_pos navbar bg-body" [ngClass]="{ 'scrolled': isScrolled }">
-      <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-between">
 
+      <div class="col-lg-12 col-sm-12 d-inline-flex" [ngClass]="this.import.anzImportedItems ? 'justify-content-between': 'justify-content-end' ">
+        @if(this.import.anzImportedItems) {
         <div class="d-inline-flex justify-content-start align-items-center">
           <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.delete" ngbTooltip="Delete" placement="bottom-left" (click)='doDelete();'>
             <span class="material-symbols-outlined">
               delete_forever
             </span>
           </a>
-          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.set" ngbTooltip="Set" placement="bottom-left" (click)='doSet();'>
+          @if(caseSubmit()) {
+          <a id="submit" role="button" class="btn border-0 ms-3" i18n-ngbTooltip="@@imports.list.details.submit" ngbTooltip="Submit" placement="bottom-left" (click)='doSubmit();'>
             <span class="material-symbols-outlined">
               workspace_premium
             </span>
           </a>
-          <a class="ms-3" i18n-ngbTooltip="@@imports.list.details.release" ngbTooltip="Release" placement="bottom-left" (click)='doRelease();'>
+          }
+          @if(caseSubmitAndRelease() || caseRelease()) {
+          <a id="release" role="button" class="btn border-0 ms-3" i18n-ngbTooltip="@@imports.list.details.release" ngbTooltip="Release" placement="bottom-left" (click)='doRelease();'>
             <span class="material-symbols-outlined">
               public
             </span>
           </a>
+          }
         </div>
-
-        <div class="small d-inline-flex justify-content-end align-items-center">
+        }
+        @if(filteredSize > 25) {
+        <div class="small d-inline-flex justify-content-end align-items-center py-1">
           <pure-paginator [totalNumberOfItems]="filteredSize" [(pageNumber)]="currentPage" [(size)]="pageSize" (paginatorChanged)="refreshLogs()" />
         </div>
+        }
       </div>
+      
     </div>
+    }
 
     <div class="row">
       <div class="col-lg-9 col-sm-12 d-flex justify-content-between mt-5 mb-3 border-bottom">
@@ -45,30 +55,39 @@
       <div class="col-lg-9 col-sm-12">
         <table class="table table-responsive col-12 mt-1">
           <thead>
+            @if(inPage.length > 0) {
             <tr class="border-bottom">
               <th scope="col" class="pe-2">Status</th>
               <th scope="col" class="pe-2" i18n="@@imports.list.header.title">Item ID</th>
+              <th scope="col" class="pe-2" i18n="@@imports.list.header.finished">Finished</th>
               <th scope="col" class="pe-2" i18n="@@imports.list.header.message">Report</th>
               <th scope="col">Log</th>
             </tr>
+          }
           </thead>
 
           <tbody>
-            @if(unfilteredSize > 0) {
-              <!--@for (item of inPage | stateFilter:refreshFilters():'errorLevel' ; track item.id) {--> 
+            @if(inPage.length > 0) {
               @for (item of inPage; track item.id) {                                
               <tr class="border-bottom" id="{{ item.id }}">
                 <td class="col-2 text-nowrap">
                   {{ getImportStatusTranslation(item.status) }} 
                 </td>
-                <td class="col-5">
+                <td class="col-3">
                   @if(item.itemId) {                 
                     <span class="nav-link text-decoration-underline" [routerLink]="['view', item.itemId]">{{ item.itemId }} </span>
                   } @else {
                     {{ getImportMessageTranslation(item.message) }}
                   }
                 </td>
-                <td class="col-3">
+                <td class="col-5">
+                  <span>{{ item.endDate | date:'fullDate' }}</span>
+                  <div class="float-end">
+                    <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
+                    <span class="me-3">{{ item.endDate | date: "HH:mm" }}</span>
+                  </div>
+                </td>
+                <td class="col-2">
                   {{ getImportErrorLevelTranslation(getAssorted(item.errorLevel)) }}
                 </td>
                 <td class="col-1">
@@ -98,16 +117,18 @@
       <div class="col-lg-3 d-none d-lg-block mt-4">
         <div class="border rounded p-3 m-1">
           @if(unfilteredSize > 0) {
-          <span class="me-0"> {{ itemsImported }}/{{ itemsImported + itemsFailed }} <span class="me-0" i18n="@@imports.list.details.count">
+          <span class="me-0"> {{ this.import.anzImportedItems }}/{{ this.import.anzFrom }} <span class="me-0" i18n="@@imports.list.details.count">
             items imported</span>
           </span>
           }
         </div>
         <br>
+        <span i18n="@@imports.list.details.filter">Reports to show</span>
+        <br>
         <form [formGroup]="filterForm" (change)="onFilterChange()">
           @if(fine > 0) {
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="fine" formControlName="fine" checked>
+            <input class="form-check-input" type="checkbox" id="fine" formControlName="fine">
             <label class="form-check-label" for="fine">
               {{ getImportErrorLevelTranslation('FINE') }}
             </label>
@@ -115,23 +136,15 @@
           }
           @if(warning > 0) {
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="warning" formControlName="warning" checked>
+            <input class="form-check-input" type="checkbox" value="" id="warning" formControlName="warning">
             <label class="form-check-label" for="warning">
               {{ getImportErrorLevelTranslation('WARNING') }}
             </label>
           </div>
           }
-          @if(problem > 0) {
+          @if(problem > 0 || error > 0) {
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="problem" formControlName="problem" checked>
-            <label class="form-check-label" for="problem">
-              {{ getImportErrorLevelTranslation('PROBLEM') }}
-            </label>
-          </div>
-          }
-          @if(error > 0) {
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="error" formControlName="error" checked>
+            <input class="form-check-input" type="checkbox" value="" id="error" formControlName="error">
             <label class="form-check-label" for="error">
               {{ getImportErrorLevelTranslation('ERROR') }}
             </label>
@@ -139,7 +152,7 @@
           }
           @if(fatal > 0) {
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="fatal" formControlName="fatal" checked>
+            <input class="form-check-input" type="checkbox" value="" id="fatal" formControlName="fatal">
             <label class="form-check-label" for="fatal">
               {{ getImportErrorLevelTranslation('FATAL') }}
             </label>

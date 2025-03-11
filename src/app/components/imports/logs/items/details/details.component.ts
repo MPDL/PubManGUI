@@ -41,6 +41,7 @@ export default class DetailsComponent implements OnInit {
 
   importStatusTranslations = {};
   importErrorLevelTranslations = {};
+  importMessageTranslations = {};
   
   isCollapsed: boolean[] = [];
   isScrolled = false;
@@ -51,7 +52,7 @@ export default class DetailsComponent implements OnInit {
     @Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(): void {
-
+    if (!history.state.item) history.back();
     this.item = history.state.item;
 
     this.importsSvc.getImportLogItemDetails(Number(this.item?.id))
@@ -80,11 +81,13 @@ export default class DetailsComponent implements OnInit {
       await import('src/assets/i18n/messages.de.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
         this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     } else {
       await import('src/assets/i18n/messages.json').then((msgs) => {
         this.importStatusTranslations = msgs.ImportStatus;
         this.importErrorLevelTranslations = msgs.ImportErrorLevel;
+        this.importMessageTranslations = msgs.ImportMessage;
       })
     }
   }
@@ -164,9 +167,14 @@ export default class DetailsComponent implements OnInit {
     return this.importErrorLevelTranslations[key];
   }
 
+  getImportMessageTranslation(txt: string): string {
+    let key = txt as keyof typeof this.importMessageTranslations;
+    return this.importMessageTranslations[key];
+  }
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 50 ? true : false;
   }
 

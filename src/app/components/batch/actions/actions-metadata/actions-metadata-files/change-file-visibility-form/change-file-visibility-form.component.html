@@ -36,9 +36,9 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        @if (validSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
+        @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
         <span class="form-text text-danger small">
-          Previous and new file visibilities {{ validSvc.getFieldError(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
+          Previous and new file visibilities {{ valSvc.getFieldError(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
         </span>
         } @else {
           <span>&nbsp;</span>

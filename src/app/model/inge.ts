@@ -596,7 +596,8 @@ export interface ImportLogDbVO extends ImportLog {
   format: ImportFormat;
   contextId: string;
   percentage: number;
-  anzItems: number;
+  anzImportedItems: number;
+  anzFrom: number;
 }
 
 export interface ImportLogItemDbVO extends ImportLog {
@@ -612,7 +613,7 @@ export interface ImportLogItemDetailDbVO extends ImportLog {
   message: string;
 }
 
-export const enum ImportStatus {
+export enum ImportStatus {
     FINISHED = "FINISHED",
     PENDING = "PENDING",
     SUSPENDED = "SUSPENDED",

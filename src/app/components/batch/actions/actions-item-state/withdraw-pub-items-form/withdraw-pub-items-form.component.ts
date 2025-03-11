@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { WithdrawPubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
 
 @Component({
@@ -15,8 +16,11 @@ import type { WithdrawPubItemsParams } from 'src/app/components/batch/interfaces
 })
 export class WithdrawPubItemsFormComponent {
 
-  constructor(private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+  constructor(
+    private router: Router,
+    private batchSvc: BatchService,
+    //private msgSvc: MessageService
+  ) { }
 
   get withdrawPubItemsParams(): WithdrawPubItemsParams {
     const actionParams: WithdrawPubItemsParams = {
@@ -29,6 +33,7 @@ export class WithdrawPubItemsFormComponent {
     this.batchSvc.withdrawPubItems(this.withdrawPubItemsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+      this.router.navigate(['/batch/logs']);
     })
   }
  }
