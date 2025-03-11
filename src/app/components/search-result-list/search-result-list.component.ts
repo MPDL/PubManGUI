@@ -31,6 +31,12 @@ import {
 import {
   ItemStatusAggregationDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-status-aggregation.directive";
+import {
+  ItemReviewMethodDirective
+} from "../item-list/aggregations/aggregation-filter/directives/item-reviewmethod-aggregation.directive";
+import {
+  ItemSourceTitleAggregationDirective
+} from "../item-list/aggregations/aggregation-filter/directives/item-sourcetitle-aggregation.directive";
 
 @Component({
   selector: 'pure-search-result-list',
@@ -45,7 +51,9 @@ import {
     ItemDateAggregationDirective,
     ItemGenreAggregationDirective,
     ItemLocalTagAggregationDirective,
-    ItemStatusAggregationDirective
+    ItemStatusAggregationDirective,
+    ItemReviewMethodDirective,
+    ItemSourceTitleAggregationDirective
   ],
   templateUrl: './search-result-list.component.html',
   styleUrl: './search-result-list.component.scss'

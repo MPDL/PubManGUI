@@ -53,8 +53,8 @@ export class ItemListComponent implements AfterViewInit{
   filterEvents: Map<string, FilterEvent> = new Map();
   aggregationEvents: Map<string, AggregationEvent> = new Map();
 
-  protected currentPage!:number;
-  protected size!:number
+  protected currentPage:number = 1;
+  protected size:number = 25;
   //currentPaginatorEvent!: PaginatorChangeEvent;
   select_all = new FormControl(false);
 
@@ -76,9 +76,9 @@ export class ItemListComponent implements AfterViewInit{
   }
 
   ngOnInit() {
-    console.log("OnInit ItemList")
-    console.log(this.size)
-    console.log(this.currentPage)
+    //console.log("OnInit ItemList")
+    //console.log(this.size)
+    //console.log(this.currentPage)
   }
 
   ngAfterViewInit(): void {

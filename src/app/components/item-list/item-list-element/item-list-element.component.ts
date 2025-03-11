@@ -1,5 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
-import {IdType, ItemVersionVO} from 'src/app/model/inge';
+import {FileDbVO, IdType, ItemVersionVO, Storage} from 'src/app/model/inge';
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {Router, ActivatedRoute, RouterLink} from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,15 +35,14 @@ export class ItemListElementComponent {
 
   no_name = 'n/a';
 
-  dummy_citation = `Eisner, D., Neher, E., Taschenberger, H., & Smith, G. (2023).
-  Physiology of intracellular calcium buffering. Physiological Reviews, 103(4), 2767-2845.
-  doi:10.1152/physrev.00042.2022. `
+  files: FileDbVO[] = [];
+  locators: FileDbVO[] = [];
 
 
   constructor(private itemSelectionService: ItemSelectionService) {
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     if (this.item?.objectId) {
       const objectId = this.item.objectId;
       this.check_box.setValue(false);
@@ -62,6 +61,8 @@ export class ItemListElementComponent {
           this.setStoredCheckBoxState(this.check_box.value as boolean);
         });
 
+      this.files = this.item.files?.filter(f => f.storage == Storage.INTERNAL_MANAGED) || [];
+      this.locators = this.item.files?.filter(f => f.storage == Storage.EXTERNAL_URL) || [];
 
     }
   }
@@ -130,5 +131,7 @@ export class ItemListElementComponent {
     }
     else return undefined;
   }
+
+
 
 }
