@@ -28,6 +28,7 @@
     "failed": "fehlgeschlagen",
     "succeded": "erfolgreich",
     "completed": "abgeschlossen",
+    "chips.localTags.placeholder": "Lokalen Tag hinzufügen",
     "batch.datasets.remove": "Aus der Batchverarbeitung entfernen",
     "batch.datasets.add": "Der Batchverarbeitung hinzufügen",
     "batch.datasets.selected": "Datensatz/Datensätze ausgewählt",

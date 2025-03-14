@@ -28,6 +28,7 @@
     "failed": "failed",
     "succeded": "succeded",
     "completed": "completed",
+    "chips.localTags.placeholder": "Add local tag",
     "batch.datasets.remove": "Remove checked items from Batch",
     "batch.datasets.add": "Add checked items to Batch",
     "batch.datasets.selected": "item/items selected",

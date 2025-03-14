@@ -19,6 +19,7 @@ export class ChipsComponent {
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  placeholder = $localize`:@@chips.localTags.placeholder:Add local tag` + ' ...'; // TO-DO enhance for other controls
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
