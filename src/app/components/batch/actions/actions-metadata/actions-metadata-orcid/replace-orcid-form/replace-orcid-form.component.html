@@ -14,7 +14,7 @@
       </div>
       <div class="col-sm-8">
         <pure-selector id="changeOrcidForm" [form]="changeOrcidForm" [control_name]="'completeName'" (notice)="updatePerson($event)" pureConePersons
-          placeholder="search cone ...">
+          placeholder="{{ placeholder }}">
           <ng-container *pureOption="let item">{{ item.text }}</ng-container>
         </pure-selector>
       </div>

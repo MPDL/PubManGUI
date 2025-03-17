@@ -32,6 +32,7 @@ export class ReplaceOrcidFormComponent {
   batchSvc = inject(BatchService);
   cone = inject(ConePersonsService);
   //msgSvc = inject(MessageService);
+  placeholder = $localize`:@@batch.actions.metadata.orcid.add:Add ORCID`+' ...';
 
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
     completeName: this.fb.control(''),

@@ -111,3 +111,17 @@
 .side_nav_mobile.collapsed .nav-label {
   display: none;
 }
+
+.show-more {
+  &:not(:hover) {
+    .more-to-show {
+      display: none;
+    }
+  }
+
+  &:hover {
+    .more-to-show {
+      display: block;
+    }
+  }
+}

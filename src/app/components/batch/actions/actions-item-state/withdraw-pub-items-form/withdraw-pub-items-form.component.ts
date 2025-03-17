@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 import type { WithdrawPubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
 
 @Component({
@@ -15,12 +15,9 @@ import type { WithdrawPubItemsParams } from 'src/app/components/batch/interfaces
   templateUrl: './withdraw-pub-items-form.component.html',
 })
 export class WithdrawPubItemsFormComponent {
-
-  constructor(
-    private router: Router,
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService
-  ) { }
+  batchSvc = inject(BatchService);
+  msgSvc = inject(MessageService);
+  router = inject(Router);
 
   get withdrawPubItemsParams(): WithdrawPubItemsParams {
     const actionParams: WithdrawPubItemsParams = {
@@ -30,10 +27,14 @@ export class WithdrawPubItemsFormComponent {
   }
 
   onSubmit(): void {
-    this.batchSvc.withdrawPubItems(this.withdrawPubItemsParams).subscribe(actionResponse => {
-      //console.log(actionResponse); 
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    })
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@batch.actions.item.state.withdraw.confirmation:Do you really want to withdraw this items?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        this.batchSvc.withdrawPubItems(this.withdrawPubItemsParams).subscribe(actionResponse => {
+          this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+          this.router.navigate(['/batch/logs']);
+        })
+      }
+    });
   }
  }

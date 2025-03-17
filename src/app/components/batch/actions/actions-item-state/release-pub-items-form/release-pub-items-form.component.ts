@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -14,11 +14,10 @@ import type { ReleasePubItemsParams } from 'src/app/components/batch/interfaces/
   ],
   templateUrl: './release-pub-items-form.component.html',
 })
-export class ReleasePubItemsFormComponent { 
-  constructor(
-    private router: Router,
-    private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+export class ReleasePubItemsFormComponent {
+  batchSvc = inject(BatchService);
+  msgSvc = inject(MessageService);
+  router = inject(Router);
 
   get releasePubItemsParams(): ReleasePubItemsParams {
     const actionParams: ReleasePubItemsParams = {
@@ -28,10 +27,14 @@ export class ReleasePubItemsFormComponent {
   }
 
   onSubmit(): void {
-    this.batchSvc.releasePubItems(this.releasePubItemsParams).subscribe(actionResponse => {
-      //console.log(actionResponse); 
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
+    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@batch.actions.item.state.release.confirmation:Do you really want to release this items?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    ref.closed.subscribe(confirmed => {
+      if (confirmed) {
+        this.batchSvc.releasePubItems(this.releasePubItemsParams).subscribe(actionResponse => {
+          this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+          this.router.navigate(['/batch/logs']);
+        });
+      }
     });
   }
 }
