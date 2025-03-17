@@ -30,7 +30,11 @@ export class ThumbnailPdfComponent {
     //var url = "https://gui.inge.mpdl.mpg.de/rest/items/item_1042573_8/component/file_3559466/content";
 
       pdfjsLib.GlobalWorkerOptions.workerSrc = "/assets/pdfjsWorker/pdf.worker.min.mjs";
-      pdfjsLib.getDocument(this.pdfUrl).promise.then(doc => {
+
+      pdfjsLib.getDocument({
+      url : this.pdfUrl, disableStream : true, disableAutoFetch: true
+    }).promise.then(doc => {
+
         doc.getPage(1).then(page1 => {
           const ctx = this.thumbnailCanvas.nativeElement.getContext("2d");
           if (ctx != null) {
@@ -44,6 +48,8 @@ export class ThumbnailPdfComponent {
           }
 
         })
+
+
       }).catch(error => {
         this.loading = false;
         this.error = true;

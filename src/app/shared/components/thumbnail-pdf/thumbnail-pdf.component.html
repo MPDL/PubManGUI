@@ -1,13 +1,16 @@
+@if((!pdfUrl) || error) {
+  <img id="placeholder" src="assets/images/DefaultMPGv2.png" width="150px">
+} @else {
+  <div class="{{loading ? '' : 'd-none'}}">
+    loading thumbnail...
+  </div>
 
-<div class="{{loading ? '' : 'd-none'}}">
-  loading thumbnail...
-</div>
-
-  <img id="placeholder" src="assets/images/minerva.png" class="img-fluid {{!pdfUrl || error ? '' : 'd-none'}}" width="150px">
-
-  <a href="{{pdfUrl}}" class="{{pdfUrl && !loading && !error ? '' : 'd-none'}}" target="_blank">
-  <canvas width="150" height="200" #pdfThumnbnailCanvas ></canvas>
+  <a href="{{pdfUrl}}" class="{{!loading ? '' : 'd-none'}}" target="_blank">
+    <canvas width="150" height="200" #pdfThumnbnailCanvas ></canvas>
   </a>
+}
+
+
 
 
 
