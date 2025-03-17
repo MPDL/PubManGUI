@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { importLogResolver } from "./services/import-log.resolver";
-import { fetchItemResolver } from './services/fetch-item-resolver';
 
 const routes: Routes = [
   {
