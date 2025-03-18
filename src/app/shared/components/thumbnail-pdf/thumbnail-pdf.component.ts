@@ -1,8 +1,4 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import * as pdfjsLib from 'pdfjs-dist';
-
-import {PageViewport} from "pdfjs-dist/types/src/display/display_utils";
-import {ItemVersionVO} from "../../../model/inge";
 
 @Component({
   selector: 'pure-thumbnail-pdf',
@@ -20,12 +16,13 @@ export class ThumbnailPdfComponent {
 
   ngAfterViewInit() {
     if(this.pdfUrl){
-      this.renderPDF();
+      //this.renderPDF();
     }
 
   }
 
 
+  /*
   renderPDF() {
     //var url = "https://gui.inge.mpdl.mpg.de/rest/items/item_1042573_8/component/file_3559466/content";
 
@@ -56,6 +53,6 @@ export class ThumbnailPdfComponent {
         console.log("Could not generate thumbnail", error);
       })
     }
-
+*/
 
 }
