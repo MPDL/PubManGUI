@@ -26,9 +26,9 @@
 
     <div class="mb-2 row">
       <!--div class="offset-sm-2 col-sm-6">
-        @if (validSvc.noDuplicatesValidator(allowedAudienceIds)) {
+        @if (valSvc.noDuplicatesValidator(allowedAudienceIds)) {
         <span class="form-text text-danger small">
-          IP range {{ validSvc.getFieldError(allowedAudienceIds) }}
+          IP range {{ valSvc.getFieldError(allowedAudienceIds) }}
         </span>
         } @else {
         <span>&nbsp;</span>
@@ -39,7 +39,7 @@
 
     <div class="row">
       <div class="offset-sm-9 col-sm-3">
-        <button type="submit" [disabled]="replaceFileAudienceForm.invalid"
+        <button type="submit" [disabled]="replaceFileAudienceForm.invalid || allowedAudienceIds.length <= 1"
           class="btn btn-outline-secondary border-2 col-4 float-end">
           GO
         </button>

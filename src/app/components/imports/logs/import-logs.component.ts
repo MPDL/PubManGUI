@@ -51,6 +51,8 @@ export default class ListComponent implements OnInit {
 
   isScrolled = false;
 
+  updateDelay = 1;
+
   constructor(
     @Inject(LOCALE_ID) public locale: string) {}
 
@@ -131,15 +133,16 @@ export default class ListComponent implements OnInit {
         this.logs[idx].anzImportedItems = importLog.anzImportedItems;
         if (this.isFinished(importLog.status)) {
           this.runningImports.delete(logId);
+          this.updateDelay = 1;
         }
       })
     })
     if (this.runningImports.size > 0) {
       setTimeout(() => {
         this.updateForRunningImports();
-        this.refreshLogs()
-      }, 1000); 
-    } 
+        this.refreshLogs();
+      }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60 )); 
+    }
   }
 
   toDatasets(id: any): void {

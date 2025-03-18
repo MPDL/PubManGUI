@@ -5,9 +5,9 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 import { Router } from '@angular/router';
 
 import { ContextDbRO } from 'src/app/model/inge';
-import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
-import { OptionDirective } from "src/app/shared/components/selector/directives/option.directive";
-import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
+//import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
+//import { OptionDirective } from "src/app/shared/components/selector/directives/option.directive";
+//import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -31,7 +31,7 @@ export class ActionsContextComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    public validSvc: BatchValidatorsService, 
+    public valSvc: BatchValidatorsService, 
     private aaSvc: AaService, 
     private batchSvc: BatchService,
     private router: Router) { }
@@ -50,7 +50,7 @@ export class ActionsContextComponent implements OnInit {
     contextFrom: [$localize`:@@batch.actions.context:Context`, Validators.required],
     contextTo: [$localize`:@@batch.actions.context:Context`, Validators.required]
   }, 
-  { validators: this.validSvc.notEqualsValidator('contextFrom','contextTo') }
+  { validators: [this.valSvc.notEqualsValidator('contextFrom','contextTo'), this.valSvc.allRequiredValidator()] }
   );
 
   get changeContextParams(): ChangeContextParams {
@@ -69,8 +69,8 @@ export class ActionsContextComponent implements OnInit {
     }
     this.batchSvc.changeContext(this.changeContextParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      setTimeout(() => {this.changeContextForm.reset();}, 500);
-      this.router.navigate(['/batch']);
+      //this.changeContextForm.reset();
+      this.router.navigate(['/batch/logs']);
     });
   }
 

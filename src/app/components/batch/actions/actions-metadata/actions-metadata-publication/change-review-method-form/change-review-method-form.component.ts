@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeReviewMethodParams } from 'src/app/components/batch/interfaces/batch-params';
 import { ReviewMethod } from 'src/app/model/inge';
 
@@ -21,10 +22,11 @@ import { ReviewMethod } from 'src/app/model/inge';
 export class ChangeReviewMethodFormComponent {
 
   constructor(
+    private router: Router,
     private fb: FormBuilder, 
-    public validSvc: BatchValidatorsService, 
+    public valSvc: BatchValidatorsService, 
     private batchSvc: BatchService,
-    private msgSvc: MessageService,
+    //private msgSvc: MessageService,
     @Inject(LOCALE_ID) public locale: string) {}
 
     reviewMethods = Object.keys(ReviewMethod);
@@ -57,7 +59,7 @@ export class ChangeReviewMethodFormComponent {
     reviewMethodFrom: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
     reviewMethodTo: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
   }, 
-  { validators: this.validSvc.notEqualsValidator('reviewMethodFrom','reviewMethodTo') });
+  { validators: [this.valSvc.notEqualsValidator('reviewMethodFrom','reviewMethodTo'), this.valSvc.allRequiredValidator()] });
 
   get changeReviewMethodParams(): ChangeReviewMethodParams {
     const actionParams: ChangeReviewMethodParams = {
@@ -77,6 +79,7 @@ export class ChangeReviewMethodFormComponent {
     this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+      this.router.navigate(['/batch/logs']);
     });
   }
  }

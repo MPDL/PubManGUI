@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, inject, Inject, LOCALE_ID } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { IdType } from 'src/app/model/inge';
 
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfaces/batch-params';
 
 
@@ -20,12 +22,14 @@ import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfac
   templateUrl: './add-source-identifier-form.component.html',
 })
 export class AddSourceIdentifierFormComponent {
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  valSvc = inject(BatchValidatorsService);
+  batchSvc = inject(BatchService);
+  //msgSvc = inject(MessageService);
 
   constructor(
-    private fb: FormBuilder, 
-    private batchSvc: BatchService,
-    private msgSvc: MessageService,
-    @Inject(LOCALE_ID) public locale: string) { }
+    @Inject(LOCALE_ID) public locale: string) {}
 
   sourceIdTypes = Object.keys(IdType);
   sourceIdTypesTranslations = {};
@@ -56,10 +60,12 @@ export class AddSourceIdentifierFormComponent {
   }
 
   public addSourceIdentifierForm: FormGroup = this.fb.group({
-    sourceNumber: ['1', [ Validators.required ]],
-    sourceIdentifierType: [$localize`:@@batch.actions.metadata.source.addId.default:Type`, [ Validators.required ]],
-    sourceIdentifier: ['', [ Validators.required ]],
-  });
+    sourceNumber: ['1'],
+    sourceIdentifierType: [$localize`:@@batch.actions.metadata.source.addId.default:Type`, Validators.required],
+    sourceIdentifier: ['', [ Validators.required, Validators.minLength(1) ]]
+  },
+    { validators: this.valSvc.allRequiredValidator() }
+  );
 
   get addSourceIdentifierParams(): AddSourceIdentiferParams {
     const actionParams: AddSourceIdentiferParams = {
@@ -80,8 +86,8 @@ export class AddSourceIdentifierFormComponent {
     this.batchSvc.addSourceIdentifer(this.addSourceIdentifierParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-
-      setTimeout(() => {this.addSourceIdentifierForm.controls['sourceIdentifier'].reset();}, 500);
+      //setTimeout(() => {this.addSourceIdentifierForm.controls['sourceIdentifier'].reset();}, 500);
+      this.router.navigate(['/batch/logs']);
     });
   }
  }

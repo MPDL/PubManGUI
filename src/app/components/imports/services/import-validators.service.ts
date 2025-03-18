@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { FormArray, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 
 
 @Injectable({
@@ -34,6 +34,9 @@ export class ImportValidatorsService {
 
         case 'forbiddenURLValidator':
           return " can't be a URL!";
+
+        case 'allRequired':
+          return " not all required values!";          
       }
     }
     return null;
@@ -44,6 +47,26 @@ export class ImportValidatorsService {
       const forbidden = nameRe.test(control.value);
       return forbidden ? { forbiddenURL: { value: control.value } } : null;
     };
+  }
+
+  // Validator repeated on Batch and Imports. TO-DO: unique validators service on shared components
+  allRequiredValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control instanceof FormGroup) {
+        let error = false;
+        Object.keys(control.controls).forEach(key => {
+          const field = control.get(key);
+          if (field!.hasValidator(Validators.required) && !(field!.dirty)) {
+            error = true;
+            return;
+          }
+        });
+        control.setErrors(error ? { allRequired: true } : null);
+        return error ? { allRequired: true } : null;
+      }
+
+      return null;
+    }
   }
 
 }

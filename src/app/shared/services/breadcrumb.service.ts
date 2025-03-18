@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
 interface Breadcrumb {
   label: string;
+  type: string;
   active: boolean;
   url: string;
 }
@@ -13,38 +14,91 @@ interface Breadcrumb {
   providedIn: 'root'
 })
 export class BreadcrumbService {
-  constructor(private router: Router) {}
+
+  breadcrumbs$: BehaviorSubject<Breadcrumb[]> = new BehaviorSubject<Breadcrumb[]>([]);
+  private routerSubscription: Subscription;
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(ev => {
+      this.createBreadcrumbs();
+
+    });
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription.unsubscribe();
+  }
 
   getBreadcrumbs(): Observable<Breadcrumb[]> {
+    return this.breadcrumbs$;
+    /*
     return this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.createBreadcrumbs(this.router.routerState.snapshot.root))
     );
+     */
   }
 
-  private createBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: Breadcrumb[] = []): Breadcrumb[] {
-    const children: ActivatedRouteSnapshot[] = route.children;
+  private createBreadcrumbs() {
 
-    if (children.length === 0) {
-      return breadcrumbs;
-    }
+    const children: ActivatedRouteSnapshot[] = this.activatedRoute.snapshot.children;
+    if(children.length > 0) {
+      const currentRoute = children[0];
+      const currentRouteLabel = currentRoute.data['breadcrumb'].label;
+      if (currentRouteLabel === 'View' || currentRouteLabel === 'Edit') {
+        const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabel, this.breadcrumbs$.getValue());
+        this.breadcrumbs$.next(smallerCrumbs);
 
-    for (const child of children) {
-      const routeURL: string = child.url.map(segment => segment.path).join('/');
-      if (routeURL !== '') {
-        url += `/${routeURL}`;
+      } else if (currentRouteLabel === 'Search' && (this.breadcrumbs$.getValue()[0]?.type) ==="Advanced Search") {
+        const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabel, this.breadcrumbs$.getValue());
+        this.breadcrumbs$.next(smallerCrumbs);
       }
-      if (child.data['breadcrumb'].label) {
-      breadcrumbs.push({
-        label: this.getLocalizedLabel(child.data['breadcrumb'].label),
-        active: child.data['breadcrumb'].active ?? true,
-        url: url
-      });}
+      else {
+        this.breadcrumbs$.next([]);
 
-      return this.createBreadcrumbs(child, url, breadcrumbs);
+      }
+      this.createHierarchicalChildBreadcrumbs(this.activatedRoute.snapshot,'',this.breadcrumbs$.getValue());
     }
 
+  }
+
+  private removeUntilLastOccurence(type: string, breadcrumbs: Breadcrumb[]) {
+    const index = breadcrumbs.findIndex(b => b.type === type);
+    if(index > -1) {
+      return breadcrumbs.slice(0, index);
+    }
     return breadcrumbs;
+
+
+
+  }
+
+  private createHierarchicalChildBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: Breadcrumb[]) {
+
+    const children = route.children;
+    if (children.length > 0) {
+
+      for (const child of children) {
+        const routeURL: string = child.url.map(segment => segment.path).join('/');
+        if (routeURL !== '') {
+          url += `/${routeURL}`;
+        }
+        if (child.data['breadcrumb'].label) {
+          breadcrumbs.push({
+            label: this.getLocalizedLabel(child.data['breadcrumb'].label),
+            type: child.data['breadcrumb'].label,
+            active: child.data['breadcrumb'].active ?? true,
+            url: url
+          });
+        }
+
+        this.createHierarchicalChildBreadcrumbs(child, url, breadcrumbs);
+      }
+    }
+
+
   }
 
   getLocalizedLabel(label: string): string {
@@ -67,7 +121,7 @@ export class BreadcrumbService {
         break;
       case 'My imports':
           localizedlabel = $localize`:@@myimports:My imports`;
-          break;  
+          break;
       case 'Batch processing':
         localizedlabel = $localize`:@@batch:Batch processing`;
         break;

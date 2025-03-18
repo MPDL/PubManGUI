@@ -36,9 +36,9 @@
       </div>
       <div class="mb-2 row">
         <div class="offset-sm-3 col-sm-6">
-          @if (validSvc.notValidField(changeFileContentCategoryForm.controls['fileContentCategoryTo'])) {
+          @if (valSvc.notValidField(changeFileContentCategoryForm.controls['fileContentCategoryTo'])) {
           <span class="form-text text-danger small">
-            Previous and new content categories {{ validSvc.getFieldError(changeFileContentCategoryForm.controls['fileContentCategoryTo']) }}
+            Previous and new content categories {{ valSvc.getFieldError(changeFileContentCategoryForm.controls['fileContentCategoryTo']) }}
           </span>
           } @else {
           <span>&nbsp;</span>

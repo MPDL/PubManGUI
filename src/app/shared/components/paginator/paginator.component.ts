@@ -20,7 +20,6 @@ export class PaginatorComponent {
   @Input() pageNumber!:number
   @Output() sizeChange = new EventEmitter<number>();
   @Output() pageNumberChange = new EventEmitter<number>();
-
   @Output() paginatorChanged = new EventEmitter<any>();
 
 

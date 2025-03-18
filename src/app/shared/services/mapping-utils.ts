@@ -15,6 +15,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -34,6 +37,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -48,6 +54,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -67,6 +76,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -85,6 +97,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -110,6 +125,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -119,6 +137,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -128,6 +149,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -137,6 +161,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -163,6 +190,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -178,6 +208,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -192,6 +225,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -211,6 +247,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -220,6 +259,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -229,13 +271,16 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
               "embargoUntil": {
                 "type": "date",
-                "format": "yyyy-MM-dd||yyyy-MM||yyyy",
-                "ignore_malformed": true
+                "ignore_malformed": true,
+                "format": "yyyy-MM-dd||yyyy-MM||yyyy"
               },
               "formats": {
                 "properties": {
@@ -245,6 +290,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -254,6 +302,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   }
@@ -267,6 +318,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -276,6 +330,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   }
@@ -287,6 +344,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -296,6 +356,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -305,6 +368,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -317,6 +383,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -328,6 +397,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -337,6 +409,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -349,6 +424,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -386,6 +464,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -402,6 +483,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -422,6 +506,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -443,6 +530,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -459,6 +549,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -479,6 +572,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -493,6 +589,9 @@ const item_mapping = {
           "keyword": {
             "type": "keyword",
             "normalizer": "sort"
+          },
+          "keyword_default": {
+            "type": "keyword"
           }
         }
       },
@@ -502,6 +601,9 @@ const item_mapping = {
           "keyword": {
             "type": "keyword",
             "normalizer": "sort"
+          },
+          "keyword_default": {
+            "type": "keyword"
           }
         }
       },
@@ -536,6 +638,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 },
                 "analyzer": "html_standard_analyzer"
@@ -567,6 +672,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   }
@@ -574,21 +682,15 @@ const item_mapping = {
               },
               "person": {
                 "properties": {
-                  "alternativeNames": {
-                    "type": "text",
-                    "fields": {
-                      "keyword": {
-                        "type": "keyword",
-                        "normalizer": "sort"
-                      }
-                    }
-                  },
                   "completeName": {
                     "type": "text",
                     "fields": {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -598,6 +700,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -607,6 +712,45 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
+                      }
+                    }
+                  },
+                  "alternativeNames": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
+                      }
+                    }
+                  },
+                  "titles": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
+                      }
+                    }
+                  },
+                  "pseudonyms": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -626,6 +770,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -648,6 +795,9 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       }
@@ -655,24 +805,6 @@ const item_mapping = {
                   },
                   "organizationsSize": {
                     "type": "long"
-                  },
-                  "pseudonyms": {
-                    "type": "text",
-                    "fields": {
-                      "keyword": {
-                        "type": "keyword",
-                        "normalizer": "sort"
-                      }
-                    }
-                  },
-                  "titles": {
-                    "type": "text",
-                    "fields": {
-                      "keyword": {
-                        "type": "keyword",
-                        "normalizer": "sort"
-                      }
-                    }
                   }
                 }
               },
@@ -686,71 +818,55 @@ const item_mapping = {
           },
           "dateAccepted": {
             "type": "date",
-            "format": "yyyy-MM-dd||yyyy-MM||yyyy",
             "copy_to": [
               "metadata.anyDates"
-            ]
+            ],
+            "format": "yyyy-MM-dd||yyyy-MM||yyyy"
           },
           "dateCreated": {
             "type": "date",
-            "format": "yyyy-MM-dd||yyyy-MM||yyyy",
             "copy_to": [
               "metadata.anyDates"
-            ]
+            ],
+            "format": "yyyy-MM-dd||yyyy-MM||yyyy"
           },
           "dateModified": {
             "type": "date",
-            "format": "yyyy-MM-dd||yyyy-MM||yyyy",
             "copy_to": [
               "metadata.anyDates"
-            ]
+            ],
+            "format": "yyyy-MM-dd||yyyy-MM||yyyy"
           },
           "datePublishedInPrint": {
             "type": "date",
-            "format": "yyyy-MM-dd||yyyy-MM||yyyy",
             "copy_to": [
               "metadata.anyDates"
-            ]
+            ],
+            "format": "yyyy-MM-dd||yyyy-MM||yyyy"
           },
           "datePublishedOnline": {
             "type": "date",
-            "format": "yyyy-MM-dd||yyyy-MM||yyyy",
             "copy_to": [
               "metadata.anyDates"
-            ]
+            ],
+            "format": "yyyy-MM-dd||yyyy-MM||yyyy"
           },
           "dateSubmitted": {
             "type": "date",
-            "format": "yyyy-MM-dd||yyyy-MM||yyyy",
             "copy_to": [
               "metadata.anyDates"
-            ]
+            ],
+            "format": "yyyy-MM-dd||yyyy-MM||yyyy"
           },
           "degree": {
             "type": "keyword"
           },
           "event": {
             "properties": {
-              "alternativeTitles": {
-                "properties": {
-                  "language": {
-                    "type": "keyword"
-                  },
-                  "value": {
-                    "type": "text",
-                    "fields": {
-                      "keyword": {
-                        "type": "keyword",
-                        "normalizer": "sort"
-                      }
-                    }
-                  }
-                }
-              },
               "endDate": {
                 "type": "date",
-                "format": "yyyy-MM-dd||yyyy-MM||yyyy",
-                "ignore_malformed": true
+                "ignore_malformed": true,
+                "format": "yyyy-MM-dd||yyyy-MM||yyyy"
               },
               "invitationStatus": {
                 "type": "keyword"
@@ -761,13 +877,16 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
               "startDate": {
                 "type": "date",
-                "format": "yyyy-MM-dd||yyyy-MM||yyyy",
-                "ignore_malformed": true
+                "ignore_malformed": true,
+                "format": "yyyy-MM-dd||yyyy-MM||yyyy"
               },
               "title": {
                 "type": "text",
@@ -775,6 +894,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -786,6 +908,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -802,6 +927,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -821,6 +949,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -836,6 +967,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -847,6 +981,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -872,6 +1009,9 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       }
@@ -895,6 +1035,9 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       }
@@ -918,6 +1061,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -931,6 +1077,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -940,6 +1089,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -949,6 +1101,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -977,6 +1132,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   }
@@ -994,6 +1152,9 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       },
@@ -1009,6 +1170,9 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       }
@@ -1016,21 +1180,15 @@ const item_mapping = {
                   },
                   "person": {
                     "properties": {
-                      "alternativeNames": {
-                        "type": "text",
-                        "fields": {
-                          "keyword": {
-                            "type": "keyword",
-                            "normalizer": "sort"
-                          }
-                        }
-                      },
                       "completeName": {
                         "type": "text",
                         "fields": {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       },
@@ -1040,6 +1198,9 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       },
@@ -1049,6 +1210,45 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
+                          }
+                        }
+                      },
+                      "alternativeNames": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
+                          }
+                        }
+                      },
+                      "titles": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
+                          }
+                        }
+                      },
+                      "pseudonyms": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       },
@@ -1068,6 +1268,9 @@ const item_mapping = {
                           "keyword": {
                             "type": "keyword",
                             "normalizer": "sort"
+                          },
+                          "keyword_default": {
+                            "type": "keyword"
                           }
                         }
                       },
@@ -1081,6 +1284,9 @@ const item_mapping = {
                               "keyword": {
                                 "type": "keyword",
                                 "normalizer": "sort"
+                              },
+                              "keyword_default": {
+                                "type": "keyword"
                               }
                             }
                           },
@@ -1096,6 +1302,9 @@ const item_mapping = {
                               "keyword": {
                                 "type": "keyword",
                                 "normalizer": "sort"
+                              },
+                              "keyword_default": {
+                                "type": "keyword"
                               }
                             }
                           }
@@ -1103,24 +1312,6 @@ const item_mapping = {
                       },
                       "organizationsSize": {
                         "type": "long"
-                      },
-                      "pseudonyms": {
-                        "type": "text",
-                        "fields": {
-                          "keyword": {
-                            "type": "keyword",
-                            "normalizer": "sort"
-                          }
-                        }
-                      },
-                      "titles": {
-                        "type": "text",
-                        "fields": {
-                          "keyword": {
-                            "type": "keyword",
-                            "normalizer": "sort"
-                          }
-                        }
                       }
                     }
                   },
@@ -1151,6 +1342,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -1170,6 +1364,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -1179,6 +1376,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   },
@@ -1188,6 +1388,9 @@ const item_mapping = {
                       "keyword": {
                         "type": "keyword",
                         "normalizer": "sort"
+                      },
+                      "keyword_default": {
+                        "type": "keyword"
                       }
                     }
                   }
@@ -1205,6 +1408,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               },
@@ -1217,6 +1423,9 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -1226,15 +1435,6 @@ const item_mapping = {
             "type": "nested",
             "include_in_parent": true,
             "properties": {
-              "language": {
-                "type": "text",
-                "fields": {
-                  "keyword": {
-                    "type": "keyword",
-                    "normalizer": "sort"
-                  }
-                }
-              },
               "type": {
                 "type": "keyword"
               },
@@ -1244,6 +1444,21 @@ const item_mapping = {
                   "keyword": {
                     "type": "keyword",
                     "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "language": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "normalizer": "sort"
+                  },
+                  "keyword_default": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -1258,6 +1473,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             },
             "analyzer": "html_standard_analyzer"
@@ -1278,6 +1496,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -1294,6 +1515,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           },
@@ -1303,6 +1527,9 @@ const item_mapping = {
               "keyword": {
                 "type": "keyword",
                 "normalizer": "sort"
+              },
+              "keyword_default": {
+                "type": "keyword"
               }
             }
           }
@@ -1317,6 +1544,9 @@ const item_mapping = {
           "keyword": {
             "type": "keyword",
             "normalizer": "sort"
+          },
+          "keyword_default": {
+            "type": "keyword"
           }
         }
       },
@@ -1348,6 +1578,9 @@ const item_mapping = {
           "keyword": {
             "type": "keyword",
             "normalizer": "sort"
+          },
+          "keyword_default": {
+            "type": "keyword"
           }
         }
       },

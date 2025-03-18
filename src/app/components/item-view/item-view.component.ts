@@ -1,8 +1,8 @@
 import {Component, HostListener, Input, TemplateRef} from '@angular/core';
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
 import {AaService} from "../../services/aa.service";
-import {ItemVersionVO} from "../../model/inge";
-import {ActivatedRoute, Router, RouterLink, RouterOutlet} from "@angular/router";
+import {ItemVersionVO, Storage, Visibility} from "../../model/inge";
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {TopnavComponent} from "../../shared/components/topnav/topnav.component";
 import {AsyncPipe, NgClass, ViewportScroller} from "@angular/common";
 import {DateToYearPipe} from "../../shared/services/pipes/date-to-year.pipe";
@@ -22,6 +22,8 @@ import {ExportItemsComponent} from "../../shared/components/export-items/export-
 import {PaginatorComponent} from "../../shared/components/paginator/paginator.component";
 import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
+import {ThumbnailPdfComponent} from "../../shared/components/thumbnail-pdf/thumbnail-pdf.component";
+import {ItemListStateService} from "../item-list/item-list-state.service";
 
 @Component({
   selector: 'pure-item-view',
@@ -36,7 +38,9 @@ import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/to
     SanitizeHtmlPipe,
     ItemViewFileComponent,
     EmptyPipe,
-    ExportItemsComponent
+    ExportItemsComponent,
+    ThumbnailPdfComponent,
+    PaginatorComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
@@ -57,54 +61,44 @@ export class ItemViewComponent {
   citation: string | undefined
 
   constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
-  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal) {
+  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService) {
 
   }
 
 
 
-  ngOnInit() {
+  ngOnInit()
+  {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id')
+      if(id) {
+          this.init(id);
+      }
+    })
+
+    /*
+    this.router.events.subscribe((event) => {
+      if(event instanceof NavigationEnd && event.url) {
+        console.log(event.url);
+      }
+    });
+
     const id = this.route.snapshot.paramMap.get('id');
     if(id)
       this.init(id);
-
-      /*
-    this.item$.pipe(
-      tap(i => {
-        if (i && i.objectId) {
-          this.item = i;
-          this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
-          this.itemsService.retrieveAuthorizationInfo(i.objectId, this.aaService.token).pipe(
-            tap(authInfo => {
-                this.authorizationInfo = authInfo;
-                if(i.latestVersion?.versionNumber===i.versionNumber) {
-                  this.latestVersionAuthorizationInfo = this.authorizationInfo;
-                }
-                else {
-                  if (i && i.objectId) {
-                    this.itemsService.retrieveAuthorizationInfo(i.objectId, this.aaService.token).subscribe(authInfoLv => {
-                      this.latestVersionAuthorizationInfo = authInfoLv
-                    })
-                  }
-                }
-              }
-            )
-          ).subscribe()
-        }
-
-      },
-
-    )).subscribe()
-*/
-
+   */
     const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
     if(subMenu) {
       this.currentSubMenuSelection = subMenu;
     }
+
+
   }
 
   init(id:string) {
 
+    //console.log("init " + id);
+    this.listStateService.initItemId(id);
     if (id)
       this.item$ = this.itemsService.retrieve(id, this.aaService.token);
     this.item$.subscribe(i => {
@@ -135,16 +129,6 @@ export class ItemViewComponent {
 
   openModal(content: TemplateRef<any>) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-      /*.result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      },
-    );
-
-       */
   }
 
   get firstAuthors() {
@@ -152,11 +136,15 @@ export class ItemViewComponent {
   }
 
   get storedFiles() {
-   return this.item?.files?.filter(f => f.storage === 'INTERNAL_MANAGED');
+   return this.item?.files?.filter(f => f.storage === Storage.INTERNAL_MANAGED);
   }
 
   get externalReferences() {
-    return this.item?.files?.filter(f => f.storage === 'EXTERNAL_URL');
+    return this.item?.files?.filter(f => f.storage === Storage.EXTERNAL_URL);
+  }
+
+  get firstPublicPdfFile() {
+    return this.item?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
   }
 
 
@@ -178,22 +166,7 @@ export class ItemViewComponent {
     return this.item.versionNumber === this.item.latestVersion?.versionNumber;
   }
 
-  /*
-  isAllowed(accessType: string): boolean {
-    if(this.authorizationInfo) {
-      return this.authorizationInfo[accessType] && this.item.latestVersion?.versionNumber === this.item.versionNumber;
-    }
-    return false;
-  }
 
-  get isAllowedForLatestVersion(accessType: string): boolean {
-    if(this.latestVersionAuthorizationInfo) {
-      return this.latestVersionAuthorizationInfo[accessType];
-    }
-    return false;
-  }
-
-   */
 
   submit() {
     this.itemsService.submit(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {

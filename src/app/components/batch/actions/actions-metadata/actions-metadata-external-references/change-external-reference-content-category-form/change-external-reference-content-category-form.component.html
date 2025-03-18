@@ -37,9 +37,9 @@
         </div>
         <div class="mb-2 row">
             <div class="offset-sm-3 col-sm-6">
-                @if (validSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'])) {
+                @if (valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'])) {
                 <span class="form-text text-danger small">
-                    Previous and new content categories {{ validSvc.getFieldError(changeExternalReferenceContentCategoryForm) }}
+                    Previous and new content categories {{ valSvc.getFieldError(changeExternalReferenceContentCategoryForm) }}
                 </span>
                 } @else {
                 <span>&nbsp;</span>

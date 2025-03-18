@@ -44,6 +44,7 @@ export class TopnavBatchComponent {
     } else {
       this.message.warning($localize`:@@batch.datasets.empty:The batch processing is empty`+'!');
     }
+    // TODO Refresh dataset list
   }
 
   get isAdd() {

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { ControlType } from "src/app/components/item-edit/services/form-builder.service";
@@ -10,7 +11,7 @@ import { SelectorComponent } from "src/app/shared/components/selector/selector.c
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/batch-params';
 
 @Component({
@@ -26,12 +27,12 @@ import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/bat
   templateUrl: './replace-orcid-form.component.html',
 })
 export class ReplaceOrcidFormComponent {
-
-  constructor(
-    private fb: FormBuilder, 
-    private batchSvc: BatchService, 
-    private cone: ConePersonsService,
-    private msgSvc: MessageService) { }
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  batchSvc = inject(BatchService);
+  cone = inject(ConePersonsService);
+  //msgSvc = inject(MessageService);
+  placeholder = $localize`:@@batch.actions.metadata.orcid.add:Add ORCID`+' ...';
 
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
     completeName: this.fb.control(''),
@@ -95,7 +96,8 @@ export class ReplaceOrcidFormComponent {
     this.batchSvc.replaceOrcid(this.changeOrcidParams).subscribe( actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      setTimeout(() => {this.changeOrcidForm.reset();}, 500);
+      //setTimeout(() => {this.changeOrcidForm.reset();}, 500);
+      this.router.navigate(['/batch/logs']);
     });
   }
 }

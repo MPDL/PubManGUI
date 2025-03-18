@@ -18,24 +18,31 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 export class SortSelectorComponent {
   @Input() itemList!: ItemListComponent;
   @Input() defaultSort:string = "modificationDate";
+  //@Input() defaultSortOrder:string = "desc";
   sortOptionNames = Object.keys(sortOptions);
   //@Output() sortChanged = new EventEmitter<any>();
   selectedSort!:string;
   selectedSortOrder!:string;
 
   constructor(private route: ActivatedRoute, private router: Router) {
-   this.selectedSort = this.defaultSort
+    this.selectedSort = this.defaultSort;
     this.selectedSortOrder = sortOptions[this.selectedSort].order;
-    const sort = route.snapshot.queryParamMap.get('sort');
-    if(sort) {
-      this.selectedSort=sort
-    }
-    const sortOrder = route.snapshot.queryParamMap.get('sortOrder');
-    if(sortOrder) {
-      this.selectedSortOrder = sortOrder
-    }
+    //this.selectedSort=route.snapshot.queryParamMap.get('sort') || this.defaultSort;
+    //this.selectedSortOrder = route.snapshot.queryParamMap.get('sortOrder' )|| sortOptions[this.selectedSort].order;
+
   }
 
+  ngOnInit(){
+    //this.selectedSort = this.defaultSort;
+    this.itemList.registerSort(this.getSortQuery(this.selectedSort))
+
+  }
+
+  ngAfterViewInit() {
+    //this.updateQueryParams()
+  }
+
+  /*
   private updateQueryParams() {
     const queryParams: Params = {
       sort: this.selectedSort,
@@ -51,10 +58,9 @@ export class SortSelectorComponent {
     );
   }
 
-  ngOnInit(){
-    //this.selectedSort = this.defaultSort;
-    this.itemList.registerSort(this.getSortQuery(this.selectedSort))
-  }
+   */
+
+
 
   getCurrentSortQuery(){
     return baseElasticSearchSortBuilder(sortOptions[this.selectedSort].index[0], this.selectedSortOrder);
@@ -68,7 +74,7 @@ export class SortSelectorComponent {
 
     console.log(this.selectedSort + ' / '+ this.selectedSortOrder)
     this.itemList.updateSort(sortQuery);
-    this.updateQueryParams()
+    //this.updateQueryParams()
   }
 
   switchSortOrder() {
@@ -79,7 +85,7 @@ export class SortSelectorComponent {
     const sortQuery = this.getCurrentSortQuery()
     console.log(this.selectedSort + ' / '+ this.selectedSortOrder)
     this.itemList.updateSort(sortQuery);
-    this.updateQueryParams()
+    //this.updateQueryParams()
   }
 
   getSortQuery(sortOption: string)

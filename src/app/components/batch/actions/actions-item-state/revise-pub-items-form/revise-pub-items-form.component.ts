@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+//import { MessageService } from 'src/app/shared/services/message.service';
 import type { RevisePubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
 
 @Component({
@@ -15,8 +16,10 @@ import type { RevisePubItemsParams } from 'src/app/components/batch/interfaces/b
 })
 export class RevisePubItemsFormComponent { 
   constructor(
+    private router: Router,
     private batchSvc: BatchService,
-    private msgSvc: MessageService) { }
+    //private msgSvc: MessageService
+    ) { }
 
   get revisePubItemsParams(): RevisePubItemsParams {
     const actionParams: RevisePubItemsParams = {
@@ -29,6 +32,7 @@ export class RevisePubItemsFormComponent {
     this.batchSvc.revisePubItems(this.revisePubItemsParams).subscribe(actionResponse => {
       //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+      this.router.navigate(['/batch/logs']);
     });
   }
 }

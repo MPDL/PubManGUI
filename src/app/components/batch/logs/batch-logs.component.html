@@ -63,7 +63,7 @@
                 @if (log.state === state.RUNNING
                 && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId
                 && batchSvc.isProcessRunning()) {
-                <span class="spinner-border ms-3" aria-hidden="true"></span>
+                <span class="spinner-border spinner-border-sm text-secondary ms-3" aria-hidden="true"></span>
                 } @else {
                 <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]">
                     <span class="material-symbols-outlined ms-3 my-0 matBadge" matBadge='{{ log.numberOfItems }}'>

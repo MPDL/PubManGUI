@@ -4,14 +4,14 @@ import {AggregationResultView} from "../item-aggregation-filter.component";
 import {baseElasticSearchQueryBuilder} from "../../../../../shared/services/search-utils";
 
 @Directive({
-  selector: '[pureItemLocalTagAggregation]',
+  selector: '[pureItemReviewMethodAggregation]',
   providers: [{
     provide: ItemAggregationBaseDirective,
-    useExisting: ItemLocalTagAggregationDirective
+    useExisting: ItemReviewMethodDirective
   }],
   standalone: true
 })
-export class ItemLocalTagAggregationDirective extends ItemAggregationBaseDirective{
+export class ItemReviewMethodDirective extends ItemAggregationBaseDirective{
 
   constructor() {
     super();
@@ -20,21 +20,31 @@ export class ItemLocalTagAggregationDirective extends ItemAggregationBaseDirecti
   getAggregationQuery(): any {
     const aggQuery= {
       [this.getName()]: {
-        terms: {"field": "localTags.keyword_default"}
+        terms: {"field": "metadata.reviewMethod"},
+        aggs: {
+          otherFields: {
+            top_hits: {
+              _source: {
+                includes: ["context.name"]
+              },
+              size: 1
+            }
+          }
+        }
       }
     }
     return aggQuery;
   }
 
   getName(): string {
-    return "localTagsAgg";
+    return "reviewMethodAgg";
   }
 
   parseResult(aggResult: any): AggregationResultView[] {
     const resultViews: AggregationResultView[] = [];
     aggResult.buckets.forEach((b: any) => {
       const aggResult: AggregationResultView = {
-        displayValue: b.key, //b['top_hits#otherFields'].hits.hits[0]._source.localTags,
+        displayValue: b.key,
         selectionValue: b.key,
         docCount: b.doc_count
       }
@@ -44,7 +54,7 @@ export class ItemLocalTagAggregationDirective extends ItemAggregationBaseDirecti
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
-    return baseElasticSearchQueryBuilder('localTags.keyword', selectedValues.map(arv => arv.selectionValue));
+    return baseElasticSearchQueryBuilder('metadata.reviewMethod', selectedValues.map(arv => arv.selectionValue));
 
   }
 

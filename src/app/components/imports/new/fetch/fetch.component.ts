@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,13 +21,11 @@ import { AaService } from 'src/app/services/aa.service';
   templateUrl: './fetch.component.html',
 })
 export default class FetchComponent implements OnInit {
-
-  constructor(
-    private fb: FormBuilder,
-    public validSvc: ImportValidatorsService, 
-    private aaSvc: AaService,
-    private importsSvc: ImportsService,
-    private router: Router) { }
+  importsSvc = inject(ImportsService);
+  valSvc = inject(ImportValidatorsService);
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  aaSvc = inject(AaService);
 
   user_contexts?: ContextDbRO[] = [];
 
@@ -40,11 +38,13 @@ export default class FetchComponent implements OnInit {
   }
 
   public fetchForm: FormGroup = this.fb.group({
-    contextId: [$localize`:@@imports.context:Context`, [Validators.required]],
-    source: ['crossref', [Validators.required]],
-    identifier: ['', [Validators.required, this.validSvc.forbiddenURLValidator(/http/i)]],
+    contextId: [$localize`:@@imports.context:Context`, Validators.required],
+    source: ['crossref'],
+    identifier: ['', [Validators.required, this.valSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']
-  });
+  },
+    { validators: [this.valSvc.allRequiredValidator()] }
+  );
 
   get getCrossrefParams(): GetCrossrefParams {
     const importParams: GetCrossrefParams = {
@@ -70,25 +70,44 @@ export default class FetchComponent implements OnInit {
     }
 
     const source = this.fetchForm.controls['source'].value;
+    this.fetchStart();
 
+
+    switch (source) {
+      case 'crossref':
+        this.importsSvc.getCrossref(this.getCrossrefParams).subscribe({
+          next: () => {
+            this.router.navigateByUrl('/edit_import');
+          },
+          error: () => { this.fetchEnd()},
+        });
+        break;
+      case 'arxiv':
+        this.importsSvc.getArxiv(this.getArxivParams).subscribe({
+          next: () => {
+            this.router.navigateByUrl('/edit_import');
+          },
+          error: () => { this.fetchEnd()},
+        });
+    }
+  }
+
+  fetchStart(): void {
     let element = document.getElementById('go') as HTMLButtonElement;
     element.ariaDisabled = 'true';
     element.tabIndex = -1;
     element.classList.add('disabled');
     element.classList.replace('border-2', 'border-0');
     element.innerHTML = '<span class="spinner-border spinner-border-sm text-secondary" aria-hidden="true"></span>'
+  }
 
-    switch (source) {
-      case 'crossref':
-        this.importsSvc.getCrossref(this.getCrossrefParams).subscribe(() => {
-          this.router.navigateByUrl('/edit_import');
-        });
-        break;
-      case 'arxiv':
-        this.importsSvc.getArxiv(this.getArxivParams).subscribe(() => {
-          this.router.navigateByUrl('/edit_import');
-        });
-    }       
+  fetchEnd(): void {
+    let element = document.getElementById('go') as HTMLButtonElement;
+    element.ariaDisabled = 'false';
+    element.tabIndex = 0;
+    element.classList.remove('disabled');
+    element.classList.replace('border-0', 'border-2');
+    element.innerHTML = 'GO'
   }
 
 }

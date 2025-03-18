@@ -9,6 +9,7 @@ import { AaService } from 'src/app/services/aa.service';
 import { LangSwitchComponent } from 'src/app/shared/components/lang-switch/lang-switch.component';
 import { SidenavComponent } from 'src/app/shared/components/sidenav/sidenav.component';
 import {SearchStateService} from "../search-result-list/search-state.service";
+import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";
 
 @Component({
     selector: 'pure-header',
@@ -45,7 +46,13 @@ export class HeaderComponent {
   search(): void {
     const search_term = this.search_form.get('text')?.value;
     if (search_term) {
-      const query = { query_string: { query: search_term } };
+      const query = {
+        bool: {
+          must: [{query_string: { query: search_term }}],
+          must_not:[baseElasticSearchQueryBuilder("publicState", "WITHDRAWN")],
+          //TODO filter out duplicates
+        }
+        };
       this.searchState.$currentQuery.next(query);
       //sessionStorage.setItem('currentQuery', JSON.stringify(query));
       this.router.navigateByUrl('/search');

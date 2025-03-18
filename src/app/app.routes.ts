@@ -15,6 +15,7 @@ import { ItemViewComponent } from "./components/item-view/item-view.component";
 import { CartListComponent } from "./components/cart-list/cart-list.component";
 import { AuthGuard } from "src/app/services/guards/Auth.guard";
 
+
 export const routes: Routes = [
   {
     path: '',
@@ -31,18 +32,10 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'list',
-    component: ItemListComponent,
-    data: {
-      breadcrumb: {
-        label: 'Datasets',
-      }
-    },
-  },
-  {
     path: 'my',
     component: MyItemsComponent,
     data: {
+      saveComponent: true,
       breadcrumb: {
         label: 'My datasets',
       }
@@ -52,6 +45,7 @@ export const routes: Routes = [
     path: 'qa',
     component: QaWorkspaceComponent,
     data: {
+      saveComponent: true,
       breadcrumb: {
         label: 'QA Area',
       }
@@ -61,6 +55,7 @@ export const routes: Routes = [
     path: 'search',
     component: SearchResultListComponent,
     data: {
+      saveComponent: true,
       breadcrumb: {
         label: 'Search',
       }
@@ -70,6 +65,7 @@ export const routes: Routes = [
     path: 'cart',
     component: CartListComponent,
     data: {
+      saveComponent: true,
       breadcrumb: {
         label: 'Cart',
       }
@@ -84,19 +80,12 @@ export const routes: Routes = [
       }
     },
   },
-  {
-    path: 'as', component: ItemSearchComponent, data: {
-      saveComponent: true,
-      breadcrumb: {
-        label: 'Advanced search',
-      }
-    }
-  },
+
   {
     path: 'as2', component: ItemSearchAdvancedComponent, data: {
       saveComponent: true,
       breadcrumb: {
-        label: 'Advanced search',
+        label: 'Advanced Search',
       }
     }
   },

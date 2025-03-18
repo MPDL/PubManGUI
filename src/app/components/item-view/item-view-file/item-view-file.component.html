@@ -8,7 +8,8 @@
           <div class="col-9 text-truncate">
 
             @if(file.storage==='EXTERNAL_URL' || fileAccessGranted(file)) {
-            <a class="icon-link" href="{{ingeUri + file.content}}" target="_blank" [ngbTooltip]="file.metadata.title">
+            @let link = (file.storage==='EXTERNAL_URL' ? '' : ingeUri) + file.content;
+            <a class="icon-link" href="{{link}}" target="_blank" [ngbTooltip]="file.metadata.title">
               <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}}"></i>
               {{ file.metadata.title }}
             </a>

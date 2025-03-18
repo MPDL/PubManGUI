@@ -59,20 +59,20 @@
             </a>
           }
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
-            <div class="border-bottom">
+            <div class="border-bottom show-more">
               <a class="nav-link py-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.hasImports()}" (click)="collapse()" data-test="sidenav-import">
                 <span class="material-symbols-outlined">get_app</span>
                 <span class="nav-label ms-3">Import</span>
               </a>
               @if ( importsSvc.hasImports() ) {
                 @defer {
-                <pure-imports-nav></pure-imports-nav>
+                <pure-imports-nav class="more-to-show"></pure-imports-nav>
                 }
               }
           </div>
           }
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
-            <div class="border-bottom">
+            <div class="border-bottom show-more">
               <a class="nav-link py-3" [routerLink]="['batch']" [ngClass]="{'disabled pb-2' : batchSvc.areItemsSelected()}" (click)="collapse()" data-test="sidenav-batch">
                 <span class="material-symbols-outlined">web_stories</span>
                 <span class="nav-label ms-3" i18n="@@batch">Batch processing</span>
@@ -82,7 +82,7 @@
               </a>
               @if ( batchSvc.areItemsSelected() ) {
                 @defer {
-                <pure-batch-nav></pure-batch-nav>
+                  <pure-batch-nav class="more-to-show"></pure-batch-nav>
                 }
               }
           </div>

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, ChangeDetectorRef, Inject, LOCALE_ID } from '@angular/core';
+import { OnInit, Component, ChangeDetectorRef, inject, Inject, LOCALE_ID } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ContextDbRO, ImportFormat } from 'src/app/model/inge';
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
+import { ImportValidatorsService } from 'src/app/components/imports/services/import-validators.service';
 import type { PostImportParams } from 'src/app/components/imports/interfaces/imports-params';
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 
@@ -25,6 +26,12 @@ import { AaService } from 'src/app/services/aa.service';
   styles: [".dropzone { width: 100%; padding: 0.5rem 1.5rem 0.5rem 1.5rem; text-align: center; border: dashed 2px; }"], // TO-DO move to scss
 })
 export default class ImportComponent implements OnInit {
+    importsSvc = inject(ImportsService);
+    valSvc = inject(ImportValidatorsService);
+    router = inject(Router);
+    fb = inject(FormBuilder);
+    aaSvc = inject(AaService);
+
   formatObject: any = null;
   lastFormat: string = '';
   data: any = '';
@@ -32,12 +39,9 @@ export default class ImportComponent implements OnInit {
   importFormatTranslations = {};
 
   constructor(
-    private fb: FormBuilder,
-    private aaSvc: AaService,
-    private importSvc: ImportsService,
     private changeDetector: ChangeDetectorRef,
-    private router: Router,
-    @Inject(LOCALE_ID) public locale: string) { }
+    @Inject(LOCALE_ID) public locale: string
+  ) {}
 
   importFormat = Object.keys(ImportFormat);
   user_contexts?: ContextDbRO[] = [];
@@ -45,11 +49,12 @@ export default class ImportComponent implements OnInit {
   public importForm: FormGroup = this.fb.group({
     contextId: [$localize`:@@imports.context:Context`, [Validators.required]],
     importName: ['', [Validators.required]],
-    format: ['ENDNOTE_STRING', [Validators.required]],
+    format: ['ENDNOTE_STRING'],
     formatConfig: [''],
     cone: [''],
-    fileName: ['']
-  });
+    fileName: ['', [Validators.required]]
+  }, 
+  { validators: [this.valSvc.allRequiredValidator()] });
 
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
@@ -78,7 +83,7 @@ export default class ImportComponent implements OnInit {
   }
 
   getFormatConfiguration(format: string) {
-    this.importSvc.getFormatConfiguration(format).subscribe(response => {
+    this.importsSvc.getFormatConfiguration(format).subscribe(response => {
       this.formatObject = response;
       this.changeDetector.detectChanges();
       if (format !== this.lastFormat) {
@@ -181,7 +186,7 @@ export default class ImportComponent implements OnInit {
       return;
     }
 
-    this.importSvc.postImport(this.getImportParams, this.data).subscribe(importResponse => {
+    this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
       this.router.navigate(['/imports/myimports']);
     });
   }

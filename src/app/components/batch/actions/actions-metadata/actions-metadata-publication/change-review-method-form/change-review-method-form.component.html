@@ -38,9 +38,9 @@
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        @if (validSvc.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])) {
+        @if (valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])) {
         <span class="form-text text-danger small">
-          Previous and new review types {{ validSvc.getFieldError(changeReviewMethodForm) }}
+          Previous and new review types {{ valSvc.getFieldError(changeReviewMethodForm) }}
         </span>
         } @else {
           <span>&nbsp;</span>
