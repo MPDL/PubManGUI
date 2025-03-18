@@ -45,14 +45,15 @@ export class BreadcrumbService {
 
     const children: ActivatedRouteSnapshot[] = this.activatedRoute.snapshot.children;
     if(children.length > 0) {
-      const firstChild = children[0];
-      const firstChildLabel = firstChild.data['breadcrumb'].label;
-      if (firstChildLabel === 'View' || firstChildLabel === 'Edit') {
-        const smallerCrumbs = this.removeUntilLastOccurence(firstChildLabel, this.breadcrumbs$.getValue());
+      const currentRoute = children[0];
+      const currentRouteLabel = currentRoute.data['breadcrumb'].label;
+      if (currentRouteLabel === 'View' || currentRouteLabel === 'Edit') {
+        const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabel, this.breadcrumbs$.getValue());
         this.breadcrumbs$.next(smallerCrumbs);
 
-      } else if (firstChildLabel === 'Search' && (this.breadcrumbs$.getValue()[0]?.type) ==="Advanced Search") {
-        //leave advanced search in
+      } else if (currentRouteLabel === 'Search' && (this.breadcrumbs$.getValue()[0]?.type) ==="Advanced Search") {
+        const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabel, this.breadcrumbs$.getValue());
+        this.breadcrumbs$.next(smallerCrumbs);
       }
       else {
         this.breadcrumbs$.next([]);

@@ -31,6 +31,10 @@
       <button class="btn" (click)="openModal(exportItemModal)"><span class="material-symbols-outlined">upload</span></button>
 
     </div>
+    @if(listStateService.currentFullQuery) {
+
+    <pure-paginator end [totalNumberOfItems]="listStateService.currentNumberOfRecords" [size]=1 [(pageNumber)]="listStateService.page" (paginatorChanged)="listStateService.paginatorChanged()"/>
+    }
   </pure-topnav>
 
 

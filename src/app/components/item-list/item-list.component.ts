@@ -21,6 +21,7 @@ import {PaginatorChangeEvent, PaginatorComponent} from "../../shared/components/
 import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
 import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 import { Location } from '@angular/common'
+import {ItemListStateService} from "./item-list-state.service";
 
 
 @Component({
@@ -75,7 +76,8 @@ export class ItemListComponent implements AfterViewInit{
     public aa: AaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private location:Location
+    private location:Location,
+    private listStateService: ItemListStateService
   )
   {
 
@@ -202,8 +204,17 @@ export class ItemListComponent implements AfterViewInit{
         if(result.aggregations) {
           this.applyAggregationResults(result.aggregations);
         }
+
       }),
-      map(result => result.hits.hits.map((record:any) => record._source as ItemVersionVO))
+      map(result => result.hits.hits.map((record:any) => record._source as ItemVersionVO)),
+      tap(result => {
+        this.listStateService.currentFullQuery = body;
+        this.listStateService.currentNumberOfRecords = this.number_of_results;
+        this.listStateService.currentResultList = result;
+        this.listStateService.currentPageOfList = this.currentPage;
+        this.listStateService.currentSizeOfList = this.size;
+
+      })
     );
   }
 
