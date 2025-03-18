@@ -25,6 +25,9 @@ export class ItemListStateService {
     if(index !== -1) {
       this.page = ((this.currentPageOfList - 1) * this.currentSizeOfList) + index + 1;
     }
+    else {
+      this.page = 0;
+    }
   }
 
 
