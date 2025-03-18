@@ -80,12 +80,12 @@ export default class FetchComponent implements OnInit {
 
     switch (source) {
       case 'crossref':
-        this.importsSvc.getCrossref(this.getCrossrefParams).subscribe(importResponse => {
+        this.importsSvc.getCrossref(this.getCrossrefParams).subscribe(() => {
           this.router.navigateByUrl('/edit_import');
         });
         break;
       case 'arxiv':
-        this.importsSvc.getArxiv(this.getArxivParams).subscribe(importResponse => {
+        this.importsSvc.getArxiv(this.getArxivParams).subscribe(() => {
           this.router.navigateByUrl('/edit_import');
         });
     }       

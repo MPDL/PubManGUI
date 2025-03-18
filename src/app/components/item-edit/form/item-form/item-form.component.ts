@@ -57,11 +57,14 @@ export class ItemFormComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(
       switchMap(data => {
+        // console.log('Data', JSON.stringify(data));
         return of(this.fbs.item_FG(data['item']));
       })
     ).subscribe(f => {
       this.form = f;
       this.initInternalAndExternalFiles();
+      // manual Update for form validation
+      //this.updateFormValidity(this.form);
     });
     this.aaService.principal.subscribe(
       p => {
@@ -80,7 +83,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   get context() {
-    console.log('Context: ', JSON.stringify(this.form.get('context')))
+    // console.log('Context: ', JSON.stringify(this.form.get('context')))
     return this.form.get('context') as FormGroup<ControlType<ContextDbVO>>
   }
 
@@ -117,6 +120,23 @@ export class ItemFormComponent implements OnInit {
         }
       }
     }
+  }
+
+  updateFormValidity(form: FormGroup | FormArray) {
+    console.log('updateFormValidity')
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
+      console.log('control name', field);
+      console.log('control.value', JSON.stringify(control?.value));
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.updateFormValidity(control);
+      } else {
+        control?.markAsTouched({ onlySelf: true });
+        control?.markAsDirty({ onlySelf: true });
+        control?.updateValueAndValidity();
+        console.log('control.valid', JSON.stringify(control?.valid));
+      }
+    });
   }
 
   add_remove_local_tag(event: any) {
@@ -264,20 +284,21 @@ export class ItemFormComponent implements OnInit {
     // cleanup form
     this.form_2_submit = remove_null_empty(this.form.value);
     this.form_2_submit = remove_objects(this.form_2_submit);
-/*
+    /*
     console.log('form_2_submit.valid:', JSON.stringify(this.form_2_submit.valid));
     console.log('form_2_submit.errors:', JSON.stringify(this.form_2_submit.errors));
     console.log('form.valid', JSON.stringify(this.form.valid));
     console.log('form.errors:', JSON.stringify(this.form.errors));
-*/
+    */
     // submit form
-
     if (this.aaService.isLoggedIn && this.aaService.token) {
       if (this.form_2_submit.objectId) {
-        this.form.errors == null ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO, this.aaService.token)).subscribe(result => console.log('Updated Item:', JSON.stringify(result))) : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
+        this.form.valid ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO, this.aaService.token)).subscribe(result => console.log('Updated Item:', JSON.stringify(result))) : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
       } else {
-        this.form.errors == null ? (this.itemService.create(this.form_2_submit as ItemVersionVO, this.aaService.token)).subscribe(result => console.log('Created Item', JSON.stringify(result))) : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
+        this.form.valid ? (this.itemService.create(this.form_2_submit as ItemVersionVO, this.aaService.token)).subscribe(result => console.log('Created Item', JSON.stringify(result))) : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
       }
+    } else {
+      alert('You must be logged in to update/create a publication');
     }
 
   }
