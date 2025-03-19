@@ -88,12 +88,17 @@ export class ItemViewComponent {
   init(id:string) {
 
     //console.log("init " + id);
-    this.listStateService.initItemId(id);
+
+    this.thumbnailUrl = undefined;
+    this.firstPublicPdfFile = undefined
+    this.authorizationInfo = undefined;
+    this.latestVersionAuthorizationInfo = undefined;
     if (id)
       this.item$ = this.itemsService.retrieve(id, this.aaService.token);
     this.item$.subscribe(i => {
       if (i && i.objectId) {
         this.item = i;
+        this.listStateService.initItemId(i.objectId);
         this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
 
         this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber, this.aaService.token).subscribe(authInfo => {
