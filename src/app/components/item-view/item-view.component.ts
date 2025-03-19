@@ -50,7 +50,7 @@ export class ItemViewComponent {
   versions$!: Observable<any>;
   item$!: Observable<ItemVersionVO>;
 
-  item!: ItemVersionVO;
+  item: ItemVersionVO | undefined;
 
   authorizationInfo: any;
 
@@ -89,6 +89,7 @@ export class ItemViewComponent {
 
     //console.log("init " + id);
 
+    this.item = undefined
     this.thumbnailUrl = undefined;
     this.firstPublicPdfFile = undefined
     this.authorizationInfo = undefined;
@@ -136,7 +137,7 @@ export class ItemViewComponent {
   }
 
   get firstAuthors() {
-    return this.item.metadata.creators.slice(0,10);
+    return this.item?.metadata.creators.slice(0,10);
   }
 
   get storedFiles() {
@@ -166,7 +167,7 @@ export class ItemViewComponent {
   }
 
   get isLatestVersion() {
-    return this.item.versionNumber === this.item.latestVersion?.versionNumber;
+    return this.item?.versionNumber === this.item?.latestVersion?.versionNumber;
   }
 
 
