@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output, computed, effect, inject, resource } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output,  inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { AbstractVO, AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, SubjectVO } from 'src/app/model/inge';
+import { AbstractVO, AlternativeTitleVO, ContextDbVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, SubjectVO } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
@@ -18,6 +18,8 @@ import { ProjectInfoFormComponent } from '../project-info-form/project-info-form
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
+import { ContextsService } from 'src/app/services/pubman-rest-client/contexts.service';
+import { AaService } from 'src/app/services/aa.service';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -45,16 +47,19 @@ import { LoadingComponent } from 'src/app/shared/components/loading/loading.comp
   templateUrl: './metadata-form.component.html',
   styleUrls: ['./metadata-form.component.scss']
 })
-export class MetadataFormComponent {
+export class MetadataFormComponent implements OnInit {
 
   @Input() meta_form!: FormGroup;
+  @Input() context!: FormGroup<ControlType<ContextDbVO>>;
   @Output() notice = new EventEmitter();
 
+  aaService = inject(AaService);
+  contextService = inject(ContextsService);
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
   genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
-  genre_types = Object.keys(MdsPublicationGenre);
+  allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
 
   constructor(
@@ -65,7 +70,12 @@ export class MetadataFormComponent {
   ngOnInit() {
     let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
     this.miscellaneousService.selectedGenre.set(genre);
+    this.updateAllowedGenres(); // Initialize allowed_genre_types with correct context specific values
+    this.context.valueChanges.subscribe((newContext) => {
+      this.updateAllowedGenres();
+    });
   }
+
 
   get alternativeTitles() {
     return this.meta_form.get('alternativeTitles') as FormArray<FormGroup<ControlType<AlternativeTitleVO>>>;
@@ -111,11 +121,17 @@ export class MetadataFormComponent {
   get projectInfo() {
     return this.meta_form.get('projectInfo') as FormArray<FormGroup<ControlType<ProjectInfoVO>>>;
   }
-/*
-  get genreSpecificProperties() {
-    return this.miscellaneousService.genreSpecficProperties();
+
+  updateAllowedGenres() {
+    if (this.context.value.objectId) {
+      this.contextService.retrieve(this.context.value.objectId, ).subscribe(completeContext => {
+        if (completeContext.allowedGenres) {
+          this.allowed_genre_types = completeContext.allowedGenres;
+        }
+      });
+    }
   }
-*/
+
   changeGenre() {
     this.miscellaneousService.selectedGenre.set(this.meta_form.get('genre')?.value);
   }

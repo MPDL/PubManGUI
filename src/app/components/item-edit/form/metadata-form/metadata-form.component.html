@@ -20,7 +20,7 @@
                                     <select id="genre" class="form-select" formControlName="genre"
                                         (change)="changeGenre()" data-test="genre">
                                         <option [value]="null" selected disabled>genre</option>
-                                        @for (g of genre_types; track g) {
+                                        @for (g of allowed_genre_types; track g) {
                                         <option [value]="g">{{g}}</option>
                                         }
                                     </select>
