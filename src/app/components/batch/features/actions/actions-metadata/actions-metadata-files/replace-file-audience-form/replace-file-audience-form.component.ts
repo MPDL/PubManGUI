@@ -10,7 +10,7 @@ import { MiscellaneousService, IpEntry } from 'src/app/services/pubman-rest-clie
 //import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/batch-params';
 
-import { AudienceFormComponent } from 'src/app/components/batch/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
+import { AudienceFormComponent } from 'src/app/components/batch/features/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
 //import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 
 @Component({

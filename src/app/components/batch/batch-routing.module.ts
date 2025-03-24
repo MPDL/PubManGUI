@@ -6,7 +6,7 @@ import { batchLogResolver } from "./services/batch-log.resolver";
 const routes: Routes = [
   {
     path: 'datasets',
-    loadComponent: () => import('./datasets/datasets.component'),
+    loadComponent: () => import('./batch-datasets/datasets.component'),
     data: {
       breadcrumb: {
         label: $localize`:@@datasets:Datasets`,
@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'actions',
-    loadComponent: () => import('./actions/actions.component'),
+    loadComponent: () => import('./features/actions/actions.component'),
     data: {
       breadcrumb: {
         label: $localize`:@@actions:Actions`,
@@ -32,7 +32,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./logs/batch-logs.component'),
+        loadComponent: () => import('./features/logs/batch-log-list.component'),
         data: {
           breadcrumb: {
             //label: '',
@@ -49,7 +49,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./logs/items/items.component'), resolve: { log: batchLogResolver },
+            loadComponent: () => import('./features/logs/batch-action-log/batch-action-details/batch-action-details-list.component'), resolve: { log: batchLogResolver },
             data: {
               breadcrumb: {
                 //label: '',

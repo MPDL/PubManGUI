@@ -8,7 +8,7 @@ import { ActionsLocalTagsComponent } from './actions-local-tags/actions-local-ta
 import { ActionsGenreComponent } from './actions-genre/change-genre.component';
 import { ActionsMetadataComponent } from './actions-metadata/actions-metadata.component';
 
-import { BatchService } from '../services/batch.service';
+import { BatchService } from '../../services/batch.service';
 
 @Component({
   selector: 'pure-batch-actions',

@@ -22,6 +22,8 @@ export class BatchService {
   datasetList = "dataset-list";
   savedSelection = "datasets-checked";
 
+  updateDelay = 1;
+
   constructor(
     private http: HttpClient,
     public aaSvc: AaService,
@@ -145,8 +147,9 @@ export class BatchService {
         if (response.state === resp.BatchProcessLogHeaderState.RUNNING) {
           setTimeout(() => {
             this.updateProcessProgress();
-          }, 5000); // 1000); on PROD
+          }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60 )); 
         } else {
+          this.updateDelay = 1;
           this.endProcess();
         }
       })

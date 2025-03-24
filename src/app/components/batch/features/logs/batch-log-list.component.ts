@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 import { MatBadgeModule } from '@angular/material/badge';
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
+import { BatchActionLogComponent } from "./batch-action-log/batch-action-log.component";
 
 
 type detail = {
@@ -17,18 +18,19 @@ type detail = {
 }
 
 @Component({
-  selector: 'pure-batch-logs',
+  selector: 'pure-batch-logs-list',
   standalone: true,
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     MatBadgeModule,
-    PaginatorComponent
-  ],
-  templateUrl: './batch-logs.component.html'
+    PaginatorComponent,
+    BatchActionLogComponent
+],
+  templateUrl: './batch-log-list.component.html'
 })
-export default class LogProcessListComponent implements OnInit {
+export default class BatchLogsListComponent implements OnInit {
 
   batchSvc = inject(BatchService);
 
@@ -39,8 +41,6 @@ export default class LogProcessListComponent implements OnInit {
   processLogs: resp.BatchProcessLogHeaderDbVO[] = [];
 
   state = resp.BatchProcessLogHeaderState;
-  batchProcessLogHeaderStateTranslations = {};
-  batchProcessMethodTranslations = {};
   detailLogs: detail[] = [];
 
   isScrolled = false;
@@ -58,22 +58,6 @@ export default class LogProcessListComponent implements OnInit {
       }
     );
 
-    this.loadTranslations(this.locale);
-
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.batchProcessLogHeaderStateTranslations = msgs.BatchProcessLogHeaderState;
-        this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.batchProcessLogHeaderStateTranslations = msgs.BatchProcessLogHeaderState;
-        this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
-      })
-    }
   }
 
   refreshLogs() {
@@ -95,16 +79,6 @@ export default class LogProcessListComponent implements OnInit {
   calculateProcessedStep(numberOfItems: number): number {
     return Math.floor(100 / numberOfItems);
   };
-
-  getProcessLogHeaderStateTranslation(txt: string):string {
-    let key = txt as keyof typeof this.batchProcessLogHeaderStateTranslations;
-    return this.batchProcessLogHeaderStateTranslations[key];
-  }
-
-  getProcessMethodTranslation(txt: string):string {
-    let key = txt as keyof typeof this.batchProcessMethodTranslations;
-    return this.batchProcessMethodTranslations[key];
-  }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {

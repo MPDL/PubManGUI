@@ -1,0 +1,23 @@
+@if(log) {
+
+<tr class="border-bottom d-flex" id="{{ log.item.itemObjectId }}" [ngClass]="log.title === '404' ? 'text-secondary' : ''">
+  <td class="col-2">
+    <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
+  </td>
+  <td class="col-6">
+    @if(log.title === '404') {
+
+    <span>NO ITEM FOUND. It may have been removed after performing the 'delete' action.</span>
+
+    } @else {
+
+    <span class="nav-link" [routerLink]="['view', log.item.itemObjectId]" [innerHTML]="log.title | sanitizeHtml"></span>
+
+    }
+  </td>
+  <td class="col-4">
+    <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
+  </td>
+</tr>
+
+}

@@ -11,20 +11,24 @@
             </span>
           </a>
           @if(failed > 0) {
+
           <a class="ms-3" i18n-ngbTooltip="@@batch.logs.details.fill.errors" ngbTooltip="Fill batch with errors only"
             placement="bottom-left" (click)="fillWithFailed()">
             <span class="material-symbols-outlined">
               breaking_news_alt_1
             </span>
           </a>
+
           }
         </div>
 
         @if(filteredSize > 25) {
+
         <div class="small d-inline-flex justify-content-end align-items-center py-1">
           <pure-paginator [totalNumberOfItems]="filteredSize" [(pageNumber)]="currentPage" [(size)]="pageSize"
             (paginatorChanged)="refreshLogs()" />
         </div>
+
         }
       </div>
     </div>
@@ -36,93 +40,102 @@
             getProcessMethodTranslation(batchLogHeader!.method) }} </strong>
         </div>
         <div class="fw-light">
-          <span i18n="@@batch.logs.started.on">started on</span><span> {{ batchLogHeader.startDate | date:'fullDate' }} </span><span
-            class="material-symbols-outlined" style="cursor: auto">
+          <span i18n="@@batch.logs.started.on">started on</span><span> {{ batchLogHeader.startDate | date:'fullDate' }}
+          </span><span class="material-symbols-outlined" style="cursor: auto">
             schedule</span><span> {{ batchLogHeader.startDate | date: "HH:mm" }}</span>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-9 col-sm-12">
-        <table class="table table-responsive col-12 mt-0" onChange="refreshInPageCount()">
-          <thead>
-            @if(inPage.length > 0) {
-            <tr class="border-bottom">
-              <th scope="col" class="pe-2">Status</th>
-              <th scope="col" class="pe-2" i18n="@@batch.logs.header.title">Title</th>
-              <th scope="col" i18n="@@batch.logs.header.message">Message</th>
-            </tr>
-            }
-          </thead>
+    <div class="col-lg-9 col-sm-12">
+      <table class="table table-responsive col-12 mt-0">
+        <thead>
+          @if(inPage.length > 0) {
 
-          <tbody>
-            @if(inPage.length > 0) {
+          <tr class="border-bottom">
+            <th scope="col" class="col-2">Status</th>
+            <th scope="col" class="col-6" i18n="@@batch.logs.header.title">Title</th>
+            <th scope="col" class="col-4" i18n="@@batch.logs.header.message">Message</th>
+          </tr>
+
+          }
+        </thead>
+      </table>
+      <table class="table table-responsive col-12" onChange="refreshInPageCount()">
+        <tbody>
+          @if(inPage.length > 0) {
+          <ng-container>
             @for (log of inPage; track log.item.itemObjectId) {
-            <tr class="border-bottom" id="{{ log.item.itemObjectId }}" [ngClass]="log.title === '404' ? 'text-secondary' : ''">
-              <td class="col-1">
-                <span>{{ getProcessLogDetailStateTranslation(log.item.state) }}</span>
-              </td>
-              <td class="col-6">
-                @if(log.title === '404') {
-                  <span>NO ITEM FOUND. It may have been removed after performing the 'delete' action.</span>
-                } @else {
-                <span class="nav-link" [routerLink]="['view', log.item.itemObjectId]"
-                  [innerHTML]="log.title | sanitizeHtml"></span>
-                }
-              </td>
-              <td class="col-5">
-                <span>{{ getProcessMessageTranslation(log.item.message) }}</span>
-              </td>
-            </tr>
+              @defer (on viewport) {
+
+              <pure-batch-action-dataset-log [log]="log"></pure-batch-action-dataset-log>
+
+              }
+              @placeholder {
+              <div>...</div>
+              }
             }
             @empty {
+
             <tr>
-              <th colspan="3" class="text-center col-12">
+              <th colspan="3" class="text-center col-19">
                 <span class="text-center" i18n="@@batch.logs.details.empty">No details to show</span>
               </th>
             </tr>
-            }
-            }
-          </tbody>
-        </table>
-      </div>
 
-      <div class="col-lg-3 d-none d-lg-block mt-4">
-        @if(unfilteredSize > 0) {
+            }
+          </ng-container>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-3 d-none d-lg-block mt-4">
+      @if(unfilteredSize > 0) {
+
         <div class="border rounded p-3 m-1">
-          <span class="me-0"> {{ batchLogHeader!.numberOfItems - failed }}/{{ batchLogHeader!.numberOfItems }} <span class="me-0" i18n="@@succeded">
+          <span class="me-0"> {{ batchLogHeader!.numberOfItems - failed }}/{{ batchLogHeader!.numberOfItems }} <span
+              class="me-0" i18n="@@succeded">
               success</span>
           </span>
 
           @if(failed > 0) {
-          <br>
-          <span class="fw-bold"> {{ failed }} <span i18n="@@failed">
-              failed</span>
-          </span>
+
+            <br>
+            <span class="fw-bold"> {{ failed }} <span i18n="@@failed">
+                failed</span>
+            </span>
+
           }
+
         </div>
-        }
-        <br>
-        <form [formGroup]="filterForm" (change)="onFilterChange()">
-          @if((unfilteredSize - failed) > 0) {
+
+      }
+      <br>
+      <form [formGroup]="filterForm" (change)="onFilterChange()">
+        @if((unfilteredSize - failed) > 0) {
+
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="success" formControlName="success" checked>
             <label class="form-check-label" for="success" i18n="@@batch.logs.details.filter.succeded">
               Show successful items
             </label>
           </div>
-          }
-          @if(failed > 0) {
+
+        }
+        @if(failed > 0) {
+
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="fail" formControlName="fail" checked>
             <label class="form-check-label" for="fail" i18n="@@batch.logs.details.filter.failed">
               Show failed items
             </label>
           </div>
-          }
-        </form>
-      </div>
+
+        }
+      </form>
+    </div>
     </div>
   </div>
 </div>

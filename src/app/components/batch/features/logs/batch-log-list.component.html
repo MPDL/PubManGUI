@@ -1,0 +1,59 @@
+<div class="batch">
+  <div class="logs">
+    @if(collectionSize > 25) {
+
+    <div class="row top_nav_pos navbar bg-body" [ngClass]="{ 'scrolled': isScrolled }">
+      <div class="col-lg-12 col-sm-12 d-inline-flex justify-content-end">
+
+        <div class="small d-inline-flex align-items-center py-1">
+          <pure-paginator [totalNumberOfItems]="collectionSize" [(pageNumber)]="currentPage" [(size)]="pageSize"
+            (paginatorChanged)="refreshLogs()" />
+        </div>
+      </div>
+    </div>
+    }
+
+    <div class="row">
+      <div class="my-3"></div>
+    </div>
+
+    <div class="col-lg-12 col-sm-12">
+      <table class="table table-responsive col-12 mt-1">
+        <thead>
+          <tr class="border-bottom">
+            <th scope="col" class="col-2">Status</th>
+            <th scope="col" class="col-5" i18n="@@batch.logs.details.for">Action</th>
+            <th scope="col" class="col-4" i18n="@@batch.logs.header.date">Date</th>
+            <th scope="col" i18n="@@batch.logs.header.details">Details</th>
+          </tr>
+        </thead>
+      </table>
+      <table class="table table-responsive col-12">
+        <tbody>
+          <ng-container>
+            @for (log of inPage; track log.batchLogHeaderId) {
+              @defer (on viewport) {
+
+              <pure-batch-action-log [log]="log"></pure-batch-action-log>
+
+              }
+              @placeholder {
+              <div>...</div>
+              }
+            }
+            @empty {
+
+            <tr>
+              <th colspan="3" class="text-center col-19">
+                <span class="text-center" i18n="@@batch.logs.details.empty">No logs to show</span>
+              </th>
+            </tr>
+
+            }
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, DoCheck, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import * as resp from 'src/app/components/batch/interfaces/batch-responses';
@@ -12,11 +11,10 @@ import { ItemVersionVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-//import { StateFilterPipe } from 'src/app/components/batch/pipes/stateFilter.pipe';
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 
-import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
+import { BatchActionDatasetLogComponent } from "./batch-action-dataset-log/batch-action-dataset-log.component";
 
 
 type detail = {
@@ -25,22 +23,20 @@ type detail = {
 }
 
 @Component({
-  selector: 'pure-batch-log-item-list',
+  selector: 'pure-batch-action-details-list',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     NgbTooltip,
-    //StateFilterPipe,
-    RouterLink,
-    SanitizeHtmlPipe,
-    PaginatorComponent
+    PaginatorComponent,
+    BatchActionDatasetLogComponent
   ],
-  templateUrl: './items.component.html',
+  templateUrl: './batch-action-details-list.component.html',
 })
 
-export default class LogItemListComponent implements OnInit {
+export default class BatchActionDetailsListComponent implements OnInit {
 
   batchSvc = inject(BatchService);
   itemSvc = inject(ItemsService);
@@ -75,8 +71,6 @@ export default class LogItemListComponent implements OnInit {
     resp.BatchProcessLogDetailState.ERROR
   ];
 
-  batchProcessLogDetailStateTranslations = {};
-  batchProcessMessageTranslations = {};
   batchProcessMethodTranslations = {};
 
   isScrolled = false;
@@ -143,14 +137,10 @@ export default class LogItemListComponent implements OnInit {
   async loadTranslations(lang: string) {
     if (lang === 'de') {
       import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.batchProcessLogDetailStateTranslations = msgs.BatchProcessLogDetailState;
-        this.batchProcessMessageTranslations = msgs.BatchProcessMessages;
         this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
       })
     } else {
       import('src/assets/i18n/messages.json').then((msgs) => {
-        this.batchProcessLogDetailStateTranslations = msgs.BatchProcessLogDetailState;
-        this.batchProcessMessageTranslations = msgs.BatchProcessMessages;
         this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
       })
     }
@@ -170,16 +160,6 @@ export default class LogItemListComponent implements OnInit {
     if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
       return +sessionStorage.getItem('preferredPageSize')!;
     } else return this.pageSize || 25;
-  }
-
-  getProcessLogDetailStateTranslation(txt: string): string {
-    let key = txt as keyof typeof this.batchProcessLogDetailStateTranslations;
-    return this.batchProcessLogDetailStateTranslations[key];
-  }
-
-  getProcessMessageTranslation(txt: string): string {
-    let key = txt as keyof typeof this.batchProcessMessageTranslations;
-    return this.batchProcessMessageTranslations[key];
   }
 
   getProcessMethodTranslation(txt: string): string {

@@ -1,0 +1,64 @@
+@if(log) {
+
+<tr class="border-bottom d-flex">
+    @if (log.state === state.RUNNING) {
+
+        <td class="col-2">
+            {{ batchSvc.getProcessLog().state | titlecase }}
+
+            @if (log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId) {
+                @if (batchSvc.isProcessRunning()) {
+
+                    {{ batchSvc.getProcessLog().percentageOfProcessedItems -
+                    calculateProcessedStep(batchSvc.getProcessLog().numberOfItems) }}&percnt;
+
+                }
+            } @else {
+
+                <span class="material-symbols-outlined" title="Something gone wrong!">
+                    error
+                </span>
+
+            }
+        </td>
+
+    } @else {
+
+        <td class="col-2">
+            {{ getProcessLogHeaderStateTranslation(log.state) }}
+        </td>
+
+    }
+    
+    <td class="col-5">
+        {{ getProcessMethodTranslation(log.method) }}
+    </td>
+
+    <td class="col-4">
+        <span>{{ log.endDate | date:'fullDate' }}</span>
+        <div class="float-end">
+            <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
+            <span>{{ log.endDate | date: "HH:mm" }}</span>
+        </div>
+    </td>
+
+    <td class="d-flex justify-content-center">
+        @if (log.state === state.RUNNING
+            && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId
+            && batchSvc.isProcessRunning()) {
+
+            <span class="spinner-border spinner-border-sm text-secondary ms-3" aria-hidden="true"></span>
+
+        } @else {
+
+            <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]">
+                <span class="material-symbols-outlined ms-3 my-0 matBadge" matBadge='{{ log.numberOfItems }}'>
+                    list
+                </span>
+            </a>
+
+        }
+    </td>
+</tr>
+
+}
