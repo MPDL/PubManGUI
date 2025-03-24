@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output, computed, effect, inject, resource } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output,  inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { AbstractVO, AlternativeTitleVO, CreatorVO, EventVO, IdentifierVO, LegalCaseVO, MdsPublicationGenre, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, SubjectVO } from 'src/app/model/inge';
+import { AbstractVO, AlternativeTitleVO, ContextDbVO, CreatorRole, CreatorType, CreatorVO, EventVO, IdentifierVO, IdType, LegalCaseVO, MdsPublicationGenre, PersonVO, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, SubjectVO } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
@@ -18,6 +18,9 @@ import { ProjectInfoFormComponent } from '../project-info-form/project-info-form
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
+import { ContextsService } from 'src/app/services/pubman-rest-client/contexts.service';
+import { AaService } from 'src/app/services/aa.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -45,17 +48,24 @@ import { LoadingComponent } from 'src/app/shared/components/loading/loading.comp
   templateUrl: './metadata-form.component.html',
   styleUrls: ['./metadata-form.component.scss']
 })
-export class MetadataFormComponent {
+export class MetadataFormComponent implements OnInit {
 
   @Input() meta_form!: FormGroup;
+  @Input() context!: FormGroup<ControlType<ContextDbVO>>;
   @Output() notice = new EventEmitter();
 
+  aaService = inject(AaService);
+  contextService = inject(ContextsService);
   fbs = inject(FormBuilderService);
+  messageService = inject(MessageService);
   miscellaneousService = inject(MiscellaneousService);
   genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
-  genre_types = Object.keys(MdsPublicationGenre);
+  allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
+  
+  multipleCreators = new FormControl<string>('');
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,7 +75,12 @@ export class MetadataFormComponent {
   ngOnInit() {
     let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
     this.miscellaneousService.selectedGenre.set(genre);
+    this.updateAllowedGenres(); // Initialize allowed_genre_types with correct context specific values
+    this.context.valueChanges.subscribe((newContext) => {
+      this.updateAllowedGenres();
+    });
   }
+
 
   get alternativeTitles() {
     return this.meta_form.get('alternativeTitles') as FormArray<FormGroup<ControlType<AlternativeTitleVO>>>;
@@ -78,7 +93,6 @@ export class MetadataFormComponent {
   get event() {
     return this.meta_form.get('event') as FormGroup<ControlType<EventVO>>;
   }
-
   
   get identifiers() {
     return this.meta_form.get('identifiers') as FormArray<FormGroup<ControlType<IdentifierVO>>>;
@@ -111,13 +125,40 @@ export class MetadataFormComponent {
   get projectInfo() {
     return this.meta_form.get('projectInfo') as FormArray<FormGroup<ControlType<ProjectInfoVO>>>;
   }
-/*
-  get genreSpecificProperties() {
-    return this.miscellaneousService.genreSpecficProperties();
+
+  updateAllowedGenres() {
+    if (this.context.value.objectId) {
+      this.contextService.retrieve(this.context.value.objectId, ).subscribe(completeContext => {
+        if (completeContext.allowedGenres) {
+          this.allowed_genre_types = completeContext.allowedGenres;
+        }
+      });
+    }
   }
-*/
+
   changeGenre() {
     this.miscellaneousService.selectedGenre.set(this.meta_form.get('genre')?.value);
+  }
+
+  addMultipleCreators () {
+    console.log('Adding multiple creators');
+    this.loading = true;
+    if (this.multipleCreators?.value != null) {
+      this.miscellaneousService.getDecodedMultiplePersons(this.multipleCreators.value).subscribe(
+        (decodedCreators) => {
+          for (let creator of decodedCreators) {
+            let personVO : PersonVO = {completeName: creator.family + ', ' + creator.given, familyName: creator.family, givenName: creator.given, alternativeNames: [''], titles: [''], pseudonyms: [''], organizations: [], identifier: {id: '', type: IdType.OTHER}, orcid: ''};
+            let creatorVO : CreatorVO = {person: personVO, role: CreatorRole.AUTHOR, type: CreatorType.PERSON, organization: {identifier: '', name: ''}}; 
+            this.creators.push(this.fbs.creator_FG(creatorVO));
+          }
+          this.messageService.success('Adding multiple creators successful. Please review the list of creators.');
+          this.multipleCreators.setValue('');
+          this.loading = false;
+        }
+      );
+    } else {
+      this.messageService.error('Please enter multiple creators in the textfield.');
+    }
   }
 
   handleAltTitleNotification(event: any) {

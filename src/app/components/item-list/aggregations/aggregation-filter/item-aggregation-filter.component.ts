@@ -49,7 +49,9 @@ export class ItemAggregationFilterComponent {
         this.resultView.clear();
         resultViews.forEach(rv => this.resultView.set(rv.selectionValue, rv));
 
-
+      }
+      else {
+        this.resultView.clear();
       }
     })
   }

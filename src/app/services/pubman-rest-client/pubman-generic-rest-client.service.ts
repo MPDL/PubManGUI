@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
 import {inject, Inject, Injectable} from '@angular/core';
 import {Observable, catchError, map, throwError, isObservable, lastValueFrom} from 'rxjs';
 import * as props from 'src/assets/properties.json';
@@ -55,15 +55,17 @@ export abstract class PubmanGenericRestClientService<modelType> {
 
 
 
-  private httpRequest(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
+  private httpRequest(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined ): Observable<any> {
     const requestUrl = this.restUri + path;
     return this.httpClient.request(method, requestUrl, {
       body,
       headers,
       params: params,
-      responseType: respType ? respType : 'json'
+      responseType: respType ? respType : 'json',
+      observe: observe ? observe : 'body',
+
     }).pipe(
-      map((response: any) => response),
+      //map((response: any) => response),
       catchError((error) => {
         return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
       })
@@ -114,6 +116,13 @@ export abstract class PubmanGenericRestClientService<modelType> {
       return this.httpRequest('GET', path, undefined, this.addAuhorizationHeader(token), params, respType);
     }
     return this.httpRequest('GET', path, undefined, undefined, params, respType);
+  }
+
+  protected httpHead(path: string, token?: string, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<HttpResponse<any>> {
+    if (token) {
+      return this.httpRequest('HEAD', path, undefined, this.addAuhorizationHeader(token), params, respType, 'response');
+    }
+    return this.httpRequest('HEAD', path, undefined, undefined, params, respType, 'response');
   }
 
   protected httpPost(path: string, resource: any, token: string): Observable<any> {

@@ -1,8 +1,8 @@
 import {Component, HostListener, Input, TemplateRef} from '@angular/core';
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
 import {AaService} from "../../services/aa.service";
-import {ItemVersionVO} from "../../model/inge";
-import {ActivatedRoute, Router, RouterLink, RouterOutlet} from "@angular/router";
+import {FileDbVO, ItemVersionVO, Storage, Visibility} from "../../model/inge";
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {TopnavComponent} from "../../shared/components/topnav/topnav.component";
 import {AsyncPipe, NgClass, ViewportScroller} from "@angular/common";
 import {DateToYearPipe} from "../../shared/services/pipes/date-to-year.pipe";
@@ -22,6 +22,7 @@ import {ExportItemsComponent} from "../../shared/components/export-items/export-
 import {PaginatorComponent} from "../../shared/components/paginator/paginator.component";
 import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
+import {ItemListStateService} from "../item-list/item-list-state.service";
 
 @Component({
   selector: 'pure-item-view',
@@ -36,7 +37,8 @@ import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/to
     SanitizeHtmlPipe,
     ItemViewFileComponent,
     EmptyPipe,
-    ExportItemsComponent
+    ExportItemsComponent,
+    PaginatorComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
@@ -48,7 +50,7 @@ export class ItemViewComponent {
   versions$!: Observable<any>;
   item$!: Observable<ItemVersionVO>;
 
-  item!: ItemVersionVO;
+  item: ItemVersionVO | undefined;
 
   authorizationInfo: any;
 
@@ -56,60 +58,48 @@ export class ItemViewComponent {
 
   citation: string | undefined
 
+  thumbnailUrl: string | undefined;
+  firstPublicPdfFile: FileDbVO | undefined;
+
   constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
-  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal) {
+  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService) {
 
   }
 
 
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id)
-      this.init(id);
-
-      /*
-    this.item$.pipe(
-      tap(i => {
-        if (i && i.objectId) {
-          this.item = i;
-          this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
-          this.itemsService.retrieveAuthorizationInfo(i.objectId, this.aaService.token).pipe(
-            tap(authInfo => {
-                this.authorizationInfo = authInfo;
-                if(i.latestVersion?.versionNumber===i.versionNumber) {
-                  this.latestVersionAuthorizationInfo = this.authorizationInfo;
-                }
-                else {
-                  if (i && i.objectId) {
-                    this.itemsService.retrieveAuthorizationInfo(i.objectId, this.aaService.token).subscribe(authInfoLv => {
-                      this.latestVersionAuthorizationInfo = authInfoLv
-                    })
-                  }
-                }
-              }
-            )
-          ).subscribe()
-        }
-
-      },
-
-    )).subscribe()
-*/
+  ngOnInit()
+  {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id')
+      if(id) {
+          this.init(id);
+      }
+    })
 
     const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
     if(subMenu) {
       this.currentSubMenuSelection = subMenu;
     }
+
+
   }
 
   init(id:string) {
 
+    //console.log("init " + id);
+
+    this.item = undefined
+    this.thumbnailUrl = undefined;
+    this.firstPublicPdfFile = undefined
+    this.authorizationInfo = undefined;
+    this.latestVersionAuthorizationInfo = undefined;
     if (id)
       this.item$ = this.itemsService.retrieve(id, this.aaService.token);
     this.item$.subscribe(i => {
       if (i && i.objectId) {
         this.item = i;
+        this.listStateService.initItemId(i.objectId);
         this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
 
         this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber, this.aaService.token).subscribe(authInfo => {
@@ -129,35 +119,37 @@ export class ItemViewComponent {
         this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined,this.aaService.token).subscribe(citation => {
           this.citation = citation;
         })
+
+
+        this.firstPublicPdfFile = this.item?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
+
+        if(this.firstPublicPdfFile) {
+          this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId, this.aaService.token).subscribe(thumbAvailable => {
+              this.thumbnailUrl =  this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
+          })
+        }
       }
     })
   }
 
   openModal(content: TemplateRef<any>) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-      /*.result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      },
-    );
-
-       */
   }
 
   get firstAuthors() {
-    return this.item.metadata.creators.slice(0,10);
+    return this.item?.metadata.creators.slice(0,10);
   }
 
   get storedFiles() {
-   return this.item?.files?.filter(f => f.storage === 'INTERNAL_MANAGED');
+   return this.item?.files?.filter(f => f.storage === Storage.INTERNAL_MANAGED);
   }
 
   get externalReferences() {
-    return this.item?.files?.filter(f => f.storage === 'EXTERNAL_URL');
+    return this.item?.files?.filter(f => f.storage === Storage.EXTERNAL_URL);
   }
+
+
+
 
 
   changeSubMenu(val: string) {
@@ -175,25 +167,10 @@ export class ItemViewComponent {
   }
 
   get isLatestVersion() {
-    return this.item.versionNumber === this.item.latestVersion?.versionNumber;
+    return this.item?.versionNumber === this.item?.latestVersion?.versionNumber;
   }
 
-  /*
-  isAllowed(accessType: string): boolean {
-    if(this.authorizationInfo) {
-      return this.authorizationInfo[accessType] && this.item.latestVersion?.versionNumber === this.item.versionNumber;
-    }
-    return false;
-  }
 
-  get isAllowedForLatestVersion(accessType: string): boolean {
-    if(this.latestVersionAuthorizationInfo) {
-      return this.latestVersionAuthorizationInfo[accessType];
-    }
-    return false;
-  }
-
-   */
 
   submit() {
     this.itemsService.submit(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {

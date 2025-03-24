@@ -1,21 +1,20 @@
-import { Component, Input, inject } from '@angular/core';
-import {FileDbVO, IdType, ItemVersionVO, Storage} from 'src/app/model/inge';
-import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import {Router, ActivatedRoute, RouterLink} from '@angular/router';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PopoverDirective } from 'src/app/shared/directives/popover.directive';
-import { Subscription } from 'rxjs';
-import {NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {Component, inject, Input} from '@angular/core';
+import {FileDbVO, ItemVersionVO, Storage, Visibility} from 'src/app/model/inge';
+import {NgClass} from '@angular/common';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {PopoverDirective} from 'src/app/shared/directives/popover.directive';
+import {Subscription} from 'rxjs';
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
-import {DateToYearPipe} from "../../../shared/services/pipes/date-to-year.pipe";
 import {ItemBadgesComponent} from "../../../shared/components/item-badges/item-badges.component";
-import {ExportItemsComponent} from "../../../shared/components/export-items/export-items.component";
 import {ItemSelectionService} from "../../../shared/services/item-selection.service";
+import * as props from "../../../../assets/properties.json";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, JsonPipe, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, DateToYearPipe, ItemBadgesComponent, ExportItemsComponent, NgbPopover],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })
@@ -36,7 +35,10 @@ export class ItemListElementComponent {
   no_name = 'n/a';
 
   files: FileDbVO[] = [];
+  publicFiles: FileDbVO[] = [];
   locators: FileDbVO[] = [];
+
+  protected ingeUri = props.inge_uri;
 
 
   constructor(private itemSelectionService: ItemSelectionService) {
@@ -61,8 +63,9 @@ export class ItemListElementComponent {
           this.setStoredCheckBoxState(this.check_box.value as boolean);
         });
 
-      this.files = this.item.files?.filter(f => f.storage == Storage.INTERNAL_MANAGED) || [];
-      this.locators = this.item.files?.filter(f => f.storage == Storage.EXTERNAL_URL) || [];
+      this.files = this.item.files?.filter(f => f.storage === Storage.INTERNAL_MANAGED) || [];
+      this.publicFiles = this.files.filter(f => f.visibility === Visibility.PUBLIC);
+      this.locators = this.item.files?.filter(f => f.storage === Storage.EXTERNAL_URL) || [];
 
     }
   }
@@ -133,5 +136,5 @@ export class ItemListElementComponent {
   }
 
 
-
+  protected readonly Visibility = Visibility;
 }

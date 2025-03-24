@@ -32,11 +32,14 @@
                 </span>
     </button>
     }
+    @if(size > 1){
     <select class="form-select" [formControl]="sizeField"
             (change)="itemPerPageChange($event)" size="1">
       @for (pages of itemPerPageOptions; track pages) {
         <option [value]="pages.value">{{pages.label}}</option>
       }
+
     </select>
+    }
   </div>
 </nav>

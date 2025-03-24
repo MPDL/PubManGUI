@@ -20,7 +20,7 @@
                                     <select id="genre" class="form-select" formControlName="genre"
                                         (change)="changeGenre()" data-test="genre">
                                         <option [value]="null" selected disabled>genre</option>
-                                        @for (g of genre_types; track g) {
+                                        @for (g of allowed_genre_types; track g) {
                                         <option [value]="g">{{g}}</option>
                                         }
                                     </select>
@@ -68,8 +68,7 @@
                             <ng-container formArrayName="alternativeTitles">
                                 @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
                                 <ng-container [formGroupName]="ati">
-                                    <pure-alt-title-form [alt_title_form]="alt"
-                                        [index]="ati"
+                                    <pure-alt-title-form [alt_title_form]="alt" [index]="ati"
                                         [index_length]="alternativeTitles.controls.length"
                                         (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
                                 </ng-container>
@@ -105,8 +104,11 @@
                         <div class="col-sm">
                             <!-- TODO Add many -->
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                                <label for="creatures" class="col-sm-2 col-form-label">TDOO: add
-                                    many</label>
+                                <label for="creatures" class="col-sm-2 col-form-label">Add Multiple Authors</label>
+                                <textarea class="form-control" id="multipleCreators" name="multipleCreators"
+                                    [formControl]="multipleCreators"></textarea>
+                                <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="button"
+                                    value="addCreators" (click)="addMultipleCreators()" [ngClass]="{'disabled': loading}">ADD Creators</button>
                             </div>
                             <ng-container formArrayName="creators">
                                 <div cdkDropList class="drag-list" (cdkDropListDropped)="dropCreator($event)">
@@ -121,8 +123,8 @@
                                     } @empty {
                                     <div class="col-sm">
                                         <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                                            [add_val]="'add creator'"
-                                            (notice)="handleCreatorNotification($event)" data-test="add-remove-creators"></pure-add-remove-buttons>
+                                            [add_val]="'add creator'" (notice)="handleCreatorNotification($event)"
+                                            data-test="add-remove-creators"></pure-add-remove-buttons>
                                     </div>
                                     }
                                 </div>
@@ -312,7 +314,8 @@
                         @for (abstract of abstracts.controls; track abstractIndex; let abstractIndex = $index) {
                         <div
                             [ngClass]="genreSpecificResource.value().properties.content_item_abstract.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                            <label for="abstracts" class="col-sm-2 col-form-label">{{abstractIndex + 1}}. Abstract</label>
+                            <label for="abstracts" class="col-sm-2 col-form-label">{{abstractIndex + 1}}.
+                                Abstract</label>
                             <div class="col-sm" id="abstract">
 
                                 <ng-container [formGroupName]="abstractIndex">
@@ -496,5 +499,5 @@
     </div>
 </div>
 } @else if (!genreSpecificResource.value()) {
-    <pure-loading></pure-loading>
+<pure-loading></pure-loading>
 }

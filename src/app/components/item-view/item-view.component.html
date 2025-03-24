@@ -31,16 +31,36 @@
       <button class="btn" (click)="openModal(exportItemModal)"><span class="material-symbols-outlined">upload</span></button>
 
     </div>
+    @if(listStateService.currentFullQuery && listStateService.page > 0) {
+
+    <pure-paginator end [totalNumberOfItems]="listStateService.currentNumberOfRecords" [size]=1 [(pageNumber)]="listStateService.page" (paginatorChanged)="listStateService.paginatorChanged()"/>
+    }
   </pure-topnav>
 
 
   <div class="row mt-5">
     <div class="col-lg-9 col-sm-12 header_color p-3">
       <div class="row">
-        <div class="col-2">
-          <div class="container">
-            <img id="placeholder" src="assets/images/minerva.png" class="img-fluid" width="100px">
-          </div>
+        <div class="col-2 text-center">
+
+          @let thumbUrl = thumbnailUrl ? thumbnailUrl : 'assets/images/DefaultMPGv2.png';
+
+          @if(thumbnailUrl) {
+            <a href="{{ingeUri + firstPublicPdfFile?.content}}" target="_blank">
+              <img id="thumbnail" src="{{thumbnailUrl}}" class="img-thumbnail">
+            </a>
+          }
+          @else {
+            <img id="thumbnail" src="assets/images/DefaultMPGv2.png" class="img-thumbnail">
+          }
+
+
+
+
+          <!--
+              <pure-thumbnail-pdf pdfUrl="{{url}}"></pure-thumbnail-pdf>
+              -->
+
         </div>
         <div class="col-10">
           <!-- badges -->

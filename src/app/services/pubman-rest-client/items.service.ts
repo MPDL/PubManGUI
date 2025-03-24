@@ -83,6 +83,13 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     )
   }
 
+  thumbnailAvalilable(itemId: string, fileId:string, token?: string): Observable<boolean> {
+    return this.httpHead(this.subPath + '/' + itemId + '/component/' + fileId + '/thumbnail', token).pipe(
+      map(resp => {return resp.status === 200})
+    );
+
+  }
+
   checkFileAudienceAccess(itemId: string, fileId: string) {
     return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/content');
   }

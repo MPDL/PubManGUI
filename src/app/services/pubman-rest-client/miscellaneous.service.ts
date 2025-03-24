@@ -7,6 +7,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 const ipListPath = 'getIpList';
 const genrePropertiesPath = 'getGenreProperties';
+const aiPersonNamePath = 'callAiApi';
 
 @Injectable({
   providedIn: 'root'
@@ -43,18 +44,30 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
     }
   }
 
-  retrieveIpList(): Observable<IpEntry[]> {
-    return this.httpGet(this.subPath + '/' + ipListPath, this.aaService.token ? this.aaService.token : undefined);
-  }
+  
   getGenreProperties(genre: string): Observable<any> {
     return this.httpGet(this.subPath + '/' + genrePropertiesPath + '?genre=' + genre, this.aaService.token ? this.aaService.token : undefined);
   }
+
+  getDecodedMultiplePersons(multiplePersonNameString: string): Observable<PersonName[]>{
+    return this.httpGet(this.subPath + '/' + aiPersonNamePath + '?data=' + multiplePersonNameString);// , this.aaService.token ? this.aaService.token : undefined);
+  }
+
+  retrieveIpList(): Observable<IpEntry[]> {
+    return this.httpGet(this.subPath + '/' + ipListPath, this.aaService.token ? this.aaService.token : undefined);
+  }
+
 }
 
 export interface IpEntry {
   name: string,
   id: string,
   ipRanges: string[];
+}
+
+export interface PersonName {
+  given: string;
+  family: string;
 }
 
 

@@ -70,31 +70,38 @@
 
     <div class="col-sm-3">
 
-      @for (file of files.slice(0,2); track file) {
+      @if(files.length > 0) {
+      <div class="d-flex flex-sm-row align-items-start mt-2">
+        {{files.length}} file(s)
+      </div>
+
+      @for (file of publicFiles.slice(0,2); track file) {
         <div class="d-flex flex-sm-row align-items-start" [ngbTooltip]="file.metadata.title">
             <i class="bi-file-earmark-text"></i>
-          <a class="btn btn-sm" href="file.content"
+          <a class="btn btn-sm" href="{{ingeUri + file.content}}" target="_blank"
              style="overflow-wrap: break-word;"> {{file.metadata.contentCategory}}</a>
         </div>
       }
-
-      @if(files.length > 2) {
-        <div class="d-flex flex-sm-row align-items-start">
-          <i>{{files.length-2}} more file(s)...</i>
-        </div>
+        @if(files.length > 2 || (publicFiles.length < files.length)) {
+          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">see more...</a></small></i>
+        }
       }
+
+      @if(locators.length > 0) {
+        <div class="d-flex flex-sm-row align-items-start  mt-3">
+          {{locators.length}} link(s)
+        </div>
       @for (file of locators.slice(0,2); track file) {
         <div class="d-flex flex-sm-row align-items-start" [ngbTooltip]="file.metadata.title">
             <i class="bi-link"></i>
-          <a class="btn btn-sm" href="file.content"
+          <a class="btn btn-sm" href="{{file.content}}" target="_blank"
              style="overflow-wrap: break-word;"> {{file.metadata.contentCategory}}</a>
         </div>
 
       }
-      @if(locators.length > 2) {
-        <div class="d-flex flex-sm-row align-items-start">
-          <i><small>{{locators.length-2}} more locator(s)...</small></i>
-        </div>
+        @if(locators.length > 2) {
+          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">see more...</a></small></i>
+        }
       }
 
   </div>
