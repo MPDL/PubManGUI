@@ -1,0 +1,38 @@
+@if(detail) {
+
+<tr class="border-bottom d-flex">
+  <td class="col-2 align-text-top">
+    {{ getImportStatusTranslation(detail.status) }}
+  </td>
+
+  <td class="col-1 align-text-top">
+    {{ getImportErrorLevelTranslation(detail.errorLevel) }}
+  </td>
+
+  <td class="col-9 align-text-top d-table-cell">
+    @if(getImportMessageTranslation(detail.message.substr(0,60))) {
+
+      {{ getImportMessageTranslation(detail.message) }}
+
+    } @else {
+      @if(detail.message.length > 80) {
+
+      <pre class="d-inline">{{ firstContentFrom(detail.message) }}</pre>
+      <button type="button" class="border-0 bg-transparent float-end" (click)="collapse.toggle()"
+        [attr.aria-expanded]="!isCollapsed">
+        <span class="material-symbols-outlined">unfold_more</span>
+      </button>
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <pre class="d-inline">{{ moreContentFrom(detail.message) }}</pre>
+      </div>
+
+      } @else {
+
+        {{ detail.message | separate | titlecase }}
+
+      }
+    }
+  </td>
+</tr>
+
+}

@@ -20,77 +20,38 @@
         <table class="table table-responsive col-12 mt-1">
           <thead>
             <tr class="border-bottom">
-              <th scope="col" class="pe-2">Status</th>
-              <th scope="col" class="pe-2">Import</th>
-              <th scope="col" class="pe-2">Format</th>
-              <th scope="col" class="pe-2" i18n="@@imports.list.header.date">Started</th>
-              <th scope="col" i18n="@@imports.list.header.details">Items</th>
+              <th scope="col" class="col-2">Status</th>
+              <th scope="col" class="col-3">Import</th>
+              <th scope="col" class="col-2">Format</th>
+              <th scope="col" class="col-3" i18n="@@imports.list.header.date">Started</th>
+              <th scope="col" class="col-1" i18n="@@imports.list.header.details">Items</th>
               <th scope="col"></th>
             </tr>
           </thead>
-
+        </table>
+        <table class="table table-responsive col-12">
           <tbody>
-            @for (log of inPage; track log.id) {
-            <tr class="border-bottom" id="{{ log.id }}">
-              @if( !isFinished(log.status) ) {
-              <td class="col-2">
-                {{ getImportStatusTranslation(log.status) }}
-                <div class="float-end ms-1 my-0">
-                  {{ log.percentage }} &percnt; <span class="mx-1 spinner-border spinner-border-sm text-secondary" aria-hidden="true"></span>
-                </div>
-              </td>
-              } @else {
-              <td class="col-2">
-                {{ getImportStatusTranslation(log.status) }}
-                <div class="float-end ms-1 my-0">
-                  @switch (log.errorLevel) {
-                  @case (importErrorLevel.FINE) {
-                  <span class="material-symbols-outlined text-success" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}' placement="bottom-left">check_circle</span> }
-                  @case (importErrorLevel.WARNING) {
-                  <span class="material-symbols-outlined text-black-50" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}' placement="bottom-left">error</span> }
-                  @default {
-                  <span class="material-symbols-outlined text-danger" style="cursor: default" ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}' placement="bottom-left">cancel</span>
-                  }
-                  }
-                </div>
-              </td>
-              }
-              <td class="col-2 d-inline-flex">
-                @if( isFinished(log.status) ) {
-                <span class="nav-link text-decoration-underline text-nowrap" (click)='toDatasets(log.id);'>{{ log.name
-                  }}</span>
-                } @else {
-                {{ log.name }}
+            <ng-container>
+              @for (log of inPage; track log.id) {
+                @defer (on viewport) {
+  
+                <pure-import-log [log]="log" (deleteImportLogEvent)="deleteImportLog($event)"></pure-import-log>
+  
                 }
-              </td>
-              <td class="col-2">
-                {{ getImportFormatTranslation(log.format) }}
-              </td>
-              <td class="col-4">
-                <span>{{ log.startDate | date:'fullDate' }}</span>
-                <div class="float-end">
-                  <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
-                  <span class="me-3">{{ log.startDate | date: "HH:mm" }}</span>
-                </div>
-              </td>
-              <td class="col-1">
-                <a [routerLink]="['/imports/myimports/', log.id]">
-                  <span class="material-symbols-outlined ms-2 my-0 matBadge"
-                    matBadge='{{ log.anzImportedItems > 0 ? log.anzImportedItems : null }}'>
-                    list
-                  </span>
-                </a>
-              </td>
-              <td class="col-1">
-                <button type="button" class="border-0 bg-transparent float-end" (click)="deleteImportLog(log)">
-                  <span class="material-symbols-outlined ms-2 my-0" ngbTooltip="Remove from log"
-                    placement="bottom-right">
-                    delete
-                  </span>
-                </button>
-              </td>
-            </tr>
-            }
+                @placeholder {
+                <div>...</div>
+                }
+              }
+              @empty {
+  
+              <tr>
+                <th colspan="3" class="text-center col-19">
+                  <span class="text-center" i18n="@@imports.list.empty">No imports available</span>
+                </th>
+              </tr>
+  
+              }
+            </ng-container>
           </tbody>
         </table>
       </div>

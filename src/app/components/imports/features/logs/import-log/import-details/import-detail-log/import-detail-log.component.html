@@ -1,0 +1,45 @@
+@if(item) {
+
+<tr class="border-bottom d-flex" id="{{ item.id }}">
+  <td class="col-2 text-nowrap">
+    {{ getImportStatusTranslation(item.status) }}
+  </td>
+
+  <td class="col-3">
+    @if(item.itemId) {
+
+      <span class="nav-link text-decoration-underline" [routerLink]="['view', item.itemId]">{{ item.itemId }} </span>
+    
+    } @else {
+    
+      {{ getImportMessageTranslation(item.message) }}
+    
+    }
+  </td>
+
+  <td class="col-4">
+    <span>{{ item.endDate | date:'fullDate' }}</span>
+    <div class="float-end">
+      <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
+      <span class="me-3">{{ item.endDate | date: "HH:mm" }}</span>
+    </div>
+  </td>
+
+  <td class="col-2">
+    {{ getImportErrorLevelTranslation(getAssorted(item.errorLevel)) }}
+  </td>
+
+  <td class="col-1">
+    @if(item.anzDetails) {
+
+      <a [routerLink]="['log']" [state]="{ item: item }">
+        <span class="material-symbols-outlined my-0">
+          integration_instructions
+        </span>
+      </a>
+
+    }
+  </td>
+</tr>
+
+}

@@ -2,15 +2,15 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject, viewChild } from '@angular/core'
 import { RouterModule, Router } from '@angular/router';
 
-
-import { ImportsService } from '../../services/imports.service';
+import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import { ImportLogDbVO, ImportStatus, ImportErrorLevel } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 import { FormsModule } from '@angular/forms';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { ImportLogComponent } from "./import-log/import-log.component";
+
 import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
@@ -21,7 +21,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     RouterModule,
     FormsModule,
     PaginatorComponent,
-    NgbTooltip,
+    ImportLogComponent,
     MatBadgeModule
   ],
   templateUrl: './import-logs-list.component.html'
@@ -42,10 +42,6 @@ export default class ImportLogsListComponent implements OnInit {
   logs: ImportLogDbVO[] = [];
   runningImports: Map<number, number> = new Map();
 
-  importStatusTranslations = {};
-  importErrorLevelTranslations = {};
-  importFormatTranslations = {};
-
   importStatus: typeof ImportStatus = ImportStatus;
   importErrorLevel: typeof ImportErrorLevel = ImportErrorLevel;
 
@@ -54,7 +50,7 @@ export default class ImportLogsListComponent implements OnInit {
   updateDelay = 1;
 
   constructor(
-    @Inject(LOCALE_ID) public locale: string) {}
+    @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
     this.importsSvc.getImportLogs()
@@ -64,37 +60,19 @@ export default class ImportLogsListComponent implements OnInit {
         this.refreshLogs();
 
         this.logs.forEach((importLog, idx) => {
-          if( !this.isFinished(importLog.status)) {
+          if (!this.isFinished(importLog.status)) {
             this.runningImports.set(importLog.id, idx);
           }
         });
         this.updateForRunningImports();
       });
-
-    this.loadTranslations(this.locale);
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.importStatusTranslations = msgs.ImportStatus;
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.importStatusTranslations = msgs.ImportStatus;
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    }
   }
 
   getAssorted(txt: string): string {
     switch (txt) {
       case 'FINE':
       case 'WARNING':
-      case 'FATAL':        
+      case 'FATAL':
         return txt;
       default:
         return 'ERROR';
@@ -111,7 +89,7 @@ export default class ImportLogsListComponent implements OnInit {
     this.importsSvc.lastPageNumFrom().myImports = this.currentPage;
   }
 
-  getPreferredPageSize():number {
+  getPreferredPageSize(): number {
     if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
       return +sessionStorage.getItem('preferredPageSize')!;
     } else return this.pageSize || 25;
@@ -127,76 +105,35 @@ export default class ImportLogsListComponent implements OnInit {
   updateForRunningImports() {
     this.runningImports.forEach((idx, logId) => {
       this.importsSvc.getImportLog(logId)
-      .subscribe(importLog => {
-        this.logs[idx].status = importLog.status;
-        this.logs[idx].percentage = importLog.percentage;
-        this.logs[idx].anzImportedItems = importLog.anzImportedItems;
-        if (this.isFinished(importLog.status)) {
-          this.runningImports.delete(logId);
-          this.updateDelay = 1;
-        }
-      })
+        .subscribe(importLog => {
+          this.logs[idx].status = importLog.status;
+          this.logs[idx].percentage = importLog.percentage;
+          this.logs[idx].anzImportedItems = importLog.anzImportedItems;
+          if (this.isFinished(importLog.status)) {
+            this.runningImports.delete(logId);
+            this.updateDelay = 1;
+          }
+        })
     })
     if (this.runningImports.size > 0) {
       setTimeout(() => {
         this.updateForRunningImports();
         this.refreshLogs();
-      }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60 )); 
+      }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60));
     }
   }
 
-  toDatasets(id: any): void {
-    let items: string[] = [];
-    this.importsSvc.getImportLogItems(id).subscribe(importsResponse => {
-      if (importsResponse.length === 0) return;
-
-      importsResponse.sort((a, b) => a.id - b.id)
-        .forEach(element => {
-          if (element.itemId) {
-            items.push(element.itemId);
-          }
-        });
-      if (items.length === 0) {
-        const msg = $localize`:@@imports.list.items.empty:This import has no items available!` + '\n';
-        this.msgSvc.info(msg);
-        return;
-      }
-      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state: { itemList: items } });
-    })
-  }
-
   deleteImportLog(log: any): void {
-    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.list.remove.confirmation:Do you really want to remove this import log?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
-    ref.closed.subscribe(confirmed => {
-      if (confirmed) {
-        this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
-          console.log(importsResponse);
-        })
+    this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
+      console.log(importsResponse);
+    })
 
-        let element = document.getElementById(log.id) as HTMLElement;
-        element.remove();
-    
-        this.logs = this.logs.filter(item => item.id != log.id);
-        this.collectionSize = this.logs.length;
-        this.refreshLogs();
-      }
-    });
-    return; 
-  }
+    let element = document.getElementById(log.id) as HTMLElement;
+    element.remove();
 
-  getImportStatusTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importStatusTranslations;
-    return this.importStatusTranslations[key];
-  }
-
-  getImportFormatTranslation(txt: string):string {
-    let key = txt as keyof typeof this.importFormatTranslations;
-    return this.importFormatTranslations[key];
-  }
-
-  getImportErrorLevelTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importErrorLevelTranslations;
-    return this.importErrorLevelTranslations[key];
+    this.logs = this.logs.filter(item => item.id != log.id);
+    this.collectionSize = this.logs.length;
+    this.refreshLogs();
   }
 
   @HostListener('window:scroll', ['$event'])

@@ -57,59 +57,39 @@
           <thead>
             @if(inPage.length > 0) {
             <tr class="border-bottom">
-              <th scope="col" class="pe-2">Status</th>
-              <th scope="col" class="pe-2" i18n="@@imports.list.header.title">Item ID</th>
-              <th scope="col" class="pe-2" i18n="@@imports.list.header.finished">Finished</th>
-              <th scope="col" class="pe-2" i18n="@@imports.list.header.message">Report</th>
+              <th scope="col" class="col-2 pe-2">Status</th>
+              <th scope="col" class="col-3 pe-2" i18n="@@imports.list.header.title">Item ID</th>
+              <th scope="col" class="col-4 pe-2" i18n="@@imports.list.header.finished">Finished</th>
+              <th scope="col" class="col-2 pe-2" i18n="@@imports.list.header.message">Report</th>
               <th scope="col">Log</th>
             </tr>
           }
           </thead>
+        </table>
+        <table class="table table-responsive col-12 mt-1">
 
           <tbody>
-            @if(inPage.length > 0) {
-              @for (item of inPage; track item.id) {                                
-              <tr class="border-bottom" id="{{ item.id }}">
-                <td class="col-2 text-nowrap">
-                  {{ getImportStatusTranslation(item.status) }} 
-                </td>
-                <td class="col-3">
-                  @if(item.itemId) {                 
-                    <span class="nav-link text-decoration-underline" [routerLink]="['view', item.itemId]">{{ item.itemId }} </span>
-                  } @else {
-                    {{ getImportMessageTranslation(item.message) }}
-                  }
-                </td>
-                <td class="col-5">
-                  <span>{{ item.endDate | date:'fullDate' }}</span>
-                  <div class="float-end">
-                    <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
-                    <span class="me-3">{{ item.endDate | date: "HH:mm" }}</span>
-                  </div>
-                </td>
-                <td class="col-2">
-                  {{ getImportErrorLevelTranslation(getAssorted(item.errorLevel)) }}
-                </td>
-                <td class="col-1">
-                  @if(item.anzDetails) {
-                  <a [routerLink]="['log']"
-                    [state]="{ item: item }">     
-                      <span class="material-symbols-outlined my-0">
-                        integration_instructions
-                      </span>
-                  </a>
-                  } 
-                </td>
-              </tr>
+            <ng-container>
+              @for (item of inPage; track item.id) {
+                @defer (on viewport) {
+  
+                <pure-detail-log [item]="item"></pure-detail-log>
+  
+                }
+                @placeholder {
+                <div>...</div>
+                }
               }
               @empty {
-                <tr>
-                  <th colspan="4" class="text-center">
-                    <span class="text-center" i18n="@@batch.logs.details.empty">No details to show</span>
-                  </th>
-                </tr>
-                }
-            }
+  
+              <tr>
+                <th colspan="3" class="text-center col-19">
+                  <span class="text-center" i18n="@@imports.list.empty">No details available</span>
+                </th>
+              </tr>
+  
+              }
+            </ng-container>
           </tbody>
         </table>
       </div>

@@ -32,43 +32,36 @@
         <table class="table table-responsive-md table-fixed col-12 mt-1">
           <thead>
             <tr class="border-bottom">
-              <th scope="col" class="pe-2 col-1">Status</th>
+              <th scope="col" class="pe-2 col-2">Status</th>
               <th scope="col" class="pe-2 col-1" i18n="@@imports.list.header.message">Report</th>
-              <th scope="col" class="pe-2 col-10" i18n="@@imports.list.header.title">Message</th>
+              <th scope="col" class="pe-2 col-9" i18n="@@imports.list.header.title">Message</th>
             </tr>
           </thead>
-
+        </table>
+        <table class="table table-responsive-md table-fixed col-12 mt-1">
           <tbody>
             @if(collectionSize > 0) {
-              @for (detail of inPage; track detail.id; let idx = $index) {
-              <tr class="border-bottom">
-                <td class="align-text-top">
-                  {{ getImportStatusTranslation(detail.status) }}
-                </td>
-                <td class="align-text-top">
-                  {{ getImportErrorLevelTranslation(detail.errorLevel) }}
-                </td>
-                <td class="align-text-top d-table-cell">
-                  @if(getImportMessageTranslation(detail.message.substr(0,60))) {
-                    {{ getImportMessageTranslation(detail.message) }}
-                  } @else {
-                    @if(detail.message.length > 80) {
-                      <pre class="d-inline">{{ firstContentFrom(detail.message) }}</pre>
-                      <button type="button"class="border-0 bg-transparent float-end"
-                        (click)="collapse.toggle()"
-                        [attr.aria-expanded]="!isCollapsed[idx]">
-                        <span class="material-symbols-outlined">unfold_more</span>
-                      </button>
-                      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[idx]">
-                        <pre class="d-inline">{{ moreContentFrom(detail.message) }}</pre>
-                      </div>
-                    } @else {
-                      {{ detail.message | separate | titlecase }}
-                    }
+              <ng-container>
+                @for (detail of inPage; track detail.id) {
+                  @defer (on viewport) {
+    
+                  <pure-import-item-log [detail]="detail"></pure-import-item-log>
+    
                   }
-                </td>
-              </tr>
-              }
+                  @placeholder {
+                  <div>...</div>
+                  }
+                }
+                @empty {
+    
+                <tr>
+                  <th colspan="3" class="text-center col-19">
+                    <span class="text-center" i18n="@@imports.list.empty">No logs available</span>
+                  </th>
+                </tr>
+    
+                }
+              </ng-container>
             }
           </tbody>
         </table>

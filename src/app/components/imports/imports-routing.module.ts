@@ -39,7 +39,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./features/logs/import-items/import-items-list.component'), resolve: { import: importLogResolver },
+            loadComponent: () => import('./features/logs/import-log/import-details/import-details-list.component'), resolve: { import: importLogResolver },
             data: {
               breadcrumb: {              
                 //label: '',
@@ -48,7 +48,7 @@ const routes: Routes = [
           },
           {
             path: 'log',
-            loadComponent: () => import('./features/logs/import-items/import-item-details/import-item-details.component'), 
+            loadComponent: () => import('./features/logs/import-log/import-details/import-detail-log/import-item-details/import-item-details-list.component'), 
             data: {
               breadcrumb: {
                 label: 'Log', 
