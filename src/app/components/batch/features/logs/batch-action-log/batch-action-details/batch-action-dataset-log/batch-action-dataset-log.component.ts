@@ -35,7 +35,6 @@ export class BatchActionDatasetLogComponent {
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
-    console.log(this.log);
     this.loadTranslations(this.locale);
   }
 
