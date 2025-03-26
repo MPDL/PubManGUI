@@ -1,6 +1,6 @@
 import { signal, computed, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap, Observable, throwError, of } from 'rxjs';
+import { catchError, tap, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { inge_rest_uri } from 'src/assets/properties.json';
 
 import type * as params from '../interfaces/batch-params';
@@ -19,6 +19,8 @@ export class BatchService {
 
   readonly #baseUrl: string = inge_rest_uri;
 
+  objectIds$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+
   datasetList = "dataset-list";
   savedSelection = "datasets-checked";
 
@@ -28,7 +30,9 @@ export class BatchService {
     private http: HttpClient,
     public aaSvc: AaService,
     private itemSvc: ItemsService,
-    private msgSvc: MessageService) { }
+    private msgSvc: MessageService) {
+      this.objectIds$.next(this.objectIds);
+    }
 
   get token(): string {
     return this.aaSvc.token || '';
@@ -41,19 +45,19 @@ export class BatchService {
   lastPageNumFrom = signal({logs: 1, details: 1});
 
   #logFilters = signal<resp.BatchProcessLogDetailState[]>([]);
+  public getLogFilters = computed( () => this.#logFilters() );
   
   public setLogFilters(filters: resp.BatchProcessLogDetailState[]) {
       this.#logFilters.set(filters);
   }
     
-  public getLogFilters = computed( () => this.#logFilters() );
-
   addToBatchDatasets(selection: string[]): number {
     //const fromSelection = localStorage.getItem(selection);
     let datasets: string[] = this.items;
     const prev = datasets.length;
     if (selection) {
       this.items = datasets.concat(selection.filter((element: string) => !datasets.includes(element)));
+      this.objectIds$.next(this.items);
       return Math.abs(this.items.length - prev); // added
     }
     return 0;
@@ -65,16 +69,16 @@ export class BatchService {
     const prev = datasets.length;
     if (selection && prev > 0) {
       this.items = datasets.filter((element: string) => !selection.includes(element));
+      this.objectIds$.next(this.items);
       return Math.abs(prev - this.items.length); // removed
     }
     return 0;
   }
 
   #itemsCount = signal(0);
-
   public getItemsCount = computed( () => this.#itemsCount() );
 
-  get objectIds() {
+  get objectIds(): string[] {
     const itemList = localStorage.getItem(this.datasetList);
     if (itemList) {
       const items = JSON.parse(itemList);
@@ -82,7 +86,7 @@ export class BatchService {
         return items;
       }
     }
-    return [] as string[];
+    return [];
   }
 
   get items(): string[] {
@@ -113,7 +117,6 @@ export class BatchService {
   }
 
   #itemsSelected = signal(false);
-
   public areItemsSelected = computed( () => this.#itemsSelected() );
 
   startProcess(id: number) {
@@ -133,11 +136,9 @@ export class BatchService {
   }
 
   #processRunning = signal(false);
-
   public isProcessRunning = computed( () => this.#processRunning() );
 
   #processLog = signal({} as resp.BatchProcessLogHeaderDbVO);
-
   public getProcessLog = computed( () => this.#processLog() );
 
   updateProcessProgress() {

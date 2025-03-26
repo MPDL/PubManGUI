@@ -8,6 +8,7 @@ const routes: Routes = [
     path: 'datasets',
     loadComponent: () => import('./batch-datasets/datasets.component'),
     data: {
+      saveComponent: true,
       breadcrumb: {
         label: $localize`:@@datasets:Datasets`,
       }
