@@ -5,8 +5,7 @@
         <div class="list-group" id="collapseExample">
           @for (author of creatorMap.keys(); track author; let i = $index) {
 
-            <div class="
-            list-group-item
+            <div class="list-group-item p-0 pb-1
             {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'mark' : ''}}
             {{i >= maxDisplay ? 'd-none' : ''}}"
 
@@ -16,6 +15,7 @@
               @if(author.person) {
                 {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
                 <span class="me-2"><sup>{{creatorMap.get(author)}}</sup></span>
+
                 @if (author?.person?.orcid) {
                   <span class="me-2" style="vertical-align: center">
                     <a [href]="author?.person?.orcid" target="_blank">
@@ -37,6 +37,7 @@
                   </span>
 
                 }
+                <span class="small"> ({{author.role}})</span>
               }
               @else {
                 {{ author?.organization?.name }}
@@ -61,7 +62,7 @@
       <span content>
         <div class="list-group">
          @for (aff of affiliations; track aff; let i = $index) {
-           <div class="list-group-item {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'mark' : ''}}"
+           <div class="list-group-item p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'mark' : ''}}"
                 data-affiliation-id="i+1"
                 (mouseenter)="highlightAffiliations([i+1])"
                 (mouseleave)="unhighlightAffiliations()">

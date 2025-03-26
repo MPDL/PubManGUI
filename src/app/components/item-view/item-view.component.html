@@ -1,6 +1,11 @@
 @if (item) {
 
   <pure-topnav>
+      <pure-topnav-cart [resetSelectionAfterAction]="false" start/>
+      <div start class="vr"></div>
+      <pure-topnav-batch [resetSelectionAfterAction]="false" start/>
+      <div start class="vr"></div>
+
     <div class="navbar-nav" start>
       @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
         <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">

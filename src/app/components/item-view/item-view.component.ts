@@ -23,6 +23,7 @@ import {PaginatorComponent} from "../../shared/components/paginator/paginator.co
 import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
 import {ItemListStateService} from "../item-list/item-list-state.service";
+import {ItemSelectionService} from "../../shared/services/item-selection.service";
 
 @Component({
   selector: 'pure-item-view',
@@ -38,7 +39,9 @@ import {ItemListStateService} from "../item-list/item-list-state.service";
     ItemViewFileComponent,
     EmptyPipe,
     ExportItemsComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    TopnavBatchComponent,
+    TopnavCartComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
@@ -62,7 +65,7 @@ export class ItemViewComponent {
   firstPublicPdfFile: FileDbVO | undefined;
 
   constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
-  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService) {
+  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService) {
 
   }
 
@@ -100,6 +103,8 @@ export class ItemViewComponent {
       if (i && i.objectId) {
         this.item = i;
         this.listStateService.initItemId(i.objectId);
+        this.itemSelectionService.resetList();
+        this.itemSelectionService.addToSelection(i.objectId);
         this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
 
         this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber, this.aaService.token).subscribe(authInfo => {

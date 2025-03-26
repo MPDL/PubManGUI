@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MessageService} from "../../../services/message.service";
 import {BatchService} from "../../../../components/batch/services/batch.service";
@@ -16,6 +16,9 @@ import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: './topnav-batch.component.html',
 })
 export class TopnavBatchComponent {
+
+  @Input() resetSelectionAfterAction: boolean = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private message: MessageService,
@@ -27,7 +30,8 @@ export class TopnavBatchComponent {
    const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected) {
       const added = this.batchSvc.addToBatchDatasets(selected);
-      this.itemSelectionService.resetList();
+      if(this.resetSelectionAfterAction)
+        this.itemSelectionService.resetList();
       this.message.success(selected.length + ' ' + $localize`:@@batch.datasets.selected:item/items selected` + '\n' + added + ' ' + $localize`:@@batch.datasets.filled:item/items added to batch processing` + ((selected.length! - added) > 0 ? ", " + `${selected.length! - added} ` + $localize`:@@batch.datasets.duplicated:on batch duplicated were ignored` + "." : ''));
     } else {
       this.message.warning($localize`:@@batch.datasets.empty:The batch processing is empty`+'!');
@@ -39,7 +43,8 @@ export class TopnavBatchComponent {
    const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected) {
       const removed = this.batchSvc.removeFromBatchDatasets(selected);
-      this.itemSelectionService.resetList();
+      if(this.resetSelectionAfterAction)
+        this.itemSelectionService.resetList();
       this.message.success(selected.length + ' ' + $localize`:@@batch.datasets.selected:item/items selected` + '\n' + removed + ' ' + $localize`:@@batch.datasets.removed:item/items removed from batch processing` + ((selected.length! - removed) > 0 ? ", " + `${selected.length! - removed} ` + $localize`:@@batch.datasets.missing:not on batch were ignored` + "." : ''));
     } else {
       this.message.warning($localize`:@@batch.datasets.empty:The batch processing is empty`+'!');
