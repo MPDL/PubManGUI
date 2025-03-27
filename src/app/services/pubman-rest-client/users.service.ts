@@ -18,46 +18,46 @@ export class UsersService extends PubmanSearchableGenericRestClientService<Accou
     super('/users');
   }
 
-  activate(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
+  activate(user: AccountUserDbVO, authenticate?: boolean): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/activate';
     const body = user.lastModificationDate;
 
-    return this.httpPut(path, body, token);
+    return this.httpPut(path, body, authenticate);
   }
 
-  deactivate(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
+  deactivate(user: AccountUserDbVO, authenticate?: boolean): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/deactivate';
     const body = user.lastModificationDate;
 
-    return this.httpPut(path, body, token);
+    return this.httpPut(path, body, authenticate);
 
   }
 
-  addGrants(user: AccountUserDbVO, grants: GrantVO[], token: string): Observable<AccountUserDbVO> {
+  addGrants(user: AccountUserDbVO, grants: GrantVO[], authenticate?: boolean): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/add';
     const body = JSON.stringify(grants);
 
-    return this.httpPut(path, body, token);
+    return this.httpPut(path, body, authenticate);
   }
 
-  removeGrants(user: AccountUserDbVO, grants: GrantVO[], token: string): Observable<AccountUserDbVO> {
+  removeGrants(user: AccountUserDbVO, grants: GrantVO[], authenticate?: boolean): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/remove';
     const body = JSON.stringify(grants);
 
-    return this.httpPut(path, body, token);
+    return this.httpPut(path, body, authenticate);
   }
 
-  changePassword(user: AccountUserDbVO, token: string): Observable<AccountUserDbVO> {
+  changePassword(user: AccountUserDbVO, authenticate?: boolean): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/password';
     const body = user.password;
 
-    return this.httpPut(path, body, token);
+    return this.httpPut(path, body, authenticate);
   }
 
-  generateRandomPassword(token: string): Observable<string> {
+  generateRandomPassword(authenticate?: boolean): Observable<string> {
     const path = this.subPath + '/generateRandomPassword';
 
-    return this.httpGet(path, token);
+    return this.httpGet(path, authenticate);
   }
 
   /*

@@ -192,9 +192,7 @@ export class ItemListComponent implements AfterViewInit{
   }
 
   private search(body: any) {
-    let token = undefined;
-    if (this.aa.token) token = this.aa.token;
-    this.result_list = this.service.elasticSearch(body, token).pipe(
+    this.result_list = this.service.elasticSearch(body).pipe(
       tap(result => {
         //console.log(JSON.stringify(result))
         this.number_of_results = result.hits.total.value as number;

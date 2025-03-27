@@ -83,7 +83,7 @@ export class ImportsService {
   }
 
   getDataFetch(url: string, query: string, headers: HttpHeaders): Observable<ItemVersionVO> {
-    const importResponse: Observable<ItemVersionVO> = this.http.get<ItemVersionVO>(url + query, { headers })
+    const importResponse: Observable<ItemVersionVO> = this.http.get<ItemVersionVO>(url + query, { headers, withCredentials: true })
       .pipe(
         tap((value: ItemVersionVO) => {
           this.#lastFetch.set(of(value));
@@ -96,71 +96,71 @@ export class ImportsService {
 
   getImportLog(id: number): Observable<ImportLogDbVO> {
     const url = `${this.#baseUrl}/import/importLog/${id}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<ImportLogDbVO>(url, { headers });
+    return this.http.get<ImportLogDbVO>(url, { withCredentials: true });
   }
 
   getImportLogs(): Observable<ImportLogDbVO[]> {
     const url = `${this.#baseUrl}/import/getImportLogs`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<ImportLogDbVO[]>(url, { headers });
+    return this.http.get<ImportLogDbVO[]>(url, { withCredentials: true });
   }
 
   getImportLogItems(id: number): Observable<ImportLogItemDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItems/${id}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<ImportLogItemDbVO[]>(url, { headers });
+    return this.http.get<ImportLogItemDbVO[]>(url, { withCredentials: true });
   }
 
   getImportLogItemDetails(id: number): Observable<ImportLogItemDetailDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItemDetails/${id}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<ImportLogItemDetailDbVO[]>(url, { headers });
+    return this.http.get<ImportLogItemDetailDbVO[]>(url, { withCredentials: true });
   }
 
   deleteImportLog(id: number): Observable<any> {
     const url = `${this.#baseUrl}/import/importLog/${id}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.delete<any>(url, { headers });
+    return this.http.delete<any>(url, { withCredentials: true });
   }
 
   getFormatConfiguration(format: string): Observable<any> {
     const url = `${this.#baseUrl}/import/getFormatConfiguration`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const query = `?format=${format}`;
 
-    return this.http.get<any>(url + query, { headers })
+    return this.http.get<any>(url + query, { withCredentials: true });
   }
 
   postImport(importParams: params.PostImportParams, data: any): Observable<any> {
     const url = `${this.#baseUrl}/import/import`;
     const headers = new HttpHeaders()
-      .set('Authorization', this.token!)
+      //.set('Authorization', this.token!)
       .set('Content-Type', 'application/octet-stream')
       .set('Content-Disposition', 'attachment');
     const query = `?contextId=${importParams.contextId}&importName=${importParams.importName}&format=${importParams.format}`;
 
-    return this.http.post<any>(url + query, data, { headers });
+    return this.http.post<any>(url + query, data, { headers, withCredentials: true });
   }
 
   getContexts(ctxId: string): Observable<any> {
     const url = `${this.#baseUrl}/contexts/${ctxId}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<any>(url, { headers })
+    return this.http.get<any>(url, { withCredentials: true });
   }
 
   deleteImportedItems(importLogId: number): Observable<any> {
     const url = `${this.#baseUrl}/import/deleteImportedItems`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const query = `?importLogId=${importLogId}`;
 
-    const response: Observable<any> = this.http.put<any>(url + query,'', { headers })
+    const response: Observable<any> = this.http.put<any>(url + query,'', { withCredentials: true  })
       .pipe(
         tap((value: any) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -171,10 +171,10 @@ export class ImportsService {
 
   submitImportedItems(importLogId: number, submitModus: string): Observable<any> {
     const url = `${this.#baseUrl}/import/submitImportedItems`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const query = `?importLogId=${importLogId}&submitModus=${submitModus}`;
 
-    const response: Observable<any> = this.http.put<any>(url + query,'', { headers })
+    const response: Observable<any> = this.http.put<any>(url + query,'', { withCredentials: true })
       .pipe(
         tap((value: any) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),

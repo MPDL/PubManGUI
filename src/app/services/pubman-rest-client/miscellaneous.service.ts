@@ -44,21 +44,21 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
     }
   }
 
-  
+
   getGenreProperties(genre: string): Observable<any> {
-    return this.httpGet(this.subPath + '/' + genrePropertiesPath + '?genre=' + genre, this.aaService.token ? this.aaService.token : undefined);
+    return this.httpGet(this.subPath + '/' + genrePropertiesPath + '?genre=' + genre);
   }
 
   getDecodedMultiplePersons(multiplePersonNameString: string): Observable<PersonName[]>{
     if (this.aaService.token) {
-      return this.httpPost(this.subPath + '/' + aiPersonNamePath, multiplePersonNameString, this.aaService.token);
+      return this.httpPost(this.subPath + '/' + aiPersonNamePath, multiplePersonNameString);
     } else {
       return throwError(() => new Error(`Authorization Error`));
     }
   }
 
   retrieveIpList(): Observable<IpEntry[]> {
-    return this.httpGet(this.subPath + '/' + ipListPath, this.aaService.token ? this.aaService.token : undefined);
+    return this.httpGet(this.subPath + '/' + ipListPath);
   }
 
 }

@@ -46,11 +46,11 @@ export class BatchService {
 
   #logFilters = signal<resp.BatchProcessLogDetailState[]>([]);
   public getLogFilters = computed( () => this.#logFilters() );
-  
+
   public setLogFilters(filters: resp.BatchProcessLogDetailState[]) {
       this.#logFilters.set(filters);
   }
-    
+
   addToBatchDatasets(selection: string[]): number {
     //const fromSelection = localStorage.getItem(selection);
     let datasets: string[] = this.items;
@@ -148,7 +148,7 @@ export class BatchService {
         if (response.state === resp.BatchProcessLogHeaderState.RUNNING) {
           setTimeout(() => {
             this.updateProcessProgress();
-          }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60 )); 
+          }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60 ));
         } else {
           this.updateDelay = 1;
           this.endProcess();
@@ -173,7 +173,7 @@ export class BatchService {
   getSelectedItems(): ItemVersionVO[] {
     let datasets: ItemVersionVO[] = [];
     for (var id of this.items) {
-        this.itemSvc.retrieve(id, this.token)
+        this.itemSvc.retrieve(id, true)
           .subscribe( actionResponse => {
             datasets.push(actionResponse);
             console.log(id);
@@ -186,46 +186,46 @@ export class BatchService {
 
   getBatchProcessUserLock(): Observable<resp.BatchProcessUserLockDbVO> {
     const url = `${this.#baseUrl}/batchProcess/getBatchProcessUserLock`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<resp.BatchProcessUserLockDbVO>(url, { headers, context: ignoredStatuses([404]) });
+    return this.http.get<resp.BatchProcessUserLockDbVO>(url, { withCredentials:true, context: ignoredStatuses([404]) });
   }
 
   deleteBatchProcessUserLock(): Observable<any> {
     const url = `${this.#baseUrl}/batchProcess/deleteBatchProcessUserLock/${ this.user }`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.delete<any>(url, { headers });
+    return this.http.delete<any>(url, { withCredentials: true });
   }
 
   // Logs
 
   getAllBatchProcessLogHeaders(): Observable<resp.BatchProcessLogHeaderDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/getAllBatchProcessLogHeaders`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { headers });
+    return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { withCredentials: true });
   }
 
   getBatchProcessLogHeaderId(batchLogHeaderId: number): Observable<resp.BatchProcessLogHeaderDbVO> {
     const url = `${this.#baseUrl}/batchProcess/${batchLogHeaderId}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<resp.BatchProcessLogHeaderDbVO>(url, { headers });
+    return this.http.get<resp.BatchProcessLogHeaderDbVO>(url, { withCredentials: true });
   }
 
   getBatchProcessLogDetails(batchProcessLogDetailId: number): Observable<resp.BatchProcessLogDetailDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/batchProcessLogDetails/${batchProcessLogDetailId}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<resp.BatchProcessLogDetailDbVO[]>(url, { headers });
+    return this.http.get<resp.BatchProcessLogDetailDbVO[]>(url, { withCredentials: true });
   }
 
   getItem(itemId: string): Observable<ItemVersionVO> {
     const url = `${this.#baseUrl}/items/${itemId}`;
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
-    return this.http.get<ItemVersionVO>(url, { headers });
+    return this.http.get<ItemVersionVO>(url, { withCredentials: true });
   }
 
   // Actions
@@ -233,11 +233,11 @@ export class BatchService {
   deletePubItems(actionParams: params.DeletePubItemsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/deletePubItems`;
     const body = actionParams;
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -249,11 +249,11 @@ export class BatchService {
   submitPubItems(actionParams: params.SubmitPubItemsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/submitPubItems`;
     const body = actionParams;
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -265,11 +265,11 @@ export class BatchService {
   revisePubItems(actionParams: params.RevisePubItemsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/revisePubItems`;
     const body = actionParams;
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -281,11 +281,11 @@ export class BatchService {
   releasePubItems(actionParams: params.ReleasePubItemsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/releasePubItems`;
     const body = actionParams;
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -297,11 +297,11 @@ export class BatchService {
   withdrawPubItems(actionParams: params.WithdrawPubItemsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/withdrawPubItems`;
     const body = actionParams;
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials:true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -313,13 +313,12 @@ export class BatchService {
   changeContext(actionParams: params.ChangeContextParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeContext`;
     const query = `?contextFrom=${actionParams.contextFrom}&contextTo=${actionParams.contextTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -331,10 +330,10 @@ export class BatchService {
   addLocalTags(actionParams: params.AddLocalTagsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/addLocalTags`;
     const body = actionParams;
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => {
           this.batchProcessLogHeaderId = value.batchLogHeaderId;
@@ -348,12 +347,12 @@ export class BatchService {
   changeLocalTags(actionParams: params.ChangeLocalTagParams): Observable<resp.ActionGenericResponse> { // TO-DO check function name!
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeLocalTag`;
     const query = `?localTagFrom=${actionParams.localTagFrom}&localTagTo=${actionParams.localTagTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -365,12 +364,12 @@ export class BatchService {
   changeGenre(actionParams: params.ChangeGenreParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeGenre`;
     const query = `?genreFrom=${actionParams.genreFrom}&genreTo=${actionParams.genreTo}&degreeType=${actionParams.degreeType}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError((error) => {
@@ -385,12 +384,12 @@ export class BatchService {
     //console.log(`{\"userAccountIpRange\": ${JSON.stringify(actionParams.localTags)}}`);
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeFileVisibility`;
     const query = `?fileVisibilityFrom=${actionParams.fileVisibilityFrom}&fileVisibilityTo=${actionParams.fileVisibilityTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -402,13 +401,13 @@ export class BatchService {
   changeFileContentCategory(actionParams: params.ChangeFileContentCategoryParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeFileContentCategory`;
     const query = `?fileContentCategoryFrom=${actionParams.fileContentCategoryFrom}&fileContentCategoryTo=${actionParams.fileContentCategoryTo}`;
 
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -421,11 +420,11 @@ export class BatchService {
     //console.log(`{\"audiences\": ${JSON.stringify(this.audiences)}}`);
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/replaceFileAudience`;
     const body = actionParams; // TO-DO!
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -437,12 +436,12 @@ export class BatchService {
   changeExternalReferenceContentCategory(actionParams: params.ChangeExternalReferenceContentCategoryParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeExternalReferenceContentCategory`;
     const query = `?externalReferenceContentCategoryFrom=${actionParams.externalReferenceContentCategoryFrom}&externalReferenceContentCategoryTo=${actionParams.externalReferenceContentCategoryTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -454,12 +453,12 @@ export class BatchService {
   replaceOrcid(actionParams: params.ReplaceOrcidParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/replaceOrcid`;
     const query = `?creatorId=${actionParams.creatorId}&orcid=${actionParams.orcid}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -471,12 +470,12 @@ export class BatchService {
   changeReviewMethod(actionParams: params.ChangeReviewMethodParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeReviewMethod`;
     const query = `?reviewMethodFrom=${actionParams.reviewMethodFrom}&reviewMethodTo=${actionParams.reviewMethodTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -488,12 +487,12 @@ export class BatchService {
   addKeywords(actionParams: params.AddKeywordsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/addKeywords`;
     const query = `?keywords=${actionParams.keywords}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -505,12 +504,12 @@ export class BatchService {
   replaceKeywords(actionParams: params.ReplaceKeywordsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/replaceKeywords`;
     const query = `?keywords=${actionParams.keywords}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -522,12 +521,12 @@ export class BatchService {
   changeKeywords(actionParams: params.ChangeKeywordsParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeKeywords`;
     const query = `?keywordsFrom=${actionParams.keywordsFrom}&keywordsTo=${actionParams.keywordsTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -539,12 +538,12 @@ export class BatchService {
   changeSourceGenre(actionParams: params.ChangeSourceGenreParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeSourceGenre`;
     const query = `?sourceGenreFrom=${actionParams.sourceGenreFrom}&sourceGenreTo=${actionParams.sourceGenreTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -556,12 +555,12 @@ export class BatchService {
   replaceSourceEdition(actionParams: params.ReplaceSourceEditionParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/replaceSourceEdition`;
     const query = `?sourceNumber=${actionParams.sourceNumber}&edition=${actionParams.edition}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -573,13 +572,13 @@ export class BatchService {
   addSourceIdentifer(actionParams: params.AddSourceIdentiferParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    const headers = new HttpHeaders()//.set('Authorization', this.token!);
     headers.set('Access-Control-Allow-Origin', this.#baseUrl);
     const url = `${this.#baseUrl}/batchProcess/addSourceIdentifier`;
     const query = `?sourceNumber=${actionParams.sourceNumber}&sourceIdentifierType=${actionParams.sourceIdentifierType}&sourceIdentifier=${actionParams.sourceIdentifier}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers, withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -591,12 +590,12 @@ export class BatchService {
   changeSourceIdentifier(actionParams: params.ChangeSourceIdentifierParams): Observable<resp.ActionGenericResponse> {
     actionParams.itemIds = this.items;
 
-    const headers = new HttpHeaders().set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/batchProcess/changeSourceIdentifier`;
     const query = `?sourceNumber=${actionParams.sourceNumber}&sourceIdentifierType=${actionParams.sourceIdentifierType}&sourceIdentifierFrom=${actionParams.sourceIdentifierFrom}&sourceIdentifierTo=${actionParams.sourceIdentifierTo}`;
     const body = { itemIds: actionParams.itemIds };
 
-    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { headers })
+    const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })
       .pipe(
         tap((value: resp.ActionGenericResponse) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),

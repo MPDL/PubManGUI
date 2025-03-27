@@ -14,77 +14,77 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     super('/items');
   }
 
-  submit(id: string, lastModificationDate: Date, comment:string, token:string): Observable<ItemVersionVO> {
+  submit(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/submit', taskParam, token);
+    return this.httpPut(this.subPath + '/' + id + '/submit', taskParam, authenticate);
   }
 
-  release(id: string, lastModificationDate: Date, comment:string, token:string): Observable<ItemVersionVO> {
+  release(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/release', taskParam, token);
+    return this.httpPut(this.subPath + '/' + id + '/release', taskParam, authenticate);
   }
 
-  revise(id: string, lastModificationDate: Date, comment:string, token:string): Observable<ItemVersionVO> {
+  revise(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/revise', taskParam, token);
+    return this.httpPut(this.subPath + '/' + id + '/revise', taskParam, authenticate);
   }
 
-  withdraw(id: string, lastModificationDate: Date, comment:string, token:string): Observable<ItemVersionVO> {
+  withdraw(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/withdraw', taskParam, token);
+    return this.httpPut(this.subPath + '/' + id + '/withdraw', taskParam, authenticate);
   }
 
-  retrieveHistory(id: string, token?:string): Observable<any> {
-    return this.httpGet(this.subPath + '/' + id + '/history', token);
+  retrieveHistory(id: string, authenticate?: boolean): Observable<any> {
+    return this.httpGet(this.subPath + '/' + id + '/history', authenticate);
   }
 
-  retrieveAuthorizationInfo(itemId: string, token?: string): Observable<any> {
-    return this.httpGet(this.subPath + '/' + itemId + '/authorization', token);
+  retrieveAuthorizationInfo(itemId: string, authenticate?: boolean): Observable<any> {
+    return this.httpGet(this.subPath + '/' + itemId + '/authorization', authenticate);
   }
 
-  retrieveFileAuthorizationInfo(itemId: string, fileId:string, token?: string): Observable<any> {
-    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/authorization', token);
+  retrieveFileAuthorizationInfo(itemId: string, fileId:string, authenticate?: boolean): Observable<any> {
+    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/authorization', authenticate);
   }
 
-  retrieveSingleExport(id: string, format?: string, citation?:string, cslConeId?:string, token?:string, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
+  retrieveSingleExport(id: string, format?: string, citation?:string, cslConeId?:string, authenticate?: boolean, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
     let params: HttpParams = new HttpParams()
     .set('format', format ? format : 'json_citation')
     .set('citation', citation ? citation : 'APA6');
     if(cslConeId) params=params.set('cslConeId', cslConeId);
-    return this.httpGet(this.subPath + '/' + id + '/export', token, params, respType);
+    return this.httpGet(this.subPath + '/' + id + '/export', authenticate, params, respType);
   }
 
-  retrieveSingleCitation(id: string, citation?:string, cslConeId?:string, token?:string): Observable<string> {
+  retrieveSingleCitation(id: string, citation?:string, cslConeId?:string, authenticate?: boolean): Observable<string> {
 
-    return this.retrieveSingleExport(id, 'json_citation', citation, cslConeId, token).pipe(
+    return this.retrieveSingleExport(id, 'json_citation', citation, cslConeId, authenticate).pipe(
       map(jsonCitation => {
         return jsonCitation.records[0].data.bibliographicCitation;
       })
     )
   }
 
-  thumbnailAvalilable(itemId: string, fileId:string, token?: string): Observable<boolean> {
-    return this.httpHead(this.subPath + '/' + itemId + '/component/' + fileId + '/thumbnail', token).pipe(
+  thumbnailAvalilable(itemId: string, fileId:string, authenticate?: boolean): Observable<boolean> {
+    return this.httpHead(this.subPath + '/' + itemId + '/component/' + fileId + '/thumbnail', authenticate).pipe(
       map(resp => {return resp.status === 200})
     );
 

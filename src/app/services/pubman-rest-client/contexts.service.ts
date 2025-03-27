@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {Observable, map, EMPTY} from 'rxjs';
+import {Observable, map, EMPTY, of} from 'rxjs';
 import { AaService } from 'src/app/services/aa.service';
 import {PubmanGenericRestClientService, SearchResult} from "./pubman-generic-rest-client.service";
 import {AccountUserDbVO, ContextDbVO} from "../../model/inge";
@@ -19,20 +19,20 @@ export class ContextsService extends PubmanSearchableGenericRestClientService<Co
   }
 
 
-  openContext(context: ContextDbVO, token: string): Observable<ContextDbVO> {
+  openContext(context: ContextDbVO, authenticate?: boolean): Observable<ContextDbVO> {
     const path = this.subPath + '/' + context.objectId + '/open';
     const body = context.lastModificationDate;
-    return this.httpPut(path, context, token);
+    return this.httpPut(path, context, authenticate);
 
   }
 
-  closeContext(context: ContextDbVO, token: string): Observable<ContextDbVO> {
+  closeContext(context: ContextDbVO, authenticate?: boolean): Observable<ContextDbVO> {
     const path = this.subPath + '/' + context.objectId + '/close';
     const body = context.lastModificationDate;
-    return this.httpPut(path, context, token);
+    return this.httpPut(path, context, authenticate);
   }
 
-  getContextsForCurrentUser(role:string, user:AccountUserDbVO, token:string) {
+  getContextsForCurrentUser(role:string, user:AccountUserDbVO) {
     //let token = this.aaService.token ? this.aaService.token : undefined;
     //let user: AccountUserDbVO = this.aaService.user;
     let should: any [] = []
@@ -60,9 +60,9 @@ export class ContextsService extends PubmanSearchableGenericRestClientService<Co
     //console.log('Body: ' + JSON.stringify(body));
     //console.log('Token: ' + token);
     if(body.query.bool.should.length) {
-      return (this.search(body, token));
+      return (this.search(body));
     }
-    else return EMPTY;
+    else return of(undefined);
   }
 
 

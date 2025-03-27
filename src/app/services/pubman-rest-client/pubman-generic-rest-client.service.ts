@@ -28,21 +28,21 @@ export abstract class PubmanGenericRestClientService<modelType> {
     this.subPath = subPath;
   }
 
-  create(obj: modelType, token:string) : Observable<modelType> {
+  create(obj: modelType) : Observable<modelType> {
     console.log('Creating: ', typeof obj);
-    return this.httpPost(this.subPath, obj, token);
+    return this.httpPost(this.subPath, obj);
   }
 
-  retrieve(id: string, token?:string): Observable<modelType> {
-    return this.httpGet(this.subPath + '/' + id, token);
+  retrieve(id: string, authenticate?: boolean): Observable<modelType> {
+    return this.httpGet(this.subPath + '/' + id, authenticate);
   }
 
-  update(id: string, obj: modelType, token:string): Observable<modelType> {
+  update(id: string, obj: modelType): Observable<modelType> {
     console.log('Updating:', id, typeof id)
-    return this.httpPut(this.subPath + '/' + id, obj, token);
+    return this.httpPut(this.subPath + '/' + id, obj);
   }
 
-  delete(id: string, lastModificationDate: Date|undefined, token:string): Observable<number> {
+  delete(id: string, lastModificationDate: Date|undefined): Observable<number> {
     let taskParam = null;
     if (lastModificationDate) {
         const isoDate = new Date(lastModificationDate).toISOString();
@@ -50,12 +50,12 @@ export abstract class PubmanGenericRestClientService<modelType> {
           'lastModificationDate': isoDate
     }
   }
-    return this.httpDelete(this.subPath + '/' + id, taskParam, token);
+    return this.httpDelete(this.subPath + '/' + id, taskParam);
   }
 
 
 
-  private httpRequest(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined ): Observable<any> {
+  private httpRequest(method: string, path: string, body?: any, authenticate:boolean = true, headers?: HttpHeaders, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined ): Observable<any> {
     const requestUrl = this.restUri + path;
     return this.httpClient.request(method, requestUrl, {
       body,
@@ -63,6 +63,7 @@ export abstract class PubmanGenericRestClientService<modelType> {
       params: params,
       responseType: respType ? respType : 'json',
       observe: observe ? observe : 'body',
+      withCredentials: authenticate
 
     }).pipe(
       //map((response: any) => response),
@@ -72,13 +73,14 @@ export abstract class PubmanGenericRestClientService<modelType> {
     );
   }
 
-  private getHttpStatus(method: string, path: string, body: Date | undefined, headers: HttpHeaders): Observable<number> {
+  private getHttpStatus(method: string, path: string, body: Date | undefined, authenticate:boolean = true, headers?: HttpHeaders): Observable<number> {
     const requestUrl = this.restUri + path;
     return this.httpClient.request(method, requestUrl, {
       body,
-      headers,
+      headers : undefined,
       observe: 'response',
       responseType: 'text',
+      withCredentials: authenticate
     }).pipe(
       map((response) => {
         const status = response.status;
@@ -111,32 +113,27 @@ export abstract class PubmanGenericRestClientService<modelType> {
 
 
 
-  protected httpGet(path: string, token?: string, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
-    if (token) {
-      return this.httpRequest('GET', path, undefined, this.addAuhorizationHeader(token), params, respType);
-    }
-    return this.httpRequest('GET', path, undefined, undefined, params, respType);
+  protected httpGet(path: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
+      return this.httpRequest('GET', path, undefined, authenticate, undefined, params, respType);
+
   }
 
-  protected httpHead(path: string, token?: string, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<HttpResponse<any>> {
-    if (token) {
-      return this.httpRequest('HEAD', path, undefined, this.addAuhorizationHeader(token), params, respType, 'response');
-    }
-    return this.httpRequest('HEAD', path, undefined, undefined, params, respType, 'response');
+  protected httpHead(path: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<HttpResponse<any>> {
+      return this.httpRequest('HEAD', path, undefined, authenticate, undefined, params, respType, 'response');
   }
 
-  protected httpPost(path: string, resource: any, token: string): Observable<any> {
+  protected httpPost(path: string, resource: any, authenticate?: boolean): Observable<any> {
     const body = JSON.stringify(resource);
-    return this.httpRequest('POST', path, body, this.addAuthAndContentType(token));
+    return this.httpRequest('POST', path, body, authenticate, this.addContentTypeHeader());
   }
 
-  protected httpPut(path: string, resource: any, token: string): Observable<any> {
+  protected httpPut(path: string, resource: any, authenticate?: boolean): Observable<any> {
     const body = JSON.stringify(resource);
-    return this.httpRequest('PUT', path, body, this.addAuthAndContentType(token));
+    return this.httpRequest('PUT', path, body, authenticate, this.addContentTypeHeader());
   }
 
-  protected httpDelete(path: string, body: any, token: string): Observable<number> {
-    return this.getHttpStatus('DELETE', path, body, this.addAuhorizationHeader(token));
+  protected httpDelete(path: string, body: any, authenticate?: boolean): Observable<number> {
+    return this.getHttpStatus('DELETE', path, body, authenticate);
   }
 
 }

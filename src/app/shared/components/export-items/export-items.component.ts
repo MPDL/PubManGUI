@@ -49,7 +49,7 @@ export class ExportItemsComponent {
 
   loadCitation() {
     if(!this.isFormat && (this.selectedCitationType !== citationTypes.CSL || this.selectedCslId)) {
-      this.itemService.retrieveSingleCitation(this.item?.objectId + '_' + this.item?.versionNumber, this.selectedCitationType, this.selectedCslId,this.aaService.token).subscribe(
+      this.itemService.retrieveSingleCitation(this.item?.objectId + '_' + this.item?.versionNumber, this.selectedCitationType, this.selectedCslId).subscribe(
         cit => {
           //console.log('Citation: ' +cit)
           this.currentCitation=cit;

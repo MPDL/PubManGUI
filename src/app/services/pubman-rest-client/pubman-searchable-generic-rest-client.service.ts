@@ -10,39 +10,32 @@ export abstract class PubmanSearchableGenericRestClientService<modelType> extend
   }
 
 
-  list(q?: string, size?: number, from?: number, token?: string):Observable<SearchResult<modelType>> {
+  list(q?: string, size?: number, from?: number, authenticate?:boolean):Observable<SearchResult<modelType>> {
     const params = new HttpParams({fromObject: {
         ...q && {q: q},
         ...size && {size: size},
         ...from && {from: from}
       }});
-    if (token) {
-      return this.getSearchResults('GET', this.subPath, null, this.addAuhorizationHeader(token), params);
-    }
-    return this.getSearchResults('GET', this.subPath, null, undefined, params);
+
+      return this.getSearchResults('GET', this.subPath, null, authenticate, this.addContentTypeHeader(), params);
 
   }
 
-  search(elasticBody: any, token?: string): Observable<SearchResult<modelType>> {
-    if (token) {
-      return this.getSearchResults('POST', this.subPath.concat('/search'), elasticBody, this.addAuthAndContentType(token));
-    }
-    return this.getSearchResults('POST', this.subPath.concat('/search'), elasticBody, this.addContentTypeHeader());
+  search(elasticBody: any, authenticate?:boolean): Observable<SearchResult<modelType>> {
+    return this.getSearchResults('POST', this.subPath.concat('/search'), elasticBody, authenticate, this.addContentTypeHeader());
   }
 
-  elasticSearch(elasticBody: any, token?: string): Observable<any> {
-    if (token) {
-      return this.getElasticSearchResults('POST', this.subPath.concat('/elasticsearch'), elasticBody, this.addAuthAndContentType(token));
-    }
-    return this.getElasticSearchResults('POST', this.subPath.concat('/elasticsearch'), elasticBody, this.addContentTypeHeader());
+  elasticSearch(elasticBody: any, authenticate?:boolean): Observable<any> {
+      return this.getElasticSearchResults('POST', this.subPath.concat('/elasticsearch'), elasticBody, authenticate, this.addContentTypeHeader());
   }
 
-  private getSearchResults(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult<modelType>> {
+  private getSearchResults(method: string, path: string, body?: any, authenticate:boolean =true, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult<modelType>> {
     const requestUrl = this.restUri + path;
     return this.httpClient.request<SearchResult<modelType>>(method, requestUrl, {
       body,
       headers,
-      params
+      params,
+      withCredentials: authenticate
     }).pipe(
       map((searchResult: SearchResult<any>) => searchResult),
       catchError((error) => {
@@ -51,12 +44,13 @@ export abstract class PubmanSearchableGenericRestClientService<modelType> extend
     );
   }
 
-  private getElasticSearchResults(method: string, path: string, body?: any, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult<modelType>> {
+  private getElasticSearchResults(method: string, path: string, body?: any, authenticate:boolean =true, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult<modelType>> {
     const requestUrl = this.restUri + path;
     return this.httpClient.request<any>(method, requestUrl, {
       body,
       headers,
-      params
+      params,
+      withCredentials: authenticate
     }).pipe(
       map((searchResult: any) => searchResult),
       catchError((error) => {

@@ -12,8 +12,8 @@ export class FileStagingService extends PubmanGenericRestClientService<FileDbVO>
     super('/staging');
   }
 
-  createStageFile(file: FileDbVO, token: string) : Observable<String> {
+  createStageFile(file: FileDbVO, authenticate?:boolean) : Observable<String> {
     // console.log('trying to stage file');
-    return super.httpPost(this.subPath + '/' + file.name, file.content, token);
+    return super.httpPost(this.subPath + '/' + file.name, file.content, authenticate);
   }
 }

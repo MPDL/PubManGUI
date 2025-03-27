@@ -95,28 +95,28 @@ export class ItemViewComponent {
     this.authorizationInfo = undefined;
     this.latestVersionAuthorizationInfo = undefined;
     if (id)
-      this.item$ = this.itemsService.retrieve(id, this.aaService.token);
+      this.item$ = this.itemsService.retrieve(id);
     this.item$.subscribe(i => {
       if (i && i.objectId) {
         this.item = i;
         this.listStateService.initItemId(i.objectId);
-        this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
+        this.versions$ = this.itemsService.retrieveHistory(i.objectId);
 
-        this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber, this.aaService.token).subscribe(authInfo => {
+        this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber).subscribe(authInfo => {
           this.authorizationInfo = authInfo;
           if(i.latestVersion?.versionNumber===i.versionNumber) {
             this.latestVersionAuthorizationInfo = this.authorizationInfo;
           }
           else {
             if (i && i.objectId) {
-              this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.latestVersion?.versionNumber, this.aaService.token).subscribe(authInfoLv => {
+              this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.latestVersion?.versionNumber).subscribe(authInfoLv => {
                 this.latestVersionAuthorizationInfo = authInfoLv
               })
             }
           }
         })
 
-        this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined,this.aaService.token).subscribe(citation => {
+        this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined).subscribe(citation => {
           this.citation = citation;
         })
 
@@ -124,7 +124,7 @@ export class ItemViewComponent {
         this.firstPublicPdfFile = this.item?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
 
         if(this.firstPublicPdfFile) {
-          this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId, this.aaService.token).subscribe(thumbAvailable => {
+          this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
               this.thumbnailUrl =  this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
           })
         }
@@ -173,7 +173,7 @@ export class ItemViewComponent {
 
 
   submit() {
-    this.itemsService.submit(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
+    this.itemsService.submit(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
       this.init(res.objectId!)
       this.messageService.success("successfully submitted")
     })
@@ -181,28 +181,28 @@ export class ItemViewComponent {
   }
 
   release() {
-    this.itemsService.release(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
+    this.itemsService.release(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
       this.init(res.objectId!)
       this.messageService.success("successfully released")
     })
   }
 
   revise() {
-    this.itemsService.revise(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
+    this.itemsService.revise(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
       this.init(res.objectId!)
       this.messageService.success("successfully revised")
     })
   }
 
   withdraw() {
-    this.itemsService.withdraw(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
+    this.itemsService.withdraw(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
       this.init(res.objectId!)
       this.messageService.success("successfully withdrawn")
     })
   }
 
   delete() {
-    this.itemsService.delete(this.item!.objectId!, this.item!.lastModificationDate!, this.aaService.token!).subscribe(res => {
+    this.itemsService.delete(this.item!.objectId!, this.item!.lastModificationDate!).subscribe(res => {
       this.router.navigate(['my'])
       this.messageService.success("successfully deleted")
     })

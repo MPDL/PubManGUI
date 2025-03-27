@@ -14,9 +14,9 @@ export class SavedSearchService extends PubmanGenericRestClientService<SavedSear
     super('/savedSearches');
   }
 
-  getAllSearch(token: string): Observable<SavedSearchVO[]>{
+  getAllSearch(authenticate? : boolean): Observable<SavedSearchVO[]>{
     const path = this.subPath;
-    return this.httpGet(path, token);
+    return this.httpGet(path, authenticate);
 
   }
 

@@ -35,7 +35,7 @@ export class ItemViewFileComponent {
 
     // Get authorization info for each AUDIENCE file
     this.files?.filter(f => f.visibility=== Visibility.AUDIENCE).forEach(f => {
-      this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), f.objectId, this.aaService.token).subscribe(authInfo => {
+      this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), f.objectId).subscribe(authInfo => {
         this.audienceInfos.set(f.objectId, authInfo);
         //console.log(this.audienceInfos)
       })
