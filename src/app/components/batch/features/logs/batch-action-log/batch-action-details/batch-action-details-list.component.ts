@@ -171,6 +171,8 @@ export default class BatchActionDetailsListComponent implements OnInit {
     }
     if (this.filterForm.get('fail')?.value) {
       this.activeFilters.push(resp.BatchProcessLogDetailState.ERROR);
+      this.activeFilters.push(resp.BatchProcessLogDetailState.INITIALIZED);
+      this.activeFilters.push(resp.BatchProcessLogDetailState.RUNNING);
     }
   }
 
