@@ -53,6 +53,7 @@ export class HomeComponent {
               }
             },
             baseElasticSearchQueryBuilder("versionState", "RELEASED"),
+            baseElasticSearchQueryBuilder("publicState", "RELEASED"),
           ]
         }
       },

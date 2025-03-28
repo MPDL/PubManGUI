@@ -8,6 +8,13 @@
   background-position: center;
 }
 
+.card-img-top {
+  height: 12vw;
+  min-height: 150px;
+  object-fit: cover;
+  object-position: top;
+}
+
 
 .infobox {
   background-color: #f6f6f6f0 ;
