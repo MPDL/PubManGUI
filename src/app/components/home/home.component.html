@@ -1,6 +1,95 @@
-<h1>{{welcome}}</h1>
 
-<!--
+<div class="jumbotron h-50">
+  <div class="row">
+    <div class="col">
+      <div class="infobox d-inline-block w-auto h-auto p-4">
+        <h1 class="m-0">Welcome to MPG.PuRe</h1>
+        <p>The publication repository of the Max Planck Society</p>
+        <p class="m-0">500.000 publications available</p>
+      </div>
+    </div>
+    <div class="col align-self-center ">
+
+      <div class="input-group input-group-lg ">
+        <span class="input-group-text ">
+        <span class="material-symbols-outlined">search</span>
+      </span>
+        <input type="text" class="form-control" placeholder="Search publications" aria-label="Search publications" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5 mb-5">
+<h4>MPG.PuRe News</h4>
+<div class="row row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-4">
+      <div class="col">
+        <div class="card h-100" style="width: 18rem;">
+        <div class="card-header text-bg-light">
+          <small>2025-03-02</small>
+          <h6 class="card-title">News Item 1</h6>
+        </div>
+          <div class="card-body">
+            <i class="bi bi-info-circle"></i>
+            <p>News snippet...</p>
+          </div>
+        </div>
+      </div>
+    <div class="col">
+      <div class="card h-100" style="width: 18rem;">
+        <div class="card-header text-bg-light">
+          <small>2025-03-02</small>
+          <h6 class="card-title">News Item 2</h6>
+        </div>
+        <div class="card-body">
+          <i class="bi bi-info-circle"></i>
+          <p>News snippet 2...</p>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+
+
+<div class="mt-5 mb-5">
+<h4>Latest featured releases</h4>
+<div class="row row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-4">
+
+@if(latestReleasedItems | async; as items) {
+  @for(item of items; track item) {
+    <div class="col">
+    <div class="card h-100" style="width: 18rem;">
+      @let file = getFirstPublicThumbnail(item);
+      @if(file) {
+        <img src="{{file.content.replace('/content', '/thumbnail')}}"
+             class="card-img-top"
+             style="
+            height: 15vw;
+            object-fit: cover;
+           object-position: center;
+           opacity: 1.0"
+        >
+      }
+      <div class="card-body">
+        <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
+        <a routerLink="/view/{{item?.objectId}}" class="stretched-link"></a>
+        <!--<p class="card-text">{{ item.metadata.abstracts[0]?.value }}</p>-->
+       <!-- <a href="#" class="btn btn-primary">Go somewhere</a>-->
+      </div>
+    </div>
+    </div>
+  }
+}
+@else {
+  <p>Loading...</p>
+}
+</div>
+</div>
+
+  <!--
 <h2>Latest released items</h2>
 <pure-item-list [searchQuery]="searchQuery"/>
 -->
+
+

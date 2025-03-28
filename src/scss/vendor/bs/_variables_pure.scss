@@ -52,6 +52,12 @@ $border-color-dark:             $mpg-light-gray;
 $link-color-dark:               $mpg-light-gray;
 $link-hover-color-dark:         $mpg-secondary-gray;
 
+$card-bg: $mpg-blue;
+$card-color: $mpg-light-gray;
+//$card-border-radius: 0;
+//$card-inner-border-radius: 0;
+
+
 
 // 4. Include any default map overrides here
 // $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -94,6 +100,7 @@ $link-hover-color-dark:         $mpg-secondary-gray;
 @import "../../../../node_modules/bootstrap/scss/offcanvas";
 // @import "../../../../node_modules/bootstrap/scss/placeholders";
 @import "../../../../node_modules/bootstrap/scss/helpers";
+@import "../../../../node_modules/bootstrap/scss/card";
 
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "../../../../node_modules/bootstrap/scss/utilities/api";
