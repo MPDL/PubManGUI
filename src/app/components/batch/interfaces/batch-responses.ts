@@ -94,6 +94,7 @@ export enum BatchProcessLogHeaderState {
     INITIALIZED = "INITIALIZED",
     RUNNING = "RUNNING",
     FINISHED = "FINISHED",
+    FINISHED_WITH_ERRORS = "FINISHED_WITH_ERRORS",
 }
 
 export enum BatchProcessLogDetailState {

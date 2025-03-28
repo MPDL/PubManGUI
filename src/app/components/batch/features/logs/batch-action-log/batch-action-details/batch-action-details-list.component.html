@@ -66,7 +66,7 @@
         <tbody>
           @if(inPage.length > 0) {
           <ng-container>
-            @for (log of inPage; track log.item.itemObjectId) {
+            @for (log of inPage; track log.itemObjectId) {
               @defer (on viewport) {
 
               <pure-batch-action-dataset-log [log]="log"></pure-batch-action-dataset-log>
@@ -99,16 +99,6 @@
               class="me-0" i18n="@@succeded">
               success</span>
           </span>
-
-          @if(failed > 0) {
-
-            <br>
-            <span class="fw-bold"> {{ failed }} <span i18n="@@failed">
-                failed</span>
-            </span>
-
-          }
-
         </div>
 
       }

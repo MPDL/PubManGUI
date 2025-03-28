@@ -198,7 +198,8 @@
   "BatchProcessLogHeaderState": {
     "INITIALIZED": "Initialized",
     "RUNNING": "Running",
-    "FINISHED": "Finished"
+    "FINISHED": "Finished",
+    "FINISHED_WITH_ERRORS": "Finished with errors"
   },
   "BatchProcessLogDetailState": {
     "INITIALIZED": "Initialized",

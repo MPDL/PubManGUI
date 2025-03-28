@@ -8,11 +8,6 @@ import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
 
 
-type detail = {
-  'item': resp.BatchProcessLogDetailDbVO,
-  'title': string
-}
-
 @Component({
   selector: 'pure-batch-action-dataset-log',
   imports: [
@@ -23,7 +18,7 @@ type detail = {
   templateUrl: './batch-action-dataset-log.component.html',
 })
 export class BatchActionDatasetLogComponent {
-  @Input() log?: detail;
+  @Input() log?: resp.BatchProcessLogDetailDbVO;
 
   batchSvc = inject(BatchService);
 
@@ -31,10 +26,23 @@ export class BatchActionDatasetLogComponent {
   batchProcessMessageTranslations = {};
   batchProcessMethodTranslations = {};
 
+  title = '';
+
   constructor(
     @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
+
+    this.batchSvc.getItem(this.log!.itemObjectId)
+      .subscribe({
+        next: (value) => {
+          this.title = value.metadata?.title;
+        },
+        error: () => {
+          this.title = '404';
+        }
+      });
+
     this.loadTranslations(this.locale);
   }
 

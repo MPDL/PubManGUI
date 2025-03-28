@@ -15,7 +15,7 @@
                 }
             } @else {
 
-                <span class="material-symbols-outlined" title="Something gone wrong!">
+                <span class="material-symbols-outlined" title="Something gone wrong!" style="cursor: auto">
                     error
                 </span>
 
@@ -26,16 +26,21 @@
 
         <td class="col-2">
             {{ getProcessLogHeaderStateTranslation(log.state) }}
+            @if (log.state === state.FINISHED) {
+                <span class="material-symbols-outlined text-success" style="cursor: default">check_circle</span>
+            } @else {
+                <span class="material-symbols-outlined text-danger" style="cursor: default">cancel</span>
+            }
         </td>
 
     }
     
-    <td class="col-5">
+    <td class="col-6">
         {{ getProcessMethodTranslation(log.method) }}
     </td>
 
-    <td class="col-4">
-        <span>{{ log.endDate | date:'fullDate' }}</span>
+    <td class="col-3">
+        <span>{{ log.endDate | date:'mediumDate' }}</span>
         <div class="float-end">
             <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
             <span>{{ log.endDate | date: "HH:mm" }}</span>

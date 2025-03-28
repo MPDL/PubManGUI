@@ -17,11 +17,6 @@ import { PaginatorComponent } from "src/app/shared/components/paginator/paginato
 import { BatchActionDatasetLogComponent } from "./batch-action-dataset-log/batch-action-dataset-log.component";
 
 
-type detail = {
-  'item': resp.BatchProcessLogDetailDbVO,
-  'title': string
-}
-
 @Component({
   selector: 'pure-batch-action-details-list',
   standalone: true,
@@ -48,13 +43,13 @@ export default class BatchActionDetailsListComponent implements OnInit {
   currentPage = this.batchSvc.lastPageNumFrom().details;
   pageSize = 25;
 
-  inPage: detail[] = [];
+  inPage: resp.BatchProcessLogDetailDbVO[] = [];
 
   unfilteredSize = 0;
   filteredSize = 0;
 
-  unfilteredLogs: detail[] = [];
-  filteredLogs: detail[] = [];
+  unfilteredLogs: resp.BatchProcessLogDetailDbVO[] = [];
+  filteredLogs: resp.BatchProcessLogDetailDbVO[] = [];
 
   items: ItemVersionVO[] = [];
 
@@ -86,31 +81,17 @@ export default class BatchActionDetailsListComponent implements OnInit {
     if (this.batchLogHeader.batchLogHeaderId) {
       this.batchSvc.getBatchProcessLogDetails(Number(this.batchLogHeader.batchLogHeaderId))
         .subscribe(batchResponse => {
-          if (batchResponse.length === 0) this.router.navigate(['/batch/logs']);
+          let itemsCount = batchResponse.length;
+          if (itemsCount === 0) this.router.navigate(['/batch/logs']);
 
           batchResponse.sort((a, b) => b.startDate.valueOf() - a.startDate.valueOf())
             .forEach((element, index) => {
-              if (element.state === resp.BatchProcessLogDetailState.ERROR) this.failed++;
-              var title = '';
-              this.batchSvc.getItem(element.itemObjectId)
-                .subscribe({
-                  next: (value) => {
-                    title = value.metadata?.title;
-                  },
-                  error: () => {
-                    this.unfilteredLogs.push({ item: element, title: '404' });
-                  },
-                  complete: () => {
-                    this.unfilteredLogs.push({ item: element, title: title });
-                    if (index === batchResponse.length - 1) {
-                      this.filteredLogs = this.unfilteredLogs;
-                      this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
-
-                      this.refreshLogs();
-                    }
-                  }
-                })
+              if (element.state != resp.BatchProcessLogDetailState.SUCCESS) this.failed++;
             })
+          this.filteredLogs = this.unfilteredLogs = batchResponse;
+          this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
+
+          this.refreshLogs();
 
           if (this.batchSvc.getLogFilters().length > 0) {
             if (this.activeFilters.length === this.batchSvc.getLogFilters().length
@@ -169,7 +150,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
 
   fillWithAll() {
     const toFill: string[] = [];
-    this.unfilteredLogs.forEach(element => { if (element.item.itemObjectId) toFill.push(element.item.itemObjectId) });
+    this.unfilteredLogs.forEach(item => { if (item.itemObjectId) toFill.push(item.itemObjectId) });
     this.batchSvc.items = toFill;
     const msg = `${toFill.length} ` + $localize`:@@batch.datasets.filled:items to batch!` + '\n';
     this.msgSvc.info(msg);
@@ -177,7 +158,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
 
   fillWithFailed() {
     const toFill: string[] = [];
-    this.unfilteredLogs.forEach(element => { if (element.item.itemObjectId && element.item.state === resp.BatchProcessLogDetailState.ERROR) toFill.push(element.item.itemObjectId) });
+    this.unfilteredLogs.forEach(item => { if (item.itemObjectId && item.state === resp.BatchProcessLogDetailState.ERROR) toFill.push(item.itemObjectId) });
     this.batchSvc.items = toFill;
     const msg = `${toFill.length} ` + $localize`:@@batch.datasets.filled:items to batch!` + '\n';
     this.msgSvc.info(msg);
@@ -207,7 +188,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
   }
 
   updateFilteredLogs():void {
-    this.filteredLogs = this.unfilteredLogs.filter(element => this.activeFilters.includes(element.item.state));
+    this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.state));
     this.filteredSize = this.filteredLogs.length;
   }
 
