@@ -23,30 +23,22 @@
 <div class="mt-5 mb-5">
 <h4>MPG.PuRe News</h4>
 <div class="row row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-4">
+  @if(newsItems | async; as blogEntries) {
+    @for(blogEntry of blogEntries.slice(0,4); track blogEntry) {
       <div class="col">
         <div class="card h-100" style="width: 18rem;">
-        <div class="card-header text-bg-light">
-          <small>2025-03-02</small>
-          <h6 class="card-title">News Item 1</h6>
+        <div class="card-header">
+          <small class="card-title"> {{ blogEntry.date | date:'short'  }}</small>
+          <h6 class="card-title">{{blogEntry.title}}</h6>
         </div>
-          <div class="card-body">
-            <i class="bi bi-info-circle"></i>
-            <p>News snippet...</p>
+          <div class="card-body text-bg-light">
+            {{ blogEntry.excerpt | slice:0:200 }} ...
           </div>
+          <a href="{{blogEntry.link }}" target="_blank" class="stretched-link"></a>
         </div>
       </div>
-    <div class="col">
-      <div class="card h-100" style="width: 18rem;">
-        <div class="card-header text-bg-light">
-          <small>2025-03-02</small>
-          <h6 class="card-title">News Item 2</h6>
-        </div>
-        <div class="card-body">
-          <i class="bi bi-info-circle"></i>
-          <p>News snippet 2...</p>
-        </div>
-      </div>
-    </div>
+    }
+  }
 </div>
 </div>
 

@@ -4,10 +4,11 @@ import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils"
 import {catchError, map, Observable, of, tap, throwError} from "rxjs";
 import {ItemVersionVO} from "../../model/inge";
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
-import {AsyncPipe, NgOptimizedImage} from "@angular/common";
+import {AsyncPipe, DatePipe, NgOptimizedImage, SlicePipe} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {SanitizeHtmlPipe} from "../../shared/services/pipes/sanitize-html.pipe";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'pure-home',
@@ -19,12 +20,14 @@ import {HttpClient} from "@angular/common/http";
     AsyncPipe,
     NgOptimizedImage,
     RouterLink,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    SlicePipe,
+    DatePipe
   ],
 })
 export class HomeComponent {
   latestReleasedItems: Observable<ItemVersionVO[]> = of([]);
-
+  newsItems: Observable<PuReBlogEntry[]> = of([])
 
   constructor(private itemsService: ItemsService, private httpClient: HttpClient) {
     // Fetch the latest released items from the backend or any other data source
@@ -74,14 +77,14 @@ export class HomeComponent {
 
 
     loadNewsItems() {
-      return this.httpClient.request('GET', 'https://blog.pure.mpdl.mpg.de/json1', {
-
-      }).pipe(
-        //map((response: any) => response),
-        catchError((error) => {
-          return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
-        })
-      ).subscribe();
+      this.newsItems = this.httpClient.request<PuReBlogEntry[]>('GET', environment.pure_blog_feed_url);
     }
 
+}
+
+export interface PuReBlogEntry {
+  title: string;
+  link: string;
+  excerpt: string;
+  date: Date
 }
