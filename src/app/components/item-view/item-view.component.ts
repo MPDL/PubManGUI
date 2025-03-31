@@ -26,6 +26,7 @@ import {ItemListStateService} from "../item-list/item-list-state.service";
 import {SanitizeHtmlCitationPipe} from "../../shared/services/pipes/sanitize-html-citation.pipe";
 import {ItemSelectionService} from "../../shared/services/item-selection.service";
 import {Title} from "@angular/platform-browser";
+import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -44,7 +45,8 @@ import {Title} from "@angular/platform-browser";
     PaginatorComponent,
     TopnavCartComponent,
     TopnavBatchComponent,
-    SanitizeHtmlCitationPipe
+    SanitizeHtmlCitationPipe,
+    NgbTooltip
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
@@ -180,40 +182,23 @@ export class ItemViewComponent {
   }
 
 
+  openActionsModal(type: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi') {
+    const comp: ItemActionsModalComponent = this.modalService.open(ItemActionsModalComponent).componentInstance;
+    comp.item = this.item!;
+    comp.action = type;
+    comp.successfullyDone.subscribe(data => {
+      if(type !== 'delete') {
+        this.init(this.item?.objectId!)
+      }
+      else {this.router.navigate(['/my']);
+      }
 
-  submit() {
-    this.itemsService.submit(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully submitted")
-    })
-
-  }
-
-  release() {
-    this.itemsService.release(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully released")
     })
   }
 
-  revise() {
-    this.itemsService.revise(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully revised")
-    })
-  }
 
-  withdraw() {
-    this.itemsService.withdraw(this.item!.objectId!, this.item!.lastModificationDate!, '').subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully withdrawn")
-    })
-  }
+  useAsTemplate() {
+    alert('To do')
 
-  delete() {
-    this.itemsService.delete(this.item!.objectId!, this.item!.lastModificationDate!).subscribe(res => {
-      this.router.navigate(['my'])
-      this.messageService.success("successfully deleted")
-    })
   }
 }

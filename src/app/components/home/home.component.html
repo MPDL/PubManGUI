@@ -61,7 +61,7 @@
              class="card-img-top">
       }
       <div class="card-body">
-        <small class="card-title"> {{ item.latestRelease?.modificationDate  | date:'short'  }}</small>
+        <small class="card-title"> {{ item.latestRelease?.modificationDate  | date:'shortDate'  }}</small>
         <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
         <a routerLink="/view/{{item?.objectId}}" class="stretched-link"></a>
         <!--<p class="card-text">{{ item.metadata.abstracts[0]?.value }}</p>-->

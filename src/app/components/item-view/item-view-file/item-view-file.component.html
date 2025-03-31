@@ -60,22 +60,29 @@
                 }
                 </div>
               }
+              @if(file.metadata.embargoUntil | empty) {
+                <div class="mt-1">
+                  <strong>Embargo</strong>
+                </div>
+                <div class="text-break">
+                  {{ file.metadata.embargoUntil }}
+                </div>
+              }
             <div class="mt-1">
               <strong>File Name</strong>
             </div>
             <div class="text-break">
               {{ file.name }}
             </div>
-
-              <div class="mt-1">
-                <strong>MimeType / Checksum</strong>
-              </div>
-              <div>
-                {{ file.mimeType }} | <button type="button" class="btn btn-sm btn-link m-0 p-0" [ngbPopover]="checksumPopup" [autoClose]="'outside'">{{file.checksumAlgorithm}}</button>
-              </div>
-              <ng-template #checksumPopup>
-                {{ file.checksum }}
-              </ng-template>
+            <div class="mt-1">
+              <strong>MimeType / Checksum</strong>
+            </div>
+            <div>
+              {{ file.mimeType }} | <button type="button" class="btn btn-sm btn-link m-0 p-0" [ngbPopover]="checksumPopup" [autoClose]="'outside'">{{file.checksumAlgorithm}}</button>
+            </div>
+            <ng-template #checksumPopup>
+              {{ file.checksum }}
+            </ng-template>
 
             }
             @if(file.metadata.description | empty) {
@@ -121,9 +128,9 @@
                 <strong>Handle</strong>
               </div>
               <div class="row">
-                <a class="icon-link" href="https://hdl.handle.net/{{item.versionPid?.substring(4)}}" target="_blank">
+                <a class="icon-link" href="https://hdl.handle.net/{{file.pid?.substring(4)}}" target="_blank">
                   <i class="bi-link"></i>
-                  <span class="text-truncate">{{ item.versionPid }}</span>
+                  <span class="text-truncate">{{ file.pid }}</span>
                 </a>
               </div>
             }

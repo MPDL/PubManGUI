@@ -6,12 +6,14 @@ import {CartService} from "../../../services/cart.service";
 import {AaService} from "../../../../services/aa.service";
 import {ItemListComponent} from "../../../../components/item-list/item-list.component";
 import {ItemSelectionService} from "../../../services/item-selection.service";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-topnav-cart',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    NgbTooltip
   ],
   templateUrl: './topnav-cart.component.html',
   //styleUrl: './topnav-cart.component.scss'

@@ -8,37 +8,63 @@
 
     <div class="navbar-nav" start>
       @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
-        <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
+        <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2" ngbTooltip="Edit item">
           <span class="material-symbols-outlined">edit</span>
         </a>
       }
-      @if(authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
-        <button class="btn btn-outline-primary" (click)="submit()">submit</button>
-
-      }
-
-      @if(authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
-        <button class="btn btn-outline-primary" (click)="revise()">revise</button>
-
-      }
       @if(authorizationInfo && authorizationInfo.actions['RELEASE'] && isLatestVersion) {
-        <button class="btn btn-outline-primary" (click)="release()">release</button>
+        <button class="nav-link" (click)="openActionsModal('release')" ngbTooltip="Release item">
+          <span class="material-symbols-outlined">public</span>
+        </button>
 
       }
-      @if(authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
-        <button class="btn btn-outline-primary" (click)="delete()">delete</button>
+      @if(authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
+        <button class="nav-link" (click)="openActionsModal('submit')" ngbTooltip="Submit item">
+          <span class="material-symbols-outlined">workspace_premium</span>
+        </button>
+
+      }
+      @if(authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
+        <button class="nav-link" (click)="openActionsModal('revise')" ngbTooltip="Revise item">revise</button>
 
       }
       @if(authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
-        <button class="btn btn-outline-primary" (click)="withdraw()">withdraw</button>
+        <button class="nav-link" (click)="openActionsModal('withdraw')" ngbTooltip="Withdraw item">
+          <span class="material-symbols-outlined">public_off</span>
+        </button>
+      }
+
+      @if(authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
+        <button class="nav-link" (click)="openActionsModal('delete')" ngbTooltip="Delete item">
+          <span class="material-symbols-outlined">delete_forever</span>
+        </button>
 
       }
-      <button class="btn" (click)="openModal(exportItemModal)"><span class="material-symbols-outlined">upload</span></button>
+
+      @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
+        <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')" ngbTooltip="Add DOI to item">
+          <svg fill="currentColor" height="24px" width="24px">
+            <use href="/assets/icons/icons.svg#doi"></use>
+          </svg>
+        </button>
+
+      }
+
+      @if(aaService.principal.value.isDepositor) {
+        <button class="nav-link" (click)="useAsTemplate()" ngbTooltip="Use as template">
+          <span class="material-symbols-outlined">copy_all</span>
+        </button>
+
+      }
+
+      <div start class="vr"></div>
+      <button class="nav-link" (click)="openModal(exportItemModal)" ngbTooltip="Export item"><span class="material-symbols-outlined">upload</span></button>
+
 
     </div>
-    @if(listStateService.currentFullQuery && listStateService.page > 0) {
 
-    <pure-paginator end [totalNumberOfItems]="listStateService.currentNumberOfRecords" [size]=1 [(pageNumber)]="listStateService.page" (paginatorChanged)="listStateService.paginatorChanged()"/>
+    @if(listStateService.currentFullQuery && listStateService.page > 0) {
+      <pure-paginator end [totalNumberOfItems]="listStateService.currentNumberOfRecords" [size]=1 [(pageNumber)]="listStateService.page" (paginatorChanged)="listStateService.paginatorChanged()"/>
     }
   </pure-topnav>
 
@@ -331,11 +357,6 @@
     </div>
     </div>
   </div>
-
- <ng-template #exportPopOver>
-    <pure-export-items [item]="item"/>
-
-  </ng-template>
 
   <ng-template #exportItemModal let-modal>
     <pure-export-items [modal]="modal" [item]="item"/>
