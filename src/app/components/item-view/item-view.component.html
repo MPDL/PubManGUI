@@ -232,6 +232,9 @@
 
             }
           }
+          @else {
+          <pure-loading/>
+          }
         } @else if (currentSubMenuSelection === 'admin') {
           <pure-item-view-metadata-element>
             <span label>ID</span>
@@ -361,6 +364,9 @@
   <ng-template #exportItemModal let-modal>
     <pure-export-items [modal]="modal" [item]="item"/>
   </ng-template>
+}
+@else {
+  <pure-loading/>
 }
 
 

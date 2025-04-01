@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, signal, Signal} from '@angular/core';
 import {Form, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ActivatedRoute, Params, Route, Router} from "@angular/router";
 
@@ -18,6 +18,7 @@ export class PaginatorComponent {
 
   @Input() size!:number
   @Input() pageNumber!:number
+  @Input() loadingSignal:Signal<boolean> = signal(false);
   @Output() sizeChange = new EventEmitter<number>();
   @Output() pageNumberChange = new EventEmitter<number>();
   @Output() paginatorChanged = new EventEmitter<any>();

@@ -22,6 +22,7 @@ import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/to
 import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 import { Location } from '@angular/common'
 import {ItemListStateService} from "./item-list-state.service";
+import {LoadingComponent} from "../../shared/components/loading/loading.component";
 
 
 @Component({
@@ -37,7 +38,8 @@ import {ItemListStateService} from "./item-list-state.service";
     TopnavComponent,
     PaginatorComponent,
     TopnavCartComponent,
-    TopnavBatchComponent
+    TopnavBatchComponent,
+    LoadingComponent
   ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss'
