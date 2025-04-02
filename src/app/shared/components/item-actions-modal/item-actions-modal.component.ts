@@ -13,8 +13,7 @@ import {Observable} from "rxjs";
     FormsModule,
     ReactiveFormsModule
   ],
-  templateUrl: './item-actions-modal.component.html',
-  styleUrl: './item-actions-modal.component.css'
+  templateUrl: './item-actions-modal.component.html'
 })
 export class ItemActionsModalComponent {
 
