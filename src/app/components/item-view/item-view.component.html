@@ -25,7 +25,11 @@
 
       }
       @if(authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
-        <button class="nav-link" (click)="openActionsModal('revise')" ngbTooltip="Revise item">revise</button>
+        <button class="nav-link" (click)="openActionsModal('revise')" ngbTooltip="Revise item">
+          <svg fill="currentColor" height="24px" width="24px">
+            <use href="/assets/icons/icons.svg#revise"></use>
+          </svg>
+        </button>
 
       }
       @if(authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
