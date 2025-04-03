@@ -672,7 +672,7 @@ export class ItemSearchAdvancedComponent {
       name: this.savedSearchNameForm.value,
       searchForm: this.searchForm.value
     }
-    this.savedSearchService.create(savedSearch, this.aaService.token == null ? "" : this.aaService.token).subscribe(search => {
+    this.savedSearchService.create(savedSearch).subscribe(search => {
       console.log("Successfully saved search!");
 
       this.updateSavedSearchList();
@@ -690,7 +690,7 @@ export class ItemSearchAdvancedComponent {
   }
 
   deleteSavedSearch(value: number) {
-    this.savedSearchService.delete(this.savedSearches[value].objectId, undefined, this.aaService.token == null ? "" : this.aaService.token).subscribe(search => {
+    this.savedSearchService.delete(this.savedSearches[value].objectId, undefined).subscribe(search => {
       console.log("Successfully deleted search!");
       this.updateSavedSearchList();
 
@@ -701,7 +701,7 @@ export class ItemSearchAdvancedComponent {
 
   private updateSavedSearchList() {
     if (this.aaService.principal.getValue().loggedIn) {
-      this.savedSearchService.getAllSearch(this.aaService.token == null ? "" : this.aaService.token).subscribe(savedSearches => this.savedSearches = savedSearches)
+      this.savedSearchService.getAllSearch().subscribe(savedSearches => this.savedSearches = savedSearches)
     }
   }
 

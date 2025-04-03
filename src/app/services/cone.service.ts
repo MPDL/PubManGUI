@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import * as props from 'src/assets/properties.json';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConeService {
 
-  rest_uri = props.cone_instance_uri;
+  rest_uri = environment.cone_instance_uri;
 
   constructor(
     private http: HttpClient
@@ -64,7 +64,7 @@ export interface position_shite {
   http_purl_org_dc_elements_1_1_identifier: string,
 }
 
-export interface identifier_bunch { 
+export interface identifier_bunch {
   http_www_w3_org_1999_02_22_rdf_syntax_ns_value: string,
   http_www_w3_org_2001_XMLSchema_instance_type: string
 }

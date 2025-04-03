@@ -6,12 +6,14 @@ import {CartService} from "../../../services/cart.service";
 import {AaService} from "../../../../services/aa.service";
 import {ItemListComponent} from "../../../../components/item-list/item-list.component";
 import {ItemSelectionService} from "../../../services/item-selection.service";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-topnav-cart',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    NgbTooltip
   ],
   templateUrl: './topnav-cart.component.html',
   //styleUrl: './topnav-cart.component.scss'
@@ -19,6 +21,8 @@ import {ItemSelectionService} from "../../../services/item-selection.service";
 export class TopnavCartComponent {
 
   //@Input({required: true}) selectedItems: string[] = []
+  @Input() resetSelectionAfterAction: boolean = true;
+  @Input() displayButtons: 'all' | 'removeOnly' | 'addOnly' | 'allowedOnly' = "all";
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,7 +35,8 @@ export class TopnavCartComponent {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected.length) {
       const added = this.cartService.addItems(selected)
-      this.itemSelectionService.resetList();
+      if(this.resetSelectionAfterAction)
+        this.itemSelectionService.resetList();
 
       this.message.success(selected + ' items selected' + ((selected.length! - added) > 0 ? `, ${selected.length! - added} on cart duplicated were ignored.` : ''));
     } else {
@@ -43,7 +48,8 @@ export class TopnavCartComponent {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected.length) {
       const removed = this.cartService.removeItems(selected)
-      this.itemSelectionService.resetList();
+      if(this.resetSelectionAfterAction)
+        this.itemSelectionService.resetList();
       this.message.success(selected + ' items selected' + ((selected.length! - removed) > 0 ? `, ${selected.length! - removed} on cart duplicated were ignored.` : ''));
     } else {
       this.message.warning(`The cart is empty!\n`);

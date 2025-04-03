@@ -5,7 +5,7 @@
     {{ getImportStatusTranslation(item.status) }}
   </td>
 
-  <td class="col-3">
+  <td class="col-4">
     @if(item.itemId) {
 
       <span class="nav-link text-decoration-underline" [routerLink]="['view', item.itemId]">{{ item.itemId }} </span>
@@ -17,8 +17,8 @@
     }
   </td>
 
-  <td class="col-4">
-    <span>{{ item.endDate | date:'fullDate' }}</span>
+  <td class="col-3">
+    <span>{{ item.endDate | date:'mediumDate' }}</span>
     <div class="float-end">
       <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
       <span class="me-3">{{ item.endDate | date: "HH:mm" }}</span>

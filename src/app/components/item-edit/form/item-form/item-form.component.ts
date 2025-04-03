@@ -44,7 +44,7 @@ export class ItemFormComponent implements OnInit {
   itemService = inject(ItemsService);
   messageService = inject(MessageService);
   route = inject(ActivatedRoute);
-  
+
   externalReferences!: FormArray<FormGroup<ControlType<FileDbVO>>>;
   form!: FormGroup;
   form_2_submit: any;
@@ -171,7 +171,7 @@ export class ItemFormComponent implements OnInit {
     for (let file of files) {
       file.storage = Storage.INTERNAL_MANAGED;
       if (this.aaService.token) {
-        this.fileStagingService.createStageFile(file, this.aaService.token)
+        this.fileStagingService.createStageFile(file)
           .subscribe(stagedFileId => {
             file.content = stagedFileId.toString();
             if (!this.internalFiles) {
@@ -263,7 +263,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   submit() {
-    // reassembling files in "files" from "internalFiles" and externalReferences 
+    // reassembling files in "files" from "internalFiles" and externalReferences
     this.files.clear();
     if (this.internalFiles) {
       this.internalFiles.controls.forEach(internalFileControl => {
@@ -293,9 +293,9 @@ export class ItemFormComponent implements OnInit {
     // submit form
     if (this.aaService.isLoggedIn && this.aaService.token) {
       if (this.form_2_submit.objectId) {
-        this.form.valid ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO, this.aaService.token)).subscribe(result => console.log('Updated Item:', JSON.stringify(result))) : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
+        this.form.valid ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe(result => console.log('Updated Item:', JSON.stringify(result))) : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
       } else {
-        this.form.valid ? (this.itemService.create(this.form_2_submit as ItemVersionVO, this.aaService.token)).subscribe(result => console.log('Created Item', JSON.stringify(result))) : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
+        this.form.valid ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe(result => console.log('Created Item', JSON.stringify(result))) : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
       }
     } else {
       alert('You must be logged in to update/create a publication');

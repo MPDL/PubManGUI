@@ -1,3 +1,85 @@
-<h1>{{welcome}}</h1>
+
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-lg">
+      <div class="infobox d-inline-block w-auto h-auto p-4">
+        <h1 class="m-0">Welcome to MPG.PuRe</h1>
+        <p>The publication repository of the Max Planck Society</p>
+        <p class="m-0">500.000 publications available</p>
+      </div>
+    </div>
+    <div class="col-lg align-self-center p-3 ">
+
+      <div class="input-group input-group-lg">
+        <span class="input-group-text ">
+        <span class="material-symbols-outlined">search</span>
+      </span>
+        <input type="text" class="form-control" placeholder="Search publications" aria-label="Search publications" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5 mb-5">
+<h4>MPG.PuRe News</h4>
+<div class="row row-cols-lg-2 g-lg-2 row-cols-xl-2 g-xl-2 row-cols-xxl-3 g-3">
+  @if(newsItems | async; as blogEntries) {
+    @for(blogEntry of blogEntries.slice(0,3); track blogEntry) {
+      <div class="col">
+        <div class="card h-100 w-100" style="width: 18rem;">
+        <div class="card-header">
+              <small class="card-title"> {{ blogEntry.date | date:'short'  }}</small>
+              <h6 class="card-title">{{blogEntry.title}}</h6>
+        </div>
+          <div class="card-body text-bg-light">
+            {{ blogEntry.excerpt | slice:0:300 }} ...
+          </div>
+          <a href="{{blogEntry.link }}" target="_blank" class="stretched-link"></a>
+        </div>
+      </div>
+    }
+  }
+  @else {
+    <pure-loading/>
+  }
+</div>
+</div>
+
+
+
+<div class="mt-5 mb-5">
+<h4>Latest Featured Releases</h4>
+<div class="row row-cols-lg-2 g-lg-2 row-cols-xl-3 g-xl-3 row-cols-xxl-4 g-xxl-4">
+
+@if(latestReleasedItems | async; as items) {
+  @for(item of items; track item) {
+    <div class="col">
+    <div class="card h-100" style="width: 18rem;">
+      @let file = getFirstPublicThumbnail(item);
+      @if(file) {
+        <img src="{{file.content.replace('/content', '/thumbnail')}}" alt="Thumbnail"
+             class="card-img-top">
+      }
+      <div class="card-body">
+        <small class="card-title"> {{ item.latestRelease?.modificationDate  | date:'shortDate'  }}</small>
+        <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
+        <a routerLink="/view/{{item?.objectId}}" class="stretched-link"></a>
+        <!--<p class="card-text">{{ item.metadata.abstracts[0]?.value }}</p>-->
+       <!-- <a href="#" class="btn btn-primary">Go somewhere</a>-->
+      </div>
+    </div>
+    </div>
+  }
+}
+@else {
+  <pure-loading/>
+}
+</div>
+</div>
+
+  <!--
 <h2>Latest released items</h2>
 <pure-item-list [searchQuery]="searchQuery"/>
+-->
+
+

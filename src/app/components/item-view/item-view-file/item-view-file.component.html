@@ -3,7 +3,7 @@
 
   @if (files && files.length) {
     @for (file of files; track file; let i = $index) {
-  <div class="accordion">
+      <div class="accordion" xmlns="http://www.w3.org/1999/html">
         <div class="row mt-3">
           <div class="col-9 text-truncate">
 
@@ -23,7 +23,7 @@
               @if(oaStatusIcon(file)) {
               <img alt="OA logo"
                    src="/assets/images/{{oaStatusIcon(file)}}"
-                   width="16" height="16"/>
+                   width="16" height="16" [ngbTooltip]="'Open Access: ' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')"/>
               }
               ({{ file.metadata.contentCategory }})
             </div>
@@ -40,30 +40,53 @@
 
         <div id="collapse{{file.objectId}}" class="collapse header_color" aria-labelledby="headingOne">
           <div class="container p-2">
+            <small>
             @if(file.storage==='INTERNAL_MANAGED') {
-            <div>
-              <strong>Name</strong>
-            </div>
-            <div class="text-break">
-              {{ file.name }}
-            </div>
-              <div>
+              <div class="mt-1">
                 <strong>Visibility</strong>
               </div>
               <div>
                 {{ file.visibility }}
               </div>
               @if(file.allowedAudienceIds | empty) {
-              <div>
-                {{ file.allowedAudienceIds }}
-              </div>
+                <!--
+                <div>
+                  {{ file.allowedAudienceIds }}
+                </div>
+                -->
+                <div>
                 @for(ouName of ipOrganizations(file); track ouName) {
                   {{ouName}}
+                }
+                </div>
               }
+              @if(file.metadata.embargoUntil | empty) {
+                <div class="mt-1">
+                  <strong>Embargo</strong>
+                </div>
+                <div class="text-break">
+                  {{ file.metadata.embargoUntil }}
+                </div>
               }
+            <div class="mt-1">
+              <strong>File Name</strong>
+            </div>
+            <div class="text-break">
+              {{ file.name }}
+            </div>
+            <div class="mt-1">
+              <strong>MimeType / Checksum</strong>
+            </div>
+            <div>
+              {{ file.mimeType }} | <button type="button" class="btn btn-sm btn-link m-0 p-0" [ngbPopover]="checksumPopup" [autoClose]="'outside'">{{file.checksumAlgorithm}}</button>
+            </div>
+            <ng-template #checksumPopup>
+              {{ file.checksum }}
+            </ng-template>
+
             }
             @if(file.metadata.description | empty) {
-            <div>
+            <div class="mt-1">
               <strong>Description</strong>
             </div>
             <div>
@@ -71,7 +94,7 @@
             </div>
             }
             @if(file.metadata.oaStatus | empty) {
-              <div>
+              <div class="mt-1">
                 <strong>OA-Status</strong>
               </div>
               <div>
@@ -84,30 +107,34 @@
               </div>
             }
               @if(file.metadata.license | empty) {
-              <div>
+              <div class="mt-1">
                 <strong>License</strong>
               </div>
               <div>
                 {{ file.metadata.license }}
               </div>
               }
-              @if(file.metadata.copyrightDate | empty) {
-              <div>
-                <strong>Copyright Date</strong>
-              </div>
-              <div>
-                {{ file.metadata.copyrightDate }}
-              </div>
-              }
+
               @if(file.metadata.rights | empty) {
-              <div>
+              <div class="mt-1">
                 <strong>Copyright</strong>
               </div>
               <div>
-                {{ file.metadata.rights }}
+                {{ file.metadata.rights }} ({{ file.metadata.copyrightDate }} )
               </div>
               }
-
+            @if(file.pid | empty) {
+              <div class="mt-1">
+                <strong>Handle</strong>
+              </div>
+              <div class="row">
+                <a class="icon-link" href="https://hdl.handle.net/{{file.pid?.substring(4)}}" target="_blank">
+                  <i class="bi-link"></i>
+                  <span class="text-truncate">{{ file.pid }}</span>
+                </a>
+              </div>
+            }
+            </small>
           </div>
 
         </div>
@@ -117,3 +144,5 @@
  @else {
    -
  }
+
+

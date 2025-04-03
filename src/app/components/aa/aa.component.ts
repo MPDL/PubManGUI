@@ -1,17 +1,19 @@
 import { Dialog, DialogConfig } from '@angular/cdk/dialog';
-import { Component } from '@angular/core';
+import {Component, TemplateRef} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { catchError, EMPTY, switchMap } from 'rxjs';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { AaService } from 'src/app/services/aa.service';
 import { LoginComponent } from './login/login.component';
 import {AsyncPipe, NgIf} from '@angular/common';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ExportItemsComponent} from "../../shared/components/export-items/export-items.component";
 
 @Component({
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
     standalone: true,
-  imports: [NgIf, RouterLink, AsyncPipe]
+  imports: [NgIf, RouterLink, AsyncPipe, ExportItemsComponent, LoginComponent]
 })
 export class AaComponent {
 
@@ -21,31 +23,15 @@ export class AaComponent {
   }
 
   constructor(
-    private dialog: Dialog,
     public aa: AaService,
     private msg: MessageService,
+    protected modalService: NgbModal
   ) { }
 
-  sign_in() {
-    const ref = this.dialog.open(LoginComponent, this.dialog_conf);
-    ref.closed.pipe(
-      switchMap((form: any) => {
-        console.log("Login dialog"+ form);
-        if(form) {
-          return this.aa.login(form.username, form.password);
-          //return this.aa.principal.asObservable()
-        }
-        else return EMPTY
-      }),
-      catchError(err => {
-        this.msg.error(err);
-        return EMPTY;
-      })
-    ).subscribe();
-  }
 
   sign_out() {
     this.aa.logout();
   }
 
+  protected readonly LoginComponent = LoginComponent;
 }

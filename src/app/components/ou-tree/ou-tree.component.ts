@@ -4,12 +4,12 @@ import { map, Observable } from 'rxjs';
 import { Database, DynamicDataSource, FlatNode, DynamicFlatTreeControl } from './dyn-tree';
 import { NgClass, NgIf } from '@angular/common';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import * as props from 'src/assets/properties.json';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
  export class OUsDatabase extends Database<any> {
 
-  inge_uri = props.inge_rest_uri;
+  inge_uri = environment.inge_rest_uri;
 
   constructor (
     private http: HttpClient

@@ -17,11 +17,11 @@ export class ImportService extends PubmanGenericRestClientService<any> {
   }
 
   getImportLogs(): Observable<ImportLogDbVO[]> {
-    return this.httpGet(this.subPath + '/' + 'getImportLogs', this.aaService.token ? this.aaService.token : undefined);
+    return this.httpGet(this.subPath + '/' + 'getImportLogs');
   }
 
   getImportLogsForModerator(): Observable<ImportLogDbVO[]> {
-    return this.httpGet(this.subPath + '/' + 'getImportLogsForModerator', this.aaService.token ? this.aaService.token : undefined);
+    return this.httpGet(this.subPath + '/' + 'getImportLogsForModerator');
   }
 }
 

@@ -3,14 +3,14 @@ import { map } from 'rxjs/operators';
 import { term_filter, AggregationParams } from '../model/aggs-params';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from './message.service';
-import * as props from 'src/assets/properties.json';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AggregationService {
 
-  inge_elastic_uri = props.inge_rest_uri.concat('/items/elasticsearch');
+  inge_elastic_uri = environment.inge_rest_uri.concat('/items/elasticsearch');
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

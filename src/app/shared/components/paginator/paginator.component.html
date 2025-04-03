@@ -4,13 +4,13 @@
   <div class="mpdl-pagination">
     @if(totalNumberOfPages > 0) {
     <button type="button" class="btn btn-sm border border-0" (click)="first()"
-            [disabled]="isFirst">
+            [disabled]="isFirst || loadingSignal()">
                 <span class="material-symbols-outlined">
                     first_page
                 </span>
     </button>
     <button type="button" class="btn btn-sm border border-0" (click)="prev()"
-            [disabled]="isFirst">
+            [disabled]="isFirst || loadingSignal()">
                 <span class="material-symbols-outlined">
                     navigate_before
                 </span>
@@ -20,13 +20,13 @@
            (keyup.enter)="jumpToPage()">
     <span i18n="@@pagination.of">of</span><span> {{totalNumberOfPages}}</span>
     <button type="button" class="btn btn-sm border border-0" (click)="next()"
-            [disabled]="isLast">
+            [disabled]="isLast || loadingSignal()">
                 <span class="material-symbols-outlined">
                     navigate_next
                 </span>
     </button>
     <button type="button" class="btn btn-sm border border-0" (click)="last()"
-            [disabled]="isLast">
+            [disabled]="isLast || loadingSignal()">
                 <span class="material-symbols-outlined">
                     last_page
                 </span>

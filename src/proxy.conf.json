@@ -3,5 +3,17 @@
     "target": "https://gui.inge.mpdl.mpg.de",
     "secure": false,
     "logLevel": "debug"
+  },
+  "/rest": {
+    "target": "https://gui.inge.mpdl.mpg.de",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/pureblogfeed": {
+    "target": "https://blog.pure.mpg.de/json1",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": { "^/pureblogfeed" : "" },
+    "changeOrigin": true
   }
 }

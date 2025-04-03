@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ action }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+
+
+<div class="modal-body">
+  @if(errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <p>Are you sure to {{action}} {{item.objectId}}?</p>
+
+  <p><i>{{item.metadata.title}}</i></p>
+
+
+  @if(action !== 'delete' && action !== 'addDoi') {
+    <form>
+      <div class="form-group">
+        <label for="inputComment">Comment</label>
+        <textarea type="text" class="form-control" id="inputComment" placeholder="Enter comment" [(ngModel)]="comment" name="comment" rows="4"></textarea>
+        <div class="invalid-feedback">
+          Please add a comment.
+        </div>
+      </div>
+    </form>
+  }
+
+</div>
+<div class="modal-footer">
+  <button type="ca" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">Cancel</button>
+  <button type="submit" class="btn btn-primary btn-sm border-2" (click)="go()" [disabled]="loading">{{ action }}</button>
+</div>
+
+
+
+
+

@@ -14,7 +14,7 @@ import {AsyncPipe} from "@angular/common";
 import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
 import {isUrl} from "../../../shared/services/item-utils";
-import * as props from "../../../../assets/properties.json";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'pure-item-view-metadata',
@@ -33,7 +33,7 @@ export class ItemViewMetadataComponent {
 
   @Input() item!:ItemVersionVO;
 
-  protected coneUri = props.cone_instance_uri
+  protected coneUri = environment.cone_instance_uri
 
   constructor() {
   }

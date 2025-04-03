@@ -10,7 +10,7 @@ import {ItemBadgesComponent} from "../../shared/components/item-badges/item-badg
 import {NgbModal, NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {ItemViewMetadataComponent} from "./item-view-metadata/item-view-metadata.component";
 import {BehaviorSubject, delay, map, Observable, pipe, tap, timeout} from "rxjs";
-import * as props from "../../../assets/properties.json";
+import { environment } from 'src/environments/environment';
 import {
   ItemViewMetadataElementComponent
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
@@ -23,6 +23,11 @@ import {PaginatorComponent} from "../../shared/components/paginator/paginator.co
 import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
 import {ItemListStateService} from "../item-list/item-list-state.service";
+import {SanitizeHtmlCitationPipe} from "../../shared/services/pipes/sanitize-html-citation.pipe";
+import {ItemSelectionService} from "../../shared/services/item-selection.service";
+import {Title} from "@angular/platform-browser";
+import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
+import {LoadingComponent} from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -38,13 +43,18 @@ import {ItemListStateService} from "../item-list/item-list-state.service";
     ItemViewFileComponent,
     EmptyPipe,
     ExportItemsComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    TopnavCartComponent,
+    TopnavBatchComponent,
+    SanitizeHtmlCitationPipe,
+    NgbTooltip,
+    LoadingComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
 })
 export class ItemViewComponent {
-  protected ingeUri = props.inge_uri;
+  protected ingeUri = environment.inge_uri;
   currentSubMenuSelection = "abstract";
 
   versions$!: Observable<any>;
@@ -62,7 +72,8 @@ export class ItemViewComponent {
   firstPublicPdfFile: FileDbVO | undefined;
 
   constructor(private itemsService: ItemsService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
-  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService) {
+  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
+              private title: Title) {
 
   }
 
@@ -95,28 +106,33 @@ export class ItemViewComponent {
     this.authorizationInfo = undefined;
     this.latestVersionAuthorizationInfo = undefined;
     if (id)
-      this.item$ = this.itemsService.retrieve(id, this.aaService.token);
-    this.item$.subscribe(i => {
+      this.item$ = this.itemsService.retrieve(id);
+      this.item$.subscribe(i => {
       if (i && i.objectId) {
-        this.item = i;
-        this.listStateService.initItemId(i.objectId);
-        this.versions$ = this.itemsService.retrieveHistory(i.objectId, this.aaService.token);
 
-        this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber, this.aaService.token).subscribe(authInfo => {
+        if(i.metadata?.title) {
+          this.title.setTitle(i.metadata.title)
+        }
+
+        this.listStateService.initItemId(i.objectId);
+        this.itemSelectionService.addToSelection(i.objectId);
+        this.versions$ = this.itemsService.retrieveHistory(i.objectId);
+
+        this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber).subscribe(authInfo => {
           this.authorizationInfo = authInfo;
           if(i.latestVersion?.versionNumber===i.versionNumber) {
             this.latestVersionAuthorizationInfo = this.authorizationInfo;
           }
           else {
             if (i && i.objectId) {
-              this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.latestVersion?.versionNumber, this.aaService.token).subscribe(authInfoLv => {
+              this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.latestVersion?.versionNumber).subscribe(authInfoLv => {
                 this.latestVersionAuthorizationInfo = authInfoLv
               })
             }
           }
         })
 
-        this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined,this.aaService.token).subscribe(citation => {
+        this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined).subscribe(citation => {
           this.citation = citation;
         })
 
@@ -124,10 +140,11 @@ export class ItemViewComponent {
         this.firstPublicPdfFile = this.item?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
 
         if(this.firstPublicPdfFile) {
-          this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId, this.aaService.token).subscribe(thumbAvailable => {
+          this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
               this.thumbnailUrl =  this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
           })
         }
+        this.item = i;
       }
     })
   }
@@ -171,40 +188,23 @@ export class ItemViewComponent {
   }
 
 
+  openActionsModal(type: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi') {
+    const comp: ItemActionsModalComponent = this.modalService.open(ItemActionsModalComponent).componentInstance;
+    comp.item = this.item!;
+    comp.action = type;
+    comp.successfullyDone.subscribe(data => {
+      if(type !== 'delete') {
+        this.init(this.item?.objectId!)
+      }
+      else {this.router.navigate(['/my']);
+      }
 
-  submit() {
-    this.itemsService.submit(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully submitted")
-    })
-
-  }
-
-  release() {
-    this.itemsService.release(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully released")
     })
   }
 
-  revise() {
-    this.itemsService.revise(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully revised")
-    })
-  }
 
-  withdraw() {
-    this.itemsService.withdraw(this.item!.objectId!, this.item!.lastModificationDate!, '', this.aaService.token!).subscribe(res => {
-      this.init(res.objectId!)
-      this.messageService.success("successfully withdrawn")
-    })
-  }
+  useAsTemplate() {
+    alert('To do')
 
-  delete() {
-    this.itemsService.delete(this.item!.objectId!, this.item!.lastModificationDate!, this.aaService.token!).subscribe(res => {
-      this.router.navigate(['my'])
-      this.messageService.success("successfully deleted")
-    })
   }
 }

@@ -72,7 +72,7 @@ export class ItemListStateService {
 
       console.log("Searching from " + this.currentFullQuery.from + " size " + this.currentFullQuery.size);
 
-      return this.itemService.elasticSearch(this.currentFullQuery, token).pipe(
+      return this.itemService.elasticSearch(this.currentFullQuery).pipe(
         tap(result => {
           //console.log(JSON.stringify(result))
           this.currentNumberOfRecords = result.hits.total.value as number;

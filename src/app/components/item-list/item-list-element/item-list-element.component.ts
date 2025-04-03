@@ -9,7 +9,7 @@ import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
 import {ItemBadgesComponent} from "../../../shared/components/item-badges/item-badges.component";
 import {ItemSelectionService} from "../../../shared/services/item-selection.service";
-import * as props from "../../../../assets/properties.json";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'pure-item-list-element',
@@ -38,7 +38,7 @@ export class ItemListElementComponent {
   publicFiles: FileDbVO[] = [];
   locators: FileDbVO[] = [];
 
-  protected ingeUri = props.inge_uri;
+  protected ingeUri = environment.inge_uri;
 
 
   constructor(private itemSelectionService: ItemSelectionService) {

@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {ItemViewMetadataElementComponent} from "../item-view-metadata-element/item-view-metadata-element.component";
 import {AffiliationDbVO, CreatorVO, OrganizationVO} from "../../../../model/inge";
 import {NgClass} from "@angular/common";
-import * as props from "../../../../../assets/properties.json";
+import { environment } from 'src/environments/environment';
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {OrganizationsService} from "../../../../services/pubman-rest-client/organizations.service";
 import {EmptyPipe} from "../../../../shared/services/pipes/empty.pipe";
@@ -30,7 +30,7 @@ export class ItemViewCreatorsComponent {
 
   maxDisplay = 20;
 
-  coneUrl = props.cone_instance_uri;
+  coneUrl = environment.cone_instance_uri;
 
   selectedAffiliationForPopover: AffiliationDbVO | undefined;
 

@@ -7,7 +7,7 @@ import {AaService} from "../../../services/aa.service";
 import {OuAutosuggestComponent} from "../ou-autosuggest/ou-autosuggest.component";
 import {CslAutosuggestComponent} from "../csl-autosuggest/csl-autosuggest.component";
 import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
-import * as props from "../../../../assets/properties.json";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'pure-export-items',
@@ -32,7 +32,7 @@ export class ExportItemsComponent {
   protected readonly exportTypes = exportTypes;
   protected readonly citationTypes = citationTypes;
 
-  protected restUri = props.inge_rest_uri;
+  protected restUri = environment.inge_rest_uri;
 
   selectedExportType:string = exportTypes.ENDNOTE;
   selectedCitationType:string = citationTypes.APA;
@@ -49,7 +49,7 @@ export class ExportItemsComponent {
 
   loadCitation() {
     if(!this.isFormat && (this.selectedCitationType !== citationTypes.CSL || this.selectedCslId)) {
-      this.itemService.retrieveSingleCitation(this.item?.objectId + '_' + this.item?.versionNumber, this.selectedCitationType, this.selectedCslId,this.aaService.token).subscribe(
+      this.itemService.retrieveSingleCitation(this.item?.objectId + '_' + this.item?.versionNumber, this.selectedCitationType, this.selectedCslId).subscribe(
         cit => {
           //console.log('Citation: ' +cit)
           this.currentCitation=cit;

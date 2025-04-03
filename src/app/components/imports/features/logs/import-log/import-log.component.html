@@ -57,11 +57,11 @@
     {{ getImportFormatTranslation(log.format) }}
   </td>
 
-  <td class="col-3">
-    <span>{{ log.startDate | date:'fullDate' }}</span>
+  <td class="col-2">
+    <span>{{ log.startDate | date:'mediumDate' }}</span>
     <div class="float-end">
       <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
-      <span class="me-3">{{ log.startDate | date: "HH:mm" }}</span>
+      <span>{{ log.startDate | date: "HH:mm" }}</span>
     </div>
   </td>
 

@@ -34,6 +34,7 @@ export const routes: Routes = [
   {
     path: 'my',
     component: MyItemsComponent,
+    title: $localize`:@@my:My Datasets`,
     data: {
       saveComponent: true,
       breadcrumb: {

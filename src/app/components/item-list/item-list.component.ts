@@ -22,6 +22,7 @@ import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/to
 import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
 import { Location } from '@angular/common'
 import {ItemListStateService} from "./item-list-state.service";
+import {LoadingComponent} from "../../shared/components/loading/loading.component";
 
 
 @Component({
@@ -37,7 +38,8 @@ import {ItemListStateService} from "./item-list-state.service";
     TopnavComponent,
     PaginatorComponent,
     TopnavCartComponent,
-    TopnavBatchComponent
+    TopnavBatchComponent,
+    LoadingComponent
   ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss'
@@ -192,9 +194,7 @@ export class ItemListComponent implements AfterViewInit{
   }
 
   private search(body: any) {
-    let token = undefined;
-    if (this.aa.token) token = this.aa.token;
-    this.result_list = this.service.elasticSearch(body, token).pipe(
+    this.result_list = this.service.elasticSearch(body).pipe(
       tap(result => {
         //console.log(JSON.stringify(result))
         this.number_of_results = result.hits.total.value as number;
