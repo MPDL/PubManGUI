@@ -199,7 +199,7 @@
     "INITIALIZED": "Initialized",
     "RUNNING": "Running",
     "FINISHED": "Finished",
-    "FINISHED_WITH_ERRORS": "Finished with errors"
+    "FINISHED_WITH_ERROR": "Finished with errors"
   },
   "BatchProcessLogDetailState": {
     "INITIALIZED": "Initialized",

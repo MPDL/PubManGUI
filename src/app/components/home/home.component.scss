@@ -1,7 +1,8 @@
+@import "src/scss/vendor/bs/_variables_pure.scss";
+
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
-  background-color: #e9ecef;
   border-radius: .3rem;
   background-image: url("/assets/images/minerva_background2.jpg");
   background-size: cover;
@@ -17,8 +18,7 @@
 
 
 .infobox {
-  background-color: #f6f6f6f0 ;
-  color: #00445F;
+  background-color: rgba($body-secondary-bg, 0.9); //#f6f6f6f0 ;
   border-radius: .3rem;
 }
 

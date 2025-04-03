@@ -27,6 +27,7 @@ import {SanitizeHtmlCitationPipe} from "../../shared/services/pipes/sanitize-htm
 import {ItemSelectionService} from "../../shared/services/item-selection.service";
 import {Title} from "@angular/platform-browser";
 import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
+import {LoadingComponent} from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -46,7 +47,8 @@ import {ItemActionsModalComponent} from "../../shared/components/item-actions-mo
     TopnavCartComponent,
     TopnavBatchComponent,
     SanitizeHtmlCitationPipe,
-    NgbTooltip
+    NgbTooltip,
+    LoadingComponent
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
@@ -105,10 +107,13 @@ export class ItemViewComponent {
     this.latestVersionAuthorizationInfo = undefined;
     if (id)
       this.item$ = this.itemsService.retrieve(id);
-    this.item$.subscribe(i => {
+      this.item$.subscribe(i => {
       if (i && i.objectId) {
-        this.item = i;
-        this.title.setTitle(i.metadata.title)
+
+        if(i.metadata?.title) {
+          this.title.setTitle(i.metadata.title)
+        }
+
         this.listStateService.initItemId(i.objectId);
         this.itemSelectionService.addToSelection(i.objectId);
         this.versions$ = this.itemsService.retrieveHistory(i.objectId);
@@ -139,6 +144,7 @@ export class ItemViewComponent {
               this.thumbnailUrl =  this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
           })
         }
+        this.item = i;
       }
     })
   }

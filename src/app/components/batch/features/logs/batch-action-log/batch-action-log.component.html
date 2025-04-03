@@ -24,7 +24,7 @@
 
     } @else {
 
-        <td class="col-2">
+        <td class="col-2 d-flex justify-content-between">
             {{ getProcessLogHeaderStateTranslation(log.state) }}
             @if (log.state === state.FINISHED) {
                 <span class="material-symbols-outlined text-success" style="cursor: default">check_circle</span>

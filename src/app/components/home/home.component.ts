@@ -9,6 +9,7 @@ import {RouterLink} from "@angular/router";
 import {SanitizeHtmlPipe} from "../../shared/services/pipes/sanitize-html.pipe";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {LoadingComponent} from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'pure-home',
@@ -22,7 +23,8 @@ import {environment} from "../../../environments/environment";
     RouterLink,
     SanitizeHtmlPipe,
     SlicePipe,
-    DatePipe
+    DatePipe,
+    LoadingComponent
   ],
 })
 export class HomeComponent {

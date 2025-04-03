@@ -13,8 +13,7 @@ import {Observable} from "rxjs";
     FormsModule,
     ReactiveFormsModule
   ],
-  templateUrl: './item-actions-modal.component.html',
-  styleUrl: './item-actions-modal.component.css'
+  templateUrl: './item-actions-modal.component.html'
 })
 export class ItemActionsModalComponent {
 
@@ -26,10 +25,13 @@ export class ItemActionsModalComponent {
 
   protected errorMessage: string = '';
 
+  protected loading = false;
+
   constructor(protected activeModal: NgbActiveModal, private itemsService: ItemsService, private messageService: MessageService, private router: Router) {
   }
 
   go() {
+    this.loading = true;
     let obs: Observable<any>|undefined = undefined;
     switch(this.action) {
       case 'release': {
@@ -67,9 +69,14 @@ export class ItemActionsModalComponent {
           error: (error) => {
             this.errorMessage = error;
           }
-
         }
       )
+        .add(
+          () => {
+            console.log("completed")
+            this.loading = false;
+          }
+        )
     }
     this.successfullyDone.emit(this.comment);
   }
