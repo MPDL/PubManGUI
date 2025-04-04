@@ -3,7 +3,8 @@
 
   @if (files && files.length) {
     @for (file of files; track file; let i = $index) {
-      <div class="accordion" xmlns="http://www.w3.org/1999/html">
+      <div class="accordion  bg-transparent" >
+        <div class="accordion-item border-0">
         <div class="row mt-3">
           <div class="col-9 text-truncate">
 
@@ -31,14 +32,14 @@
 
           </div>
           <div class="col-3">
-            <button class="float-end btn collapsed accordion-button" type="button" data-bs-toggle="collapse"
+            <button class="float-end btn collapsed accordion-button bg-transparent" type="button" data-bs-toggle="collapse"
                     [attr.data-bs-target]="'#collapse'+file.objectId" aria-expanded="true" aria-controls="collapseOne">
               <!--<i class="bi bi-chevron-down"></i>-->
             </button>
           </div>
         </div>
 
-        <div id="collapse{{file.objectId}}" class="collapse header_color" aria-labelledby="headingOne">
+        <div id="collapse{{file.objectId}}" class="accordion-collapse collapse bg-light" aria-labelledby="headingOne">
           <div class="container p-2">
             <small>
             @if(file.storage==='INTERNAL_MANAGED') {
@@ -139,6 +140,7 @@
 
         </div>
   </div>
+      </div>
     }
   }
  @else {

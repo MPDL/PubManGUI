@@ -1,8 +1,39 @@
 <div class="container pb-4">
-<h6>{{ label }}</h6>
-<div class="list-group">
-@for (val of resultView.values(); track val.selectionValue ) {
-  <small><button type="button" class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}" (click)="selectValue(val)">{{val.displayValue}} ({{val.docCount}})</button></small>
-}
-</div>
+  <div class="accordion">
+    <div class="accordion-item border-0">
+      <h6 class="accordion-header">
+        <button class="accordion-button p-2" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#aggregationBody-' + inputId" aria-expanded="true" aria-controls="collapseOne">
+          {{ label }}
+        </button>
+      </h6>
+
+
+      <div [attr.id]="'aggregationBody-' + inputId" class="accordion-collapse collapse show">
+        <div class="accordion-body p-0">
+          <div class="list-group small">
+            @for (val of resultView.values(); track val.selectionValue ) {
+
+
+              <button class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}" (click)="selectValue(val)">
+                <div class="row">
+                  <div class="col-9">
+                    {{val.displayValue}}
+                  </div>
+                  <div class="col-3 text-end">
+                    {{val.docCount}}
+                  </div>
+                </div>
+
+
+              </button>
+
+            }
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 </div>

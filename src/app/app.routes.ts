@@ -14,7 +14,6 @@ import { fetchItemResolver } from "./components/imports/services/fetch-item-reso
 import { ItemViewComponent } from "./components/item-view/item-view.component";
 import { CartListComponent } from "./components/cart-list/cart-list.component";
 import { AuthGuard } from "src/app/services/guards/Auth.guard";
-import {BsCheatsheetComponent} from "./components/bs-cheatsheet/bs-cheatsheet.component";
 
 
 export const routes: Routes = [
@@ -22,11 +21,6 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },
-  {
-    path: 'bs-cheatsheet',
-
-    component: BsCheatsheetComponent
   },
   {
     path: 'home',
