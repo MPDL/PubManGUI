@@ -15,18 +15,12 @@ export class ValidationService extends PubmanGenericRestClientService<any> {
 
   constructor() {
     super('/validation');
-
   }
 
   validateEvent(eventJson: JSON): Observable<any>{
     console.log('validateEvent validationService')
-    if (this.aaService.token) {
-        console.log('validateEvent validationService with token');
-        console.log('eventJson', eventJson);
-        return this.httpPost(validateEventTitleRequired, eventJson, this.aaService.token);
-    } else {
-        return throwError(() => new Error(`Authorization Error`));
-    }
+    console.log('eventJson', eventJson);
+    return this.httpPost(this.subPath + '/'+ validateEventTitleRequired, eventJson);
   }
 }
 

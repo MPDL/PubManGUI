@@ -1,6 +1,6 @@
 import { Directive, inject } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
-import { catchError, map, of, Subject, takeUntil } from 'rxjs';
+import { of, Subject, takeUntil } from 'rxjs';
 import { ValidationService } from 'src/app/services/pubman-rest-client/validation.service';
 
 
@@ -32,7 +32,7 @@ export function validateEvent(validationService: ValidationService): ValidatorFn
           return { invalidEvent: true };
         } else {
           console.log('Event validation succeeded:', response.status);
-          return null;
+          return null
         }
       },
       error: (error) => {

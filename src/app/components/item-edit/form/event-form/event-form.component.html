@@ -5,6 +5,9 @@
             <div class="col-sm">
                 <label class="col-form-label">Title</label>
                 <input type="text" class="form-control" formControlName="title">
+                <span>
+                    Invalid Event: {{event_form.errors?.['invalidEvent']  | json}}
+                  </span>
                 <span *ngIf="event_form.errors?.['invalidEvent']">
                     Event is invalid
                   </span>
