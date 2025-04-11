@@ -55,27 +55,6 @@
   top: -1.5rem;
 }
 
-.side_nav .mat-badge-content {
-  position: absolute;
-  text-align: center;
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  pointer-events: none;
-  border-radius: 50%;
-  //opacity: 0.7;
-  box-shadow: 0 1px 6px 0 #{$mpdl-pale-purple};
-  --mat-badge-background-color: var(--bs-body-background) !important;
-  --mat-badge-text-color: color-mix(in srgb, var(--bs-body-color), transparent 20%);
-  --mat-badge-text-font: var(--bs-body-font-family);
-  --mat-badge-text-size: x-small;
-  --mat-badge-text-weight: bolder;
-  --mat-badge-container-size:1.4rem;
-  --mat-badge-container-overlap-offset:-0.8rem 0.1rem;
-  --mat-badge-container-padding:0.3rem; 
-}
-
 .side_nav_mobile {
   left: 0.5vh;
   position: fixed;

@@ -1,56 +1,14 @@
 .imports {
 
-    .material-symbols-outlined,
-    .nav-link {
-        cursor: pointer;
-    }
-
     .top_nav_pos {
         overflow: visible;
     }
 
-    .tooltip-inner {
-        background-color: #{$mpdl-light};
-        color: #{$mpdl-dark};
-    }
-
-    .bs-tooltip-bottom .tooltip-arrow::before {
-        border-bottom-color: #{$mpdl-light};
-    }
-
-    .action-card {
-        background-color: var(--accent-color-contrast);
-    }
-
     .form-control::placeholder {
-        color: color-mix(in srgb, var(--accent-bg-color), white 15%);
         font-style: italic;
     }
 
     .logs {
-
-        table {
-
-            th {
-                padding: 0.2em 1em;
-            }
-
-            td {
-                padding: 0.8em 1em;
-            }
-
-            tbody {
-                background-color: var(--accent-color-contrast);
-            }
-
-            tr {
-                border-color: var(--bs-body-bg) !important;
-            }
-        }
-
-        .spinner-border {
-            cursor: wait;
-        }
 
         a {
             
@@ -58,34 +16,11 @@
                 font-size: 160%;
 
                 &:hover {
-                    border-radius: 40%;
-                    //box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05);
-                    box-shadow: color-mix(in srgb, var(--bs-body-color), transparent 80%) 0 0 6px 0;
-                    background-color: rgba(0, 0, 0, 0.05);
-                    color: var(--bs-body-color) !important;
+                    border-radius: 25%;
+                    background-color: color-mix(in srgb, var(--bs-dark), transparent 75%); 
                 }
             }
 
-            .mat-badge-content {
-                position: absolute;
-                text-align: center;
-                display: inline-block;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                pointer-events: none;
-                border-radius: 50%;
-                //opacity: 0.7;
-                box-shadow: 0 1px 6px 0 #{$mpdl-pale-purple};
-                --mat-badge-background-color:  var(--bs-body-bg) !important;
-                --mat-badge-text-color: var(--bs-body-color);
-                --mat-badge-text-font: var(--bs-body-font-family);
-                --mat-badge-text-size: x-small;
-                --mat-badge-text-weight: bolder;
-                --mat-badge-container-size:1.4rem;
-                --mat-badge-container-overlap-offset:-0.8rem -0.4rem;
-                --mat-badge-container-padding:0.3rem;
-            }
         }
 
         /* anchor focus */

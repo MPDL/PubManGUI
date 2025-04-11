@@ -5,6 +5,7 @@ import {AsyncPipe} from "@angular/common";
 import {ItemAggregationBaseDirective} from "./directives/item-aggregation-base.directive";
 
 
+let uniqueId = 0;
 
 @Component({
   selector: 'pure-item-aggregation-filter',
@@ -21,6 +22,8 @@ export class ItemAggregationFilterComponent {
 
   result: BehaviorSubject<any | undefined> = new BehaviorSubject<any | undefined>(undefined);
   resultView: Map<string,AggregationResultView> = new Map;
+
+  inputId = `${uniqueId++}`;
 
   constructor(private aggregationDirective: ItemAggregationBaseDirective) {
   }

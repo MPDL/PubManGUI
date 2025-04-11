@@ -2,7 +2,7 @@
 <div class="jumbotron">
   <div class="row">
     <div class="col-lg">
-      <div class="infobox d-inline-block w-auto h-auto p-4">
+      <div class="infobox d-inline-block w-auto h-auto p-4 bg-mpg-light-gray bg-opacity-75">
         <h1 class="m-0">Welcome to MPG.PuRe</h1>
         <p>The publication repository of the Max Planck Society</p>
         <p class="m-0">500.000 publications available</p>
@@ -11,7 +11,7 @@
     <div class="col-lg align-self-center p-3 ">
 
       <div class="input-group input-group-lg">
-        <span class="input-group-text ">
+        <span class="input-group-text">
         <span class="material-symbols-outlined">search</span>
       </span>
         <input type="text" class="form-control" placeholder="Search publications" aria-label="Search publications" />
@@ -31,7 +31,7 @@
               <small class="card-title"> {{ blogEntry.date | date:'short'  }}</small>
               <h6 class="card-title">{{blogEntry.title}}</h6>
         </div>
-          <div class="card-body text-bg-light">
+          <div class="card-body">
             {{ blogEntry.excerpt | slice:0:300 }} ...
           </div>
           <a href="{{blogEntry.link }}" target="_blank" class="stretched-link"></a>
@@ -60,6 +60,7 @@
         <img src="{{file.content.replace('/content', '/thumbnail')}}" alt="Thumbnail"
              class="card-img-top">
       }
+
       <div class="card-body">
         <small class="card-title"> {{ item.latestRelease?.modificationDate  | date:'shortDate'  }}</small>
         <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>

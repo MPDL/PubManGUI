@@ -1,7 +1,7 @@
 @if(log) {
 
-<tr class="border-bottom d-flex" id="{{ log.itemObjectId }}" [ngClass]="title === '404' ? 'text-secondary' : ''">
-  <td class="col-2">
+<tr class="bg-light border-bottom border-white d-flex py-2" id="{{ log.itemObjectId }}" [ngClass]="title === '404' ? 'text-secondary' : ''">
+  <td class="col-2 px-1">
     <span>{{ getProcessLogDetailStateTranslation(log.state) }}</span>
   </td>
 
@@ -12,7 +12,7 @@
 
     } @else {
 
-    <span class="nav-link" [routerLink]="['view', log.itemObjectId]" [innerHTML]="title | sanitizeHtml"></span>
+    <span class="nav-link" [routerLink]="['view', log.itemObjectId]" [innerHTML]="title | sanitizeHtml" style="cursor:pointer"></span>
 
     }
   </td>

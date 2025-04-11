@@ -8,6 +8,7 @@ import {OuAutosuggestComponent} from "../ou-autosuggest/ou-autosuggest.component
 import {CslAutosuggestComponent} from "../csl-autosuggest/csl-autosuggest.component";
 import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
 import { environment } from 'src/environments/environment';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-export-items',
@@ -26,7 +27,6 @@ export class ExportItemsComponent {
 
   @Input() itemIds: string[] = [];
   @Input() item: ItemVersionVO|undefined = undefined;
-  @Input() modal!: any;
 
 
   protected readonly exportTypes = exportTypes;
@@ -40,7 +40,7 @@ export class ExportItemsComponent {
 
   currentCitation: string = '';
 
-  constructor(private itemService: ItemsService, private aaService: AaService, private formBuilder: FormBuilder) {
+  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal) {
   }
 
   ngOnInit() {

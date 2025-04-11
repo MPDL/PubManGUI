@@ -1,0 +1,41 @@
+.mpdl-pagination {
+    font-size: 0.875rem;
+
+    button {
+        padding: 0 0.1em;
+        vertical-align: baseline;
+    }
+
+    button:disabled,
+    button[disabled] {
+        opacity: 40%;
+    }
+
+    input {
+        padding: 0.1em 0.1em;
+        width: 3em;
+        display: inline;
+        text-align: center;
+    }
+
+    select {
+        margin-left: 1em;
+        padding: 0.1em 0.3em;
+        width: 4em;
+        display: inline;
+    }
+
+    .material-symbols-outlined {
+        //font-size: 160%;
+
+        &:hover {
+            border-radius: 40%;
+            //box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05); //color-mix(in srgb, var(--bs-body-color), transparent 80%)
+            box-shadow: color-mix(in srgb, var(--bs-body-color), transparent 80%) 0 0 6px 0;
+            background-color: rgba(0, 0, 0, 0.05);
+            //color: black !important;
+            color: var(--bs-body-color) !important;
+        }
+    }
+
+}

@@ -9,7 +9,7 @@ pure-breadcrumb {
     margin: auto 0.3rem;
 
     &:hover:not(.last) {
-      color: black !important;
+      color:  var(--bs-dark) !important;
       text-decoration: none;
     }
   }

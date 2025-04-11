@@ -62,7 +62,7 @@
       }
 
       <div start class="vr"></div>
-      <button class="nav-link" (click)="openModal(exportItemModal)" ngbTooltip="Export item"><span class="material-symbols-outlined">upload</span></button>
+      <button class="nav-link" (click)="openExportModal()" ngbTooltip="Export item"><span class="material-symbols-outlined">upload</span></button>
 
 
     </div>
@@ -74,7 +74,7 @@
 
 
   <div class="row mt-5">
-    <div class="col-lg-9 col-sm-12 header_color p-3">
+    <div class="col-lg-9 col-sm-12 p-3 bg-light rounded">
       <div class="row">
         <div class="col-2 text-center">
 
@@ -292,7 +292,8 @@
 
     <!-- Files and references -->
     <div class="col-lg-3">
-      <div class="container">
+
+      <div class="container mt-2">
         <h5>Files</h5>
         <pure-item-view-file [files]="storedFiles" [item]="item"/>
       </div>
@@ -365,9 +366,6 @@
     </div>
   </div>
 
-  <ng-template #exportItemModal let-modal>
-    <pure-export-items [modal]="modal" [item]="item"/>
-  </ng-template>
 }
 @else {
   <pure-loading/>

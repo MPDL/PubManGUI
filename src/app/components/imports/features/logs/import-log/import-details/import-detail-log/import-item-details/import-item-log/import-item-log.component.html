@@ -1,18 +1,18 @@
 @if(detail) {
 
-<tr class="border-bottom d-flex">
-  <td class="col-2 align-text-top">
-    {{ getImportStatusTranslation(detail.status) }}
+<tr class="bg-light border-bottom border-white d-flex py-2">
+  <td class="col-2 px-1 align-text-top">
+    <span>{{ getImportStatusTranslation(detail.status) }}</span>
   </td>
 
   <td class="col-1 align-text-top">
-    {{ getImportErrorLevelTranslation(detail.errorLevel) }}
+    <span>{{ getImportErrorLevelTranslation(detail.errorLevel) }}</span>
   </td>
 
   <td class="col-9 align-text-top d-table-cell">
     @if(getImportMessageTranslation(detail.message.substr(0,60))) {
 
-      {{ getImportMessageTranslation(detail.message) }}
+      <span>{{ getImportMessageTranslation(detail.message) }}</span>
 
     } @else {
       @if(detail.message.length > 80) {
@@ -28,7 +28,7 @@
 
       } @else {
 
-        {{ detail.message | separate | titlecase }}
+        <pre>{{ detail.message | separate | titlecase }}</pre>
 
       }
     }

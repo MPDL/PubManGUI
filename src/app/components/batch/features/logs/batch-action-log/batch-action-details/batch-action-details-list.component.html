@@ -6,7 +6,7 @@
         <div class="d-inline-flex justify-content-start align-items-center">
           <a i18n-ngbTooltip="@@batch.logs.details.fill.all" ngbTooltip="Fill batch with all items from the log"
             placement="bottom-left" (click)="fillWithAll()">
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined" style="cursor:pointer">
               list_alt
             </span>
           </a>
@@ -14,7 +14,7 @@
 
           <a class="ms-3" i18n-ngbTooltip="@@batch.logs.details.fill.errors" ngbTooltip="Fill batch with errors only"
             placement="bottom-left" (click)="fillWithFailed()">
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined" style="cursor:pointer">
               breaking_news_alt_1
             </span>
           </a>
@@ -53,8 +53,8 @@
         <thead>
           @if(inPage.length > 0) {
 
-          <tr class="border-bottom">
-            <th scope="col" class="col-2">Status</th>
+          <tr>
+            <th scope="col" class="col-2 ps-1">Status</th>
             <th scope="col" class="col-6" i18n="@@batch.logs.header.title">Title</th>
             <th scope="col" class="col-4" i18n="@@batch.logs.header.message">Message</th>
           </tr>

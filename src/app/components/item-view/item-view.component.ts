@@ -137,7 +137,7 @@ export class ItemViewComponent {
         })
 
 
-        this.firstPublicPdfFile = this.item?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
+        this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
 
         if(this.firstPublicPdfFile) {
           this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
@@ -149,9 +149,7 @@ export class ItemViewComponent {
     })
   }
 
-  openModal(content: TemplateRef<any>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-  }
+
 
   get firstAuthors() {
     return this.item?.metadata.creators.slice(0,10);
@@ -200,6 +198,12 @@ export class ItemViewComponent {
       }
 
     })
+
+  }
+
+  openExportModal() {
+    const comp = this.modalService.open(ExportItemsComponent).componentInstance;
+    comp.item = this.item;
   }
 
 

@@ -1,0 +1,17 @@
+.mat-badge-content {
+    position: absolute;
+    text-align: center;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    border-radius: 50% !important;
+    box-shadow: 0 0.1em 0.5em 0 var(--bs-dark);
+    --mat-badge-text-font: var(--bs-body-font-family);
+    --mat-badge-text-size: x-small;
+    --mat-badge-text-weight: bolder;
+    --mat-badge-container-size: 1.4rem;
+    --mat-badge-container-overlap-offset: -0.8rem -0.1rem;
+    --mat-badge-container-padding: 0.3rem;
+}

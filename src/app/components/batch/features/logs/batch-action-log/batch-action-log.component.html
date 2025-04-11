@@ -1,21 +1,21 @@
 @if(log) {
 
-<tr class="border-bottom d-flex">
+<tr class="bg-light border-bottom border-white d-flex py-3">
     @if (log.state === state.RUNNING) {
 
-        <td class="col-2">
-            {{ batchSvc.getProcessLog().state | titlecase }}
+        <td class="col-2 px-1">
+            <span>{{ batchSvc.getProcessLog().state | titlecase }}</span>
 
             @if (log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId) {
                 @if (batchSvc.isProcessRunning()) {
-
-                    {{ batchSvc.getProcessLog().percentageOfProcessedItems -
-                    calculateProcessedStep(batchSvc.getProcessLog().numberOfItems) }}&percnt;
-
+                    <span>
+                        {{ batchSvc.getProcessLog().percentageOfProcessedItems -
+                            calculateProcessedStep(batchSvc.getProcessLog().numberOfItems) }}&percnt;
+                    </span>
                 }
             } @else {
 
-                <span class="material-symbols-outlined" title="Something gone wrong!" style="cursor: auto">
+                <span class="material-symbols-outlined pe-1" title="Something gone wrong!">
                     error
                 </span>
 
@@ -24,25 +24,25 @@
 
     } @else {
 
-        <td class="col-2 d-flex justify-content-between">
-            {{ getProcessLogHeaderStateTranslation(log.state) }}
+        <td class="col-2 px-1 d-flex justify-content-between">
+            <span>{{ getProcessLogHeaderStateTranslation(log.state) }}</span>
             @if (log.state === state.FINISHED) {
-                <span class="material-symbols-outlined text-success" style="cursor: default">check_circle</span>
+                <span class="material-symbols-outlined text-success pe-1">check_circle</span>
             } @else {
-                <span class="material-symbols-outlined text-danger" style="cursor: default">cancel</span>
+                <span class="material-symbols-outlined text-danger pe-1">cancel</span>
             }
         </td>
 
     }
     
     <td class="col-6">
-        {{ getProcessMethodTranslation(log.method) }}
+        <span>{{ getProcessMethodTranslation(log.method) }}</span>
     </td>
 
-    <td class="col-3">
+    <td class="col-3 d-flex justify-content-between">
         <span>{{ log.endDate | date:'mediumDate' }}</span>
-        <div class="float-end">
-            <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
+        <div class="pe-3">
+            <span class="material-symbols-outlined text-secondary">schedule</span>&nbsp;
             <span>{{ log.endDate | date: "HH:mm" }}</span>
         </div>
     </td>
@@ -52,12 +52,12 @@
             && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId
             && batchSvc.isProcessRunning()) {
 
-            <span class="spinner-border spinner-border-sm text-secondary ms-3" aria-hidden="true"></span>
+            <span class="spinner-border spinner-border-sm text-secondary ms-3" style="cursor: wait" aria-hidden="true"></span>
 
         } @else {
 
             <a [routerLink]="['/batch/logs/', log.batchLogHeaderId]">
-                <span class="material-symbols-outlined ms-3 my-0 matBadge" matBadge='{{ log.numberOfItems }}'>
+                <span class="material-symbols-outlined ms-3 my-0 matBadge" style="cursor: pointer" matBadge='{{ log.numberOfItems }}'>
                     list
                 </span>
             </a>
