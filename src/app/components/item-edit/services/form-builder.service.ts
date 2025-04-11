@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractVO, AlternativeTitleVO, ChecksumAlgorithm, ContextDbRO, CreatorType, CreatorVO, EventVO, FileDbVO, FormatVO, FundingInfoVO, FundingOrganizationVO, FundingProgramVO, IdentifierVO, InvitationStatus, ItemVersionState, ItemVersionVO, LegalCaseVO, MdsFileVO, MdsPublicationGenre, MdsPublicationVO, OA_STATUS, OrganizationVO, PersonVO, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, Storage, SubjectVO, Visibility } from 'src/app/model/inge';
+import { EventValidationDirective } from 'src/app/shared/directives/event-validation.directive';
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 
@@ -22,6 +23,7 @@ export class FormBuilderService {
 
   constructor(
     private fb: FormBuilder,
+    private eventValidatonDirective: EventValidationDirective,
   ) { }
 
   item_FG(item: ItemVersionVO | null) {
@@ -203,6 +205,10 @@ export class FormBuilderService {
       place: this.fb.control(event?.place ? event.place : null),
       startDate: this.fb.control(event?.startDate ? event.startDate : null),
       title: this.fb.control(event?.title ? event.title : null)
+    },
+    {
+      asyncValidators: [this.eventValidatonDirective.validate.bind(this.eventValidatonDirective)],
+      updateOn: 'blur' // or 'change' or 'submit'
     }
   );
     return event_form;

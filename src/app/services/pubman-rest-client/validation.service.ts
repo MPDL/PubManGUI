@@ -1,8 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import { AaService } from '../aa.service';
-import { Observable, throwError } from 'rxjs';
-import { C } from '@angular/cdk/focus-monitor.d-810a02e6';
+import { Observable } from 'rxjs';
 
 const validateEventTitleRequired = 'validateEventTitleRequired';
 
@@ -11,16 +9,28 @@ const validateEventTitleRequired = 'validateEventTitleRequired';
 })
 export class ValidationService extends PubmanGenericRestClientService<any> {
 
-  private aaService = inject(AaService);
-
   constructor() {
     super('/validation');
   }
 
-  validateEvent(eventJson: JSON): Observable<any>{
-    console.log('validateEvent validationService')
+  validateEvent(eventJson: any): Observable<any> {
+    console.log('validateEvent validationService');
     console.log('eventJson', eventJson);
-    return this.httpPost(this.subPath + '/'+ validateEventTitleRequired, eventJson);
+    return this.httpPost(this.subPath + '/' + validateEventTitleRequired, eventJson);/*.pipe(
+      map(response => {
+        // Assuming the response contains a status code
+        if (response.status >= 400) {
+          return { invalidEvent: true };
+        } else {
+          return null;
+        }
+      }),
+      catchError(error => {
+        console.error('Validation error:', error);
+        return of({ invalidEvent: true });
+      }),
+      defaultIfEmpty(null) // Ensures that the observable emits null if it completes without emitting any values
+    );*/
   }
 }
 

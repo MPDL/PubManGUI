@@ -1,16 +1,13 @@
-<div [formGroup]="event_form" >
+<div [formGroup]="event_form">
     <label class="col-sm-2 col-form-label">Event</label>
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
                 <label class="col-form-label">Title</label>
                 <input type="text" class="form-control" formControlName="title">
-                <span>
-                    Invalid Event: {{event_form.errors?.['invalidEvent']  | json}}
-                  </span>
                 <span *ngIf="event_form.errors?.['invalidEvent']">
-                    Event is invalid
-                  </span>
+                    Event title is required.
+                </span>
             </div>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
@@ -27,8 +24,8 @@
                 <input type="text" class="form-control" formControlName="place">
             </div>
             <div class="col-sm-2 form-check">
-                <input id="invitation-status" class="form-check-input mt-2 mx-1" type="checkbox" [formControl]="invitationBoolean"
-                    (change)="change_invitation_status($event)">
+                <input id="invitation-status" class="form-check-input mt-2 mx-1" type="checkbox"
+                    [formControl]="invitationBoolean" (change)="change_invitation_status($event)">
                 <label class="form-check-label" for="invitation-status">Invited</label>
             </div>
         </div>

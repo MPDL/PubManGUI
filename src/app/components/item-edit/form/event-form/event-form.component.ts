@@ -1,11 +1,10 @@
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AsyncValidatorFn, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventVO, InvitationStatus } from 'src/app/model/inge';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { ControlType } from '../../services/form-builder.service';
-import { validateEvent } from 'src/app/shared/directives/event-validation.directive';
-import { ValidationService } from 'src/app/services/pubman-rest-client/validation.service';
+import { EventValidationDirective } from 'src/app/shared/directives/event-validation.directive';
 
 @Component({
   selector: 'pure-event-form',
@@ -18,14 +17,14 @@ export class EventFormComponent {
   @Input() event_form!: FormGroup<ControlType<EventVO>>;
 
   miscellaneousService = inject(MiscellaneousService);
-  validationService = inject(ValidationService);
+  eventValidationDirective = inject(EventValidationDirective); // Inject the directive
+
 
   invitationBoolean= new FormControl(true);
 
-
   ngOnInit() {
     this.invitationBoolean.setValue (this.event_form.get('invitationStatus')?.value == InvitationStatus.INVITED ? true : false);
-    this.event_form.addValidators(validateEvent(this.validationService));
+    // this.event_form.addAsyncValidators(this.eventValidationDirective.validate.bind(this.eventValidationDirective));
   }
   
   get genreSpecificProperties() {
