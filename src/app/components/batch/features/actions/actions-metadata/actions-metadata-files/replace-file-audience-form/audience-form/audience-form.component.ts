@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 
 import type { IpEntry }  from 'src/app/services/pubman-rest-client/miscellaneous.service';
+
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-audience-form',
@@ -12,7 +15,8 @@ import type { IpEntry }  from 'src/app/services/pubman-rest-client/miscellaneous
     CommonModule,
     FormsModule, 
     ReactiveFormsModule,
-    AddRemoveButtonsComponent
+    AddRemoveButtonsComponent,
+    TranslatePipe
   ],
   templateUrl: './audience-form.component.html'
 })
@@ -24,9 +28,11 @@ export class AudienceFormComponent {
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
 
+  translate = inject(TranslateService);
+
   ngOnInit() {
     if(this.audienceId.value.name === '') {
-      this.audienceId.setValue($localize`:@@batch.actions.metadata.files.ipRanges.singular:Range`);
+      this.audienceId.setValue(this.translate.instant(_('batch.actions.metadata.files.ipRanges.singular')));
     }
   }
   

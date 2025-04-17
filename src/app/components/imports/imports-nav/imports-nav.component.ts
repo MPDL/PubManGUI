@@ -6,6 +6,8 @@ import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 
+import { TranslatePipe } from "@ngx-translate/core";
+
 interface NavOption {
   route: string;
   label: string;
@@ -17,14 +19,15 @@ interface NavOption {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule],
+    RouterModule,
+    TranslatePipe],
   templateUrl: './imports-nav.component.html'
 })
 export class ImportsNavComponent implements OnInit {
 
   public navList = signal<NavOption[]>([
-    { route: '/imports/new', label: $localize`:@@new:new`, disabled: false },
-    { route: '/imports/myimports', label: $localize`:@@myimports:My imports`, disabled: false },
+    { route: '/imports/new', label: 'new', disabled: false },
+    { route: '/imports/myimports', label: 'myimports', disabled: false },
   ]);
 
   constructor(

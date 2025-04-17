@@ -6,11 +6,15 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { WithdrawPubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
 
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from "@ngx-translate/core";
+
 @Component({
   selector: 'pure-withdraw-pub-items-form',
   standalone: true,
   imports: [
     CommonModule,
+    TranslatePipe
   ],
   templateUrl: './withdraw-pub-items-form.component.html',
 })
@@ -18,6 +22,7 @@ export class WithdrawPubItemsFormComponent {
   batchSvc = inject(BatchService);
   msgSvc = inject(MessageService);
   router = inject(Router);
+  translate = inject(TranslateService);
 
   get withdrawPubItemsParams(): WithdrawPubItemsParams {
     const actionParams: WithdrawPubItemsParams = {
@@ -27,7 +32,11 @@ export class WithdrawPubItemsFormComponent {
   }
 
   onSubmit(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@batch.actions.item.state.withdraw.confirmation:Do you really want to withdraw this items?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    let ref = this.msgSvc.displayConfirmation({
+      text: this.translate.instant(_('batch.actions.item.state.withdraw.confirmation')),
+      confirm: this.translate.instant(_('common.confirm')),
+      cancel: this.translate.instant(_('common.cancel'))
+    });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.batchSvc.withdrawPubItems(this.withdrawPubItemsParams).subscribe(actionResponse => {
@@ -37,4 +46,4 @@ export class WithdrawPubItemsFormComponent {
       }
     });
   }
- }
+}

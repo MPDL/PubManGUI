@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -15,6 +15,8 @@ import { ItemsService } from "src/app/services/pubman-rest-client/items.service"
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { BatchActionDatasetLogComponent } from "./batch-action-dataset-log/batch-action-dataset-log.component";
+import { TranslatePipe } from "@ngx-translate/core";
+import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
 
 
 @Component({
@@ -26,7 +28,9 @@ import { BatchActionDatasetLogComponent } from "./batch-action-dataset-log/batch
     FormsModule,
     NgbTooltip,
     PaginatorComponent,
-    BatchActionDatasetLogComponent
+    BatchActionDatasetLogComponent,
+    TranslatePipe,
+    LocalizeDatePipe
   ],
   templateUrl: './batch-action-details-list.component.html',
 })
@@ -66,12 +70,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
     resp.BatchProcessLogDetailState.ERROR
   ];
 
-  batchProcessMethodTranslations = {};
-
   isScrolled = false;
-
-  constructor(
-    @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(value => {
@@ -111,20 +110,6 @@ export default class BatchActionDetailsListComponent implements OnInit {
           //return;
         });
     }
-
-    this.loadTranslations(this.locale);
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
-      })
-    } else {
-      import('src/assets/i18n/messages.json').then((msgs) => {
-        this.batchProcessMethodTranslations = msgs.BatchProcessMethod;
-      })
-    }
   }
 
   refreshLogs() {
@@ -141,11 +126,6 @@ export default class BatchActionDetailsListComponent implements OnInit {
     if (sessionStorage.getItem('preferredPageSize') && Number.isFinite(+sessionStorage.getItem('preferredPageSize')!)) {
       return +sessionStorage.getItem('preferredPageSize')!;
     } else return this.pageSize || 25;
-  }
-
-  getProcessMethodTranslation(txt: string): string {
-    let key = txt as keyof typeof this.batchProcessMethodTranslations;
-    return this.batchProcessMethodTranslations[key];
   }
 
   fillWithAll() {

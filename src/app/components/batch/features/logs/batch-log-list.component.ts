@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { OnInit, Component, HostListener, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -11,6 +11,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { BatchActionLogComponent } from "./batch-action-log/batch-action-log.component";
 
+import { TranslatePipe } from "@ngx-translate/core";
 
 type detail = {
   'item': resp.BatchProcessLogDetailDbVO,
@@ -26,7 +27,8 @@ type detail = {
     FormsModule,
     MatBadgeModule,
     PaginatorComponent,
-    BatchActionLogComponent
+    BatchActionLogComponent,
+    TranslatePipe
 ],
   templateUrl: './batch-log-list.component.html'
 })
@@ -44,9 +46,6 @@ export default class BatchLogsListComponent implements OnInit {
   detailLogs: detail[] = [];
 
   isScrolled = false;
-
-  constructor(
-    @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
     this.batchSvc.getAllBatchProcessLogHeaders()

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-footer',
   templateUrl: './footer.component.html',
-  standalone: true
+  standalone: true,
+  imports: [TranslatePipe]
 })
 export class FooterComponent {
   protected linkImpressum: string = "";
@@ -12,7 +14,7 @@ export class FooterComponent {
   protected linkPubman: string = "";
   protected linkHomepage: string = "";
 
-  openLink(url: string){
+  openLink(url: string) {
     window.open(url, '_blank');
   }
 }

@@ -11,7 +11,7 @@
         </a>
       </div>
       <a id="brand" [routerLink]="['/']">
-        <span class="ms-3" i18n="@@brand.name">MPG.PuRe</span>
+        <span class="ms-3">{{'header.brand.name'| translate}}</span>
       </a>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header_nav"
@@ -30,7 +30,7 @@
             </a>
           </div>
           <input id="text" class="form-control border-0" type="search" formControlName="text"
-            placeholder="Search" aria-label="Search">
+            placeholder="{{ 'header.search'| translate }}" aria-label="Search">
           <div class="input-group-text border-0 p-0">
             <a pureTooltip class="btn" data-bs-toggle="tooltip" data-bs-title="advanced search" role="button"
               [routerLink]="['/as2']">

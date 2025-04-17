@@ -9,7 +9,7 @@
             </button>
         </mat-chip-row>
         }
-        <input class="form-control" [placeholder]="placeholder" 
+        <input class="form-control" [placeholder]="'chips.localTags.placeholder' | translate"
             [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" />
     </mat-chip-grid>

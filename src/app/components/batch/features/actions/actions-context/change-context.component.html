@@ -1,18 +1,18 @@
-
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-  <h4 class="m-0" i18n="@@batch.actions.context.change">Change context</h4>
+  <h4 class="m-0">{{ 'batch.actions.context.change' | translate }}</h4>
   <div class="mt-2 mb-5">
-    <span i18n="@@batch.actions.context.change.info">
-      The items will be assigned to a new context if their genre is also admitted there.
+    <span>
+      {{ 'batch.actions.context.change.info' | translate }}
     </span>
   </div>
 
   <form [formGroup]="changeContextForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label for="contextFrom" class="col-sm-3 col-form-label" i18n="@@batch.actions.context.change.from">Previous context</label>
+      <label for="contextFrom" class="col-sm-3 col-form-label">{{ 'batch.actions.context.change.from' | translate
+        }}</label>
       <div class="col-sm-9">
         <select id="contextFrom" class="form-select" formControlName="contextFrom">
-          <option [value]='' selected disabled i18n="@@batch.actions.context">Context</option>
+          <option [value]='' selected disabled>{{ 'batch.actions.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
           }
@@ -21,10 +21,10 @@
     </div>
 
     <div class="row">
-      <label for="contextTo" class="col-sm-3 col-form-label" i18n="@@batch.actions.context.change.to">New context</label>
+      <label for="contextTo" class="col-sm-3 col-form-label">{{ 'batch.actions.context.change.to' | translate }}</label>
       <div class="col-sm-9">
         <select id="contextTo" class="form-select" formControlName="contextTo">
-          <option [value]='' selected disabled i18n="@@batch.actions.context">Context</option>
+          <option [value]='' selected disabled>{{ 'batch.actions.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
           }
@@ -35,18 +35,18 @@
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeContextForm.controls['contextTo'])) {
-          <span class="form-text text-danger small">
-            Previous and new contexts {{ valSvc.getFieldError(changeContextForm.controls['contextTo']) }}
-          </span>
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.context.change.invalid' | translate }} {{ valSvc.getFieldError(changeContextForm.controls['contextTo']) }}
+        </span>
         } @else {
-          <span>&nbsp;</span>
+        <span>&nbsp;</span>
         }
       </div>
     </div>
 
     <div class="row">
       <div class="offset-sm-9 col-sm-3">
-        <button type="submit" [disabled]="changeContextForm.invalid || changeContextForm.pristine" 
+        <button type="submit" [disabled]="changeContextForm.invalid || changeContextForm.pristine"
           class="btn btn-outline-secondary border-2 col-4 float-end">
           GO
         </button>

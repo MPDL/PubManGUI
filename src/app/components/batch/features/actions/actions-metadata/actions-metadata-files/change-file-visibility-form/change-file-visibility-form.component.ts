@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeFileVisibilityParams } from 'src/app/components/batch/interfaces/batch-params';
 import { Visibility } from 'src/app/model/inge';
+
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from "@ngx-translate/core";
 
 
 @Component({
@@ -16,49 +17,23 @@ import { Visibility } from 'src/app/model/inge';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './change-file-visibility-form.component.html',
 })
 export class ChangeFileVisibilityFormComponent {
-
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService, 
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService,
-    @Inject(LOCALE_ID) public locale: string) {}
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  valSvc = inject(BatchValidatorsService);
+  batchSvc = inject(BatchService);
+  translate = inject(TranslateService);
 
   visibility = Object.keys(Visibility);
-  visibilityTranslations = {};
-  visibilityOptions: {value: string, option: string}[] = [];
-
-  ngOnInit(): void { 
-    this.loadTranslations(this.locale)
-      .then(() => {
-        this.visibility.forEach((value) => {
-          let keyT = value as keyof typeof this.visibilityTranslations;
-          this.visibilityOptions.push({'value': keyT, 'option': this.visibilityTranslations[keyT]})
-        })
-      })
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.visibilityTranslations = msgs.Visibility;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.visibilityTranslations = msgs.Visibility;
-      })
-    } 
-  }
 
   public changeFileVisibilityForm: FormGroup = this.fb.group({
-    fileVisibilityFrom: [$localize`:@@batch.actions.metadata.files.visibility:Visibility`, [Validators.required]],
-    fileVisibilityTo: [$localize`:@@batch.actions.metadata.files.visibility:Visibility`, [Validators.required]],
+    fileVisibilityFrom: [this.translate.instant(_('batch.actions.metadata.files.visibility')), [Validators.required]],
+    fileVisibilityTo: [this.translate.instant(_('batch.actions.metadata.files.visibility')), [Validators.required]],
   }, 
   { validators: [this.valSvc.notEqualsValidator('fileVisibilityFrom','fileVisibilityTo'), this.valSvc.allRequiredValidator()] });
 
@@ -78,7 +53,6 @@ export class ChangeFileVisibilityFormComponent {
     }
 
     this.batchSvc.changeFileVisibility(this.changeFileVisibilityParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.router.navigate(['/batch/logs']);
     });

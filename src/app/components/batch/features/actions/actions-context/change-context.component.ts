@@ -5,14 +5,13 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 import { Router } from '@angular/router';
 
 import { ContextDbRO } from 'src/app/model/inge';
-//import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
-//import { OptionDirective } from "src/app/shared/components/selector/directives/option.directive";
-//import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeContextParams } from 'src/app/components/batch/interfaces/batch-params';
 import { AaService } from 'src/app/services/aa.service';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-batch-change-context',
@@ -21,9 +20,7 @@ import { AaService } from 'src/app/services/aa.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    //PureCtxsDirective,
-    //OptionDirective,
-    //SelectorComponent
+    TranslatePipe
   ],
   templateUrl: './change-context.component.html',
 })

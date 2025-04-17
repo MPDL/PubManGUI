@@ -25,7 +25,7 @@
     } @else {
 
         <td class="col-2 px-1 d-flex justify-content-between">
-            <span>{{ getProcessLogHeaderStateTranslation(log.state) }}</span>
+            <span>{{ 'BatchProcessLogHeaderState.' + log.state | translate }}</span>
             @if (log.state === state.FINISHED) {
                 <span class="material-symbols-outlined text-success pe-1">check_circle</span>
             } @else {
@@ -36,11 +36,11 @@
     }
     
     <td class="col-6">
-        <span>{{ getProcessMethodTranslation(log.method) }}</span>
+        <span>{{ 'BatchProcessMethod.' + log.method | translate }}</span>
     </td>
 
     <td class="col-3 d-flex justify-content-between">
-        <span>{{ log.endDate | date:'mediumDate' }}</span>
+        <span>{{ log.endDate | localizeDate:'mediumDate' }}</span>
         <div class="pe-3">
             <span class="material-symbols-outlined text-secondary">schedule</span>&nbsp;
             <span>{{ log.endDate | date: "HH:mm" }}</span>

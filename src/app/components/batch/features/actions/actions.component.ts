@@ -9,6 +9,7 @@ import { ActionsGenreComponent } from './actions-genre/change-genre.component';
 import { ActionsMetadataComponent } from './actions-metadata/actions-metadata.component';
 
 import { BatchService } from '../../services/batch.service';
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-batch-actions',
@@ -20,7 +21,8 @@ import { BatchService } from '../../services/batch.service';
     ActionsContextComponent,
     ActionsLocalTagsComponent,
     ActionsGenreComponent,
-    ActionsMetadataComponent
+    ActionsMetadataComponent,
+    TranslatePipe
   ],
   templateUrl: './actions.component.html'
 })
@@ -29,12 +31,12 @@ export default class ActionsComponent implements OnInit {
   public isReady: boolean = false;
 
   constructor(
-    public batchSvc: BatchService, 
+    public batchSvc: BatchService,
   ) { }
 
   ngOnInit() {
     this.batchSvc.items;
-    this.isReady =  (this.batchSvc.areItemsSelected() && !this.batchSvc.isProcessRunning()) ? true : false;
+    this.isReady = (this.batchSvc.areItemsSelected() && !this.batchSvc.isProcessRunning()) ? true : false;
   }
 
 }

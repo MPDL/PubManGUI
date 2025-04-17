@@ -6,11 +6,14 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReleasePubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
 
+import { TranslatePipe } from "@ngx-translate/core";
+
 @Component({
   selector: 'pure-release-pub-items-form',
   standalone: true,
   imports: [
     CommonModule,
+    TranslatePipe
   ],
   templateUrl: './release-pub-items-form.component.html',
 })
