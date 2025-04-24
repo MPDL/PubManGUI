@@ -15,7 +15,10 @@ import { ItemsService } from "src/app/services/pubman-rest-client/items.service"
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { BatchActionDatasetLogComponent } from "./batch-action-dataset-log/batch-action-dataset-log.component";
+
 import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
+
 import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
 
 
@@ -43,6 +46,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
   fb = inject(FormBuilder);
+  translate = inject(TranslateService);
 
   currentPage = this.batchSvc.lastPageNumFrom().details;
   pageSize = 25;
@@ -132,7 +136,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
     const toFill: string[] = [];
     this.unfilteredLogs.forEach(item => { if (item.itemObjectId) toFill.push(item.itemObjectId) });
     this.batchSvc.items = toFill;
-    const msg = `${toFill.length} ` + $localize`:@@batch.datasets.filled:items to batch!` + '\n';
+    const msg = `${toFill.length} ` + this.translate.instant(_('batch.datasets.filled')) + '\n';
     this.msgSvc.info(msg);
   }
 
@@ -140,7 +144,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
     const toFill: string[] = [];
     this.unfilteredLogs.forEach(item => { if (item.itemObjectId && item.state === resp.BatchProcessLogDetailState.ERROR) toFill.push(item.itemObjectId) });
     this.batchSvc.items = toFill;
-    const msg = `${toFill.length} ` + $localize`:@@batch.datasets.filled:items to batch!` + '\n';
+    const msg = `${toFill.length} ` + this.translate.instant(_('batch.datasets.filled')) + '\n';
     this.msgSvc.info(msg);
   }
 

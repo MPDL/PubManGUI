@@ -1,14 +1,14 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-  <h4 class="m-0" i18n="@@batch.actions.metadata.publication.keywordsAdd">Add Keywords</h4>
+  <h4 class="m-0">{{ 'batch.actions.metadata.publication.keywordsAdd' | translate }}</h4>
   <div class="mt-2 mb-5">
-    <span i18n="@@batch.actions.metadata.publication.keywordsAdd.info">    
-      New keywords will be added to any existing values
+    <span>
+      {{ 'batch.actions.metadata.publication.keywordsAdd.info' | translate }}
     </span>
   </div>
 
   <form [formGroup]="addKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label" i18n="@@batch.actions.metadata.publication.keywordsAdd.to">Additional keywords</label>
+      <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.publication.keywordsAdd.to' | translate }}</label>
       <div class="col-sm-9">
         <textarea class="form-control" formControlName="keywords"></textarea>
       </div>

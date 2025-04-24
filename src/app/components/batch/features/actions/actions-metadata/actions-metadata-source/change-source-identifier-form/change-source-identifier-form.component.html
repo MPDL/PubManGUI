@@ -1,15 +1,19 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-  <h4 class="m-0" i18n="@@batch.actions.metadata.source.replaceId">Replace Identifier</h4>
+  <h4 class="m-0">
+    {{ 'batch.actions.metadata.source.replaceId' | translate }}
+  </h4>
   <div class="mt-2 mb-5">
-    <span i18n="@@batch.actions.metadata.source.replaceId.info">
-      The values of specific identifiers (IDs) will be replaced within the sources.
+    <span>
+      {{ 'batch.actions.metadata.source.replaceId.info' | translate }}
     </span>
   </div>
 
   <form [formGroup]="changeSourceIdentifierForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.source.adjust">Source to be adjusted</label>
+        <label class="col-form-label">
+          {{ 'batch.actions.metadata.source.adjust' | translate }}
+        </label>
       </div>
       <div class="col-sm-1">
         <select class="form-select" formControlName="sourceNumber">
@@ -21,13 +25,17 @@
 
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.source.replaceId.type">Type of ID</label>
+        <label class="col-form-label">
+          {{ 'batch.actions.metadata.source.replaceId.type' | translate }}
+        </label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceIdentifierType">
-          <option [value]='' selected disabled i18n="@@batch.actions.metadata.source.replaceId.default">Type</option>
-          @for (type of sourceIdTypesOptions; track type) {
-            <option [value]="type.value">{{type.option}}</option>
+          <option [value]='' selected disabled>
+            {{ 'batch.actions.metadata.source.replaceId.default' | translate }}
+          </option>
+          @for (type of sourceIdTypes; track type) {
+            <option [value]="type">{{ 'SourceIdType.' + type | translate }}</option>
           }
         </select>
       </div>
@@ -35,7 +43,9 @@
 
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.source.replaceId.from">Value of ID to be replaced</label>
+        <label class="col-form-label">
+          {{ 'batch.actions.metadata.source.replaceId.from' | translate }}
+        </label>
       </div>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceIdentifierFrom">
@@ -44,7 +54,9 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.source.replaceId.to">Value of replacing ID</label>
+        <label class="col-form-label">
+          {{ 'batch.actions.metadata.source.replaceId.from' | translate }}
+        </label>
       </div>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceIdentifierTo">
@@ -54,7 +66,7 @@
       <div class="offset-sm-3 col-sm-6">
         @if(valSvc.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])) {
         <span class="form-text text-danger small">
-          Previous and new identifiers {{ valSvc.getFieldError(changeSourceIdentifierForm) }}
+          {{ 'batch.actions.metadata.source.replaceId.invalid' | translate }} {{ valSvc.getFieldError(changeSourceIdentifierForm) }}
         </span>
         } @else {
         <span>&nbsp;</span>

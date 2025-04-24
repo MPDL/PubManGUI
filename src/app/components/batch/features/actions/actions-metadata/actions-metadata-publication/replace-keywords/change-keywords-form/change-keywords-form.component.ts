@@ -1,40 +1,38 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
+
 import type { ChangeKeywordsParams } from 'src/app/components/batch/interfaces/batch-params';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-change-keywords-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './change-keywords-form.component.html',
 })
-export class ChangeKeywordsFormComponent { 
-
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService, 
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService
-  ) { }
+export class ChangeKeywordsFormComponent {
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  batchSvc = inject(BatchService);
+  valSvc = inject(BatchValidatorsService);
 
   public changeKeywordsForm: FormGroup = this.fb.group({
-    keywordsFrom: ['', [ Validators.required ]],
-    keywordsTo: ['', [ Validators.required ]],
-  }, 
-  { validators: this.valSvc.notEqualsValidator('keywordsFrom','keywordsTo') });
-
-  // TO-DO if multiple words? check if they don't repeat
+    keywordsFrom: ['', [Validators.required]],
+    keywordsTo: ['', [Validators.required]],
+  }, { 
+    validators: this.valSvc.notEqualsValidator('keywordsFrom', 'keywordsTo') 
+  });
 
   get changeKeywordsParams(): ChangeKeywordsParams {
     const actionParams: ChangeKeywordsParams = {
@@ -51,10 +49,8 @@ export class ChangeKeywordsFormComponent {
       return;
     }
 
-    this.batchSvc.changeKeywords(this.changeKeywordsParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
+    this.batchSvc.changeKeywords(this.changeKeywordsParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //setTimeout(() => {this.changeKeywordsForm.reset();}, 500);
       this.router.navigate(['/batch/logs']);
     });
   }

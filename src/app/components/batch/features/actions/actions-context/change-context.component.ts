@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import type { ChangeContextParams } from 'src/app/components/batch/interfaces/ba
 import { AaService } from 'src/app/services/aa.service';
 
 import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 @Component({
   selector: 'pure-batch-change-context',
@@ -25,13 +26,12 @@ import { TranslatePipe } from "@ngx-translate/core";
   templateUrl: './change-context.component.html',
 })
 export class ActionsContextComponent implements OnInit {
-
-  constructor(
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService, 
-    private aaSvc: AaService, 
-    private batchSvc: BatchService,
-    private router: Router) { }
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  valSvc = inject(BatchValidatorsService);
+  batchSvc = inject(BatchService);
+  aaSvc = inject(AaService);
+  translate = inject(TranslateService);
 
   user_contexts?: ContextDbRO[] = [];
 
@@ -44,8 +44,8 @@ export class ActionsContextComponent implements OnInit {
   }
 
   public changeContextForm: FormGroup = this.fb.group({
-    contextFrom: [$localize`:@@batch.actions.context:Context`, Validators.required],
-    contextTo: [$localize`:@@batch.actions.context:Context`, Validators.required]
+    contextFrom: [this.translate.instant(_('batch.actions.context')), Validators.required],
+    contextTo: [this.translate.instant(_('batch.actions.context')), Validators.required]
   }, 
   { validators: [this.valSvc.notEqualsValidator('contextFrom','contextTo'), this.valSvc.allRequiredValidator()] }
   );
@@ -66,7 +66,6 @@ export class ActionsContextComponent implements OnInit {
     }
     this.batchSvc.changeContext(this.changeContextParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //this.changeContextForm.reset();
       this.router.navigate(['/batch/logs']);
     });
   }

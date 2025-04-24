@@ -1,65 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeSourceGenreParams } from 'src/app/components/batch/interfaces/batch-params';
 import { SourceGenre } from 'src/app/model/inge';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-change-source-genre-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './change-source-genre-form.component.html',
 })
 export class ChangeSourceGenreFormComponent {
-
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService, 
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService,
-    @Inject(LOCALE_ID) public locale: string) {}
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  valSvc = inject(BatchValidatorsService);
+  batchSvc = inject(BatchService);
 
   sourceGenres = Object.keys(SourceGenre).sort();
-  sourceGenresTranslations = {};
-  sourceGenresOptions: {value: string, option: string}[] = [];
-
-  ngOnInit(): void { 
-    this.loadTranslations(this.locale)
-      .then(() => {
-        this.sourceGenres.forEach((value) => {
-          let keyT = value as keyof typeof this.sourceGenresTranslations;
-          this.sourceGenresOptions.push({'value': keyT, 'option': this.sourceGenresTranslations[keyT]})
-        })
-      })
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.sourceGenresTranslations = msgs.SourceGenre;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.sourceGenresTranslations = msgs.SourceGenre;
-      })
-    } 
-  }
 
   public changeSourceGenreForm: FormGroup = this.fb.group({
     sourceGenreFrom: ['Genre', [Validators.required]],
     sourceGenreTo: ['Genre', [Validators.required]],
-  },
-    { validators: [this.valSvc.notEqualsValidator('sourceGenreFrom', 'sourceGenreTo'), this.valSvc.allRequiredValidator()] });
+  }, { 
+    validators: [this.valSvc.notEqualsValidator('sourceGenreFrom', 'sourceGenreTo'), this.valSvc.allRequiredValidator()] 
+  });
 
   get changeSourceGenreParams(): ChangeSourceGenreParams {
     const actionParams: ChangeSourceGenreParams = {
@@ -77,9 +51,7 @@ export class ChangeSourceGenreFormComponent {
     }
 
     this.batchSvc.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => {
-      //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //setTimeout(() => {this.changeSourceGenreForm.reset();}, 500);
       this.router.navigate(['/batch/logs']);
     });
 

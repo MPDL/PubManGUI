@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { ChangeKeywordsFormComponent } from './change-keywords-form/change-keywords-form.component';
 import { ReplaceKeywordsFormComponent } from './replace-keywords-form/replace-keywords-form.component';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-replace-keywords',
@@ -13,16 +15,17 @@ import { ReplaceKeywordsFormComponent } from './replace-keywords-form/replace-ke
     CommonModule,
     ReactiveFormsModule,
     ChangeKeywordsFormComponent,
-    ReplaceKeywordsFormComponent
+    ReplaceKeywordsFormComponent,
+    TranslatePipe
   ],
   templateUrl: './replace-keywords.component.html',
 })
 export class ReplaceKeywordsComponent {
 
-  constructor(private fb: FormBuilder) { }
+  fb = inject(FormBuilder);
 
   public _chooseMethodForm: FormGroup = this.fb.group({
-    keywordsReplaceMethod: ['REPLACE_ALL', [ Validators.required ]],
+    keywordsReplaceMethod: ['REPLACE_ALL', [Validators.required]],
   });
 
   public keywordsReplaceMethod: string = "REPLACE_ALL";
@@ -35,8 +38,8 @@ export class ReplaceKeywordsComponent {
   onKeywordsReplaceMethodChanged(): void {
     this._chooseMethodForm.get('keywordsReplaceMethod')!.valueChanges
       // TO-DO pipe to reset forms
-      .subscribe( (method: string) => {
+      .subscribe((method: string) => {
         this.keywordsReplaceMethod = method;
       });
   }
- }
+}
