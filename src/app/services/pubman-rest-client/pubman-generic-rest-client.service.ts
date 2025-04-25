@@ -118,18 +118,18 @@ export abstract class PubmanGenericRestClientService<modelType> {
 
   }
 
-  protected httpHead(path: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<HttpResponse<any>> {
+  protected httpHead(path: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
       return this.httpRequest('HEAD', path, undefined, authenticate, undefined, params, respType, 'response');
   }
 
-  protected httpPost(path: string, resource: any, authenticate?: boolean): Observable<any> {
+  protected httpPost(path: string, resource: any, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined): Observable<any> {
     const body = JSON.stringify(resource);
-    return this.httpRequest('POST', path, body, authenticate, this.addContentTypeHeader());
+    return this.httpRequest('POST', path, body, authenticate, this.addContentTypeHeader(), params, respType, observe);
   }
 
-  protected httpPut(path: string, resource: any, authenticate?: boolean): Observable<any> {
+  protected httpPut(path: string, resource: any, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined): Observable<any> {
     const body = JSON.stringify(resource);
-    return this.httpRequest('PUT', path, body, authenticate, this.addContentTypeHeader());
+    return this.httpRequest('PUT', path, body, authenticate, this.addContentTypeHeader(), params, respType, observe);
   }
 
   protected httpDelete(path: string, body: any, authenticate?: boolean): Observable<number> {

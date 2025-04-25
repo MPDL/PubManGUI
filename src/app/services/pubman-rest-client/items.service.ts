@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import {map, Observable} from 'rxjs';
+import {catchError, map, Observable, throwError} from 'rxjs';
 import {ItemVersionVO} from "../../model/inge";
 import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
 import {HttpParams} from "@angular/common/http";
@@ -89,6 +89,7 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     );
 
   }
+
 
   checkFileAudienceAccess(itemId: string, fileId: string) {
     return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/content');
