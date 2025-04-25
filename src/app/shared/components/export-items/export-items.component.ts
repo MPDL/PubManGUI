@@ -7,14 +7,13 @@ import {AaService} from "../../../services/aa.service";
 import {OuAutosuggestComponent} from "../ou-autosuggest/ou-autosuggest.component";
 import {CslAutosuggestComponent} from "../csl-autosuggest/csl-autosuggest.component";
 import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ItemSelectionService} from "../../services/item-selection.service";
 import {map} from "rxjs";
 import {baseElasticSearchQueryBuilder} from "../../services/search-utils";
-import contentDisposition from "content-disposition";
 import {LoadingComponent} from "../loading/loading.component";
-
+import {contentDispositionParser} from "../../services/utils";
 
 
 @Component({
@@ -46,14 +45,15 @@ export class ExportItemsComponent {
 
   itemIds: string[] = [];
 
-  selectedExportType:string = exportTypes.ENDNOTE;
-  selectedCitationType:string = citationTypes.APA;
+  selectedExportType: string = exportTypes.ENDNOTE;
+  selectedCitationType: string = citationTypes.APA;
   selectedCslId = "";
   selectedCslName = "";
 
   currentCitation: string = '';
 
   protected loading = false;
+  protected errorMessage: string = "";
 
   constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService) {
   }
@@ -61,8 +61,8 @@ export class ExportItemsComponent {
   ngOnInit() {
 
     const exportType = localStorage.getItem("exportType");
-    if(exportType){
-      const expType:ExportType = JSON.parse(exportType);
+    if (exportType) {
+      const expType: ExportType = JSON.parse(exportType);
       this.selectedExportType = expType.exportType;
       this.selectedCitationType = expType.citationType;
       this.selectedCslId = expType.cslId;
@@ -75,6 +75,7 @@ export class ExportItemsComponent {
   }
 
   updateStoredExportInfo() {
+    this.errorMessage = "";
     const exportType: ExportType = {
       exportType: this.selectedExportType,
       citationType: this.selectedCitationType,
@@ -85,21 +86,26 @@ export class ExportItemsComponent {
   }
 
   loadCitation() {
-    if(!this.isFormat && this.itemIds.length > 0 && (this.selectedCitationType !== citationTypes.CSL || this.selectedCslId)) {
-      this.itemService.retrieveSingleCitation(this.itemIds[0], this.selectedCitationType, this.selectedCslId).subscribe(
-        cit => {
+    if (!this.isFormat && this.isValid()) {
+      this.itemService.retrieveSingleCitation(this.itemIds[0], this.selectedCitationType, this.selectedCslId).subscribe({
+        next: (cit) => {
           //console.log('Citation: ' +cit)
-          this.currentCitation=cit;
-        }
-      )
+          this.currentCitation = cit;
+        },
+        error: e => {
+          this.errorMessage = e;
+          this.loading = false;
+        },
+      })
     }
 
   }
 
-  isValid() :boolean {
+  isValid(): boolean {
     return this.itemIds.length > 0 &&
       (this.selectedCitationType !== citationTypes.CSL || (this.selectedCslId?.length > 0));
   }
+
   handleFormatChange($event: Event) {
     this.currentCitation = '';
     this.loadCitation();
@@ -115,7 +121,7 @@ export class ExportItemsComponent {
   selectCsl(event: any) {
     this.selectedCslId = event.id;
     this.selectedCslName = event.value;
-    if(this.selectedCslId)
+    if (this.selectedCslId)
       this.loadCitation();
     else {
       this.currentCitation = '';
@@ -143,23 +149,27 @@ export class ExportItemsComponent {
   download() {
     this.loading = true;
     const searchQuery = {
-      query : baseElasticSearchQueryBuilder("objectId", this.itemIds),
+      query: baseElasticSearchQueryBuilder("objectId", this.itemIds),
       size: this.itemIds.length,
       ...this.sortQuery && {sort: [this.sortQuery]},
     }
 
-    this.itemService.searchAndExport(searchQuery, this.selectedExportType, this.selectedCitationType, this.selectedCitationType === citationTypes.CSL ? this.selectedCslId : undefined, true).subscribe(
-      result => {
-
-        if(result.body) {
-          const blob:Blob = result.body;
+    this.itemService.searchAndExport(searchQuery, this.selectedExportType, this.selectedCitationType, this.selectedCitationType === citationTypes.CSL ? this.selectedCslId : undefined, true).subscribe({
+      next: result => {
+        if (result.body) {
+          const blob: Blob = result.body;
           console.log("Blob type: " + blob.type);
           const data = window.URL.createObjectURL(blob);
           let filename = "download"
 
+
           const contentDispositionHeader = result.headers.get("Content-disposition");
-          if(contentDispositionHeader) {
-            filename = contentDisposition.parse(contentDispositionHeader).parameters['filename'];
+          const parsedContentDisposition = contentDispositionParser(contentDispositionHeader)
+          if (parsedContentDisposition) {
+            const parsedFileName = parsedContentDisposition['filename']
+            if(parsedFileName) {
+              filename = parsedFileName;
+            }
           }
           const link = document.createElement('a');
           link.href = data;
@@ -167,14 +177,14 @@ export class ExportItemsComponent {
           link.click();
           window.URL.revokeObjectURL(data);
           link.remove();
+          this.loading = false;
         }
+      },
+      error: e => {
+        this.errorMessage = e;
         this.loading = false;
-
-
-
-      }
-
-    )
+      },
+    })
   }
 }
 

@@ -87,6 +87,12 @@
     }
 </div>
 
+@if(errorMessage) {
+  <div class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+}
+
 <div class="modal-footer">
   @if(!loading) {
     <button type="button" class="btn btn-primary" (click)="download()" [disabled]="!isValid()">Download</button>
