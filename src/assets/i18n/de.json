@@ -196,6 +196,7 @@
 		"list.items": "Details",
 		"list.items.empty": "Für diesen Import sind keine Datensätze verfügbar!",
 		"list.items.for": "Import",
+		"list.remove": "Aus dem Protokol entfernen",
 		"list.remove.confirmation": "Möchten Sie dieses Importprotokoll wirklich entfernen?",
 		"list.started.on": "gestartet am",
 		"release.confirmation": "Möchten Sie diesen Import wirklich freigeben?",

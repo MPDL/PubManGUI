@@ -2,7 +2,7 @@
 
 <tr class="bg-light border-bottom border-white d-flex py-2" id="{{ item.id }}">
   <td class="col-2 text-nowrap">
-    <span>{{ getImportStatusTranslation(item.status) }}</span>
+    <span>{{ 'ImportStatus.' + item.status | translate }}</span>
   </td>
 
   <td class="col-4">
@@ -12,13 +12,13 @@
     
     } @else {
     
-      <span>{{ getImportMessageTranslation(item.message) }}</span>
+      <span>{{ 'ImportMessage.' + item.message | translate }}</span>
     
     }
   </td>
 
   <td class="col-3 d-flex justify-content-between">
-    <span>{{ item.endDate | date:'mediumDate' }}</span>
+    <span>{{ item.endDate | localizeDate }}</span>
     <div class="pe-3">
       <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
       <span class="me-3">{{ item.endDate | date: "HH:mm" }}</span>
@@ -26,7 +26,7 @@
   </td>
 
   <td class="col-2">
-    <span>{{ getImportErrorLevelTranslation(getAssorted(item.errorLevel)) }}</span>
+    <span>{{ 'ImportErrorLevel.' + getAssorted(item.errorLevel) | translate }}</span>
   </td>
 
   <td class="col-1">

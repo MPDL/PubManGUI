@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
@@ -13,6 +13,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { ImportDetailLogComponent } from "./import-detail-log/import-detail-log.component";
 
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
+
+import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+
 @Component({
   selector: 'pure-import-details-list',
   standalone: true,
@@ -22,7 +27,9 @@ import { ImportDetailLogComponent } from "./import-detail-log/import-detail-log.
     FormsModule,
     NgbTooltip,
     PaginatorComponent,
-    ImportDetailLogComponent
+    ImportDetailLogComponent,
+    TranslatePipe,
+    LocalizeDatePipe
   ],
   templateUrl: './import-details-list.component.html'
 })
@@ -32,6 +39,7 @@ export default class ImportDetailsListComponent implements OnInit {
   router = inject(Router);
   fb = inject(FormBuilder);
   msgSvc = inject(MessageService);
+  translate = inject(TranslateService);
 
   currentPage = this.importsSvc.lastPageNumFrom().details;
   pageSize = 25;
@@ -70,13 +78,7 @@ export default class ImportDetailsListComponent implements OnInit {
 
   executeOnceTimeout = false;
 
-  importErrorLevelTranslations = {};
-  importFormatTranslations = {};
-
   isScrolled = false;
-
-  constructor(
-    @Inject(LOCALE_ID) public locale: string) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(value => {
@@ -150,21 +152,6 @@ export default class ImportDetailsListComponent implements OnInit {
       }
     }
 
-    this.loadTranslations(this.locale);
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    }
   }
 
   refreshLogs() {
@@ -226,23 +213,13 @@ export default class ImportDetailsListComponent implements OnInit {
     this.filteredSize = this.filteredLogs.length;
   }
 
-  getImportErrorLevelTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importErrorLevelTranslations;
-    return this.importErrorLevelTranslations[key];
-  }
-
-  getImportFormatTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importFormatTranslations;
-    return this.importFormatTranslations[key];
-  }
-
   doDelete(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.remove.confirmation:Do you really want to remove this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translate.instant(_('imports.remove.confirmation')), confirm: this.translate.instant(_('common.confirm')), cancel: this.translate.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.importsSvc.deleteImportedItems(this.import.id).subscribe(importsResponse => {
           console.log(importsResponse); 
-          const msg = $localize`:@@imports.list.details.delete:Delete` + ' ' + $localize`:@@completed:completed` + '!\n';
+          const msg = this.translate.instant(_('imports.list.details.delete')) + ' ' + this.translate.instant(_('common.completed')) + '!\n';
           this.msgSvc.success(msg);   
           setTimeout(() => {
             this.router.navigate(['/imports/myimports']);
@@ -271,13 +248,13 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doSubmit(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.submit.confirmation:Do you really want to submit this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translate.instant(_('imports.submit.confirmation')), confirm: this.translate.instant(_('common.confirm')), cancel: this.translate.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         let submitModus = 'SUBMIT';
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
           console.log(importsResponse);
-          const msg = $localize`:@@imports.list.details.submit:Submit` + ' ' + $localize`:@@completed:completed` + '!\n';
+          const msg = this.translate.instant(_('imports.list.details.submit')) + ' ' + this.translate.instant(_('common.completed')) + '!\n';
           this.msgSvc.success(msg);  
 
           let element = document.getElementById('submit') as HTMLButtonElement;
@@ -290,13 +267,13 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doRelease(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.release.confirmation:Do you really want to release this import?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translate.instant(_('imports.release.confirmation')), confirm: this.translate.instant(_('common.confirm')), cancel: this.translate.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         let submitModus = this.caseSubmitAndRelease() ? 'SUBMIT_AND_RELEASE' : 'RELEASE';
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
           console.log(importsResponse);
-          const msg = $localize`:@@imports.list.details.release:Release` + ' ' + $localize`:@@completed:completed` + '!\n';
+          const msg = this.translate.instant(_('imports.list.details.release')) + ' ' + this.translate.instant(_('common.completed')) + '!\n';
           this.msgSvc.success(msg);  
 
           let element = document.getElementById('release') as HTMLButtonElement;

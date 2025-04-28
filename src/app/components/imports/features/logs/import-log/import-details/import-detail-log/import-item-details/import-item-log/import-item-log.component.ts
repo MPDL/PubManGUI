@@ -10,6 +10,9 @@ import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFil
 import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'pure-import-item-log',
@@ -17,7 +20,8 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     SeparateFilterPipe,
-    NgbCollapseModule
+    NgbCollapseModule,
+    TranslatePipe
   ],
   templateUrl: './import-item-log.component.html'
 })
@@ -27,6 +31,7 @@ export class ImportItemLogComponent implements OnInit {
   importsSvc = inject(ImportsService);
   msgSvc = inject(MessageService);
   router = inject(Router);
+  translate = inject(TranslateService);
 
   importStatusTranslations = {};
   importErrorLevelTranslations = {};

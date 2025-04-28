@@ -4,7 +4,7 @@
   @if( !isFinished(log.status) ) {
 
     <td class="col-2 px-1 d-flex justify-content-between">
-      <span>{{ getImportStatusTranslation(log.status) }}</span>
+      <span>{{ 'ImportStatus.' + log.status | translate }}</span>
       <div class="my-0 pe-1">
         {{ log.percentage }} &percnt; <span class="mx-1 spinner-border spinner-border-sm text-secondary"
           aria-hidden="true"></span>
@@ -14,23 +14,23 @@
   } @else {
 
     <td class="col-2 px-1 d-flex justify-content-between">
-      <span>{{ getImportStatusTranslation(log.status) }}</span>
+      <span>{{ 'ImportStatus.' + log.status | translate }}</span>
       <div class="my-0">
 
         @switch (log.errorLevel) {
           @case (importErrorLevel.FINE) {
             <span class="material-symbols-outlined text-success pe-1" style="cursor: default"
-              ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}'
+              ngbTooltip="{{ 'ImportErrorLevel.' + getAssorted(log.errorLevel)| translate }}"
               placement="bottom-left">check_circle</span>
           }
           @case (importErrorLevel.WARNING) {
             <span class="material-symbols-outlined text-black-50 pe-1" style="cursor: default"
-              ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}'
+              ngbTooltip="{{ 'ImportErrorLevel.' + getAssorted(log.errorLevel)| translate }}"
               placement="bottom-left">error</span>
           }
           @default {
           <span class="material-symbols-outlined text-danger pe-1" style="cursor: default"
-            ngbTooltip='{{ getImportErrorLevelTranslation(getAssorted(log.errorLevel)) }}'
+            ngbTooltip="{{ 'ImportErrorLevel.' + getAssorted(log.errorLevel)| translate }}"
             placement="bottom-left">cancel</span>
           }
         }
@@ -54,11 +54,11 @@
   </td>
 
   <td class="col-2">
-    {{ getImportFormatTranslation(log.format) }}
+    {{ 'ImportFormat.' + log.format | translate }}
   </td>
 
   <td class="col-2 d-flex justify-content-between">
-    <span>{{ log.startDate | date:'mediumDate' }}</span>
+    <span>{{ log.startDate | localizeDate }}</span>
     <div class="pe-3">
       <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
       <span>{{ log.startDate | date: "HH:mm" }}</span>
@@ -76,7 +76,7 @@
 
   <td class="col-1">
       <span class="material-symbols-outlined my-0 float-end" 
-        ngbTooltip="Remove from log" placement="bottom-left" style="cursor: pointer" (click)="deleteImportLog(log)">
+        ngbTooltip="{{ 'imports.list.remove' | translate }}" placement="bottom-left" style="cursor: pointer" (click)="deleteImportLog(log)">
         delete
       </span>
   </td>

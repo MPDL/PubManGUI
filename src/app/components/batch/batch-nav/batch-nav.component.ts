@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, signal } from '@angular/core';
+import { OnInit, Component, signal, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -7,6 +7,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { BatchService } from '../services/batch.service';
 
 import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 interface NavOption {
   route: string;
@@ -25,17 +26,18 @@ interface NavOption {
 })
 export class BatchNavComponent implements OnInit {
 
+  router = inject(Router);
+  msgSvc = inject(MessageService);
+  batchSvc = inject(BatchService);
+  aaSvc = inject(AaService);
+  translate = inject(TranslateService);
+
   public navList = signal<NavOption[]>([
     { route: '/batch/datasets', label: 'datasets', disabled: false },
     { route: '/batch/actions', label: 'actions', disabled: false },
     { route: '/batch/logs', label: 'logs', disabled: false },
   ]);
 
-  constructor(
-    public aaSvc: AaService,
-    private batchSvc: BatchService,
-    private msgSvc: MessageService,
-    private router: Router) { }
 
   ngOnInit(): void {
     this.batchSvc.items;
@@ -48,7 +50,7 @@ export class BatchNavComponent implements OnInit {
     switch (option) {
       case '/batch/datasets':
         if (!this.batchSvc.areItemsSelected()) {
-          this.msgSvc.warning($localize`:@@batch.datasets.empty:The batch processing is empty` + '!\n');
+          this.msgSvc.warning(this.translate.instant(_('batch.datasets.empty')) + '!\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/batch'])
           })
@@ -56,12 +58,12 @@ export class BatchNavComponent implements OnInit {
         break;
       case '/batch/actions':
         if (!this.batchSvc.areItemsSelected()) {
-          this.msgSvc.warning($localize`:@@batch.datasets.empty:The batch processing is empty` + '!\n');
+          this.msgSvc.warning(this.translate.instant(_('batch.datasets.empty')) + '!\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/batch'])
           })
         } else if (this.batchSvc.isProcessRunning()) {
-          this.msgSvc.warning($localize`:@@batch.actions.running:Please wait, a process is running` + '!\n');
+          this.msgSvc.warning(this.translate.instant(_('batch.actions.running')) + '!\n');
           this.msgSvc.dialog.afterAllClosed.subscribe(result => {
             this.router.navigate(['/batch'])
           })
