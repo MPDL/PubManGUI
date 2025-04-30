@@ -15,6 +15,8 @@ export class ItemViewMetadataElementComponent {
 
   @Input() condition: boolean = true;
 
+  @Input() highlight: boolean = true;
+
   last: boolean = false;
 
 

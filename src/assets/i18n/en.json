@@ -620,7 +620,8 @@
     "issue" : "Issue",
     "startPage" : "Start page",
     "endPage" : "End page",
-    "sequenceNumber" : "Sequence number"
+    "sequenceNumber" : "Sequence number",
+    "totalNumberOfPages" : "Total no. of pages"
   },
   "CreatorRoles" : {
     "ARTIST" : "Artist",
@@ -648,9 +649,10 @@
     "SOUND_DESIGNER" : "Sound engineer"
   },
   "ItemList" : {
-    "files" : "File(s)",
-    "links" : "Link(s)",
+    "files" : "file(s)",
+    "links" : "link(s)",
     "showAll" : "show all",
+    "moreCreators" : "more creators",
     "publishedIn" : "Published in"
   }
 }

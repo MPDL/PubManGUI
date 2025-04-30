@@ -620,7 +620,8 @@
     "issue" : "Heftnummer",
     "startPage" : "Startseite",
     "endPage" : "Endseite",
-    "sequenceNumber" : "Artikelnummer"
+    "sequenceNumber" : "Artikelnummer",
+    "totalNumberOfPages" : "Gesamtseitenzahl"
   },
   "CreatorRoles" : {
     "ARTIST" : "Künstler",
@@ -651,6 +652,7 @@
     "files" : "Datei(en)",
     "links" : "Link(s)",
     "showAll" : "alle anzeigen",
+    "moreCreators" : "weitere Urheber",
     "publishedIn" : "Veröffentlicht in"
 }
 }

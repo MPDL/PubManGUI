@@ -55,7 +55,7 @@
         }
         @if (creators_length && creators_length > 3) {
           <div class="">
-            <i>{{ (creators_length - 3) + ' more authors ...' }}</i>
+            <i>{{ (creators_length - 3) }} {{'ItemList.moreCreators' | translate }}...</i>
           </div>
         }
       </div>
@@ -71,8 +71,8 @@
     <div class="col-sm-3">
 
       @if(files.length > 0) {
-      <div class="d-flex flex-sm-row align-items-start mt-2">
-        {{files.length}} {{ 'ItemList.files' | translate }}
+      <div class="d-flex flex-sm-row align-items-start mt-2 font-weight">
+        <i>{{files.length}} {{ 'ItemList.files' | translate }}</i>
       </div>
 
       @for (file of publicFiles.slice(0,2); track file) {
@@ -89,7 +89,7 @@
 
       @if(locators.length > 0) {
         <div class="d-flex flex-sm-row align-items-start  mt-3">
-          {{locators.length}} {{ 'ItemList.links' | translate }}
+          <i>{{locators.length}} {{ 'ItemList.links' | translate }}</i>
         </div>
       @for (file of locators.slice(0,2); track file) {
         <div class="d-flex flex-sm-row align-items-start" [ngbTooltip]="file.metadata.title">

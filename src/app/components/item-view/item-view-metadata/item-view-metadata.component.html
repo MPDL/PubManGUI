@@ -84,7 +84,7 @@
       <span label>{{'MetadataFields.date' | translate}}</span>
         <span content>
             @if (item.metadata?.dateCreated) {
-              <pure-item-view-metadata-element [sub]="true">
+              <pure-item-view-metadata-element [sub]="true" [highlight]="false">
               <span label>{{'MetadataFields.dateCreated' | translate}}</span>
              <span content>
               {{ item.metadata?.dateCreated }}
@@ -92,7 +92,7 @@
               </pure-item-view-metadata-element>
             }
           @if (item.metadata?.dateModified) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
               <span label>{{'MetadataFields.dateModified' | translate}}</span>
              <span content>
               {{ item.metadata?.dateModified }}
@@ -100,7 +100,7 @@
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.dateSubmitted) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
               <span label>{{'MetadataFields.dateSubmitted' | translate}}</span>
              <span content>
               {{ item.metadata?.dateSubmitted }}
@@ -108,7 +108,7 @@
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.dateAccepted) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
               <span label>{{'MetadataFields.dateAccepted' | translate}}</span>
              <span content>
               {{ item.metadata?.dateAccepted }}
@@ -116,7 +116,7 @@
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.datePublishedOnline) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
               <span label>{{'MetadataFields.datePublishedOnline' | translate}}</span>
              <span content>
               {{ item.metadata?.datePublishedOnline }}
@@ -124,7 +124,7 @@
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.datePublishedInPrint) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
               <span label>{{'MetadataFields.datePublishedInPrint' | translate}}</span>
              <span content>
               {{ item.metadata?.datePublishedInPrint }}
@@ -163,11 +163,11 @@
           {{ item.metadata?.reviewMethod }}
         </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.identifiers | empty)">
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.identifiers | empty)" >
       <span label>{{'MetadataFields.identifiers' | translate}}</span>
         <span content>
           @for (id of item.metadata?.identifiers; track id) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
 
               <span label>{{ 'IdType.' + id.type | translate}}:</span>
               <span content>
@@ -178,6 +178,7 @@
             }
              </span>
               </pure-item-view-metadata-element>
+
           }
         </span>
     </pure-item-view-metadata-element>
@@ -351,7 +352,7 @@
       <span label>{{'MetadataFields.identifiers' | translate}}</span>
         <span content>
           @for (id of source.identifiers; track id) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
 
               <span label>{{'IdType' + id.type | translate}}</span>
               <span content>
@@ -361,7 +362,9 @@
               {{ id.id }}
             }
              </span>
+
               </pure-item-view-metadata-element>
+
           }
         </span>
     </pure-item-view-metadata-element>
