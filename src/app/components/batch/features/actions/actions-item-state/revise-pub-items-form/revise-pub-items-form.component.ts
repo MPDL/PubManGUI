@@ -1,25 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { RevisePubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-revise-pub-items-form',
   standalone: true,
   imports: [
     CommonModule,
+    TranslatePipe
   ],
   templateUrl: './revise-pub-items-form.component.html',
 })
-export class RevisePubItemsFormComponent { 
-  constructor(
-    private router: Router,
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService
-    ) { }
+export class RevisePubItemsFormComponent {
+  batchSvc = inject(BatchService);
+  router = inject(Router);
 
   get revisePubItemsParams(): RevisePubItemsParams {
     const actionParams: RevisePubItemsParams = {

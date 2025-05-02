@@ -6,6 +6,7 @@ import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 import {AaService} from "../../../services/aa.service";
 import {checkFileAccess, getFullItemId} from "../../../shared/services/item-utils";
 import {ItemsService} from "../../../services/pubman-rest-client/items.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-view-file',
@@ -13,7 +14,8 @@ import {ItemsService} from "../../../services/pubman-rest-client/items.service";
   imports: [
     NgbTooltip,
     EmptyPipe,
-    NgbPopover
+    NgbPopover,
+    TranslatePipe
   ],
   templateUrl: './item-view-file.component.html',
   styleUrl: './item-view-file.component.scss'

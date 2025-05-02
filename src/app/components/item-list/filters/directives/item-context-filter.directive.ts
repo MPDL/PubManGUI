@@ -34,7 +34,7 @@ export class ItemContextFilterDirective extends ItemFilterDirective {
       else {
         contextList = p.depositorContexts;
       }
-      this.options =  Object.assign({'': 'All'}, ...contextList.map(context => ({ [context.objectId]: context.name })));
+      this.options =  Object.assign({'': 'common.all'}, ...contextList.map(context => ({ [context.objectId]: context.name })));
     })
   }
 

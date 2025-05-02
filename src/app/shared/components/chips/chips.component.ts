@@ -1,13 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatIconModule } from '@angular/material/icon';
 
+import { TranslatePipe } from "@ngx-translate/core";
+
 @Component({
   selector: 'pure-chips',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatChipsModule, MatIconModule],
+  imports: [FormsModule, ReactiveFormsModule, MatChipsModule, MatIconModule, TranslatePipe],
   templateUrl: './chips.component.html',
   styleUrl: './chips.component.scss'
 })
@@ -19,7 +21,6 @@ export class ChipsComponent {
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  placeholder = $localize`:@@chips.localTags.placeholder:Add local tag` + ' ...'; // TO-DO enhance for other controls
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();

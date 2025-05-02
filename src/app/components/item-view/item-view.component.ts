@@ -28,6 +28,7 @@ import {ItemSelectionService} from "../../shared/services/item-selection.service
 import {Title} from "@angular/platform-browser";
 import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-view',
@@ -48,7 +49,8 @@ import {LoadingComponent} from "../../shared/components/loading/loading.componen
     TopnavBatchComponent,
     SanitizeHtmlCitationPipe,
     NgbTooltip,
-    LoadingComponent
+    LoadingComponent,
+    TranslatePipe
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'

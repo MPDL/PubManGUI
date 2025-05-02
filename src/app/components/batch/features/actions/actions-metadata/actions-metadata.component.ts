@@ -7,6 +7,8 @@ import { ActionsMetadataOrcidComponent } from './actions-metadata-orcid/actions-
 import { ActionsMetadataPublicationComponent } from './actions-metadata-publication/actions-metadata-publication.component';
 import { ActionsMetadataSourceComponent } from './actions-metadata-source/actions-metadata-source.component';
 
+import { TranslatePipe } from "@ngx-translate/core";
+
 @Component({
   selector: 'pure-batch-actions-metadata',
   standalone: true,
@@ -16,7 +18,8 @@ import { ActionsMetadataSourceComponent } from './actions-metadata-source/action
     ActionsMetadataExternalReferencesComponent,
     ActionsMetadataOrcidComponent,
     ActionsMetadataPublicationComponent,
-    ActionsMetadataSourceComponent
+    ActionsMetadataSourceComponent,
+    TranslatePipe
   ],
   templateUrl: './actions-metadata.component.html',
 })

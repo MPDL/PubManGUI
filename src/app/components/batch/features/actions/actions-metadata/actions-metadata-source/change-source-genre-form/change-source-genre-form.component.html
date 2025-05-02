@@ -1,21 +1,25 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-  <h4 class="m-0" i18n="@@batch.actions.metadata.source.changeGenre">Change Genre</h4>
+  <h4 class="m-0">
+    {{ 'batch.actions.metadata.source.changeGenre' | translate }}
+  </h4>
   <div class="mt-2 mb-5">
-    <span i18n="@@batch.actions.metadata.source.changeGenre.info">
-      The genre of existing sources will be changed within the items
+    <span>
+      {{ 'batch.actions.metadata.source.changeGenre.info' | translate }}
     </span>
   </div>
 
   <form [formGroup]="changeSourceGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.source.changeGenre.from">Genre to be replaced</label>
+        <label class="col-form-label">
+          {{ 'batch.actions.metadata.source.changeGenre.from' | translate }}
+        </label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceGenreFrom">
           <option [value]='' selected disabled>Genre</option>
-          @for (genre of sourceGenresOptions; track genre) {
-            <option [value]="genre.value"> {{genre.option}}</option>
+          @for (genre of sourceGenres; track genre) {
+            <option [value]="genre">{{ 'SourceGenre.' + genre | translate }}</option>
           }
         </select>
       </div>
@@ -23,13 +27,15 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.source.changeGenre.to">Replacing genre</label>
+        <label class="col-form-label">
+          {{ 'batch.actions.metadata.source.changeGenre.to' | translate }}
+        </label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceGenreTo">
           <option [value]='' selected disabled>Genre</option>
-          @for (genre of sourceGenresOptions; track genre) {
-            <option [value]="genre.value"> {{genre.option}}</option>
+          @for (genre of sourceGenres; track genre) {
+            <option [value]="genre"> {{ 'SourceGenre.' + genre | translate }}</option>
           }
         </select>
       </div>
@@ -38,7 +44,7 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeSourceGenreForm.controls['sourceGenreTo'])) {
         <span class="form-text text-danger small">
-          Previous and new genres {{ valSvc.getFieldError(changeSourceGenreForm) }}
+          {{ 'batch.actions.metadata.source.changeGenre.invalid' | translate }} {{ valSvc.getFieldError(changeSourceGenreForm) }}
         </span>
         } @else {
           <span>&nbsp;</span>

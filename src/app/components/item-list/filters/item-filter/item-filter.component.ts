@@ -5,6 +5,7 @@ import {KeyValuePipe} from "@angular/common";
 import {ItemFilterDirective} from "../directives/item-filter.directive";
 import {options} from "sanitize-html";
 import {DefaultKeyValuePipe} from "../../../../shared/services/pipes/default-key-value.pipe";
+import {TranslatePipe} from "@ngx-translate/core";
 
 
 @Component({
@@ -12,7 +13,8 @@ import {DefaultKeyValuePipe} from "../../../../shared/services/pipes/default-key
   standalone: true,
   imports: [
     KeyValuePipe,
-    DefaultKeyValuePipe
+    DefaultKeyValuePipe,
+    TranslatePipe
   ],
   templateUrl: './item-filter.component.html',
   styleUrl: './item-filter.component.scss'

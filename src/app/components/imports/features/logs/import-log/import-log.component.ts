@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, Inject, Input, Output, EventEmitter, LOCALE_ID, inject } from '@angular/core'
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core'
 import { RouterModule, Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
@@ -11,6 +11,11 @@ import { FormsModule } from '@angular/forms';
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { MatBadgeModule } from '@angular/material/badge';
 
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
+
+import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+
 @Component({
   selector: 'pure-import-log',
   standalone: true,
@@ -19,49 +24,25 @@ import { MatBadgeModule } from '@angular/material/badge';
     RouterModule,
     FormsModule,
     NgbTooltip,
-    MatBadgeModule
+    MatBadgeModule,
+    TranslatePipe,
+    LocalizeDatePipe
   ],
   templateUrl: './import-log.component.html'
 })
-export class ImportLogComponent implements OnInit {
+export class ImportLogComponent {
   @Input() log?: ImportLogDbVO;
   @Output() deleteImportLogEvent = new EventEmitter<ImportLogDbVO>();
 
   importsSvc = inject(ImportsService);
   msgSvc = inject(MessageService);
   router = inject(Router);
-
-  importStatusTranslations = {};
-  importErrorLevelTranslations = {};
-  importFormatTranslations = {};
+  translateSvc = inject(TranslateService);
 
   importStatus: typeof ImportStatus = ImportStatus;
   importErrorLevel: typeof ImportErrorLevel = ImportErrorLevel;
 
   updateDelay = 1;
-
-  constructor(
-    @Inject(LOCALE_ID) public locale: string) { }
-
-  ngOnInit(): void {
-    this.loadTranslations(this.locale);
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.importStatusTranslations = msgs.ImportStatus;
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.importStatusTranslations = msgs.ImportStatus;
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    }
-  }
 
   getAssorted(txt: string): string {
     switch (txt) {
@@ -93,7 +74,7 @@ export class ImportLogComponent implements OnInit {
           }
         });
       if (items.length === 0) {
-        const msg = $localize`:@@imports.list.items.empty:This import has no items available!` + '\n';
+        const msg = this.translateSvc.instant(_('imports.list.items.empty')) + '\n';
         this.msgSvc.info(msg);
         return;
       }
@@ -102,27 +83,11 @@ export class ImportLogComponent implements OnInit {
   }
 
   deleteImportLog(log: any): void {
-    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@imports.list.remove.confirmation:Do you really want to remove this import log?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.list.remove.confirmation')), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.deleteImportLogEvent.emit(log);
       }
     });
   }
-
-  getImportStatusTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importStatusTranslations;
-    return this.importStatusTranslations[key];
-  }
-
-  getImportFormatTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importFormatTranslations;
-    return this.importFormatTranslations[key];
-  }
-
-  getImportErrorLevelTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importErrorLevelTranslations;
-    return this.importErrorLevelTranslations[key];
-  }
-
 }

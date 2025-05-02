@@ -23,6 +23,11 @@ import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/
 import { Location } from '@angular/common'
 import {ItemListStateService} from "./item-list-state.service";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
+import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {ExportItemsComponent} from "../../shared/components/export-items/export-items.component";
+import {ItemSelectionService} from "../../shared/services/item-selection.service";
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 
 @Component({
@@ -39,7 +44,9 @@ import {LoadingComponent} from "../../shared/components/loading/loading.componen
     PaginatorComponent,
     TopnavCartComponent,
     TopnavBatchComponent,
-    LoadingComponent
+    LoadingComponent,
+    NgbTooltip,
+    TranslatePipe
   ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss'
@@ -64,9 +71,6 @@ export class ItemListComponent implements AfterViewInit{
   //currentPaginatorEvent!: PaginatorChangeEvent;
   select_all = new FormControl(false);
 
-  selectAll = $localize`:@@selectAll:select all`;
-  deselectAll = $localize`:@@deselectAll:deselect all`;
-
   currentSortQuery: any;
   currentQuery: any;
 
@@ -79,7 +83,9 @@ export class ItemListComponent implements AfterViewInit{
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private location:Location,
-    private listStateService: ItemListStateService
+    private listStateService: ItemListStateService,
+    private modalService: NgbModal,
+    protected selectionService: ItemSelectionService
   )
   {
 
@@ -276,6 +282,11 @@ export class ItemListComponent implements AfterViewInit{
     //this.currentPaginatorEvent = $event;
     this.updateList();
 
+  }
+
+  openExportModal() {
+    const comp = this.modalService.open(ExportItemsComponent).componentInstance;
+    comp.sortQuery = this.currentSortQuery;
   }
 
 }

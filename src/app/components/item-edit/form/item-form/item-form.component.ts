@@ -170,7 +170,7 @@ export class ItemFormComponent implements OnInit {
   handleFileUploadNotification(files: FileDbVO[]) {
     for (let file of files) {
       file.storage = Storage.INTERNAL_MANAGED;
-      if (this.aaService.token) {
+      if (this.aaService.isLoggedIn) {
         this.fileStagingService.createStageFile(file)
           .subscribe(stagedFileId => {
             file.content = stagedFileId.toString();

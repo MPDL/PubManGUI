@@ -8,7 +8,7 @@ const routes: Routes = [
     loadComponent: () => import('./features/new/new.component'),
     data: {
       breadcrumb: {
-        label: $localize`:@@new:New`,
+        labelKey: 'common.new',
       }
     },
   },
@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'myimports',
     data: {
       breadcrumb: {
-        label: $localize`:@@myimports:My imports`,
+        labelKey: 'common.myimports',
       }
     },
     children: [
@@ -25,7 +25,7 @@ const routes: Routes = [
         loadComponent: () => import('./features/logs/import-logs-list.component'),
         data: {
           breadcrumb: {
-            //label: '',
+            //labelKey: '',
           }
         },
       },
@@ -33,7 +33,7 @@ const routes: Routes = [
         path: ':importId',
         data: {
           breadcrumb: {
-            label: $localize`:@@imports.list.items:Details`, 
+            labelKey: 'imports.list.items',
           }
         },
         children: [
@@ -41,17 +41,17 @@ const routes: Routes = [
             path: '',
             loadComponent: () => import('./features/logs/import-log/import-details/import-details-list.component'), resolve: { import: importLogResolver },
             data: {
-              breadcrumb: {              
-                //label: '',
+              breadcrumb: {
+                //labelKey: '',
               }
             },
           },
           {
             path: 'log',
-            loadComponent: () => import('./features/logs/import-log/import-details/import-detail-log/import-item-details/import-item-details-list.component'), 
+            loadComponent: () => import('./features/logs/import-log/import-details/import-detail-log/import-item-details/import-item-details-list.component'),
             data: {
               breadcrumb: {
-                label: 'Log', 
+                labelKey: 'imports.list.details',
               }
             },
           },
@@ -60,7 +60,7 @@ const routes: Routes = [
             loadComponent: () => import('./imports-datasets/datasets.component'),
             data: {
               breadcrumb: {
-                label: 'Datasets', 
+                labelKey: 'common.datasets',
               }
             },
           },
@@ -69,20 +69,20 @@ const routes: Routes = [
             loadComponent: () => import('src/app/components/item-view/item-view.component').then(c => c.ItemViewComponent),
             data: {
               breadcrumb: {
-                label: 'View',
+                labelKey: 'common.view',
               }
             },
           },
         ],
       },
-],
+    ],
   },
-{
+  {
     path: '',
     loadComponent: () => import('./imports.component'),
     data: {
       breadcrumb: {
-        label: $localize`:@@imports:Imports`,
+        labelKey: 'imports.name',
       }
     }
   }
@@ -92,4 +92,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ImportsRoutingModule {}
+export class ImportsRoutingModule { }

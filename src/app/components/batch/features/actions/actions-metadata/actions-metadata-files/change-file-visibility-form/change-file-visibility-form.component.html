@@ -1,21 +1,21 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-  <h4 class="m-0" i18n="@@batch.actions.metadata.files.visibility">Visibility</h4>
+  <h4 class="m-0">{{ 'batch.actions.metadata.files.visibility' | translate }}</h4>
   <div class="mt-2 mb-5">
-    <span i18n="@@batch.actions.metadata.files.visibility.info">
-      The file visibility will be changed as follows:
+    <span>
+      {{ 'batch.actions.metadata.files.visibility.info' | translate }}
     </span>
   </div>
 
   <form [formGroup]="changeFileVisibilityForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.files.visibility.from">Visibility to be replaced</label>
+        <label class="col-form-label">{{ 'batch.actions.metadata.files.visibility.from' | translate }}</label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileVisibilityFrom">
-          <option [value]=''  selected disabled i18n="@@batch.actions.metadata.files.visibility">Visibility</option>
-          @for (fileVisibility of visibilityOptions; track fileVisibility) {
-            <option [value]="fileVisibility.value"> {{fileVisibility.option}}</option>
+          <option [value]=''  selected disabled>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
+          @for (fileVisibility of visibility; track fileVisibility) {
+            <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
           }
         </select>
       </div>
@@ -23,13 +23,13 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@batch.actions.metadata.files.visibility.to">Replacing visibility</label>
+        <label class="col-form-label">{{ 'batch.actions.metadata.files.visibility.to' | translate }}</label>
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileVisibilityTo">
-          <option [value]=''  selected disabled i18n="@@batch.actions.metadata.files.visibility">Visibility</option>
-          @for (fileVisibility of visibilityOptions; track fileVisibility) {
-            <option [value]="fileVisibility.value"> {{fileVisibility.option}}</option>
+          <option [value]=''  selected disabled>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
+          @for (fileVisibility of visibility; track fileVisibility) {
+            <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
           }
         </select>
       </div>
@@ -38,7 +38,7 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
         <span class="form-text text-danger small">
-          Previous and new file visibilities {{ valSvc.getFieldError(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
+          {{ 'batch.actions.metadata.files.visibility.invalid' | translate }} {{ valSvc.getFieldError(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
         </span>
         } @else {
           <span>&nbsp;</span>

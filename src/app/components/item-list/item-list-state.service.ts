@@ -60,9 +60,6 @@ export class ItemListStateService {
 
     if (this.currentFullQuery) {
 
-      let token = undefined;
-      if (this.aa.token) token = this.aa.token;
-
       const from = (Math.floor(this.page / this.currentSizeOfList)) * this.currentSizeOfList;
       console.log("Set from to " + from);
       this.currentPageOfList = (from / this.currentSizeOfList) + 1;

@@ -3,6 +3,7 @@ import {AggregationEvent, FilterEvent, ItemListComponent} from "../../item-list.
 import {BehaviorSubject} from "rxjs";
 import {AsyncPipe} from "@angular/common";
 import {ItemAggregationBaseDirective} from "./directives/item-aggregation-base.directive";
+import {TranslatePipe} from "@ngx-translate/core";
 
 
 let uniqueId = 0;
@@ -11,7 +12,8 @@ let uniqueId = 0;
   selector: 'pure-item-aggregation-filter',
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    TranslatePipe
   ],
   templateUrl: './item-aggregation-filter.component.html',
   styleUrl: './item-aggregation-filter.component.scss'
@@ -94,5 +96,6 @@ export interface AggregationResultView {
   displayValue: string,
   docCount: number,
   selectionValue: string,
-  selected?: boolean
+  selected?: boolean,
+  translateDisplayValue?: boolean
 }

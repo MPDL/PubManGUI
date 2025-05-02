@@ -1,11 +1,11 @@
 <div class="container pb-4">
-<h6>Sort by</h6>
+<h6>{{'common.sort' | translate}}</h6>
 <div class="row">
   <div class="col">
     <select class="form-select" (change)="handleInputChange($event)">
-      @for (val of sortOptionNames; track val) {
-        <option [value]="val" [selected]="val === selectedSort">
-          {{ val }}
+      @for (val of sortOptionEntries; track val) {
+        <option [value]="val[0]" [selected]="val[0] === selectedSort">
+          {{ val[1].label | translate}}
         </option>
       }
     </select>

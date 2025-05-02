@@ -3,7 +3,7 @@
 <!-- Subtitle -->
 <pure-item-view-metadata-element
   [condition]="(item.metadata?.alternativeTitles?.length | empty)">
-  <span label>Subtitle</span>
+  <span label>{{'MetadataFields.subtitle' | translate}}</span>
   <span content>
     @for (sub of item.metadata?.alternativeTitles; track sub; let i = $index) {
       <div> {{ sub.value }}</div>
@@ -14,7 +14,7 @@
 
 <!--Authors-->
 <pure-item-view-metadata-element>
-  <span label id="creators">Creators</span>
+  <span label id="creators">{{'MetadataFields.creators' | translate}}</span>
   <span content>
   @if (item) {
     <pure-item-view-creators [creators]="item.metadata?.creators"/>
@@ -27,10 +27,10 @@
   [condition]="(item.metadata?.freeKeywords  | empty) ||
   (item.metadata?.subjects?.length  | empty) ||
   (item.metadata?.abstracts?.length  | empty)">
-  <span label>Content</span>
+  <span label>{{'MetadataFields.content' | translate}}</span>
   <span content>
     <pure-item-view-metadata-element [sub]="true" [condition]="item.metadata?.freeKeywords | empty">
-        <span label>Free keywords</span>
+        <span label>{{'MetadataFields.keywords' | translate}}</span>
         <span content>
           {{ item.metadata?.freeKeywords }},
         </span>
@@ -45,7 +45,7 @@
     </pure-item-view-metadata-element>
     @for (abs of item.metadata?.abstracts; track abs; ) {
       <pure-item-view-metadata-element [sub]="true">
-        <span label>Abstract {{ abs.language ? '(' + abs.language + ')' : '' }}</span>
+        <span label>{{'MetadataFields.abstract' | translate}} {{ abs.language ? '(' + abs.language + ')' : '' }}</span>
         <span content>
           <p [innerHTML]="(abs.value | sanitizeHtml)" ></p>
         </span>
@@ -73,7 +73,7 @@
   <span label>Details</span>
   <span content>
     <pure-item-view-metadata-element [sub]="true" [condition]=" (item.metadata?.languages | empty)">
-      <span label>Language</span>
+      <span label>{{'MetadataFields.languages' | translate}}</span>
         <span content>
           @for (lang of item.metadata?.languages; track lang) {
             <div>{{ lang }}</div>
@@ -81,51 +81,51 @@
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true">
-      <span label>Dates</span>
+      <span label>{{'MetadataFields.date' | translate}}</span>
         <span content>
             @if (item.metadata?.dateCreated) {
-              <pure-item-view-metadata-element [sub]="true">
-              <span label>Created</span>
+              <pure-item-view-metadata-element [sub]="true" [highlight]="false">
+              <span label>{{'MetadataFields.dateCreated' | translate}}</span>
              <span content>
               {{ item.metadata?.dateCreated }}
              </span>
               </pure-item-view-metadata-element>
             }
           @if (item.metadata?.dateModified) {
-            <pure-item-view-metadata-element [sub]="true">
-              <span label>Modified</span>
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
+              <span label>{{'MetadataFields.dateModified' | translate}}</span>
              <span content>
               {{ item.metadata?.dateModified }}
              </span>
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.dateSubmitted) {
-            <pure-item-view-metadata-element [sub]="true">
-              <span label>Submitted</span>
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
+              <span label>{{'MetadataFields.dateSubmitted' | translate}}</span>
              <span content>
               {{ item.metadata?.dateSubmitted }}
              </span>
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.dateAccepted) {
-            <pure-item-view-metadata-element [sub]="true">
-              <span label>Accepted</span>
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
+              <span label>{{'MetadataFields.dateAccepted' | translate}}</span>
              <span content>
               {{ item.metadata?.dateAccepted }}
              </span>
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.datePublishedOnline) {
-            <pure-item-view-metadata-element [sub]="true">
-              <span label>Published online</span>
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
+              <span label>{{'MetadataFields.datePublishedOnline' | translate}}</span>
              <span content>
               {{ item.metadata?.datePublishedOnline }}
              </span>
               </pure-item-view-metadata-element>
           }
           @if (item.metadata?.datePublishedInPrint) {
-            <pure-item-view-metadata-element [sub]="true">
-              <span label>Published in print</span>
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
+              <span label>{{'MetadataFields.datePublishedInPrint' | translate}}</span>
              <span content>
               {{ item.metadata?.datePublishedInPrint }}
              </span>
@@ -134,42 +134,42 @@
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(publicationState  | empty)">
-      <span label>Publication Status</span>
+      <span label>{{'MetadataFields.publicationState' | translate}}</span>
         <span content>
-          {{ publicationState }}
+          {{ 'PublicationState.' + publicationState | translate }}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.totalNumberOfPages | empty)">
-      <span label>Pages</span>
+      <span label>{{'MetadataFields.numberOfPages' | translate}}</span>
         <span content>
           {{ item.metadata?.totalNumberOfPages }}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.publishingInfo | empty)">
-      <span label>Publishing Info</span>
+      <span label>{{'MetadataFields.publishingInfo' | translate}}</span>
         <span content>
           {{publishingInfoString(item.metadata.publishingInfo)}}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.tableOfContents | empty)">
-      <span label>Table of Contents</span>
+      <span label>{{'MetadataFields.tableOfContents' | translate}}</span>
         <span content>
           <p style="white-space: pre-wrap;" [innerHTML]="(item.metadata.tableOfContents | sanitizeHtml)"></p>
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.reviewMethod | empty)">
-      <span label>Review Type</span>
+      <span label>{{'MetadataFields.reviewMethod' | translate}}</span>
         <span content>
           {{ item.metadata?.reviewMethod }}
         </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.identifiers | empty)">
-      <span label>Identifiers</span>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.identifiers | empty)" >
+      <span label>{{'MetadataFields.identifiers' | translate}}</span>
         <span content>
           @for (id of item.metadata?.identifiers; track id) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
 
-              <span label>{{ id.type }}:</span>
+              <span label>{{ 'IdType.' + id.type | translate}}:</span>
               <span content>
             @if(identifierUrl(id) | empty) {
               <a href="{{identifierUrl(id)}}" target="_blank">{{id.id}}</a>
@@ -178,11 +178,12 @@
             }
              </span>
               </pure-item-view-metadata-element>
+
           }
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.degree | empty)">
-      <span label>Degree</span>
+      <span label>{{'MetadataFields.degree' | translate}}</span>
         <span content>
           {{ item.metadata?.degree }}
         </span>
@@ -192,28 +193,28 @@
 </pure-item-view-metadata-element>
 
 <pure-item-view-metadata-element [condition]="(item.metadata.event | empty)">
-  <span label>Event</span>
+  <span label>{{'MetadataFields.event' | translate}}</span>
   <span content>
         <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.event?.title | empty)">
-            <span label>Title</span>
+            <span label>{{'MetadataFields.title' | translate}}</span>
             <span content>
                 {{ item.metadata?.event?.title }}
             </span>
         </pure-item-view-metadata-element>
         <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.event?.place | empty)">
-            <span label>Place of Event</span>
+            <span label>{{'MetadataFields.eventPlace' | translate}}</span>
             <span content>
                 {{ item.metadata?.event?.place }}
             </span>
         </pure-item-view-metadata-element>
         <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.event?.startDate | empty) || (item.metadata.event?.endDate | empty)">
-            <span label>Start / End Date</span>
+            <span label>{{'MetadataFields.date' | translate}}</span>
             <span content>
                 {{ item.metadata?.event?.startDate }} - {{ item.metadata?.event?.endDate }}
             </span>
         </pure-item-view-metadata-element>
         <pure-item-view-metadata-element [sub]="true">
-            <span label>Invited</span>
+            <span label>{{'MetadataFields.eventInvited' | translate}}</span>
             <span content>
                 {{ item.metadata?.event?.invitationStatus === 'INVITED' ? 'Yes' : 'No' }}
             </span>
@@ -222,28 +223,28 @@
 </pure-item-view-metadata-element>
 
 <pure-item-view-metadata-element [condition]="(item.metadata.legalCase | empty)">
-  <span label>Legal Case</span>
+  <span label>{{'MetadataFields.legalCase' | translate}}</span>
   <span content>
         <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.title | empty)">
-            <span label>Title</span>
+            <span label>{{'MetadataFields.title' | translate}}</span>
             <span content>
                 {{ item.metadata?.legalCase?.title }}
             </span>
         </pure-item-view-metadata-element>
         <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.courtName | empty)">
-            <span label>Court Name</span>
+            <span label>{{'MetadataFields.legalCaseCourt' | translate}}</span>
             <span content>
                 {{ item.metadata?.legalCase?.courtName }}
             </span>
         </pure-item-view-metadata-element>
         <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.datePublished | empty)">
-            <span label>Date Published</span>
+            <span label>{{'MetadataFields.date' | translate}}</span>
             <span content>
                 {{ item.metadata?.legalCase?.datePublished }}
             </span>
         </pure-item-view-metadata-element>
         <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.legalCase?.identifier | empty)">
-            <span label>Identifier</span>
+            <span label>{{'MetadataFields.legalCaseRefNumber' | translate}}</span>
             <span content>
                 {{ item.metadata?.legalCase?.identifier }}
             </span>
@@ -253,29 +254,29 @@
 
 
 <pure-item-view-metadata-element [condition]="(item.metadata.projectInfo | empty)">
-  <span label>Project Information</span>
+  <span label>{{'MetadataFields.projectInfo' | translate}}</span>
   <span content>
         @for (pi of item.metadata?.projectInfo; track pi) {
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.title | empty)">
-                <span label>Project name</span>
+                <span label>{{'MetadataFields.projectInfoName' | translate}}</span>
                 <span content>
                     {{ pi.title }}
                 </span>
             </pure-item-view-metadata-element>
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.grantIdentifier?.id | empty)">
-                <span label>Grant ID</span>
+                <span label>{{'MetadataFields.projectInfoGrantId' | translate}}</span>
                 <span content>
                     {{ pi.grantIdentifier?.id }}
                 </span>
             </pure-item-view-metadata-element>
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.fundingInfo?.fundingProgram | empty)">
-                <span label>Funding program</span>
+                <span label>{{'MetadataFields.projectInfoFundingProgram' | translate}}</span>
                 <span content>
                     {{ pi.fundingInfo?.fundingProgram?.title }} {{ pi.fundingInfo?.fundingProgram?.identifiers ? '(' + pi.fundingInfo.fundingProgram?.identifiers![0].id + ')' : '' }}
                 </span>
             </pure-item-view-metadata-element>
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.fundingInfo?.fundingOrganization | empty)">
-                <span label>Funding organization</span>
+                <span label>{{'MetadataFields.projectInfoFundingOrganization' | translate}}</span>
                 <span content>
                     {{ pi.fundingInfo?.fundingOrganization?.title }} {{ pi.fundingInfo?.fundingOrganization?.identifiers ? '(' + pi.fundingInfo?.fundingOrganization?.identifiers![0].id + ')' : '' }}
                 </span>
@@ -289,10 +290,10 @@
 <!--Sources -->
 @for (source of item.metadata?.sources; track source; let i = $index) {
   <pure-item-view-metadata-element>
-    <span label>Source {{ i + 1 }}</span>
+    <span label>{{'MetadataFields.source' | translate}} {{ i + 1 }}</span>
     <span content>
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.title | empty)">
-      <span label>Title</span>
+      <span label>{{'MetadataFields.title' | translate}}</span>
       <span content>
         {{ source.title }}
       </span>
@@ -308,7 +309,7 @@
           }
 
       <pure-item-view-metadata-element [sub]="true" [condition]="(source.genre | empty)">
-      <span label>Genre</span>
+      <span label>{{'MetadataFields.genre' | translate}}</span>
       <span content>
         {{ source.genre }}
       </span>
@@ -318,42 +319,42 @@
 
 
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.publishingInfo | empty)">
-        <span label>Publishing Info</span>
+        <span label>{{'MetadataFields.publishingInfo' | translate}}</span>
         <span content>
           {{publishingInfoString(source.publishingInfo)}}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.totalNumberOfPages | empty)">
-        <span label>Pages</span>
+        <span label>{{'MetadataFields.totalNumberOfPages' | translate}}</span>
         <span content>
           {{ source.totalNumberOfPages }}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.volume | empty) || (source.issue | empty)">
-        <span label>Volume / Issue</span>
+        <span label>{{'MetadataFields.volume' | translate}} / {{'MetadataFields.issue' | translate}}</span>
         <span content>
           {{ source.volume }} {{(source.issue | empty) ? '(' + source.issue + ')' : ''}}
         </span>
     </pure-item-view-metadata-element>
      <pure-item-view-metadata-element [sub]="true" [condition]="(source.sequenceNumber | empty)">
-        <span label>Sequence Number</span>
+        <span label>{{'MetadataFields.sequenceNumber' | translate}}</span>
         <span content>
           {{ source.sequenceNumber }}
         </span>
     </pure-item-view-metadata-element>
      <pure-item-view-metadata-element [sub]="true" [condition]="(source.startPage | empty) || (source.endPage | empty)">
-        <span label>Start / End Page</span>
+        <span label>{{'MetadataFields.startPage' | translate}} / {{'MetadataFields.endPage' | translate}}</span>
         <span content>
           {{ source.startPage }}{{ (source.endPage | empty) ? ' - ' + source.endPage : ''}}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.identifiers | empty)">
-      <span label>Identifiers</span>
+      <span label>{{'MetadataFields.identifiers' | translate}}</span>
         <span content>
           @for (id of source.identifiers; track id) {
-            <pure-item-view-metadata-element [sub]="true">
+            <pure-item-view-metadata-element [sub]="true" [highlight]="false">
 
-              <span label>{{ id.type }}</span>
+              <span label>{{'IdType' + id.type | translate}}</span>
               <span content>
             @if(identifierUrl(id) | empty) {
               <a href="{{identifierUrl(id)}}" target="_blank">{{id.id}}</a>
@@ -361,7 +362,9 @@
               {{ id.id }}
             }
              </span>
+
               </pure-item-view-metadata-element>
+
           }
         </span>
     </pure-item-view-metadata-element>

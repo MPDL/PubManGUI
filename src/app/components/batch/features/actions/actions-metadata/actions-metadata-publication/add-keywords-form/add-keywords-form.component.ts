@@ -1,36 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { AddKeywordsParams } from 'src/app/components/batch/interfaces/batch-params';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-add-keywords-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './add-keywords-form.component.html',
 })
 export class AddKeywordsFormComponent {
-  
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService
-  ) { }
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  batchSvc = inject(BatchService);
 
   public addKeywordsForm: FormGroup = this.fb.group({
-    keywords: ['', [ Validators.required ]],
+    keywords: ['', [Validators.required]],
   });
-
-  // TO-DO Check that words don't repeat
 
   get addKeywordsParams(): AddKeywordsParams {
     const actionParams: AddKeywordsParams = {
@@ -46,11 +41,11 @@ export class AddKeywordsFormComponent {
       return;
     }
 
-    this.batchSvc.addKeywords(this.addKeywordsParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
+    this.batchSvc.addKeywords(this.addKeywordsParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //setTimeout(() => {this.addKeywordsForm.reset();}, 500);
       this.router.navigate(['/batch/logs']);
     });
   }
+
+  // TO-DO? No duplicated keywords validation.
 }

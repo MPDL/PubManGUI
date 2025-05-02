@@ -558,6 +558,20 @@ export enum SourceGenre {
     FESTSCHRIFT = "FESTSCHRIFT",
 }
 
+export enum SourceIdType {
+    BIBTEX_CITEKEY = "BIBTEX_CITEKEY",
+    CONE = "CONE",
+    DOI = "DOI",
+    ISBN = "ISBN",
+    ISI = "ISI",
+    ISSN = "ISSN",
+    OTHER = "OTHER",
+    PII = "PII",
+    URI = "URI",
+    URN = "URN",
+    ZDB = "ZDB",
+}
+
 export enum AlternativeTitleType {
     ABBREVIATION = "ABBREVIATION",
     HTML = "HTML",
@@ -568,18 +582,18 @@ export enum AlternativeTitleType {
 }
 
 export enum ContentCategories {
-  any_fulltext = "http://purl.org/escidoc/metadata/ves/content-categories/any-fulltext",
-  pre_print = "http://purl.org/escidoc/metadata/ves/content-categories/pre-print",
-  post_print = "http://purl.org/escidoc/metadata/ves/content-categories/post-print",
-  publisher_version = "http://purl.org/escidoc/metadata/ves/content-categories/publisher-version",
-  abstract = "http://purl.org/escidoc/metadata/ves/content-categories/abstract",
-  table_of_contents = "http://purl.org/escidoc/metadata/ves/content-categories/table-of-contents",
-  supplementary_material = "http://purl.org/escidoc/metadata/ves/content-categories/supplementary-material",
-  correspondence = "http://purl.org/escidoc/metadata/ves/content-categories/correspondence",
-  copyright_transfer_agreement = "http://purl.org/escidoc/metadata/ves/content-categories/copyright-transfer-agreement",
-  research_data = "http://purl.org/escidoc/metadata/ves/content-categories/research-data",
-  multimedia = "http://purl.org/escidoc/metadata/ves/content-categories/multimedia",
-  code = "http://purl.org/escidoc/metadata/ves/content-categories/code"
+  "any-fulltext" = "http://purl.org/escidoc/metadata/ves/content-categories/any-fulltext",
+  "pre-print" = "http://purl.org/escidoc/metadata/ves/content-categories/pre-print",
+  "post_print" = "http://purl.org/escidoc/metadata/ves/content-categories/post-print",
+  "publisher-version" = "http://purl.org/escidoc/metadata/ves/content-categories/publisher-version",
+  "abstract" = "http://purl.org/escidoc/metadata/ves/content-categories/abstract",
+  "table-of-contents" = "http://purl.org/escidoc/metadata/ves/content-categories/table-of-contents",
+  "supplementary-material" = "http://purl.org/escidoc/metadata/ves/content-categories/supplementary-material",
+  "correspondence" = "http://purl.org/escidoc/metadata/ves/content-categories/correspondence",
+  "copyright-transfer-agreement" = "http://purl.org/escidoc/metadata/ves/content-categories/copyright-transfer-agreement",
+  "research-data" = "http://purl.org/escidoc/metadata/ves/content-categories/research-data",
+  "multimedia" = "http://purl.org/escidoc/metadata/ves/content-categories/multimedia",
+  "code" = "http://purl.org/escidoc/metadata/ves/content-categories/code"
 }
 
 

@@ -15,6 +15,7 @@ import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
 import {isUrl} from "../../../shared/services/item-utils";
 import { environment } from 'src/environments/environment';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-view-metadata',
@@ -24,7 +25,8 @@ import { environment } from 'src/environments/environment';
     ItemViewCreatorsComponent,
     AsyncPipe,
     EmptyPipe,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    TranslatePipe
   ],
   templateUrl: './item-view-metadata.component.html',
   styleUrl: './item-view-metadata.component.scss'

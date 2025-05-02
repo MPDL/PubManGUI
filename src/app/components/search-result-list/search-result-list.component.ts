@@ -37,6 +37,7 @@ import {
 import {
   ItemSourceTitleAggregationDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-sourcetitle-aggregation.directive";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-search-result-list',
@@ -53,7 +54,8 @@ import {
     ItemLocalTagAggregationDirective,
     ItemStatusAggregationDirective,
     ItemReviewMethodDirective,
-    ItemSourceTitleAggregationDirective
+    ItemSourceTitleAggregationDirective,
+    TranslatePipe
   ],
   templateUrl: './search-result-list.component.html',
   styleUrl: './search-result-list.component.scss'

@@ -2,13 +2,15 @@ import {Component, Input} from '@angular/core';
 import {DateToYearPipe} from "../../services/pipes/date-to-year.pipe";
 import {IdType, ItemVersionVO} from "../../../model/inge";
 import {AaService} from "../../../services/aa.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-badges',
   standalone: true,
-    imports: [
-        DateToYearPipe
-    ],
+  imports: [
+    DateToYearPipe,
+    TranslatePipe
+  ],
   templateUrl: './item-badges.component.html',
   styleUrl: './item-badges.component.scss'
 })

@@ -6,7 +6,7 @@
         [ngClass]="{'disabled' : option.disabled}" (click)="warning(option.route)" 
         data-bs-toggle="button"
         class="nav-link nav-label ps-5">
-        {{ option.label | titlecase }}
+        {{ 'common.' + option.label | translate }}
     </li>
     }
 </ul>

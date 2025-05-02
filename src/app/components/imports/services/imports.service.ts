@@ -25,10 +25,6 @@ export class ImportsService {
     //this.checkImports();
   }
 
-  get token(): string {
-    return this.aaSvc.token || '';
-  }
-
   get isDepositor(): boolean {
     return this.aaSvc.principal.value.isDepositor;
   }
@@ -65,25 +61,23 @@ export class ImportsService {
   }
 
   getCrossref(importParams: params.GetCrossrefParams): Observable<ItemVersionVO> {
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/dataFetch/getCrossref`;
     const query = `?contextId=${importParams.contextId}&identifier=${importParams.identifier}`;
 
-    return this.getDataFetch(url, query, headers);
+    return this.getDataFetch(url, query );
   }
 
   getArxiv(importParams: params.GetArxivParams): Observable<ItemVersionVO> {
-    const headers = new HttpHeaders()
-      .set('Authorization', this.token!);
+    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/dataFetch/getArxiv`;
     const query = `?contextId=${importParams.contextId}&identifier=${importParams.identifier}&fullText=${importParams.fullText}`;
 
-    return this.getDataFetch(url, query, headers);
+    return this.getDataFetch(url, query );
   }
 
-  getDataFetch(url: string, query: string, headers: HttpHeaders): Observable<ItemVersionVO> {
-    const importResponse: Observable<ItemVersionVO> = this.http.get<ItemVersionVO>(url + query, { headers, withCredentials: true })
+  getDataFetch(url: string, query: string): Observable<ItemVersionVO> {
+    const importResponse: Observable<ItemVersionVO> = this.http.get<ItemVersionVO>(url + query, { withCredentials: true })
       .pipe(
         tap((value: ItemVersionVO) => {
           this.#lastFetch.set(of(value));

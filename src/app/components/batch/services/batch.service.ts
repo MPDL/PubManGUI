@@ -1,4 +1,4 @@
-import { signal, computed, Injectable } from '@angular/core';
+import { signal, computed, Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,6 +12,9 @@ import { AaService } from 'src/app/services/aa.service';
 import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 import { ItemVersionVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
+
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -31,13 +34,10 @@ export class BatchService {
     private http: HttpClient,
     public aaSvc: AaService,
     private itemSvc: ItemsService,
-    private msgSvc: MessageService) {
+    private msgSvc: MessageService,
+    private translateSvc: TranslateService) {
       this.objectIds$.next(this.objectIds);
     }
-
-  get token(): string {
-    return this.aaSvc.token || '';
-  }
 
   get user(): string {
     return this.aaSvc.principal.getValue().user?.objectId || '';
@@ -125,7 +125,7 @@ export class BatchService {
     this.#processRunning.set(true);
     this.items = [];
 
-    this.msgSvc.info($localize`:@@batch.actions.start:Action started!`+'\n');
+    this.msgSvc.info(this.translateSvc.instant(_('batch.actions.start')) + '\n');
     this.updateProcessProgress();
   }
 
@@ -133,7 +133,7 @@ export class BatchService {
     this.batchProcessLogHeaderId = -1;
     this.#processRunning.set(false);
 
-    this.msgSvc.success($localize`:@@batch.actions.stop:Action finished!`+'\n');
+    this.msgSvc.success(this.translateSvc.instant(_('batch.actions.stop')) + '\n');
   }
 
   #processRunning = signal(false);

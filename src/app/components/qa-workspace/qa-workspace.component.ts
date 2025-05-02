@@ -9,6 +9,7 @@ import {ItemContextFilterDirective} from "../item-list/filters/directives/item-c
 import {ItemStateFilterDirective} from "../item-list/filters/directives/item-state-filter.directive";
 import {ItemVersionState} from "../../model/inge";
 import {ItemImportFilterDirective} from "../item-list/filters/directives/item-import-filter.directive";
+import {TranslatePipe} from "@ngx-translate/core";
 
 
 @Component({
@@ -22,6 +23,7 @@ import {ItemImportFilterDirective} from "../item-list/filters/directives/item-im
     ItemContextFilterDirective,
     ItemStateFilterDirective,
     ItemImportFilterDirective,
+    TranslatePipe,
   ],
   templateUrl: './qa-workspace.component.html',
   styleUrl: './qa-workspace.component.scss'

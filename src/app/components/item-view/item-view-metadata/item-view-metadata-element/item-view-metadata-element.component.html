@@ -1,9 +1,11 @@
 @if(condition) {
   <div class="row mb-2">
-  <div class="col-2">
-    <span class="{{true ? '' : 'h6'}}"><b><ng-content select="[label]"/></b></span>
+  <div class="{{sub ? 'col-3' : 'col-2'}} text-break">
+    <span class="{{highlight ? 'fw-bold' : ''}}">
+      <ng-content select="[label]"/>
+    </span>
   </div>
-  <div class="col-10" >
+  <div class="{{sub ? 'col-9' : 'col-10'}}" >
     <ng-content select="[content]" #content/>
   </div>
 

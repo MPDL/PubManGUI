@@ -27,8 +27,8 @@ import {EmptyPipe} from "../../services/pipes/empty.pipe";
 })
 export class CslAutosuggestComponent {
 
-  selectedCslName : string = '';
-  selectedCslId : string = '';
+  @Input() selectedCslName : string = '';
+  @Input() selectedCslId : string = '';
 
   @Output() selectedEvent = new EventEmitter<any>()
 

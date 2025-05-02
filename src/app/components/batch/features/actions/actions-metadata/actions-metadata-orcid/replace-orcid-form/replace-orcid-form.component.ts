@@ -11,8 +11,10 @@ import { SelectorComponent } from "src/app/shared/components/selector/selector.c
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
+
 import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/batch-params';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-replace-orcid-form',
@@ -22,7 +24,8 @@ import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/bat
     ReactiveFormsModule,
     ConePersonsDirective,  
     SelectorComponent,
-    OptionDirective
+    OptionDirective,
+    TranslatePipe
   ],
   templateUrl: './replace-orcid-form.component.html',
 })
@@ -31,8 +34,6 @@ export class ReplaceOrcidFormComponent {
   fb = inject(FormBuilder);
   batchSvc = inject(BatchService);
   cone = inject(ConePersonsService);
-  //msgSvc = inject(MessageService);
-  placeholder = $localize`:@@batch.actions.metadata.orcid.add:Add ORCID`+' ...';
 
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
     completeName: this.fb.control(''),
@@ -94,9 +95,7 @@ export class ReplaceOrcidFormComponent {
     }
 
     this.batchSvc.replaceOrcid(this.changeOrcidParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //setTimeout(() => {this.changeOrcidForm.reset();}, 500);
       this.router.navigate(['/batch/logs']);
     });
   }

@@ -4,13 +4,15 @@ import {FilterEvent, ItemListComponent} from "../../item-list.component";
 import {ItemVersionState} from "../../../../model/inge";
 import {baseElasticSearchSortBuilder} from "../../../../shared/services/search-utils";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-sort-selector',
   standalone: true,
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './sort-selector.component.html',
   styleUrl: './sort-selector.component.scss'
@@ -18,8 +20,10 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 export class SortSelectorComponent {
   @Input() itemList!: ItemListComponent;
   @Input() defaultSort:string = "modificationDate";
+
+  sortOptionEntries = Object.entries(sortOptions);
   //@Input() defaultSortOrder:string = "desc";
-  sortOptionNames = Object.keys(sortOptions);
+  //sortOptionNames = Object.keys(sortOptions);
   //@Output() sortChanged = new EventEmitter<any>();
   selectedSort!:string;
   selectedSortOrder!:string;
@@ -98,7 +102,8 @@ export interface SortOptionsType {
   [key:string] : {
     index: string[],
     order:string,
-    loggedIn: boolean
+    loggedIn: boolean,
+    label: string
 
 }
 }
@@ -107,58 +112,69 @@ export const sortOptions: SortOptionsType = {
   "relevance" : {
     index: ['_score'],
     order: 'desc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'Relevance'
   },
 
   "modificationDate" : {
     index: ['modificationDate'],
     order: 'desc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.dateModified'
   },
   "creationDate" : {
     index: ['creationDate'],
     order: 'desc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.dateCreated'
   },
   "title" : {
     index: ['metadata.title'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.title'
   },
   "genre" : {
     index: ['metadata.genre'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.genre'
   },
   "date" : {
     index: ['sort-metadata-dates-by-category'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.date'
   },
   "creators" : {
     index: ['sort-metadata-creators-compound'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.creators'
   },
-  "publishing-info" : {
+  "publishingInfo" : {
     index: ['metadata.publishingInfo.publisher', 'metadata.publishingInfo.place', 'metadata.publishingInfo.edition'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.publishingInfo'
   },
-  "event-title" : {
+  "eventTitle" : {
     index: ['metadata.event.title'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.eventTitle'
   },
-  "source-title" : {
+  "sourceTitle" : {
     index: ['metadata.sources.title'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.sourceTitle'
   },
-  "review-method" : {
+  "reviewMethod" : {
     index: ['metadata.reviewMethod'],
     order: 'asc',
-    loggedIn: false
+    loggedIn: false,
+    label: 'MetadataFields.reviewMethod'
   }
 
 }

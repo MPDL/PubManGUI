@@ -10,7 +10,7 @@ const routes: Routes = [
     data: {
       saveComponent: true,
       breadcrumb: {
-        label: $localize`:@@datasets:Datasets`,
+        labelKey: 'common.datasets',
       }
     },
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
     loadComponent: () => import('./features/actions/actions.component'),
     data: {
       breadcrumb: {
-        label: $localize`:@@actions:Actions`,
+        labelKey: 'common.actions',
       }
     },
   },
@@ -27,7 +27,7 @@ const routes: Routes = [
     path: 'logs',
     data: {
       breadcrumb: {
-        label: $localize`:@@logs:Logs`,
+        labelKey: 'common.logs',
       }
     },
     children: [
@@ -36,7 +36,7 @@ const routes: Routes = [
         loadComponent: () => import('./features/logs/batch-log-list.component'),
         data: {
           breadcrumb: {
-            //label: '',
+            //labelKey: '',
           }
         },
       },
@@ -44,7 +44,7 @@ const routes: Routes = [
         path: ':logId',
         data: {
           breadcrumb: {
-            label: $localize`:@@details:Log details`,
+            labelKey: 'batch.logs.details',
           }
         },
         children: [
@@ -53,7 +53,7 @@ const routes: Routes = [
             loadComponent: () => import('./features/logs/batch-action-log/batch-action-details/batch-action-details-list.component'), resolve: { log: batchLogResolver },
             data: {
               breadcrumb: {
-                //label: '',
+                //labelKey: '',
               }
             },
           },
@@ -62,7 +62,7 @@ const routes: Routes = [
             loadComponent: () => import('src/app/components/item-view/item-view.component').then(c => c.ItemViewComponent),
             data: {
               breadcrumb: {
-                label: 'View',
+                labelKey: 'common.view',
               }
             },
           },
@@ -75,7 +75,7 @@ const routes: Routes = [
     loadComponent: () => import('./batch.component'),
     data: {
       breadcrumb: {
-        label: $localize`:@@batch:Batch processing`,
+        labelKey: 'batch.name',
       }
     }
   }

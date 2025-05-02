@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ContextDbRO } from 'src/app/model/inge';
-//import { PureCtxsDirective } from 'src/app/shared/components/selector/services/pure_ctxs/pure-ctxs.directive';
-//import { OptionDirective } from "src/app/shared/components/selector/directives/option.directive";
-//import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeContextParams } from 'src/app/components/batch/interfaces/batch-params';
 import { AaService } from 'src/app/services/aa.service';
+
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 @Component({
   selector: 'pure-batch-change-context',
@@ -21,20 +21,17 @@ import { AaService } from 'src/app/services/aa.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    //PureCtxsDirective,
-    //OptionDirective,
-    //SelectorComponent
+    TranslatePipe
   ],
   templateUrl: './change-context.component.html',
 })
 export class ActionsContextComponent implements OnInit {
-
-  constructor(
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService, 
-    private aaSvc: AaService, 
-    private batchSvc: BatchService,
-    private router: Router) { }
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  valSvc = inject(BatchValidatorsService);
+  batchSvc = inject(BatchService);
+  aaSvc = inject(AaService);
+  translateSvc = inject(TranslateService);
 
   user_contexts?: ContextDbRO[] = [];
 
@@ -47,8 +44,8 @@ export class ActionsContextComponent implements OnInit {
   }
 
   public changeContextForm: FormGroup = this.fb.group({
-    contextFrom: [$localize`:@@batch.actions.context:Context`, Validators.required],
-    contextTo: [$localize`:@@batch.actions.context:Context`, Validators.required]
+    contextFrom: [this.translateSvc.instant(_('batch.actions.context')), Validators.required],
+    contextTo: [this.translateSvc.instant(_('batch.actions.context')), Validators.required]
   }, 
   { validators: [this.valSvc.notEqualsValidator('contextFrom','contextTo'), this.valSvc.allRequiredValidator()] }
   );
@@ -69,7 +66,6 @@ export class ActionsContextComponent implements OnInit {
     }
     this.batchSvc.changeContext(this.changeContextParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //this.changeContextForm.reset();
       this.router.navigate(['/batch/logs']);
     });
   }

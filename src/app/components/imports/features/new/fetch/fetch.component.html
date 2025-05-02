@@ -1,12 +1,12 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-  <h3 class="m-0 mb-4" i18n="@@imports.fetch">ID Fetch</h3>
+  <h3 class="m-0 mb-4">{{ 'imports.fetch' | translate }}</h3>
 
   <form [formGroup]="fetchForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label for="context" class="col-sm-3 col-form-label" i18n="@@imports.context">Context</label>
+      <label for="context" class="col-sm-3 col-form-label">{{ 'imports.context' | translate }}</label>
       <div class="col-sm-9">
         <select id="context" class="form-select" formControlName="contextId">
-          <option [value]='' selected disabled i18n="@@imports.context">Context</option>
+          <option [value]='' selected disabled>{{ 'imports.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
           }
@@ -16,7 +16,7 @@
 
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label" i18n="@@imports.fetch.source">Source</label>
+        <label class="col-form-label">{{ 'imports.fetch.source' | translate }}</label>
       </div>
       <div class="col-sm-2">
         <select class="form-select" formControlName="source">
@@ -32,8 +32,8 @@
     <div class="mb-2 row">
       <div class="offset-sm-5 col-sm-6">
         @if(fetchForm.controls['identifier'].errors?.['forbiddenURL']) {
-        <span class="form-text text-danger small" i18n="@@imports.fetch.id.error">
-          Invalid input: The identifier must not be a URL.
+        <span class="form-text text-danger small">
+          {{ 'imports.fetch.id.error' | translate }}
         </span>
         } @else {
         <span>&nbsp;</span>

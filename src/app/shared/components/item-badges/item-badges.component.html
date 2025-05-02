@@ -1,9 +1,9 @@
 <div class="row">
 <div class="col-9">
 
-  <span class="badge bg-primary me-2">{{item?.metadata?.genre}}</span>
+  <span class="badge bg-primary me-2">{{'MdsPublicationGenre.' + item?.metadata?.genre | translate}}</span>
   @if (publicationState) {
-    <span class="badge bg-success me-2">{{publicationState}}: {{publicationStateDate | dateToYear}}</span>
+    <span class="badge bg-success me-2">{{'PublicationState.' + publicationState | translate}}: {{publicationStateDate | dateToYear}}</span>
   }
   @if (doi) {
     <a class="badge bg-warning me-2" href="https://doi.org/{{doi}}" target="_blank">DOI: {{doi}}</a>
@@ -16,7 +16,7 @@
     <span class="badge bg-dark me-2">v{{item?.versionNumber}}</span>
     }
     @if(aaService.principal.value.loggedIn || state==='WITHDRAWN') {
-  <span class="badge {{state==='WITHDRAWN' ? 'badge-red' : 'bg-dark' }} me-2">{{state}}</span>
+  <span class="badge {{state==='WITHDRAWN' ? 'bg-danger' : 'bg-dark' }} me-2">{{'ItemState.' + state | translate}}</span>
     }
 </div>
 

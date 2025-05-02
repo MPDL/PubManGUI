@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Export Item(s)</h4>
+  <h4 class="modal-title" id="modal-basic-title">Cite & Export</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 
@@ -77,7 +77,7 @@
 
       @if(selectedCitationType===citationTypes.CSL) {
         <div class="mb-3">
-          <pure-csl-autosuggest (selectedEvent)="selectCsl($event)"/>
+          <pure-csl-autosuggest (selectedEvent)="selectCsl($event)" [selectedCslId]="selectedCslId" [selectedCslName]="selectedCslName"/>
         </div>
       }
 
@@ -87,7 +87,19 @@
     }
 </div>
 
+@if(errorMessage) {
+  <div class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+}
+
 <div class="modal-footer">
-  <a class="btn btn-outline-primary" href="{{downloadLink}}" target="_blank">Download</a>
+  @if(!loading) {
+    <button type="button" class="btn btn-primary" (click)="download()" [disabled]="!isValid()">Download</button>
+  } @else {
+    <pure-loading></pure-loading>
+  }
+
+
   <!--<button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Download</button>-->
 </div>

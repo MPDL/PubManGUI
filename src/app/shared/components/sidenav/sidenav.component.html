@@ -44,25 +44,25 @@
           @if (aaService.principal.getValue().isDepositor) {
             <a class="nav-link border-bottom py-3" [routerLink]="['edit']" (click)="collapse()" data-test="sidenav-entry">
               <span class="material-symbols-outlined">note_add</span>
-              <span class="nav-label ms-3" i18n="@@edit">Entry</span>
+              <span class="nav-label ms-3">{{'common.edit'| translate }}</span>
             </a>
 
             <a class="nav-link border-bottom py-3" [routerLink]="['my']" (click)="collapse()" data-test="sidenav-my-datasets">
               <span class="material-symbols-outlined">folder_shared</span>
-              <span class="nav-label ms-3" i18n="@@my">My datasets</span>
+              <span class="nav-label ms-3">{{'common.my'| translate }}</span>
             </a>
           }
           @if (aaService.principal.getValue().isModerator) {
             <a class="nav-link border-bottom py-3" [routerLink]="['qa']" (click)="collapse()" data-test="sidenav-qa-area">
               <span class="material-symbols-outlined">workspace_premium</span>
-              <span class="nav-label ms-3" i18n="@@qa">QA Area</span>
+              <span class="nav-label ms-3">{{'common.qa'| translate }}</span>
             </a>
           }
           @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
             <div class="border-bottom show-more">
               <a class="nav-link py-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.hasImports()}" (click)="collapse()" data-test="sidenav-import">
                 <span class="material-symbols-outlined">get_app</span>
-                <span class="nav-label ms-3">Import</span>
+                <span class="nav-label ms-3">{{'imports.name'| translate }}</span>
               </a>
               @if ( importsSvc.hasImports() ) {
                 @defer {
@@ -75,7 +75,7 @@
             <div class="border-bottom show-more">
               <a class="nav-link py-3" [routerLink]="['batch']" [ngClass]="{'disabled pb-2' : batchSvc.areItemsSelected()}" (click)="collapse()" data-test="sidenav-batch">
                 <span class="material-symbols-outlined">web_stories</span>
-                <span class="nav-label ms-3" i18n="@@batch">Batch processing</span>
+                <span class="nav-label ms-3">{{'batch.name'| translate }}</span>
                 @if ( batchSvc.areItemsSelected() ) {
                   <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' data-test="batch-badge"></div>
                 }
@@ -96,11 +96,11 @@
             }
 
 
-            <span class="nav-label ms-3" i18n="@@basket">Basket</span>
+            <span class="nav-label ms-3">{{'common.basket'| translate }}</span>
           </a>
           <a class="nav-link border-bottom py-3" [routerLink]="['ou_tree']" (click)="collapse()" data-test="sidenav-organizational-units">
             <span class="material-symbols-outlined">account_tree</span>
-            <span class="nav-label ms-3" i18n="@@ouTree">Organizational units</span>
+            <span class="nav-label ms-3">{{'common.ouTree'| translate }}</span>
           </a>
           <a class="nav-link py-3" [routerLink]="['']" (click)="collapse()" data-test="sidenav-place">
             <span class="material-symbols-outlined">place</span>

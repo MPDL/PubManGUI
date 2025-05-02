@@ -35,7 +35,7 @@ export class ItemImportFilterDirective extends ItemFilterDirective {
       importLogs$ = this.importService.getImportLogs();
     }
     importLogs$.subscribe(importLogs => {
-      this.options =  Object.assign({'': 'All'}, ...importLogs.map(importLog => ({ [importLog.name]: importLog.name +' ('+ importLog.startDate+')' })));
+      this.options =  Object.assign({'': 'common.all'}, ...importLogs.map(importLog => ({ [importLog.name]: importLog.name +' ('+ importLog.startDate+')' })));
     });
   }
 

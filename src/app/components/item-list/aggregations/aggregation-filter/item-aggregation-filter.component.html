@@ -17,7 +17,11 @@
               <button class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}" (click)="selectValue(val)">
                 <div class="row">
                   <div class="col-9">
-                    {{val.displayValue}}
+                    @if(val.translateDisplayValue) {
+                      {{val.displayValue | translate}}
+                    } @else {
+                      {{val.displayValue}}
+                    }
                   </div>
                   <div class="col-3 text-end">
                     {{val.docCount}}

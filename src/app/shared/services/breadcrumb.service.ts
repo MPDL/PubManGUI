@@ -4,7 +4,7 @@ import { filter, map } from 'rxjs/operators';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
 interface Breadcrumb {
-  label: string;
+  labelKey: string;
   type: string;
   active: boolean;
   url: string;
@@ -46,12 +46,12 @@ export class BreadcrumbService {
     const children: ActivatedRouteSnapshot[] = this.activatedRoute.snapshot.children;
     if(children.length > 0) {
       const currentRoute = children[0];
-      const currentRouteLabel = currentRoute.data['breadcrumb'].label;
-      if (currentRouteLabel === 'View' || currentRouteLabel === 'Edit') {
+      const currentRouteLabel = currentRoute.data['breadcrumb'].labelKey;
+      if (currentRouteLabel === 'common.view' || currentRouteLabel === 'common.edit') {
         const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabel, this.breadcrumbs$.getValue());
         this.breadcrumbs$.next(smallerCrumbs);
 
-      } else if (currentRouteLabel === 'Search' && (this.breadcrumbs$.getValue()[0]?.type) ==="Advanced Search") {
+      } else if (currentRouteLabel === 'header.search' && (this.breadcrumbs$.getValue()[0]?.labelKey) ==="header.advancedSearch") {
         const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabel, this.breadcrumbs$.getValue());
         this.breadcrumbs$.next(smallerCrumbs);
       }
@@ -85,9 +85,9 @@ export class BreadcrumbService {
         if (routeURL !== '') {
           url += `/${routeURL}`;
         }
-        if (child.data['breadcrumb'].label) {
+        if (child.data['breadcrumb'].labelKey) {
           breadcrumbs.push({
-            label: this.getLocalizedLabel(child.data['breadcrumb'].label),
+            labelKey: child.data['breadcrumb'].labelKey,
             type: child.data['breadcrumb'].label,
             active: child.data['breadcrumb'].active ?? true,
             url: url
@@ -101,39 +101,4 @@ export class BreadcrumbService {
 
   }
 
-  getLocalizedLabel(label: string): string {
-    let localizedlabel = label;
-    switch (label) {
-      case 'My datasets':
-        localizedlabel = $localize`:@@my:My datasets`;
-        break;
-      case 'QA Area':
-        localizedlabel = $localize`:@@qa:QA Area`;
-        break;
-      case 'Basket':
-        localizedlabel = $localize`:@@basket:Basket`;
-        break;
-      case 'Organizational units':
-        localizedlabel = $localize`:@@ouTree:Organizational units`;
-        break;
-      case 'Entry':
-        localizedlabel = $localize`:@@edit:Entry`;
-        break;
-      case 'My imports':
-          localizedlabel = $localize`:@@myimports:My imports`;
-          break;
-      case 'Batch processing':
-        localizedlabel = $localize`:@@batch:Batch processing`;
-        break;
-      case 'Search':
-        localizedlabel = $localize`:@@search:Search`;
-        break;
-      case 'Advanced search':
-        localizedlabel = $localize`:@@advancedSearch:Advanced search`;
-        break;
-      case 'Privacy Policy':
-        localizedlabel = $localize`:@@privacyPolicy:Privacy Policy`;
-    }
-    return localizedlabel;
-  }
 }

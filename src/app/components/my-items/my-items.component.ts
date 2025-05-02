@@ -32,6 +32,7 @@ import {
 } from "../item-list/aggregations/aggregation-filter/directives/item-date-aggregation.directive";
 import {ItemContextFilterDirective} from "../item-list/filters/directives/item-context-filter.directive";
 import {ItemImportFilterDirective} from "../item-list/filters/directives/item-import-filter.directive";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-my-items',
@@ -52,7 +53,8 @@ import {ItemImportFilterDirective} from "../item-list/filters/directives/item-im
     ItemStatusAggregationDirective,
     ItemDateAggregationDirective,
     ItemContextFilterDirective,
-    ItemImportFilterDirective
+    ItemImportFilterDirective,
+    TranslatePipe
   ],
   templateUrl: './my-items.component.html',
   styleUrl: './my-items.component.scss',

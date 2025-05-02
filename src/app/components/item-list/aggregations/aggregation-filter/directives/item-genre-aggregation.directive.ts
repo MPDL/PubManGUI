@@ -2,6 +2,7 @@ import { Directive } from '@angular/core';
 import {ItemAggregationBaseDirective} from "./item-aggregation-base.directive";
 import {AggregationResultView} from "../item-aggregation-filter.component";
 import {baseElasticSearchQueryBuilder} from "../../../../../shared/services/search-utils";
+import {TranslateService} from "@ngx-translate/core";
 
 @Directive({
   selector: '[pureItemGenreAggregation]',
@@ -34,7 +35,8 @@ export class ItemGenreAggregationDirective extends ItemAggregationBaseDirective{
     const resultViews: AggregationResultView[] = [];
     aggResult.buckets.forEach((b: any) => {
       const aggResult: AggregationResultView = {
-        displayValue: b.key, //['top_hits#otherFields'].hits.hits[0]._source.context.name,
+        displayValue: 'MdsPublicationGenre.' +b.key, //['top_hits#otherFields'].hits.hits[0]._source.context.name,
+        translateDisplayValue: true,
         selectionValue: b.key,
         docCount: b.doc_count
       }

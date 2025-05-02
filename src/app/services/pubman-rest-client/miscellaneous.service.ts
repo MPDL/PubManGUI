@@ -50,11 +50,7 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
   }
 
   getDecodedMultiplePersons(multiplePersonNameString: string): Observable<PersonName[]>{
-    if (this.aaService.token) {
       return this.httpPost(this.subPath + '/' + aiPersonNamePath, multiplePersonNameString);
-    } else {
-      return throwError(() => new Error(`Authorization Error`));
-    }
   }
 
   retrieveIpList(): Observable<IpEntry[]> {

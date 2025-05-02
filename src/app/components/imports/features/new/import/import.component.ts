@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, ChangeDetectorRef, inject, Inject, LOCALE_ID } from '@angular/core';
+import { OnInit, Component, ChangeDetectorRef, inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import type { PostImportParams } from 'src/app/components/imports/interfaces/imp
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 
 import { AaService } from 'src/app/services/aa.service';
-
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 @Component({
   selector: 'pure-imports-new-import',
@@ -20,41 +21,40 @@ import { AaService } from 'src/app/services/aa.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SeparateFilterPipe
+    SeparateFilterPipe,
+    TranslatePipe
   ],
   templateUrl: './import.component.html',
   styles: [".dropzone { width: 100%; padding: 0.5rem 1.5rem 0.5rem 1.5rem; text-align: center; border: dashed 2px; }"], // TO-DO move to scss
 })
 export default class ImportComponent implements OnInit {
-    importsSvc = inject(ImportsService);
-    valSvc = inject(ImportValidatorsService);
-    router = inject(Router);
-    fb = inject(FormBuilder);
-    aaSvc = inject(AaService);
+  importsSvc = inject(ImportsService);
+  valSvc = inject(ImportValidatorsService);
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  aaSvc = inject(AaService);
+  translateService = inject(TranslateService);
 
   formatObject: any = null;
   lastFormat: string = '';
   data: any = '';
 
-  importFormatTranslations = {};
-
   constructor(
-    private changeDetector: ChangeDetectorRef,
-    @Inject(LOCALE_ID) public locale: string
-  ) {}
+    private changeDetector: ChangeDetectorRef
+  ) { }
 
   importFormat = Object.keys(ImportFormat);
   user_contexts?: ContextDbRO[] = [];
 
   public importForm: FormGroup = this.fb.group({
-    contextId: [$localize`:@@imports.context:Context`, [Validators.required]],
+    contextId: [this.translateService.instant(_('imports.context')), [Validators.required]],
     importName: ['', [Validators.required]],
     format: ['ENDNOTE_STRING'],
     formatConfig: [''],
     cone: [''],
     fileName: ['', [Validators.required]]
-  }, 
-  { validators: [this.valSvc.allRequiredValidator()] });
+  },
+    { validators: [this.valSvc.allRequiredValidator()] });
 
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
@@ -62,20 +62,6 @@ export default class ImportComponent implements OnInit {
         this.user_contexts = p.depositorContexts;
       }
     );
-
-    this.loadTranslations(this.locale);
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.importFormatTranslations = msgs.ImportFormat;
-      })
-    }
   }
 
   ngDoCheck() {
@@ -87,15 +73,10 @@ export default class ImportComponent implements OnInit {
       this.formatObject = response;
       this.changeDetector.detectChanges();
       if (format !== this.lastFormat) {
-        this.setDefaultOption(); 
+        this.setDefaultOption();
         this.lastFormat = format;
       };
     });
-  }
-
-  getImportFormatTranslation(txt: string):string {
-    let key = txt as keyof typeof this.importFormatTranslations;
-    return this.importFormatTranslations[key];
   }
 
   hasConfig(): boolean {
@@ -155,9 +136,9 @@ export default class ImportComponent implements OnInit {
 
     const reader = file.stream().getReader();
     let result: any = '';
-  
+
     reader.read().then(
-      function processData({ done, value }):any {
+      function processData({ done, value }): any {
         if (done) {
           return;
         }
@@ -167,7 +148,7 @@ export default class ImportComponent implements OnInit {
 
         return reader.read().then(processData);
       }
-    ).finally(() => { this.data = result; });  
+    ).finally(() => { this.data = result; });
   }
 
   get getImportParams(): PostImportParams {

@@ -10,6 +10,9 @@ import { ImportsService } from 'src/app/components/imports/services/imports.serv
 import type { GetCrossrefParams, GetArxivParams } from 'src/app/components/imports/interfaces/imports-params';
 import { AaService } from 'src/app/services/aa.service';
 
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
+
 @Component({
   selector: 'pure-imports-new-fetch',
   standalone: true,
@@ -17,6 +20,7 @@ import { AaService } from 'src/app/services/aa.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './fetch.component.html',
 })
@@ -26,6 +30,7 @@ export default class FetchComponent implements OnInit {
   router = inject(Router);
   fb = inject(FormBuilder);
   aaSvc = inject(AaService);
+  translateService = inject(TranslateService);
 
   user_contexts?: ContextDbRO[] = [];
 
@@ -38,7 +43,7 @@ export default class FetchComponent implements OnInit {
   }
 
   public fetchForm: FormGroup = this.fb.group({
-    contextId: [$localize`:@@imports.context:Context`, Validators.required],
+    contextId: [this.translateService.instant(_('imports.context')), Validators.required],
     source: ['crossref'],
     identifier: ['', [Validators.required, this.valSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']
@@ -79,7 +84,7 @@ export default class FetchComponent implements OnInit {
           next: () => {
             this.router.navigateByUrl('/edit_import');
           },
-          error: () => { this.fetchEnd()},
+          error: () => { this.fetchEnd() },
         });
         break;
       case 'arxiv':
@@ -87,7 +92,7 @@ export default class FetchComponent implements OnInit {
           next: () => {
             this.router.navigateByUrl('/edit_import');
           },
-          error: () => { this.fetchEnd()},
+          error: () => { this.fetchEnd() },
         });
     }
   }

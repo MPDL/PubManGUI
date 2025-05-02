@@ -1,9 +1,9 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-    <h3 class="m-0 mb-4" i18n="@@imports.fileImport">File Import</h3>
+    <h3 class="m-0 mb-4">{{ 'imports.fileImport' | translate }}</h3>
   
     <form [formGroup]="importForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <label class="col-sm-3 col-form-label" i18n="@@imports.fileImport.upload">Upload</label>
+        <label class="col-sm-3 col-form-label">{{ 'imports.fileImport.upload' | translate }}</label>
         <div class="col-sm-4">
           <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="dropzone col-sm" pureFileImport (drop)="onFileDrop($event)" (dragover)="onDragOver($event)">
@@ -18,10 +18,10 @@
       </div>
 
       <div class="mb-3 row">
-        <label for="context" class="col-sm-3 col-form-label" i18n="@@imports.context">Context</label>
+        <label for="context" class="col-sm-3 col-form-label">{{ 'imports.context' | translate }}</label>
         <div class="col-sm-9">
           <select id="context" class="form-select" formControlName="contextId">
-            <option [value]='' selected disabled i18n="@@imports.context">Context</option>
+            <option [value]='' selected disabled>{{ 'imports.context' | translate }}</option>
             @for (contextObject of user_contexts; track contextObject) {
             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
             }
@@ -37,7 +37,7 @@
           <select class="form-select" formControlName="format">
             <option [value]='' selected disabled>Format</option>
             @for (format of importFormat; track format) {
-              <option [value]="format">{{ getImportFormatTranslation(format) }}</option>
+              <option [value]="format">{{ format }}</option>
             }
           </select>
         </div>

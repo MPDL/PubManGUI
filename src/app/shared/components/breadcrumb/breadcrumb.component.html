@@ -2,18 +2,18 @@
   <a [routerLink]="['/home']">
     <span class="material-symbols-outlined">Home</span>
   </a>
-  @for(breadcrumb of breadcrumbs$ | async; track breadcrumb.label; let last = $last) {
-    @if(breadcrumb.label) {
-      @if(breadcrumb.label !== 'Home') {
+  @for(breadcrumb of breadcrumbs$ | async; track breadcrumb.labelKey; let last = $last) {
+    @if(breadcrumb.labelKey) {
+      @if(breadcrumb.labelKey !== 'Home') {
         <span class="text-muted"> &gt; </span>
         @if(last) {
-          <span class="last">{{ breadcrumb.label }}</span>
+          <span class="last">{{ '' + breadcrumb.labelKey | translate }}</span>
         } @else {
           @if(!breadcrumb.active) {
-            <span>{{ breadcrumb.label }}</span>
+            <span>{{ '' + breadcrumb.labelKey | translate }}</span>
           } @else {
           <span>
-            <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+            <a [routerLink]="breadcrumb.url">{{ '' + breadcrumb.labelKey | translate }}</a>
           </span>
           }
         }

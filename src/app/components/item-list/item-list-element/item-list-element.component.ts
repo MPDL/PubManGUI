@@ -10,11 +10,12 @@ import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pip
 import {ItemBadgesComponent} from "../../../shared/components/item-badges/item-badges.component";
 import {ItemSelectionService} from "../../../shared/services/item-selection.service";
 import { environment } from 'src/environments/environment';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })

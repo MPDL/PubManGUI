@@ -12,6 +12,10 @@ import xmlFormat from 'xml-formatter';
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { ImportItemLogComponent } from "./import-item-log/import-item-log.component";
 
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
+
+import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
 
 @Component({
   selector: 'pure-import-item-details-list',
@@ -20,7 +24,9 @@ import { ImportItemLogComponent } from "./import-item-log/import-item-log.compon
     CommonModule,
     NgbCollapseModule,
     PaginatorComponent,
-    ImportItemLogComponent
+    ImportItemLogComponent,
+    TranslatePipe,
+    LocalizeDatePipe
   ],
   templateUrl: './import-item-details-list.component.html'
 })
@@ -29,6 +35,7 @@ export default class ImportItemDetailsListComponent implements OnInit {
   importsSvc = inject(ImportsService);
   msgSvc = inject(MessageService);
   router = inject(Router);
+  translateSvc = inject(TranslateService);
   
   currentPage = this.importsSvc.lastPageNumFrom().log;
 
@@ -54,7 +61,7 @@ export default class ImportItemDetailsListComponent implements OnInit {
     this.importsSvc.getImportLogItemDetails(Number(this.item?.id))
       .subscribe(importsResponse => {
         if (importsResponse.length === 0) {
-          const msg = $localize`:@@imports.list.details.empty:This detail has no logs available!` + '\n';
+          const msg = this.translateSvc.instant(_('imports.list.details.empty')) + '\n';
           this.msgSvc.info(msg);       
           return this.router.navigate(['/imports/myimports/', this.item?.parent.id]);
         }

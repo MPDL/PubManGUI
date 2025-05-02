@@ -43,19 +43,6 @@ export class AaService {
     AaService.instance = this;
   }
 
-
-
-  get token(): string | undefined {
-    /*
-    const t = localStorage.getItem('token');
-    if(t!=null)
-      return t
-    else return undefined;
-
-     */
-    return undefined;
-  }
-
   get isLoggedInObservable(): Observable<boolean> {
     return this.principal.asObservable().pipe(map(p => p.loggedIn));
   }

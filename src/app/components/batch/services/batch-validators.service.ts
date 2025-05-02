@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 
-
+import { TranslateService, _} from '@ngx-translate/core'
 @Injectable({
   providedIn: 'root'
 })
 export class BatchValidatorsService {
 
-  constructor() {}
+  translateSvc = inject(TranslateService);
 
   notValidField(control: AbstractControl): boolean | null {
     return control.errors
@@ -26,25 +26,25 @@ export class BatchValidatorsService {
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
-          return ' value is required!';
+          return this.translateSvc.instant(_('validation.required'))
 
         case 'minlength':
-          return ` at least ${errors['minlength'].requiredLength} characters required!`;
+          return this.translateSvc.instant(_('validation.minlength'), { minLength: errors['minlength'].requiredLength })
 
         case 'singleWord':
-          return " can't contain multiple words!";
+          return this.translateSvc.instant(_('validation.singleWord'))
 
         case 'notEquals':
-          return " can't be the same!";
+          return this.translateSvc.instant(_('validation.notEquals'))
 
         case 'equals':
-          return " do not match!";  
+          return this.translateSvc.instant(_('validation.equals')) 
 
         case 'notDuplicates':
-          return " duplicate!";
+          return this.translateSvc.instant(_('validation.notDuplicates'))
 
         case 'allRequired':
-          return " not all required values!";
+          return this.translateSvc.instant(_('validation.allRequired'))
       }
     }
     return null;

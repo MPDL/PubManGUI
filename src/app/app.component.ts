@@ -8,15 +8,27 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ScrollToTopComponent } from './shared/components/scroll-to-top/scroll-to-top.component';
 import { InfoPanelComponent } from "./shared/components/info-panel/info-panel.component";
 
+import { TranslateModule } from "@ngx-translate/core";
+import { TranslateService } from "@ngx-translate/core";
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoPanelComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoPanelComponent, TranslateModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'pure';
 
-  constructor(private navigation: NavigationService) {}
+  constructor(
+    private navigation: NavigationService,
+    private translateSvc: TranslateService
+  ) {
+    this.translateSvc.addLangs(['de', 'en']);
+    this.translateSvc.setDefaultLang('de');
+
+    const browserLang = translateSvc.getBrowserLang() || 'en';
+    translateSvc.use(browserLang?.match(/en|de/) ? browserLang : 'en');
+   }
 }

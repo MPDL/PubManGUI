@@ -1,6 +1,6 @@
 
     <pure-item-view-metadata-element [sub]="true" [condition]="creatorMap.size > 0">
-      <span label>Creators</span>
+      <span label></span>
       <span content>
         <div class="list-group" id="collapseExample">
           @for (author of creatorMap.keys(); track author; let i = $index) {
@@ -37,7 +37,7 @@
                   </span>
 
                 }
-                <span class="small"> ({{author.role}})</span>
+                <span class="small"> ({{'CreatorRoles.' + author.role | translate}})</span>
               }
               @else {
                 {{ author?.organization?.name }}
@@ -58,7 +58,7 @@
       </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="affiliations.length > 0">
-      <span label>Affiliations</span>
+      <span label>{{ 'MetadataFields.affiliations' | translate }}</span>
       <span content>
         <div class="list-group">
          @for (aff of affiliations; track aff; let i = $index) {

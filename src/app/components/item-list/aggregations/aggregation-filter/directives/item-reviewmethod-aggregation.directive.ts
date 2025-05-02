@@ -2,6 +2,7 @@ import { Directive } from '@angular/core';
 import {ItemAggregationBaseDirective} from "./item-aggregation-base.directive";
 import {AggregationResultView} from "../item-aggregation-filter.component";
 import {baseElasticSearchQueryBuilder} from "../../../../../shared/services/search-utils";
+import {TranslateService} from "@ngx-translate/core";
 
 @Directive({
   selector: '[pureItemReviewMethodAggregation]',
@@ -44,7 +45,8 @@ export class ItemReviewMethodDirective extends ItemAggregationBaseDirective{
     const resultViews: AggregationResultView[] = [];
     aggResult.buckets.forEach((b: any) => {
       const aggResult: AggregationResultView = {
-        displayValue: b.key,
+        displayValue: 'ReviewMethod.' +b.key,
+        translateDisplayValue: true,
         selectionValue: b.key,
         docCount: b.doc_count
       }

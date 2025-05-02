@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { ImportLogComponent } from "./import-log/import-log.component";
+import { TranslatePipe } from "@ngx-translate/core";
 
 import { MatBadgeModule } from '@angular/material/badge';
 
@@ -22,6 +23,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     FormsModule,
     PaginatorComponent,
     ImportLogComponent,
+    TranslatePipe,
     MatBadgeModule
   ],
   templateUrl: './import-logs-list.component.html'

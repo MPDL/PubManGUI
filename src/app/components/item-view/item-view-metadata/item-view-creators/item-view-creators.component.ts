@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {OrganizationsService} from "../../../../services/pubman-rest-client/organizations.service";
 import {EmptyPipe} from "../../../../shared/services/pipes/empty.pipe";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-view-creators',
@@ -14,7 +15,8 @@ import {EmptyPipe} from "../../../../shared/services/pipes/empty.pipe";
     ItemViewMetadataElementComponent,
     NgClass,
     NgbPopover,
-    EmptyPipe
+    EmptyPipe,
+    TranslatePipe
   ],
   templateUrl: './item-view-creators.component.html',
   styleUrl: './item-view-creators.component.scss'

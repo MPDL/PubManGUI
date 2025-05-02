@@ -1,34 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceSourceEditionParams } from 'src/app/components/batch/interfaces/batch-params';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-replace-source-edition-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './replace-source-edition-form.component.html',
 })
 export class ReplaceSourceEditionFormComponent {
-
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService
-  ) { }
+  router = inject(Router);
+  fb = inject(FormBuilder);
+  batchSvc = inject(BatchService);
 
   public replaceSourceEditionForm: FormGroup = this.fb.group({
-    sourceNumber: ['1', [ Validators.required ]],
-    sourceEdition: ['', [ Validators.required ]],
+    sourceNumber: ['1', [Validators.required]],
+    sourceEdition: ['', [Validators.required]],
   });
 
   get replaceSourceEditionParams(): ReplaceSourceEditionParams {
@@ -46,11 +43,9 @@ export class ReplaceSourceEditionFormComponent {
       return;
     }
 
-    this.batchSvc.replaceSourceEdition(this.replaceSourceEditionParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
+    this.batchSvc.replaceSourceEdition(this.replaceSourceEditionParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //setTimeout(() => {this.replaceSourceEditionForm.controls['sourceEdition'].reset;}, 500);
       this.router.navigate(['/batch/logs']);
     });
   }
- }
+}

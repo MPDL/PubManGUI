@@ -1,33 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceKeywordsParams } from 'src/app/components/batch/interfaces/batch-params';
+
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-replace-keywords-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './replace-keywords-form.component.html',
 })
 export class ReplaceKeywordsFormComponent {
-
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService
-  ) { }
+    router = inject(Router);
+    fb = inject(FormBuilder);
+    batchSvc = inject(BatchService);
 
   public replaceKeywordsForm: FormGroup = this.fb.group({
-    keywords: ['', [ Validators.required ]],
+    keywords: ['', [Validators.required]],
   });
 
   get replaceKeywordsParams(): ReplaceKeywordsParams {
@@ -44,12 +42,10 @@ export class ReplaceKeywordsFormComponent {
       return;
     }
 
-    this.batchSvc.replaceKeywords(this.replaceKeywordsParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
+    this.batchSvc.replaceKeywords(this.replaceKeywordsParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //setTimeout(() => {this.replaceKeywordsForm.reset();}, 500);
       this.router.navigate(['/batch/logs']);
     });
   }
 
- }
+}

@@ -6,11 +6,15 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReleasePubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
 
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
+
 @Component({
   selector: 'pure-release-pub-items-form',
   standalone: true,
   imports: [
     CommonModule,
+    TranslatePipe
   ],
   templateUrl: './release-pub-items-form.component.html',
 })
@@ -18,6 +22,7 @@ export class ReleasePubItemsFormComponent {
   batchSvc = inject(BatchService);
   msgSvc = inject(MessageService);
   router = inject(Router);
+  translateSvc = inject(TranslateService);
 
   get releasePubItemsParams(): ReleasePubItemsParams {
     const actionParams: ReleasePubItemsParams = {
@@ -27,7 +32,7 @@ export class ReleasePubItemsFormComponent {
   }
 
   onSubmit(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: $localize`:@@batch.actions.item.state.release.confirmation:Do you really want to release this items?`, confirm: $localize`:@@confirm:Confirm`, cancel: $localize`:@@cancel:Cancel` });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('batch.actions.item.state.release.confirmation')), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.batchSvc.releasePubItems(this.releasePubItemsParams).subscribe(actionResponse => {

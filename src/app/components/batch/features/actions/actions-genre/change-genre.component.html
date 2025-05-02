@@ -1,79 +1,83 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
-    <h4 class="m-0" i18n="@@batch.actions.genre.change">Change Genre</h4>
-    <div class="mt-2 mb-5">
-      <p i18n="@@batch.actions.genre.change.info">
-        The items will be changed from one genre to another.
-      </p>
-      <p>
-        <strong>
-      <span i18n="@@batch.actions.genre.change.note">
-          Please note that all metadata fields not permitted in the new genre will automatically be deleted!
+  <h4 class="m-0">{{ 'batch.actions.genre.change' | translate }}</h4>
+  <div class="mt-2 mb-5">
+    <p>
+      {{ 'batch.actions.genre.change.info' | translate }}
+    </p>
+    <p>
+      <strong>
+        <span>
+          {{ 'batch.actions.genre.change.reminder' | translate }}
         </span>
       </strong>
-      </p>
+    </p>
+  </div>
+
+  <form [formGroup]="changeGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="mb-3 row">
+      <div class="col-sm-2">
+        <label class="col-form-label">{{ 'batch.actions.genre.change.from' | translate }}</label>
+      </div>
+      <div class="col-sm-10">
+        <select class="form-select" formControlName="genreFrom" data-test="genre-to-be-replaced">
+          <option [value]='' selected disabled>Genre</option>
+          @for (genre of genres; track genre) {
+          <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
+          }
+        </select>
+      </div>
     </div>
 
-    <form [formGroup]="changeGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
-      <div class="mb-3 row">
-        <div class="col-sm-2">
-          <label class="col-form-label" i18n="@@batch.actions.genre.change.from">Genre to be replaced</label>
-        </div>
-        <div class="col-sm-10">
-          <select class="form-select" formControlName="genreFrom" data-test="genre-to-be-replaced">
-            <option [value]='' selected disabled>Genre</option>
-            @for (genre of genresOptions; track genre) {
-              <option [value]="genre.value">{{genre.option}}</option>
-            }
-          </select>
-        </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="col-form-label">{{ 'batch.actions.genre.change.to' | translate }}</label>
       </div>
-
-      <div class="row">
-        <div class="col-sm-2">
-          <label class="col-form-label" i18n="@@batch.actions.genre.change.to">Replacing genre</label>
-        </div>
-        <div class="col-sm-10">
-          <select class="form-select" formControlName="genreTo" data-test="replacing-genre">
-            <option [value]=''  selected disabled>Genre</option>
-            @for (genre of genresOptions; track genre) {
-              <option [value]="genre.value">{{genre.option}}</option>
-            }
-          </select>
-        </div>
-      </div>
-
-      <div class="mb-2 row">
-        <div class="offset-sm-2 col-sm-6">
-          @if (valSvc.notValidField(changeGenreForm.controls['genreTo'])) {
-          <span class="form-text text-danger small">
-            Previous and new genres {{ valSvc.getFieldError(changeGenreForm.controls['genreTo']) }}
-          </span>
-          } @else {
-          <span>&nbsp;</span>
+      <div class="col-sm-10">
+        <select class="form-select" formControlName="genreTo" data-test="replacing-genre">
+          <option [value]='' selected disabled>Genre</option>
+          @for (genre of genres; track genre) {
+          <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
           }
-        </div>
+        </select>
       </div>
+    </div>
 
-      <div class="mb-3 row">
-        <label class="col-sm-2 col-form-label" [ngClass]="{'text-secondary': !changeGenreForm.controls['genreTo'].value.includes('THESIS')}" i18n="@@batch.actions.genre.change.type">Degree type</label>
-        <div class="col-sm-10">
-          <select class="form-select" formControlName="degreeType" [attr.disabled]="changeGenreForm.controls['genreTo'].value.includes('THESIS') ? null : ''">
-            <option value=null selected disabled>Type</option>
-            @for (degreeType of degreeTypesOptions; track degreeType) {
-              <option [value]="degreeType.value">{{degreeType.option}}</option>
-            }
-          </select>
-        </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-2 col-sm-6">
+        @if (valSvc.notValidField(changeGenreForm.controls['genreTo'])) {
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.genre.change.invalid' | translate }} {{ valSvc.getFieldError(changeGenreForm.controls['genreTo']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
       </div>
+    </div>
 
-      <div class="row">
-        <div class="offset-sm-9 col-sm-3">
-          <button type="submit" [disabled]="changeGenreForm.invalid || changeGenreForm.pristine"
-            class="btn btn-outline-secondary border-2 col-4 float-end">
-            GO
-          </button>
-        </div>
+    <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label"
+        [ngClass]="{'text-secondary': !changeGenreForm.controls['genreTo'].value.includes('THESIS')}">
+        {{ 'batch.actions.genre.change.type' | translate }}
+      </label>
+      <div class="col-sm-10">
+        <select class="form-select" formControlName="degreeType"
+          [attr.disabled]="changeGenreForm.controls['genreTo'].value.includes('THESIS') ? null : ''">
+          <option value=null selected disabled>{{ 'batch.actions.genre.change.type' | translate }}</option>
+          @for (degreeType of degreeTypes; track degreeType) {
+          <option [value]="degreeType">{{ 'DegreeType.' + degreeType | translate }}</option>
+          }
+        </select>
       </div>
-    </form>
+    </div>
 
-  </div>
+    <div class="row">
+      <div class="offset-sm-9 col-sm-3">
+        <button type="submit" [disabled]="changeGenreForm.invalid || changeGenreForm.pristine"
+          class="btn btn-outline-secondary border-2 col-4 float-end">
+          GO
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

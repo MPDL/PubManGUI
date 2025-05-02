@@ -1,7 +1,17 @@
+<!--
 <div style="white-space:nowrap">
     @if (svc.locale().localeCompare('en') === 0) {
         <b>en</b>&nbsp;|&nbsp;<a [routerLink]="[]" class="nav-link" (click)="switch_lang()" style="display:inline">de</a>        
     } @else {
         <a [routerLink]="[]" class="nav-link" (click)="switch_lang()" style="display:inline">en</a>&nbsp;|&nbsp;<b>de</b>
+    }
+</div>
+-->
+
+<div style="white-space:nowrap">
+    @if (currentLang === 'en') {
+        <b>en</b>&nbsp;|&nbsp;<a [routerLink]="[]" class="nav-link" (click)="switchLang('de')" style="display:inline">de</a>        
+    } @else {
+        <a [routerLink]="[]" class="nav-link" (click)="switchLang('en')" style="display:inline">en</a>&nbsp;|&nbsp;<b>de</b>
     }
 </div>

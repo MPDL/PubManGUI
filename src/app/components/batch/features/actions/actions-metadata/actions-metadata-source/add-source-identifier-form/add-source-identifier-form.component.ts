@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Inject, LOCALE_ID } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { IdType } from 'src/app/model/inge';
+import { SourceIdType } from 'src/app/model/inge';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfaces/batch-params';
+
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,7 +18,8 @@ import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfac
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './add-source-identifier-form.component.html',
 })
@@ -26,46 +28,17 @@ export class AddSourceIdentifierFormComponent {
   fb = inject(FormBuilder);
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
-  //msgSvc = inject(MessageService);
+  translateSvc = inject(TranslateService);
 
-  constructor(
-    @Inject(LOCALE_ID) public locale: string) {}
-
-  sourceIdTypes = Object.keys(IdType);
-  sourceIdTypesTranslations = {};
-  sourceIdTypesOptions: {value: string, option: string}[] = [];
-
-  ngOnInit(): void { 
-    this.loadTranslations(this.locale)
-      .then(() => {
-        this.sourceIdTypes.sort((a,b) => b[1].localeCompare(a[1])).forEach((value) => {
-          let keyT = value as keyof typeof this.sourceIdTypesTranslations;
-          if(this.sourceIdTypesTranslations[keyT]) {
-            this.sourceIdTypesOptions.push({'value': keyT, 'option': this.sourceIdTypesTranslations[keyT]})
-          }
-        })
-      })
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.sourceIdTypesTranslations = msgs.SourceIdType;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.sourceIdTypesTranslations = msgs.SourceIdType;
-      })
-    } 
-  }
+  sourceIdTypes = Object.keys(SourceIdType);
 
   public addSourceIdentifierForm: FormGroup = this.fb.group({
     sourceNumber: ['1'],
-    sourceIdentifierType: [$localize`:@@batch.actions.metadata.source.addId.default:Type`, Validators.required],
-    sourceIdentifier: ['', [ Validators.required, Validators.minLength(1) ]]
-  },
-    { validators: this.valSvc.allRequiredValidator() }
-  );
+    sourceIdentifierType: [this.translateSvc.instant(_('batch.actions.metadata.source.addId.default')), Validators.required],
+    sourceIdentifier: ['', [Validators.required, Validators.minLength(1)]]
+  }, { 
+    validators: this.valSvc.allRequiredValidator() 
+  });
 
   get addSourceIdentifierParams(): AddSourceIdentiferParams {
     const actionParams: AddSourceIdentiferParams = {
@@ -83,11 +56,9 @@ export class AddSourceIdentifierFormComponent {
       return;
     }
 
-    this.batchSvc.addSourceIdentifer(this.addSourceIdentifierParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
+    this.batchSvc.addSourceIdentifer(this.addSourceIdentifierParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      //setTimeout(() => {this.addSourceIdentifierForm.controls['sourceIdentifier'].reset();}, 500);
       this.router.navigate(['/batch/logs']);
     });
   }
- }
+}

@@ -3,7 +3,7 @@
   <select class="form-select" (change)="handleInputChange($event)">
     @for (val of options | defaultKeyValue; track val.key) {
       <option [value]="val.key">
-        {{ options[val.key] }}
+        {{ options[val.key] | translate}}
       </option>
     }
   </select>

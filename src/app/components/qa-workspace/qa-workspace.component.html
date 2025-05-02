@@ -1,6 +1,6 @@
 <pure-item-list [searchQuery]="searchQuery" #itemList>
   <pure-sort-selector [itemList]="itemList"/>
-  <pure-item-filter [itemList]="itemList" pureItemStateFilter [label]="'State'" />
-  <pure-item-filter [itemList]="itemList" pureItemContextFilter type="moderator" [label]="'Context'" />
+  <pure-item-filter [itemList]="itemList" pureItemStateFilter [label]="'MetadataFields.state' | translate" />
+  <pure-item-filter [itemList]="itemList" pureItemContextFilter type="moderator" [label]="'MetadataFields.context' | translate" />
   <pure-item-filter [itemList]="itemList" pureItemImportFilter type="moderator" [label]="'Imports'" />
 </pure-item-list>

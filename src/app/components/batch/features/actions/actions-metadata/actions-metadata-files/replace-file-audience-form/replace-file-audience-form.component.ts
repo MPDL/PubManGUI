@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
@@ -7,11 +7,10 @@ import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MiscellaneousService, IpEntry } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/batch-params';
 
 import { AudienceFormComponent } from 'src/app/components/batch/features/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
-//import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -20,25 +19,21 @@ import { AudienceFormComponent } from 'src/app/components/batch/features/actions
     CommonModule,
     ReactiveFormsModule,
     AudienceFormComponent,
-    //AddRemoveButtonsComponent
+    TranslatePipe
   ],
   templateUrl: './replace-file-audience-form.component.html',
 })
 export class ReplaceFileAudienceFormComponent implements OnInit {
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  valSvc = inject(BatchValidatorsService);
+  batchSvc = inject(BatchService);
+  miscSvc = inject(MiscellaneousService);
 
   index!: number;
   index_length!: number;
 
   ous: IpEntry[] = [];
-
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService,
-    private batchSvc: BatchService,
-    private miscSvc: MiscellaneousService,
-    //private msgSvc: MessageService
-  ) { }
 
   ngOnInit(): void {
     this.miscSvc.retrieveIpList()

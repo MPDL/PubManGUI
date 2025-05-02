@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, Input, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { Component, Input, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportLogItemDbVO, ImportLogItemDetailDbVO } from 'src/app/model/inge';
+import { ImportLogItemDetailDbVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,48 +20,23 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     SeparateFilterPipe,
-    NgbCollapseModule
+    NgbCollapseModule,
+    TranslatePipe
   ],
   templateUrl: './import-item-log.component.html'
 })
-export class ImportItemLogComponent implements OnInit {
+export class ImportItemLogComponent {
   @Input() detail?: ImportLogItemDetailDbVO;
 
   importsSvc = inject(ImportsService);
   msgSvc = inject(MessageService);
   router = inject(Router);
-
-  importStatusTranslations = {};
-  importErrorLevelTranslations = {};
-  importMessageTranslations = {};
+  translateService = inject(TranslateService);
 
   isCollapsed: boolean = true;
   isScrolled = false;
 
   BOM = '239,187,191';
-
-  constructor(
-    @Inject(LOCALE_ID) public locale: string) { }
-
-  ngOnInit(): void {
-    this.loadTranslations(this.locale);
-  }
-
-  async loadTranslations(lang: string) {
-    if (lang === 'de') {
-      await import('src/assets/i18n/messages.de.json').then((msgs) => {
-        this.importStatusTranslations = msgs.ImportStatus;
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importMessageTranslations = msgs.ImportMessage;
-      })
-    } else {
-      await import('src/assets/i18n/messages.json').then((msgs) => {
-        this.importStatusTranslations = msgs.ImportStatus;
-        this.importErrorLevelTranslations = msgs.ImportErrorLevel;
-        this.importMessageTranslations = msgs.ImportMessage;
-      })
-    }
-  }
 
   firstContentFrom(message: string): string {
     message = message.replace('null', '').slice(0, 80);
@@ -110,19 +88,11 @@ export class ImportItemLogComponent implements OnInit {
     return message.replaceAll(',', ', ');
   }
 
-  getImportStatusTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importStatusTranslations;
-    return this.importStatusTranslations[key];
-  }
+  hasTranslation(key: string): boolean {
+    if ((key.split('\n').length) > 1
+      || (this.translateService.instant(_('ImportMessage.' + key)) === 'ImportMessage.' + key)) return false;
 
-  getImportErrorLevelTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importErrorLevelTranslations;
-    return this.importErrorLevelTranslations[key];
-  }
-
-  getImportMessageTranslation(txt: string): string {
-    let key = txt as keyof typeof this.importMessageTranslations;
-    return this.importMessageTranslations[key];
+    return true;
   }
 
   @HostListener('window:scroll', ['$event'])

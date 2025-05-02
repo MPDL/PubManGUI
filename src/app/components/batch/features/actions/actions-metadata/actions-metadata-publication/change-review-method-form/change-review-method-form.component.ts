@@ -1,65 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-//import { MessageService } from 'src/app/shared/services/message.service';
 import type { ChangeReviewMethodParams } from 'src/app/components/batch/interfaces/batch-params';
 import { ReviewMethod } from 'src/app/model/inge';
+
+import { TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, _ } from '@ngx-translate/core';
 
 @Component({
   selector: 'pure-change-review-method-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './change-review-method-form.component.html',
 })
 export class ChangeReviewMethodFormComponent {
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  valSvc = inject(BatchValidatorsService);
+  batchSvc = inject(BatchService);
+  translateSvc = inject(TranslateService);
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder, 
-    public valSvc: BatchValidatorsService, 
-    private batchSvc: BatchService,
-    //private msgSvc: MessageService,
-    @Inject(LOCALE_ID) public locale: string) {}
-
-    reviewMethods = Object.keys(ReviewMethod);
-    reviewMethodsTranslations = {};
-    reviewMethodssOptions: {value: string, option: string}[] = [];
-  
-    ngOnInit(): void { 
-      this.loadTranslations(this.locale)
-        .then(() => {
-          this.reviewMethods.forEach((value) => {
-            let keyT = value as keyof typeof this.reviewMethodsTranslations;
-            this.reviewMethodssOptions.push({'value': keyT, 'option': this.reviewMethodsTranslations[keyT]})
-          })
-        })
-    }
-  
-    async loadTranslations(lang: string) {
-      if (lang === 'de') {
-        await import('src/assets/i18n/messages.de.json').then((msgs) => {
-          this.reviewMethodsTranslations = msgs.ReviewMethod;
-        })
-      } else {
-        await import('src/assets/i18n/messages.json').then((msgs) => {
-          this.reviewMethodsTranslations = msgs.ReviewMethod;
-        })
-      } 
-    }  
+  reviewMethods = Object.keys(ReviewMethod);
 
   public changeReviewMethodForm: FormGroup = this.fb.group({
-    reviewMethodFrom: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
-    reviewMethodTo: [$localize`:@@batch.actions.metadata.publication.reviewType:Review type`, [ Validators.required ]],
-  }, 
-  { validators: [this.valSvc.notEqualsValidator('reviewMethodFrom','reviewMethodTo'), this.valSvc.allRequiredValidator()] });
+    reviewMethodFrom: [this.translateSvc.instant(_('batch.actions.metadata.publication.reviewType')), [Validators.required]],
+    reviewMethodTo: [this.translateSvc.instant(_('batch.actions.metadata.publication.reviewType')), [Validators.required]],
+  },
+    { validators: [this.valSvc.notEqualsValidator('reviewMethodFrom', 'reviewMethodTo'), this.valSvc.allRequiredValidator()] });
 
   get changeReviewMethodParams(): ChangeReviewMethodParams {
     const actionParams: ChangeReviewMethodParams = {
@@ -76,10 +52,9 @@ export class ChangeReviewMethodFormComponent {
       return;
     }
 
-    this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe( actionResponse => {
-      //console.log(actionResponse); 
+    this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.router.navigate(['/batch/logs']);
     });
   }
- }
+}

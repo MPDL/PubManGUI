@@ -26,7 +26,7 @@
                    src="/assets/images/{{oaStatusIcon(file)}}"
                    width="16" height="16" [ngbTooltip]="'Open Access: ' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')"/>
               }
-              ({{ file.metadata.contentCategory }})
+              ({{ 'ContentCategories.' + file.metadata.contentCategory | translate }})
             </div>
 
 

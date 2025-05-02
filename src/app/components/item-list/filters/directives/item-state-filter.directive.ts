@@ -2,6 +2,7 @@ import { Directive } from '@angular/core';
 import {ItemFilterDirective} from "./item-filter.directive";
 import {ItemVersionState} from "../../../../model/inge";
 import {FilterEvent} from "../../item-list.component";
+import {TranslateService} from "@ngx-translate/core";
 
 
 
@@ -16,12 +17,14 @@ import {FilterEvent} from "../../item-list.component";
   standalone: true
 })
 export class ItemStateFilterDirective extends ItemFilterDirective {
-  private options: { [p: string]: string };
+  options: { [p: string]: string };
 
-  constructor() {
+  constructor(private translateService: TranslateService) {
     super();
-    this.options =  Object.assign({'': 'All'}, ...Object.keys(ItemVersionState).map(x => ({ [x]: x })));
+    this.options =  Object.assign({'': 'common.all'}, ...Object.keys(ItemVersionState).map(x => ({ [x]: 'ItemState.' + [x] })));
+
   }
+
 
   getOptions():{[key:string]: string } {
     return this.options;

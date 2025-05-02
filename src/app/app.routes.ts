@@ -27,7 +27,7 @@ export const routes: Routes = [
     component: HomeComponent,
     data: {
       breadcrumb: {
-        label: 'Home',
+        labelKey: 'common.home',
       }
     },
   },
@@ -38,7 +38,7 @@ export const routes: Routes = [
     data: {
       saveComponent: true,
       breadcrumb: {
-        label: 'My datasets',
+        labelKey: 'common.my',
       }
     },
   },
@@ -48,7 +48,7 @@ export const routes: Routes = [
     data: {
       saveComponent: true,
       breadcrumb: {
-        label: 'QA Area',
+        labelKey: 'common.qa',
       }
     },
   },
@@ -58,7 +58,7 @@ export const routes: Routes = [
     data: {
       saveComponent: true,
       breadcrumb: {
-        label: 'Search',
+        labelKey: 'header.search',
       }
     },
   },
@@ -68,7 +68,7 @@ export const routes: Routes = [
     data: {
       saveComponent: true,
       breadcrumb: {
-        label: 'Cart',
+        labelKey: 'common.basket',
       }
     },
   },
@@ -77,7 +77,7 @@ export const routes: Routes = [
     component: OuTreeComponent,
     data: {
       breadcrumb: {
-        label: 'Organizational units',
+        labelKey: 'common.ouTree',
       }
     },
   },
@@ -86,7 +86,7 @@ export const routes: Routes = [
     path: 'as2', component: ItemSearchAdvancedComponent, data: {
       saveComponent: true,
       breadcrumb: {
-        label: 'Advanced Search',
+        labelKey: 'header.advancedSearch',
       }
     }
   },
@@ -94,7 +94,7 @@ export const routes: Routes = [
     path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver },
     data: {
       breadcrumb: {
-        label: 'Edit',
+        labelKey: 'common.edit',
       }
     },
   },
@@ -103,7 +103,7 @@ export const routes: Routes = [
 
     data: {
       breadcrumb: {
-        label: 'View',
+        labelKey: 'common.view',
       }
     },
   },
@@ -111,7 +111,7 @@ export const routes: Routes = [
     path: 'edit', component: ItemFormComponent,
     data: {
       breadcrumb: {
-        label: 'Entry',
+        labelKey: 'common.edit',
       }
     },
   },
@@ -119,7 +119,7 @@ export const routes: Routes = [
     path: 'edit_import', component: ItemFormComponent, resolve: { item: fetchItemResolver },
     data: {
       breadcrumb: {
-        label: 'Edit import',
+        labelKey: 'imports.edit',
       }
     },
   },
@@ -128,7 +128,7 @@ export const routes: Routes = [
     loadChildren: () => import('./components/batch/batch-routing.module').then(m => m.BatchRoutingModule),
     data: {
       breadcrumb: {
-        label: 'Batch processing',
+        labelKey: 'batch.name',
         active: false
       }
     }
@@ -138,7 +138,7 @@ export const routes: Routes = [
     loadChildren: () => import('./components/imports/imports-routing.module').then(m => m.ImportsRoutingModule),
     data: {
       breadcrumb: {
-        label: 'Imports',
+        labelKey: 'imports.name',
         active: false
       }
     }

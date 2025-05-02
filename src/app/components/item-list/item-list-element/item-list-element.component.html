@@ -55,14 +55,14 @@
         }
         @if (creators_length && creators_length > 3) {
           <div class="">
-            <i>{{ (creators_length - 3) + ' more authors ...' }}</i>
+            <i>{{ (creators_length - 3) }} {{'ItemList.moreCreators' | translate }}...</i>
           </div>
         }
       </div>
       @if (sourceCitation) {
         <div class="row my-3">
           <div class="col">
-            Published in: {{ sourceCitation }}
+            {{ 'ItemList.publishedIn' | translate }}: {{ sourceCitation }}
           </div>
         </div>
       }
@@ -71,36 +71,36 @@
     <div class="col-sm-3">
 
       @if(files.length > 0) {
-      <div class="d-flex flex-sm-row align-items-start mt-2">
-        {{files.length}} file(s)
+      <div class="d-flex flex-sm-row align-items-start mt-2 font-weight">
+        <i>{{files.length}} {{ 'ItemList.files' | translate }}</i>
       </div>
 
       @for (file of publicFiles.slice(0,2); track file) {
         <div class="d-flex flex-sm-row align-items-start" [ngbTooltip]="file.metadata.title">
             <i class="bi-file-earmark-text"></i>
           <a class="btn btn-sm" href="{{ingeUri + file.content}}" target="_blank"
-             style="overflow-wrap: break-word;"> {{file.metadata.contentCategory}}</a>
+             style="overflow-wrap: break-word;"> {{'ContentCategories.' + file.metadata.contentCategory | translate}}</a>
         </div>
       }
         @if(files.length > 2 || (publicFiles.length < files.length)) {
-          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">see more...</a></small></i>
+          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">{{ 'ItemList.showAll' | translate }}...</a></small></i>
         }
       }
 
       @if(locators.length > 0) {
         <div class="d-flex flex-sm-row align-items-start  mt-3">
-          {{locators.length}} link(s)
+          <i>{{locators.length}} {{ 'ItemList.links' | translate }}</i>
         </div>
       @for (file of locators.slice(0,2); track file) {
         <div class="d-flex flex-sm-row align-items-start" [ngbTooltip]="file.metadata.title">
             <i class="bi-link"></i>
           <a class="btn btn-sm" href="{{file.content}}" target="_blank"
-             style="overflow-wrap: break-word;"> {{file.metadata.contentCategory}}</a>
+             style="overflow-wrap: break-word;"> {{'ContentCategories.' + file.metadata.contentCategory | translate}}</a>
         </div>
 
       }
         @if(locators.length > 2) {
-          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">see more...</a></small></i>
+          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">{{ 'ItemList.showAll' | translate }}...</a></small></i>
         }
       }
 
