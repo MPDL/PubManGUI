@@ -95,4 +95,8 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/content');
   }
 
+  addDoi(id: string, authenticate?: boolean): Observable<ItemVersionVO> {
+    return this.httpPut(this.subPath + '/' + id + '/addNewDoi',undefined, authenticate);
+  }
+
 }

@@ -6,12 +6,14 @@ import {ItemsService} from "../../../services/pubman-rest-client/items.service";
 import {MessageService} from "../../services/message.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-actions-modal',
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './item-actions-modal.component.html'
 })
@@ -102,10 +104,7 @@ export class ItemActionsModalComponent {
   }
 
   addDoi() {
-    return new Observable((observer) => {
-      alert('not there yet')
-    })
-
+    return this.itemsService.addDoi(this.item!.objectId!);
   }
 
 }

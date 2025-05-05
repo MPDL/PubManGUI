@@ -28,7 +28,18 @@
 		"succeded": "succeded",
     "version" : "Version",
     "versions" : "Versions",
-		"view": "View"
+		"view": "View",
+    "export": "Cite & Export",
+    "edit": "Edit",
+    "release": "Release",
+    "submit": "Submit",
+    "withdraw": "Withdraw",
+    "delete": "Delete",
+    "revise": "Send back",
+    "useAsTemplate": "Use as template",
+    "addDoi": "Add DOI",
+    "comment": "Comment",
+    "actionWarning": "This action is irreversible. Are you sure?"
 	},
 	"chips.localTags.placeholder": "Add local tag",
 	"validation": {

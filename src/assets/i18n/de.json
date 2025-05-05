@@ -28,7 +28,18 @@
 		"succeded": "erfolgreich",
     "version" : "Version",
     "versions" : "Versionen",
-		"view": "Sicht"
+		"view": "Sicht",
+    "export": "Zitieren & Exportieren",
+    "edit": "Bearbeiten",
+    "release": "Freigeben",
+    "submit": "Einstellen",
+    "withdraw": "Zurückziehen",
+    "delete": "Löschen",
+    "revise": "Zurücksenden",
+    "useAsTemplate": "Als Vorlage verwenden",
+    "addDoi": "DOI hinzufügen",
+    "comment": "Kommentar",
+    "actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?"
 	},
 	"chips.localTags.placeholder": "Lokalen Tag hinzufügen",
 	"validation": {
