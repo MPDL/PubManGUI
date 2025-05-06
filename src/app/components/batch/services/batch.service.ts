@@ -2,7 +2,6 @@ import { signal, computed, Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-// import { properties } from 'src/assets/properties.json';
 
 import type * as params from '../interfaces/batch-params';
 import * as resp from '../interfaces/batch-responses';
@@ -13,7 +12,6 @@ import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
 import { ItemVersionVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
-import { TranslatePipe } from "@ngx-translate/core";
 import { TranslateService, _ } from '@ngx-translate/core';
 
 @Injectable({
@@ -53,7 +51,6 @@ export class BatchService {
   }
 
   addToBatchDatasets(selection: string[]): number {
-    //const fromSelection = localStorage.getItem(selection);
     let datasets: string[] = this.items;
     const prev = datasets.length;
     if (selection) {
@@ -65,7 +62,6 @@ export class BatchService {
   }
 
   removeFromBatchDatasets(selection: string[]): number {
-    //const fromSelection = localStorage.getItem(selection);
     let datasets: string[] = this.items;
     const prev = datasets.length;
     if (selection && prev > 0) {
