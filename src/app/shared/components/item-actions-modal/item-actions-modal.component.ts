@@ -80,7 +80,7 @@ export class ItemActionsModalComponent {
           }
         )
     }
-    this.successfullyDone.emit(this.comment);
+    //this.successfullyDone.emit(this.comment);
   }
 
   submit() {

@@ -216,7 +216,7 @@
             @for (ve of versions; track ve) {
               <pure-item-view-metadata-element>
                 <span label><a
-                  href="/view/{{ve.pubItem.objectId}}_{{ve.pubItem.versionNumber}}">Version {{ ve.pubItem.versionNumber }}</a></span>
+                  [routerLink]="'/view/' + ve.pubItem.objectId + '_' + ve.pubItem.versionNumber">Version {{ ve.pubItem.versionNumber }}</a></span>
 
                 <span content>
                <pure-item-view-metadata-element [sub]="true">

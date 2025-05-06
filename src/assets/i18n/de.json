@@ -1,6 +1,7 @@
 {
 	"common": {
 		"actions": "Aktionen",
+    "addItem": "Neuer Datensatz",
     "all": "Alle",
 		"basket": "Ablage",
 		"cancel": "Abbrechen",

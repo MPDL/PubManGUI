@@ -1,6 +1,7 @@
 {
 	"common": {
 		"actions": "Actions",
+    "addItem": "New Item",
     "all": "All",
 		"basket": "Basket",
 		"cancel": "Cancel",

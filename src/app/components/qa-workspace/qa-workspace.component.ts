@@ -41,7 +41,12 @@ export class QaWorkspaceComponent {
           bool: {
             must: [
               baseElasticSearchQueryBuilder("context.objectId", p.moderatorContexts.map(con => con.objectId)),
-              baseElasticSearchQueryBuilder("versionState", [ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION, ItemVersionState.RELEASED])
+              baseElasticSearchQueryBuilder("versionState", [ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION, ItemVersionState.RELEASED]),
+              {
+                script: {
+                  script: "doc['latestVersion.versionNumber']==doc['versionNumber']"
+                }
+              }
             ]
           }
         }
