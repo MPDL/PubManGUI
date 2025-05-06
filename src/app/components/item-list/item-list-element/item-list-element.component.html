@@ -26,7 +26,7 @@
         ></h4>
       </a>
       -->
-      <a class="nav-link" routerLink="/view/{{item?.objectId}}">
+      <a class="nav-link" routerLink="/view/{{item?.objectId + '_' + item?.versionNumber}}">
         <h3 class="" style="font-weight: normal; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml" data-test="item-title"
         ></h3>
       </a>
@@ -83,7 +83,7 @@
         </div>
       }
         @if(files.length > 2 || (publicFiles.length < files.length)) {
-          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">{{ 'ItemList.showAll' | translate }}...</a></small></i>
+          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId + '_' + item?.versionNumber}}">{{ 'ItemList.showAll' | translate }}...</a></small></i>
         }
       }
 
@@ -100,7 +100,7 @@
 
       }
         @if(locators.length > 2) {
-          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId}}">{{ 'ItemList.showAll' | translate }}...</a></small></i>
+          <i><small><a class="nav-link" routerLink="/view/{{item?.objectId + '_' + item?.versionNumber}}">{{ 'ItemList.showAll' | translate }}...</a></small></i>
         }
       }
 

@@ -29,6 +29,7 @@ import {Title} from "@angular/platform-browser";
 import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {TranslatePipe} from "@ngx-translate/core";
+import {itemToVersionId} from "../../shared/services/utils";
 
 @Component({
   selector: 'pure-item-view',
@@ -117,24 +118,24 @@ export class ItemViewComponent {
         }
 
         this.listStateService.initItemId(i.objectId);
-        this.itemSelectionService.addToSelection(i.objectId);
+        this.itemSelectionService.addToSelection(itemToVersionId(i));
         this.versions$ = this.itemsService.retrieveHistory(i.objectId);
 
-        this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber).subscribe(authInfo => {
+        this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i)).subscribe(authInfo => {
           this.authorizationInfo = authInfo;
           if(i.latestVersion?.versionNumber===i.versionNumber) {
             this.latestVersionAuthorizationInfo = this.authorizationInfo;
           }
           else {
             if (i && i.objectId) {
-              this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.latestVersion?.versionNumber).subscribe(authInfoLv => {
+              this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i.latestVersion!)).subscribe(authInfoLv => {
                 this.latestVersionAuthorizationInfo = authInfoLv
               })
             }
           }
         })
 
-        this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined).subscribe(citation => {
+        this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined,undefined).subscribe(citation => {
           this.citation = citation;
         })
 

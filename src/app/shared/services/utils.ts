@@ -1,8 +1,19 @@
+import {ItemVersionRO} from "../../model/inge";
+
 const reParamSplit = /\s*;\s*/
 const reHeaderSplit = /\s*:\s*/
 const rePropertySplit = /\s*=\s*(.+)/
 const reEncodingSplit = /\s*'[^']*'\s*(.*)/
 const reQuotesTrim = /(?:^["'\s]*)|(?:["'\s]*$)/g
+
+
+const versionIdToObjectId = (id: string): string => {
+    return id.substring(0, id.lastIndexOf('_'));
+}
+
+const itemToVersionId = (item: ItemVersionRO): string => {
+  return item.objectId + '_' + item.versionNumber;
+}
 
 const contentDispositionParser = (data: string | null) => {
   if (!(data && typeof data === 'string')) {
@@ -42,5 +53,7 @@ const contentDispositionParser = (data: string | null) => {
 }
 
 export {
-  contentDispositionParser
+  contentDispositionParser,
+  versionIdToObjectId,
+  itemToVersionId
 }

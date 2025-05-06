@@ -151,7 +151,9 @@ export class ExportItemsComponent {
   download() {
     this.loading = true;
     const searchQuery = {
-      query: baseElasticSearchQueryBuilder("objectId", this.itemIds),
+      query: {
+        terms : {"_id" : this.itemIds}
+      },
       size: this.itemIds.length,
       ...this.sortQuery && {sort: [this.sortQuery]},
     }
