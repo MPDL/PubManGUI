@@ -34,7 +34,7 @@
                 "ignore": [
                   "**/*.htaccess"
                 ],
-                "output": "/assets/"
+                "output": "/"
               },
               {
                 "glob": ".htaccess",
