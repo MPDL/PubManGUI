@@ -212,25 +212,29 @@
 
         } @else if (currentSubMenuSelection === 'versions') {
 
-          @if (versions$ | async; as versions) {
-            @for (ve of versions; track ve) {
-              <pure-item-view-metadata-element>
-                <span label><a
-                  [routerLink]="'/view/' + ve.pubItem.objectId + '_' + ve.pubItem.versionNumber">Version {{ ve.pubItem.versionNumber }}</a></span>
+          @if (versionMap$ | async; as versionMap) {
 
+            @for (vm of versionMap; track vm[0]; ) {
+              <pure-item-view-metadata-element>
+                <span label>
+                  <a
+                  [routerLink]="'/view/' + vm[1][0].pubItem.objectId + '_' + vm[0]">Version {{ vm[0] }}</a></span>
                 <span content>
-               <pure-item-view-metadata-element [sub]="true">
+                  @for(auditEntry of vm[1]; track auditEntry; let last = $last) {
+                    <pure-item-view-metadata-element [sub]="true">
                  <span label>Date</span>
-                 <span content>{{ ve.modificationDate }}</span>
+                 <span content>{{ auditEntry.modificationDate }}</span>
                </pure-item-view-metadata-element>
-               <pure-item-view-metadata-element [sub]="true">
+                    <pure-item-view-metadata-element [sub]="true">
                  <span label>Event</span>
-                 <span content>{{ ve.event }}</span>
+                 <span content>{{ auditEntry.event }}</span>
                </pure-item-view-metadata-element>
-               <pure-item-view-metadata-element [sub]="true">
+                    <pure-item-view-metadata-element [sub]="true" [hl]="!last">
                  <span label>Comment</span>
-                 <span content>{{ ve.comment }}</span>
+                 <span content>{{ auditEntry.comment }}</span>
                </pure-item-view-metadata-element>
+                  }
+
              </span>
               </pure-item-view-metadata-element>
 

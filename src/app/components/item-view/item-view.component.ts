@@ -1,7 +1,7 @@
 import {Component, HostListener, Input, TemplateRef} from '@angular/core';
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
 import {AaService} from "../../services/aa.service";
-import {FileDbVO, ItemVersionVO, Storage, Visibility} from "../../model/inge";
+import {AuditDbVO, FileDbVO, ItemVersionVO, Storage, Visibility} from "../../model/inge";
 import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {TopnavComponent} from "../../shared/components/topnav/topnav.component";
 import {AsyncPipe, NgClass, ViewportScroller} from "@angular/common";
@@ -60,7 +60,8 @@ export class ItemViewComponent {
   protected ingeUri = environment.inge_uri;
   currentSubMenuSelection = "abstract";
 
-  versions$!: Observable<any>;
+  versions$!: Observable<AuditDbVO[]>;
+  versionMap$!: Observable<Map<number, AuditDbVO[]>>;
   item$!: Observable<ItemVersionVO>;
 
   item: ItemVersionVO | undefined;
@@ -119,7 +120,25 @@ export class ItemViewComponent {
 
         this.listStateService.initItemId(i.objectId);
         this.itemSelectionService.addToSelection(itemToVersionId(i));
+
+
+        //Get versions and create version map
         this.versions$ = this.itemsService.retrieveHistory(i.objectId);
+        this.versionMap$ = this.versions$.pipe(
+          map(versions => {
+            const vMap: Map<number, AuditDbVO[]> = new Map();
+            versions.forEach((auditEntry) => {
+              const mapEntry = vMap.get(auditEntry.pubItem.versionNumber!);
+              let auditForVersionNumber: AuditDbVO[] = [];
+              if(mapEntry) {
+                auditForVersionNumber = mapEntry;
+              }
+              auditForVersionNumber.push(auditEntry);
+              vMap.set(auditEntry.pubItem.versionNumber!, auditForVersionNumber);
+              console.log("Added " +  auditEntry.pubItem.versionNumber!, auditForVersionNumber);
+            })
+            return vMap;
+        }))
 
         this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i)).subscribe(authInfo => {
           this.authorizationInfo = authInfo;

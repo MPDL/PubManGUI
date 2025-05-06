@@ -17,8 +17,15 @@ export class ItemViewMetadataElementComponent {
 
   @Input() highlight: boolean = true;
 
+  @Input() hl:boolean = false;
+
   last: boolean = false;
 
+  ngOnInit(): void {
+    if(!this.sub) {
+      this.hl=true;
+    }
+  }
 
   ngAfterViewInit(){
     /*
