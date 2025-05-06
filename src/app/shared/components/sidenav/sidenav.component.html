@@ -89,7 +89,7 @@
           }
           <a class="nav-link border-bottom py-3" [routerLink]="['cart']" (click)="collapse()" data-test="sidenav-basket">
             <svg fill="currentColor" height="24px" width="24px">
-              <use href="/assets/icons/icons.svg#cart"></use>
+              <use href="assets/icons/icons.svg#cart"></use>
             </svg>
             @if(cartService.objectIds.length > 0) {
               <div class="matBadge" matBadge='{{ cartService.objectIds.length }}'></div>
@@ -170,7 +170,7 @@
           <a class="nav-link border-bottom" [routerLink]="['']" (click)="collapse()">
             <!--materials "inventory_2" without a grip-->
             <svg fill="currentColor" height="24px" width="24px">
-              <use href="/assets/icons/icons.svg#cart"></use>
+              <use href="assets/icons/icons.svg#cart"></use>
             </svg>
             <small class="nav-label ms-2">Ablage</small>
           </a>

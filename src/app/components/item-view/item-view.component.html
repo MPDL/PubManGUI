@@ -27,7 +27,7 @@
       @if(authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
         <button class="nav-link" (click)="openActionsModal('revise')" ngbTooltip="{{'common.revise' | translate}}">
           <svg fill="currentColor" height="24px" width="24px">
-            <use href="/assets/icons/icons.svg#revise"></use>
+            <use href="assets/icons/icons.svg#revise"></use>
           </svg>
         </button>
 
@@ -48,7 +48,7 @@
       @if(authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI'] && isLatestVersion) {
         <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')" ngbTooltip="{{'common.addDoi' | translate}}">
           <svg fill="currentColor" height="24px" width="24px">
-            <use href="/assets/icons/icons.svg#doi"></use>
+            <use href="assets/icons/icons.svg#doi"></use>
           </svg>
         </button>
 
@@ -116,7 +116,7 @@
                   <sup>
                     <a [href]="author?.person?.orcid" target="_blank">
                       <img alt="ORCID logo"
-                           src="/assets/images/ORCID-iD_icon_vector.svg"
+                           src="assets/images/ORCID-iD_icon_vector.svg"
                            width="16" height="16"/>
                     </a>
                   </sup>

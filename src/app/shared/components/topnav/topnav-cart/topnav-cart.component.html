@@ -4,7 +4,7 @@
 
     <button class="btn btn-link svg-icon nav-link px-2" (click)="addSelectedToCart()" style="vertical-align: baseline;" [disabled]="!isAdd" ngbTooltip="Add to cart">
         <svg fill="currentColor" height="24px" width="24px">
-            <use href="/assets/icons/icons.svg#cart-add"></use>
+            <use href="assets/icons/icons.svg#cart-add"></use>
         </svg>
     </button>
   }
@@ -12,7 +12,7 @@
   @if(displayButtons === 'all' || displayButtons==='removeOnly' || (displayButtons==='allowedOnly' && isRemove)) {
   <button  class=" btn btn-link nav-link px-2" [disabled]="!isRemove" (click)="removeSelectedFromCart()" ngbTooltip="Remove from cart">
     <svg fill="currentColor" height="24px" width="24px">
-        <use href="/assets/icons/icons.svg#cart-remove"></use>
+        <use href="assets/icons/icons.svg#cart-remove"></use>
     </svg>
   </button>
 }
