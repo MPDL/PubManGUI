@@ -613,7 +613,7 @@
     "numberOfPages": "Gesamtseitenzahl",
     "publisher": "Verlag",
     "publisherPlace": "Verlagsort",
-    "tableOfContent": "Inhaltsverzeichnis",
+    "tableOfContents": "Inhaltsverzeichnis",
     "identifiers": "Identifikatoren",
     "edition" : "Ausgabe",
     "publicationState": "Publikationsstatus",

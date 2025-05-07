@@ -114,10 +114,12 @@ export class ItemViewComponent {
       this.item$.subscribe(i => {
       if (i && i.objectId) {
 
+        //set HTMl title
         if(i.metadata?.title) {
           this.title.setTitle(i.metadata.title)
         }
 
+        //init item in selection and state (for export, basket, batch, pagination etc)
         this.listStateService.initItemId(i.objectId);
         this.itemSelectionService.addToSelection(itemToVersionId(i));
 
@@ -135,11 +137,11 @@ export class ItemViewComponent {
               }
               auditForVersionNumber.push(auditEntry);
               vMap.set(auditEntry.pubItem.versionNumber!, auditForVersionNumber);
-              console.log("Added " +  auditEntry.pubItem.versionNumber!, auditForVersionNumber);
             })
             return vMap;
         }))
 
+        //retrieve authorization information for item (for relase, submit, etc...)
         this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i)).subscribe(authInfo => {
           this.authorizationInfo = authInfo;
           if(i.latestVersion?.versionNumber===i.versionNumber) {
@@ -154,18 +156,21 @@ export class ItemViewComponent {
           }
         })
 
+        //Retrieve citation for item view
         this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined,undefined).subscribe(citation => {
           this.citation = citation;
         })
 
 
+        //retrieve thumbnail, if available
         this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
-
         if(this.firstPublicPdfFile) {
           this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
               this.thumbnailUrl =  this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
           })
         }
+
+        //Set item
         this.item = i;
       }
     })

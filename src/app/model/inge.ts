@@ -584,7 +584,7 @@ export enum AlternativeTitleType {
 export enum ContentCategories {
   "any-fulltext" = "http://purl.org/escidoc/metadata/ves/content-categories/any-fulltext",
   "pre-print" = "http://purl.org/escidoc/metadata/ves/content-categories/pre-print",
-  "post_print" = "http://purl.org/escidoc/metadata/ves/content-categories/post-print",
+  "post-print" = "http://purl.org/escidoc/metadata/ves/content-categories/post-print",
   "publisher-version" = "http://purl.org/escidoc/metadata/ves/content-categories/publisher-version",
   "abstract" = "http://purl.org/escidoc/metadata/ves/content-categories/abstract",
   "table-of-contents" = "http://purl.org/escidoc/metadata/ves/content-categories/table-of-contents",
