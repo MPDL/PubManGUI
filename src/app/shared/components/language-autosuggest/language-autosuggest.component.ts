@@ -6,11 +6,12 @@ import { ConeService } from 'src/app/services/cone.service';
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { I18nService } from '../../services/i18n.service';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-language-autosuggest',
   standalone: true,
-  imports: [CommonModule, NgbTypeahead, ReactiveFormsModule],
+  imports: [CommonModule, NgbTypeahead, ReactiveFormsModule, TranslatePipe],
   templateUrl: './language-autosuggest.component.html',
   styleUrl: './language-autosuggest.component.scss'
 })
@@ -22,7 +23,7 @@ export class LanguageAutosuggestComponent {
   language = computed(() => {return this.i18nService.locale()}); //language that will be searched for the search term (e.g. en, de [ISO639-1])
   searching: boolean = false;
   selected: boolean = false;
-  
+
 
   //  constructor(private coneService: ConeService, private fb: FormBuilder, private fbs: FormBuilderService) {
   constructor(private coneService: ConeService, private i18nService : I18nService) {

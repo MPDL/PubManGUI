@@ -3,6 +3,7 @@
 		"actions": "Aktionen",
     "addItem": "Neuer Datensatz",
     "all": "Alle",
+    "autosuggestPlaceholder": "Eingabe beginnen...",
 		"basket": "Ablage",
 		"cancel": "Abbrechen",
 		"completed": "abgeschlossen",
@@ -710,6 +711,7 @@
     "anyField" : "Alle Felder",
     "YES" : "Ja",
     "NO" : "Nein",
-    "WHATEVER" : "-"
+    "WHATEVER" : "-",
+    "searchButton": "Suche"
   }
 }

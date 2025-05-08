@@ -16,6 +16,7 @@ import {ConeService, PersonResource} from "../../../services/cone.service";
 import { HttpParams } from "@angular/common/http";
 import { FormBuilderService } from 'src/app/components/item-edit/services/form-builder.service';
 import { IdType, OrganizationVO } from 'src/app/model/inge';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-person-autosuggest',
@@ -24,7 +25,8 @@ import { IdType, OrganizationVO } from 'src/app/model/inge';
     NgbTypeahead,
     ReactiveFormsModule,
     NgbHighlight,
-    CommonModule
+    CommonModule,
+    TranslatePipe
   ],
   templateUrl: './person-autosuggest.component.html',
   styleUrl: './person-autosuggest.component.scss'
@@ -44,7 +46,7 @@ export class PersonAutosuggestComponent {
 
   constructor(private coneService: ConeService, private fb: FormBuilder, private fbs: FormBuilderService) {
   }
-  
+
   suggestPersons: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
     text$.pipe(
       filter(typed => (typed != null && typed.length >= 3)),

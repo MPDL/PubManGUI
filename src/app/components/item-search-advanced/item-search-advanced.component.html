@@ -465,16 +465,17 @@
     <pure-file-section-component [fileSectionSearchCriterion]="locatorSectionSearchCriterion" />
 
 
-    <div class="btn-grid mt-2">
+    <div>
 
-      <button type="button" class="btn btn-sm btn-outline-primary"
+      <button type="submit" class="btn btn btn-primary me-2"
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="search()">
-        search
+        {{ 'Search.searchButton' | translate }}
       </button>
-      <button type="button" class="btn btn-sm btn-outline-danger"
+      <button type="button" class="btn btn btn-secondary me-2"
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="reset()">
-        reset
+        Reset
       </button>
+      <!--
       <button type="button" class="btn btn-sm btn-outline-info"
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
         show form
@@ -483,6 +484,7 @@
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
         show query
       </button>
+      -->
 
     </div>
 

@@ -5,7 +5,7 @@
        [resultFormatter]="suggestOusFormatter"
        [inputFormatter]="suggestOusFormatter"
        [readonly]="formForOuId?.value"
-       placeholder="Start typing..."/>
+       [placeholder]="'common.autosuggestPlaceholder' | translate"/>
 
   @if(searching) {
   <button class="btn btn-outline-dark" disabled>

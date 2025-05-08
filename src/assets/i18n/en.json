@@ -3,6 +3,7 @@
 		"actions": "Actions",
     "addItem": "New Item",
     "all": "All",
+    "autosuggestPlaceholder": "Start typing...",
 		"basket": "Basket",
 		"cancel": "Cancel",
 		"completed": "completed",
@@ -710,6 +711,7 @@
     "anyField" : "Any field",
     "YES" : "Yes",
     "NO" : "No",
-    "WHATEVER" : "-"
+    "WHATEVER" : "-",
+    "searchButton": "Search"
   }
 }
