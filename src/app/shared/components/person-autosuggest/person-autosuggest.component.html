@@ -4,16 +4,17 @@
     [style.background-color]="(r.type==='main') ? 'lightgrey' : ''"></ngb-highlight>
 </ng-template>
 
-<div class="input-group">
+<div class="input-group" >
   @if(formForPersonsCompleteName) {
   <input class="form-control" type="text" [formControl]="formForPersonsCompleteName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
-    [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." />
+    [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." [ngClass]="{'is-invalid': validationError}"/>
   } @else if (formForPersonsGivenName && formForPersonsFamilyName) {
     <input class="form-control" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
-    [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." />
+    [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." [ngClass]="{'is-invalid': validationError}"/>
   }
+  <div class="invalid-feedback">Creator family name is required</div>
 
   @if(searching) {
 

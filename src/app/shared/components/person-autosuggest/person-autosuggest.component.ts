@@ -40,6 +40,9 @@ export class PersonAutosuggestComponent {
   @Input() formForPersonsIdValue! : FormControl;
   @Input() formForPersonsIdType? : FormControl;
 
+  @Input() validationError!: boolean;
+
+
   searching: boolean = false;
 
   constructor(private coneService: ConeService, private fb: FormBuilder, private fbs: FormBuilderService) {

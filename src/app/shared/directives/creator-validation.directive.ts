@@ -22,16 +22,20 @@ export class CreatorValidationDirective {
         if (response.valid == false) {
           console.log('invalid creator');
           console.log('response creator items',  JSON.stringify(response.items));
-          for (let item in response.items) {
-            console.log('item', JSON.stringify(item));
+          let  validationErrors: ValidationErrors = {};
+        if (response.valid == false) {
+          if (response.items != null && response.items.length > 0) {
+            response.items.forEach((item: any) => {
+              validationErrors[item.content as string] = true;
+            });
           }
-          //formGroup.get('title')?.setErrors({ titleMissing: true});
-          // do not add: formGroup.updateValueAndValidity(); 
-          // this will prevent the validity from being updated after the return value
-          return { invalidCreator: true };
+          console.log('validationErrors', validationErrors);
+          return validationErrors;
+        } else {
+          return null;
+        }
         } else {
           console.log('valid creator');
-          formGroup.get('title')?.setErrors(null);
           return null;
         }
       }),
@@ -42,5 +46,4 @@ export class CreatorValidationDirective {
       defaultIfEmpty(null),
     );
   }
-
 }

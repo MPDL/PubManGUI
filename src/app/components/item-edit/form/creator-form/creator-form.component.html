@@ -1,16 +1,15 @@
 <div [formGroup]="creator_form">
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm ms-sm-3" [ngClass]="{'border-bottom': index !== index_length -1}">
-
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start ">
                 <div class="col-sm-auto">
-                    <label class="col-form-label text-end pe-2">&nbsp;</label>
+                    <label class="col-form-label pe-2">&nbsp;</label><br/>
                     <span class="material-symbols-outlined">
                         drag_indicator
                     </span>
                 </div>
                 <div class="col-sm-2">
-                    <label for="creator_type" class="col-form-label text-end pe-2">type</label>
+                    <label for="creator_type" class="col-form-label pe-2">type</label>
                     <select id="creator_type" class="form-select" formControlName="type"
                         (change)="type_change(type.value)">
                         <option [value]="null" selected disabled>type</option>
@@ -20,17 +19,18 @@
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <label for="creator_role" class="col-form-label text-end pe-2">role</label>
-                    <select id="creator_role" class="form-select" formControlName="role" data-test="creator">
+                    <label for="creator_role" class="col-form-label pe-2">role</label>
+                    <select id="creator_role" class="form-select" formControlName="role" data-test="creator" [ngClass]="creator_form.errors?.[CreatorValidationErrorTypes.CREATOR_ROLE_NOT_PROVIDED] ? 'is-invalid' : ''">
                         <option [value]="null" selected disabled>role</option>
                         @for (r of creator_roles; track r) {
                         <option [value]="r">{{r}}</option>
                         }
                     </select>
+                    <div class="invalid-feedback">Creator role is required</div>
                 </div>
                 @if (type.value === 'ORGANIZATION') {
                 <div class="col-sm" formGroupName="organization">
-                    <label for="name" class="col-form-label text-end pe-2">name</label>
+                    <label for="name" class="col-form-label pe-2">name</label>
                     <pure-selector [form]="organization" [control_name]="'name'" (notice)="updateOU($event)" purePureOus
                         placeholder="search ous ...">
                         <ng-container *pureOption="let item">{{ item.text }}</ng-container>
@@ -49,7 +49,7 @@
 
                 <ng-container formGroupName="person">
                     <div class="col-sm-3">
-                        <label for="familyName" class="col-form-label text-end pe-2">family</label>
+                        <label for="familyName" class="col-form-label pe-2">family</label>
                         <!--<input type="text" class="form-control" id="familyName"
                             formControlName="familyName">-->
                         <pure-person-autosuggest [formForPersonsGivenName]="$any(person.controls.givenName)"
@@ -57,11 +57,12 @@
                             [formForPersonOrganizations]="$any(person.controls.organizations)"
                             [formForPersonsIdValue]="$any(person.controls.identifier.controls.id)"
                             [formForPersonsIdType]="$any(person.controls.identifier.controls.type)"
+                            [validationError]="creator_form.errors?.[CreatorValidationErrorTypes.CREATOR_FAMILY_NAME_NOT_PROVIDED] ? true : false"
                             data-test="familyname-autosuggest" />
                         <!--{{person.controls.identifier.value | json}}-->
                     </div>
                     <div class="col-sm-3">
-                        <label for="givenName" class="col-form-label text-end pe-2">given</label>
+                        <label for="givenName" class="col-form-label pe-2">given</label>
                         <input type="text" class="form-control" id="givenName" formControlName="givenName"
                             data-test="givenname">
                     </div>
@@ -107,8 +108,8 @@
             <ng-container formGroupName="person">
                 <div formArrayName="organizations">
                     @for (pou of organizations.controls; track pou; let i = $index) {
-                    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center" [formGroupName]="i">
-                        <label for="ou_name" class="col-sm-1 col-form-label text-end pe-2">ou
+                    <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start" [formGroupName]="i">
+                        <label for="ou_name" class="col-sm-1 col-form-label pe-2">ou
                             {{i+1}}</label>
                         <div class="col-sm">
                             <!--
@@ -117,7 +118,8 @@
                                     <ng-container *pureOption="let item">{{ item.text }}</ng-container>
                                 </pure-selector>
                             -->
-                            <input type="text" class="form-control" id="OuName" formControlName="name">
+                            <input type="text" class="form-control" id="OuName" formControlName="name" [ngClass]="creator_form.errors?.[CreatorValidationErrorTypes.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] ? 'is-invalid' : ''">
+                            <div class="invalid-feedback">Creator organization is required</div>
                             <!--<pre class="col-sm">{{pou.value.name | json}}</pre>-->
                         </div>
                         <!--TODO link-->
@@ -143,7 +145,7 @@
                 </div>
             </ng-container>
             }
-            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
                 <span>Creator valid: {{creator_form.valid}} | Creator errors: {{creator_form.errors | json}} </span>
             </div>
         </div>

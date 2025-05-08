@@ -2,21 +2,31 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
 import { CreatorRole, CreatorType, IdType, IdentifierVO, OrganizationVO, PersonVO } from 'src/app/model/inge';
 import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
 import { PureOusDirective } from 'src/app/shared/components/selector/services/pure_ous/pure-ous.directive';
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
-import { ConePersonsDirective } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.directive';
 import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
+enum CreatorErrorsEnum {
+  CREATOR_FAMILY_NAME_NOT_PROVIDED = "CreatorFamilyNameNotProvided",
+  CREATOR_GIVEN_NAME_NOT_PROVIDED = "CreatorGivenNameNotProvided",
+  CREATOR_NOT_PROVIDED = "CreatorNotProvided",
+  CREATOR_ORCID_INVALID = "CreatorOrcidInvalid",
+  CREATOR_ORGANIZATION_NAME_NOT_PROVIDED = "CreatorOrganizationNameNotProvided",
+  CREATOR_ROLE_NOT_PROVIDED = "CreatorRoleNotProvided",
+  CREATOR_TYPE_NOT_PROVIDED = "CreatorTypeNotProvided",
+  DATE_ACCEPTED_NOT_PROVIDED = "DateAcceptedNotProvided",
+  ORGANIZATIONAL_METADATA_NOT_PROVIDED = "OrganizationalMetadataNotProvided",
+}
+
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IdentifierFormComponent, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, ConePersonsDirective, OptionDirective, PersonAutosuggestComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })
@@ -33,6 +43,8 @@ export class CreatorFormComponent {
   
   creator_roles = Object.keys(CreatorRole);
   creator_types = Object.keys(CreatorType);
+
+  CreatorValidationErrorTypes = CreatorErrorsEnum;
 
   get type() {
     return this.creator_form.get('type') as FormControl<ControlType<CreatorType>>;
@@ -133,6 +145,7 @@ export class CreatorFormComponent {
     } else if (event.action === 'remove') {
       this.organizations.removeAt(event.index);
     }
+    this.creator_form.updateValueAndValidity();
   }
 
   handleIdentifierNotification(event: any) {
