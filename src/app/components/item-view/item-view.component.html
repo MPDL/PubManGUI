@@ -8,61 +8,61 @@
 
     <div class="navbar-nav" start>
       @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
-        <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2" ngbTooltip="Edit item">
+        <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2" ngbTooltip="{{'common.edit' | translate}}">
           <span class="material-symbols-outlined">edit</span>
         </a>
       }
       @if(authorizationInfo && authorizationInfo.actions['RELEASE'] && isLatestVersion) {
-        <button class="nav-link" (click)="openActionsModal('release')" ngbTooltip="Release item">
+        <button class="nav-link" (click)="openActionsModal('release')" ngbTooltip="{{'common.release' | translate}}">
           <span class="material-symbols-outlined">public</span>
         </button>
 
       }
       @if(authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
-        <button class="nav-link" (click)="openActionsModal('submit')" ngbTooltip="Submit item">
+        <button class="nav-link" (click)="openActionsModal('submit')" ngbTooltip="{{'common.submit' | translate}}">
           <span class="material-symbols-outlined">workspace_premium</span>
         </button>
 
       }
       @if(authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
-        <button class="nav-link" (click)="openActionsModal('revise')" ngbTooltip="Revise item">
+        <button class="nav-link" (click)="openActionsModal('revise')" ngbTooltip="{{'common.revise' | translate}}">
           <svg fill="currentColor" height="24px" width="24px">
-            <use href="/assets/icons/icons.svg#revise"></use>
+            <use href="assets/icons/icons.svg#revise"></use>
           </svg>
         </button>
 
       }
       @if(authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
-        <button class="nav-link" (click)="openActionsModal('withdraw')" ngbTooltip="Withdraw item">
+        <button class="nav-link" (click)="openActionsModal('withdraw')" ngbTooltip="{{'common.withdraw' | translate}}">
           <span class="material-symbols-outlined">public_off</span>
         </button>
       }
 
       @if(authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
-        <button class="nav-link" (click)="openActionsModal('delete')" ngbTooltip="Delete item">
+        <button class="nav-link" (click)="openActionsModal('delete')" ngbTooltip="{{'common.delete' | translate}}">
           <span class="material-symbols-outlined">delete_forever</span>
         </button>
 
       }
 
-      @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
-        <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')" ngbTooltip="Add DOI to item">
+      @if(authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI'] && isLatestVersion) {
+        <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')" ngbTooltip="{{'common.addDoi' | translate}}">
           <svg fill="currentColor" height="24px" width="24px">
-            <use href="/assets/icons/icons.svg#doi"></use>
+            <use href="assets/icons/icons.svg#doi"></use>
           </svg>
         </button>
 
       }
 
       @if(aaService.principal.value.isDepositor) {
-        <button class="nav-link" (click)="useAsTemplate()" ngbTooltip="Use as template">
+        <button class="nav-link" (click)="useAsTemplate()" ngbTooltip="{{'common.useAsTemplate' | translate}}">
           <span class="material-symbols-outlined">copy_all</span>
         </button>
 
       }
 
       <div start class="vr"></div>
-      <button class="nav-link" (click)="openExportModal()" ngbTooltip="Cite & Export"><span class="material-symbols-outlined">upload</span></button>
+      <button class="nav-link" (click)="openExportModal()" ngbTooltip="{{'common.export' | translate}}"><span class="material-symbols-outlined">upload</span></button>
 
 
     </div>
@@ -116,7 +116,7 @@
                   <sup>
                     <a [href]="author?.person?.orcid" target="_blank">
                       <img alt="ORCID logo"
-                           src="/assets/images/ORCID-iD_icon_vector.svg"
+                           src="assets/images/ORCID-iD_icon_vector.svg"
                            width="16" height="16"/>
                     </a>
                   </sup>
@@ -212,25 +212,29 @@
 
         } @else if (currentSubMenuSelection === 'versions') {
 
-          @if (versions$ | async; as versions) {
-            @for (ve of versions; track ve) {
-              <pure-item-view-metadata-element>
-                <span label><a
-                  href="/view/{{ve.pubItem.objectId}}_{{ve.pubItem.versionNumber}}">Version {{ ve.pubItem.versionNumber }}</a></span>
+          @if (versionMap$ | async; as versionMap) {
 
+            @for (vm of versionMap; track vm[0]; ) {
+              <pure-item-view-metadata-element>
+                <span label>
+                  <a
+                  [routerLink]="'/view/' + vm[1][0].pubItem.objectId + '_' + vm[0]">Version {{ vm[0] }}</a></span>
                 <span content>
-               <pure-item-view-metadata-element [sub]="true">
+                  @for(auditEntry of vm[1]; track auditEntry; let last = $last) {
+                    <pure-item-view-metadata-element [sub]="true">
                  <span label>Date</span>
-                 <span content>{{ ve.modificationDate }}</span>
+                 <span content>{{ auditEntry.modificationDate }}</span>
                </pure-item-view-metadata-element>
-               <pure-item-view-metadata-element [sub]="true">
+                    <pure-item-view-metadata-element [sub]="true">
                  <span label>Event</span>
-                 <span content>{{ ve.event }}</span>
+                 <span content>{{ auditEntry.event }}</span>
                </pure-item-view-metadata-element>
-               <pure-item-view-metadata-element [sub]="true">
+                    <pure-item-view-metadata-element [sub]="true" [hl]="!last">
                  <span label>Comment</span>
-                 <span content>{{ ve.comment }}</span>
+                 <span content>{{ auditEntry.comment }}</span>
                </pure-item-view-metadata-element>
+                  }
+
              </span>
               </pure-item-view-metadata-element>
 

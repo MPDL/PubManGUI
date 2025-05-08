@@ -83,7 +83,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'as2', component: ItemSearchAdvancedComponent, data: {
+    path: 'advanced-search', component: ItemSearchAdvancedComponent, data: {
       saveComponent: true,
       breadcrumb: {
         labelKey: 'header.advancedSearch',

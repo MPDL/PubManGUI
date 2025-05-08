@@ -1,5 +1,8 @@
+
+@let colorClass= (action === 'delete' || action === 'withdraw') ? 'danger' : 'primary';
+
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">{{ action }}</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{ 'common.' + action | translate }}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 
@@ -12,16 +15,16 @@
     </div>
   }
 
-  <p>Are you sure to {{action}} {{item.objectId}}?</p>
 
-  <p><i>{{item.metadata.title}}</i></p>
+  <p>{{'common.item' | translate}} {{item.objectId}}:<br/>
+  <b>{{item.metadata.title}}</b></p>
 
 
   @if(action !== 'delete' && action !== 'addDoi') {
     <form>
       <div class="form-group">
-        <label for="inputComment">Comment</label>
-        <textarea type="text" class="form-control" id="inputComment" placeholder="Enter comment" [(ngModel)]="comment" name="comment" rows="4"></textarea>
+        <label for="inputComment">{{ 'common.comment' | translate}}</label>
+        <textarea type="text" class="form-control" id="inputComment" placeholder="{{ 'common.comment' | translate}}" [(ngModel)]="comment" name="comment" rows="4"></textarea>
         <div class="invalid-feedback">
           Please add a comment.
         </div>
@@ -29,10 +32,17 @@
     </form>
   }
 
+  @if(colorClass === 'danger') {
+    <p class="text-danger">{{'common.actionWarning' | translate}}</p>
+  }
+
 </div>
 <div class="modal-footer">
-  <button type="ca" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">Cancel</button>
-  <button type="submit" class="btn btn-primary btn-sm border-2" (click)="go()" [disabled]="loading">{{ action }}</button>
+
+
+
+  <button type="ca" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">{{'common.cancel' | translate}}</button>
+  <button type="submit" class="btn btn-{{colorClass}} btn-sm border-2" (click)="go()" [disabled]="loading">{{ 'common.' +action | translate }}</button>
 </div>
 
 

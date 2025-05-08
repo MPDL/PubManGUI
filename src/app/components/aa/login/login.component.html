@@ -4,14 +4,14 @@
 </div>
 
 
-
+<form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
 <div class="modal-body">
   @if(errorMessage) {
     <div class="alert alert-danger" role="alert">
       {{ errorMessage }}
     </div>
   }
-  <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
+
     <div class="form-group">
       <label for="inputUsername">Username</label>
       <input type="text" class="form-control" id="inputUsername" formControlName="username" placeholder="Enter username" data-test="username"
@@ -28,13 +28,13 @@
         Please choose a password.
       </div>
     </div>
-  </form>
+
 </div>
 <div class="modal-footer">
   <button type="submit" class="btn btn-primary btn-sm border-2" (click)="login()" data-test="sign-in">Sign In</button>
 </div>
 
-
+</form>
 
 
 

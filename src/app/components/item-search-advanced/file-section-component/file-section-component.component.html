@@ -4,7 +4,7 @@
     <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
             [attr.data-bs-target]="'#accordionBodyFilesGroup_' + fileSectionSearchCriterion.type" aria-expanded="true"
             aria-controls="accordionBodyFilesGroup">
-      {{fileSectionSearchCriterion.type === 'INTERNAL_MANAGED' ? 'Files' : 'Locators'}}
+      {{(fileSectionSearchCriterion.type === 'INTERNAL_MANAGED' ? 'common.files' : 'common.links') | translate}}
     </button>
   </h2>
   <div id="{{'accordionBodyFilesGroup_' + fileSectionSearchCriterion.type}}" class="accordion-collapse collapse show">
@@ -13,25 +13,25 @@
       <div class="row">
         <div class="col-md-6 col-xxl-4">
           <div class="container mb-4">
-            <h5>with {{fileSectionSearchCriterion.type === 'INTERNAL_MANAGED' ? 'file(s)' : 'locator(s)'}}</h5>
+            <h5>{{(fileSectionSearchCriterion.type === 'INTERNAL_MANAGED' ? 'common.files' : 'common.links') | translate}}</h5>
             <select class="form-select"
                     [formControl]="$any(fileSectionSearchCriterion.content).get('component_available')">
               @for (val of fileSectionSearchCriterion.availabilityOptions; track val) {
                 <option [value]="val">
-                  {{ val }}
+                  {{ 'Search.' + val | translate}}
                 </option>
               }
             </select>
           </div>
           @if (fileSectionSearchCriterion.type === 'INTERNAL_MANAGED') {
             <div class="container mb-4">
-              <h5>Visibility</h5>
+              <h5>{{ 'FileMetadataFields.visibility' | translate }}</h5>
               @for (visibility of fileSectionSearchCriterion.componentVisibilitySearchCriterion.visibilityOptions; track visibility; let i = $index; ) {
                 <div class="col-md-6 col-xxl-4">
                   <div class="form-check">
                     <input id="fileVisibility{{i}}" class="form-check-input" type="checkbox"
                            [formControl]="$any(fileSectionSearchCriterion.componentVisibilitySearchCriterion.componentVisibilityFormGroup).get(visibility)"/>
-                    <label class="form-check-label" for="fileVisibility{{i}}">{{ visibility }}</label>
+                    <label class="form-check-label" for="fileVisibility{{i}}">{{ 'Visibility.' + visibility | translate}}</label>
                   </div>
                 </div>
               }
@@ -39,19 +39,19 @@
             </div>
 
             <div class="container">
-              <h5>Embargo Date</h5>
+              <h5>{{ 'FileMetadataFields.embargoDate' | translate }}</h5>
               <div class="container">
-                from:
+                {{ 'common.from' |translate }}:
                 <input class="form-control" type="text"
                        [formControl]="$any(fileSectionSearchCriterion.embargoDateSearchCriterion.content).get('from')"
-                       placeholder="YYYY-MM-DD"/>
+                       [placeholder]="'common.dateFormat' | translate"/>
               </div>
 
               <div class="container">
-                to:
+                {{ 'common.to' |translate }}:
                 <input class="form-control" type="text"
                        [formControl]="$any(fileSectionSearchCriterion.embargoDateSearchCriterion.content).get('to')"
-                       placeholder="YYYY-MM-DD"/>
+                       [placeholder]="'common.dateFormat' | translate"/>
               </div>
             </div>
           }
@@ -59,24 +59,24 @@
         </div>
 
           <div class="col-md-6 col-xxl-4">
-            <h5>Content Category</h5>
+            <h5>{{ 'FileMetadataFields.contentCategory' | translate }}</h5>
             @for (cc of fileSectionSearchCriterion.componentContentCategorySearchCriterion.contentCategoryOptions; track cc; let i = $index; ) {
 
               <div class="form-check">
                 <input id="fileCcName{{i}}" class="form-check-input" type="checkbox"
                        [formControl]="$any(fileSectionSearchCriterion.componentContentCategorySearchCriterion.contentCategoryFormGroup).get(cc)"/>
-                <label class="form-check-label" for="fileCcName{{i}}">{{ cc }}</label>
+                <label class="form-check-label" for="fileCcName{{i}}">{{ 'ContentCategories.' + cc | translate }}</label>
               </div>
             }
           </div>
           <div class="col-md-6 col-xxl-4">
-            <h5>OA Status</h5>
+            <h5>{{ 'FileMetadataFields.oaStatus' | translate }}</h5>
             @for (cc of fileSectionSearchCriterion.oaStatusSearchCriterion.oaStatusOptions; track cc; let i = $index; ) {
 
               <div class="form-check">
                 <input id="oaStatus{{i}}" class="form-check-input" type="checkbox"
                        [formControl]="$any(fileSectionSearchCriterion.oaStatusSearchCriterion.oaStatusFormGroup).get(cc)"/>
-                <label class="form-check-label" for="oaStatus{{i}}">{{ cc }}</label>
+                <label class="form-check-label" for="oaStatus{{i}}">{{ 'OAStatus.' + cc | translate }}</label>
               </div>
             }
           </div>

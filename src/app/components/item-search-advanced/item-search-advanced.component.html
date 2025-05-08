@@ -51,7 +51,7 @@
         <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#accordionBodyStandardGroup" aria-expanded="true"
                 aria-controls="accordionBodyStandardGroup">
-          Search terms
+          {{'Search.searchTerms' | translate}}
         </button>
       </h2>
       <div id="accordionBodyStandardGroup" class="accordion-collapse collapse show">
@@ -69,9 +69,9 @@
                   <div class="col-auto" formGroupName="content">
                     <select class="form-select" formControlName="operator"
                             (change)="changeOperator(i, t.value)" #t>
-                      <option value="and">AND</option>
-                      <option value="or">OR</option>
-                      <option value="not">NOT</option>
+                      <option value="and">{{'Search.AND' | translate}}</option>
+                      <option value="or">{{'Search.OR' | translate}}</option>
+                      <option value="not">{{'Search.NOT' | translate}}</option>
                     </select>
                   </div>
 
@@ -98,38 +98,37 @@
                 </div>
                 <div class="col-sm-2">
                   <select class="form-select" formControlName="type" (change)="changeType(i, t.value)" #t>
-                    <option value="title">title</option>
-                    <option value="keyword">keyword</option>
-                    <option value="classification">classification</option>
-                    <option value="anyField">anyField</option>
-                    <option value="fulltext">fulltext</option>
-                    <option value="person">person</option>
-                    <option value="orcid">orcid</option>
-                    <option value="organization">organization</option>
-                    <option value="orcid">orcid</option>
-                    <optgroup label="Dates">
-                      <option value="anyDate">anyDate</option>
-                      <option value="publishedInPrintDate">publishedInPrintDate</option>
-                      <option value="publishedDate">publishedDate</option>
-                      <option value="acceptedDate">acceptedDate</option>
-                      <option value="submittedDate">submittedDate</option>
-                      <option value="modifiedDate">modifiedDate</option>
-                      <option value="createdDate">createdDate</option>
+                    <option value="title">{{ 'MetadataFields.title' | translate }}</option>
+                    <option value="keyword">{{ 'MetadataFields.keywords' | translate }}</option>
+                    <option value="classification">{{ 'MetadataFields.classification' | translate }}</option>
+                    <option value="anyField">{{ 'Search.anyField' | translate }}</option>
+                    <option value="fulltext">{{ 'Search.fulltext' | translate}}</option>
+                    <option value="person">{{ 'MetadataFields.creators' | translate }}</option>
+                    <option value="orcid">ORCID</option>
+                    <option value="organization">{{ 'MetadataFields.organization' | translate }}</option>
+                    <optgroup label="{{ 'MetadataFields.date' | translate }}">
+                      <option value="anyDate">{{ 'MetadataFields.date' | translate }}</option>
+                      <option value="publishedInPrintDate">{{ 'MetadataFields.datePublishedInPrint' | translate }}</option>
+                      <option value="publishedDate">{{ 'MetadataFields.datePublishedOnline' | translate }}</option>
+                      <option value="acceptedDate">{{ 'MetadataFields.dateAccepted' | translate }}</option>
+                      <option value="submittedDate">{{ 'MetadataFields.dateSubmitted' | translate }}</option>
+                      <option value="modifiedDate">{{ 'MetadataFields.dateModified' | translate }}</option>
+                      <option value="createdDate">{{ 'MetadataFields.dateCreated' | translate }}</option>
                     </optgroup>
-                    <optgroup label="Event">
-                      <option value="eventTitle">eventTitle</option>
-                      <option value="eventStartDate">eventStartDate</option>
-                      <option value="eventEndDate">eventEndDate</option>
+                    <optgroup label="{{ 'MetadataFields.event' | translate }}">
+                      <option value="eventTitle">{{ 'MetadataFields.eventTitle' | translate }}</option>
+                      <option value="eventStartDate">{{ 'MetadataFields.eventStartDate' | translate }}</option>
+                      <option value="eventEndDate">{{ 'MetadataFields.eventEndDate' | translate }}</option>
                     </optgroup>
-                    <option value="genre">genre</option>
-                    <option value="reviewMethod">reviewMethod</option>
-                    <option value="language">language</option>
-                    <option value="source">source</option>
-                    <option value="journal">journal</option>
-                    <option value="localTag">localTag</option>
-                    <option value="identifier">identifier</option>
-                    <option value="collection">collection</option>
-                    <option value="projectInfo">projectInfo</option>
+                    <option value="genre">{{ 'MetadataFields.genre' | translate }}</option>
+                    <option value="reviewMethod">{{ 'MetadataFields.reviewMethod' | translate }}</option>
+                    <option value="language">{{ 'MetadataFields.languages' | translate }}</option>
+                    <option value="source">{{ 'MetadataFields.source' | translate }}</option>
+                    <option value="journal">{{ 'MetadataFields.journal' | translate }}</option>
+                    <option value="localTag">{{ 'MetadataFields.localTags' | translate }}</option>
+                    <option value="identifier">{{ 'MetadataFields.identifiers' | translate }}</option>
+                    <option value="collection">{{ 'MetadataFields.context' | translate }}</option>
+                    <option value="projectInfo">{{ 'MetadataFields.projectInfo' | translate }}</option>
                   </select>
                   <!--Type -->
                   <!--
@@ -154,11 +153,11 @@
                   <div class="col-sm-2" formGroupName="content">
                     <select class="form-select" formControlName="role">
                       <option value="">
-                        PERSON
+                        {{ 'MetadataFields.person' | translate}}
                       </option>
                       @for (val of personOptions; track val) {
                         <option [value]="val">
-                          {{ val }}
+                          {{ 'CreatorRoles.' + val | translate }}
                         </option>
                       }
                     </select>
@@ -183,17 +182,17 @@
                     <input id="predecessorsAndSuccessors" class="form-check-input" type="checkbox"
                            formControlName="includePredecessorsAndSuccessors"/>
                     <label class="form-check-label" style="font-size:12px;" for="predecessorsAndSuccessors">
-                      Include predecessors and successors
+                      {{'Search.includePresAndSuccs' | translate}}
                     </label>
                   </div>
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.DATE) {
 
                   <div class="col" formGroupName="content">
-                    <input class="form-control" type="text" formControlName="from" placeholder="YYYY-MM-DD"/>
+                    <input class="form-control" type="text" formControlName="from" [placeholder]="'common.dateFormat' | translate"/>
                   </div>
                   <div class="col" formGroupName="content">
-                    <input class="form-control" type="text" formControlName="to" placeholder="YYYY-MM-DD"/>
+                    <input class="form-control" type="text" formControlName="to" [placeholder]="'common.dateFormat' | translate"/>
                   </div>
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.IDENTIFIER) {
@@ -356,7 +355,7 @@
         <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#accordionBodyGenreGroup" aria-expanded="true"
                 aria-controls="accordionBodyGenreGroup">
-          Genres
+          {{ 'MetadataFields.genre' | translate }}
         </button>
       </h2>
       <div id="accordionBodyGenreGroup" class="accordion-collapse collapse show">
@@ -367,7 +366,7 @@
               <div class="form-check">
                 <input id="checkAllGenres" class="form-check-input" type="checkbox"
                        (change)="genreListSearchCriterion.selectAll($event)"/>
-                <label class="form-check-label" for="checkAllGenres">Check all</label>
+                <label class="form-check-label" for="checkAllGenres">{{ 'common.selectAll' | translate }}</label>
               </div>
             </div>
           </div>
@@ -379,7 +378,7 @@
                     <div class="form-check">
                         <input id="genreName{{(i + j * anzGenreRows)}}" class="form-check-input" type="checkbox"
                                [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)])"/>
-                        <label class="form-check-label" for="genreName{{(i + j * anzGenreCols)}}">{{ genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] }}</label>
+                        <label class="form-check-label" for="genreName{{(i + j * anzGenreCols)}}">{{ 'MdsPublicationGenre.' + genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] | translate}}</label>
                       <!--<pre>{{anzGenreRows}},{{anzGenreCols}}  {{i}},{{j}} : {{ (i + j * anzGenreRows) }} : {{ genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] | json }}</pre>-->
                     </div>
                 }
@@ -410,7 +409,7 @@
                 <div class="form-check">
                   <input id="genreDegreeName" class="form-check-input" type="checkbox"
                          [formControl]="$any(genreListSearchCriterion.genreFormGroup).get('THESIS')"/>
-                  <label class="form-check-label" for="genreDegreeName">THESIS</label>
+                  <label class="form-check-label" for="genreDegreeName">{{ 'MdsPublicationGenre.THESIS' | translate }}</label>
                 </div>
               </div>
           </div>
@@ -421,7 +420,7 @@
                 <div class="form-check">
                   <input id="degreeName{{i}}" class="form-check-input" type="checkbox"
                          [formControl]="$any(genreListSearchCriterion.degreeFormGroup).get(currentDegree)"/>
-                  <label class="form-check-label" for="degreeName{{i}}">{{ currentDegree }}</label>
+                  <label class="form-check-label" for="degreeName{{i}}">{{ 'Thesis.' + currentDegree | translate}}</label>
                 </div>
               </div>
             }
@@ -437,7 +436,7 @@
         <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#accordionBodyPubStatusGroup" aria-expanded="true"
                 aria-controls="accordionBodyPubStatusGroup">
-          Publication Status
+          {{ 'MetadataFields.publicationState' | translate }}
         </button>
       </h2>
       <div id="accordionBodyPubStatusGroup" class="accordion-collapse collapse show">
@@ -450,7 +449,7 @@
                   <div class="form-check">
                     <input id="pubStateName{{i}}" class="form-check-input" type="checkbox"
                            [formControl]="$any(publicationStateSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
-                    <label class="form-check-label" for="pubStateName{{i}}">{{ pubState }}</label>
+                    <label class="form-check-label" for="pubStateName{{i}}">{{ 'PublicationState.' + pubState | translate }}</label>
                   </div>
                 </div>
             }
@@ -466,16 +465,17 @@
     <pure-file-section-component [fileSectionSearchCriterion]="locatorSectionSearchCriterion" />
 
 
-    <div class="btn-grid mt-2">
+    <div>
 
-      <button type="button" class="btn btn-sm btn-outline-primary"
+      <button type="submit" class="btn btn btn-primary me-2"
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="search()">
-        search
+        {{ 'Search.searchButton' | translate }}
       </button>
-      <button type="button" class="btn btn-sm btn-outline-danger"
+      <button type="button" class="btn btn btn-secondary me-2"
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="reset()">
-        reset
+        Reset
       </button>
+      <!--
       <button type="button" class="btn btn-sm btn-outline-info"
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
         show form
@@ -484,6 +484,7 @@
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
         show query
       </button>
+      -->
 
     </div>
 

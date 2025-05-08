@@ -82,7 +82,7 @@ export class ImportsService {
         tap((value: ItemVersionVO) => {
           this.#lastFetch.set(of(value));
         }),
-        catchError(err => throwError(() => err)),
+        //catchError(err => throwError(() => err)),
       );
 
     return importResponse;

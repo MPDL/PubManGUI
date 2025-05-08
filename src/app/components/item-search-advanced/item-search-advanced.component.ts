@@ -34,12 +34,13 @@ import {SavedSearchService} from "../../services/pubman-rest-client/saved-search
 import {Component, HostListener, ViewEncapsulation} from "@angular/core";
 import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterion";
 import {SearchStateService} from "../search-result-list/search-state.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe, TranslatePipe
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',

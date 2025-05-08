@@ -13,7 +13,7 @@ export enum COMPONENT_SEARCH_TYPES {
 
 export class FileSectionSearchCriterion extends SearchCriterion {
 
-  availabilityOptions = ['YES', 'NO', 'WHATEVER']
+  availabilityOptions = ['WHATEVER', 'YES', 'NO']
   //componentAvailableSearchCriterion = new ComponentAvailabiltySearchCriterion();
   //componentAvailabilitySearchCrierion =
   componentContentCategorySearchCriterion = new ComponentContentCategorySearchCriterion();

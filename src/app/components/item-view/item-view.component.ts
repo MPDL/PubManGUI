@@ -1,7 +1,7 @@
 import {Component, HostListener, Input, TemplateRef} from '@angular/core';
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
 import {AaService} from "../../services/aa.service";
-import {FileDbVO, ItemVersionVO, Storage, Visibility} from "../../model/inge";
+import {AuditDbVO, FileDbVO, ItemVersionVO, Storage, Visibility} from "../../model/inge";
 import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {TopnavComponent} from "../../shared/components/topnav/topnav.component";
 import {AsyncPipe, NgClass, ViewportScroller} from "@angular/common";
@@ -29,6 +29,7 @@ import {Title} from "@angular/platform-browser";
 import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {TranslatePipe} from "@ngx-translate/core";
+import {itemToVersionId} from "../../shared/services/utils";
 
 @Component({
   selector: 'pure-item-view',
@@ -59,7 +60,8 @@ export class ItemViewComponent {
   protected ingeUri = environment.inge_uri;
   currentSubMenuSelection = "abstract";
 
-  versions$!: Observable<any>;
+  versions$!: Observable<AuditDbVO[]>;
+  versionMap$!: Observable<Map<number, AuditDbVO[]>>;
   item$!: Observable<ItemVersionVO>;
 
   item: ItemVersionVO | undefined;
@@ -112,40 +114,63 @@ export class ItemViewComponent {
       this.item$.subscribe(i => {
       if (i && i.objectId) {
 
+        //set HTMl title
         if(i.metadata?.title) {
           this.title.setTitle(i.metadata.title)
         }
 
+        //init item in selection and state (for export, basket, batch, pagination etc)
         this.listStateService.initItemId(i.objectId);
-        this.itemSelectionService.addToSelection(i.objectId);
-        this.versions$ = this.itemsService.retrieveHistory(i.objectId);
+        this.itemSelectionService.addToSelection(itemToVersionId(i));
 
-        this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.versionNumber).subscribe(authInfo => {
+
+        //Get versions and create version map
+        this.versions$ = this.itemsService.retrieveHistory(i.objectId);
+        this.versionMap$ = this.versions$.pipe(
+          map(versions => {
+            const vMap: Map<number, AuditDbVO[]> = new Map();
+            versions.forEach((auditEntry) => {
+              const mapEntry = vMap.get(auditEntry.pubItem.versionNumber!);
+              let auditForVersionNumber: AuditDbVO[] = [];
+              if(mapEntry) {
+                auditForVersionNumber = mapEntry;
+              }
+              auditForVersionNumber.push(auditEntry);
+              vMap.set(auditEntry.pubItem.versionNumber!, auditForVersionNumber);
+            })
+            return vMap;
+        }))
+
+        //retrieve authorization information for item (for relase, submit, etc...)
+        this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i)).subscribe(authInfo => {
           this.authorizationInfo = authInfo;
           if(i.latestVersion?.versionNumber===i.versionNumber) {
             this.latestVersionAuthorizationInfo = this.authorizationInfo;
           }
           else {
             if (i && i.objectId) {
-              this.itemsService.retrieveAuthorizationInfo(i.objectId + '_' + i.latestVersion?.versionNumber).subscribe(authInfoLv => {
+              this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i.latestVersion!)).subscribe(authInfoLv => {
                 this.latestVersionAuthorizationInfo = authInfoLv
               })
             }
           }
         })
 
-        this.itemsService.retrieveSingleCitation(i.objectId + '_' + i.versionNumber, undefined,undefined).subscribe(citation => {
+        //Retrieve citation for item view
+        this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined,undefined).subscribe(citation => {
           this.citation = citation;
         })
 
 
+        //retrieve thumbnail, if available
         this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
-
         if(this.firstPublicPdfFile) {
           this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
               this.thumbnailUrl =  this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
           })
         }
+
+        //Set item
         this.item = i;
       }
     })

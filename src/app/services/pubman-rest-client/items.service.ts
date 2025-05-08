@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
 import {catchError, map, Observable, throwError} from 'rxjs';
-import {ItemVersionVO} from "../../model/inge";
+import {AuditDbVO, ItemVersionVO} from "../../model/inge";
 import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
 import {HttpParams} from "@angular/common/http";
 
@@ -54,7 +54,7 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     return this.httpPut(this.subPath + '/' + id + '/withdraw', taskParam, authenticate);
   }
 
-  retrieveHistory(id: string, authenticate?: boolean): Observable<any> {
+  retrieveHistory(id: string, authenticate?: boolean): Observable<AuditDbVO[]> {
     return this.httpGet(this.subPath + '/' + id + '/history', authenticate);
   }
 
@@ -93,6 +93,10 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
 
   checkFileAudienceAccess(itemId: string, fileId: string) {
     return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/content');
+  }
+
+  addDoi(id: string, authenticate?: boolean): Observable<ItemVersionVO> {
+    return this.httpPut(this.subPath + '/' + id + '/addNewDoi',undefined, authenticate);
   }
 
 }

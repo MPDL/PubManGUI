@@ -11,6 +11,7 @@ import {ItemBadgesComponent} from "../../../shared/components/item-badges/item-b
 import {ItemSelectionService} from "../../../shared/services/item-selection.service";
 import { environment } from 'src/environments/environment';
 import {TranslatePipe} from "@ngx-translate/core";
+import {itemToVersionId} from "../../../shared/services/utils";
 
 @Component({
   selector: 'pure-item-list-element',
@@ -51,7 +52,7 @@ export class ItemListElementComponent {
       this.check_box.setValue(false);
 
       this.itemSelectionService.selectedIds$.subscribe(currentIds => {
-        if(currentIds.includes(this.item!.objectId!)) {
+        if(currentIds.includes(itemToVersionId(this.item!))) {
           this.check_box.setValue(true, {emitEvent: false});
         }
         else {
@@ -98,10 +99,10 @@ export class ItemListElementComponent {
 
   setStoredCheckBoxState(isChecked: boolean) {
     if(isChecked) {
-      this.itemSelectionService.addToSelection(this.item!.objectId!)
+      this.itemSelectionService.addToSelection(this.item!.objectId! + '_' + this.item!.versionNumber);
     }
     else {
-      this.itemSelectionService.removeFromSelection(this.item!.objectId!)
+      this.itemSelectionService.removeFromSelection(this.item!.objectId! + '_' + this.item!.versionNumber)
     }
 
     /*

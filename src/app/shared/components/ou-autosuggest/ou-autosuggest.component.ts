@@ -13,11 +13,12 @@ import {
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 import {OrganizationsService} from "../../../services/pubman-rest-client/organizations.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-ou-autosuggest',
   standalone: true,
-  imports: [NgbTypeahead, ReactiveFormsModule],
+  imports: [NgbTypeahead, ReactiveFormsModule, TranslatePipe],
   templateUrl: './ou-autosuggest.component.html',
   styleUrl: './ou-autosuggest.component.scss'
 })

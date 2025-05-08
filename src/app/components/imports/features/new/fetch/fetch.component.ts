@@ -12,6 +12,7 @@ import { AaService } from 'src/app/services/aa.service';
 
 import { TranslatePipe } from "@ngx-translate/core";
 import { TranslateService, _ } from '@ngx-translate/core';
+import { MessageService } from "src/app/shared/services/message.service";
 
 @Component({
   selector: 'pure-imports-new-fetch',
@@ -31,6 +32,7 @@ export default class FetchComponent implements OnInit {
   fb = inject(FormBuilder);
   aaSvc = inject(AaService);
   translateService = inject(TranslateService);
+  msgSvc = inject(MessageService);
 
   user_contexts?: ContextDbRO[] = [];
 
@@ -84,7 +86,10 @@ export default class FetchComponent implements OnInit {
           next: () => {
             this.router.navigateByUrl('/edit_import');
           },
-          error: () => { this.fetchEnd() },
+          error: (response) => { 
+            this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message));
+            this.fetchEnd(); 
+          },
         });
         break;
       case 'arxiv':
@@ -92,7 +97,10 @@ export default class FetchComponent implements OnInit {
           next: () => {
             this.router.navigateByUrl('/edit_import');
           },
-          error: () => { this.fetchEnd() },
+          error: (response) => { 
+            this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message));
+            this.fetchEnd(); 
+          },
         });
     }
   }

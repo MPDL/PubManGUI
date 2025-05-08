@@ -1,19 +1,23 @@
 {
 	"common": {
 		"actions": "Aktionen",
+    "addItem": "Neuer Datensatz",
     "all": "Alle",
+    "autosuggestPlaceholder": "Eingabe beginnen...",
 		"basket": "Ablage",
 		"cancel": "Abbrechen",
 		"completed": "abgeschlossen",
 		"confirm": "Bestätigen",
 		"datasets": "Datensätze",
-		"deselectAll": "alles abwählen",
+		"deselectAll": "Alles abwählen",
 		"edit": "Eingabe",
 		"failed": "fehlgeschlagen",
     "file": "Datei",
     "files": "Dateien",
 		"home": "Home",
     "item": "Datensatz",
+    "link": "Link",
+    "links": "Links",
 		"logs": "Protokolle",
     "metadata" : "Metadaten",
 		"my": "Meine Datensätze",
@@ -23,12 +27,26 @@
 		"pagination.of": "von",
 		"pagination.page": "Seite",
 		"qa": "QA-Bereich",
-		"selectAll": "alles auswählen",
+		"selectAll": "Alles auswählen",
     "sort": "Sortierung",
 		"succeded": "erfolgreich",
     "version" : "Version",
     "versions" : "Versionen",
-		"view": "Sicht"
+		"view": "Ansicht",
+    "export": "Zitieren & Exportieren",
+    "edit": "Bearbeiten",
+    "release": "Freigeben",
+    "submit": "Einstellen",
+    "withdraw": "Zurückziehen",
+    "delete": "Löschen",
+    "revise": "Zurücksenden",
+    "useAsTemplate": "Als Vorlage verwenden",
+    "addDoi": "DOI hinzufügen",
+    "comment": "Kommentar",
+    "actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?",
+    "dateFormat": "JJJJ-MM-TT",
+    "from": "von",
+    "to": "bis"
 	},
 	"chips.localTags.placeholder": "Lokalen Tag hinzufügen",
 	"validation": {
@@ -488,6 +506,7 @@
 		"INTERVIEW": "Interview",
 		"ISSUE": "Heft",
 		"JOURNAL": "Zeitschrift",
+    "MAGAZINE_ARTICLE" : "Magazinartikel",
 		"MANUAL": "Leitfaden",
 		"MANUSCRIPT": "Manuskript",
 		"MEETING_ABSTRACT": "Meeting Abstract",
@@ -601,7 +620,7 @@
     "numberOfPages": "Gesamtseitenzahl",
     "publisher": "Verlag",
     "publisherPlace": "Verlagsort",
-    "tableOfContent": "Inhaltsverzeichnis",
+    "tableOfContents": "Inhaltsverzeichnis",
     "identifiers": "Identifikatoren",
     "edition" : "Ausgabe",
     "publicationState": "Publikationsstatus",
@@ -621,7 +640,17 @@
     "startPage" : "Startseite",
     "endPage" : "Endseite",
     "sequenceNumber" : "Artikelnummer",
-    "totalNumberOfPages" : "Gesamtseitenzahl"
+    "totalNumberOfPages" : "Gesamtseitenzahl",
+    "localTags": "Lokale Tags",
+    "organization": "Organisation",
+    "person": "Person",
+    "classification": "Klassifikation"
+  },
+  "FileMetadataFields" : {
+    "visibility" : "Sichtbarkeit",
+    "contentCategory" : "Inhaltskategorie",
+    "embargoDate" : "Embargodatum",
+    "oaStatus" : "Open Access Status"
   },
   "CreatorRoles" : {
     "ARTIST" : "Künstler",
@@ -648,11 +677,41 @@
     "CINEMATOGRAPHER" : "Kameramann",
     "SOUND_DESIGNER" : "Tontechniker"
   },
+  "Thesis" : {
+    "BACHELOR" : "Bachelor",
+    "DIPLOMA" : "Diplom",
+    "HABILITATION": "Habilitation",
+    "MAGISTER": "Magister",
+    "MASTER": "Master",
+    "PHD": "Doktorarbeit",
+    "STAATSEXAMEN" : "Staatsexamen"
+  },
+  "OAStatus" : {
+    "NOT_SPECIFIED" : "Keine Angabe",
+    "GOLD" : "Gold",
+    "HYBRID" : "Hybrid",
+    "GREEN" : "Grün",
+    "MISCELLANEOUS" : "Sonstiges",
+    "CLOSED_ACCESS" : "Kein OA"
+  },
   "ItemList" : {
     "files" : "Datei(en)",
     "links" : "Link(s)",
     "showAll" : "alle anzeigen",
     "moreCreators" : "weitere Urheber",
     "publishedIn" : "Veröffentlicht in"
-}
+  },
+  "Search": {
+    "AND" : "UND",
+    "OR" : "ODER",
+    "NOT" : "NICHT",
+    "searchTerms" : "Suchbegriffe",
+    "includePresAndSuccs" : "Vorgänger und Nachfolger einschließen",
+    "fulltext" : "Volltext",
+    "anyField" : "Alle Felder",
+    "YES" : "Ja",
+    "NO" : "Nein",
+    "WHATEVER" : "-",
+    "searchButton": "Suche"
+  }
 }

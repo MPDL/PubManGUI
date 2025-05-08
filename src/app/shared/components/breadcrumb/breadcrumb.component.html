@@ -4,7 +4,7 @@
   </a>
   @for(breadcrumb of breadcrumbs$ | async; track breadcrumb.labelKey; let last = $last) {
     @if(breadcrumb.labelKey) {
-      @if(breadcrumb.labelKey !== 'Home') {
+      @if(breadcrumb.labelKey !== 'common.home') {
         <span class="text-muted"> &gt; </span>
         @if(last) {
           <span class="last">{{ '' + breadcrumb.labelKey | translate }}</span>

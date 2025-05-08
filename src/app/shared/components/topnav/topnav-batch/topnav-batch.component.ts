@@ -6,6 +6,7 @@ import { ItemSelectionService } from "../../../services/item-selection.service";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { TranslatePipe } from "@ngx-translate/core";
 import { TranslateService, _ } from "@ngx-translate/core";
+import {versionIdToObjectId} from "../../../services/utils";
 
 @Component({
   selector: 'pure-topnav-batch',
@@ -27,15 +28,15 @@ export class TopnavBatchComponent {
   translateSvc = inject(TranslateService);
 
   addToBatchDatasets() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));
     if (selected) {
       const added = this.batchSvc.addToBatchDatasets(selected);
       if (this.resetSelectionAfterAction)
         this.itemSelectionService.resetList();
-      this.msgSvc.success(selected.length + ' ' 
-        + this.translateSvc.instant(_('batch.datasets.selected')) + '\n' + added + ' ' 
-        + this.translateSvc.instant(_('batch.datasets.filled')) 
-        + ((selected.length! - added) > 0 ? ", " + `${selected.length! - added} ` 
+      this.msgSvc.success(selected.length + ' '
+        + this.translateSvc.instant(_('batch.datasets.selected')) + '\n' + added + ' '
+        + this.translateSvc.instant(_('batch.datasets.filled'))
+        + ((selected.length! - added) > 0 ? ", " + `${selected.length! - added} `
         + this.translateSvc.instant(_('batch.datasets.duplicated'))  + "." : '')
       );
     } else {
@@ -44,15 +45,15 @@ export class TopnavBatchComponent {
   }
 
   removeFromBatchDatasets() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));
     if (selected) {
       const removed = this.batchSvc.removeFromBatchDatasets(selected);
       if (this.resetSelectionAfterAction)
         this.itemSelectionService.resetList();
-      this.msgSvc.success(selected.length + ' ' 
-        + this.translateSvc.instant(_('batch.datasets.selected')) + '\n' + removed + ' ' 
-        + this.translateSvc.instant(_('batch.datasets.removed')) 
-        + ((selected.length! - removed) > 0 ? ", " + `${selected.length! - removed} ` 
+      this.msgSvc.success(selected.length + ' '
+        + this.translateSvc.instant(_('batch.datasets.selected')) + '\n' + removed + ' '
+        + this.translateSvc.instant(_('batch.datasets.removed'))
+        + ((selected.length! - removed) > 0 ? ", " + `${selected.length! - removed} `
         + this.translateSvc.instant(_('batch.datasets.missing')) + "." : '')
       );
     } else {
@@ -61,7 +62,7 @@ export class TopnavBatchComponent {
   }
 
   get isAdd() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));
     if (selected.length > 0) {
       return selected.some(id => !this.batchSvc.objectIds.includes(id))
     }
@@ -69,7 +70,7 @@ export class TopnavBatchComponent {
   }
 
   get isRemove() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));
     if (selected.length > 0) {
       return selected.some(id => this.batchSvc.objectIds.includes(id))
     }

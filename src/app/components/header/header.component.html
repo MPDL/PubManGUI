@@ -33,14 +33,14 @@
             placeholder="{{ 'header.search'| translate }}" aria-label="Search">
           <div class="input-group-text border-0 p-0">
             <a pureTooltip class="btn" data-bs-toggle="tooltip" data-bs-title="advanced search" role="button"
-              [routerLink]="['/as2']">
+              [routerLink]="['/advanced-search']">
               <span class="material-symbols-outlined">tune</span>
             </a>
           </div>
         </div>
       </form>
       <div class="col-4 d-flex justify-content-end align-items-end">
-        <pure-switch-bs-theme class="me-4"></pure-switch-bs-theme>
+        <!--<pure-switch-bs-theme class="me-4"></pure-switch-bs-theme>-->
         <div class="me-4">
           <a [routerLink]="[]" class="nav-link" (click)="help()">
             <span class="material-symbols-outlined">help</span>

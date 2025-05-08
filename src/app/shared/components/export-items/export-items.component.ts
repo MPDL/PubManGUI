@@ -14,6 +14,7 @@ import {map} from "rxjs";
 import {baseElasticSearchQueryBuilder} from "../../services/search-utils";
 import {LoadingComponent} from "../loading/loading.component";
 import {contentDispositionParser} from "../../services/utils";
+import {TranslatePipe} from "@ngx-translate/core";
 
 
 @Component({
@@ -25,7 +26,8 @@ import {contentDispositionParser} from "../../services/utils";
     OuAutosuggestComponent,
     CslAutosuggestComponent,
     SanitizeHtmlPipe,
-    LoadingComponent
+    LoadingComponent,
+    TranslatePipe
   ],
   templateUrl: './export-items.component.html',
   styleUrl: './export-items.component.scss'
@@ -149,7 +151,9 @@ export class ExportItemsComponent {
   download() {
     this.loading = true;
     const searchQuery = {
-      query: baseElasticSearchQueryBuilder("objectId", this.itemIds),
+      query: {
+        terms : {"_id" : this.itemIds}
+      },
       size: this.itemIds.length,
       ...this.sortQuery && {sort: [this.sortQuery]},
     }
