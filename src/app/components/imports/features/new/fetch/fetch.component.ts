@@ -36,12 +36,22 @@ export default class FetchComponent implements OnInit {
 
   user_contexts?: ContextDbRO[] = [];
 
+  dinamicPlaceholder = "Identifier";
+
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
       p => {
         this.user_contexts = p.depositorContexts;
       }
     );
+
+    this.fetchForm.controls['source'].valueChanges.subscribe(source => {
+      if (source === 'arxiv') {
+        this.dinamicPlaceholder = 'arXiv:yymm.nnnnn';
+      } else {
+        this.dinamicPlaceholder = '10.1000/1000xyz';
+      }
+    });
   }
 
   public fetchForm: FormGroup = this.fb.group({
@@ -61,10 +71,11 @@ export default class FetchComponent implements OnInit {
     return importParams;
   }
 
+  arxiv = /arxiv:/gi; 
   get getArxivParams(): GetArxivParams {
     const importParams: GetArxivParams = {
       contextId: this.fetchForm.controls['contextId'].value,
-      identifier: this.fetchForm.controls['identifier'].value,
+      identifier: this.fetchForm.controls['identifier'].value.replace(this.arxiv, '').trim(),
       fullText: this.fetchForm.controls['fullText'].value
     }
     return importParams;
