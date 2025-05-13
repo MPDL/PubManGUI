@@ -372,14 +372,15 @@
           </div>
 
           <!--All genres except THESIS -->
+          @let sortedGenres = genreListSearchCriterion.genreOptions | sortByLabel : 'MdsPublicationGenre.';
+
           <div class="row" *ngFor="let row of genreRows; let i = index">
               <div class="col-md-6 col-xxl-4" *ngFor="let col of genreCols; let j = index">
-                @if (genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] != 'THESIS'){
+                @if (sortedGenres[(i + j * anzGenreRows)] != 'THESIS'){
                     <div class="form-check">
                         <input id="genreName{{(i + j * anzGenreRows)}}" class="form-check-input" type="checkbox"
-                               [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)])"/>
-                        <label class="form-check-label" for="genreName{{(i + j * anzGenreCols)}}">{{ 'MdsPublicationGenre.' + genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] | translate}}</label>
-                      <!--<pre>{{anzGenreRows}},{{anzGenreCols}}  {{i}},{{j}} : {{ (i + j * anzGenreRows) }} : {{ genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] | json }}</pre>-->
+                               [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(sortedGenres[(i + j * anzGenreRows)])"/>
+                        <label class="form-check-label" for="genreName{{(i + j * anzGenreCols)}}">{{ 'MdsPublicationGenre.' + sortedGenres[(i + j * anzGenreRows)] | translate}}</label>
                     </div>
                 }
               </div>
@@ -475,7 +476,7 @@
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="reset()">
         Reset
       </button>
-      <!--
+
       <button type="button" class="btn btn-sm btn-outline-info"
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
         show form
@@ -484,7 +485,7 @@
               [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
         show query
       </button>
-      -->
+
 
     </div>
 

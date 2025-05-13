@@ -34,13 +34,14 @@ import {SavedSearchService} from "../../services/pubman-rest-client/saved-search
 import {Component, HostListener, ViewEncapsulation} from "@angular/core";
 import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterion";
 import {SearchStateService} from "../search-result-list/search-state.service";
-import {TranslatePipe} from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {SortByLabelPipe} from "../../shared/services/pipes/sort-by-label.pipe";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe, TranslatePipe
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe, TranslatePipe, SortByLabelPipe
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
@@ -61,7 +62,7 @@ export class ItemSearchAdvancedComponent {
 
   contextListSearchCriterion = new ContextListSearchCriterion();
   itemStateListSearchCriterion = new ItemStateListSearchCriterion();
-  genreListSearchCriterion = new GenreListSearchCriterion();
+  genreListSearchCriterion = new GenreListSearchCriterion(this.translateService);
   publicationStateSearchCriterion = new PublicationStateSearchCriterion();
   fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
   locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
@@ -83,7 +84,8 @@ export class ItemSearchAdvancedComponent {
     protected aaService: AaService,
     private savedSearchService: SavedSearchService,
     private clipboard: Clipboard,
-    private searchStateService: SearchStateService
+    private searchStateService: SearchStateService,
+    private translateService: TranslateService,
 ) {
     this.initializeGenres();
   }
@@ -130,7 +132,7 @@ export class ItemSearchAdvancedComponent {
 
   reset() {
     this.itemStateListSearchCriterion = new ItemStateListSearchCriterion();
-    this.genreListSearchCriterion = new GenreListSearchCriterion();
+    this.genreListSearchCriterion = new GenreListSearchCriterion(this.translateService);
     this.publicationStateSearchCriterion = new PublicationStateSearchCriterion();
     this.fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
     this.locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
