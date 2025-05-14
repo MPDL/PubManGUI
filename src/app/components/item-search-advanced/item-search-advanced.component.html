@@ -1,48 +1,7 @@
-@if(aaService.isLoggedIn) {
-<div class="mb-4">
-  <div class="dropdown">
-  <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="outside" >
-    My Saved Searches
-  </button>
-  <div class="dropdown-menu" >
-    <form >
-      <h5>Save current search</h5>
-      <div class="row mb-4">
-        <div class="col-9">
-          <input type=text class="form-control" id="searchName" [formControl]="savedSearchNameForm" placeholder="Name">
-        </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-primary btn-sm" [disabled]="savedSearchNameForm.invalid || searchForm.invalid" (click)="saveCurrentSearchForm()">Save current</button>
-        </div>
-      </div>
-    </form>
-    <hr class="dropdown-divider">
-        <h5>Saved search forms</h5>
-        @for (savedSearch of savedSearches; track savedSearch; let i = $index;) {
-          <div class="row mb-2">
-           <div class="col-6">
-            <button class="btn btn-link" (click)="applySearchFromHistory(i)">{{ savedSearch.name + ' '}}</button>
-          </div>
-            <div class="col-2">
-              {{savedSearch.creationDate | date:'yyyy-MM-dd HH:mm:ss'}}
-            </div>
-            <div class="col-2">
-              <button class="btn btn-sm btn-secondary" (click)="copySavedSearchLink(savedSearch.objectId)">Copy link</button>
-            </div>
-            <div class="col-2">
-              <button class="btn btn-sm btn-danger" (click)="deleteSavedSearch(i)">Delete</button>
 
-            </div>
-          </div>
-
-        }
+<ng-template [ngTemplateOutlet]="searchButtons"/>
 
 
-    </div>
-
-</div>
-</div>
-}
 <div class="accordion">
   <form [formGroup]="searchForm" (ngSubmit)="search()">
     <div class="accordion-item border-0">
@@ -372,14 +331,15 @@
           </div>
 
           <!--All genres except THESIS -->
+          @let sortedGenres = genreListSearchCriterion.genreOptions | sortByLabel : 'MdsPublicationGenre.';
+
           <div class="row" *ngFor="let row of genreRows; let i = index">
               <div class="col-md-6 col-xxl-4" *ngFor="let col of genreCols; let j = index">
-                @if (genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] != 'THESIS'){
+                @if (sortedGenres[(i + j * anzGenreRows)] != 'THESIS'){
                     <div class="form-check">
                         <input id="genreName{{(i + j * anzGenreRows)}}" class="form-check-input" type="checkbox"
-                               [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)])"/>
-                        <label class="form-check-label" for="genreName{{(i + j * anzGenreCols)}}">{{ 'MdsPublicationGenre.' + genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] | translate}}</label>
-                      <!--<pre>{{anzGenreRows}},{{anzGenreCols}}  {{i}},{{j}} : {{ (i + j * anzGenreRows) }} : {{ genreListSearchCriterion.genreOptions[(i + j * anzGenreRows)] | json }}</pre>-->
+                               [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(sortedGenres[(i + j * anzGenreRows)])"/>
+                        <label class="form-check-label" for="genreName{{(i + j * anzGenreCols)}}">{{ 'MdsPublicationGenre.' + sortedGenres[(i + j * anzGenreRows)] | translate}}</label>
                     </div>
                 }
               </div>
@@ -465,46 +425,16 @@
     <pure-file-section-component [fileSectionSearchCriterion]="locatorSectionSearchCriterion" />
 
 
-    <div>
+    <ng-template [ngTemplateOutlet]="searchButtons"/>
 
-      <button type="submit" class="btn btn btn-primary me-2"
-              [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="search()">
-        {{ 'Search.searchButton' | translate }}
-      </button>
-      <button type="button" class="btn btn btn-secondary me-2"
-              [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="reset()">
-        Reset
-      </button>
-      <!--
-      <button type="button" class="btn btn-sm btn-outline-info"
-              [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
-        show form
-      </button>
-      <button type="button" class="btn btn-sm btn-outline-dark"
-              [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
-        show query
-      </button>
-      -->
-
-    </div>
-
-    <!--
-    <div [formGroup]="genreListFormGroup">
-      <div formGroupName="genres">
-        <ul class="list-group" style="max-height:200px">
-      @for (currentGenre of genreListKeys; track currentGenre; let i = $index; ) {
-        <li class="list-group-item">
-          <input id="genre" class="form-check-input" type="checkbox"
-                 formControlName="currentGenre"/>
-          <label class="form-check-label" for="genre">{{currentGenre}}</label>
-        </li>
-      }
-        </ul>
-      </div>
-
-
-    </div>
-    -->
+    <button type="button" class="btn btn-sm btn-outline-info"
+            [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
+      show form
+    </button>
+    <button type="button" class="btn btn-sm btn-outline-dark"
+            [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
+      show query
+    </button>
 
   </form>
 
@@ -515,3 +445,24 @@
     <pre>{{ query | json }}</pre>
   }
 </div>
+
+<ng-template #searchButtons>
+  <div class="m-2">
+  <button type="submit" class="btn btn btn-primary me-2"
+          [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="search()">
+    {{ 'Search.searchButton' | translate }}
+  </button>
+  <button type="button" class="btn btn btn-secondary me-2"
+          [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="reset()">
+    Reset
+  </button>
+
+  @if(aaService.isLoggedIn) {
+    <button type="button" class="btn btn btn-secondary me-2" (click)="openSavedSearchModal()">{{ 'Search.saveSearchButton' | translate }}</button>
+  }
+
+
+  </div>
+
+</ng-template>
+

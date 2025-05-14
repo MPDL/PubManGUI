@@ -8,7 +8,7 @@ import {
   Validators
 } from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DatePipe, JsonPipe, KeyValuePipe, NgFor, NgIf} from "@angular/common";
+import {DatePipe, JsonPipe, KeyValuePipe, NgFor, NgIf, NgTemplateOutlet} from "@angular/common";
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
 import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
@@ -34,13 +34,17 @@ import {SavedSearchService} from "../../services/pubman-rest-client/saved-search
 import {Component, HostListener, ViewEncapsulation} from "@angular/core";
 import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterion";
 import {SearchStateService} from "../search-result-list/search-state.service";
-import {TranslatePipe} from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {SortByLabelPipe} from "../../shared/services/pipes/sort-by-label.pipe";
+import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
+import {SavedSearchesModalComponent} from "../../shared/components/saved-searches-modal/saved-searches-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe, TranslatePipe
+    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
@@ -61,13 +65,10 @@ export class ItemSearchAdvancedComponent {
 
   contextListSearchCriterion = new ContextListSearchCriterion();
   itemStateListSearchCriterion = new ItemStateListSearchCriterion();
-  genreListSearchCriterion = new GenreListSearchCriterion();
+  genreListSearchCriterion = new GenreListSearchCriterion(this.translateService);
   publicationStateSearchCriterion = new PublicationStateSearchCriterion();
   fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
   locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
-
-  savedSearches: SavedSearchVO[] = [];
-  savedSearchNameForm: FormControl = new FormControl("", Validators.required);
 
   private principalSubscription?: Subscription;
 
@@ -83,7 +84,9 @@ export class ItemSearchAdvancedComponent {
     protected aaService: AaService,
     private savedSearchService: SavedSearchService,
     private clipboard: Clipboard,
-    private searchStateService: SearchStateService
+    private searchStateService: SearchStateService,
+    private translateService: TranslateService,
+    private modalService: NgbModal
 ) {
     this.initializeGenres();
   }
@@ -96,11 +99,6 @@ export class ItemSearchAdvancedComponent {
         this.parseFormJson(savedSearch.searchForm);
       })
     }
-    this.principalSubscription = this.aaService.principal.subscribe(p =>
-    {
-      this.updateSavedSearchList()
-    })
-    //this.updateSavedSearchList();
 
   }
 
@@ -130,7 +128,7 @@ export class ItemSearchAdvancedComponent {
 
   reset() {
     this.itemStateListSearchCriterion = new ItemStateListSearchCriterion();
-    this.genreListSearchCriterion = new GenreListSearchCriterion();
+    this.genreListSearchCriterion = new GenreListSearchCriterion(this.translateService);
     this.publicationStateSearchCriterion = new PublicationStateSearchCriterion();
     this.fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
     this.locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
@@ -666,52 +664,15 @@ export class ItemSearchAdvancedComponent {
     this.scListToElasticSearchQuery(this.prepareQuery()).subscribe(query => this.query = query);
   }
 
-  saveCurrentSearchForm() {
 
-    const savedSearch: SavedSearchVO = {
-      objectId: "",
-      name: this.savedSearchNameForm.value,
-      searchForm: this.searchForm.value
-    }
-    this.savedSearchService.create(savedSearch).subscribe(search => {
-      console.log("Successfully saved search!");
+  openSavedSearchModal() {
+    const comp: SavedSearchesModalComponent = this.modalService.open(SavedSearchesModalComponent, {scrollable: true, size: "lg"}).componentInstance;
+    comp.searchFormJson = this.searchForm.value;
 
-      this.updateSavedSearchList();
-      this.savedSearchNameForm.setValue("");
+    comp.applySearchForm.subscribe(data => {
+      this.parseFormJson(data);
+    })
 
-    });
-
-
-  }
-
-
-  applySearchFromHistory(value: number) {
-    this.parseFormJson(this.savedSearches[value].searchForm);
-
-  }
-
-  deleteSavedSearch(value: number) {
-    this.savedSearchService.delete(this.savedSearches[value].objectId, undefined).subscribe(search => {
-      console.log("Successfully deleted search!");
-      this.updateSavedSearchList();
-
-    });
-  }
-
-
-
-  private updateSavedSearchList() {
-    if (this.aaService.principal.getValue().loggedIn) {
-      this.savedSearchService.getAllSearch().subscribe(savedSearches => this.savedSearches = savedSearches)
-    }
-  }
-
-  copySavedSearchLink(savedSearchId: string) {
-    const urlString = window.location.toString();
-    const url = new URL(urlString);
-    url.searchParams.set('searchId', savedSearchId);
-    this.clipboard.copy(url.toString());
-    //console.log(`${url}`);
   }
 }
 

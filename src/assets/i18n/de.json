@@ -712,6 +712,7 @@
     "YES" : "Ja",
     "NO" : "Nein",
     "WHATEVER" : "-",
-    "searchButton": "Suche"
+    "searchButton": "Suche",
+    "saveSearchButton" : "Suche öffnen/speichern"
   }
 }

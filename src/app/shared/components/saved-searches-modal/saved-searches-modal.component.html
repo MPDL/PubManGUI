@@ -1,0 +1,60 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Saved searches</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+
+
+<div class="modal-body">
+  <!--
+  @if(errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+  -->
+<form >
+  <h5>Save current search</h5>
+  @if(errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+  <div class="row mb-4">
+    <div class="col-9">
+      <input type=text class="form-control" id="searchName" [formControl]="savedSearchNameForm" placeholder="Name">
+    </div>
+    <div class="col-3">
+      <button type="button" class="btn btn-primary btn-sm" [disabled]="savedSearchNameForm.invalid" (click)="saveCurrentSearchForm()">Save current</button>
+    </div>
+  </div>
+</form>
+  <hr/>
+<div>
+  <h5>Saved search forms</h5>
+  @if(!savedSearchesLoading) {
+  @for (savedSearch of savedSearches; track savedSearch; let i = $index;) {
+    <div class="row mb-2">
+      <div class="col-6 text-break">
+        <button class="btn btn-link text-start" (click)="applySearchFromHistory(i)">{{ savedSearch.name + ' '}}</button>
+      </div>
+      <div class="col-3">
+        {{savedSearch.creationDate | date:'yyyy-MM-dd HH:mm:ss'}}
+      </div>
+      <div class="col-3">
+        <button class="btn btn-sm btn-primary me-2" (click)="copySavedSearchLink(savedSearch.objectId)" ngbTooltip="Copy search link to clipboard"><i class="bi bi-copy"></i></button>
+        <button class="btn btn-sm btn-danger" (click)="deleteSavedSearch(i)" ngbTooltip="Delete"><i class="bi bi-trash"></i></button>
+      </div>
+    </div>
+
+  }
+  } @else {
+    <pure-loading></pure-loading>
+  }
+</div>
+
+
+
+
+</div>
+

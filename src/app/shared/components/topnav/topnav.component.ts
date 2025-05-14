@@ -15,11 +15,6 @@ import {NgClass} from "@angular/common";
   selector: 'pure-topnav',
   standalone: true,
   imports: [
-    RouterLink,
-    NgbTooltip,
-    TopnavCartComponent,
-    TopnavBatchComponent,
-    PaginatorComponent,
     NgClass
   ],
   templateUrl: './topnav.component.html'

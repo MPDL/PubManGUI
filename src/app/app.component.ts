@@ -23,12 +23,8 @@ export class AppComponent {
 
   constructor(
     private navigation: NavigationService,
-    private translateSvc: TranslateService
-  ) {
-    this.translateSvc.addLangs(['de', 'en']);
-    this.translateSvc.setDefaultLang('de');
 
-    const browserLang = translateSvc.getBrowserLang() || 'en';
-    translateSvc.use(browserLang?.match(/en|de/) ? browserLang : 'en');
+  ) {
+
    }
 }
