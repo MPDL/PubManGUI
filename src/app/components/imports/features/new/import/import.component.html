@@ -37,7 +37,7 @@
           <select class="form-select" formControlName="format">
             <option [value]='' selected disabled>Format</option>
             @for (format of importFormat; track format) {
-              <option [value]="format">{{ format.replace(REGEXP, '') }}</option>
+              <option [value]="format">{{ 'ImportFormat.' + format | translate }}</option>
             }
           </select>
         </div>

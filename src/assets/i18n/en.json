@@ -244,6 +244,7 @@
 		"RUNNING": "Running"
 	},
 	"BatchProcessMessages": {
+		"BATCH_SUCCESS": "Success",
 		"BATCH_AUTHENTICATION_ERROR": "You need to be logged in, to change the publication.",
 		"BATCH_AUTHORIZATION_ERROR": "You do not have the permission to change the publication.",
 		"BATCH_CONTEXT_NOT_FOUND": "The specified context was not found.",

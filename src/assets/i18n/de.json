@@ -244,6 +244,7 @@
 		"RUNNING": "Läuft"
 	},
 	"BatchProcessMessages": {
+		"BATCH_SUCCESS": "Erfolgreich.",
 		"BATCH_AUTHENTICATION_ERROR": "Sie müssen eingeloggt sein, um die Publikation zu verändern.",
 		"BATCH_AUTHORIZATION_ERROR": "Sie haben keine Rechte, diese Publikation zu verändern.",
 		"BATCH_CONTEXT_NOT_FOUND": "Der angegebene Kontext wurde nicht gefunden.",
