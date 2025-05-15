@@ -97,8 +97,12 @@ export default class FetchComponent implements OnInit {
           next: () => {
             this.router.navigateByUrl('/edit_import');
           },
-          error: (response) => { 
-            this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message));
+          error: (response) => {
+            if (response.error.cause !== undefined ) {
+              this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message)); 
+            } else {
+              this.msgSvc.warning(JSON.stringify(response.error.exception));
+            }
             this.fetchEnd(); 
           },
         });
@@ -109,8 +113,12 @@ export default class FetchComponent implements OnInit {
             this.router.navigateByUrl('/edit_import');
           },
           error: (response) => { 
-            this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message));
-            this.fetchEnd(); 
+            if (response.error.cause !== undefined ) {
+              this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message)); 
+            } else {
+              this.msgSvc.warning(JSON.stringify(response.error.exception));
+            }
+            this.fetchEnd();  
           },
         });
     }

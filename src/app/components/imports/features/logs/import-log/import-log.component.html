@@ -43,7 +43,7 @@
   <td class="col-4">
     @if( isFinished(log.status) ) {
 
-      <span class="nav-link text-decoration-underline text-nowrap" (click)='toDatasets(log.id);'>
+      <span class="nav-link text-decoration-underline text-nowrap" style="cursor: pointer" (click)='toDatasets(log.id);'>
         {{ log.name }}
       </span>
 
