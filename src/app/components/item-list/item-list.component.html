@@ -7,7 +7,10 @@
         <pure-topnav-batch start/>
         <div start class="vr"></div>
         <div class="navbar-nav" start>
-          <button start class="btn btn-link nav-link" (click)="openExportModal()" ngbTooltip="Cite & Export" [disabled]="selectionService.selectedIds$.value.length === 0">
+          <button start class="btn btn-link nav-link" (click)="openExportModal()" 
+            ngbTooltip="{{ 'common.export' | translate }}"
+            placement="bottom-left" 
+            [disabled]="selectionService.selectedIds$.value.length === 0">
             <span class="material-symbols-outlined">upload</span>
           </button>
         </div>

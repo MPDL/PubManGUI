@@ -2,7 +2,9 @@
 
   @if(displayButtons === 'all' || displayButtons==='addOnly' || (displayButtons==='allowedOnly' && isAdd)) {
 
-    <button class="btn btn-link svg-icon nav-link px-2" (click)="addSelectedToCart()" style="vertical-align: baseline;" [disabled]="!isAdd" ngbTooltip="Add to cart">
+    <button class="btn btn-link svg-icon nav-link px-2" (click)="addSelectedToCart()" style="vertical-align: baseline;" [disabled]="!isAdd" 
+      ngbTooltip="{{ 'common.addToCart' | translate }}"
+      placement="bottom-left">
         <svg fill="currentColor" height="24px" width="24px">
             <use href="assets/icons/icons.svg#cart-add"></use>
         </svg>
@@ -10,10 +12,13 @@
   }
 
   @if(displayButtons === 'all' || displayButtons==='removeOnly' || (displayButtons==='allowedOnly' && isRemove)) {
-  <button  class=" btn btn-link nav-link px-2" [disabled]="!isRemove" (click)="removeSelectedFromCart()" ngbTooltip="Remove from cart">
-    <svg fill="currentColor" height="24px" width="24px">
-        <use href="assets/icons/icons.svg#cart-remove"></use>
-    </svg>
-  </button>
-}
+
+    <button  class=" btn btn-link nav-link px-2" [disabled]="!isRemove" (click)="removeSelectedFromCart()"
+      ngbTooltip="{{ 'common.removeFromCart' | translate }}"
+        placement="bottom-left">
+      <svg fill="currentColor" height="24px" width="24px">
+          <use href="assets/icons/icons.svg#cart-remove"></use>
+      </svg>
+    </button>
+  }
 </div>

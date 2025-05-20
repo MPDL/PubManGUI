@@ -1,19 +1,20 @@
 import {Component, Input} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MessageService} from "../../../services/message.service";
-import {BatchService} from "../../../../components/batch/services/batch.service";
 import {CartService} from "../../../services/cart.service";
 import {AaService} from "../../../../services/aa.service";
 import {ItemListComponent} from "../../../../components/item-list/item-list.component";
 import {ItemSelectionService} from "../../../services/item-selection.service";
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-topnav-cart',
   standalone: true,
   imports: [
     RouterLink,
-    NgbTooltip
+    NgbTooltip,
+    TranslatePipe
   ],
   templateUrl: './topnav-cart.component.html',
   //styleUrl: './topnav-cart.component.scss'
