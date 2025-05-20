@@ -2,8 +2,8 @@
 	"common": {
 		"actions": "Aktionen",
 		"addItem": "Neuer Datensatz",
-		"addToCart": "In den Warenkorb legen",
-		"removeFromCart": "Aus dem Warenkorb entfernen",
+		"addToCart": "Zur Ablage hinzufügen",
+		"removeFromCart": "Aus Ablage entfernen",
 		"all": "Alle",
 		"autosuggestPlaceholder": "Eingabe beginnen...",
 		"basket": "Ablage",
