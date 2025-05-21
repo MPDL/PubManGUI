@@ -39,7 +39,7 @@
 		"edit": "Bearbeiten",
 		"release": "Freigeben",
 		"submit": "Einstellen",
-		"withdraw": "Zurückziehen",
+		"withdraw": "Verwerfen",
 		"delete": "Löschen",
 		"revise": "Zurücksenden",
 		"useAsTemplate": "Als Vorlage verwenden",
@@ -48,7 +48,11 @@
 		"actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?",
 		"dateFormat": "JJJJ-MM-TT",
 		"from": "von",
-		"to": "bis"
+		"to": "bis",
+    "releaseExportControl" : "Exportkontrolle: Wenn Sie Dokumente öffentlich zugänglich machen, dann stellen Sie bitte sicher, dass Sie die <a href='https://www.bafa.de/SharedDocs/Downloads/DE/Aussenwirtschaft/afk_aca_broschuere_awareness.html' target='_blank'>rechtlichen Vorgaben</a> für die Exportkontrolle von wissenschaftlichen Publikationen durch das Bundesamt für Wirtschaft und Ausfuhrkontrolle vorab geprüft haben.",
+    "handle": "PID (ePIC Handle)",
+    "latestVersion": "Neueste Version",
+    "latestRelease": "Neueste Freigabe"
 	},
 	"chips.localTags.placeholder": "Lokalen Tag hinzufügen",
 	"validation": {
@@ -653,7 +657,13 @@
 		"visibility": "Sichtbarkeit",
 		"contentCategory": "Inhaltskategorie",
 		"embargoDate": "Embargodatum",
-		"oaStatus": "Open Access Status"
+		"oaStatus": "Open Access Status",
+    "filename": "Dateiname",
+    "mimeType": "MIME Typ",
+    "checksum" : "Checksumme",
+    "description" : "Beschreibung",
+    "license" : "Lizenz",
+    "copyright": "Copyright"
 	},
 	"CreatorRoles": {
 		"ARTIST": "Künstler",

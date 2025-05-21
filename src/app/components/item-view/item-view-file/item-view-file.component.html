@@ -24,7 +24,7 @@
               @if(oaStatusIcon(file)) {
               <img alt="OA logo"
                    src="assets/images/{{oaStatusIcon(file)}}"
-                   width="16" height="16" [ngbTooltip]="'Open Access: ' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')"/>
+                   width="16" height="16" [ngbTooltip]="'Open Access: ' + ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')| translate)"/>
               }
               ({{ 'ContentCategories.' + file.metadata.contentCategory | translate }})
             </div>
@@ -44,10 +44,10 @@
             <small>
             @if(file.storage==='INTERNAL_MANAGED') {
               <div class="mt-1">
-                <strong>Visibility</strong>
+                <strong>{{ 'FileMetadataFields.visibility' | translate }}</strong>
               </div>
               <div>
-                {{ file.visibility }}
+                {{ 'Visibility.' + file.visibility | translate}}
               </div>
               @if(file.allowedAudienceIds | empty) {
                 <!--
@@ -63,20 +63,20 @@
               }
               @if(file.metadata.embargoUntil | empty) {
                 <div class="mt-1">
-                  <strong>Embargo</strong>
+                  <strong>{{ 'FileMetadataFields.embargoDate' | translate }}</strong>
                 </div>
                 <div class="text-break">
                   {{ file.metadata.embargoUntil }}
                 </div>
               }
             <div class="mt-1">
-              <strong>File Name</strong>
+              <strong>{{ 'FileMetadataFields.filename' | translate }}</strong>
             </div>
             <div class="text-break">
               {{ file.name }}
             </div>
             <div class="mt-1">
-              <strong>MimeType / Checksum</strong>
+              <strong>{{ 'FileMetadataFields.mimeType' | translate }} / {{ 'FileMetadataFields.checksum' | translate }}</strong>
             </div>
             <div>
               {{ file.mimeType }} | <button type="button" class="btn btn-sm btn-link m-0 p-0" [ngbPopover]="checksumPopup" [autoClose]="'outside'">{{file.checksumAlgorithm}}</button>
@@ -88,7 +88,7 @@
             }
             @if(file.metadata.description | empty) {
             <div class="mt-1">
-              <strong>Description</strong>
+              <strong>{{ 'FileMetadataFields.description' | translate }}</strong>
             </div>
             <div>
               {{ file.metadata.description }}
@@ -96,7 +96,7 @@
             }
             @if(file.metadata.oaStatus | empty) {
               <div class="mt-1">
-                <strong>OA-Status</strong>
+                <strong>{{ 'FileMetadataFields.oaStatus' | translate }}</strong>
               </div>
               <div>
                 @if(oaStatusIcon(file)) {
@@ -104,12 +104,12 @@
                        src="assets/images/{{oaStatusIcon(file)}}"
                        width="16" height="16"/>
                 }
-                {{ file.metadata.oaStatus }}
+                {{ 'OAStatus.' + file.metadata.oaStatus | translate }}
               </div>
             }
               @if(file.metadata.license | empty) {
               <div class="mt-1">
-                <strong>License</strong>
+                <strong>{{ 'FileMetadataFields.license' | translate }}</strong>
               </div>
               <div>
                 {{ file.metadata.license }}
@@ -118,7 +118,7 @@
 
               @if(file.metadata.rights | empty) {
               <div class="mt-1">
-                <strong>Copyright</strong>
+                <strong>{{ 'FileMetadataFields.copyright' | translate }}</strong>
               </div>
               <div>
                 {{ file.metadata.rights }} ({{ file.metadata.copyrightDate }} )
@@ -126,7 +126,7 @@
               }
             @if(file.pid | empty) {
               <div class="mt-1">
-                <strong>Handle</strong>
+                <strong>{{ 'common.handle' | translate }}</strong>
               </div>
               <div class="row">
                 <a class="icon-link" href="https://hdl.handle.net/{{file.pid?.substring(4)}}" target="_blank">

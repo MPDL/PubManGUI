@@ -1,12 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, TemplateRef} from '@angular/core';
 import {ItemViewMetadataElementComponent} from "../item-view-metadata-element/item-view-metadata-element.component";
 import {AffiliationDbVO, CreatorVO, OrganizationVO} from "../../../../model/inge";
 import {NgClass} from "@angular/common";
 import { environment } from 'src/environments/environment';
-import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {OrganizationsService} from "../../../../services/pubman-rest-client/organizations.service";
 import {EmptyPipe} from "../../../../shared/services/pipes/empty.pipe";
 import {TranslatePipe} from "@ngx-translate/core";
+import {LoadingComponent} from "../../../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'pure-item-view-creators',
@@ -16,7 +17,8 @@ import {TranslatePipe} from "@ngx-translate/core";
     NgClass,
     NgbPopover,
     EmptyPipe,
-    TranslatePipe
+    TranslatePipe,
+    LoadingComponent
   ],
   templateUrl: './item-view-creators.component.html',
   styleUrl: './item-view-creators.component.scss'
@@ -36,7 +38,7 @@ export class ItemViewCreatorsComponent {
 
   selectedAffiliationForPopover: AffiliationDbVO | undefined;
 
-  constructor(private ouService: OrganizationsService) {
+  constructor(private ouService: OrganizationsService, private modalService: NgbModal) {
 
   }
 
@@ -120,16 +122,14 @@ export class ItemViewCreatorsComponent {
     this.maxDisplay = 20;
   }
 
-  toggleAffPopover(popover: NgbPopover, aff: OrganizationVO) {
-    if (popover.isOpen()) {
-      popover.close();
-    } else {
+  toggleAffPopover(content: TemplateRef<any>, aff: OrganizationVO) {
+
       this.selectedAffiliationForPopover = undefined;
+      this.modalService.open(content, {size: 'lg'});
       this.ouService.retrieve(aff.identifier).subscribe(ou => {
         this.selectedAffiliationForPopover = ou;
-      })
-      popover.open();
-    }
 
-  }
+      })
+
+    }
 }

@@ -39,7 +39,7 @@
 		"edit": "Edit",
 		"release": "Release",
 		"submit": "Submit",
-		"withdraw": "Withdraw",
+		"withdraw": "Discard",
 		"delete": "Delete",
 		"revise": "Send back",
 		"useAsTemplate": "Use as template",
@@ -48,7 +48,11 @@
 		"actionWarning": "This action is irreversible. Are you sure?",
 		"dateFormat": "YYYY-MM-DD",
 		"from": "from",
-		"to": "to"
+		"to": "to",
+    "releaseExportControl" : "Export Control: If you are sharing publicly available documents, then please make sure you have checked the <a href='https://www.bafa.de/SharedDocs/Downloads/EN/Foreign_Trade/ec_awareness_academia.pdf' target='_blank'>legal specifications</a> regarding export control for academic publications by the German Federal Office for Economic Affairs and Export Control in advance.",
+    "handle": "PID (ePIC Handle)",
+    "latestVersion": "Latest version",
+    "latestRelease": "Latest release"
 	},
 	"chips.localTags.placeholder": "Add local tag",
 	"validation": {
@@ -653,7 +657,14 @@
 		"visibility": "Visibility",
 		"contentCategory": "Content Category",
 		"embargoDate": "Embargo Date",
-		"oaStatus": "Open Access Status"
+		"oaStatus": "Open Access Status",
+    "filename": "File name",
+    "mimeType": "MIME Type",
+    "checksum" : "Checksum",
+    "description" : "Description",
+    "license" : "License",
+    "copyright": "Copyright",
+
 	},
 	"CreatorRoles": {
 		"ARTIST": "Artist",

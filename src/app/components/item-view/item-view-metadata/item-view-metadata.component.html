@@ -72,6 +72,12 @@
 ">
   <span label>Details</span>
   <span content>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.degree | empty)">
+      <span label>{{'MetadataFields.degree' | translate}}</span>
+        <span content>
+          {{ item.metadata?.degree }}
+        </span>
+    </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]=" (item.metadata?.languages | empty)">
       <span label>{{'MetadataFields.languages' | translate}}</span>
         <span content>
@@ -182,12 +188,7 @@
           }
         </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.degree | empty)">
-      <span label>{{'MetadataFields.degree' | translate}}</span>
-        <span content>
-          {{ item.metadata?.degree }}
-        </span>
-    </pure-item-view-metadata-element>
+
 
   </span>
 </pure-item-view-metadata-element>

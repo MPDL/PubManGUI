@@ -1,10 +1,7 @@
 @if (item) {
 
   <pure-topnav>
-      <pure-topnav-cart [resetSelectionAfterAction]="false" start/>
-      <div start class="vr"></div>
-      <pure-topnav-batch [resetSelectionAfterAction]="false" start/>
-      <div start class="vr"></div>
+
 
     <div class="navbar-nav" start>
       @if(authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
@@ -63,6 +60,10 @@
 
       <div start class="vr"></div>
       <button class="nav-link" (click)="openExportModal()" ngbTooltip="{{'common.export' | translate}}"><span class="material-symbols-outlined">upload</span></button>
+      <div start class="vr"></div>
+      <pure-topnav-cart [resetSelectionAfterAction]="false" start/>
+      <div start class="vr"></div>
+      <pure-topnav-batch [resetSelectionAfterAction]="false" start/>
 
 
     </div>
@@ -126,8 +127,9 @@
                   <span class="me-2">
                     <sup>
                     <a [href]="'/cone'+author?.person?.identifier?.id" target="_blank">
-                      <i class="bi-person-vcard"></i>
-
+                        <img alt="CoNE logo"
+                             src="assets/icons/CoNE_icon.svg"
+                             width="16" height="16"/>
                     </a>
                       </sup>
                   </span>
@@ -313,7 +315,7 @@
 
       @if(item.objectPid | empty) {
       <div class="mt-3">
-        <h6>{{ 'common.item' | translate }} Permalink</h6>
+        <h6>{{ 'common.item' | translate }} {{'common.handle' | translate}}</h6>
         <div class="row">
           <a class="icon-link" href="https://hdl.handle.net/{{item.objectPid?.substring(4)}}" target="_blank">
             <i class="bi-link"></i>
@@ -326,7 +328,7 @@
       @if(item.versionPid | empty) {
       <div class="mt-3">
 
-        <h6>{{ 'common.version' | translate }} {{ item.versionNumber }} Permalink</h6>
+        <h6>{{ 'common.version' | translate }} {{ item.versionNumber }} {{'common.handle' | translate}}</h6>
         <div class="row">
         <a class="icon-link" href="https://hdl.handle.net/{{item.versionPid?.substring(4)}}" target="_blank">
           <i class="bi-link"></i>
@@ -340,7 +342,7 @@
 
       @if((item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber) {
       <div class="mt-3">
-        <h6>Latest Release</h6>
+        <h6>{{ 'common.latestRelease' | translate}}</h6>
         <div>
           <a class="icon-link" href="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}" target="_blank">
             <i class="bi-link"></i>
@@ -355,7 +357,7 @@
       latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
       !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber)  ) {
         <div class="mt-3">
-          <h6>Latest Version</h6>
+          <h6>{{ 'common.latestVersion' | translate}}</h6>
           <div>
             <a class="icon-link" href="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}" target="_blank">
               <i class="bi-link"></i>

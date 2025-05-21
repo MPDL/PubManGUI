@@ -2,12 +2,12 @@
 @let colorClass= (action === 'delete' || action === 'withdraw') ? 'danger' : 'primary';
 
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">{{ 'common.' + action | translate }}</h4>
+  <h4 class="modal-title" [class.text-danger]="action === 'withdraw'|| action === 'delete'" id="modal-basic-title">{{ 'common.' + action | translate }}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 
 
-
+<form #commentForm="ngForm">
 <div class="modal-body">
   @if(errorMessage) {
     <div class="alert alert-danger" role="alert">
@@ -16,20 +16,34 @@
   }
 
 
-  <p>{{'common.item' | translate}} {{item.objectId}}:<br/>
-  <b>{{item.metadata.title}}</b></p>
+  <p>{{'common.item' | translate}} {{item.objectId}}<br/>
+  <b>{{item.metadata.title}}</b>
+  </p>
 
+
+  @if(action === 'release') {
+    <p class="text-danger small" [innerHTML]="'common.releaseExportControl' | translate"></p>
+  }
 
   @if(action !== 'delete' && action !== 'addDoi') {
-    <form>
+
       <div class="form-group">
-        <label for="inputComment">{{ 'common.comment' | translate}}</label>
-        <textarea type="text" class="form-control" id="inputComment" placeholder="{{ 'common.comment' | translate}}" [(ngModel)]="comment" name="comment" rows="4"></textarea>
+        <label for="inputComment">{{ 'common.comment' | translate}}{{action === 'withdraw' ? '*' : ''}}</label>
+        <textarea type="text"
+                  id="inputComment"
+                  name="comment"
+                  rows="4"
+                  class="form-control"
+                  [class.is-invalid]="commentInput.invalid && commentInput.touched"
+                  placeholder="{{ 'common.comment' | translate}}" [(ngModel)]="comment"
+                  [required]="action === 'withdraw'"
+                  #commentInput="ngModel">
+
+        </textarea>
         <div class="invalid-feedback">
           Please add a comment.
         </div>
       </div>
-    </form>
   }
 
   @if(colorClass === 'danger') {
@@ -39,11 +53,11 @@
 </div>
 <div class="modal-footer">
 
+  <button type="button" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">{{'common.cancel' | translate}}</button>
+  <button type="submit" class="btn btn-{{colorClass}} btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'common.' + action | translate }}</button>
 
-
-  <button type="ca" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">{{'common.cancel' | translate}}</button>
-  <button type="submit" class="btn btn-{{colorClass}} btn-sm border-2" (click)="go()" [disabled]="loading">{{ 'common.' +action | translate }}</button>
 </div>
+</form>
 
 
 

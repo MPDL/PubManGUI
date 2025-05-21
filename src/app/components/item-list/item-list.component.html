@@ -2,18 +2,20 @@
   <!-- Default top nav for item lists-->
   <pure-topnav>
       <ng-content select="[listTopNavElements]" start>
-        <pure-topnav-cart start/>
-        <div start class="vr"></div>
-        <pure-topnav-batch start/>
-        <div start class="vr"></div>
+
         <div class="navbar-nav" start>
-          <button start class="btn btn-link nav-link" (click)="openExportModal()" 
+          <button start class="btn btn-link nav-link" (click)="openExportModal()"
             ngbTooltip="{{ 'common.export' | translate }}"
-            placement="bottom-left" 
+            placement="bottom-left"
             [disabled]="selectionService.selectedIds$.value.length === 0">
             <span class="material-symbols-outlined">upload</span>
           </button>
         </div>
+        <div start class="vr"></div>
+        <pure-topnav-cart start/>
+        <div start class="vr"></div>
+        <pure-topnav-batch start/>
+
       </ng-content>
 
       <pure-paginator end [totalNumberOfItems]="number_of_results" [(size)]="size" [(pageNumber)]="currentPage" (paginatorChanged)="paginatorChanged()"/>
