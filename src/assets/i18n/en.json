@@ -596,8 +596,8 @@
 	"MetadataFields": {
 		"state": "State",
 		"context": "Context",
-		"modificationDate": "Modification Date",
-		"creationDate": "Creation Date",
+    "dateCreated": "Creation Date",
+		"dateModified": "Modification Date",
 		"date": "Date",
 		"genre": "Genre",
 		"title": "Title",
