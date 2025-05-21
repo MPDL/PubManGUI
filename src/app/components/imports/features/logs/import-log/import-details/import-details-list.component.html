@@ -7,20 +7,20 @@
       <div class="col-lg-12 col-sm-12 d-inline-flex" [ngClass]="this.import.anzImportedItems ? 'justify-content-between': 'justify-content-end' ">
         @if(this.import.anzImportedItems) {
         <div class="d-inline-flex justify-content-start align-items-center">
-          <a class="ms-3" ngbTooltip="{{ 'imports.list.details.delete' | translate }}" placement="bottom-left" (click)='doDelete();'>
+          <a id="delete" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.delete' | translate }}" placement="bottom-left" (click)='doDelete();'>
             <span class="material-symbols-outlined">
               delete_forever
             </span>
           </a>
           @if(caseSubmit()) {
-          <a id="submit" role="button" class="btn border-0 ms-3" ngbTooltip="{{ 'imports.list.details.submit' | translate }}" placement="bottom-left" (click)='doSubmit();'>
+          <a id="submit" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.submit' | translate }}" placement="bottom-left" (click)='doSubmit();'>
             <span class="material-symbols-outlined">
               workspace_premium
             </span>
           </a>
           }
           @if(caseSubmitAndRelease() || caseRelease()) {
-          <a id="release" role="button" class="btn border-0 ms-3" ngbTooltip="{{ 'imports.list.details.release' | translate }}" placement="bottom-left" (click)='doRelease();'>
+          <a id="release" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.release' | translate }}" placement="bottom-left" (click)='doRelease();'>
             <span class="material-symbols-outlined">
               public
             </span>
