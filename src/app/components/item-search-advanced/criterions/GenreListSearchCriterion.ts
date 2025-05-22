@@ -9,6 +9,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class GenreListSearchCriterion extends SearchCriterion {
 
   genreOptions = Object.keys(MdsPublicationGenre);
+  genreOptions_ = this.genreOptions.filter(key => key !== 'THESIS');
 
   degreeOptions = Object.keys(DegreeType);
 
