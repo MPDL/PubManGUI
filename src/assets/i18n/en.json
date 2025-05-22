@@ -663,8 +663,7 @@
     "checksum" : "Checksum",
     "description" : "Description",
     "license" : "License",
-    "copyright": "Copyright",
-
+    "copyright": "Copyright"
 	},
 	"CreatorRoles": {
 		"ARTIST": "Artist",

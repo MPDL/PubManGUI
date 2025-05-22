@@ -10,7 +10,7 @@
 
             @if(file.storage==='EXTERNAL_URL' || fileAccessGranted(file)) {
             @let link = (file.storage==='EXTERNAL_URL' ? '' : ingeUri) + file.content;
-            <a class="icon-link" href="{{link}}" target="_blank" [ngbTooltip]="file.metadata.title">
+            <a class="icon-link" href="{{link}}" target="_blank" [ngbTooltip]="file.name">
               <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}}"></i>
               {{ file.metadata.title }}
             </a>
