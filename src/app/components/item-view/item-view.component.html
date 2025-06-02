@@ -239,7 +239,7 @@
                   @for(auditEntry of vm[1]; track auditEntry; let last = $last) {
                     <pure-item-view-metadata-element [sub]="true">
                  <span label>Date</span>
-                 <span content>{{auditEntry.modificationDate | date:'medium':'+0000'}}</span>
+                 <span content>{{auditEntry.modificationDate | date:'medium'}}</span>
                </pure-item-view-metadata-element>
                     <pure-item-view-metadata-element [sub]="true">
                  <span label>Event</span>
@@ -275,7 +275,7 @@
           <pure-item-view-metadata-element>
             <span label>Created</span>
             <span content>
-            {{ item.creationDate  | date:'medium':'+0000' }}
+            {{ item.creationDate  | date:'medium'}}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
@@ -287,7 +287,7 @@
           <pure-item-view-metadata-element>
             <span label>Modified</span>
             <span content>
-            {{ item.modificationDate  | date:'medium':'+0000'}}
+            {{ item.modificationDate  | date:'medium'}}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
