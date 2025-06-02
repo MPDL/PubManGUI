@@ -651,7 +651,9 @@
 		"localTags": "Local Tags",
 		"organization": "Organization",
 		"person": "Person",
-		"classification": "Classification"
+		"classification": "Classification",
+    "creator": "Creator",
+    "modifier": "Modifier"
 	},
 	"FileMetadataFields": {
 		"visibility": "Visibility",

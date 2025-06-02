@@ -238,15 +238,15 @@
                 <span content>
                   @for(auditEntry of vm[1]; track auditEntry; let last = $last) {
                     <pure-item-view-metadata-element [sub]="true">
-                 <span label>Date</span>
+                 <span label>{{ 'MetadataFields.date' | translate }}</span>
                  <span content>{{auditEntry.modificationDate | date:'medium'}}</span>
                </pure-item-view-metadata-element>
                     <pure-item-view-metadata-element [sub]="true">
-                 <span label>Event</span>
-                 <span content>{{ auditEntry.event }}</span>
+                 <span label>{{ 'common.actions' | translate }}</span>
+                 <span content>{{auditEntry.event }}</span>
                </pure-item-view-metadata-element>
                     <pure-item-view-metadata-element [sub]="true" [hl]="!last">
-                 <span label>Comment</span>
+                 <span label>{{ 'common.comment' | translate }}</span>
                  <span content>{{ auditEntry.comment }}</span>
                </pure-item-view-metadata-element>
                   }
@@ -267,37 +267,37 @@
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
-            <span label>Context</span>
+            <span label>{{ 'MetadataFields.context' | translate }}</span>
             <span content>
             {{ item.context.name }}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
-            <span label>Created</span>
+            <span label>{{ 'MetadataFields.dateCreated' | translate}}</span>
             <span content>
             {{ item.creationDate  | date:'medium'}}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
-            <span label>Created by</span>
+            <span label>{{ 'MetadataFields.creator' | translate}}</span>
             <span content>
             {{ item.creator?.name }}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
-            <span label>Modified</span>
+            <span label>{{ 'MetadataFields.dateModified' | translate}}</span>
             <span content>
             {{ item.modificationDate  | date:'medium'}}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
-            <span label>Modified by</span>
+            <span label>{{ 'MetadataFields.modifier' | translate}}</span>
             <span content>
             {{ item.modifier?.name }}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
-            <span label>Last comment</span>
+            <span label>{{ 'common.comment' | translate }}</span>
             <span content>
             {{ item.message }}
           </span>

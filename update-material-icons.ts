@@ -21,6 +21,7 @@ const icons = [
   "navigate_next",
   "note_add",
   "place",
+  "public",
   "public_off",
   "schedule",
   "search",
@@ -44,7 +45,9 @@ updateMaterialIcons();
  */
 function updateMaterialIcons() {
   const iconParams = icons.sort().join(",");
-  fetch("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,500,0,0&icon_names="+iconParams)
+  const googleCssUrl = "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,500,0,0&icon_names=" + iconParams;
+  console.log("Trying to fetch CSS from " + googleCssUrl)
+  fetch(googleCssUrl)
     .then(
       res =>  res.text()
     ).then(
@@ -71,8 +74,10 @@ function downloadAndSave(url:string) {
   ).then(
       fontArrayBuffer => {
         const fontBuffer = Buffer.from(fontArrayBuffer);
-        console.log("Writing to file")
-        fs.writeFile('src/assets/fonts/material-icons/material_icons_subset.woff', fontBuffer, (err: any) => {console.error(err)})
+        const fileName = "src/assets/fonts/material-icons/material_icons_subset.woff";
+        console.log("Writing icon font to file " + fileName);
+        fs.writeFile(fileName, fontBuffer, (err: any) => {if (err) console.error(err)});
+        console.log("Done!");
       }
   )
 }

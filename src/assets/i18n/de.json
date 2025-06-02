@@ -596,7 +596,7 @@
 	"MetadataFields": {
 		"state": "Status",
 		"context": "Kontext",
-		"dateCreated": "Bearbeitungsdatum",
+		"dateCreated": "Erstellungsdatum",
 		"dateModified": "Änderungssdatum",
 		"date": "Datum",
 		"genre": "Genre",
@@ -651,7 +651,9 @@
 		"localTags": "Lokale Tags",
 		"organization": "Organisation",
 		"person": "Person",
-		"classification": "Klassifikation"
+		"classification": "Klassifikation",
+    "creator": "Ersteller",
+    "modifier": "Bearbeiter"
 	},
 	"FileMetadataFields": {
 		"visibility": "Sichtbarkeit",
