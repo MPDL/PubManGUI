@@ -275,7 +275,7 @@
           <pure-item-view-metadata-element>
             <span label>Created</span>
             <span content>
-            {{ item.creationDate }}
+            {{ item.creationDate  | date:'medium':'+0000' }}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
@@ -285,9 +285,9 @@
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
-            <span label>Modifier</span>
+            <span label>Modified</span>
             <span content>
-            {{ item.modificationDate }}
+            {{ item.modificationDate  | date:'medium':'+0000'}}
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element>
