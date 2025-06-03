@@ -93,8 +93,6 @@
       <div class="row">
         <div class="col-2 text-center">
 
-          @let thumbUrl = thumbnailUrl ? thumbnailUrl : 'assets/images/DefaultMPGv2.png';
-
           @if(thumbnailUrl) {
             <a href="{{ingeUri + firstPublicPdfFile?.content}}" target="_blank">
               <img id="thumbnail" src="{{thumbnailUrl}}" class="img-thumbnail">
@@ -103,13 +101,6 @@
           @else {
             <img id="thumbnail" src="assets/images/DefaultMPGv2.png" class="img-thumbnail">
           }
-
-
-
-
-          <!--
-              <pure-thumbnail-pdf pdfUrl="{{url}}"></pure-thumbnail-pdf>
-              -->
 
         </div>
         <div class="col-10">
@@ -260,43 +251,43 @@
           <pure-loading/>
           }
         } @else if (currentSubMenuSelection === 'admin') {
-          <pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [hl]="true">
             <span label>ID</span>
             <span content>
             {{ item.objectId + '_' + item.versionNumber }}
           </span>
           </pure-item-view-metadata-element>
-          <pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [hl]="true">
             <span label>{{ 'MetadataFields.context' | translate }}</span>
             <span content>
             {{ item.context.name }}
           </span>
-          </pure-item-view-metadata-element>
-          <pure-item-view-metadata-element>
+          </pure-item-view-metadata-element >
+          <pure-item-view-metadata-element [sub]="true" [hl]="true">
             <span label>{{ 'MetadataFields.dateCreated' | translate}}</span>
             <span content>
             {{ item.creationDate  | date:'medium'}}
           </span>
           </pure-item-view-metadata-element>
-          <pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [hl]="true">
             <span label>{{ 'MetadataFields.creator' | translate}}</span>
             <span content>
             {{ item.creator?.name }}
           </span>
           </pure-item-view-metadata-element>
-          <pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [hl]="true">
             <span label>{{ 'MetadataFields.dateModified' | translate}}</span>
             <span content>
             {{ item.modificationDate  | date:'medium'}}
           </span>
           </pure-item-view-metadata-element>
-          <pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [hl]="true">
             <span label>{{ 'MetadataFields.modifier' | translate}}</span>
             <span content>
             {{ item.modifier?.name }}
           </span>
           </pure-item-view-metadata-element>
-          <pure-item-view-metadata-element>
+          <pure-item-view-metadata-element [sub]="true" [hl]="false">
             <span label>{{ 'common.comment' | translate }}</span>
             <span content>
             {{ item.message }}

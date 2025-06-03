@@ -65,7 +65,7 @@ function updateMaterialIcons() {
   )
 }
 
-function downloadAndSave(url:string) {
+function downloadAndSave(url) {
   console.log("Trying to download font file from " + url)
   fetch(url).then(
     res =>
@@ -77,7 +77,7 @@ function downloadAndSave(url:string) {
         const fontBuffer = Buffer.from(fontArrayBuffer);
         const fileName = "src/assets/fonts/material-icons/material_icons_subset.woff";
         console.log("Writing icon font to file " + fileName);
-        fs.writeFile(fileName, fontBuffer, (err: any) => {if (err) console.error(err)});
+        fs.writeFile(fileName, fontBuffer, (err) => {if (err) console.error(err)});
         console.log("Done!");
       }
   )
