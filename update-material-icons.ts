@@ -7,6 +7,7 @@ const icons = [
   "copy_all",
   "delete",
   "delete_forever",
+  "drag_indicator",
   "edit",
   "error",
   "first_page",
