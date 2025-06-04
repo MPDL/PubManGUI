@@ -4,10 +4,6 @@
     [ngClass]="{'is-invalid': validationError}" (selectItem)="suggestOusSelector($event)"
     [resultFormatter]="suggestOusFormatter" [inputFormatter]="suggestOusFormatter" [readonly]="formForOuId?.value"
     [placeholder]="'common.autosuggestPlaceholder' | translate" />
-  @if(validationEnabled) {
-    <div class="invalid-feedback">Creator organization is required</div>
-  }
-  
 
   @if(searching) {
   <button class="btn btn-outline-dark" disabled>
@@ -20,6 +16,10 @@
   <button class="btn btn-outline-dark" type="button" (click)="deleteFields()">
     <span class="bi bi-x"></span>
   </button>
+  }
+
+  @if(validationEnabled) {
+    <div class="invalid-feedback">Creator organization is required</div>
   }
 
 </div>
