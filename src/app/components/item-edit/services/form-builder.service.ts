@@ -122,8 +122,8 @@ export class FormBuilderService {
 
   organization_FG(ou: OrganizationVO | null) {
     const ou_form = this.fb.group<ControlType<OrganizationVO>>({
-      name: this.fb.control(ou?.name ? ou.name : null, [Validators.required]),
-      identifier: this.fb.control(ou?.identifier ? ou.identifier : null, [Validators.required]),
+      name: this.fb.control(ou?.name ? ou.name : null),
+      identifier: this.fb.control(ou?.identifier ? ou.identifier : null),
       // identifierPath: this.fb.array(ou?.identifierPath ? ou.identifierPath.map(s => this.fb.control(s) as AbstractControl) : []),
       // address: this.fb.control(ou?.address ? ou.address : null),
     });

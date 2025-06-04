@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   catchError,
   debounceTime,
@@ -18,7 +19,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 @Component({
   selector: 'pure-ou-autosuggest',
   standalone: true,
-  imports: [NgbTypeahead, ReactiveFormsModule, TranslatePipe],
+  imports: [CommonModule, NgbTypeahead, ReactiveFormsModule, TranslatePipe],
   templateUrl: './ou-autosuggest.component.html',
   styleUrl: './ou-autosuggest.component.scss'
 })
@@ -26,6 +27,9 @@ export class OuAutosuggestComponent {
 
   @Input() formForOuName! : FormControl;
   @Input() formForOuId! : FormControl | undefined;
+
+  @Input() validationEnabled: boolean = false;
+  @Input() validationError: boolean = false;
 
   searching: boolean = false;
 
@@ -94,8 +98,8 @@ export class OuAutosuggestComponent {
   }
 
   deleteFields() {
-    this.formForOuName.setValue('');
-    this.formForOuId?.setValue('');
+    this.formForOuName.setValue(null);
+    this.formForOuId?.setValue(null);
   }
 
 }

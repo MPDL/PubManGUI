@@ -1,11 +1,13 @@
+
 <div class="input-group">
-<input class="form-control" type="text" [formControl]="formForOuName"
-       [ngbTypeahead]="suggestOus"
-       (selectItem)="suggestOusSelector($event)"
-       [resultFormatter]="suggestOusFormatter"
-       [inputFormatter]="suggestOusFormatter"
-       [readonly]="formForOuId?.value"
-       [placeholder]="'common.autosuggestPlaceholder' | translate"/>
+  <input class="form-control" type="text" [formControl]="formForOuName" [ngbTypeahead]="suggestOus"
+    [ngClass]="{'is-invalid': validationError}" (selectItem)="suggestOusSelector($event)"
+    [resultFormatter]="suggestOusFormatter" [inputFormatter]="suggestOusFormatter" [readonly]="formForOuId?.value"
+    [placeholder]="'common.autosuggestPlaceholder' | translate" />
+  @if(validationEnabled) {
+    <div class="invalid-feedback">Creator organization is required</div>
+  }
+  
 
   @if(searching) {
   <button class="btn btn-outline-dark" disabled>
@@ -14,9 +16,10 @@
   </button>
   }
 
-@if(formForOuId?.value) {
+  @if(formForOuId?.value) {
   <button class="btn btn-outline-dark" type="button" (click)="deleteFields()">
     <span class="bi bi-x"></span>
   </button>
-}
+  }
+
 </div>

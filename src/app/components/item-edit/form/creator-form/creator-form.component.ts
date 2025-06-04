@@ -8,6 +8,7 @@ import { PureOusDirective } from 'src/app/shared/components/selector/services/pu
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
 import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import { OuAutosuggestComponent } from 'src/app/shared/components/ou-autosuggest/ou-autosuggest.component';
 import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
@@ -26,7 +27,7 @@ enum CreatorErrorsEnum {
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent, OuAutosuggestComponent],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })
@@ -149,7 +150,7 @@ export class CreatorFormComponent {
   }
 
   handleIdentifierNotification(event: any) {
-    console.log(event)
+    console.log(event);
   }
 
   /*
@@ -164,6 +165,7 @@ export class CreatorFormComponent {
 
   add_remove_creator(event: any) {
     this.notice.emit(event);
+    this.creator_form.updateValueAndValidity();
   }
 
 }
