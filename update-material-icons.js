@@ -31,6 +31,7 @@ const icons = [
   "search",
   "task_alt",
   "tune",
+  "unfold_more",
   "upload",
   "warning",
   "web_stories",
