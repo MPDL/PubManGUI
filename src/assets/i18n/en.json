@@ -74,7 +74,8 @@
 	},
 	"footer": {
 		"cookies": "Cookie settings",
-		"privacy": "Privacy Policy"
+		"privacy": "Privacy Policy",
+		"disclaimer": "Disclaimer"
 	},
 	"batch": {
 		"name": "Batch processing",

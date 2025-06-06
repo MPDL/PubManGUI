@@ -8,11 +8,11 @@ import { TranslatePipe } from "@ngx-translate/core";
   imports: [TranslatePipe]
 })
 export class FooterComponent {
-  protected linkImpressum: string = "";
-  protected linkDatenschutz: string = "";
+  protected linkDisclaimer: string = '/disclaimer';
+  protected linkPrivacy: string = '/privacy-policy';
   protected linkCookies: string = "";
-  protected linkPubman: string = "";
-  protected linkHomepage: string = "";
+  protected linkPubman: string = 'https://pure.mpg.de/';
+  protected linkHome: string = '/home';
 
   openLink(url: string) {
     window.open(url, '_blank');

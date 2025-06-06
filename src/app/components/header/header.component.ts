@@ -74,7 +74,7 @@ export class HeaderComponent {
     public aa: AaService,
     private router: Router,
     private searchState: SearchStateService,
-    private itemsService: ItemsService,
+    private itemsService: ItemsService
   ) {
   }
 
@@ -99,10 +99,6 @@ export class HeaderComponent {
   onWindowScroll() {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 20 ? true : false;
-  }
-
-  help() {
-    alert('help ya self!');
   }
 
   tools() {
