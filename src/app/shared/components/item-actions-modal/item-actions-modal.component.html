@@ -3,7 +3,7 @@
 
 <div class="modal-header">
   <h4 class="modal-title" [class.text-danger]="action === 'withdraw'|| action === 'delete'" id="modal-basic-title">{{ 'common.' + action | translate }}</h4>
-  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 
 
@@ -52,9 +52,18 @@
 
 </div>
 <div class="modal-footer">
+  <button type="button" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">{{'common.cancel' | translate}}
 
-  <button type="button" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">{{'common.cancel' | translate}}</button>
-  <button type="submit" class="btn btn-{{colorClass}} btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'common.' + action | translate }}</button>
+
+  </button>
+  <button type="submit" class="btn btn-{{colorClass}} btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'common.' + action | translate }}
+    @if(loading)
+    {
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span class="visually-hidden" role="status">Loading...</span>
+    }
+  </button>
+
 
 </div>
 </form>

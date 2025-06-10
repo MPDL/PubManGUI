@@ -120,11 +120,14 @@
 }
 
 <div class="modal-footer">
-  @if(!loading) {
-    <button type="button" class="btn btn-primary" (click)="download()" [disabled]="!isValid()">Download</button>
-  } @else {
-    <pure-loading></pure-loading>
-  }
+
+    <button type="button" class="btn btn-primary" (click)="download()" [disabled]="loading || !isValid()">Download
+      @if(loading)
+      {
+        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+        <span class="visually-hidden" role="status">Loading...</span>
+      }
+    </button>
 
 
   <!--<button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Download</button>-->

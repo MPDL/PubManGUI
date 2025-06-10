@@ -5,15 +5,17 @@ import {ItemVersionVO} from "../../../model/inge";
 import {ItemsService} from "../../../services/pubman-rest-client/items.service";
 import {MessageService} from "../../services/message.service";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {TranslatePipe} from "@ngx-translate/core";
+import {LoadingComponent} from "../loading/loading.component";
 
 @Component({
   selector: 'pure-item-actions-modal',
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    LoadingComponent
   ],
   templateUrl: './item-actions-modal.component.html'
 })
@@ -29,7 +31,16 @@ export class ItemActionsModalComponent {
 
   protected loading = false;
 
+  private subscription?: Subscription;
+
   constructor(protected activeModal: NgbActiveModal, private itemsService: ItemsService, private messageService: MessageService, private router: Router) {
+  }
+
+  closeModal() {
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.activeModal.dismiss();
   }
 
   go() {
@@ -62,7 +73,7 @@ export class ItemActionsModalComponent {
       }
     }
     if(obs) {
-      obs.subscribe({
+      this.subscription = obs.subscribe({
           next: (data: any) => {
             this.messageService.success(this.action + " successful");
             this.activeModal.close();
@@ -72,8 +83,8 @@ export class ItemActionsModalComponent {
             this.errorMessage = error;
           }
         }
-      )
-        .add(
+      );
+        this.subscription.add(
           () => {
             console.log("completed")
             this.loading = false;
