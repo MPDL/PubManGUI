@@ -10,6 +10,7 @@
 		"cancel": "Cancel",
 		"completed": "completed",
 		"confirm": "Confirm",
+    "copyToClipboard": "Copy to clipboard",
 		"datasets": "Datasets",
 		"deselectAll": "deselect all",
 		"entry": "Entry",
@@ -19,6 +20,7 @@
 		"help": "Help",
 		"home": "Home",
 		"item": "Dataset",
+    "items": "Datasets",
 		"link": "Link",
 		"links": "Links",
 		"logs": "Logs",
@@ -32,6 +34,7 @@
 		"qa": "QA Area",
     "searchResult": "Search Result",
 		"selectAll": "select all",
+    "selection": "Selection",
 		"sort": "Sort",
 		"succeded": "succeeded",
 		"version": "Version",
@@ -731,6 +734,8 @@
 		"NO": "No",
 		"WHATEVER": "-",
 		"searchButton": "Search",
-		"saveSearchButton": "Open/Save Search"
+		"saveSearchButton": "Open/Save Search",
+    "asc": "ascending",
+    "desc" : "descending"
 	}
 }

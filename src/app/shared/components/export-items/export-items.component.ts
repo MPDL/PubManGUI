@@ -64,6 +64,8 @@ export class ExportItemsComponent {
   protected errorMessage: string = "";
   private exportSubscription?: Subscription;
 
+  protected atomFeedUrl = "";
+
   constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService) {
 
   }
@@ -83,7 +85,6 @@ export class ExportItemsComponent {
     if(this.type === 'exportSelected') {
       this.itemIds = this.selectionService.selectedIds$.value;
     }
-
 
 
     this.loadCitation();

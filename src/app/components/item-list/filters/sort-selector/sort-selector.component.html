@@ -1,9 +1,9 @@
 <div class="container pb-4">
 <h6>{{'common.sort' | translate}}</h6>
   @for(sortEntry of sortEntries; track sortEntry.sort; let index = $index) {
-    <div class="row mt-2">
-      <div class="col-1">
-        {{index +1 }}:
+    <div class="row mt-2 mb-2">
+      <div class="col-1 align-self-center">
+       {{index +1 }}:
       </div>
       <div class="col">
         <select class="form-select" (change)="handleInputChange($event, index)">
@@ -14,8 +14,10 @@
           }
         </select>
       </div>
-      <div class="col-3">
-        <button type="button" class="btn btn-secondary btn-sm" (click)="switchSortOrder(index)">
+      <div class="col-2">
+        <button type="button" class="btn btn-secondary btn-sm" (click)="switchSortOrder(index); t.close();"
+                [ngbTooltip]="('common.sort' | translate) + ': ' + (('Search.' + sortEntry.sortOrder) | translate)"
+        #t = "ngbTooltip">
           <i class="bi {{sortEntry.sortOrder ==='asc' ? 'bi-arrow-up' : 'bi-arrow-down'}}"></i>
         </button>
 
@@ -23,16 +25,16 @@
     </div>
     }
 
-  <div class="row me-auto">
+  <div class="row">
     <div class="col">
-  <button type="button" class="btn btn-sm p-0" (click)="addSortCriterion(0)">
-    <span class="material-symbols-outlined">add_circle</span>
+      <div class="">
+  <button type="button" class="btn btn-secondary me-2 p-0" (click)="addSortCriterion(0)">
+    <i class="bi bi-plus"></i>
   </button>
-      @if(sortEntries.length > 1) {
-      <button type="button" class="btn btn-sm" (click)="removeSortCriterion(sortEntries.length -1)">
-        <span class="material-symbols-outlined">do_not_disturb_on</span>
-      </button>
-      }
+    <button type="button" class="btn btn-secondary btn-sm p-0" (click)="removeSortCriterion(sortEntries.length -1)" [disabled]="sortEntries.length === 1">
+      <i class="bi bi-dash"></i>
+    </button>
+      </div>
     </div>
   </div>
 

@@ -5,6 +5,7 @@ import {ItemVersionState} from "../../../../model/inge";
 import {baseElasticSearchSortBuilder} from "../../../../shared/services/search-utils";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {TranslatePipe} from "@ngx-translate/core";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-sort-selector',
@@ -12,7 +13,8 @@ import {TranslatePipe} from "@ngx-translate/core";
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    NgbTooltip
   ],
   templateUrl: './sort-selector.component.html',
   styleUrl: './sort-selector.component.scss'

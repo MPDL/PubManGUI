@@ -10,6 +10,7 @@
 		"cancel": "Abbrechen",
 		"completed": "abgeschlossen",
 		"confirm": "Bestätigen",
+    "copyToClipboard": "In die Zwischenablage kopieren",
 		"datasets": "Datensätze",
 		"deselectAll": "Alles abwählen",
 		"entry": "Eingabe",
@@ -19,6 +20,7 @@
 		"help": "Hilfe",
 		"home": "Home",
 		"item": "Datensatz",
+    "items": "Datensätze",
 		"link": "Link",
 		"links": "Links",
 		"logs": "Protokolle",
@@ -32,6 +34,7 @@
 		"qa": "QA-Bereich",
     "searchResult": "Suchergebnis",
 		"selectAll": "Alles auswählen",
+    "selection": "Auswahl",
 		"sort": "Sortierung",
 		"succeded": "erfolgreich",
 		"version": "Version",
@@ -732,6 +735,8 @@
 		"NO": "Nein",
 		"WHATEVER": "-",
 		"searchButton": "Suche",
-		"saveSearchButton": "Suche öffnen/speichern"
+		"saveSearchButton": "Suche öffnen/speichern",
+    "asc": "aufsteigend",
+    "desc" : "absteigend"
 	}
 }
