@@ -102,13 +102,16 @@
     </div>
 
     <div>
-      <button type="button" class="btn btn-link" data-bs-toggle="collapse"
-              [attr.data-bs-target]="'#collapseSearchQuery'" aria-expanded="true" aria-controls="collapseOne">show query</button>
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#collapseSearchQuery'" aria-expanded="true" aria-controls="collapseOne"><i class="bi bi-chevron-down"></i> Show query</button>
 
       <div id="collapseSearchQuery" class="accordion-collapse collapse bg-light" aria-labelledby="headingOne">
         <textarea class="form-control form-control-sm" [value]="completeQuery | json" rows="25" readonly="true"></textarea>
       </div>
     </div>
+
+    <hr/>
+    <a [href]="atomFeedUrl" class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-rss-fill"></i> Atom Feed</a>
 
 
 

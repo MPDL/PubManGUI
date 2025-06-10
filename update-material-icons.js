@@ -30,6 +30,7 @@ const icons = [
   "place",
   "public",
   "public_off",
+  "rss_feed",
   "schedule",
   "search",
   "task_alt",

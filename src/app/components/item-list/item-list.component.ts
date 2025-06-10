@@ -289,7 +289,7 @@ export class ItemListComponent implements AfterViewInit{
   }
 
   openExportModal() {
-    const comp: ExportItemsComponent = this.modalService.open(ExportItemsComponent).componentInstance;
+    const comp: ExportItemsComponent = this.modalService.open(ExportItemsComponent, {size: "lg"}).componentInstance;
     comp.type = 'exportSelected';
     comp.sortQuery = this.currentSortQuery;
   }
