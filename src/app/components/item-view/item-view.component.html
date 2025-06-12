@@ -406,7 +406,7 @@
             <div class="mt-3">
               <h6>{{ 'common.latestRelease' | translate }}</h6>
               <div>
-                <a class="icon-link" href="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}"
+                <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}"
                    target="_blank">
                   <i class="bi-link"></i>
                   <span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
@@ -422,7 +422,7 @@
             <div class="mt-3">
               <h6>{{ 'common.latestVersion' | translate }}</h6>
               <div>
-                <a class="icon-link" href="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}"
+                <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}"
                    target="_blank">
                   <i class="bi-link"></i>
                   <span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>

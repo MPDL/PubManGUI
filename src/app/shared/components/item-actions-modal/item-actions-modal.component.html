@@ -23,7 +23,7 @@
 
 
   <p>{{'common.item' | translate}} {{item.objectId}}<br/>
-  <b>{{item.metadata.title}}</b>
+  <b [innerHTML]="item.metadata.title | sanitizeHtml"></b>
   </p>
 
 
