@@ -8,22 +8,6 @@
     transition: all 0.1s ease;
   }
 
-  &.scrolled {
-    height: 50px;
-
-    #logo {
-      width: 80px;
-      height: 80px;
-      margin-left: 30px;
-      margin-right: 30px;
-      margin-top: -10px;
-    }
-
-    .navbar {
-      transform: translateY(-50px);
-    }
-  }
-
   #brand {
     font-size: 2.2rem;
     font-family: "Roboto", "Tahoma", Arial, sans-serif;
@@ -31,10 +15,10 @@
     letter-spacing: 0.1rem;
     color: var(--bs-body-color);
     text-decoration: none;
+    z-index: 99;
   }
 
   #search {
-
     .input-group-text {
       height: 2.2rem;
     }
@@ -51,4 +35,29 @@
     }
   }
 
+  &.scrolled {
+    height: 50px;
+
+    #logo {
+      width: 80px;
+      height: 80px;
+      margin-left: 30px;
+      margin-right: 30px;
+      margin-top: -10px;
+    }
+
+    @media (max-width: 1400px) {
+      #header_container {
+        transform: translateY(-15px);
+      }
+
+      .side_nav_mobile {
+        transform: translateY(-13px);
+      }
+    }
+  }
+
+  #header_nav {
+    z-index: 99;
+  }
 }

@@ -20,13 +20,13 @@
 <nav id="sidenav" #sidenav class="navbar side_nav_mobile" (click)="expand()">
   <div class="container-fluid">
     
-    <button class="navbar-toggler d-flex" type="button" data-bs-toggle="collapse" data-bs-target="#side_nav_mobile"
+    <button id="side_nav_mobile_toggler" class="navbar-toggler d-flex" type="button" data-bs-toggle="collapse" data-bs-target="#side_nav_mobile"
       aria-controls="side_nav_mobile" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="side_nav_mobile">
-      <nav class="nav flex-column ps-0 py-2">
+      <nav class="nav flex-column py-2">
         <ng-container *ngTemplateOutlet="options"></ng-container>
       </nav>
     </div>
@@ -76,7 +76,7 @@
     <a class="nav-link py-3" [routerLink]="['batch']" [ngClass]="{'disabled pb-2' : batchSvc.areItemsSelected()}"
       (click)="collapse()" data-test="sidenav-batch">
       <span class="material-symbols-outlined">web_stories</span>
-      <span class="nav-label ms-3">{{'batch.name'| translate }}</span>
+      <span class="nav-label ms-3 text-nowrap">{{'batch.name'| translate }}</span>
       @if ( batchSvc.areItemsSelected() ) {
       <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' data-test="batch-badge"></div>
       }
@@ -102,7 +102,7 @@
   <a class="nav-link border-bottom py-3" [routerLink]="['ou_tree']" (click)="collapse()"
     data-test="sidenav-organizational-units">
     <span class="material-symbols-outlined">account_tree</span>
-    <span class="nav-label ms-3">{{'common.ouTree'| translate }}</span>
+    <span class="nav-label ms-3 text-nowrap">{{'common.ouTree'| translate }}</span>
   </a>
   <a class="nav-link py-3" [routerLink]="['']" (click)="collapse()" data-test="sidenav-place">
     <span class="material-symbols-outlined">place</span>
