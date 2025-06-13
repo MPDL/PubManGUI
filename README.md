@@ -33,7 +33,7 @@ PubManGUI uses [Cypress](https://www.cypress.io/) for end-to-end testing. The te
 1. Backend Setup
    - As a precondition for the end-to-end tests a **User** and a **Context** must exist in the PubMan instance under test.
 2. Environment Settings
-   - Set the _baseUrl_ in [cypress.config.json](https://github.com/MPDL/PubManGUI/blob/main/cypress.config.ts)
+   - Set the _baseUrl_ in [cypress.config.ts](https://github.com/MPDL/PubManGUI/blob/main/cypress.config.ts)
    - Set the values for the required _environment variables_ in [cypress.env.json](https://github.com/MPDL/PubManGUI/blob/main/cypress.env.json)
 3. PubManGUI Project Setup
    - Checkout the main Branch: `git checkout main`
@@ -46,7 +46,7 @@ To execute the end-to-end tests open the PubManGUI project in the CLI, then run 
 - `npm run cypress:run` (Run Cypress in CLI)
 - `npm run cypress:open` (Open Cypress UI)
 
-Use the CLI argument `CYPRESS_baseUrl=NEW_BASE_URL` to set a different baseUrl (default is: `http://localhost:4200`).
+Use the CLI argument `CYPRESS_baseUrl=NEW_BASE_URL` to set a different baseUrl (default is `http://localhost:4200/` when executing `ng e2e`).
 
 ## Further help
 

@@ -2,7 +2,13 @@
 @let colorClass= (action === 'delete' || action === 'withdraw') ? 'danger' : 'primary';
 
 <div class="modal-header">
-  <h4 class="modal-title" [class.text-danger]="action === 'withdraw'|| action === 'delete'" id="modal-basic-title">{{ 'common.' + action | translate }}</h4>
+  <h4 class="modal-title" [class.text-danger]="action === 'withdraw'|| action === 'delete'" id="modal-basic-title">
+    {{ 'common.' + action | translate }}
+    @if(action === 'rollback') {
+     Version {{rollbackVersion}}
+    }
+
+  </h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 
@@ -10,22 +16,22 @@
 <form #commentForm="ngForm">
 <div class="modal-body">
   @if(errorMessage) {
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger text-break" role="alert">
       {{ errorMessage }}
     </div>
   }
 
 
   <p>{{'common.item' | translate}} {{item.objectId}}<br/>
-  <b>{{item.metadata.title}}</b>
+  <b [innerHTML]="item.metadata.title | sanitizeHtml"></b>
   </p>
 
 
   @if(action === 'release') {
-    <p class="text-danger small" [innerHTML]="'common.releaseExportControl' | translate"></p>
+    <p class="small" [innerHTML]="'common.releaseExportControl' | translate"></p>
   }
 
-  @if(action !== 'delete' && action !== 'addDoi') {
+  @if(action !== 'delete' && action !== 'addDoi' && action !== 'rollback') {
 
       <div class="form-group">
         <label for="inputComment">{{ 'common.comment' | translate}}{{action === 'withdraw' ? '*' : ''}}</label>

@@ -23,7 +23,7 @@ describe('Check Batch Logs', () => {
   it('Read Batch Log (Add Local Tags)', () => {
     //Given
     let newTag: string = 'NewCypressTag';
-    window.sessionStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
     cy.fixture('localTags').then((localTags) => {
       localTags.itemIds = new Array(itemId)
       localTags.localTags = new Array(newTag)
@@ -45,10 +45,8 @@ describe('Check Batch Logs', () => {
     cy.get('@logDetails').click()
 
     //Then
-    cy.get('tbody').children().as('logDetailsAllRows').should('have.length', 1)
-    cy.get('@logDetailsAllRows').first().as('logDetailsRow')
-    cy.get('@logDetailsRow').children().first().should('contain.text', 'Success')
-    cy.get('@logDetailsRow').children().eq(1).should('contain.text', itemTitle)
+    cy.get('pure-batch-action-dataset-log').should('have.length', 1)
+      .should('contain.text', 'Success').should('contain.text', itemTitle)
     //TODO: Check 'Message' Column
   })
 

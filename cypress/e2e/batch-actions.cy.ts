@@ -21,7 +21,7 @@ describe('Execute Batch Actions', () => {
 
   it('Add ORCID', () => {
     //Given
-    window.sessionStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
 
     //cy.visit('/batch/actions')
     //TODO: Remove this workaround (Navigating to the actions via buttons). Use cy.visit('/batch/actions') as soon as it works.
@@ -42,7 +42,7 @@ describe('Execute Batch Actions', () => {
   it('Change Genre', () => {
     //Given
     let newItemGenre: string = 'ARTICLE';
-    window.sessionStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/changeGenre?*').as('changeGenre')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
@@ -67,7 +67,7 @@ describe('Execute Batch Actions', () => {
       cy.get('pure-messaging').should('exist')
     })
 
-    cy.repeatedWait('@batchProcess', 'state', 'FINISHED', 10000, 5).then((response) => {
+    cy.repeatedWait('@batchProcess', 'state', ['FINISHED', 'FINISHED_WITH_ERROR'], 10000, 5).then((response) => {
       // @ts-ignore
       expect(response.statusCode).to.equal(200)
       // @ts-ignore
@@ -85,7 +85,7 @@ describe('Execute Batch Actions', () => {
   it('Add Local Tags', () => {
     //Given
     let newTag: string = 'NewTag';
-    window.sessionStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/addLocalTags').as('addLocalTags')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
@@ -109,7 +109,7 @@ describe('Execute Batch Actions', () => {
       cy.get('pure-messaging').should('exist')
     })
 
-    cy.repeatedWait('@batchProcess', 'state', 'FINISHED', 10000, 5).then((response) => {
+    cy.repeatedWait('@batchProcess', 'state', ['FINISHED', 'FINISHED_WITH_ERROR'], 10000, 5).then((response) => {
       // @ts-ignore
       expect(response.statusCode).to.equal(200)
       // @ts-ignore

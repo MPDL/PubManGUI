@@ -20,6 +20,7 @@ const icons = [
   "folder_shared",
   "get_app",
   "help",
+  "history",
   "home",
   "info",
   "integration_instructions",

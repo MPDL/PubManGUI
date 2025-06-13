@@ -49,6 +49,7 @@
 		"revise": "Send back",
 		"useAsTemplate": "Use as template",
 		"addDoi": "Add DOI",
+    "rollback": "Revert",
 		"comment": "Comment",
 		"actionWarning": "This action is irreversible. Are you sure?",
 		"dateFormat": "YYYY-MM-DD",

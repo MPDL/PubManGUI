@@ -36,9 +36,15 @@ declare namespace Cypress {
     createItemViaAPI(itemMetadata: string): Chainable<Cypress.Response<any>>
 
     /**
-     * Repeat cy.wait until the response of a request for the given alias contains the given responseBodyValue
+     * Repeat cy.wait until the response of a request for the given alias contains one of the given responseBodyValues
      */
-    repeatedWait(alias: string, responseBodyKey: string, responseBodyValue: string, waitTimeout: number, maxNumberOfWaits: number): Chainable<Cypress.Response<any>>
+    repeatedWait(
+      alias: string,
+      responseBodyKey: string,
+      responseBodyValues: string[],
+      waitTimeout: number,
+      maxNumberOfWaits: number
+    ): Chainable<Cypress.Response<any>>
 
     /**
      * Add Local Tags via Batch using the REST API

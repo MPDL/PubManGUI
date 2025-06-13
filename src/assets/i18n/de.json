@@ -49,6 +49,7 @@
 		"revise": "Zurücksenden",
 		"useAsTemplate": "Als Vorlage verwenden",
 		"addDoi": "DOI hinzufügen",
+    "rollback": "Wiederherstellen",
 		"comment": "Kommentar",
 		"actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?",
 		"dateFormat": "JJJJ-MM-TT",

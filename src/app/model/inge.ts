@@ -436,9 +436,10 @@ export enum ChecksumAlgorithm {
 export enum ItemVersionState {
     PENDING = "PENDING",
     SUBMITTED = "SUBMITTED",
+    IN_REVISION = "IN_REVISION",
     RELEASED = "RELEASED",
     WITHDRAWN = "WITHDRAWN",
-    IN_REVISION = "IN_REVISION",
+
 }
 
 export enum OA_STATUS {

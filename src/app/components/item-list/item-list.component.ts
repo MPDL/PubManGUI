@@ -80,6 +80,8 @@ export class ItemListComponent implements AfterViewInit{
 
   queryParamSubscription!: Subscription;
 
+  itemUpdatedSubscription!: Subscription;
+
 
   constructor(
     private service: ItemsService,
@@ -92,6 +94,12 @@ export class ItemListComponent implements AfterViewInit{
     protected selectionService: ItemSelectionService
   )
   {
+
+    this.itemUpdatedSubscription = this.listStateService.itemUpdated.subscribe(itemId => {
+      if(itemId) {
+        this.updateList();
+      }
+    })
 
     this.queryParamSubscription =
       this.activatedRoute.queryParamMap.subscribe((paramMap) => {
@@ -131,6 +139,7 @@ export class ItemListComponent implements AfterViewInit{
   ngOnDestroy() {
     this.searchQuerySubscription.unsubscribe();
     this.queryParamSubscription.unsubscribe()
+    this.itemUpdatedSubscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {

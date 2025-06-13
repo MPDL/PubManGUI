@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ItemVersionVO} from "../../model/inge";
 import {Router} from "@angular/router";
-import {map, Observable, of, tap} from "rxjs";
+import {BehaviorSubject, map, Observable, of, tap} from "rxjs";
 import {AaService} from "../../services/aa.service";
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
 
@@ -9,6 +9,13 @@ import {ItemsService} from "../../services/pubman-rest-client/items.service";
   providedIn: 'root'
 })
 export class ItemListStateService {
+
+  /*
+  This behaviour subject should be called whenever changes to an item were made.
+  The list will subscribe to this and update the item in the list.
+   */
+  itemUpdated: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+
 
   currentFullQuery: any = undefined;
   currentNumberOfRecords = 0;

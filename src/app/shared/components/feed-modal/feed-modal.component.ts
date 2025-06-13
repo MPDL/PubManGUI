@@ -23,6 +23,8 @@ export class FeedModalComponent {
 
   atomFeedUrl: string = "";
 
+  copiedSuccessful: boolean = false;
+
   constructor(protected activeModal: NgbActiveModal) {
   }
 

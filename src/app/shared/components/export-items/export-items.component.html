@@ -89,7 +89,11 @@
 
 
       <h6>Citation Example</h6>
-      <p [innerHTML]="currentCitation"></p>
+      @if(currentCitation) {
+        <p [innerHTML]="currentCitation"></p>
+      } @else {
+        <pure-loading></pure-loading>
+      }
     }
   @if(type === 'exportAll') {
     <div class="mb-3">

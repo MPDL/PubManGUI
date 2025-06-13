@@ -1,16 +1,23 @@
-import {Component, HostListener, Input, TemplateRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {ItemsService} from "../../services/pubman-rest-client/items.service";
 import {AaService} from "../../services/aa.service";
-import {AccountUserDbVO, AuditDbVO, FileDbVO, ItemVersionVO, Storage, Visibility} from "../../model/inge";
-import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet} from "@angular/router";
+import {
+  AccountUserDbVO,
+  AuditDbVO,
+  FileDbVO,
+  ItemVersionState,
+  ItemVersionVO,
+  Storage,
+  Visibility
+} from "../../model/inge";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {TopnavComponent} from "../../shared/components/topnav/topnav.component";
-import {AsyncPipe, DatePipe, NgClass, ViewportScroller} from "@angular/common";
-import {DateToYearPipe} from "../../shared/services/pipes/date-to-year.pipe";
+import {AsyncPipe, DatePipe, ViewportScroller} from "@angular/common";
 import {ItemBadgesComponent} from "../../shared/components/item-badges/item-badges.component";
-import {NgbModal, NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {ItemViewMetadataComponent} from "./item-view-metadata/item-view-metadata.component";
-import {BehaviorSubject, catchError, delay, map, Observable, pipe, tap, timeout} from "rxjs";
-import { environment } from 'src/environments/environment';
+import {forkJoin, map, Observable} from "rxjs";
+import {environment} from 'src/environments/environment';
 import {
   ItemViewMetadataElementComponent
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
@@ -25,12 +32,13 @@ import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/to
 import {ItemListStateService} from "../item-list/item-list-state.service";
 import {SanitizeHtmlCitationPipe} from "../../shared/services/pipes/sanitize-html-citation.pipe";
 import {ItemSelectionService} from "../../shared/services/item-selection.service";
-import {Title} from "@angular/platform-browser";
+import {DomSanitizer, Meta, Title} from "@angular/platform-browser";
 import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {TranslatePipe} from "@ngx-translate/core";
 import {itemToVersionId} from "../../shared/services/utils";
 import {UsersService} from "../../services/pubman-rest-client/users.service";
+import sanitizeHtml from "sanitize-html";
 
 @Component({
   selector: 'pure-item-view',
@@ -45,7 +53,6 @@ import {UsersService} from "../../services/pubman-rest-client/users.service";
     SanitizeHtmlPipe,
     ItemViewFileComponent,
     EmptyPipe,
-    ExportItemsComponent,
     PaginatorComponent,
     TopnavCartComponent,
     TopnavBatchComponent,
@@ -80,9 +87,12 @@ export class ItemViewComponent {
   itemModifier$!: Observable<AccountUserDbVO>;
   itemCreator$!: Observable<AccountUserDbVO>;
 
+  metaTagElements: Element[] = [];
+
+
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
-              private title: Title) {
+              private title: Title, private meta: Meta, private domSanitizer: DomSanitizer) {
 
   }
 
@@ -109,6 +119,7 @@ export class ItemViewComponent {
 
     //console.log("init " + id);
 
+    this.removeMetaTags();
     this.item = undefined
     this.thumbnailUrl = undefined;
     this.firstPublicPdfFile = undefined
@@ -121,8 +132,10 @@ export class ItemViewComponent {
 
         //set HTMl title
         if(i.metadata?.title) {
-          this.title.setTitle(i.metadata.title)
+          const sanitizedTitle = sanitizeHtml(i.metadata.title, {allowedTags: []}) + ' | ' + this.title.getTitle();
+          this.title.setTitle(sanitizedTitle);
         }
+
 
         //init item in selection and state (for export, basket, batch, pagination etc)
         this.listStateService.initItemId(i.objectId);
@@ -178,13 +191,57 @@ export class ItemViewComponent {
           })
         }
 
+
+        this.addMetaTags(i);
+
+
         //Set item
         this.item = i;
       }
     })
   }
 
+  ngOnDestroy() {
+    //Remove meta tags from DOM
+    this.removeMetaTags();
+  }
 
+  removeMetaTags() {
+    this.metaTagElements.forEach(element => {
+      document.head.removeChild(element);
+    });
+    this.metaTagElements = [];
+  }
+
+
+  addMetaTags(i: ItemVersionVO) {
+
+    if(i.versionState== ItemVersionState.RELEASED && i.publicState== ItemVersionState.RELEASED) {
+      //Add DC and highwire Press citation meta tags
+      forkJoin({
+        dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Dc_Xml", undefined, undefined, true, "text"),
+        highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Highwirepress_Cit_Xml", undefined, undefined, true, "text")
+      })
+        .subscribe(
+          res => {
+            const div = document.createElement('div');
+            div.innerHTML = res.dc + res.highwire;
+            Array.from(div.children).forEach(child => {
+              this.metaTagElements.push(child);
+              document.head.append(child)
+            })
+          }
+        );
+    }
+    else if (i.publicState== ItemVersionState.WITHDRAWN) {
+      //Add no-index meta tag
+      const meta = document.createElement('meta');
+      meta.name = 'robots';
+      meta.content = 'noindex';
+      this.metaTagElements.push(meta);
+      document.head.append(meta);
+    }
+  }
 
   get firstAuthors() {
     return this.item?.metadata.creators.slice(0,10);
@@ -227,11 +284,15 @@ export class ItemViewComponent {
   }
 
 
-  openActionsModal(type: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi') {
+  openActionsModal(type: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi' | 'rollback', rollbackVersion?:number) {
     const comp: ItemActionsModalComponent = this.modalService.open(ItemActionsModalComponent).componentInstance;
     comp.item = this.item!;
     comp.action = type;
+    if(type==='rollback') {
+      comp.rollbackVersion = rollbackVersion;
+    }
     comp.successfullyDone.subscribe(data => {
+      this.listStateService.itemUpdated.next(this.item?.objectId);
       if(type !== 'delete') {
         this.init(this.item?.objectId!)
       }

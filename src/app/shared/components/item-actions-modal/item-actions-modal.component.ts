@@ -6,8 +6,9 @@ import {ItemsService} from "../../../services/pubman-rest-client/items.service";
 import {MessageService} from "../../services/message.service";
 import {Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
-import {TranslatePipe} from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {LoadingComponent} from "../loading/loading.component";
+import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
 
 @Component({
   selector: 'pure-item-actions-modal',
@@ -15,14 +16,16 @@ import {LoadingComponent} from "../loading/loading.component";
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
-    LoadingComponent
+    LoadingComponent,
+    SanitizeHtmlPipe
   ],
   templateUrl: './item-actions-modal.component.html'
 })
 export class ItemActionsModalComponent {
 
   @Input() item!: ItemVersionVO;
-  @Input() action!: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi';
+  @Input() action!: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi' | 'rollback';
+  @Input() rollbackVersion?: number;
   @Output() successfullyDone: EventEmitter<string> = new EventEmitter();
 
   protected comment : string = '';
@@ -33,7 +36,7 @@ export class ItemActionsModalComponent {
 
   private subscription?: Subscription;
 
-  constructor(protected activeModal: NgbActiveModal, private itemsService: ItemsService, private messageService: MessageService, private router: Router) {
+  constructor(protected activeModal: NgbActiveModal, private itemsService: ItemsService, private messageService: MessageService, private router: Router, private translateService: TranslateService) {
   }
 
   closeModal() {
@@ -71,11 +74,15 @@ export class ItemActionsModalComponent {
         obs = this.addDoi();
         break;
       }
+      case "rollback": {
+        obs = this.rollback();
+        break;
+      }
     }
     if(obs) {
       this.subscription = obs.subscribe({
           next: (data: any) => {
-            this.messageService.success(this.action + " successful");
+            this.messageService.success(this.translateService.instant('common.' + this.action) + " successful");
             this.activeModal.close();
             this.successfullyDone.emit(data);
           },
@@ -116,6 +123,10 @@ export class ItemActionsModalComponent {
 
   addDoi() {
     return this.itemsService.addDoi(this.item!.objectId!);
+  }
+
+  rollback() {
+    return this.itemsService.rollback(this.item!.objectId!, this.rollbackVersion!);
   }
 
 }

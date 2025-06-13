@@ -6,6 +6,8 @@ import {baseElasticSearchQueryBuilder} from "../../../../shared/services/search-
 import {ImportService} from "../../../../services/pubman-rest-client/import.service";
 import {ImportLogDbVO} from "../../../../model/inge";
 import {Observable} from "rxjs";
+import {DatePipe} from "@angular/common";
+import { LOCALE_ID, Inject } from '@angular/core';
 
 
 @Directive({
@@ -21,12 +23,13 @@ export class ItemImportFilterDirective extends ItemFilterDirective {
 
   @Input() type!: 'my' | 'moderator'
 
-  constructor(private aa: AaService, private importService: ImportService) {
+  constructor(private aa: AaService, private importService: ImportService, @Inject(LOCALE_ID) private locale: string) {
     super();
     //this.options = Object.assign({'': 'All'}, ...Object.keys(ItemVersionState).map(x => ({ [x]: x })));
   }
 
   ngOnInit() {
+    const datePipe= new DatePipe(this.locale);
     let importLogs$ = undefined;
     if(this.type==='moderator') {
       importLogs$ = this.importService.getImportLogsForModerator();
@@ -35,7 +38,8 @@ export class ItemImportFilterDirective extends ItemFilterDirective {
       importLogs$ = this.importService.getImportLogs();
     }
     importLogs$.subscribe(importLogs => {
-      this.options =  Object.assign({'': 'common.all'}, ...importLogs.map(importLog => ({ [importLog.name]: importLog.name +' ('+ importLog.startDate+')' })));
+
+      this.options =  Object.assign({'': 'common.all'}, ...importLogs.map(importLog => ({ [importLog.name]: importLog.name +' (' + datePipe.transform(importLog.startDate, 'short') + ')' })));
     });
   }
 
