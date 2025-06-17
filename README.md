@@ -34,7 +34,19 @@ PubManGUI uses [Cypress](https://www.cypress.io/) for end-to-end testing. The te
    - As a precondition for the end-to-end tests a **User** and a **Context** must exist in the PubMan instance under test.
 2. Environment Settings
    - Set the _baseUrl_ in [cypress.config.ts](https://github.com/MPDL/PubManGUI/blob/main/cypress.config.ts)
-   - Set the values for the required _environment variables_ in [cypress.env.json](https://github.com/MPDL/PubManGUI/blob/main/cypress.env.json)
+   - Set the values for the required _environment variables_ in a local **cypress.env.json** file
+     ```
+     {
+       "restUrl": "",
+       "testUser": {
+         "userName": "",
+         "password": ""
+       },
+       "testContext": {
+         "name": ""
+       }
+     }
+     ```
 3. PubManGUI Project Setup
    - Checkout the main Branch: `git checkout main`
    - Build the project: `ng build`

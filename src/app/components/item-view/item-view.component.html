@@ -253,8 +253,13 @@
             @for (vm of versionMap; track vm[0]; ) {
               <pure-item-view-metadata-element>
                 <span label>
+                  @if (vm[0] !== item.versionNumber) {
                   <a
                     [routerLink]="'/view/' + vm[1][0].pubItem.objectId + '_' + vm[0]">Version {{ vm[0] }}</a>
+                  }
+                  @else {
+                    Version {{ vm[0] }}
+                  }
                   @if(authorizationInfo && authorizationInfo.actions['EDIT'] && item.latestVersion?.versionNumber !== vm[0]) {
                     <div class="mt-2">
                       <button type="button" class="btn btn-secondary btn-sm" (click)="openActionsModal('rollback', vm[0])"><i class="material-symbols-outlined">history</i> {{'common.rollback'| translate}}</button>
@@ -375,6 +380,40 @@
       <div class="container mt-5">
         <h5>{{ 'common.item' | translate }} Information</h5>
         @if (item.publicState !== 'WITHDRAWN') {
+
+
+
+
+          @if ((item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber) {
+            <div class="mt-3">
+              <h6 class="">{{ 'common.latestRelease' | translate }}</h6>
+              <div>
+                <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}"
+                   target="_blank">
+                  <i class="bi-link"></i>
+                  <span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
+                </a>
+              </div>
+
+            </div>
+          }
+
+          @if ((item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
+          latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
+          !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber)) {
+            <div class="mt-3">
+              <h6>{{ 'common.latestVersion' | translate }}</h6>
+              <div>
+                <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}"
+                   target="_blank">
+                  <i class="bi-link"></i>
+                  <span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
+                </a>
+              </div>
+
+            </div>
+          }
+
           @if (item.objectPid | empty) {
             <div class="mt-3">
               <h6>{{ 'common.item' | translate }} {{ 'common.handle' | translate }}</h6>
@@ -395,37 +434,6 @@
                 <a class="icon-link" href="https://hdl.handle.net/{{item.versionPid?.substring(4)}}" target="_blank">
                   <i class="bi-link"></i>
                   <span class="text-truncate">{{ item.versionPid }}</span>
-                </a>
-              </div>
-
-            </div>
-          }
-
-
-          @if ((item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber) {
-            <div class="mt-3">
-              <h6>{{ 'common.latestRelease' | translate }}</h6>
-              <div>
-                <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}"
-                   target="_blank">
-                  <i class="bi-link"></i>
-                  <span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
-                </a>
-              </div>
-
-            </div>
-          }
-
-          @if ((item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
-          latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
-          !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber)) {
-            <div class="mt-3">
-              <h6>{{ 'common.latestVersion' | translate }}</h6>
-              <div>
-                <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}"
-                   target="_blank">
-                  <i class="bi-link"></i>
-                  <span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
                 </a>
               </div>
 
