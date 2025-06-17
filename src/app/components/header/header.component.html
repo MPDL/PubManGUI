@@ -1,31 +1,98 @@
-<nav id="header" class="navbar navbar-light navbar-expand-xxl p-0 fixed-top header bg-light" [ngClass]="{ 'scrolled': isScrolled }">
-  <div class="container-fluid" id="header_container">
+<nav id="header" class="navbar navbar-light navbar-expand-xxl p-0 fixed-top header bg-light"
+  [ngClass]="{ 'scrolled': isScrolled }">
+  <div class="container-fluid d-flex justify-content-start" id="header_container">
     <div class="d-block d-xxl-none">
       <pure-sidenav [mobile]="true"></pure-sidenav>
     </div>
 
-    <div class="offset-1 navbar-brand d-flex align-items-center">
-      <div class="d-none d-xxl-block">
+    <div id="brand" class="offset-0 offset-xxl-1 col-2 col-xxl-3 navbar-brand d-flex align-items-xxl-center">
+      <div>
         <a [routerLink]="['/']">
           <img id="logo" src="assets/images/mpg_blue.svg" />
         </a>
       </div>
-      <a id="brand" [routerLink]="['/']">
-        <span class="ms-3">{{'header.brand.name'| translate}}</span>
-      </a>
+      <div>
+        <a id="brand_name" [routerLink]="['/']">
+          <span class="ms-3">{{'header.brand.name'| translate}}</span>
+        </a>
+      </div>
     </div>
 
-    <button id="side_nav_toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header_nav"
-      aria-controls="header_nav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="d-none d-xxl-flex row col-7">
+      <div class="col-8 d-flex align-items-center">
+        <pure-search></pure-search>
+      </div>
+
+      <div class="col-4 d-flex justify-content-end align-items-center">
+        <!--<pure-switch-bs-theme class="me-4"></pure-switch-bs-theme>-->
+        <div class="me-4">
+          <a ngbTooltip="{{ 'common.help' | translate }}" placement="bottom-left" [routerLink]="['/help']"
+            class="nav-link">
+            <span class="material-symbols-outlined">help</span>
+          </a>
+        </div>
+
+        <div class="me-4">
+          <a [routerLink]="[]" class="nav-link" (click)="tools()">
+            <span class="material-symbols-outlined">apps</span>
+          </a>
+        </div>
+
+        <pure-aa class="me-4"></pure-aa>
+
+        <pure-lang-switch></pure-lang-switch>
+
+      </div>
+    </div>
+
+    <div class="colspan-1"></div>
+
+    <!--div class="d-block d-xxl-none">
+      <pure-mainnav></pure-mainnav>
+    </div-->
+
+    <!--
+    <div class="d-block d-xxl-none">
+      <button class="navbar-toggler d-flex" type="button" data-bs-toggle="collapse"
+        data-bs-target="#main_nav_mobile" aria-controls="main_nav_mobile" aria-expanded="false" 
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+-->
+      <!--div class="collapse navbar-collapse">
+        <nav class="nav flex-column py-2">
+          <ng-container>
+            <pure-mainnav></pure-mainnav>
+          </ng-container>
+        </nav>
+      </div-->
+
+    <!--/div-->
 
     <!-- d-lg-flex reqired! correspondent to navbar-expand-lg -->
-    <div class="collapse navbar-collapse d-xxl-none" id="header_nav">
-    
-      <pure-mainnav class="row col-10"></pure-mainnav>   
+
+    <!--div class="collapse navbar-collapse d-xxl-none" id="main_nav_mobile"-->
+
+    <!--
+    <div class="d-block d-xxl-none">
+
+      <button class="navbar-toggler d-flex" type="button" data-bs-toggle="collapse" data-bs-target="#side_nav_mobile"
+        aria-controls="side_nav_mobile" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse">
+        <nav class="nav flex-column py-2">
+          <ng-container>
+            <pure-mainnav></pure-mainnav>
+          </ng-container>
+        </nav>
+      </div>
 
     </div>
+    -->
+    <!--/div-->
+
   </div>
 </nav>
 

@@ -1,16 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
-import { AaComponent } from 'src/app/components/aa/aa.component';
-import { SwitchBsThemeComponent } from 'src/app/shared/components/switch-bs-theme/switch-bs-theme.component';
-import { AaService } from 'src/app/services/aa.service';
-import { LangSwitchComponent } from 'src/app/shared/components/lang-switch/lang-switch.component';
 import { SearchStateService } from "src/app/components/search-result-list/search-state.service";
 import { baseElasticSearchQueryBuilder } from "../../services/search-utils";
 
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+
 import {
   catchError,
   debounceTime,
@@ -26,24 +23,19 @@ import { ItemsService } from "src/app/services/pubman-rest-client/items.service"
 import sanitizeHtml from "sanitize-html";
 import { filter } from "rxjs/operators";
 
-
 @Component({
-  selector: 'pure-mainnav',
+  selector: 'pure-search',
   imports: [
     RouterLink,
     FormsModule,
     ReactiveFormsModule,
-    LangSwitchComponent,
-    AaComponent,
     TranslatePipe,
     NgbTooltip,
   ],
-  templateUrl: './mainnav.component.html',
+  templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainnavComponent {
-
-  isScrolled = false;
+export class SearchComponent {
 
   search_form = this.form_builder.group({
     text: '',
@@ -51,12 +43,12 @@ export class MainnavComponent {
 
   constructor(
     private form_builder: FormBuilder,
-    public aa: AaService,
     private router: Router,
     private searchState: SearchStateService,
     private itemsService: ItemsService
   ) {
   }
+
 
   search(): void {
     const search_term = this.search_form.get('text')?.value;
@@ -73,20 +65,6 @@ export class MainnavComponent {
       this.router.navigateByUrl('/search');
     }
     this.search_form.controls['text'].patchValue('');
-  }
-
-  tools() {
-    alert('select from tools ...');
-  }
-
-  switch_lang() {
-    const loc = localStorage.getItem('locale');
-    if (loc?.localeCompare('de') === 0) {
-      localStorage.setItem('locale', 'en');
-    } else {
-      localStorage.setItem('locale', 'de');
-    }
-    location.reload();
   }
 
 
@@ -208,7 +186,6 @@ export class MainnavComponent {
     event.preventDefault();
     this.search_form.controls['text'].patchValue(searchTerm);
   }
-
 
 
 }

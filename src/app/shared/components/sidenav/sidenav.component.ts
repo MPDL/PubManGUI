@@ -12,11 +12,15 @@ import { CartService } from "../../services/cart.service";
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { AaComponent } from 'src/app/components/aa/aa.component';
+import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { LangSwitchComponent } from 'src/app/shared/components/lang-switch/lang-switch.component';
+
 
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
-  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent, TranslatePipe],
+  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent, TranslatePipe, AaComponent, SearchComponent, LangSwitchComponent],
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {

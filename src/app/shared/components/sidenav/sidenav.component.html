@@ -6,7 +6,7 @@
 -->
 @if (!mobile) {
 <nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()">
-  <div class="container-fluid px-0">
+  <div class="container px-0">
 
     <div class="collapse navbar-collapse d-xxl-flex" id="side_nav">
       <nav class="nav flex-column ps-4 py-2">
@@ -17,22 +17,51 @@
   </div>
 </nav>
 } @else {
-<nav id="sidenav" #sidenav class="navbar side_nav_mobile" (click)="expand()">
+<div class="side_nav_mobile" (click)="expand()">
   <div class="container-fluid">
-    
-    <button id="side_nav_mobile_toggler" class="navbar-toggler d-flex" type="button" data-bs-toggle="collapse" data-bs-target="#side_nav_mobile"
-      aria-controls="side_nav_mobile" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="side_nav_mobile">
-      <nav class="nav flex-column py-2">
+    <nav class="d-flex flex-column align-items-end">
+      <button class="navbar-toggler border border-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#side_nav_mobile" aria-controls="side_nav_mobile" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+
+    <div class="collapse mt-2" id="side_nav_mobile">
+      <div class="d-flex flex-column py-2 px-4">
+        <div class="row col-12 d-flex justify-content-between">
+          <div class="col-8 d-flex align-items-center">
+            <pure-search></pure-search>
+          </div>
+          <pure-aa class="col-3"></pure-aa>
+        </div>
         <ng-container *ngTemplateOutlet="options"></ng-container>
-      </nav>
+        <pure-lang-switch class="d-flex justify-content-center"></pure-lang-switch>
+
+        <!--
+            <pure-switch-bs-theme class="me-4"></pure-switch-bs-theme>
+
+            <div class="me-4">
+              <a ngbTooltip="{{ 'common.help' | translate }}" placement="bottom-left" [routerLink]="['/help']"
+                class="nav-link">
+                <span class="material-symbols-outlined">help</span>
+              </a>
+            </div>
+
+            <div class="me-4">
+              <a [routerLink]="[]" class="nav-link" (click)="tools()">
+                <span class="material-symbols-outlined">apps</span>
+              </a>
+            </div>
+          -->
+
+      </div>
     </div>
 
   </div>
-</nav>
+</div>
+
 }
 
 <ng-template #options>
