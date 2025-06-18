@@ -39,7 +39,7 @@
                 <!-- Remove parenthesis button -->
                 <div class="col-sm-1">
                   <span>{{ $any(currentFormGroup).type === 'opening_parenthesis' ? '(' : ')' }}</span>
-                  <button type="button" class="btn btn-sm" (click)="removeParenthesis(i)">
+                  <button type="button" class="btn btn-sm btn-outline-secondary p-0 m-1" (click)="removeParenthesis(i)">
                     <span class="bi bi-x"></span>
                   </button>
                 </div>
@@ -48,7 +48,7 @@
                 <div class="col-auto">
                   <!-- Add parenthesis button -->
                   @if (currentlyOpenedParenthesis === undefined) {
-                    <button type="button" class="btn btn-sm"
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
                             [disabled]="currentlyOpenedParenthesis!==undefined"
                             (click)="addOpeningParenthesis(i)">
                       (
@@ -212,12 +212,12 @@
                 <div class="col-sm-1">
                   <!-- WARNING!!!-->
                   <!-- if type is omitted, submit will trigger remove ... -->
-                  <button type="button" class="btn btn-sm btn-outline-dark"
+                  <button type="button" class="btn btn-sm btn-outline-dark p-0 me-1"
                           (click)="addSearchCriterion(i, $any(currentFormGroup))">
-                    <strong>+</strong>
+                    <i class="bi bi-plus"></i>
                   </button>
-                  <button type="button" class="btn btn-sm btn-outline-dark" (click)="removeSearchCriterion(i)">
-                    <strong>-</strong>
+                  <button type="button" class="btn btn-sm btn-outline-dark p-0" (click)="removeSearchCriterion(i)">
+                    <i class="bi bi-dash"></i>
                   </button>
                 </div>
 
@@ -229,7 +229,7 @@
             @if (possibleCriterionsForClosingParenthesisMap.includes($any(currentFormGroup))) {
               <div class="row" style="margin-left: {{($any(currentFormGroup).level-1) * 15}}px">
                 <div class="col-sm-1">
-                  <button type="button" class="btn btn-sm " (click)="addClosingParenthesis(i)">
+                  <button type="button" class="btn btn-sm btn-outline-secondary m-1 " (click)="addClosingParenthesis(i)">
                     )
                   </button>
                 </div>
@@ -434,13 +434,13 @@
           [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="search()">
     {{ 'Search.searchButton' | translate }}
   </button>
-  <button type="button" class="btn btn btn-secondary me-2"
+  <button type="button" class="btn btn btn-outline-primary me-2"
           [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="reset()">
     Reset
   </button>
 
   @if(aaService.isLoggedIn) {
-    <button type="button" class="btn btn btn-secondary me-2" (click)="openSavedSearchModal()">{{ 'Search.saveSearchButton' | translate }}</button>
+    <button type="button" class="btn btn btn-outline-primary me-2" (click)="openSavedSearchModal()">{{ 'Search.saveSearchButton' | translate }}</button>
   }
 
 

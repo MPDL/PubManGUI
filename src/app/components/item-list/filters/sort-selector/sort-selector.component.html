@@ -15,7 +15,7 @@
         </select>
       </div>
       <div class="col-2">
-        <button type="button" class="btn btn-secondary btn-sm" (click)="switchSortOrder(index); t.close();"
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="switchSortOrder(index); t.close();"
                 [ngbTooltip]="('common.sort' | translate) + ': ' + (('Search.' + sortEntry.sortOrder) | translate)"
         #t = "ngbTooltip">
           <i class="bi {{sortEntry.sortOrder ==='asc' ? 'bi-arrow-up' : 'bi-arrow-down'}}"></i>
@@ -28,10 +28,10 @@
   <div class="row">
     <div class="col">
       <div class="">
-  <button type="button" class="btn btn-secondary me-2 p-0" (click)="addSortCriterion(0)">
+  <button type="button" class="btn btn-outline-secondary me-1 btn-sm p-0" (click)="addSortCriterion(0)">
     <i class="bi bi-plus"></i>
   </button>
-    <button type="button" class="btn btn-secondary btn-sm p-0" (click)="removeSortCriterion(sortEntries.length -1)" [disabled]="sortEntries.length === 1">
+    <button type="button" class="btn btn btn-outline-secondary btn-sm p-0" (click)="removeSortCriterion(sortEntries.length -1)" [disabled]="sortEntries.length === 1">
       <i class="bi bi-dash"></i>
     </button>
       </div>
