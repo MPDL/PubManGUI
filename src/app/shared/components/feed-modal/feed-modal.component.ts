@@ -6,13 +6,12 @@ import {Router} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
 import {TranslatePipe} from "@ngx-translate/core";
+import {CopyButtonDirective} from "../../directives/copy-button.directive";
 
 @Component({
   selector: 'pure-feed-modal',
   imports: [
-    CdkCopyToClipboard,
-    TranslatePipe,
-    NgbTooltip
+    CopyButtonDirective
   ],
   templateUrl: './feed-modal.component.html',
   styleUrl: './feed-modal.component.scss'
@@ -23,7 +22,6 @@ export class FeedModalComponent {
 
   atomFeedUrl: string = "";
 
-  copiedSuccessful: boolean = false;
 
   constructor(protected activeModal: NgbActiveModal) {
   }

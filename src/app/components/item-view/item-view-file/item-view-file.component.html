@@ -93,19 +93,19 @@
               {{ file.metadata.description }}
             </div>
             }
-            @if(file.metadata.oaStatus | empty) {
+              @if(oaStatusIcon(file)) {
               <div class="mt-1">
                 <strong>{{ 'FileMetadataFields.oaStatus' | translate }}</strong>
               </div>
               <div>
-                @if(oaStatusIcon(file)) {
+
                   <img alt="OA logo"
                        src="assets/images/{{oaStatusIcon(file)}}"
                        width="16" height="16"/>
-                }
-                {{ 'OAStatus.' + file.metadata.oaStatus | translate }}
+
+                {{ ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')) | translate }}
               </div>
-            }
+              }
               @if(file.metadata.license | empty) {
               <div class="mt-1">
                 <strong>{{ 'FileMetadataFields.license' | translate }}</strong>

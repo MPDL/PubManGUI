@@ -16,7 +16,7 @@ import {AsyncPipe, DatePipe, ViewportScroller} from "@angular/common";
 import {ItemBadgesComponent} from "../../shared/components/item-badges/item-badges.component";
 import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {ItemViewMetadataComponent} from "./item-view-metadata/item-view-metadata.component";
-import {forkJoin, map, Observable} from "rxjs";
+import {forkJoin, map, Observable, timer} from "rxjs";
 import {environment} from 'src/environments/environment';
 import {
   ItemViewMetadataElementComponent
@@ -39,6 +39,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {itemToVersionId} from "../../shared/services/utils";
 import {UsersService} from "../../services/pubman-rest-client/users.service";
 import sanitizeHtml from "sanitize-html";
+import {CopyButtonDirective} from "../../shared/directives/copy-button.directive";
 
 @Component({
   selector: 'pure-item-view',
@@ -60,7 +61,8 @@ import sanitizeHtml from "sanitize-html";
     NgbTooltip,
     LoadingComponent,
     TranslatePipe,
-    DatePipe
+    DatePipe,
+    CopyButtonDirective
   ],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.scss'
@@ -88,6 +90,7 @@ export class ItemViewComponent {
   itemCreator$!: Observable<AccountUserDbVO>;
 
   metaTagElements: Element[] = [];
+  copiedSuccessful: boolean = false;
 
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
@@ -313,4 +316,6 @@ export class ItemViewComponent {
     alert('To do')
 
   }
+
+  protected readonly timer = timer;
 }

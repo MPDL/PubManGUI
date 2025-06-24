@@ -8,7 +8,7 @@ import {
   Validators
 } from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DatePipe, JsonPipe, KeyValuePipe, NgFor, NgIf, NgTemplateOutlet} from "@angular/common";
+import {JsonPipe, KeyValuePipe, NgFor, NgTemplateOutlet} from "@angular/common";
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
 import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
@@ -18,9 +18,6 @@ import {TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
 import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
 import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
 import {forkJoin, map, Subscription, tap} from "rxjs";
-import {OptionDirective} from "../../shared/components/selector/directives/option.directive";
-import {PureOusDirective} from "../../shared/components/selector/services/pure_ous/pure-ous.directive";
-import {SelectorComponent} from "../../shared/components/selector/selector.component";
 import {OuAutosuggestComponent} from "../../shared/components/ou-autosuggest/ou-autosuggest.component";
 import {PersonAutosuggestComponent} from "../../shared/components/person-autosuggest/person-autosuggest.component";
 import {GenreListSearchCriterion} from "./criterions/GenreListSearchCriterion";
@@ -36,7 +33,7 @@ import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterio
 import {SearchStateService} from "../search-result-list/search-state.service";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {SortByLabelPipe} from "../../shared/services/pipes/sort-by-label.pipe";
-import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
+
 import {SavedSearchesModalComponent} from "../../shared/components/saved-searches-modal/saved-searches-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
@@ -44,7 +41,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, NgIf, JsonPipe, OptionDirective, PureOusDirective, SelectorComponent, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, DatePipe, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet
+    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',

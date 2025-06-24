@@ -12,6 +12,7 @@ import {Clipboard} from "@angular/cdk/clipboard";
 import {TranslatePipe} from "@ngx-translate/core";
 import {DatePipe} from "@angular/common";
 import {LoadingComponent} from "../loading/loading.component";
+import {CopyButtonDirective} from "../../directives/copy-button.directive";
 
 @Component({
   selector: 'pure-saved-searches-modal',
@@ -21,7 +22,8 @@ import {LoadingComponent} from "../loading/loading.component";
     DatePipe,
     ReactiveFormsModule,
     NgbTooltip,
-    LoadingComponent
+    LoadingComponent,
+    CopyButtonDirective
   ],
   templateUrl: './saved-searches-modal.component.html',
   styleUrl: './saved-searches-modal.component.scss'
@@ -73,11 +75,12 @@ export class SavedSearchesModalComponent {
 
   }
 
-  copySavedSearchLink(savedSearchId: string) {
+  getSavedSearchLink(savedSearchId: string) {
     const urlString = window.location.toString();
     const url = new URL(urlString);
     url.searchParams.set('searchId', savedSearchId);
-    this.clipboard.copy(url.toString());
+    //this.clipboard.copy(url.toString());
+    return url.toString();
     //console.log(`${url}`);
   }
 

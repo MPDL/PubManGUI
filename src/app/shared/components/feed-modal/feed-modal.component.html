@@ -11,18 +11,8 @@
 
       <textarea class="form-control form-control-sm" rows="3" readonly [value]="atomFeedUrl"></textarea>
 
-      <button class="btn btn-primary" type="button" id="button-addon1"
-              [disabled]="copiedSuccessful"
-              [cdkCopyToClipboard]="atomFeedUrl"
-              (cdkCopyToClipboardCopied)="copiedSuccessful = true"
-              [ngbTooltip]="'common.copyToClipboard' | translate">
-
-        @if(!copiedSuccessful) {
-          <i class="bi bi-copy"></i>
-        }
-        @else{
-          <i class="bi bi-check-lg"></i>
-        }
+      <button class="btn btn-primary" type="button" id="button-addon1" pureCopyButton
+              [textToCopy]="atomFeedUrl">
       </button>
     </div>
 

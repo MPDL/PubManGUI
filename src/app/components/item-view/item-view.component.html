@@ -418,10 +418,15 @@
             <div class="mt-3">
               <h6>{{ 'common.item' | translate }} {{ 'common.handle' | translate }}</h6>
               <div class="row">
+                <div class="col-11">
                 <a class="icon-link" href="https://hdl.handle.net/{{item.objectPid?.substring(4)}}" target="_blank">
                   <i class="bi-link"></i>
                   <span class="text-truncate">{{ item.objectPid }}</span>
                 </a>
+                </div>
+                <div class="col-1">
+                <button class="btn btn-sm border-0" pureCopyButton [textToCopy]="'https://hdl.handle.net/' + item.objectPid?.substring(4)"></button>
+                </div>
               </div>
             </div>
           }
@@ -431,10 +436,15 @@
 
               <h6>{{ 'common.version' | translate }} {{ item.versionNumber }} {{ 'common.handle' | translate }}</h6>
               <div class="row">
+                <div class="col">
                 <a class="icon-link" href="https://hdl.handle.net/{{item.versionPid?.substring(4)}}" target="_blank">
                   <i class="bi-link"></i>
                   <span class="text-truncate">{{ item.versionPid }}</span>
                 </a>
+                </div>
+                <div class="col-1">
+                  <button class="btn btn-sm border-0" pureCopyButton [textToCopy]="'https://hdl.handle.net/' + item.versionPid?.substring(4)"></button>
+                </div>
               </div>
 
             </div>
