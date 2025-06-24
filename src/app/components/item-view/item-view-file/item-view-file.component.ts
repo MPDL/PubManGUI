@@ -4,9 +4,10 @@ import {NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import { environment } from 'src/environments/environment';
 import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 import {AaService} from "../../../services/aa.service";
-import {checkFileAccess, getFullItemId} from "../../../shared/services/item-utils";
+import {checkFileAccess, getFullItemId, isUrl} from "../../../shared/services/item-utils";
 import {ItemsService} from "../../../services/pubman-rest-client/items.service";
 import {TranslatePipe} from "@ngx-translate/core";
+import {CopyButtonDirective} from "../../../shared/directives/copy-button.directive";
 
 @Component({
   selector: 'pure-item-view-file',
@@ -15,7 +16,8 @@ import {TranslatePipe} from "@ngx-translate/core";
     NgbTooltip,
     EmptyPipe,
     NgbPopover,
-    TranslatePipe
+    TranslatePipe,
+    CopyButtonDirective
   ],
   templateUrl: './item-view-file.component.html',
   styleUrl: './item-view-file.component.scss'
@@ -73,4 +75,5 @@ export class ItemViewFileComponent {
     return undefined;
   }
 
+  protected readonly isUrl = isUrl;
 }

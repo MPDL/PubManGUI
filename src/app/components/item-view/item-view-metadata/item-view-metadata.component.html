@@ -166,7 +166,7 @@
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.reviewMethod | empty)">
       <span label>{{'MetadataFields.reviewMethod' | translate}}</span>
         <span content>
-          {{ item.metadata?.reviewMethod }}
+          {{ 'ReviewMethod.' + item.metadata?.reviewMethod | translate }}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.identifiers | empty)" >
