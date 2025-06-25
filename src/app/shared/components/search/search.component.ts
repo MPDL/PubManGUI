@@ -199,7 +199,6 @@ export class SearchComponent implements OnInit{
   }
 
   collapse() {
-    console.log('collapse ', this.mobile);
     if (this.mobile) {
       if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
       if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
