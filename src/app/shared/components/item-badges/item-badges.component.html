@@ -23,17 +23,21 @@
       <span class="badge {{state==='WITHDRAWN' ? 'bg-danger' : 'bg-dark' }} me-2">{{'ItemState.' + state | translate}}{{showPublicStatusIcon ? ' (v' + item?.versionNumber + ')' : ''}}</span>
 
       @if(showPublicStatusIcon && state !== 'WITHDRAWN') {
+
+        @let isLatestVersion = item?.versionNumber === item?.latestVersion?.versionNumber ? 'border-bottom border-2 border-dark' : '';
+        @let isLatestRelease = item?.versionNumber === item?.latestRelease?.versionNumber ? 'border-bottom border-2 border-dark' : '';
+
         @if(item?.latestRelease) {
 
-          <a routerLink="/view/{{item?.objectId + '_' + item?.latestRelease?.versionNumber}}" [ngbTooltip]="('ItemState.' + item?.latestRelease?.versionState | translate) + ': Version ' + item?.latestRelease?.versionNumber ">
-          <span class="material-symbols-outlined text-success me-2">public</span>
+          <a class="" routerLink="/view/{{item?.objectId + '_' + item?.latestRelease?.versionNumber}}" [ngbTooltip]="('ItemState.' + item?.latestRelease?.versionState | translate) + ': Version ' + item?.latestRelease?.versionNumber ">
+          <span class="material-symbols-outlined text-success me-2 {{isLatestRelease}}">public</span>
           </a>
         }
 
         @if(item?.latestVersion?.versionState !== 'RELEASED'){
 
           <a routerLink="/view/{{item?.objectId + '_' + item?.latestVersion?.versionNumber}}"  [ngbTooltip]="('ItemState.' + item?.latestVersion?.versionState | translate) + ': Version ' + item?.latestVersion?.versionNumber ">
-          <span class="material-symbols-outlined text-danger me-2">draft</span>
+          <span class="material-symbols-outlined text-danger me-2 {{isLatestVersion}}">draft</span>
           </a>
         }
       }
