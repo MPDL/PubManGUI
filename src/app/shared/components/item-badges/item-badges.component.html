@@ -1,5 +1,5 @@
 <div class="row">
-<div class="col-9">
+<div class="col-8">
 
   <span class="badge bg-primary me-2">{{'MdsPublicationGenre.' + item?.metadata?.genre | translate}}</span>
   @if (publicationState) {
@@ -9,14 +9,58 @@
     <a class="badge bg-warning me-2" href="https://doi.org/{{doi}}" target="_blank">DOI: {{doi}}</a>
   }
 </div>
-<div class="col-3">
+<div class="col-4">
 
   <div class="float-end">
+    <!--
     @if(showVersion) {
     <span class="badge bg-dark me-2">v{{item?.versionNumber}}</span>
     }
+    -->
     @if(aaService.principal.value.loggedIn || state==='WITHDRAWN') {
-  <span class="badge {{state==='WITHDRAWN' ? 'bg-danger' : 'bg-dark' }} me-2">{{'ItemState.' + state | translate}}</span>
+
+
+      <span class="badge {{state==='WITHDRAWN' ? 'bg-danger' : 'bg-dark' }} me-2">{{'ItemState.' + state | translate}}{{showPublicStatusIcon ? ' (v' + item?.versionNumber + ')' : ''}}</span>
+
+      @if(showPublicStatusIcon && state !== 'WITHDRAWN') {
+
+        @let isLatestVersion = item?.versionNumber === item?.latestVersion?.versionNumber ? 'border-bottom border-2 border-dark' : '';
+        @let isLatestRelease = item?.versionNumber === item?.latestRelease?.versionNumber ? 'border-bottom border-2 border-dark' : '';
+
+        @if(item?.latestRelease) {
+
+          <a class="" routerLink="/view/{{item?.objectId + '_' + item?.latestRelease?.versionNumber}}" [ngbTooltip]="('ItemState.' + item?.latestRelease?.versionState | translate) + ': Version ' + item?.latestRelease?.versionNumber ">
+          <span class="material-symbols-outlined text-success me-2 {{isLatestRelease}}">public</span>
+          </a>
+        }
+
+        @if(item?.latestVersion?.versionState !== 'RELEASED'){
+
+          <a routerLink="/view/{{item?.objectId + '_' + item?.latestVersion?.versionNumber}}"  [ngbTooltip]="('ItemState.' + item?.latestVersion?.versionState | translate) + ': Version ' + item?.latestVersion?.versionNumber ">
+          <span class="material-symbols-outlined text-danger me-2 {{isLatestVersion}}">draft</span>
+          </a>
+        }
+      }
+
+      <!--
+      @if(showPublicStatusIcon && state !== 'WITHDRAWN') {
+        @if(item?.latestRelease && item?.latestRelease?.versionNumber === item?.latestVersion?.versionNumber) {
+
+          <span class="material-symbols-outlined text-success me-2">public</span>
+        }
+        @else if(item?.latestRelease) {
+          <span class="material-symbols-outlined text-warning me-2">public</span>
+        }
+        @else {
+
+          <span class="material-symbols-outlined text-danger me-2">draft</span>
+        }
+      }
+    -->
+
+
+
+
     }
 </div>
 

@@ -1,8 +1,9 @@
-import { Directive } from '@angular/core';
+import {Directive, Input} from '@angular/core';
 import {ItemFilterDirective} from "./item-filter.directive";
 import {ItemVersionState} from "../../../../model/inge";
 import {FilterEvent} from "../../item-list.component";
 import {TranslateService} from "@ngx-translate/core";
+import {AaService} from "../../../../services/aa.service";
 
 
 
@@ -17,11 +18,17 @@ import {TranslateService} from "@ngx-translate/core";
   standalone: true
 })
 export class ItemStateFilterDirective extends ItemFilterDirective {
+  @Input() includePending: boolean = true;
+
+  states: string[] = Object.keys(ItemVersionState);
   options: { [p: string]: string };
 
-  constructor(private translateService: TranslateService) {
+  constructor(private translateService: TranslateService, private aaService: AaService) {
     super();
-    this.options =  Object.assign({'': 'common.all'}, ...Object.keys(ItemVersionState).map(x => ({ [x]: 'ItemState.' + [x] })));
+    if(!this.includePending) {
+      this.states.splice(this.states.indexOf(ItemVersionState.PENDING.valueOf()), 1);
+    }
+    this.options =  Object.assign({'': 'common.all'}, ...this.states.map(x => ({ [x]: 'ItemState.' + [x] })));
 
   }
 
@@ -43,22 +50,26 @@ export class ItemStateFilterDirective extends ItemFilterDirective {
         }
     }
     else {
-      const states = selectedValue ? [selectedValue] : [ItemVersionState.PENDING.valueOf(), ItemVersionState.SUBMITTED.valueOf(), ItemVersionState.IN_REVISION, ItemVersionState.RELEASED];
+      const selectedStatesWithoutWithdrawn = selectedValue ? [selectedValue] : this.states.filter(x => x !== ItemVersionState.WITHDRAWN.valueOf());
+      const filterOutQuery = this.aaService.filterOutQuery(selectedStatesWithoutWithdrawn);
       query =
         {
           bool: {
             must: [{
               terms: {
-                versionState: states
+                versionState: selectedStatesWithoutWithdrawn
               }
             }
             ],
             must_not: [
-              {term: {publicState: ItemVersionState.WITHDRAWN.valueOf()}}
+              {term: {publicState: ItemVersionState.WITHDRAWN.valueOf()}},
+              ...(filterOutQuery ? [filterOutQuery] : [])
             ]
           }
         }
     }
+
+
 
     const fe: FilterEvent = {
       name: "stateFilter",

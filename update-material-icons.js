@@ -13,6 +13,7 @@ const icons = [
   "delete_forever",
   "do_not_disturb_on",
   "drag_indicator",
+  "draft",
   "edit",
   "error",
   "expand_content",

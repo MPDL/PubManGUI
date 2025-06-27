@@ -4,6 +4,7 @@ import {StandardSearchCriterion} from "./StandardSearchCriterion";
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {DegreeType, ItemVersionState, MdsPublicationGenre} from "../../../model/inge";
 import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
+import {AaService} from "../../../services/aa.service";
 
 export class ItemStateListSearchCriterion extends SearchCriterion {
 
@@ -18,18 +19,43 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
 
   }
 
+  /**
+   * Always return false, as we need to filter out withdrawn and duplicates
+   */
   override isEmpty(): boolean {
+    /*
     const isEmpty = !Object.keys(this.publicationStatesFormGroup.controls).some(pubState => this.publicationStatesFormGroup.get(pubState)?.value);
     return isEmpty;
+    */
+
+    return false;
   }
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
 
     let shouldClauses: Object[] = [];
 
-    Object.keys(this.publicationStatesFormGroup.controls)
-      .filter(genre => this.publicationStatesFormGroup.get(genre)?.value)
-      .forEach(pubState => {
+    const selectedStates = Object.keys(this.publicationStatesFormGroup.controls)
+      .filter(genre => this.publicationStatesFormGroup.get(genre)?.value);
+
+
+    //if no states are selected, filter withdrawn items and duplicate versions
+    if(selectedStates.length === 0) {
+      const filterOutQuery = AaService.instance.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
+      return of(
+        {
+        bool: {
+          must_not: [
+            baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
+            ...(filterOutQuery ? [filterOutQuery] : [])
+          ]
+
+          }
+        }
+      )
+    }
+
+      selectedStates.forEach(pubState => {
       switch (pubState) {
         case "RELEASED" : {
           shouldClauses.push({
@@ -47,8 +73,10 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
           shouldClauses.push({
             bool: {
               must: [baseElasticSearchQueryBuilder("versionState", pubState)],
-              must_not:[baseElasticSearchQueryBuilder("publicState", "WITHDRAWN")],
-              //TODO filter out duplicates
+              must_not:[
+                baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
+                AaService.instance.filterOutQuery([pubState])
+              ],
             }
           });
           break;

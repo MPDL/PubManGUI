@@ -71,11 +71,14 @@ export class MyItemsComponent {
           bool: {
             must: [
               baseElasticSearchQueryBuilder("creator.objectId", userObjectId ? userObjectId : ""),
+              /*
               {
                 script: {
                   script: "doc['latestVersion.versionNumber']==doc['versionNumber']"
                 }
               }
+
+               */
             ]
           }
         }

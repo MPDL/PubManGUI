@@ -23,6 +23,8 @@ import { ItemsService } from "src/app/services/pubman-rest-client/items.service"
 import sanitizeHtml from "sanitize-html";
 import { filter } from "rxjs/operators";
 import { DOCUMENT } from '@angular/common';
+import {AaService} from "../../../services/aa.service";
+import {ItemVersionState} from "../../../model/inge";
 
 @Component({
   selector: 'pure-search',
@@ -46,7 +48,8 @@ export class SearchComponent implements OnInit{
     private form_builder: FormBuilder,
     private router: Router,
     private searchState: SearchStateService,
-    private itemsService: ItemsService
+    private itemsService: ItemsService,
+    private aaService: AaService
   ) {
   }
 
@@ -64,11 +67,14 @@ export class SearchComponent implements OnInit{
   search(): void {
     const search_term = this.search_form.get('text')?.value;
     if (search_term) {
+      const filterOutQuery = AaService.instance.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
       const query = {
         bool: {
           must: [{ query_string: { query: search_term } }],
-          must_not: [baseElasticSearchQueryBuilder("publicState", "WITHDRAWN")],
-          //TODO filter out duplicates
+          must_not: [
+            baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
+            ...(filterOutQuery ? [filterOutQuery] : [])
+          ]
         }
       };
       this.searchState.$currentQuery.next(query);

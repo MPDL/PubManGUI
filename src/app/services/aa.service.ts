@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, catchError, EMPTY, forkJoin, map, Observable, switchMap, tap, throwError} from 'rxjs';
-import { MessageService } from 'src/app/shared/services/message.service';
-import { environment } from 'src/environments/environment';
-import {AccountUserDbVO, ContextDbVO} from "../model/inge";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, catchError, EMPTY, forkJoin, map, Observable, switchMap, tap, throwError, of} from 'rxjs';
+import {MessageService} from 'src/app/shared/services/message.service';
+import {environment} from 'src/environments/environment';
+import {AccountUserDbVO, ContextDbVO, ItemVersionState} from "../model/inge";
 import {ContextsService} from "./pubman-rest-client/contexts.service";
 import {Router} from "@angular/router";
 
@@ -31,6 +31,7 @@ export class AaService {
 
   principal: BehaviorSubject<Principal>;
 
+
   constructor(
     private http: HttpClient,
     private contextService: ContextsService,
@@ -39,7 +40,7 @@ export class AaService {
   ) {
     const principal: Principal = new Principal();
     this.principal = new BehaviorSubject<Principal>(principal);
-    this.checkLogin();
+    //this.checkLogin();
     AaService.instance = this;
   }
 
@@ -50,45 +51,41 @@ export class AaService {
     return this.principal.getValue().loggedIn;
   }
 
-  checkLogin() {
-      console.log("Check login")
-      //this.token = token;
+  checkLogin(): Observable<Principal> {
+    console.log("Check login");
 
-      //console.log("New Principal logged in with token");
-      //Get UserAccount
-      this.who().subscribe(user => {
+    return this.who().pipe(
+      switchMap(user => {
         let principal: Principal = new Principal();
-        if(user) {
-          principal.loggedIn = true;
-          principal.user = user;
-          if (user.grantList.find((grant: any) => grant.role === 'SYSADMIN')) {
-            principal.isAdmin = true;
-          }
-
-
-
-          forkJoin(
-            [this.contextService.getContextsForCurrentUser("DEPOSITOR", user),
-              this.contextService.getContextsForCurrentUser("MODERATOR", user)])
-            .subscribe(results => {
-
-              if(results[0]) {
-                principal.depositorContexts = results[0].records.map(rec => rec.data);
-                principal.isDepositor = principal.depositorContexts.length > 0;
-              }
-              if(results[1]) {
-                principal.moderatorContexts = results[1].records.map(rec => rec.data);
-                principal.isModerator = principal.moderatorContexts.length > 0;
-              }
-
-              this.principal.next(principal);
-              console.log("New Principal logged in: " + principal.depositorContexts)
-            })
+        if (!user) {
+          this.principal.next(principal);
+          return of(principal);
         }
 
-      })
-      return this.principal.asObservable();
+        principal.loggedIn = true;
+        principal.user = user;
+        principal.isAdmin = !!user.grantList.find((grant: any) => grant.role === 'SYSADMIN');
 
+        return forkJoin([
+          this.contextService.getContextsForCurrentUser("DEPOSITOR", user),
+          this.contextService.getContextsForCurrentUser("MODERATOR", user)
+        ]).pipe(
+          map(([depositorResults, moderatorResults]) => {
+            if (depositorResults) {
+              principal.depositorContexts = depositorResults.records.map(rec => rec.data);
+              principal.isDepositor = principal.depositorContexts.length > 0;
+            }
+            if (moderatorResults) {
+              principal.moderatorContexts = moderatorResults.records.map(rec => rec.data);
+              principal.isModerator = principal.moderatorContexts.length > 0;
+            }
+
+            this.principal.next(principal);
+            return principal;
+          })
+        );
+      })
+    );
   }
 
   login(userName: string, password: string) {
@@ -151,4 +148,96 @@ export class AaService {
       })
     );
   }
+
+  /**
+   * Constructs and returns a query object that filters data based on the provided states
+   * and the user's role and permissions.
+   *
+   * @param {string[]} states - An array of strings representing the desired states
+   *     to filter for, such as "SUBMITTED" or "IN_REVISION".
+   * @return {Object} The constructed query object formatted for filtering purposes.
+   *     Returns undefined if no valid query can be constructed.
+   */
+  public filterOutQuery(states: string[]) {
+    let moderatorQuery: any = undefined;
+    let depositorQuery: any = undefined;
+    const depositorStates:string[] = states.filter(state => state === ItemVersionState.PENDING.valueOf());
+    const moderatorStates:string[] = states.filter(state => state === ItemVersionState.SUBMITTED.valueOf() || state === ItemVersionState.IN_REVISION.valueOf());
+
+    if(this.principal.getValue().moderatorContexts.length > 0 && moderatorStates.length > 0)
+    {
+      moderatorQuery =
+        {
+          bool: {
+            must : [
+              {
+                "terms": {
+                  "latestVersion.versionState": moderatorStates
+                }
+              },
+              {
+                "terms": {
+                  "context.objectId": this.principal.getValue().moderatorContexts.map(context => context.objectId)
+              }
+              }
+            ]
+          }
+        }
+    }
+
+    if(this.principal.getValue().loggedIn && depositorStates.length > 0) {
+      depositorQuery = {
+        bool: {
+          must : [
+            {
+              "terms": {
+                "latestVersion.versionState": depositorStates
+              }
+            },
+            {
+              "term": {
+                "creator.objectId": this.principal?.getValue()?.user?.objectId
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    console.log("Moderator query: " + JSON.stringify(moderatorQuery))
+
+    if(moderatorQuery === undefined && depositorQuery === undefined) {
+      return undefined;
+    }
+    else {
+
+      const query =
+        {
+          "bool": {
+            "must": [
+              {
+                "term": {
+                  "versionState": "RELEASED"
+                }
+              },
+              {
+                bool: {
+                  should: [
+                    ...depositorQuery ? [depositorQuery] : [],
+                    ...moderatorQuery ? [moderatorQuery] : []
+                  ]
+                }
+              }
+            ]
+          }
+        }
+
+      return query;
+    }
+
+  }
+
+
+
+
 }

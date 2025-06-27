@@ -22,7 +22,8 @@ import {TranslateModule, TranslateLoader, provideTranslateService, TranslateServ
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import {LOCATION_INITIALIZED, registerLocaleData} from "@angular/common";
-import {lastValueFrom} from "rxjs";
+import {firstValueFrom, lastValueFrom} from "rxjs";
+import {AaService} from "./services/aa.service";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -99,5 +100,10 @@ export const appConfig: ApplicationConfig = {
     }),
 
 
-  ]
+    provideAppInitializer(async () => {
+      const aaService = inject(AaService);
+      await lastValueFrom(aaService.checkLogin())
+    }),
+  ],
+
 };
