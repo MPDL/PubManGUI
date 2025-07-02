@@ -4,7 +4,7 @@
     @if (log.state === state.RUNNING) {
 
         <td class="col-2 px-1">
-            <span>{{ batchSvc.getProcessLog().state | titlecase }}</span>
+            <span >{{ batchSvc.getProcessLog().state | titlecase }}</span>
 
             @if (log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId) {
                 @if (batchSvc.isProcessRunning()) {
@@ -24,30 +24,32 @@
 
     } @else {
 
-        <td class="col-2 px-1 d-flex justify-content-between">
-            <span>{{ 'BatchProcessLogHeaderState.' + log.state | translate }}</span>
+        <td class="col-1 col-sm-2 d-flex flex-column flex-xl-row justify-content-between ps-1">
+            <span class="d-flex d-none d-lg-inline">{{ 'BatchProcessLogHeaderState.' + log.state | translate }}</span>
+            <div>
             @if (log.state === state.FINISHED) {
                 <span class="material-symbols-outlined text-success pe-1">check_circle</span>
             } @else {
                 <span class="material-symbols-outlined text-danger pe-1">cancel</span>
             }
+            </div>
         </td>
 
     }
 
-    <td class="col-6">
-        <span>{{ 'BatchProcessMethod.' + log.method | translate }}</span>
+    <td class="d-flex flex-column col-7 col-sm-6 col-xl-6 pe-xxl-2">
+        <span class="text-nowrap text-truncate">{{ 'BatchProcessMethod.' + log.method | translate }}</span>
     </td>
 
-    <td class="col-3 d-flex justify-content-between">
+    <td class="d-flex flex-column flex-xl-row col-2 col-xl-3 justify-content-lg-between">
         <span>{{ log.endDate | localizeDate:'mediumDate' }}</span>
-        <div class="pe-3">
-            <span class="material-symbols-outlined text-secondary">schedule</span>&nbsp;
+        <div class="ps-lg-1 pe-lg-5 d-flex flex-nowrap">
+            <span class="material-symbols-outlined text-secondary pt-1">schedule</span>&nbsp;
             <span>{{ log.endDate | date: 'HH:mm'}}</span>
         </div>
     </td>
 
-    <td class="d-flex justify-content-center">
+    <td class="d-flex d-none col-0 col-sm-1 d-sm-table-cell justify-content-center">
         @if (log.state === state.RUNNING
             && log.batchLogHeaderId === batchSvc.getProcessLog().batchLogHeaderId
             && batchSvc.isProcessRunning()) {
