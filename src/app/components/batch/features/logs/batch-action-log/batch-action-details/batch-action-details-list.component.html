@@ -34,29 +34,31 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-9 col-sm-12 d-flex justify-content-between mt-5 mb-3 border-bottom">
-        <div>
+      <div class="d-flex flex-column flex-lg-row col-12 col-xl-9 justify-content-between mt-5 mb-3 border-bottom">
+        <div class="text-nowrap text-truncate">
           <span>{{ 'batch.logs.details.for' | translate }}</span>: <strong class="fw-bolder"> {{
             'BatchProcessMethod.' + batchLogHeader!.method | translate }} </strong>
         </div>
-        <div class="fw-light">
-          <span>{{ 'batch.logs.started.on' | translate }}</span><span> {{ batchLogHeader.startDate | localizeDate:'fullDate' }}
-          </span><span class="material-symbols-outlined" style="cursor: auto">
-            schedule</span><span> {{ batchLogHeader.startDate | date: "HH:mm" }}</span>
+        <div class="fw-light text-nowrap text-truncate">
+          <span>{{ 'batch.logs.started.on' | translate }}</span>
+          <span> {{ batchLogHeader.startDate | localizeDate:'fullDate' }}</span>
+          <span class="material-symbols-outlined text-secondary pt-1" style="cursor: auto">
+            schedule</span>&nbsp;
+          <span> {{ batchLogHeader.startDate | date: "HH:mm" }}</span>
         </div>
       </div>
     </div>
 
     <div class="row">
-    <div class="col-lg-9 col-sm-12">
+    <div class="col-12 col-xl-9">
       <table class="table table-responsive col-12 mt-0">
         <thead>
           @if(inPage.length > 0) {
 
           <tr>
-            <th scope="col" class="col-2 ps-1">Status</th>
-            <th scope="col" class="col-6">{{ 'batch.logs.header.title' | translate }}</th>
-            <th scope="col" class="col-4">{{ 'batch.logs.header.message' | translate }}</th>
+            <th scope="col" class="d-flex d-none d-md-table-cell col-1 col-lg-2 text-nowrap text-truncate">Status</th>
+            <th scope="col" class="d-flex d-none d-md-table-cell col-sm-6">{{ 'batch.logs.header.title' | translate }}</th>
+            <th scope="col" class="d-flex d-none d-md-table-cell col-sm-5 col-lg-4">{{ 'batch.logs.header.message' | translate }}</th>
           </tr>
 
           }
@@ -91,7 +93,7 @@
       </table>
     </div>
 
-    <div class="col-lg-3 d-none d-lg-block mt-4">
+    <div class="d-flex d-none col-0 col-xl-3 d-xl-block mt-4">
       @if(unfilteredSize > 0) {
 
         <div class="border rounded p-3 m-1">
