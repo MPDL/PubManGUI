@@ -1,49 +1,44 @@
-import { Injectable } from '@angular/core';
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
-import { catchError, defaultIfEmpty, map, Observable, of } from 'rxjs';
-import { ValidationService } from 'src/app/services/pubman-rest-client/validation.service';
+import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Errors } from 'src/app/model/errors';
+import { CreatorType } from 'src/app/model/inge';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CreatorValidationDirective {
-  constructor(private validationService: ValidationService) {
-    }
-
-  validate(control: AbstractControl): Observable<ValidationErrors | null> {
-    console.log('validating Creator control');
-    const formGroup = control as FormGroup;
-    // console.log('this', this);
-    return this.validationService.validateCreator(formGroup.value).pipe(
-      map(response => {
-        console.log('Mapping');
-        console.log('Response Creator validation', JSON.stringify(response));
-        console.log('Response Creator validation validity: ', JSON.stringify(response.valid));
-        if (response.valid == false) {
-          console.log('invalid creator');
-          console.log('response creator items',  JSON.stringify(response.items));
-          let  validationErrors: ValidationErrors = {};
-        if (response.valid == false) {
-          if (response.items != null && response.items.length > 0) {
-            response.items.forEach((item: any) => {
-              validationErrors[item.content as string] = true;
-            });
+export const creatorValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
+  const error_types = Errors;
+  const creator = control;
+  if (creator !== null && creator.get('role')?.value === null) {
+    switch (creator.get('type')?.value) {
+      case CreatorType.ORGANIZATION:
+        const o = creator.get('organization');
+        if (o !== null) {
+          if (o.get('name')?.value ||
+            o.get('adress')?.value) {
+            return { [error_types.CREATOR_ROLE_NOT_PROVIDED]: true };
           }
-          console.log('validationErrors', validationErrors);
-          return validationErrors;
-        } else {
-          return null;
         }
-        } else {
-          console.log('valid creator');
-          return null;
-        }
-      }),
-      catchError(error => {
-        console.log('error', error);
-        return of({ invalidCreator: true });
-      }),
-      defaultIfEmpty(null),
-    );
-  }
+        break;
+      case CreatorType.PERSON:
+        const p = creator.get('person');
+        if (p !== null) {
+          if (p.get('familyName')?.value ||
+            p.get('givenName')?.value) {
+            return { [error_types.CREATOR_ROLE_NOT_PROVIDED]: true };
+          }
+          const personOrgs = p.get('organizations') as FormArray;
+          if (personOrgs) {
+            let j = 1;
+            for (const organization of personOrgs.controls) {
+              if (organization !== null) {
+                if (organization.get('name')?.value ||
+                  organization.get('adress')?.value) {
+                  return { [error_types.CREATOR_ROLE_NOT_PROVIDED]: true };
+                } // if
+              } // if
+              j++;
+            } // for
+          } // if
+          break;
+        } // if
+    } // switch
+  } // if
+  return null;
 }

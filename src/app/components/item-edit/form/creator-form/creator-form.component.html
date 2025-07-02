@@ -21,13 +21,15 @@
                 <div class="col-sm-2">
                     <label for="creator_role" class="col-form-label pe-2">role</label>
                     <select id="creator_role" class="form-select" formControlName="role" data-test="creator"
-                        [ngClass]="creator_form.errors?.[CreatorValidationErrorTypes.CREATOR_ROLE_NOT_PROVIDED] ? 'is-invalid' : ''">
+                        [ngClass]="creator_form.errors?.[error_types.CREATOR_ROLE_NOT_PROVIDED] ? 'ng-invalid' : ''">
                         <option [value]="null" selected disabled>role</option>
                         @for (r of creator_roles; track r) {
                         <option [value]="r">{{r}}</option>
                         }
                     </select>
-                    <div class="invalid-feedback">Creator role is required</div>
+                    @if(creator_form.errors?.[error_types.CREATOR_ROLE_NOT_PROVIDED]) {
+                        <div class="text-danger">Creator role is required</div>
+                    }
                 </div>
                 @if (type.value === 'ORGANIZATION') {
                 <div class="col-sm" formGroupName="organization">
@@ -59,7 +61,7 @@
                             [formForPersonOrganizations]="$any(person.controls.organizations)"
                             [formForPersonsIdValue]="$any(person.controls.identifier.controls.id)"
                             [formForPersonsIdType]="$any(person.controls.identifier.controls.type)"
-                            [validationError]="creator_form.errors?.[CreatorValidationErrorTypes.CREATOR_FAMILY_NAME_NOT_PROVIDED] ? true : false"
+                            [validationError]="creator_form.errors?.[error_types.CREATOR_FAMILY_NAME_NOT_PROVIDED] ? true : false"
                             data-test="familyname-autosuggest" />
                         <!--{{person.controls.identifier.value | json}}-->
                     </div>
@@ -113,7 +115,7 @@
                             -->
                             <pure-ou-autosuggest id="personOu{{i+1}}" [formForOuName]="$any(pou.controls.name)"
                                 [formForOuId]="$any(pou.controls.identifier)" [validationEnabled]="true"
-                                [validationError]="creator_form.errors?.[CreatorValidationErrorTypes.ORGANIZATIONAL_METADATA_NOT_PROVIDED] ? true : false"></pure-ou-autosuggest>
+                                [validationError]="creator_form.errors?.[error_types.ORGANIZATIONAL_METADATA_NOT_PROVIDED] ? true : false"></pure-ou-autosuggest>
                         </div>
 
                         <!--TODO link-->
@@ -132,12 +134,12 @@
                     </div>
                     } @empty {
                     <div class="col-sm offset-sm-1"
-                        [ngClass]="creator_form.errors?.[CreatorValidationErrorTypes.ORGANIZATIONAL_METADATA_NOT_PROVIDED] ? 'is-invalid' : ''">
+                        [ngClass]="creator_form.errors?.[error_types.ORGANIZATIONAL_METADATA_NOT_PROVIDED] ? 'is-invalid' : ''">
                         <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add organization'"
                             (notice)="add_remove_person_ou($event)"
                             data-test="add-remove-organizations"></pure-add-remove-buttons>
-                        @if(creator_form.hasError(CreatorValidationErrorTypes.ORGANIZATIONAL_METADATA_NOT_PROVIDED)) {
-                            <div class="text-danger">Creator organization is required</div>
+                        @if(creator_form.errors?.[error_types.ORGANIZATIONAL_METADATA_NOT_PROVIDED]) {
+                        <div class="text-danger">Creator organization is required</div>
                         }
                     </div>
                     }

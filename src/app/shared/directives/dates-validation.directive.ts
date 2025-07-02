@@ -1,7 +1,9 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { MdsPublicationGenre } from "src/app/model/inge";
+import { Errors } from "src/app/model/errors";
 
 export const datesValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
+  const error_types = Errors;
   const dateAccepted = control.get('dateAccepted')
   const dateCreated = control.get('dateCreated');
   const dateModified = control.get('dateModified');
@@ -28,8 +30,7 @@ export const datesValidator: ValidatorFn = (control: AbstractControl,): Validati
       && (event && event.get('startDate'))) {
       return null;
     }
-
-    return { DateNotProvided: true };
+    return { [error_types.DATE_NOT_PROVIDED]: true };
   } 
 
   return null;

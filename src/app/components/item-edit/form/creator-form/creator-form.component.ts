@@ -11,18 +11,8 @@ import { AddRemoveButtonsComponent } from '../../../../shared/components/add-rem
 import { OuAutosuggestComponent } from 'src/app/shared/components/ou-autosuggest/ou-autosuggest.component';
 import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import { Errors } from 'src/app/model/errors';
 
-enum CreatorErrorsEnum {
-  CREATOR_FAMILY_NAME_NOT_PROVIDED = "CreatorFamilyNameNotProvided",
-  CREATOR_GIVEN_NAME_NOT_PROVIDED = "CreatorGivenNameNotProvided",
-  CREATOR_NOT_PROVIDED = "CreatorNotProvided",
-  CREATOR_ORCID_INVALID = "CreatorOrcidInvalid",
-  CREATOR_ORGANIZATION_NAME_NOT_PROVIDED = "CreatorOrganizationNameNotProvided",
-  CREATOR_ROLE_NOT_PROVIDED = "CreatorRoleNotProvided",
-  CREATOR_TYPE_NOT_PROVIDED = "CreatorTypeNotProvided",
-  DATE_ACCEPTED_NOT_PROVIDED = "DateAcceptedNotProvided",
-  ORGANIZATIONAL_METADATA_NOT_PROVIDED = "OrganizationalMetadataNotProvided",
-}
 
 @Component({
   selector: 'pure-creator-form',
@@ -45,7 +35,7 @@ export class CreatorFormComponent {
   creator_roles = Object.keys(CreatorRole);
   creator_types = Object.keys(CreatorType);
 
-  CreatorValidationErrorTypes = CreatorErrorsEnum;
+  error_types = Errors;
 
   get type() {
     return this.creator_form.get('type') as FormControl<ControlType<CreatorType>>;

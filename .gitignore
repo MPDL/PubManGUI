@@ -51,3 +51,4 @@ Thumbs.db
 
 # GIT
 .gitignore
+src/app/shared/directives/creator-validation.directive_old.ts
