@@ -260,6 +260,7 @@
 		"BATCH_SUCCESS": "Success",
 		"BATCH_AUTHENTICATION_ERROR": "You need to be logged in, to change the publication.",
 		"BATCH_AUTHORIZATION_ERROR": "You do not have the permission to change the publication.",
+		"BATCH_CONTEXT_AUTHORIZATION_ERROR": "You do not have the permission to change the context.",
 		"BATCH_CONTEXT_NOT_FOUND": "The specified context was not found.",
 		"BATCH_CONTEXT_NOT_OPEN": "No fitting context found.",
 		"BATCH_FILES_METADATA_OLD_VALUE_NOT_EQUAL": "The given initial value does not match the value in the file metadata.",

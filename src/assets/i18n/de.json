@@ -81,7 +81,6 @@
 		"cookies": "Cookie Einstellungen",
 		"privacy": "Datenschutzerklärung",
 		"disclaimer": "Impressum"
-
 	},
 	"batch": {
 		"name": "Batchverarbeitung",
@@ -261,6 +260,7 @@
 		"BATCH_SUCCESS": "Erfolgreich.",
 		"BATCH_AUTHENTICATION_ERROR": "Sie müssen eingeloggt sein, um die Publikation zu verändern.",
 		"BATCH_AUTHORIZATION_ERROR": "Sie haben keine Rechte, diese Publikation zu verändern.",
+		"BATCH_CONTEXT_AUTHORIZATION_ERROR": "Sie haben keine Rechte, den Kontext zu wechseln.",
 		"BATCH_CONTEXT_NOT_FOUND": "Der angegebene Kontext wurde nicht gefunden.",
 		"BATCH_CONTEXT_NOT_OPEN": "Keinen passenden Kontext gefunden.",
 		"BATCH_FILES_METADATA_OLD_VALUE_NOT_EQUAL": "Der angegebene Initialwert und der aktuelle Wert der Datei stimmen nicht überein.",

@@ -1,6 +1,6 @@
 @if(log) {
 
-<tr class="bg-light border-bottom border-white d-flex py-2" id="{{ log.itemObjectId }}" [ngClass]="title === '404' ? 'text-secondary' : ''">
+<tr class="bg-light border-bottom border-white d-flex py-1 my-1" id="{{ log.itemObjectId }}" [ngClass]="title === '404' ? 'text-secondary' : ''">
   <td class="col-1 col-lg-2 px-1 text-nowrap text-truncate">
     <span class="d-flex d-none d-lg-inline">{{ 'BatchProcessLogDetailState.' + log.state | translate }}</span>
         <div class="d-flex d-lg-none my-0 pe-xl-2">
