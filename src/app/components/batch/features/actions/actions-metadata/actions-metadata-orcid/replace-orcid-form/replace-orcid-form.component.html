@@ -9,10 +9,11 @@
   <form [formGroup]="changeOrcidForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <div class="col-sm-3">
-        <label class="col-form-label"for="changeOrcidForm">CoNE</label>
+        <label class="col-form-label" for="changeOrcidForm">CoNE</label>
       </div>
       <div class="col-sm-8">
-        <pure-selector id="changeOrcidForm" [form]="changeOrcidForm" [control_name]="'completeName'" (notice)="updatePerson($event)" pureConePersons
+        <pure-selector id="changeOrcidForm" [form]="changeOrcidForm" [control_name]="'completeName'"
+          (notice)="updatePerson($event)" pureConePersons
           placeholder="{{ 'batch.actions.metadata.orcid.add' | translate }}">
           <ng-container *pureOption="let item">{{ item.text }}</ng-container>
         </pure-selector>
@@ -27,8 +28,9 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
-        <button type="submit" [disabled]="changeOrcidForm.invalid || changeOrcidForm.pristine" class="btn btn-outline-secondary border-2 col-1 float-end">
+      <div>
+        <button type="submit" [disabled]="changeOrcidForm.invalid || changeOrcidForm.pristine"
+          class="btn btn-outline-secondary border-2 float-end">
           GO
         </button>
       </div>

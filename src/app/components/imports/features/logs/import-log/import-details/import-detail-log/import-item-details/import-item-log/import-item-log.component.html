@@ -9,7 +9,7 @@
     <span>{{ 'ImportErrorLevel.' + detail.errorLevel | translate }}</span>
   </td>
 
-  <td class="col-8 align-text-top text-nowrap text-truncate">
+  <td class="col-8 align-text-top">
     @if(hasTranslation(detail.message.substr(0,50))) {
       <span>{{ 'ImportMessage.' + detail.message | translate }}</span>
 

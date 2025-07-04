@@ -36,7 +36,8 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeContextForm.controls['contextTo'])) {
         <span class="form-text text-danger small">
-          {{ 'batch.actions.context.change.invalid' | translate }} {{ valSvc.getFieldError(changeContextForm.controls['contextTo']) }}
+          {{ 'batch.actions.context.change.invalid' | translate }} {{
+          valSvc.getFieldError(changeContextForm.controls['contextTo']) }}
         </span>
         } @else {
         <span>&nbsp;</span>
@@ -45,9 +46,9 @@
     </div>
 
     <div class="row">
-      <div class="offset-sm-9 col-sm-3">
+      <div>
         <button type="submit" [disabled]="changeContextForm.invalid || changeContextForm.pristine"
-          class="btn btn-outline-secondary border-2 col-4 float-end">
+          class="btn btn-outline-secondary border-2 float-end">
           GO
         </button>
       </div>

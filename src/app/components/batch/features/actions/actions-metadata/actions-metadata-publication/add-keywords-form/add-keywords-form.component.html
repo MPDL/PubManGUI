@@ -8,15 +8,17 @@
 
   <form [formGroup]="addKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.publication.keywordsAdd.to' | translate }}</label>
+      <label class="col-sm-3 col-form-label">
+        {{ 'batch.actions.metadata.publication.keywordsAdd.to' | translate }}</label>
       <div class="col-sm-9">
         <textarea class="form-control" formControlName="keywords"></textarea>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
-        <button type="submit" [disabled]="addKeywordsForm.invalid || addKeywordsForm.pristine" class="btn btn-outline-secondary border-2 col-1 float-end">
+      <div>
+        <button type="submit" [disabled]="addKeywordsForm.invalid || addKeywordsForm.pristine"
+          class="btn btn-outline-secondary border-2 float-end">
           GO
         </button>
       </div>
