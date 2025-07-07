@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ContentChild, ElementRef, EventEmitter, Input, OnDestroy, Output, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { OptionDirective } from './directives/option.directive';
 import { HighlightableDirective } from './directives/highlightable.directive';
 import { SelectorDatasource } from './services/selector-datasource.service';
@@ -11,26 +12,28 @@ import { HighLightJsonPipe } from '../../services/pipes/high-light-json.pipe';
 import { NgFor, NgIf, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'pure-selector',
-    templateUrl: './selector.component.html',
-    styleUrls: ['./selector.component.scss'],
-    standalone: true,
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        NgFor,
-        HighlightableDirective,
-        NgIf,
-        NgTemplateOutlet,
-        AsyncPipe,
-        HighLightJsonPipe,
-    ],
+  selector: 'pure-selector',
+  templateUrl: './selector.component.html',
+  styleUrls: ['./selector.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgFor,
+    HighlightableDirective,
+    NgIf,
+    NgTemplateOutlet,
+    AsyncPipe,
+    HighLightJsonPipe,
+  ],
 })
 export class SelectorComponent implements OnDestroy, AfterViewInit {
 
   @Input() form!: FormGroup;
   @Input() control_name!: string;
   @Input() placeholder!: string;
+  @Input() validationError?: boolean;
   @ViewChild('overlayContainer', { static: true }) overlayTemplate!: TemplateRef<void>;
   @ViewChild('input', { read: ElementRef }) input_field!: ElementRef;
   @ContentChild(OptionDirective, { static: true }) optionTemplateDirective!: OptionDirective;

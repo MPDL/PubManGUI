@@ -12,7 +12,7 @@ import { OuAutosuggestComponent } from 'src/app/shared/components/ou-autosuggest
 import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'pure-creator-form',
@@ -28,7 +28,7 @@ export class CreatorFormComponent {
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
   
-  cone = inject(ConePersonsService);
+  coneService = inject(ConePersonsService);
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
   
@@ -36,6 +36,9 @@ export class CreatorFormComponent {
   creator_types = Object.keys(CreatorType);
 
   error_types = Errors;
+
+  cone_uri = environment.cone_instance_uri;
+
 
   get type() {
     return this.creator_form.get('type') as FormControl<ControlType<CreatorType>>;
@@ -62,8 +65,11 @@ export class CreatorFormComponent {
     return this.creator_form.get('person') as FormGroup<ControlType<PersonVO>>;
   }
 
-  type_change(val: string) {
-    if (val.localeCompare('ORGANIZATION') === 0) {
+  type_change(event : Event ) {
+    const val = (<HTMLInputElement>event.target).value;
+    console.log('type: ', val);
+    console.log('val.localeCompare("ORGANIZATION") === 0', val.localeCompare('ORGANIZATION') === 0)
+    if (val?.localeCompare('ORGANIZATION') === 0) {
       // this.organizations.clear();
       // this.organizations.push(this.fbs.organization_FG(null))
       this.creator_form.get('organization')?.enable();
@@ -85,7 +91,7 @@ export class CreatorFormComponent {
   updatePerson(event: any) {
     const selected_person = event.selected as string;
     const selected_ou = selected_person.substring(selected_person.indexOf('(') + 1, selected_person.lastIndexOf(','));
-    this.cone.resource(event.id).subscribe(
+    this.coneService.resource(event.id).subscribe(
       (person: PersonResource) => {
         const patched: Partial<PersonVO> = {
           givenName: person.http_xmlns_com_foaf_0_1_givenname,

@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbHighlight, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from "@angular/forms";
@@ -161,6 +161,7 @@ export class PersonAutosuggestComponent {
     console.log("formForPersonOrganization after delete", this.formForPersonOrganizations?.value);
     this.formForPersonsIdValue.setValue(null);
     this.formForPersonsIdType?.setValue(null);
+    this.formForPersonsOrcid?.setValue(null);
     //this.formForPersonsIdValue.get('id')?.setValue(null);
     //this.formForPersonsIdValue.get('type')?.setValue(null);
   }

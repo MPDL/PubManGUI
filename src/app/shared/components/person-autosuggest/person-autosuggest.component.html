@@ -15,7 +15,10 @@
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." [ngClass]="{'is-invalid': validationError}"/>
   }
-  <div class="invalid-feedback">Creator family name is required</div>
+  @if (validationError) {
+    <div class="text-danger">Creator family name is required</div>
+  }
+  
 
   @if(searching) {
 
