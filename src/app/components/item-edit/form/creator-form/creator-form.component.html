@@ -91,7 +91,7 @@
                     <div class="col-sm-autoalign-items-start">
                         <p>&nbsp;</p>
                         <svg fill="currentColor" height="24px" width="24px">
-                            <use href="/assets/icons/icons.svg#doi"></use>
+                            <use href="/assets/icons/icons.svg#orcid"></use>
                         </svg>
                     </div>
 
@@ -131,13 +131,14 @@
                         </div>
 
                         <!--TODO link-->
-                        <a routerLink="/TODO" routerLinkActive="active">
-                            <span class="material-symbols-outlined"
-                                [ngClass]="{'invisible': !pou.controls.identifier.value}"
-                                title="{{pou.controls.identifier.value}}">
-                                info
-                            </span>
-                        </a>
+                        <div class="col-sm-auto py-1" [ngClass]="{'invisible': !pou.controls.identifier.value}">
+                            <a routerLink="/TODO" routerLinkActive="active">
+                                <span class="material-symbols-outlined"
+                                    title="{{pou.controls.identifier.value}}">
+                                    info
+                                </span>
+                            </a>
+                        </div>
                         <div class="col-sm-1">
                             <pure-add-remove-buttons [index]="i"
                                 (notice)="add_remove_person_ou($event)"></pure-add-remove-buttons>
