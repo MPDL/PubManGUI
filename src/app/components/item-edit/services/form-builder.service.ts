@@ -5,6 +5,7 @@ import { creatorValidator } from 'src/app/shared/directives/creator-validation.d
 import { CreatorsOrganizationsValidator } from 'src/app/shared/directives/creators-organizations-validation.directive';
 import { datesValidator } from 'src/app/shared/directives/dates-validation.directive';
 import { EventValidator } from 'src/app/shared/directives/event-validation.directive';
+import { IdentifierValidator } from 'src/app/shared/directives/identifier-validation.directive';
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 
@@ -54,8 +55,8 @@ export class FormBuilderService {
 
   file_FG(file: FileDbVO | null) {
     const file_form = this.fb.group<ControlType<FileDbVO>>({
-      objectId : this.fb.control(file?.objectId ? file.objectId : null),
-      name : this.fb.control(file?.name ? file.name : null),
+      objectId: this.fb.control(file?.objectId ? file.objectId : null),
+      name: this.fb.control(file?.name ? file.name : null),
       visibility: this.fb.control(file?.visibility ? file.visibility : Visibility.PUBLIC),
       pid: this.fb.control(file?.pid ? file.pid : null),
       content: this.fb.control(file?.content ? file.content : null),
@@ -80,7 +81,7 @@ export class FormBuilderService {
       formats: this.fb.array(fileMetadata?.formats ? fileMetadata.formats.map(format => this.format_FG(format) as AbstractControl) : []),
       size: this.fb.control(fileMetadata?.size ? fileMetadata.size : null),
       embargoUntil: this.fb.control(fileMetadata?.embargoUntil ? fileMetadata.embargoUntil : null),
-      copyrightDate: this.fb.control(fileMetadata?.copyrightDate ? fileMetadata.copyrightDate : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
+      copyrightDate: this.fb.control(fileMetadata?.copyrightDate ? fileMetadata.copyrightDate : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       rights: this.fb.control(fileMetadata?.rights ? fileMetadata.rights : null),
       license: this.fb.control(fileMetadata?.license ? fileMetadata.license : null),
       oaStatus: this.fb.control(fileMetadata?.oaStatus ? fileMetadata.oaStatus : OA_STATUS.NOT_SPECIFIED),
@@ -113,7 +114,7 @@ export class FormBuilderService {
       role: this.fb.control(creator?.role ? creator.role : null),
       type: this.fb.control(creator?.type ? creator.type : CreatorType.PERSON)
     },
-    { validators: [creatorValidator], updateOn: 'blur' }
+      { validators: [creatorValidator], updateOn: 'blur' }
     );
     creator?.organization ? creator_form.get('person')?.disable() : creator_form.get('organization')?.disable();
     return creator_form;
@@ -148,7 +149,8 @@ export class FormBuilderService {
     const identifier_form = this.fb.group<ControlType<IdentifierVO>>({
       id: this.fb.control(identifier?.id ? identifier.id : null),
       type: this.fb.control(identifier?.type ? identifier.type : null)
-    });
+    },
+      { validators: [IdentifierValidator], updateOn: 'blur' });
     return identifier_form;
   }
 
@@ -157,12 +159,12 @@ export class FormBuilderService {
       title: this.fb.control(metadata?.title ? metadata.title : null, [Validators.required],),
       alternativeTitles: this.fb.array(metadata?.alternativeTitles ? metadata.alternativeTitles.map(at => this.alt_title_FG(at) as AbstractControl) : []),
       creators: this.fb.array(metadata?.creators ? metadata.creators.map(creator => this.creator_FG(creator) as AbstractControl) : []),
-      dateAccepted: this.fb.control(metadata?.dateAccepted ? metadata.dateAccepted : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
+      dateAccepted: this.fb.control(metadata?.dateAccepted ? metadata.dateAccepted : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       dateCreated: this.fb.control(metadata?.dateCreated ? metadata.dateCreated : null),
-      dateModified: this.fb.control(metadata?.dateModified ? metadata.dateModified : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
-      datePublishedInPrint: this.fb.control(metadata?.datePublishedInPrint ? metadata.datePublishedInPrint : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
-      datePublishedOnline: this.fb.control(metadata?.datePublishedOnline ? metadata.datePublishedOnline : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
-      dateSubmitted: this.fb.control(metadata?.dateSubmitted ? metadata.dateSubmitted : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
+      dateModified: this.fb.control(metadata?.dateModified ? metadata.dateModified : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
+      datePublishedInPrint: this.fb.control(metadata?.datePublishedInPrint ? metadata.datePublishedInPrint : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
+      datePublishedOnline: this.fb.control(metadata?.datePublishedOnline ? metadata.datePublishedOnline : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
+      dateSubmitted: this.fb.control(metadata?.dateSubmitted ? metadata.dateSubmitted : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       degree: this.fb.control(metadata?.degree ? metadata.degree : null),
       event: metadata?.event ? this.event_FG(metadata.event) : this.event_FG(null),
       legalCase: metadata?.legalCase ? this.legal_case_FG(metadata.legalCase) : this.legal_case_FG(null),
@@ -180,7 +182,7 @@ export class FormBuilderService {
       abstracts: this.fb.array(metadata?.abstracts ? metadata.abstracts.map(a => this.abstract_FG(a) as AbstractControl) : []),
       projectInfo: this.fb.array(metadata?.projectInfo ? metadata.projectInfo.map(pi => this.project_info_FG(pi) as AbstractControl) : []),
     },
-    { validators: [datesValidator, CreatorsOrganizationsValidator], updateOn: 'blur' }
+      { validators: [datesValidator, CreatorsOrganizationsValidator], updateOn: 'blur' }
     );
     return metadata_form;
   }
@@ -192,7 +194,7 @@ export class FormBuilderService {
       creators: this.fb.array(source?.creators ? source.creators.map(c => this.creator_FG(c) as AbstractControl) : []),
       volume: this.fb.control(source?.volume ? source.volume : null),
       issue: this.fb.control(source?.issue ? source.issue : null),
-      datePublishedInPrint: this.fb.control(source?.datePublishedInPrint ? source.datePublishedInPrint : new Date(), {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
+      datePublishedInPrint: this.fb.control(source?.datePublishedInPrint ? source.datePublishedInPrint : new Date(), { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       startPage: this.fb.control(source?.startPage ? source.startPage : null),
       endPage: this.fb.control(source?.endPage ? source.endPage : null),
       sequenceNumber: this.fb.control(source?.sequenceNumber ? source.sequenceNumber : null),
@@ -206,17 +208,17 @@ export class FormBuilderService {
   }
 
   event_FG(event: EventVO | null) {
-    const event_form: any  = this.fb.group<ControlType<EventVO>>({
-      endDate: this.fb.control(event?.endDate ? event.endDate : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
+    const event_form: any = this.fb.group<ControlType<EventVO>>({
+      endDate: this.fb.control(event?.endDate ? event.endDate : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       invitationStatus: this.fb.control(event?.invitationStatus ? event.invitationStatus : InvitationStatus.INVITED),
       place: this.fb.control(event?.place ? event.place : null),
-      startDate: this.fb.control(event?.startDate ? event.startDate : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'}),
+      startDate: this.fb.control(event?.startDate ? event.startDate : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       title: this.fb.control(event?.title ? event.title : null)
     },
-    {
-      validators: [EventValidator],
-      updateOn: 'blur' // 'blur' or 'change' or 'submit'
-    });
+      {
+        validators: [EventValidator],
+        updateOn: 'blur' // 'blur' or 'change' or 'submit'
+      });
     return event_form;
   }
 
@@ -225,7 +227,7 @@ export class FormBuilderService {
       courtName: this.fb.control(legal_case?.courtName ? legal_case.courtName : null),
       title: this.fb.control(legal_case?.title ? legal_case.title : null),
       identifier: this.fb.control(legal_case?.identifier ? legal_case.identifier : null),
-      datePublished: this.fb.control(legal_case?.datePublished ? legal_case.datePublished : null, {validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur'})
+      datePublished: this.fb.control(legal_case?.datePublished ? legal_case.datePublished : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' })
     });
     return case_form;
   }
