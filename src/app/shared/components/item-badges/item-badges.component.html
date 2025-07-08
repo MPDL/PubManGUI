@@ -30,14 +30,14 @@
         @if(item?.latestRelease) {
 
           <a class="" routerLink="/view/{{item?.objectId + '_' + item?.latestRelease?.versionNumber}}" [ngbTooltip]="('ItemState.' + item?.latestRelease?.versionState | translate) + ': Version ' + item?.latestRelease?.versionNumber ">
-          <span class="material-symbols-outlined text-success me-2 {{isLatestRelease}}">public</span>
+          <span class="material-symbols-outlined text-dark me-2 {{isLatestRelease}}">public</span>
           </a>
         }
 
         @if(item?.latestVersion?.versionState !== 'RELEASED'){
 
           <a routerLink="/view/{{item?.objectId + '_' + item?.latestVersion?.versionNumber}}"  [ngbTooltip]="('ItemState.' + item?.latestVersion?.versionState | translate) + ': Version ' + item?.latestVersion?.versionNumber ">
-          <span class="material-symbols-outlined text-danger me-2 {{isLatestVersion}}">draft</span>
+          <span class="material-symbols-outlined text-dark me-2 {{isLatestVersion}}">overview</span>
           </a>
         }
       }
