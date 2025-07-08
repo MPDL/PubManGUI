@@ -8,6 +8,8 @@ import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+
 
 @Component({
   selector: 'pure-batch-action-dataset-log',
@@ -15,7 +17,8 @@ import { TranslatePipe } from "@ngx-translate/core";
     CommonModule,
     RouterLink,
     SanitizeHtmlPipe,
-    TranslatePipe
+    TranslatePipe,
+    NgbTooltip
   ],
   templateUrl: './batch-action-dataset-log.component.html',
 })
@@ -23,6 +26,7 @@ export class BatchActionDatasetLogComponent {
   @Input() log?: resp.BatchProcessLogDetailDbVO;
 
   batchSvc = inject(BatchService);
+  logDetailState: typeof resp.BatchProcessLogDetailState = resp.BatchProcessLogDetailState;
 
   title = '';
 

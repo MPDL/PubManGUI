@@ -1,11 +1,11 @@
 @if(item) {
 
-<tr class="bg-light border-bottom border-white d-flex py-2" id="{{ item.id }}">
-  <td class="col-2 text-nowrap">
+<tr class="bg-light border-bottom border-white d-flex py-1 my-1" id="{{ item.id }}">
+  <td class="col-2 text-nowrap text-truncate">
     <span>{{ 'ImportStatus.' + item.status | translate }}</span>
   </td>
 
-  <td class="col-4">
+  <td class="col-8 col-lg-4">
     @if(item.itemId) {
 
       <span class="nav-link text-decoration-underline" style="cursor: pointer" [routerLink]="['view', item.itemId]">{{ item.itemId }} </span>
@@ -17,19 +17,19 @@
     }
   </td>
 
-  <td class="col-3 d-flex justify-content-between">
+  <td class="d-flex flex-column flex-xl-row col-2 col-lg-3 justify-content-lg-between">
     <span>{{ item.endDate | localizeDate }}</span>
-    <div class="pe-3">
-      <span class="material-symbols-outlined text-secondary" style="cursor: auto">schedule</span>&nbsp;
-      <span class="me-3">{{ item.endDate | date: "HH:mm" }}</span>
+    <div class="ps-lg-1 pe-lg-5 d-flex flex-nowrap">
+      <span class="material-symbols-outlined text-secondary pt-1" style="cursor: auto">schedule</span>&nbsp;
+      <span>{{ item.endDate | date: "HH:mm" }}</span>
     </div>
   </td>
 
-  <td class="col-2">
+  <td class="d-flex d-none d-lg-table-cell col-0 col-lg-2 ext-nowrap text-truncate">
     <span>{{ 'ImportErrorLevel.' + getAssorted(item.errorLevel) | translate }}</span>
   </td>
 
-  <td class="col-1">
+  <td class="d-flex d-none d-lg-table-cell col-0 col-lg-1">
     @if(item.anzDetails) {
 
       <a [routerLink]="['log']" [state]="{ item: item }">

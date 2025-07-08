@@ -13,9 +13,9 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileVisibilityFrom">
-          <option [value]=''  selected disabled>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
+          <option [value]='' selected disabled>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
           @for (fileVisibility of visibility; track fileVisibility) {
-            <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
+          <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
           }
         </select>
       </div>
@@ -27,9 +27,9 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileVisibilityTo">
-          <option [value]=''  selected disabled>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
+          <option [value]='' selected disabled>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
           @for (fileVisibility of visibility; track fileVisibility) {
-            <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
+          <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
           }
         </select>
       </div>
@@ -38,18 +38,19 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
         <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.files.visibility.invalid' | translate }} {{ valSvc.getFieldError(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
+          {{ 'batch.actions.metadata.files.visibility.invalid' | translate }} {{
+          valSvc.getFieldError(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
         </span>
         } @else {
-          <span>&nbsp;</span>
+        <span>&nbsp;</span>
         }
       </div>
     </div>
 
     <div class="row">
-      <div class="offset-sm-9 col-sm-3">
+      <div>
         <button type="submit" [disabled]="changeFileVisibilityForm.invalid || changeFileVisibilityForm.pristine"
-          class="btn btn-outline-secondary border-2 col-4 float-end">
+          class="btn btn-outline-secondary border-2 float-end">
           GO
         </button>
       </div>
