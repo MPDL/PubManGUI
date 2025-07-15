@@ -1,7 +1,7 @@
-import {Component, Input, inject} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {NgbHighlight, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
-import {FormArray, FormBuilder, FormControl, ReactiveFormsModule} from "@angular/forms";
+import { NgbHighlight, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
+import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from "@angular/forms";
 import {
   catchError,
   debounceTime,
@@ -12,7 +12,7 @@ import {
   OperatorFunction,
   switchMap, tap
 } from "rxjs";
-import {ConeService, PersonResource} from "../../../services/cone.service";
+import { ConeService, PersonResource } from "../../../services/cone.service";
 import { HttpParams } from "@angular/common/http";
 import { FormBuilderService } from 'src/app/components/item-edit/services/form-builder.service';
 import { IdType, OrganizationVO } from 'src/app/model/inge';
@@ -32,13 +32,14 @@ import { IdType, OrganizationVO } from 'src/app/model/inge';
 export class PersonAutosuggestComponent {
 
 
-  @Input() formForPersonsCompleteName? : FormControl;
-  @Input() formForPersonsGivenName? : FormControl;
-  @Input() formForPersonsFamilyName? : FormControl;
-  @Input() formForPersonOrganizations! : FormArray;
+  @Input() formForPersonsCompleteName?: FormControl;
+  @Input() formForPersonsGivenName?: FormControl;
+  @Input() formForPersonsFamilyName?: FormControl;
+  @Input() formForPersonOrganizations!: FormArray;
 
-  @Input() formForPersonsIdValue! : FormControl;
-  @Input() formForPersonsIdType? : FormControl;
+  @Input() formForPersonsIdValue!: FormControl;
+  @Input() formForPersonsIdType?: FormControl;
+  @Input() formForPersonsOrcid?: FormControl;
 
   @Input() validationError!: boolean;
 
@@ -77,28 +78,28 @@ export class PersonAutosuggestComponent {
     );
 
 
-  suggestPersonsSelector= (event: any) => {
+  suggestPersonsSelector = (event: any) => {
     //console.log("setOU" + JSON.stringify(event));
     const coneId = event.item.id.substring(event.item.id.indexOf("/persons/"), event.item.id.length)
     // console.log("formForPersonId", JSON.stringify(this.formForPersonsId))
     this.formForPersonsIdValue.setValue(coneId);
     this.formForPersonsIdType?.setValue(IdType.CONE);
-    console.log("Item",JSON.stringify(event.item));
-    if(this.formForPersonsCompleteName) {
+    console.log("Item", JSON.stringify(event.item));
+    if (this.formForPersonsCompleteName) {
       this.formForPersonsCompleteName.setValue(event.item.value);
     }
-    if(this.formForPersonsGivenName) {
+    if (this.formForPersonsGivenName) {
       this.formForPersonsGivenName.setValue(event.item.value.substring(event.item.value.indexOf(", ") + 2, event.item.value.indexOf("(")));
     }
-    if(this.formForPersonsFamilyName) {
+    if (this.formForPersonsFamilyName) {
       this.formForPersonsFamilyName.setValue(event.item.value.substring(0, event.item.value.indexOf(", ")));
     }
-    console.log("formForPersonOrganization before set",this.formForPersonOrganizations?.value);
-    if(!this.formForPersonOrganizations) {
+    console.log("formForPersonOrganization before set", this.formForPersonOrganizations?.value);
+    if (!this.formForPersonOrganizations) {
       this.formForPersonOrganizations = this.fb.array([this.fbs.organization_FG(null)]);
       this.formForPersonOrganizations.insert(event.index + 1, this.fbs.organization_FG(null));
     }
-    console.log("formForPersonOrganization after set",this.formForPersonOrganizations?.value);
+    console.log("formForPersonOrganization after set", this.formForPersonOrganizations?.value);
 
     this.updatePerson(coneId, event.item.value.substring(event.item.value.indexOf("(") + 1, event.item.value.indexOf(")")));
 
@@ -111,13 +112,16 @@ export class PersonAutosuggestComponent {
     const selected_ou = selected_person.substring(selected_person.indexOf('(') + 1, selected_person.lastIndexOf(','));
     console.log("Selected:", selected_person, selected_ou)
     console.log("ConeId", coneId)
-    this.coneService.getPersonResource("cone/" + coneId).subscribe(
+    this.coneService.getPersonResource("cone" + coneId).subscribe(
       (person: PersonResource) => {
-        if(this.formForPersonsGivenName) {
+        if (this.formForPersonsGivenName) {
           this.formForPersonsGivenName.setValue(person.http_xmlns_com_foaf_0_1_givenname);
         }
-        if(this.formForPersonsFamilyName) {
+        if (this.formForPersonsFamilyName) {
           this.formForPersonsFamilyName.setValue(person.http_xmlns_com_foaf_0_1_family_name);
+        }
+        if (this.formForPersonsOrcid && person.http_xmlns_com_foaf_0_1_family_name) {
+          this.formForPersonsOrcid.setValue(person.http_xmlns_com_foaf_0_1_family_name);
         }
         let ou_id = '', ou_name = '';
         if (Array.isArray(person.http_purl_org_escidoc_metadata_terms_0_1_position)) {
@@ -141,22 +145,23 @@ export class PersonAutosuggestComponent {
   }
 
   deleteFields() {
-    if(this.formForPersonsCompleteName) {
+    if (this.formForPersonsCompleteName) {
       this.formForPersonsCompleteName.setValue('');
     }
-    if(this.formForPersonsGivenName) {
+    if (this.formForPersonsGivenName) {
       this.formForPersonsGivenName.setValue('');
     }
-    if(this.formForPersonsFamilyName) {
+    if (this.formForPersonsFamilyName) {
       this.formForPersonsFamilyName.setValue('');
     }
-    console.log("formForPersonOrganization before delete",this.formForPersonOrganizations?.value);
-    if(this.formForPersonOrganizations) {
+    console.log("formForPersonOrganization before delete", this.formForPersonOrganizations?.value);
+    if (this.formForPersonOrganizations) {
       this.formForPersonOrganizations.clear();
     }
-    console.log("formForPersonOrganization after delete",this.formForPersonOrganizations?.value);
+    console.log("formForPersonOrganization after delete", this.formForPersonOrganizations?.value);
     this.formForPersonsIdValue.setValue(null);
     this.formForPersonsIdType?.setValue(null);
+    this.formForPersonsOrcid?.setValue(null);
     //this.formForPersonsIdValue.get('id')?.setValue(null);
     //this.formForPersonsIdValue.get('type')?.setValue(null);
   }

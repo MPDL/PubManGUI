@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { EventVO, InvitationStatus } from 'src/app/model/inge';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { ControlType } from '../../services/form-builder.service';
-import { EventValidationDirective } from 'src/app/shared/directives/event-validation.directive';
+import { Errors } from 'src/app/model/errors';
 
 export enum ValidationErrorsEnum {
   END_DATE_WITHOUT_START_DATE = "EndDateWithoutStartDate",
@@ -19,7 +19,6 @@ export enum ValidationErrorsEnum {
   selector: 'pure-event-form',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  providers: [EventValidationDirective],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.scss'
 })
@@ -27,11 +26,10 @@ export class EventFormComponent {
   @Input() event_form!: FormGroup<ControlType<EventVO>>;
 
   miscellaneousService = inject(MiscellaneousService);
-  eventValidationDirective = inject(EventValidationDirective); // Inject the directive
-
-  EventValidatorErrorType = ValidationErrorsEnum; // Expose the enum to the template
 
   invitationBoolean = new FormControl(true);
+
+  error_types = Errors;
 
   ngOnInit() {
     this.invitationBoolean.setValue(this.event_form.get('invitationStatus')?.value == InvitationStatus.INVITED ? true : false);

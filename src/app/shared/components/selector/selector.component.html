@@ -1,7 +1,8 @@
 <div class="">
   <div class="form-group" [formGroup]="form">
     <input [formControlName]="control_name" [value]="searchedValue$ | async" class="form-control"
-      [placeholder]="placeholder" (keydown)="onKeydown($event)" #input (input)="handleInput($event)">
+      [placeholder]="placeholder" (keydown)="onKeydown($event)" #input (input)="handleInput($event)"
+      [ngClass]="{'is-invalid': validationError}">
   </div>
   <ng-template #overlayContainer>
     <div class="list-group">

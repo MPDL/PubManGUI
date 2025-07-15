@@ -10,6 +10,7 @@ import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-
 import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import { Errors } from 'src/app/model/errors';
 
 @Component({
   selector: 'pure-source-form',
@@ -38,6 +39,7 @@ export class SourceFormComponent {
   miscellaneousService = inject(MiscellaneousService);
   genrePropertiesResource  = this.miscellaneousService.genrePropertiesResource;
 
+  error_types = Errors;
   genre_types = Object.keys(MdsPublicationGenre);
 
   get alternativeTitles() {

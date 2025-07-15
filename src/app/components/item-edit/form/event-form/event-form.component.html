@@ -3,25 +3,31 @@
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
                 <label class="col-form-label">Title</label>
-                <input type="text" class="form-control" formControlName="title" [ngClass]="event_form.errors?.[EventValidatorErrorType.EVENT_TITLE_NOT_PROVIDED] || event_form.errors?.[EventValidatorErrorType.EVENT_TITLE_NOT_PROVIDED] ? 'is-invalid' : ''">
-                <div class="invalid-feedback">Event title is required if any other field is not</div>
+                <input type="text" class="form-control" formControlName="title"
+                    [ngClass]="event_form.errors?.[error_types.EVENT_TITLE_NOT_PROVIDED] || event_form.errors?.[error_types.EVENT_TITLE_NOT_PROVIDED] ? 'is-invalid' : ''">
+                @if (event_form.errors?.[error_types.EVENT_TITLE_NOT_PROVIDED]) {
+                <div class="text-danger">Event title is required if any other field is not null</div>
+                }
             </div>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
             <div class="col-sm-2">
                 <label class="col-form-label">Start Date</label>
-                <input type="text" class="form-control" formControlName="startDate" [ngClass]="event_form.errors?.[EventValidatorErrorType.EVENT_START_DATE_REQUIRED] ? 'is-invalid' : ''">
-                <div class="invalid-feedback">Event start date is required</div>
+                <input type="text" class="form-control" formControlName="startDate">
+                @if (event_form.get('startDate')?.errors) {
+                <div class="text-danger">Date format incorrect</div>
+                }
             </div>
             <div class="col-sm-2">
                 <label class="col-form-label">End Date</label>
-                <input type="text" class="form-control" formControlName="endDate" [ngClass]="event_form.errors?.[EventValidatorErrorType.EVENT_END_DATE_REQUIRED] ? 'is-invalid' : ''">
-                <div class="invalid-feedback">Event end date is required</div>
+                <input type="text" class="form-control" formControlName="endDate">
+                @if (event_form.get('endDate')?.errors) {
+                <div class="text-danger">Date format incorrect</div>
+                }
             </div>
             <div class="col-sm-2">
                 <label class="col-form-label">Place</label>
-                <input type="text" class="form-control" formControlName="place" [ngClass]="event_form.errors?.[EventValidatorErrorType.EVENT_PLACE_REQUIRED] ? 'is-invalid' : ''">
-                <div class="invalid-feedback">Event end date is required</div>
+                <input type="text" class="form-control" formControlName="place">
             </div>
             <div class="col-sm-2 form-check">
                 <input id="invitation-status" class="form-check-input mt-2 mx-1" type="checkbox"

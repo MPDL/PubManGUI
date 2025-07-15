@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdType } from 'src/app/model/inge';
 import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import { Errors } from 'src/app/model/errors';
 
 @Component({
   selector: 'pure-identifier-form',
@@ -19,7 +20,10 @@ export class IdentifierFormComponent {
   @Input() multi!: boolean;
   @Output() notice = new EventEmitter();
 
+  error_types = Errors;
+
   identifier_types = Object.keys(IdType);
+  
   add_remove_identifier(event: any) {
     this.notice.emit(event);
   }

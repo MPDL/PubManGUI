@@ -9,6 +9,9 @@
                 <option [value]="g">{{g}}</option>
                 }
             </select>
+            @if(source_form.hasError(error_types.SOURCE_GENRE_NOT_PROVIDED.toString())) {
+            <div class="text-danger p-3">Source Genre required</div>
+            }
         </div>
         <div class="col-sm-1">
             <pure-add-remove-buttons [index]="index" (notice)="add_remove_source($event)"></pure-add-remove-buttons>
@@ -19,6 +22,9 @@
         <div class="col-sm">
             <label for="source_title" class="col-sm-2 col-form-label">Title</label>
             <input type="text" class="form-control" id="source_title" name="title" formControlName="title">
+            @if (source_form.get('title')?.hasError('required')) {
+            <div class="text-danger">Title is required</div>
+            }
         </div>
         <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
         </div>
@@ -69,12 +75,14 @@
         </div>
     </div>
     <ng-container>
-        <div [ngClass]="{'d-none' : !genrePropertiesResource.value().properties.sources_source_publishing_info.display}">
-        <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
+        <div
+            [ngClass]="{'d-none' : !genrePropertiesResource.value().properties.sources_source_publishing_info.display}">
+            <pure-publishing-info-form [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
         </div>
     </ng-container>
     <ng-container>
-        <div class="genrePropertiesResource.value().properties.sources_source_identifiers.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+        <div
+            class="genrePropertiesResource.value().properties.sources_source_identifiers.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
             <label class="col-sm-2 col-form-label">Identifiers</label>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">

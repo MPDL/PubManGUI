@@ -21,6 +21,7 @@ import { LoadingComponent } from 'src/app/shared/components/loading/loading.comp
 import { ContextsService } from 'src/app/services/pubman-rest-client/contexts.service';
 import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { Errors } from 'src/app/model/errors';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -63,6 +64,7 @@ export class MetadataFormComponent implements OnInit {
 
   allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
+  error_types = Errors;
 
   multipleCreators = new FormControl<string>('');
   loading: boolean = false;
