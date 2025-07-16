@@ -13,11 +13,12 @@ import { PersonAutosuggestComponent } from 'src/app/shared/components/person-aut
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
 import { environment } from 'src/environments/environment';
+import {CdkDragHandle} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent, OuAutosuggestComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })
@@ -27,11 +28,11 @@ export class CreatorFormComponent {
   @Input() index!: number;
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
-  
+
   coneService = inject(ConePersonsService);
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
-  
+
   creator_roles = Object.keys(CreatorRole);
   creator_types = Object.keys(CreatorType);
 
