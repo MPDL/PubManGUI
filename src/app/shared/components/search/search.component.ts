@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, OnInit, DOCUMENT } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -22,7 +22,7 @@ import {
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 import sanitizeHtml from "sanitize-html";
 import { filter } from "rxjs/operators";
-import { DOCUMENT } from '@angular/common';
+
 import {AaService} from "../../../services/aa.service";
 import {ItemVersionState} from "../../../model/inge";
 

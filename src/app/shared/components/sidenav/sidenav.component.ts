@@ -1,5 +1,5 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, inject, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, inject, HostListener, DOCUMENT } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AaService } from "../../../services/aa.service";
 
