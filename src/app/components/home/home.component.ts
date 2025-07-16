@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { baseElasticSearchQueryBuilder } from "../../shared/services/search-utils";
-import { map, Observable, of } from "rxjs";
+import { catchError, map, Observable, of } from "rxjs";
 import { ItemVersionVO } from "../../model/inge";
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AsyncPipe, DatePipe, SlicePipe } from "@angular/common";
