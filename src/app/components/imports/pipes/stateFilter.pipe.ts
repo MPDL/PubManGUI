@@ -1,6 +1,6 @@
-import { Pipe, type PipeTransform } from '@angular/core';
+import {Pipe, type PipeTransform} from '@angular/core';
 
-import { ImportErrorLevel } from 'src/app/model/inge';
+import {ImportErrorLevel} from 'src/app/model/inge';
 
 @Pipe({
   name: 'stateFilter',

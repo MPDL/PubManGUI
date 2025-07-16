@@ -1,26 +1,25 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AddRemoveButtonsComponent} from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 
-import type { IpEntry }  from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import type {IpEntry} from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from "@ngx-translate/core";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-audience-form',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     AddRemoveButtonsComponent,
     TranslatePipe
   ],
   templateUrl: './audience-form.component.html'
 })
-export class AudienceFormComponent { 
+export class AudienceFormComponent {
 
   @Input() ous!: IpEntry[];
   @Input() audienceId!: FormControl;
@@ -35,7 +34,7 @@ export class AudienceFormComponent {
       this.audienceId.setValue(this.translateSvc.instant(_('batch.actions.metadata.files.ipRanges.singular')));
     }
   }
-  
+
   add_remove_audience(event: any) {
     this.notice.emit(event);
   }

@@ -1,4 +1,3 @@
-import { Directive } from '@angular/core';
 import {AggregationResultView} from "../item-aggregation-filter.component";
 
 

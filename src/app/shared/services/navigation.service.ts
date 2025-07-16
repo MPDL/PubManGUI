@@ -1,7 +1,7 @@
-import { Location } from '@angular/common';
-import { Injectable } from '@angular/core';
-import { Router, RoutesRecognized } from '@angular/router';
-import { filter, map, pairwise } from 'rxjs';
+import {Location} from '@angular/common';
+import {Injectable} from '@angular/core';
+import {Router, RoutesRecognized} from '@angular/router';
+import {filter, map, pairwise} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

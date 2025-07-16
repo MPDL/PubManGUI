@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SourceFormComponent } from './source-form.component';
+import {SourceFormComponent} from './source-form.component';
 
 describe('SourceFormComponent', () => {
   let component: SourceFormComponent;
@@ -11,7 +11,7 @@ describe('SourceFormComponent', () => {
       imports: [SourceFormComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(SourceFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

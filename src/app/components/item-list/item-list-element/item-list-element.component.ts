@@ -9,7 +9,7 @@ import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
 import {ItemBadgesComponent} from "../../../shared/components/item-badges/item-badges.component";
 import {ItemSelectionService} from "../../../shared/services/item-selection.service";
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 import {TranslatePipe} from "@ngx-translate/core";
 import {itemToVersionId} from "../../../shared/services/utils";
 

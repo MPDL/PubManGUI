@@ -1,7 +1,7 @@
-import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
-import {inject, Inject, Injectable} from '@angular/core';
-import {Observable, catchError, map, throwError, isObservable, lastValueFrom} from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {catchError, map, Observable, throwError} from 'rxjs';
+import {environment} from 'src/environments/environment';
 
 export interface SearchResult<Type> {
   numberOfRecords: number,

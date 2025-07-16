@@ -1,9 +1,8 @@
 import {Component, Input, TemplateRef} from '@angular/core';
 import {ItemViewMetadataElementComponent} from "../item-view-metadata-element/item-view-metadata-element.component";
 import {AffiliationDbVO, CreatorVO, OrganizationVO} from "../../../../model/inge";
-import {NgClass} from "@angular/common";
-import { environment } from 'src/environments/environment';
-import {NgbModal, NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {environment} from 'src/environments/environment';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OrganizationsService} from "../../../../services/pubman-rest-client/organizations.service";
 import {EmptyPipe} from "../../../../shared/services/pipes/empty.pipe";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -14,8 +13,6 @@ import {LoadingComponent} from "../../../../shared/components/loading/loading.co
   standalone: true,
   imports: [
     ItemViewMetadataElementComponent,
-    NgClass,
-    NgbPopover,
     EmptyPipe,
     TranslatePipe,
     LoadingComponent

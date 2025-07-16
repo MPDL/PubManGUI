@@ -1,7 +1,7 @@
-import { Directive, inject } from '@angular/core';
-import { SelectorDatasource } from '../selector-datasource.service';
-import { Ctx, PureCtxsService } from './pure-ctxs.service';
-import { Observable, switchMap } from 'rxjs';
+import {Directive, inject} from '@angular/core';
+import {SelectorDatasource} from '../selector-datasource.service';
+import {Ctx, PureCtxsService} from './pure-ctxs.service';
+import {Observable, switchMap} from 'rxjs';
 
 @Directive({
   selector: '[purePureCtxs]',

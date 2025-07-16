@@ -1,6 +1,6 @@
-import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Output } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { FileDbVO } from 'src/app/model/inge';
+import {Directive, EventEmitter, HostBinding, HostListener, Output} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {FileDbVO} from 'src/app/model/inge';
 
 enum DropColor {
   Default = "none",
@@ -24,11 +24,11 @@ export class FileUploadDirective {
   @HostListener('mouseenter') onMouseEnter() {
     this.highlight('yellow');
   }
-  
+
   @HostListener('mouseleave') onMouseLeave() {
     this.highlight('');
   }
-  
+
   private highlight(color: string) {
     this.el.nativeElement.style.backgroundColor = color;
   }

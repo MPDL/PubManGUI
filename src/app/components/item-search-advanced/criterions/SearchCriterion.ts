@@ -1,5 +1,4 @@
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {searchTypes} from "./search_config";
 import {Observable} from "rxjs";
 
 export abstract class SearchCriterion extends FormGroup<any> {

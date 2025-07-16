@@ -1,5 +1,5 @@
-import { Directive, HostListener } from '@angular/core';
-import { NavigationService } from '../services/navigation.service';
+import {Directive, HostListener} from '@angular/core';
+import {NavigationService} from '../services/navigation.service';
 
 @Directive({
     selector: '[pureBackButton]',

@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AggregationEvent, FilterEvent, ItemListComponent} from "../../item-list.component";
 import {BehaviorSubject} from "rxjs";
-import {AsyncPipe} from "@angular/common";
 import {ItemAggregationBaseDirective} from "./directives/item-aggregation-base.directive";
 import {TranslatePipe} from "@ngx-translate/core";
 
@@ -12,7 +11,6 @@ let uniqueId = 0;
   selector: 'pure-item-aggregation-filter',
   standalone: true,
   imports: [
-    AsyncPipe,
     TranslatePipe
   ],
   templateUrl: './item-aggregation-filter.component.html',

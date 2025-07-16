@@ -8,8 +8,7 @@ import {FooterComponent} from './components/footer/footer.component';
 import {ScrollToTopComponent} from './shared/components/scroll-to-top/scroll-to-top.component';
 import {InfoPanelComponent} from "./shared/components/info-panel/info-panel.component";
 
-import {TranslateModule} from "@ngx-translate/core";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {NgbTooltipConfig} from "@ng-bootstrap/ng-bootstrap";
 import {filter} from "rxjs/operators";
 import {Title} from "@angular/platform-browser";

@@ -1,9 +1,8 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs';
 
-import { OrganizationsService } from './organizations.service';
-import {PubmanGenericRestClientService} from "./pubman-generic-rest-client.service";
+import {OrganizationsService} from './organizations.service';
 import {AccountUserDbVO, GrantVO} from "../../model/inge";
 import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
 

@@ -1,6 +1,6 @@
-import { OverlayRef } from "@angular/cdk/overlay";
-import { ComponentType } from "@angular/cdk/portal";
-import { Observable, Subject } from "rxjs";
+import {OverlayRef} from "@angular/cdk/overlay";
+import {ComponentType} from "@angular/cdk/portal";
+import {Observable, Subject} from "rxjs";
 
 export interface OverlayCloseEvent<T> {
     action: 'backdropClick' | 'close';

@@ -1,22 +1,27 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { AaService } from 'src/app/services/aa.service';
+import {HttpParams} from '@angular/common/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
+import {AaService} from 'src/app/services/aa.service';
 // import { public_filter } from 'src/app/isis/model/pure_queries';
-import { bool_query, bracketed_search_criterion, fieldOptions, join_enum, search_criterion } from 'src/app/model/pure_search';
-import { ConeService } from 'src/app/services/cone.service';
-import { ItemSearchCriterionComponent } from './item-search-criterion/item-search-criterion.component';
-import { NgFor, NgIf, AsyncPipe, JsonPipe, NgClass, NgStyle } from '@angular/common';
-import { ItemSearchBracketsComponent } from './item-search-brackets/item-search-brackets.component';
+import {
+  bool_query,
+  bracketed_search_criterion,
+  fieldOptions,
+  join_enum,
+  search_criterion
+} from 'src/app/model/pure_search';
+import {ConeService} from 'src/app/services/cone.service';
+import {ItemSearchCriterionComponent} from './item-search-criterion/item-search-criterion.component';
+import {AsyncPipe, JsonPipe, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'pure-item-search',
   templateUrl: './item-search.component.html',
   styleUrls: ['./item-search.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgFor, NgClass, NgStyle, ItemSearchCriterionComponent, ItemSearchBracketsComponent, NgIf, AsyncPipe, JsonPipe]
+  imports: [FormsModule, ReactiveFormsModule, NgStyle, ItemSearchCriterionComponent, AsyncPipe, JsonPipe]
 })
 export class ItemSearchComponent implements OnInit, OnDestroy {
 

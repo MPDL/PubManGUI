@@ -2,17 +2,16 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {
   catchError,
   debounceTime,
-  distinctUntilChanged, filter,
-  map,
+  distinctUntilChanged,
+  filter,
   Observable,
   of,
   OperatorFunction,
   switchMap,
   tap
 } from "rxjs";
-import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
-import {OrganizationsService} from "../../../services/pubman-rest-client/organizations.service";
 import {HttpParams} from "@angular/common/http";
 import {ConeService} from "../../../services/cone.service";
 import {FormBuilderService} from "../../../components/item-edit/services/form-builder.service";

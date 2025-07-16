@@ -1,8 +1,8 @@
-import { inject } from "@angular/core";
-import { ActivatedRouteSnapshot, ResolveFn, Router } from "@angular/router";
-import { of, mergeMap, EMPTY } from "rxjs";
-import { MessageService } from "src/app/shared/services/message.service";
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
+import {inject} from "@angular/core";
+import {ActivatedRouteSnapshot, ResolveFn, Router} from "@angular/router";
+import {EMPTY, mergeMap, of} from "rxjs";
+import {MessageService} from "src/app/shared/services/message.service";
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
 
 export const fetchItemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
     const router = inject(Router);
@@ -16,7 +16,7 @@ export const fetchItemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot)
             } else {
                 msgSvc.warning('Invalid import');
                 router.navigate(['imports']);
-                return EMPTY; 
+                return EMPTY;
             }
         })
     );

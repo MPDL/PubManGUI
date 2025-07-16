@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {KeyValuePipe} from "@angular/common";
 
 const keepOrder = (a: any, b: any) => a;

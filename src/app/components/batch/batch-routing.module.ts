@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { batchLogResolver } from "./services/batch-log.resolver";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {batchLogResolver} from "./services/batch-log.resolver";
 
 
 const routes: Routes = [

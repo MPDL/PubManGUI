@@ -1,6 +1,6 @@
-import { Pipe, type PipeTransform, inject } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
+import {inject, Pipe, type PipeTransform} from '@angular/core';
+import {DatePipe} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 
 @Pipe({
   name: 'localizeDate',

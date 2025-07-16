@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-import { MessagingComponent } from '../messaging/messaging.component';
+import {CommonModule} from '@angular/common';
+import {Component, HostListener} from '@angular/core';
+import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
+import {MessagingComponent} from '../messaging/messaging.component';
 
 @Component({
   selector: 'pure-info-panel',
@@ -9,7 +9,7 @@ import { MessagingComponent } from '../messaging/messaging.component';
   imports: [CommonModule, BreadcrumbComponent, MessagingComponent],
   templateUrl: './info-panel.component.html'
 })
-export class InfoPanelComponent { 
+export class InfoPanelComponent {
   isScrolled = false;
 
   @HostListener('window:scroll', ['$event'])

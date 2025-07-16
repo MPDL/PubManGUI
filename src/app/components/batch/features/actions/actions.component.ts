@@ -1,15 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 
-import { ActionsItemStateComponent } from './actions-item-state/actions-item-state.component';
-import { ActionsContextComponent } from './actions-context/change-context.component';
-import { ActionsLocalTagsComponent } from './actions-local-tags/actions-local-tags.component';
-import { ActionsGenreComponent } from './actions-genre/change-genre.component';
-import { ActionsMetadataComponent } from './actions-metadata/actions-metadata.component';
+import {ActionsItemStateComponent} from './actions-item-state/actions-item-state.component';
+import {ActionsContextComponent} from './actions-context/change-context.component';
+import {ActionsLocalTagsComponent} from './actions-local-tags/actions-local-tags.component';
+import {ActionsGenreComponent} from './actions-genre/change-genre.component';
+import {ActionsMetadataComponent} from './actions-metadata/actions-metadata.component';
 
-import { BatchService } from '../../services/batch.service';
-import { TranslatePipe } from "@ngx-translate/core";
+import {BatchService} from '../../services/batch.service';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-batch-actions',

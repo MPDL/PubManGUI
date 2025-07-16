@@ -1,16 +1,12 @@
-import { inject } from "@angular/core";
-import { AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { catchError, map, Observable, of } from "rxjs";
-import { ValidationService } from "src/app/services/pubman-rest-client/validation.service";
-import { ControlType } from "../services/form-builder.service";
-import { EventVO } from "src/app/model/inge";
+import {inject} from "@angular/core";
+import {ValidationService} from "src/app/services/pubman-rest-client/validation.service";
 
 export class EventValidator {
 
     //inject validationService
     private validationService= inject(ValidationService);
- 
-    
+
+
     /*
     public validateEvent() : ValidatorFn {
       console.log('validating Event');

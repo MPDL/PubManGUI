@@ -1,8 +1,6 @@
-import { Directive } from '@angular/core';
+import {Directive} from '@angular/core';
 import {ItemAggregationBaseDirective} from "./item-aggregation-base.directive";
 import {AggregationResultView} from "../item-aggregation-filter.component";
-import {baseElasticSearchQueryBuilder} from "../../../../../shared/services/search-utils";
-import {ItemVersionState} from "../../../../../model/inge";
 
 @Directive({
   selector: '[pureItemDateAggregation]',

@@ -1,17 +1,16 @@
-import { Component, inject, HostListener, DOCUMENT } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { AaComponent } from '../aa/aa.component';
-import { SwitchBsThemeComponent } from 'src/app/shared/components/switch-bs-theme/switch-bs-theme.component';
-import { NgClass } from '@angular/common';
-import { AaService } from 'src/app/services/aa.service';
-import { LangSwitchComponent } from 'src/app/shared/components/lang-switch/lang-switch.component';
-import { SidenavComponent } from 'src/app/shared/components/sidenav/sidenav.component';
+import {Component, DOCUMENT, HostListener, inject} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
+import {AaComponent} from '../aa/aa.component';
+import {NgClass} from '@angular/common';
+import {AaService} from 'src/app/services/aa.service';
+import {LangSwitchComponent} from 'src/app/shared/components/lang-switch/lang-switch.component';
+import {SidenavComponent} from 'src/app/shared/components/sidenav/sidenav.component';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import {SearchComponent} from 'src/app/shared/components/search/search.component';
 
 
 @Component({

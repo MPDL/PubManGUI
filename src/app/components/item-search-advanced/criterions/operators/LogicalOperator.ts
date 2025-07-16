@@ -1,6 +1,5 @@
 import {SearchCriterion} from "../SearchCriterion";
-import {FormControl, FormGroup} from "@angular/forms";
-import {DisplayType} from "../search_config";
+import {FormControl} from "@angular/forms";
 import {Observable, of} from "rxjs";
 
 export class LogicalOperator extends SearchCriterion {

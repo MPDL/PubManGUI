@@ -1,9 +1,6 @@
-import {Component, ContentChild, Input} from '@angular/core';
-import {FilterEvent, ItemListComponent} from "../../item-list.component";
-import {fieldOptions} from "../../../../model/pure_search";
-import {KeyValuePipe} from "@angular/common";
+import {Component, Input} from '@angular/core';
+import {ItemListComponent} from "../../item-list.component";
 import {ItemFilterDirective} from "../directives/item-filter.directive";
-import {options} from "sanitize-html";
 import {DefaultKeyValuePipe} from "../../../../shared/services/pipes/default-key-value.pipe";
 import {TranslatePipe} from "@ngx-translate/core";
 
@@ -12,7 +9,6 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'pure-item-filter',
   standalone: true,
   imports: [
-    KeyValuePipe,
     DefaultKeyValuePipe,
     TranslatePipe
   ],

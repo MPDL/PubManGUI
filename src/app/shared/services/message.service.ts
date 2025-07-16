@@ -1,8 +1,8 @@
-import { Injectable, signal } from '@angular/core';
-import { Dialog } from '@angular/cdk/dialog';
+import {Injectable, signal} from '@angular/core';
+import {Dialog} from '@angular/cdk/dialog';
 
-import { MessageComponent } from '../components/message/message.component';
-import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
+import {MessageComponent} from '../components/message/message.component';
+import {ConfirmationComponent} from '../components/confirmation/confirmation.component';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,7 @@ export class MessageService {
       const multilines = this.splitMessage(message);
       msg = { type: 'success', title: multilines.title, text: multilines.content };
       if (this.lastMessage().title && this.lastMessage().title === title) return;
-    } else {    
+    } else {
       msg = { type: 'success', text: message };
     }
     //this.displayMessage(msg);

@@ -1,6 +1,4 @@
-import {SearchCriterion} from "./SearchCriterion";
 import {StandardSearchCriterion} from "./StandardSearchCriterion";
-import {FormControl} from "@angular/forms";
 import {ItemVersionState, MdsPublicationGenre, ReviewMethod} from "../../../model/inge";
 
 export abstract class EnumSearchCriterion extends StandardSearchCriterion {

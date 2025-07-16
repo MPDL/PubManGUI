@@ -1,7 +1,7 @@
-import {Directive, ElementRef, Input, ViewContainerRef} from '@angular/core';
+import {Directive, ElementRef, Input} from '@angular/core';
 import {CdkCopyToClipboard, Clipboard} from "@angular/cdk/clipboard";
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import {Subscription, timer} from "rxjs";
+import {timer} from "rxjs";
 import {TranslateService} from "@ngx-translate/core";
 
 @Directive({

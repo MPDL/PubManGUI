@@ -1,6 +1,6 @@
-import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Errors } from 'src/app/model/errors';
-import { CreatorType } from 'src/app/model/inge';
+import {AbstractControl, FormArray, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {Errors} from 'src/app/model/errors';
+import {CreatorType} from 'src/app/model/inge';
 
 const ORCID_HTTPS = 'https://orcid.org/';
 const ORCID_REGEX = /^\d{4}-\d{4}-\d{4}-(\d{3}X|\d{4})$/;
@@ -55,7 +55,7 @@ export const creatorValidator: ValidatorFn = (control: AbstractControl,): Valida
                   organization.get('adress')?.value) {
                   currentErrors[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] = true;
                 }
-              } 
+              }
               j++;
             } // for
           } // if

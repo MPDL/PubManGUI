@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {PubmanGenericRestClientService} from './pubman-generic-rest-client.service';
+import {Observable} from 'rxjs';
 
 const validateEvent = 'validateEvent';
 const validateCreator = 'validateCreator';

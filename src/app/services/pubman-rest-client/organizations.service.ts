@@ -1,11 +1,8 @@
-import { Injectable, inject } from '@angular/core';
-import {map, Observable, tap} from 'rxjs';
-
-import { HttpClient } from "@angular/common/http";
-import {PubmanGenericRestClientService, SearchResult} from "./pubman-generic-rest-client.service";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {SearchResult} from "./pubman-generic-rest-client.service";
 import {AffiliationDbVO} from "../../model/inge";
 import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
-
 
 
 @Injectable({

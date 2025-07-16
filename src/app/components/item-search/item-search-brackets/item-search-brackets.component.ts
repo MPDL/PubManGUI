@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ItemSearchCriterionComponent } from '../item-search-criterion/item-search-criterion.component';
-import { JsonPipe } from '@angular/common';
+import {Component, inject, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ItemSearchCriterionComponent} from '../item-search-criterion/item-search-criterion.component';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'pure-item-search-brackets',

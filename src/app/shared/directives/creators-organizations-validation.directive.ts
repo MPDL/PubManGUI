@@ -1,11 +1,11 @@
-import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { CreatorType } from 'src/app/model/inge';
-import { Errors } from 'src/app/model/errors'
+import {AbstractControl, FormArray, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {CreatorType} from 'src/app/model/inge';
+import {Errors} from 'src/app/model/errors'
 
 export const CreatorsOrganizationsValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;
   const creators = control.get('creators') as FormArray;
-  let ok:boolean = false; 
+  let ok:boolean = false;
   let errorOrg:boolean = false;
   for (let creator of creators.controls) {
     switch (creator.get('type')?.value) {
@@ -24,7 +24,7 @@ export const CreatorsOrganizationsValidator: ValidatorFn = (control: AbstractCon
           for (let organization of personOrganizations.controls) {
             if (organization !== null && organization.get('name')?.value !== null) {
               ok = true;
-            } 
+            }
           }
         }
         break;

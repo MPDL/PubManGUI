@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ViewContainerRef, inject } from '@angular/core';
-import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
+import {ChangeDetectionStrategy, Component, inject, ViewContainerRef} from '@angular/core';
+import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'en-content',

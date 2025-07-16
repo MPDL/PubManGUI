@@ -1,6 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ChangeExternalReferenceContentCategoryFormComponent } from './change-external-reference-content-category-form/change-external-reference-content-category-form.component'
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {
+  ChangeExternalReferenceContentCategoryFormComponent
+} from './change-external-reference-content-category-form/change-external-reference-content-category-form.component'
 
 @Component({
   selector: 'pure-batch-actions-metadata-external-references',

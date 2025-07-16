@@ -1,9 +1,9 @@
-import { inject } from "@angular/core";
-import { ActivatedRouteSnapshot, ResolveFn, Router } from "@angular/router";
-import { of, mergeMap, EMPTY } from "rxjs";
-import { MessageService } from "src/app/shared/services/message.service";
-import { ItemsService } from "./items.service";
-import { AaService } from "../aa.service";
+import {inject} from "@angular/core";
+import {ActivatedRouteSnapshot, ResolveFn, Router} from "@angular/router";
+import {EMPTY, mergeMap, of} from "rxjs";
+import {MessageService} from "src/app/shared/services/message.service";
+import {ItemsService} from "./items.service";
+import {AaService} from "../aa.service";
 
 export const itemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
     const aaService = inject(AaService);

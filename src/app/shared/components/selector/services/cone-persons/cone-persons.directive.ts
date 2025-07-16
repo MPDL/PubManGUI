@@ -1,8 +1,8 @@
-import { Directive, inject } from '@angular/core';
-import { SelectorDatasource } from '../selector-datasource.service';
-import { Observable, debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
-import { ConePerson, ConePersonsService } from './cone-persons.service';
-import { HttpParams } from '@angular/common/http';
+import {Directive, inject} from '@angular/core';
+import {SelectorDatasource} from '../selector-datasource.service';
+import {debounceTime, distinctUntilChanged, filter, map, Observable, switchMap} from 'rxjs';
+import {ConePerson, ConePersonsService} from './cone-persons.service';
+import {HttpParams} from '@angular/common/http';
 
 @Directive({
     selector: '[pureConePersons]',

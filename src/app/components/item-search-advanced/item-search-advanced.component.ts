@@ -1,19 +1,11 @@
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {JsonPipe, KeyValuePipe, NgFor, NgTemplateOutlet} from "@angular/common";
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
 import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
 import {Parenthesis, PARENTHESIS_TYPE} from "./criterions/operators/Parenthesis";
-import {CreatorRole, IdType, SavedSearchVO} from "../../model/inge";
+import {CreatorRole, IdType} from "../../model/inge";
 import {TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
 import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
 import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";

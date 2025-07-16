@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { FileDbVO } from 'src/app/model/inge';
-import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {FileDbVO} from 'src/app/model/inge';
+import {PubmanGenericRestClientService} from './pubman-generic-rest-client.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

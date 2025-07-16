@@ -1,14 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, inject} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/batch-params';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {ChangeLocalTagParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { TranslatePipe } from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-change-local-tags-form',
@@ -31,7 +31,7 @@ export class ChangeLocalTagsFormComponent {
     localTagTo: ['', [Validators.required]],
   },
     { validators: [
-        this.valSvc.notEqualsValidator('localTagFrom', 'localTagTo'), 
+        this.valSvc.notEqualsValidator('localTagFrom', 'localTagTo'),
         this.valSvc.allRequiredValidator()
       ]});
 

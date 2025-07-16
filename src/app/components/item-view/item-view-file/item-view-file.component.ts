@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FileDbVO, ItemVersionVO, OA_STATUS, Storage, Visibility} from "../../../model/inge";
 import {NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 import {AaService} from "../../../services/aa.service";
 import {checkFileAccess, getFullItemId, isUrl} from "../../../shared/services/item-utils";

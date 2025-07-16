@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FilterEvent, ItemListComponent} from "../../item-list.component";
-import {ItemVersionState} from "../../../../model/inge";
+import {ItemListComponent} from "../../item-list.component";
 import {baseElasticSearchSortBuilder} from "../../../../shared/services/search-utils";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TranslatePipe} from "@ngx-translate/core";
 import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 

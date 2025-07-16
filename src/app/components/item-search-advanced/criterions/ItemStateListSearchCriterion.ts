@@ -1,8 +1,7 @@
 import {SearchCriterion} from "./SearchCriterion";
 import {Observable, of} from "rxjs";
-import {StandardSearchCriterion} from "./StandardSearchCriterion";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import {DegreeType, ItemVersionState, MdsPublicationGenre} from "../../../model/inge";
+import {FormControl, FormGroup} from "@angular/forms";
+import {ItemVersionState} from "../../../model/inge";
 import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
 import {AaService} from "../../../services/aa.service";
 

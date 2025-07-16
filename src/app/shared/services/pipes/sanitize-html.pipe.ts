@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import sanitizeHtml from 'sanitize-html'
 
 @Pipe({

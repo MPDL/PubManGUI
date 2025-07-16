@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ItemVersionVO} from "../../model/inge";
 import {Router} from "@angular/router";
 import {BehaviorSubject, map, Observable, of, tap} from "rxjs";

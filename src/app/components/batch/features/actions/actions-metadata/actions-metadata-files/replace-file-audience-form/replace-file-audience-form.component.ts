@@ -1,16 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, EventEmitter, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, inject, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { FormArray, FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MiscellaneousService, IpEntry } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import type { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/batch-params';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import {IpEntry, MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import type {ReplaceFileAudienceParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { AudienceFormComponent } from 'src/app/components/batch/features/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
-import { TranslatePipe } from "@ngx-translate/core";
+import {
+  AudienceFormComponent
+} from 'src/app/components/batch/features/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -39,7 +41,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
     this.miscSvc.retrieveIpList()
       .subscribe( ous => {
         this.ous = ous.sort((a,b) => a.name.localeCompare(b.name));
-      }) 
+      })
   }
 
   public replaceFileAudienceForm: FormGroup = this.fb.group({
@@ -53,7 +55,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
     //validators: this.valSvc.noDuplicatesValidator(this.allowedAudienceIds)
   });
 
-    
+
   get allowedAudienceIds() {
     return this.replaceFileAudienceForm.get('allowedAudienceIds') as FormArray<FormControl>;
   }
@@ -81,8 +83,8 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
   removeAudience(index: number) {
     this.allowedAudienceIds.removeAt(index);
-  } 
-  
+  }
+
   getIDsOfAudience(): string[] {
     let Audiences = [];
 
@@ -93,7 +95,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
     return Audiences;
   }
 
-  onSubmit(): void {    
+  onSubmit(): void {
     if (this.replaceFileAudienceForm.invalid || this.allowedAudienceIds.length <= 1) {
       this.replaceFileAudienceForm.markAllAsTouched();
       return;

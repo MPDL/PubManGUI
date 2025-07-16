@@ -1,5 +1,11 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, UrlSerializer, createUrlTreeFromSnapshot } from "@angular/router";
+import {Injectable} from "@angular/core";
+import {
+  ActivatedRouteSnapshot,
+  createUrlTreeFromSnapshot,
+  DetachedRouteHandle,
+  RouteReuseStrategy,
+  UrlSerializer
+} from "@angular/router";
 
 @Injectable()
 export class PureRrs extends RouteReuseStrategy {
@@ -19,7 +25,7 @@ export class PureRrs extends RouteReuseStrategy {
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
         return route.data['saveComponent'];
     }
-    
+
     store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
         const key = this.getKey(route);
         this.handleMap.set(key, handle);

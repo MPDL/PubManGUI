@@ -1,6 +1,6 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { MdsPublicationGenre } from "src/app/model/inge";
-import { Errors } from "src/app/model/errors";
+import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {MdsPublicationGenre} from "src/app/model/inge";
+import {Errors} from "src/app/model/errors";
 
 export const datesValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;
@@ -31,7 +31,7 @@ export const datesValidator: ValidatorFn = (control: AbstractControl,): Validati
       return null;
     }
     return { [error_types.DATE_NOT_PROVIDED]: true };
-  } 
+  }
 
   return null;
 

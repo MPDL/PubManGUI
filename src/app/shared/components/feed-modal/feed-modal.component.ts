@@ -1,11 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {NgbActiveModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import {ItemsService} from "../../../services/pubman-rest-client/items.service";
-import {MessageService} from "../../services/message.service";
-import {Router} from "@angular/router";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {environment} from "../../../../environments/environment";
-import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
-import {TranslatePipe} from "@ngx-translate/core";
 import {CopyButtonDirective} from "../../directives/copy-button.directive";
 
 @Component({

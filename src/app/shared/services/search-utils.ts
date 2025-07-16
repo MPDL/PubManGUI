@@ -1,7 +1,6 @@
 import {elasticSearchFields, ElasticSearchIndexField} from "./mapping-utils";
 
 
-
 export const escapeForQueryString = (escapeMe: string) : string  => {
   let result = escapeMe.replace("\\", "\\\\");
   result = result.replace("=", "\\=");

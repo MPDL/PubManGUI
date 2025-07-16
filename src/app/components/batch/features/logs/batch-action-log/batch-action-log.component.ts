@@ -1,14 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, inject, Input} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
-import { BatchService } from 'src/app/components/batch/services/batch.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
 import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 
-import { MatBadgeModule } from '@angular/material/badge';
+import {MatBadgeModule} from '@angular/material/badge';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+import {TranslatePipe} from "@ngx-translate/core";
+import {LocalizeDatePipe} from "src/app/shared/services/pipes/localize-date.pipe";
 
 
 type detail = {

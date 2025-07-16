@@ -1,8 +1,16 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpContext, HttpContextToken } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { MessageService } from 'src/app/shared/services/message.service';
+import {
+  HttpContext,
+  HttpContextToken,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
+} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {MessageService} from 'src/app/shared/services/message.service';
 
 
 export const IGNORED_STATUSES = new HttpContextToken<number[]>(() => []);

@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import {Directive, EventEmitter, Input, Output} from '@angular/core';
 
 @Directive({
     selector: '[purePagination]',

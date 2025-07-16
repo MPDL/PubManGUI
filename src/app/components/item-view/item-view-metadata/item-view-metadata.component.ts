@@ -1,20 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {
-  AffiliationDbVO,
-  CreatorVO,
-  IdentifierVO, IdType,
-  ItemVersionVO,
-  OrganizationVO,
-  PublishingInfoVO
-} from "../../../model/inge";
+import {IdentifierVO, IdType, ItemVersionVO, PublishingInfoVO} from "../../../model/inge";
 import {ItemViewMetadataElementComponent} from "./item-view-metadata-element/item-view-metadata-element.component";
-import {BehaviorSubject} from "rxjs";
 import {ItemViewCreatorsComponent} from "./item-view-creators/item-view-creators.component";
-import {AsyncPipe} from "@angular/common";
 import {EmptyPipe} from "../../../shared/services/pipes/empty.pipe";
 import {SanitizeHtmlPipe} from "../../../shared/services/pipes/sanitize-html.pipe";
 import {isUrl} from "../../../shared/services/item-utils";
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
@@ -23,7 +14,6 @@ import {TranslatePipe} from "@ngx-translate/core";
   imports: [
     ItemViewMetadataElementComponent,
     ItemViewCreatorsComponent,
-    AsyncPipe,
     EmptyPipe,
     SanitizeHtmlPipe,
     TranslatePipe

@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { NgClass } from '@angular/common';
+import {Component, Inject, OnInit} from '@angular/core';
+import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
+import {NgClass} from '@angular/common';
 
 @Component({
     selector: 'pure-message',
@@ -23,7 +23,7 @@ export class MessageComponent implements OnInit {
       setTimeout(() => {
         this.close();
       }, 15000);
-    }  
+    }
   }
 
   close(): void {

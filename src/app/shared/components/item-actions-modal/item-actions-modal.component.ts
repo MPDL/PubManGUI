@@ -7,7 +7,6 @@ import {MessageService} from "../../services/message.service";
 import {Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
-import {LoadingComponent} from "../loading/loading.component";
 import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
 
 @Component({
@@ -16,7 +15,6 @@ import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
-    LoadingComponent,
     SanitizeHtmlPipe
   ],
   templateUrl: './item-actions-modal.component.html'

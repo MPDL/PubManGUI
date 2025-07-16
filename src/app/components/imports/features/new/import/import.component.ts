@@ -1,18 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { OnInit, Component, ChangeDetectorRef, inject } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { ContextDbRO, ImportFormat } from 'src/app/model/inge';
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportValidatorsService } from 'src/app/components/imports/services/import-validators.service';
-import type { PostImportParams } from 'src/app/components/imports/interfaces/imports-params';
-import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
+import {ContextDbRO, ImportFormat} from 'src/app/model/inge';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {ImportValidatorsService} from 'src/app/components/imports/services/import-validators.service';
+import type {PostImportParams} from 'src/app/components/imports/interfaces/imports-params';
+import {SeparateFilterPipe} from 'src/app/components/imports/pipes/separateFilter.pipe';
 
-import { AaService } from 'src/app/services/aa.service';
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
+import {AaService} from 'src/app/services/aa.service';
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-imports-new-import',
@@ -45,7 +44,7 @@ export default class ImportComponent implements OnInit {
 
   importFormat = Object.keys(ImportFormat);
   user_contexts?: ContextDbRO[] = [];
-  
+
   public importForm: FormGroup = this.fb.group({
     contextId: [this.translateService.instant(_('imports.context')), [Validators.required]],
     importName: ['', [Validators.required]],

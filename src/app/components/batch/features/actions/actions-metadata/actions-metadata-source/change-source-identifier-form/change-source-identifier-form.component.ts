@@ -1,17 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, inject} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { SourceIdType } from 'src/app/model/inge';
+import {SourceIdType} from 'src/app/model/inge';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { ChangeSourceIdentifierParams } from 'src/app/components/batch/interfaces/batch-params';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {ChangeSourceIdentifierParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-change-source-identifier-form',

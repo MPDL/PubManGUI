@@ -1,11 +1,10 @@
-import { Component, Input, inject } from '@angular/core';
-import { MessageService } from "../../../services/message.service";
-import { BatchService } from "../../../../components/batch/services/batch.service";
-import { AaService } from "../../../../services/aa.service";
-import { ItemSelectionService } from "../../../services/item-selection.service";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from "@ngx-translate/core";
+import {Component, inject, Input} from '@angular/core';
+import {MessageService} from "../../../services/message.service";
+import {BatchService} from "../../../../components/batch/services/batch.service";
+import {AaService} from "../../../../services/aa.service";
+import {ItemSelectionService} from "../../../services/item-selection.service";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {versionIdToObjectId} from "../../../services/utils";
 
 @Component({

@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, OnDestroy } from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, OnDestroy} from '@angular/core';
 
 declare const bootstrap: any;
 

@@ -1,27 +1,27 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
-import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
-import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { AlternativeTitleVO, CreatorVO, IdentifierVO, MdsPublicationGenre, PublishingInfoVO } from 'src/app/model/inge';
-import { CreatorFormComponent } from '../creator-form/creator-form.component';
-import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
-import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
-import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { Errors } from 'src/app/model/errors';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormArray, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AddRemoveButtonsComponent} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import {AltTitleFormComponent} from '../alt-title-form/alt-title-form.component';
+import {ControlType, FormBuilderService} from '../../services/form-builder.service';
+import {AlternativeTitleVO, CreatorVO, IdentifierVO, MdsPublicationGenre, PublishingInfoVO} from 'src/app/model/inge';
+import {CreatorFormComponent} from '../creator-form/creator-form.component';
+import {PublishingInfoFormComponent} from '../publishing-info-form/publishing-info-form.component';
+import {IdentifierFormComponent} from '../identifier-form/identifier-form.component';
+import {CdkDrag, CdkDragDrop, CdkDropList} from '@angular/cdk/drag-drop';
+import {MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {Errors} from 'src/app/model/errors';
 
 @Component({
   selector: 'pure-source-form',
   standalone: true,
-  imports: [AddRemoveButtonsComponent, 
-    AltTitleFormComponent, 
+  imports: [AddRemoveButtonsComponent,
+    AltTitleFormComponent,
     CommonModule,
-    CreatorFormComponent, 
+    CreatorFormComponent,
     IdentifierFormComponent,
     PublishingInfoFormComponent,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     CdkDropList,
     CdkDrag

@@ -1,18 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { OnInit, Component, inject } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component, inject, OnInit} from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { ContextDbRO } from 'src/app/model/inge';
-import { ImportValidatorsService } from 'src/app/components/imports/services/import-validators.service';
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import type { GetCrossrefParams, GetArxivParams } from 'src/app/components/imports/interfaces/imports-params';
-import { AaService } from 'src/app/services/aa.service';
+import {ContextDbRO} from 'src/app/model/inge';
+import {ImportValidatorsService} from 'src/app/components/imports/services/import-validators.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import type {GetArxivParams, GetCrossrefParams} from 'src/app/components/imports/interfaces/imports-params';
+import {AaService} from 'src/app/services/aa.service';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
-import { MessageService } from "src/app/shared/services/message.service";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {MessageService} from "src/app/shared/services/message.service";
 
 @Component({
   selector: 'pure-imports-new-fetch',
@@ -71,7 +70,7 @@ export default class FetchComponent implements OnInit {
     return importParams;
   }
 
-  arxiv = /arxiv:/gi; 
+  arxiv = /arxiv:/gi;
   get getArxivParams(): GetArxivParams {
     const importParams: GetArxivParams = {
       contextId: this.fetchForm.controls['contextId'].value,
@@ -99,11 +98,11 @@ export default class FetchComponent implements OnInit {
           },
           error: (response) => {
             if (response.error.cause !== undefined ) {
-              this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message)); 
+              this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message));
             } else {
               this.msgSvc.warning(JSON.stringify(response.error.exception));
             }
-            this.fetchEnd(); 
+            this.fetchEnd();
           },
         });
         break;
@@ -112,13 +111,13 @@ export default class FetchComponent implements OnInit {
           next: () => {
             this.router.navigateByUrl('/edit_import');
           },
-          error: (response) => { 
+          error: (response) => {
             if (response.error.cause !== undefined ) {
-              this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message)); 
+              this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message));
             } else {
               this.msgSvc.warning(JSON.stringify(response.error.exception));
             }
-            this.fetchEnd();  
+            this.fetchEnd();
           },
         });
     }

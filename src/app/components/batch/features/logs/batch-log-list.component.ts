@@ -1,17 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { OnInit, Component, HostListener, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, HostListener, inject, OnInit} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
-import { BatchService } from 'src/app/components/batch/services/batch.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
 import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
-import { MatBadgeModule } from '@angular/material/badge';
-import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
-import { BatchActionLogComponent } from "./batch-action-log/batch-action-log.component";
+import {MatBadgeModule} from '@angular/material/badge';
+import {PaginatorComponent} from "src/app/shared/components/paginator/paginator.component";
+import {BatchActionLogComponent} from "./batch-action-log/batch-action-log.component";
 
-import { TranslatePipe } from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 
 type detail = {
   'item': resp.BatchProcessLogDetailDbVO,

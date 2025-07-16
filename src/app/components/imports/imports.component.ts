@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { OnInit, Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
 
-import { ImportsNavComponent } from './imports-nav/imports-nav.component';
-import { ImportsService } from './services/imports.service';
+import {ImportsNavComponent} from './imports-nav/imports-nav.component';
+import {ImportsService} from './services/imports.service';
 
 @Component({
   selector: 'pure-imports',
@@ -30,4 +30,4 @@ export default class ImportsComponent implements OnInit {
     }
 
   }
-}  
+}

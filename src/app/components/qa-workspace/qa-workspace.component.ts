@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {map, Observable} from "rxjs";
 import {AaService} from "../../services/aa.service";
 import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";

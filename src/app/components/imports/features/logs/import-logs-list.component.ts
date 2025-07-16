@@ -1,18 +1,18 @@
-import { CommonModule, ViewportScroller } from '@angular/common';
-import { OnInit, Component, Inject, LOCALE_ID, HostListener, inject, viewChild } from '@angular/core'
-import { RouterModule, Router } from '@angular/router';
+import {CommonModule, ViewportScroller} from '@angular/common';
+import {Component, HostListener, Inject, inject, LOCALE_ID, OnInit, viewChild} from '@angular/core'
+import {Router, RouterModule} from '@angular/router';
 
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportLogDbVO, ImportStatus, ImportErrorLevel } from 'src/app/model/inge';
-import { MessageService } from 'src/app/shared/services/message.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {ImportErrorLevel, ImportLogDbVO, ImportStatus} from 'src/app/model/inge';
+import {MessageService} from 'src/app/shared/services/message.service';
 
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
-import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
-import { ImportLogComponent } from "./import-log/import-log.component";
-import { TranslatePipe } from "@ngx-translate/core";
+import {PaginatorComponent} from "src/app/shared/components/paginator/paginator.component";
+import {ImportLogComponent} from "./import-log/import-log.component";
+import {TranslatePipe} from "@ngx-translate/core";
 
-import { MatBadgeModule } from '@angular/material/badge';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @Component({
   selector: 'pure-import-logs-list',

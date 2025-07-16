@@ -1,17 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component, inject} from '@angular/core';
 
-import { FormArray, FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { AddLocalTagsParams } from 'src/app/components/batch/interfaces/batch-params';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {AddLocalTagsParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { ControlType } from 'src/app/components/item-edit/services/form-builder.service';
-import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
+import {ControlType} from 'src/app/components/item-edit/services/form-builder.service';
+import {ChipsComponent} from 'src/app/shared/components/chips/chips.component';
 
-import { TranslatePipe } from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-add-local-tags-form',

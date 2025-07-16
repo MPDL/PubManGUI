@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
     selector: 'pure-switch-bs-theme',

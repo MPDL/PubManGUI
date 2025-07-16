@@ -1,5 +1,5 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { Errors } from "src/app/model/errors";
+import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {Errors} from "src/app/model/errors";
 
 export const SourceValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;

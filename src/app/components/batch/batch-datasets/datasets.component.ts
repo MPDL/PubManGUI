@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import {map, Observable, of} from "rxjs";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {map, Observable} from "rxjs";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { BatchService } from '../services/batch.service';
+import {BatchService} from '../services/batch.service';
 
-import { ItemListComponent } from "../../item-list/item-list.component";
-import { baseElasticSearchQueryBuilder } from "../../../shared/services/search-utils";
+import {ItemListComponent} from "../../item-list/item-list.component";
+import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
 
 
 @Component({

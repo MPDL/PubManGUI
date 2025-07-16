@@ -1,15 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn } from '@angular/forms';
-import { EMPTY, Observable, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
-import { fieldOptions, join_enum } from 'src/app/model/pure_search';
-import { ConeService } from 'src/app/services/cone.service';
-import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
-import { PureOusDirective } from 'src/app/shared/components/selector/services/pure_ous/pure-ous.directive';
-import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
-import { ClickOutsideDirective } from 'src/app/shared/directives/click-outside.directive';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { CreatorRole, IdType, MdsPublicationGenre } from 'src/app/model/inge';
-import {OrganizationSearchCriterion} from "../../item-search-advanced/criterions/StringOrHiddenIdSearchCriterion";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidatorFn
+} from '@angular/forms';
+import {debounceTime, distinctUntilChanged, EMPTY, filter, Observable, switchMap} from 'rxjs';
+import {fieldOptions, join_enum} from 'src/app/model/pure_search';
+import {ConeService} from 'src/app/services/cone.service';
+import {OptionDirective} from 'src/app/shared/components/selector/directives/option.directive';
+import {PureOusDirective} from 'src/app/shared/components/selector/services/pure_ous/pure-ous.directive';
+import {SelectorComponent} from 'src/app/shared/components/selector/selector.component';
+import {ClickOutsideDirective} from 'src/app/shared/directives/click-outside.directive';
+import {AsyncPipe} from '@angular/common';
+import {CreatorRole, IdType, MdsPublicationGenre} from 'src/app/model/inge';
 
 // const valid_date_old = /^((?:19|20)[0-9][0-9])-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/;
 export const valid_date = /^((?:19|20)[0-9][0-9])(?:(?:-(0[1-9]|1[012]))(?:-(0[1-9]|[12][0-9]|3[01]))?)?$/;
@@ -31,7 +38,7 @@ export function mustOrNot(regExp: RegExp, must: boolean): ValidatorFn {
   templateUrl: './item-search-criterion.component.html',
   styleUrls: ['./item-search-criterion.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor, ClickOutsideDirective, SelectorComponent, PureOusDirective, OptionDirective, AsyncPipe]
+  imports: [FormsModule, ReactiveFormsModule, ClickOutsideDirective, SelectorComponent, PureOusDirective, OptionDirective, AsyncPipe]
 })
 export class ItemSearchCriterionComponent {
 

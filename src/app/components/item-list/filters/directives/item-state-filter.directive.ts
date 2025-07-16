@@ -6,7 +6,6 @@ import {TranslateService} from "@ngx-translate/core";
 import {AaService} from "../../../../services/aa.service";
 
 
-
 @Directive({
   selector: '[pureItemStateFilter]',
 

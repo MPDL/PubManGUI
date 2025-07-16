@@ -1,7 +1,6 @@
 import {SearchCriterion} from "./SearchCriterion";
-import {forkJoin, Observable, of} from "rxjs";
-import {StandardSearchCriterion} from "./StandardSearchCriterion";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import {Observable, of} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
 import {DegreeType, MdsPublicationGenre} from "../../../model/inge";
 import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
 import {TranslateService} from "@ngx-translate/core";

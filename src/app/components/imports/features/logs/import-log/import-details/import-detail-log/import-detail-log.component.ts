@@ -1,15 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, inject, Input} from '@angular/core';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportLogItemDbVO } from 'src/app/model/inge';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {ImportLogItemDbVO} from 'src/app/model/inge';
 
-import { MessageService } from 'src/app/shared/services/message.service';
-import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {MessageService} from 'src/app/shared/services/message.service';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+import {TranslatePipe} from "@ngx-translate/core";
+import {LocalizeDatePipe} from "src/app/shared/services/pipes/localize-date.pipe";
 
 
 @Component({
@@ -38,7 +38,7 @@ export class ImportDetailLogComponent {
     switch (txt) {
       case 'FINE':
       case 'WARNING':
-      case 'FATAL':        
+      case 'FATAL':
         return txt;
       default:
         return 'ERROR';

@@ -1,5 +1,5 @@
-import { NgClass } from '@angular/common';
-import { Component, HostListener, Inject, DOCUMENT } from '@angular/core';
+import {NgClass} from '@angular/common';
+import {Component, DOCUMENT, HostListener, Inject} from '@angular/core';
 
 @Component({
   selector: 'pure-scroll-to-top',

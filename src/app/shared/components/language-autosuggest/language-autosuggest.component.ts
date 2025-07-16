@@ -1,10 +1,20 @@
-import { HttpParams } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { Component, computed, Input } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, Observable, of, OperatorFunction, switchMap, tap, } from 'rxjs';
-import { ConeService } from 'src/app/services/cone.service';
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import {HttpParams} from '@angular/common/http';
+import {CommonModule} from '@angular/common';
+import {Component, computed, Input} from '@angular/core';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  of,
+  OperatorFunction,
+  switchMap,
+  tap,
+} from 'rxjs';
+import {ConeService} from 'src/app/services/cone.service';
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({

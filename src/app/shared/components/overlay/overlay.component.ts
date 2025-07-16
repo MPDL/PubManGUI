@@ -1,6 +1,6 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { OverlayReference } from '../../services/overlay-reference';
-import { NgComponentOutlet } from '@angular/common';
+import {Component, OnInit, Type} from '@angular/core';
+import {OverlayReference} from '../../services/overlay-reference';
+import {NgComponentOutlet} from '@angular/common';
 
 @Component({
     selector: 'pure-overlay',

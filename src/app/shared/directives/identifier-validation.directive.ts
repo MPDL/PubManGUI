@@ -1,6 +1,6 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { Errors } from "src/app/model/errors";
-import { IdType } from "src/app/model/inge";
+import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {Errors} from "src/app/model/errors";
+import {IdType} from "src/app/model/inge";
 
 export const IdentifierValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;
@@ -28,4 +28,4 @@ export const IdentifierValidator: ValidatorFn = (control: AbstractControl,): Val
     } // if
   } // if
   return null;
-} 
+}

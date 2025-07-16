@@ -1,11 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
-import { ControlType} from '../../services/form-builder.service';
-import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
-import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ContentCategories, MdsFileVO, OA_STATUS, Visibility} from 'src/app/model/inge';
+import {ControlType} from '../../services/form-builder.service';
+import {IpEntry, MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {AddRemoveButtonsComponent} from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
+import {LoadingComponent} from 'src/app/shared/components/loading/loading.component';
 
 @Component({
   selector: 'pure-file-form',

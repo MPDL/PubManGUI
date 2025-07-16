@@ -1,6 +1,6 @@
-import { Component, inject, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {Component, Input} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'pure-legal-case-form',

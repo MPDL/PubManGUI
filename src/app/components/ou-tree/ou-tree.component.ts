@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { Database, DynamicDataSource, FlatNode, DynamicFlatTreeControl } from './dyn-tree';
-import { NgClass, NgIf } from '@angular/common';
-import { CdkTreeModule } from '@angular/cdk/tree';
-import { environment } from 'src/environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Component, Injectable} from '@angular/core';
+import {map, Observable} from 'rxjs';
+import {Database, DynamicDataSource, DynamicFlatTreeControl, FlatNode} from './dyn-tree';
+import {NgClass, NgIf} from '@angular/common';
+import {CdkTreeModule} from '@angular/cdk/tree';
+import {environment} from 'src/environments/environment';
 
 @Injectable()
  export class OUsDatabase extends Database<any> {

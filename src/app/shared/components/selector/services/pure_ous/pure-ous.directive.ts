@@ -1,7 +1,7 @@
-import { Directive, inject } from '@angular/core';
-import { SelectorDatasource } from '../selector-datasource.service';
-import { OU, PureOusService } from './pure-ous.service';
-import { Observable, switchMap } from 'rxjs';
+import {Directive, inject} from '@angular/core';
+import {SelectorDatasource} from '../selector-datasource.service';
+import {OU, PureOusService} from './pure-ous.service';
+import {Observable, switchMap} from 'rxjs';
 
 @Directive({
     selector: '[purePureOus]',

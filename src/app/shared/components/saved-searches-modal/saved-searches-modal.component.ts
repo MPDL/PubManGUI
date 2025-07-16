@@ -1,15 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgbActiveModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import {ItemsService} from "../../../services/pubman-rest-client/items.service";
 import {MessageService} from "../../services/message.service";
-import {Router} from "@angular/router";
 import {AaService} from "../../../services/aa.service";
 import {Subscription} from "rxjs";
 import {SavedSearchVO} from "../../../model/inge";
 import {SavedSearchService} from "../../../services/pubman-rest-client/saved-search.service";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Clipboard} from "@angular/cdk/clipboard";
-import {TranslatePipe} from "@ngx-translate/core";
 import {DatePipe} from "@angular/common";
 import {LoadingComponent} from "../loading/loading.component";
 import {CopyButtonDirective} from "../../directives/copy-button.directive";
@@ -18,7 +15,6 @@ import {CopyButtonDirective} from "../../directives/copy-button.directive";
   selector: 'pure-saved-searches-modal',
   imports: [
     FormsModule,
-    TranslatePipe,
     DatePipe,
     ReactiveFormsModule,
     NgbTooltip,

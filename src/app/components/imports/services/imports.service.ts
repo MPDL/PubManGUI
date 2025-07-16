@@ -1,15 +1,19 @@
-import { signal, computed, effect, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap, of, Observable, throwError, EMPTY } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {computed, Injectable, signal} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError, Observable, of, tap, throwError} from 'rxjs';
+import {environment} from 'src/environments/environment';
 
 import type * as params from '../interfaces/imports-params';
 // import type * as resp from '../interfaces/imports-responses';
-import { ImportLogDbVO, ImportLogItemDbVO, ImportLogItemDetailDbVO, ImportStatus, ImportErrorLevel, AccountUserDbVO, } from 'src/app/model/inge';
-import { ItemVersionVO } from 'src/app/model/inge';
+import {
+  ImportErrorLevel,
+  ImportLogDbVO,
+  ImportLogItemDbVO,
+  ImportLogItemDetailDbVO,
+  ItemVersionVO,
+} from 'src/app/model/inge';
 
-import { AaService } from 'src/app/services/aa.service';
-import { bool_query } from 'src/app/model/pure_search';
+import {AaService} from 'src/app/services/aa.service';
 
 @Injectable({
   providedIn: 'root'

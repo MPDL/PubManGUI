@@ -1,9 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
-import { LanguageAutosuggestComponent } from 'src/app/shared/components/language-autosuggest/language-autosuggest.component';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AddRemoveButtonsComponent} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import {
+  LanguageAutosuggestComponent
+} from 'src/app/shared/components/language-autosuggest/language-autosuggest.component';
+import {MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({
   selector: 'pure-language-form',

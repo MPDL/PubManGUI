@@ -1,27 +1,45 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { AbstractVO, AlternativeTitleVO, ContextDbVO, CreatorRole, CreatorType, CreatorVO, EventVO, IdentifierVO, IdType, LegalCaseVO, MdsPublicationGenre, PersonVO, ProjectInfoVO, PublishingInfoVO, ReviewMethod, SourceVO, SubjectVO } from 'src/app/model/inge';
-import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
-import { CreatorFormComponent } from '../creator-form/creator-form.component';
-import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
-import { EventFormComponent } from '../event-form/event-form.component';
-import { LanguageFormComponent } from '../language-form/language-form.component';
-import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';
-import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
-import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
-import { SourceFormComponent } from '../source-form/source-form.component';
-import { SubjectFormComponent } from '../subject-form/subject-form.component';
-import { AbstractFormComponent } from '../abstract-form/abstract-form.component';
-import { ProjectInfoFormComponent } from '../project-info-form/project-info-form.component';
-import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
-import { ContextsService } from 'src/app/services/pubman-rest-client/contexts.service';
-import { AaService } from 'src/app/services/aa.service';
-import { MessageService } from 'src/app/shared/services/message.service';
-import { Errors } from 'src/app/model/errors';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ControlType, FormBuilderService} from '../../services/form-builder.service';
+import {
+  AbstractVO,
+  AlternativeTitleVO,
+  ContextDbVO,
+  CreatorRole,
+  CreatorType,
+  CreatorVO,
+  EventVO,
+  IdentifierVO,
+  IdType,
+  LegalCaseVO,
+  MdsPublicationGenre,
+  PersonVO,
+  ProjectInfoVO,
+  PublishingInfoVO,
+  ReviewMethod,
+  SourceVO,
+  SubjectVO
+} from 'src/app/model/inge';
+import {AltTitleFormComponent} from '../alt-title-form/alt-title-form.component';
+import {CreatorFormComponent} from '../creator-form/creator-form.component';
+import {AddRemoveButtonsComponent} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import {EventFormComponent} from '../event-form/event-form.component';
+import {LanguageFormComponent} from '../language-form/language-form.component';
+import {LegalCaseFormComponent} from '../legal-case-form/legal-case-form.component';
+import {IdentifierFormComponent} from '../identifier-form/identifier-form.component';
+import {PublishingInfoFormComponent} from '../publishing-info-form/publishing-info-form.component';
+import {SourceFormComponent} from '../source-form/source-form.component';
+import {SubjectFormComponent} from '../subject-form/subject-form.component';
+import {AbstractFormComponent} from '../abstract-form/abstract-form.component';
+import {ProjectInfoFormComponent} from '../project-info-form/project-info-form.component';
+import {CdkDrag, CdkDragDrop, CdkDropList} from '@angular/cdk/drag-drop';
+import {MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {LoadingComponent} from 'src/app/shared/components/loading/loading.component';
+import {ContextsService} from 'src/app/services/pubman-rest-client/contexts.service';
+import {AaService} from 'src/app/services/aa.service';
+import {MessageService} from 'src/app/shared/services/message.service';
+import {Errors} from 'src/app/model/errors';
 
 @Component({
   selector: 'pure-metadata-form',

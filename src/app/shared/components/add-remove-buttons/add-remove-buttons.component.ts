@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'pure-add-remove-buttons',

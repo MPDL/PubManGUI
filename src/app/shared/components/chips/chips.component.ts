@@ -1,10 +1,10 @@
-import { Component, Input, inject } from '@angular/core';
-import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatIconModule } from '@angular/material/icon';
+import {Component, Input} from '@angular/core';
+import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatIconModule} from '@angular/material/icon';
 
-import { TranslatePipe } from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-chips',
