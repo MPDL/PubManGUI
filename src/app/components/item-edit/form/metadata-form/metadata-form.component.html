@@ -178,7 +178,7 @@
                                     <label class="col-form-label">Date Published in Print</label>
                                     <input type="text" class="form-control" formControlName="datePublishedInPrint"
                                         placeholder="YYYY-MM-DD">
-                                    @if(meta_form.get('datePublishedInPrint')?.errors) {
+                                    @if(meta_form.get('datePublishedInPrint')?.hasError('pattern')) {
                                     <div class="text-danger">Incorrect date format. Expected format YYYY-MM-DD</div>
                                     }
                                 </div>
@@ -187,7 +187,7 @@
                                     <label class="col-form-label">Date Published Online</label>
                                     <input type="text" class="form-control" formControlName="datePublishedOnline"
                                         placeholder="YYYY-MM-DD">
-                                    @if(meta_form.get('datePublishedOnline')?.errors) {
+                                    @if(meta_form.get('datePublishedOnline')?.hasError('pattern')) {
                                     <div class="text-danger">Incorrect date format. Expected format YYYY-MM-DD</div>
                                     }
                                 </div>
@@ -196,7 +196,7 @@
                                     <label class="col-form-label">Date Accepted</label>
                                     <input type="text" class="form-control" formControlName="dateAccepted"
                                         placeholder="YYYY-MM-DD">
-                                    @if(meta_form.get('dateAccepted')?.errors) {
+                                    @if(meta_form.get('dateAccepted')?.hasError('pattern')) {
                                     <div class="text-danger">Incorrect date format. Expected format YYYY-MM-DD</div>
                                     }
                                 </div>
@@ -205,7 +205,7 @@
                                     <label class="col-form-label">Date Submitted</label>
                                     <input type="text" class="form-control" formControlName="dateSubmitted"
                                         placeholder="YYYY-MM-DD">
-                                    @if(meta_form.get('dateSubmitted')?.errors) {
+                                    @if(meta_form.get('dateSubmitted')?.hasError('pattern')) {
                                     <div class="text-danger">Incorrect date format. Expected format YYYY-MM-DD</div>
                                     }
                                 </div>
@@ -215,7 +215,7 @@
                                     <label class="col-form-label">Date Created</label>
                                     <input type="text" class="form-control" formControlName="dateCreated"
                                         placeholder="YYYY-MM-DD" data-test="date-created">
-                                    @if(meta_form.get('dateCreated')?.errors) {
+                                    @if(meta_form.get('dateCreated')?.hasError('pattern')) {
                                     <div class="text-danger">Incorrect date format. Expected format YYYY-MM-DD</div>
                                     }
                                 </div>
@@ -223,7 +223,7 @@
                                     <label class="col-form-label">Date Modified</label>
                                     <input type="text" class="form-control" formControlName="dateModified"
                                         placeholder="YYYY-MM-DD">
-                                    @if(meta_form.get('dateModified')?.errors) {
+                                    @if(meta_form.get('dateModified')?.hasError('pattern')) {
                                     <div class="text-danger">Incorrect date format. Expected format YYYY-MM-DD</div>
                                     }
                                 </div>
