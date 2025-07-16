@@ -1,5 +1,6 @@
 @if (genreSpecificResource.value()) {
 <div [formGroup]="file_form" [ngClass]="{'d-none' : !genreSpecificResource.value().properties.files.display}">
+
     <div class="custom-drag-placeholder" *cdkDragPlaceholder></div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1" cdkDragHandle>
         <div class="py-1">
@@ -10,6 +11,9 @@
         @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED') {
         <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. File -
             {{file_form.get('name')?.value}}</label>
+        @if(file_form.hasError(error_types.COMPONENT_CONTENT_NOT_PROVIDED.toString())) {
+        <div class="text-danger">Content is required</div>
+        }
         } @else if (file_form.get('storage')?.value == 'EXTERNAL_URL') {
         <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. External Reference -
             {{file_form.get('metadata')?.get('title')?.value}}</label>
@@ -22,12 +26,16 @@
 
                     <label for="contentCategory" class="col-sm-2 col-form-label">ContentCategory</label>
                     <select id="contentCategory" class="form-select" formControlName="contentCategory"
+                        [ngClass]="file_form.hasError(error_types.COMPONENT_CONTENT_CATEGORY_NOT_PROVIDED.toString()) ? 'is-invalid' : ''">
                         (change)="contentCategory_change($event)">
                         <option [value]="null" selected disabled>contentCategory</option>
                         @for (contentCategoryType of contentCategory_types; track contentCategoryType) {
                         <option [value]="contentCategoryType">{{contentCategoryType}}</option>
                         }
                     </select>
+                    @if(file_form.hasError(error_types.COMPONENT_CONTENT_CATEGORY_NOT_PROVIDED.toString())) {
+                    <div class="text-danger">Content Category is required</div>
+                    }
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
@@ -35,17 +43,25 @@
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm">
                     <label for="file_title" class="col-sm-2 col-form-label">Title</label>
-                    <input type="text" class="form-control" id="file_title" name="title" formControlName="title">
+                    <input type="text" class="form-control" id="file_title" name="title" formControlName="title"
+                        [ngClass]="file_form.hasError(error_types.COMPONENT_FILE_NAME_NOT_PROVIDED.toString()) ? 'is-invalid' : ''">
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
             </div>
+            @if (file_form.hasError(error_types.COMPONENT_FILE_NAME_NOT_PROVIDED.toString())) {
+            <div class="text-danger">File Title is required</div>
+            }
         </ng-container>
         @if (file_form.get('storage')?.value == 'EXTERNAL_URL') {
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
                 <label for="file_content" class="col-sm-2 col-form-label">URL</label>
-                <input type="text" class="form-control" id="file_content" name="content" formControlName="content">
+                <input type="text" class="form-control" id="file_content" name="content" formControlName="content"
+                    [ngClass]="file_form.hasError(error_types.COMPONENT_CONTENT_NOT_PROVIDED.toString()) ? 'is-invalid' : ''">
+                @if (file_form.hasError(error_types.COMPONENT_CONTENT_NOT_PROVIDED.toString())) {
+                <div class="text-danger">Content is required</div>
+                }
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
@@ -56,12 +72,16 @@
             <div class="col-sm">
                 <label for="visibility" class="col-sm-2 col-form-label">Visibility</label>
                 <select id="visibility" class="form-select" formControlName="visibility"
+                    [ngClass]="file_form.hasError(error_types.COMPONENT_VISIBILITY_NOT_PROVIDED.toString()) ? 'is-invalid' : ''"
                     (change)="visibility_change($event)">
                     <option [value]="null" selected disabled>visibility</option>
                     @for (visibility of visibility_types; track visibility) {
                     <option [value]="visibility">{{visibility}}</option>
                     }
                 </select>
+                @if (file_form.hasError(error_types.COMPONENT_VISIBILITY_NOT_PROVIDED.toString())) {
+                <div class="text-danger">Content is required</div>
+                }
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
@@ -70,6 +90,11 @@
         @if (file_form.get('visibility')?.value == 'AUDIENCE') {
 
         <ng-container formArrayName="allowedAudienceIds">
+            @if (file_form.hasError(error_types.COMPONENT_IP_RANGE_NOT_PROVIDED.toString())) {
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                <div class="text-danger">IP-Range is required</div>
+            </div>
+            }
             @for (audienceId of allowedAudienceIds.controls; track audienceId; let audienceIdIndex = $index) {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm-2">
@@ -185,5 +210,5 @@
     </div>
 </div>
 } @else if (!genreSpecificResource.value()) {
-    <pure-loading></pure-loading>
+<pure-loading></pure-loading>
 }

@@ -5,6 +5,7 @@ import { creatorValidator } from 'src/app/shared/directives/creator-validation.d
 import { CreatorsOrganizationsValidator } from 'src/app/shared/directives/creators-organizations-validation.directive';
 import { datesValidator } from 'src/app/shared/directives/dates-validation.directive';
 import { EventValidator } from 'src/app/shared/directives/event-validation.directive';
+import { fileDataValidator } from 'src/app/shared/directives/file-data-validation';
 import { IdentifierValidator } from 'src/app/shared/directives/identifier-validation.directive';
 import { SourceRequiredValidator } from 'src/app/shared/directives/source-required-validation.directive';
 import { SourceValidator } from 'src/app/shared/directives/source-validation.directive';
@@ -71,7 +72,8 @@ export class FormBuilderService {
       metadata: file?.metadata ? this.mds_file_FG(file.metadata) : this.mds_file_FG(null),
       allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.control(audiencId) as AbstractControl) : []),
       sortkz: this.fb.control(file?.sortkz ? file.sortkz : null),
-    });
+    },
+      { validators: [fileDataValidator], updateOn: 'blur' });
     return file_form;
   }
 
@@ -105,7 +107,7 @@ export class FormBuilderService {
     const atf = this.fb.group<ControlType<AlternativeTitleVO>>({
       type: this.fb.control(at?.type ? at.type : null),
       language: this.fb.control(at?.language ? at.language : null),
-      value: this.fb.control(at?.value ? at.value : null, {validators: [Utf8Validator], updateOn: 'blur'}),
+      value: this.fb.control(at?.value ? at.value : null, { validators: [Utf8Validator], updateOn: 'blur' }),
     });
     return atf;
   }
@@ -159,7 +161,7 @@ export class FormBuilderService {
 
   metadata_FG(metadata: MdsPublicationVO | null) {
     const metadata_form = this.fb.group<ControlType<MdsPublicationVO>>({
-      title: this.fb.control(metadata?.title ? metadata.title : null, { validators: [Validators.required, Utf8Validator], updateOn: 'blur'}),
+      title: this.fb.control(metadata?.title ? metadata.title : null, { validators: [Validators.required, Utf8Validator], updateOn: 'blur' }),
       alternativeTitles: this.fb.array(metadata?.alternativeTitles ? metadata.alternativeTitles.map(at => this.alt_title_FG(at) as AbstractControl) : []),
       creators: this.fb.array(metadata?.creators ? metadata.creators.map(creator => this.creator_FG(creator) as AbstractControl) : []),
       dateAccepted: this.fb.control(metadata?.dateAccepted ? metadata.dateAccepted : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
@@ -193,7 +195,7 @@ export class FormBuilderService {
   source_FG(source: SourceVO | null) {
     const source_form = this.fb.group<ControlType<SourceVO>>({
       alternativeTitles: this.fb.array(source?.alternativeTitles ? source.alternativeTitles.map(at => this.alt_title_FG(at) as AbstractControl) : []),
-      title: this.fb.control(source?.title ? source.title : null, {validators : [Validators.required], updateOn : 'blur'}),
+      title: this.fb.control(source?.title ? source.title : null, { validators: [Validators.required], updateOn: 'blur' }),
       creators: this.fb.array(source?.creators ? source.creators.map(c => this.creator_FG(c) as AbstractControl) : []),
       volume: this.fb.control(source?.volume ? source.volume : null),
       issue: this.fb.control(source?.issue ? source.issue : null),
@@ -207,7 +209,7 @@ export class FormBuilderService {
       genre: this.fb.control(source?.genre ? source.genre : null),
       totalNumberOfPages: this.fb.control(source?.totalNumberOfPages ? source.totalNumberOfPages : null),
     },
-  {validators : [SourceValidator], updateOn: 'blur'});
+      { validators: [SourceValidator], updateOn: 'blur' });
     return source_form;
   }
 
@@ -257,7 +259,7 @@ export class FormBuilderService {
   abstract_FG(abstract: AbstractVO | null) {
     const abstract_form = this.fb.group<ControlType<AbstractVO>>({
       language: this.fb.control(abstract?.language ? abstract.language : null),
-      value: this.fb.control(abstract?.value ? abstract.value : null, {validators: [Utf8Validator], updateOn: 'blur'})
+      value: this.fb.control(abstract?.value ? abstract.value : null, { validators: [Utf8Validator], updateOn: 'blur' })
     });
     return abstract_form
   }

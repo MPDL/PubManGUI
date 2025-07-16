@@ -1,11 +1,13 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CdkDragHandle, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
 import { ControlType} from '../../services/form-builder.service';
 import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
 import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
+import { Errors } from 'src/app/model/errors';
 
 @Component({
   selector: 'pure-file-form',
@@ -15,6 +17,8 @@ import { LoadingComponent } from 'src/app/shared/components/loading/loading.comp
     CommonModule,
     LoadingComponent,
     ReactiveFormsModule,
+    CdkDragHandle,
+    CdkDragPlaceholder
   ],
   templateUrl: './file-form.component.html',
   styleUrl: './file-form.component.scss'
@@ -34,6 +38,8 @@ export class FileFormComponent {
   oaStatus_types = Object.keys(OA_STATUS);
 
   ipRangeCompleteList: IpEntry[] = [] as IpEntry[];
+  
+  error_types = Errors;
 
   constructor(miscellaneousService: MiscellaneousService) {
     miscellaneousService.retrieveIpList().subscribe(
