@@ -46,7 +46,6 @@ export class FileUploadComponent {
       //this.file_upload_form.push(this.fbs.file_FG(file))
     }
     this.fileUploadNotice.emit(files);
-    console.log('$event.target', $event.target);
     $event.target.value = '';
   }
 
