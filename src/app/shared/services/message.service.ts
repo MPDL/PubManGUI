@@ -53,7 +53,7 @@ export class MessageService {
       const multilines = this.splitMessage(message);
       msg = { type: 'success', title: multilines.title, text: multilines.content };
       if (this.lastMessage().title && this.lastMessage().title === title) return;
-    } else {    
+    } else {
       msg = { type: 'success', text: message };
     }
     //this.displayMessage(msg);

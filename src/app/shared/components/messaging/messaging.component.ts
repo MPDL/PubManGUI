@@ -12,7 +12,7 @@ import { MessageService } from "src/app/shared/services/message.service";
 })
 export class MessagingComponent {
   message: any = {};
-  collapsed: boolean = true; 
+  collapsed: boolean = true;
 
   fg_color = 'text-info-emphasis';
   bg_color = 'bg-info-subtle';

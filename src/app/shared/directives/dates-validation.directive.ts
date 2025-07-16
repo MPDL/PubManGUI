@@ -29,7 +29,7 @@ export const datesValidator: ValidatorFn = (control: AbstractControl,): Validati
       return null;
     }
     return { [error_types.DATE_NOT_PROVIDED]: true };
-  } 
+  }
 
   return null;
 

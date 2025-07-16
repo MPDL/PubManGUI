@@ -1,5 +1,4 @@
-import {elasticSearchFields, ElasticSearchIndexField} from "./mapping-utils";
-
+import { elasticSearchFields, ElasticSearchIndexField } from "./mapping-utils";
 
 
 export const escapeForQueryString = (escapeMe: string) : string  => {

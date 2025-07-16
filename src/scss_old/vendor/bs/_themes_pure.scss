@@ -128,7 +128,7 @@
     }
 
     .mat-mdc-chip.mat-mdc-standard-chip {
-        --mdc-chip-container-height: 24px;
+        --mat-chip-container-height: 24px;
         background-color: $body-secondary-bg;
         border: 1px solid lightgray;
     }
@@ -325,7 +325,7 @@
     }
 
     .mat-mdc-chip.mat-mdc-standard-chip {
-        --mdc-chip-container-height: 24px;
+        --mat-chip-container-height: 24px;
         background-color: $body-tertiary-bg-dark;
         border: 1px solid $border-color-dark;
     }

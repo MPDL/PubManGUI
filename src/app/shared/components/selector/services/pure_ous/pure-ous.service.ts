@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { ou_suggest } from 'src/app/model/pure_queries';
 import { SelectedValue } from '../selector-datasource.service';
-import {OrganizationsService} from "../../../../../services/pubman-rest-client/organizations.service";
+import { OrganizationsService } from "../../../../../services/pubman-rest-client/organizations.service";
 
 export interface OU extends SelectedValue {
   id: string

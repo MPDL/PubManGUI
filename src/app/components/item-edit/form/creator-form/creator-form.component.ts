@@ -1,23 +1,29 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
-import { CreatorRole, CreatorType, IdType, IdentifierVO, OrganizationVO, PersonVO } from 'src/app/model/inge';
+import { CreatorRole, CreatorType, IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
 import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
 import { PureOusDirective } from 'src/app/shared/components/selector/services/pure_ous/pure-ous.directive';
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
-import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
-import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import {
+  ConePersonsService,
+  PersonResource
+} from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
+import {
+  AddRemoveButtonsComponent
+} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { OuAutosuggestComponent } from 'src/app/shared/components/ou-autosuggest/ou-autosuggest.component';
 import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
 import { environment } from 'src/environments/environment';
+import { CdkDragHandle } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent, OuAutosuggestComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })
@@ -27,11 +33,11 @@ export class CreatorFormComponent {
   @Input() index!: number;
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
-  
+
   coneService = inject(ConePersonsService);
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
-  
+
   creator_roles = Object.keys(CreatorRole);
   creator_types = Object.keys(CreatorType);
 

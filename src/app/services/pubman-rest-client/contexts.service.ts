@@ -1,10 +1,7 @@
-import { Injectable, inject } from '@angular/core';
-import {Observable, map, EMPTY, of} from 'rxjs';
-import { AaService } from 'src/app/services/aa.service';
-import {PubmanGenericRestClientService, SearchResult} from "./pubman-generic-rest-client.service";
-import {AccountUserDbVO, ContextDbVO} from "../../model/inge";
-import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
-import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { AccountUserDbVO, ContextDbVO } from "../../model/inge";
+import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
 
 @Injectable({
   providedIn: 'root'

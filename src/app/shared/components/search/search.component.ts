@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DOCUMENT, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -8,23 +8,13 @@ import { baseElasticSearchQueryBuilder } from "../../services/search-utils";
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  Observable,
-  of,
-  OperatorFunction,
-  switchMap,
-  tap
-} from "rxjs";
+import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, OperatorFunction, switchMap } from "rxjs";
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 import sanitizeHtml from "sanitize-html";
 import { filter } from "rxjs/operators";
-import { DOCUMENT } from '@angular/common';
-import {AaService} from "../../../services/aa.service";
-import {ItemVersionState} from "../../../model/inge";
+
+import { AaService } from "../../../services/aa.service";
+import { ItemVersionState } from "../../../model/inge";
 
 @Component({
   selector: 'pure-search',

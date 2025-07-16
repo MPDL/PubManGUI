@@ -1,43 +1,27 @@
-import {Component, ViewChild} from '@angular/core';
-import {ItemListComponent} from "../item-list/item-list.component";
-import {filter, map, Observable, of, pipe, startWith, tap} from "rxjs";
-import {AaService} from "../../services/aa.service";
-import {baseElasticSearchQueryBuilder} from "../../shared/services/search-utils";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {Location} from "@angular/common";
-import {SortSelectorComponent} from "../item-list/filters/sort-selector/sort-selector.component";
-import {SearchStateService} from "./search-state.service";
+import { Component } from '@angular/core';
+import { ItemListComponent } from "../item-list/item-list.component";
+import { Observable } from "rxjs";
+import { AaService } from "../../services/aa.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Location } from "@angular/common";
+import { SortSelectorComponent } from "../item-list/filters/sort-selector/sort-selector.component";
+import { SearchStateService } from "./search-state.service";
 import {
   ItemAggregationFilterComponent
 } from "../item-list/aggregations/aggregation-filter/item-aggregation-filter.component";
 import {
-    ItemContextAggregationDirective
-} from "../item-list/aggregations/aggregation-filter/directives/item-context-aggregation.directive";
-import {
-    ItemCreatorAggregationDirective
+  ItemCreatorAggregationDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-creator-aggregation.directive";
-import {
-    ItemOuAggregationDirective
-} from "../item-list/aggregations/aggregation-filter/directives/item-ou-aggregation.directive";
-import {
-  ItemDateAggregationDirective
-} from "../item-list/aggregations/aggregation-filter/directives/item-date-aggregation.directive";
 import {
   ItemGenreAggregationDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-genre-aggregation.directive";
-import {
-  ItemLocalTagAggregationDirective
-} from "../item-list/aggregations/aggregation-filter/directives/item-local-tag-aggregation.directive";
-import {
-  ItemStatusAggregationDirective
-} from "../item-list/aggregations/aggregation-filter/directives/item-status-aggregation.directive";
 import {
   ItemReviewMethodDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-reviewmethod-aggregation.directive";
 import {
   ItemSourceTitleAggregationDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-sourcetitle-aggregation.directive";
-import {TranslatePipe} from "@ngx-translate/core";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-search-result-list',
@@ -46,13 +30,8 @@ import {TranslatePipe} from "@ngx-translate/core";
     ItemListComponent,
     SortSelectorComponent,
     ItemAggregationFilterComponent,
-    ItemContextAggregationDirective,
     ItemCreatorAggregationDirective,
-    ItemOuAggregationDirective,
-    ItemDateAggregationDirective,
     ItemGenreAggregationDirective,
-    ItemLocalTagAggregationDirective,
-    ItemStatusAggregationDirective,
     ItemReviewMethodDirective,
     ItemSourceTitleAggregationDirective,
     TranslatePipe

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
-import { filter, map } from 'rxjs/operators';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 interface Breadcrumb {
   labelKey: string;

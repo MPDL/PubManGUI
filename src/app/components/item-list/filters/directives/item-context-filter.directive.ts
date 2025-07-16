@@ -1,9 +1,9 @@
-import {Directive, Input} from '@angular/core';
-import {ItemFilterDirective} from "./item-filter.directive";
-import {AaService} from "../../../../services/aa.service";
-import {FilterEvent} from "../../item-list.component";
-import {baseElasticSearchQueryBuilder} from "../../../../shared/services/search-utils";
-import {ContextDbVO} from "../../../../model/inge";
+import { Directive, Input } from '@angular/core';
+import { ItemFilterDirective } from "./item-filter.directive";
+import { AaService } from "../../../../services/aa.service";
+import { FilterEvent } from "../../item-list.component";
+import { baseElasticSearchQueryBuilder } from "../../../../shared/services/search-utils";
+import { ContextDbVO } from "../../../../model/inge";
 
 
 @Directive({

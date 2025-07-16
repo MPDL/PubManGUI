@@ -1,20 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportLogItemDbVO, ImportErrorLevel, ImportLogDbVO } from 'src/app/model/inge';
+import { ImportErrorLevel, ImportLogDbVO, ImportLogItemDbVO } from 'src/app/model/inge';
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 import { MessageService } from 'src/app/shared/services/message.service';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { ImportDetailLogComponent } from "./import-detail-log/import-detail-log.component";
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
+import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
 
@@ -110,7 +109,7 @@ export default class ImportDetailsListComponent implements OnInit {
                   break;
               }
             });
-            
+
           this.filteredLogs = this.unfilteredLogs = importsResponse;
           this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
 
@@ -218,9 +217,9 @@ export default class ImportDetailsListComponent implements OnInit {
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.importsSvc.deleteImportedItems(this.import.id).subscribe(importsResponse => {
-          console.log(importsResponse); 
+          console.log(importsResponse);
           const msg = this.translateSvc.instant(_('imports.list.details.delete')) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
-          this.msgSvc.success(msg);   
+          this.msgSvc.success(msg);
           setTimeout(() => {
             this.router.navigate(['/imports/myimports']);
           }, 1000);
@@ -230,19 +229,19 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   caseSubmit(): boolean {
-    if (!this.importsSvc.isModerator && this.importsSvc.isDepositor && this.isStandardWorkflow) {  
+    if (!this.importsSvc.isModerator && this.importsSvc.isDepositor && this.isStandardWorkflow) {
       return true;
     } else return false;
   }
 
   caseSubmitAndRelease(): boolean {
-    if (this.importsSvc.isModerator && this.isStandardWorkflow) { 
+    if (this.importsSvc.isModerator && this.isStandardWorkflow) {
       return true;
     } else return false;
   }
 
   caseRelease(): boolean {
-    if (this.importsSvc.isModerator && this.isSimpleWorkflow) { 
+    if (this.importsSvc.isModerator && this.isSimpleWorkflow) {
       return true;
     } else return false;
   }
@@ -255,7 +254,7 @@ export default class ImportDetailsListComponent implements OnInit {
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
           console.log(importsResponse);
           const msg = this.translateSvc.instant(_('imports.list.details.submit')) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
-          this.msgSvc.success(msg);  
+          this.msgSvc.success(msg);
 
           let element = document.getElementById('submit') as HTMLButtonElement;
           element.ariaDisabled = 'true';
@@ -274,7 +273,7 @@ export default class ImportDetailsListComponent implements OnInit {
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
           console.log(importsResponse);
           const msg = this.translateSvc.instant(_('imports.list.details.release')) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
-          this.msgSvc.success(msg);  
+          this.msgSvc.success(msg);
 
           let element = document.getElementById('release') as HTMLButtonElement;
           element.ariaDisabled = 'true';

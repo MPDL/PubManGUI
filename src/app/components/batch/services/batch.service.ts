@@ -1,6 +1,6 @@
-import { signal, computed, Injectable, inject } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap, Observable, throwError, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import type * as params from '../interfaces/batch-params';
@@ -8,11 +8,11 @@ import * as resp from '../interfaces/batch-responses';
 
 import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';
-import { ItemsService} from "src/app/services/pubman-rest-client/items.service";
+import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 import { ItemVersionVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/shared/services/message.service';
 
-import { TranslateService, _ } from '@ngx-translate/core';
+import { _, TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -6,7 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
 import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO, Storage } from 'src/app/model/inge';
-import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import {
+  AddRemoveButtonsComponent
+} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { remove_null_empty, remove_objects } from 'src/app/shared/services/utils_final';
 import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
 import { AaService } from 'src/app/services/aa.service';

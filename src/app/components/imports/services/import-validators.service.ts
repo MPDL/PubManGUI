@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 
 @Injectable({
@@ -36,7 +36,7 @@ export class ImportValidatorsService {
           return " can't be a URL!";
 
         case 'allRequired':
-          return " not all required values!";          
+          return " not all required values!";
       }
     }
     return null;

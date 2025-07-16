@@ -3,9 +3,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HelpComponent } from './pages/help/help.component';
 import { DisclaimerComponent } from './pages/disclaimer/disclaimer.component';
 import { PrivacyComponent } from './pages/privacy-policy/privacy.component';
-import { ItemListComponent } from './components/item-list/item-list.component';
 import { OuTreeComponent } from './components/ou-tree/ou-tree.component';
-import { ItemSearchComponent } from './components/item-search/item-search.component';
 import { ItemFormComponent } from './components/item-edit/form/item-form/item-form.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { ItemSearchAdvancedComponent } from "./components/item-search-advanced/item-search-advanced.component";
@@ -16,7 +14,6 @@ import { SearchResultListComponent } from "./components/search-result-list/searc
 import { fetchItemResolver } from "./components/imports/services/fetch-item-resolver";
 import { ItemViewComponent } from "./components/item-view/item-view.component";
 import { CartListComponent } from "./components/cart-list/cart-list.component";
-import { AuthGuard } from "src/app/services/guards/Auth.guard";
 
 
 export const routes: Routes = [

@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ItemsService} from "../../services/pubman-rest-client/items.service";
-import {AaService} from "../../services/aa.service";
+import { Component } from '@angular/core';
+import { ItemsService } from "../../services/pubman-rest-client/items.service";
+import { AaService } from "../../services/aa.service";
 import {
   AccountUserDbVO,
   AuditDbVO,
@@ -10,36 +10,36 @@ import {
   Storage,
   Visibility
 } from "../../model/inge";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {TopnavComponent} from "../../shared/components/topnav/topnav.component";
-import {AsyncPipe, DatePipe, ViewportScroller} from "@angular/common";
-import {ItemBadgesComponent} from "../../shared/components/item-badges/item-badges.component";
-import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import {ItemViewMetadataComponent} from "./item-view-metadata/item-view-metadata.component";
-import {forkJoin, map, Observable, timer} from "rxjs";
-import {environment} from 'src/environments/environment';
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { TopnavComponent } from "../../shared/components/topnav/topnav.component";
+import { AsyncPipe, DatePipe, ViewportScroller } from "@angular/common";
+import { ItemBadgesComponent } from "../../shared/components/item-badges/item-badges.component";
+import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
+import { forkJoin, map, Observable, timer } from "rxjs";
+import { environment } from 'src/environments/environment';
 import {
   ItemViewMetadataElementComponent
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
-import {SanitizeHtmlPipe} from "../../shared/services/pipes/sanitize-html.pipe";
-import {ItemViewFileComponent} from "./item-view-file/item-view-file.component";
-import {EmptyPipe} from "../../shared/services/pipes/empty.pipe";
-import {MessageService} from "../../shared/services/message.service";
-import {ExportItemsComponent} from "../../shared/components/export-items/export-items.component";
-import {PaginatorComponent} from "../../shared/components/paginator/paginator.component";
-import {TopnavBatchComponent} from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
-import {TopnavCartComponent} from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
-import {ItemListStateService} from "../item-list/item-list-state.service";
-import {SanitizeHtmlCitationPipe} from "../../shared/services/pipes/sanitize-html-citation.pipe";
-import {ItemSelectionService} from "../../shared/services/item-selection.service";
-import {DomSanitizer, Meta, Title} from "@angular/platform-browser";
-import {ItemActionsModalComponent} from "../../shared/components/item-actions-modal/item-actions-modal.component";
-import {LoadingComponent} from "../../shared/components/loading/loading.component";
-import {TranslatePipe} from "@ngx-translate/core";
-import {itemToVersionId} from "../../shared/services/utils";
-import {UsersService} from "../../services/pubman-rest-client/users.service";
+import { SanitizeHtmlPipe } from "../../shared/services/pipes/sanitize-html.pipe";
+import { ItemViewFileComponent } from "./item-view-file/item-view-file.component";
+import { EmptyPipe } from "../../shared/services/pipes/empty.pipe";
+import { MessageService } from "../../shared/services/message.service";
+import { ExportItemsComponent } from "../../shared/components/export-items/export-items.component";
+import { PaginatorComponent } from "../../shared/components/paginator/paginator.component";
+import { TopnavBatchComponent } from "../../shared/components/topnav/topnav-batch/topnav-batch.component";
+import { TopnavCartComponent } from "../../shared/components/topnav/topnav-cart/topnav-cart.component";
+import { ItemListStateService } from "../item-list/item-list-state.service";
+import { SanitizeHtmlCitationPipe } from "../../shared/services/pipes/sanitize-html-citation.pipe";
+import { ItemSelectionService } from "../../shared/services/item-selection.service";
+import { DomSanitizer, Meta, Title } from "@angular/platform-browser";
+import { ItemActionsModalComponent } from "../../shared/components/item-actions-modal/item-actions-modal.component";
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
+import { TranslatePipe } from "@ngx-translate/core";
+import { itemToVersionId } from "../../shared/services/utils";
+import { UsersService } from "../../services/pubman-rest-client/users.service";
 import sanitizeHtml from "sanitize-html";
-import {CopyButtonDirective} from "../../shared/directives/copy-button.directive";
+import { CopyButtonDirective } from "../../shared/directives/copy-button.directive";
 
 @Component({
   selector: 'pure-item-view',

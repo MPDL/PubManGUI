@@ -28,7 +28,7 @@ export class DataStoreSimpleService<T> {
   }
 
   updData(item: T, prop: keyof T): void {
-    const data = this.getData().map(i => 
+    const data = this.getData().map(i =>
       i[prop] === item[prop] ? item : i
     );
     this.setData(data);

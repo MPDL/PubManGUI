@@ -1,29 +1,34 @@
 import {
   ApplicationConfig,
   importProvidersFrom,
-  inject, LOCALE_ID,
+  inject,
+  LOCALE_ID,
   provideAppInitializer,
   provideZoneChangeDetection,
-
 } from '@angular/core';
 import de from '@angular/common/locales/de';
 import en from '@angular/common/locales/en';
 
-import { RouteReuseStrategy, provideRouter, withInMemoryScrolling, withRouterConfig, withComponentInputBinding } from '@angular/router';
+import { provideRouter, RouteReuseStrategy, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { PureRrs } from './services/pure-rrs';
 import { DialogModule } from '@angular/cdk/dialog';
-import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi} from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withFetch,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 import { HttpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
 import { WithCredentialsInterceptor } from "./services/interceptors/with-credentials.interceptor";
 
-import {TranslateModule, TranslateLoader, provideTranslateService, TranslateService} from "@ngx-translate/core";
+import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
-import {LOCATION_INITIALIZED, registerLocaleData} from "@angular/common";
-import {firstValueFrom, lastValueFrom} from "rxjs";
-import {AaService} from "./services/aa.service";
+import { registerLocaleData } from "@angular/common";
+import { lastValueFrom } from "rxjs";
+import { AaService } from "./services/aa.service";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -41,7 +46,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(DialogModule),
 
     provideHttpClient(
-      withInterceptorsFromDi()
+      withInterceptorsFromDi(),
+      withFetch()
     ),
     {
       provide: HTTP_INTERCEPTORS,

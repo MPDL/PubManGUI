@@ -1,10 +1,9 @@
-import {Directive, Input} from '@angular/core';
-import {ItemFilterDirective} from "./item-filter.directive";
-import {ItemVersionState} from "../../../../model/inge";
-import {FilterEvent} from "../../item-list.component";
-import {TranslateService} from "@ngx-translate/core";
-import {AaService} from "../../../../services/aa.service";
-
+import { Directive, Input } from '@angular/core';
+import { ItemFilterDirective } from "./item-filter.directive";
+import { ItemVersionState } from "../../../../model/inge";
+import { FilterEvent } from "../../item-list.component";
+import { TranslateService } from "@ngx-translate/core";
+import { AaService } from "../../../../services/aa.service";
 
 
 @Directive({

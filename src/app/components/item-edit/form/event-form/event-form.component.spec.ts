@@ -11,7 +11,7 @@ describe('EventFormComponent', () => {
       imports: [EventFormComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(EventFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import FetchComponent  from './fetch/fetch.component';
-import ImportComponent  from './import/import.component';
+import FetchComponent from './fetch/fetch.component';
+import ImportComponent from './import/import.component';
 
 @Component({
   selector: 'pure-imports-new',

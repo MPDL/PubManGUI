@@ -11,7 +11,7 @@ describe('LanguageFormComponent', () => {
       imports: [LanguageFormComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(LanguageFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

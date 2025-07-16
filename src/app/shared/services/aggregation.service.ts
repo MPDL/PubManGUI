@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { term_filter, AggregationParams } from '../model/aggs-params';
+import { AggregationParams, term_filter } from '../model/aggs-params';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from './message.service';
 import { environment } from 'src/environments/environment';

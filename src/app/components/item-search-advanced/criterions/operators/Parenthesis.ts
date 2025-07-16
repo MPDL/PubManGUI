@@ -1,7 +1,7 @@
-import {SearchCriterion} from "../SearchCriterion";
-import {FormControl, FormGroup} from "@angular/forms";
-import {DisplayType} from "../search_config";
-import {Observable, of} from "rxjs";
+import { SearchCriterion } from "../SearchCriterion";
+import { FormControl, FormGroup } from "@angular/forms";
+import { DisplayType } from "../search_config";
+import { Observable, of } from "rxjs";
 
 export enum PARENTHESIS_TYPE {
   OPENING_PARENTHESIS="opening_parenthesis",

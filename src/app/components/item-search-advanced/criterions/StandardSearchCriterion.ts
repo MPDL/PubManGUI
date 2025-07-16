@@ -1,9 +1,9 @@
-import {SearchCriterion} from "./SearchCriterion";
-import {FormControl} from "@angular/forms";
-import {baseElasticSearchQueryBuilder, baseElasticSearchSortBuilder} from "../../../shared/services/search-utils";
-import {Observable, of} from "rxjs";
-import {ContextDbVO} from "../../../model/inge";
-import {ContextsService} from "../../../services/pubman-rest-client/contexts.service";
+import { SearchCriterion } from "./SearchCriterion";
+import { FormControl } from "@angular/forms";
+import { baseElasticSearchQueryBuilder } from "../../../shared/services/search-utils";
+import { Observable, of } from "rxjs";
+import { ContextDbVO } from "../../../model/inge";
+import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
 
 
 export abstract class StandardSearchCriterion extends SearchCriterion {

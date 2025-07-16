@@ -1,5 +1,20 @@
-import { AfterViewInit, Component, ContentChild, ElementRef, EventEmitter, Input, OnDestroy, Output, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  Output,
+  QueryList,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef
+} from '@angular/core';
+import { AsyncPipe, CommonModule, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { OptionDirective } from './directives/option.directive';
 import { HighlightableDirective } from './directives/highlightable.directive';
 import { SelectorDatasource } from './services/selector-datasource.service';
@@ -9,7 +24,6 @@ import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { HighLightJsonPipe } from '../../services/pipes/high-light-json.pipe';
-import { NgFor, NgIf, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'pure-selector',

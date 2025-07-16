@@ -11,7 +11,7 @@ describe('SubjectFormComponent', () => {
       imports: [SubjectFormComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(SubjectFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

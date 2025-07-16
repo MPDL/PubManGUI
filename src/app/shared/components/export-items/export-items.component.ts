@@ -1,32 +1,24 @@
-import {Component, Input, ViewChild, ViewChildren} from '@angular/core';
-import {DefaultKeyValuePipe} from "../../services/pipes/default-key-value.pipe";
-import {citationTypes, exportTypes, ItemVersionVO} from "../../../model/inge";
-import {FormBuilder, FormControl, FormGroup, FormsModule} from "@angular/forms";
-import {ItemsService} from "../../../services/pubman-rest-client/items.service";
-import {AaService} from "../../../services/aa.service";
-import {OuAutosuggestComponent} from "../ou-autosuggest/ou-autosuggest.component";
-import {CslAutosuggestComponent} from "../csl-autosuggest/csl-autosuggest.component";
-import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
-import {environment} from 'src/environments/environment';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {ItemSelectionService} from "../../services/item-selection.service";
-import {map, Subscription} from "rxjs";
-import {baseElasticSearchQueryBuilder} from "../../services/search-utils";
-import {LoadingComponent} from "../loading/loading.component";
-import {contentDispositionParser} from "../../services/utils";
-import {TranslatePipe} from "@ngx-translate/core";
-import {JsonPipe} from "@angular/common";
+import { Component, Input } from '@angular/core';
+import { citationTypes, exportTypes } from "../../../model/inge";
+import { FormsModule } from "@angular/forms";
+import { ItemsService } from "../../../services/pubman-rest-client/items.service";
+import { CslAutosuggestComponent } from "../csl-autosuggest/csl-autosuggest.component";
+import { environment } from 'src/environments/environment';
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { ItemSelectionService } from "../../services/item-selection.service";
+import { Subscription } from "rxjs";
+import { LoadingComponent } from "../loading/loading.component";
+import { contentDispositionParser } from "../../services/utils";
+import { TranslatePipe } from "@ngx-translate/core";
+import { JsonPipe } from "@angular/common";
 
 
 @Component({
   selector: 'pure-export-items',
   standalone: true,
   imports: [
-    DefaultKeyValuePipe,
     FormsModule,
-    OuAutosuggestComponent,
     CslAutosuggestComponent,
-    SanitizeHtmlPipe,
     LoadingComponent,
     TranslatePipe,
     JsonPipe

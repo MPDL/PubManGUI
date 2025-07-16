@@ -1,4 +1,4 @@
-import {ItemVersionRO} from "../../model/inge";
+import { ItemVersionRO } from "../../model/inge";
 
 const reParamSplit = /\s*;\s*/
 const reHeaderSplit = /\s*:\s*/

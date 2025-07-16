@@ -1,5 +1,5 @@
-import {FileDbVO, ItemVersionVO, Visibility} from "../../model/inge";
-import {Principal} from "../../services/aa.service";
+import { FileDbVO, ItemVersionVO, Visibility } from "../../model/inge";
+import { Principal } from "../../services/aa.service";
 
 export const checkFileAccess = (file: FileDbVO, item: ItemVersionVO, principal: Principal): boolean => {
   //console.log(file.visibility === Visibility.PUBLIC)

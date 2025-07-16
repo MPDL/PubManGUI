@@ -2,11 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ControlType } from "src/app/components/item-edit/services/form-builder.service";
-import { IdType, IdentifierVO, PersonVO, OrganizationVO } from 'src/app/model/inge';
+import { IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
 import { ConePersonsDirective } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.directive';
-import { ConePersonsService, PersonResource } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
+import {
+  ConePersonsService,
+  PersonResource
+} from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
 import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
 import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
 
@@ -22,7 +25,7 @@ import { TranslatePipe } from "@ngx-translate/core";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ConePersonsDirective,  
+    ConePersonsDirective,
     SelectorComponent,
     OptionDirective,
     TranslatePipe

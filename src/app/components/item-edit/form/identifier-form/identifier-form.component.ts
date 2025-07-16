@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdType } from 'src/app/model/inge';
-import { AddRemoveButtonsComponent } from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+import {
+  AddRemoveButtonsComponent
+} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
 import { Errors } from 'src/app/model/errors';
 
 @Component({
@@ -23,7 +25,7 @@ export class IdentifierFormComponent {
   error_types = Errors;
 
   identifier_types = Object.keys(IdType);
-  
+
   add_remove_identifier(event: any) {
     this.notice.emit(event);
   }

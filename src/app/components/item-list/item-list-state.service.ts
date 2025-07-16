@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {ItemVersionVO} from "../../model/inge";
-import {Router} from "@angular/router";
-import {BehaviorSubject, map, Observable, of, tap} from "rxjs";
-import {AaService} from "../../services/aa.service";
-import {ItemsService} from "../../services/pubman-rest-client/items.service";
+import { ItemVersionVO } from "../../model/inge";
+import { Router } from "@angular/router";
+import { BehaviorSubject, map, Observable, of, tap } from "rxjs";
+import { AaService } from "../../services/aa.service";
+import { ItemsService } from "../../services/pubman-rest-client/items.service";
 
 @Injectable({
   providedIn: 'root'

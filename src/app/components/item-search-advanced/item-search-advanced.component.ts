@@ -1,41 +1,35 @@
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {JsonPipe, KeyValuePipe, NgFor, NgTemplateOutlet} from "@angular/common";
-import {SearchCriterion} from "./criterions/SearchCriterion";
-import {LogicalOperator} from "./criterions/operators/LogicalOperator";
-import {DisplayType, searchTypes, searchTypesI} from "./criterions/search_config";
-import {Parenthesis, PARENTHESIS_TYPE} from "./criterions/operators/Parenthesis";
-import {CreatorRole, IdType, SavedSearchVO} from "../../model/inge";
-import {TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
-import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";
-import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./criterions/DateSearchCriterion";
-import {forkJoin, map, Subscription, tap} from "rxjs";
-import {OuAutosuggestComponent} from "../../shared/components/ou-autosuggest/ou-autosuggest.component";
-import {PersonAutosuggestComponent} from "../../shared/components/person-autosuggest/person-autosuggest.component";
-import {GenreListSearchCriterion} from "./criterions/GenreListSearchCriterion";
-import {PublicationStateSearchCriterion} from "./criterions/PublicationStateSearchCriterion";
-import {COMPONENT_SEARCH_TYPES, FileSectionSearchCriterion} from "./criterions/FileSectionSearchCriterion";
-import {FileSectionComponent} from "./file-section-component/file-section-component.component";
-import {AaService} from "../../services/aa.service";
-import {Clipboard} from "@angular/cdk/clipboard";
-import {ItemStateListSearchCriterion} from "./criterions/ItemStateListSearchCriterion";
-import {SavedSearchService} from "../../services/pubman-rest-client/saved-search.service";
-import {Component, HostListener, ViewEncapsulation} from "@angular/core";
-import {ContextListSearchCriterion} from "./criterions/ContextListSearchCriterion";
-import {SearchStateService} from "../search-result-list/search-state.service";
-import {TranslatePipe, TranslateService} from "@ngx-translate/core";
-import {SortByLabelPipe} from "../../shared/services/pipes/sort-by-label.pipe";
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { JsonPipe, KeyValuePipe, NgFor, NgTemplateOutlet } from "@angular/common";
+import { SearchCriterion } from "./criterions/SearchCriterion";
+import { LogicalOperator } from "./criterions/operators/LogicalOperator";
+import { DisplayType, searchTypes, searchTypesI } from "./criterions/search_config";
+import { Parenthesis, PARENTHESIS_TYPE } from "./criterions/operators/Parenthesis";
+import { CreatorRole, IdType } from "../../model/inge";
+import { TitleSearchCriterion } from "./criterions/StandardSearchCriterion";
+import { OrganizationSearchCriterion, PersonSearchCriterion } from "./criterions/StringOrHiddenIdSearchCriterion";
+import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./criterions/DateSearchCriterion";
+import { forkJoin, map, Subscription, tap } from "rxjs";
+import { OuAutosuggestComponent } from "../../shared/components/ou-autosuggest/ou-autosuggest.component";
+import { PersonAutosuggestComponent } from "../../shared/components/person-autosuggest/person-autosuggest.component";
+import { GenreListSearchCriterion } from "./criterions/GenreListSearchCriterion";
+import { PublicationStateSearchCriterion } from "./criterions/PublicationStateSearchCriterion";
+import { COMPONENT_SEARCH_TYPES, FileSectionSearchCriterion } from "./criterions/FileSectionSearchCriterion";
+import { FileSectionComponent } from "./file-section-component/file-section-component.component";
+import { AaService } from "../../services/aa.service";
+import { Clipboard } from "@angular/cdk/clipboard";
+import { ItemStateListSearchCriterion } from "./criterions/ItemStateListSearchCriterion";
+import { SavedSearchService } from "../../services/pubman-rest-client/saved-search.service";
+import { Component, HostListener, ViewEncapsulation } from "@angular/core";
+import { ContextListSearchCriterion } from "./criterions/ContextListSearchCriterion";
+import { SearchStateService } from "../search-result-list/search-state.service";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { SortByLabelPipe } from "../../shared/services/pipes/sort-by-label.pipe";
 
-import {SavedSearchesModalComponent} from "../../shared/components/saved-searches-modal/saved-searches-modal.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {
+  SavedSearchesModalComponent
+} from "../../shared/components/saved-searches-modal/saved-searches-modal.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-item-search-advanced',

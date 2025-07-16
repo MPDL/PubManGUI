@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { BatchNavComponent } from './batch-nav/batch-nav.component';
@@ -29,4 +29,4 @@ export default class BatchComponent implements OnInit {
       this.router.navigate(['/batch/logs'])
     }
   }
-}  
+}

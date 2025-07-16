@@ -1,10 +1,10 @@
-import {Component, Input} from '@angular/core';
-import {DateToYearPipe} from "../../services/pipes/date-to-year.pipe";
-import {IdType, ItemVersionVO} from "../../../model/inge";
-import {AaService} from "../../../services/aa.service";
-import {TranslatePipe} from "@ngx-translate/core";
-import {RouterLink} from "@angular/router";
-import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import { Component, Input } from '@angular/core';
+import { DateToYearPipe } from "../../services/pipes/date-to-year.pipe";
+import { IdType, ItemVersionVO } from "../../../model/inge";
+import { AaService } from "../../../services/aa.service";
+import { TranslatePipe } from "@ngx-translate/core";
+import { RouterLink } from "@angular/router";
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-item-badges',

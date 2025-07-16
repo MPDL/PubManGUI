@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { ImportsNavComponent } from './imports-nav/imports-nav.component';
@@ -30,4 +30,4 @@ export default class ImportsComponent implements OnInit {
     }
 
   }
-}  
+}

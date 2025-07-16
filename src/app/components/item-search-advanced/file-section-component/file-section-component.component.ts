@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {ReactiveFormsModule} from "@angular/forms";
-import {FileSectionSearchCriterion} from "../criterions/FileSectionSearchCriterion";
-import {TranslatePipe} from "@ngx-translate/core";
+import { Component, Input } from '@angular/core';
+import { ReactiveFormsModule } from "@angular/forms";
+import { FileSectionSearchCriterion } from "../criterions/FileSectionSearchCriterion";
+import { TranslatePipe } from "@ngx-translate/core";
 
 
 @Component({

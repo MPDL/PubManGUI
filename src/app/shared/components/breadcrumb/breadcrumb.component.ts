@@ -10,7 +10,7 @@ interface Breadcrumb {
   labelKey: string;
   active: boolean;
   url: string;
-} 
+}
 
 @Component({
   selector: 'pure-breadcrumb',

@@ -6,11 +6,13 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  filter, finalize,
+  filter,
+  finalize,
   Observable,
   of,
   OperatorFunction,
-  switchMap, tap
+  switchMap,
+  tap
 } from "rxjs";
 import { ConeService, PersonResource } from "../../../services/cone.service";
 import { HttpParams } from "@angular/common/http";

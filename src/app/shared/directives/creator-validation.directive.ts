@@ -54,7 +54,7 @@ export const creatorValidator: ValidatorFn = (control: AbstractControl,): Valida
                   organization.get('adress')?.value) {
                   currentErrors[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] = true;
                 }
-              } 
+              }
               j++;
             } // for
           } // if

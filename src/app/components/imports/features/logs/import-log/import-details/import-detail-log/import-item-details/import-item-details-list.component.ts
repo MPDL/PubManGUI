@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, LOCALE_ID, HostListener, inject } from '@angular/core';
+import { Component, HostListener, Inject, inject, LOCALE_ID, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
@@ -12,8 +12,7 @@ import xmlFormat from 'xml-formatter';
 import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
 import { ImportItemLogComponent } from "./import-item-log/import-item-log.component";
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
+import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
 
@@ -36,7 +35,7 @@ export default class ImportItemDetailsListComponent implements OnInit {
   msgSvc = inject(MessageService);
   router = inject(Router);
   translateSvc = inject(TranslateService);
-  
+
   currentPage = this.importsSvc.lastPageNumFrom().log;
 
   pageSize = 25;
@@ -45,7 +44,7 @@ export default class ImportItemDetailsListComponent implements OnInit {
   logs: ImportLogItemDetailDbVO[] = [];
 
   item: ImportLogItemDbVO | undefined;
-  
+
   isCollapsed: boolean[] = [];
   isScrolled = false;
 
@@ -62,11 +61,11 @@ export default class ImportItemDetailsListComponent implements OnInit {
       .subscribe(importsResponse => {
         if (importsResponse.length === 0) {
           const msg = this.translateSvc.instant(_('imports.list.details.empty')) + '\n';
-          this.msgSvc.info(msg);       
+          this.msgSvc.info(msg);
           return this.router.navigate(['/imports/myimports/', this.item?.parent.id]);
         }
         importsResponse.sort((a, b) => a.id - b.id);
-          
+
         this.logs = importsResponse;
         this.collectionSize = this.logs.length;
         this.isCollapsed = new Array<boolean>(this.logs.length).fill(true);
@@ -85,7 +84,7 @@ export default class ImportItemDetailsListComponent implements OnInit {
     } else if (message.indexOf('\n') === 0) {
       message = message.slice(1, message.indexOf('\n',1));
     }
-    
+
     if (message.indexOf(this.BOM) === 0) {
       message = message.slice(0, message.lastIndexOf(',')+1) + '...';
     }
@@ -103,7 +102,7 @@ export default class ImportItemDetailsListComponent implements OnInit {
     }
     if (message.search("xml") >= 0) {
       return this.formatFromXml(message.slice(message.indexOf('\n')+1));
-    } 
+    }
     if (message.indexOf(this.BOM) === 0 ) {
       return this.formatFromBytes(message.slice(message.indexOf(',',75)+1));
     }
