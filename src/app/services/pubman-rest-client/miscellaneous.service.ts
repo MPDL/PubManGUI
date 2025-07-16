@@ -24,8 +24,8 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
   public genreSpecficProperties = signal<GenrePresentationObject>({} as GenrePresentationObject);
 
   public genrePropertiesResource = rxResource({
-    request: () => this.selectedGenre(),
-    loader: ({ request: genre }) => { return this.getGenreProperties(genre) },
+    params: () => this.selectedGenre(),
+    stream: ({ params: genre }) => { return this.getGenreProperties(genre) },
   });
 
   constructor() {
