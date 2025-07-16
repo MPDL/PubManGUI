@@ -20,8 +20,6 @@ export const datesValidator: ValidatorFn = (control: AbstractControl,): Validati
     return null;
   }
 
-  console.log('!dateAccepted?.value', !dateAccepted?.value);
-
   if (!dateAccepted?.value && !dateCreated?.value && !dateModified?.value && !datePublishedInPrint?.value && !datePublishedOnline?.value && !dateSubmitted?.value) {
 
     if (MdsPublicationGenre.COURSEWARE_LECTURE == genre?.value

@@ -46,7 +46,6 @@ export const creatorValidator: ValidatorFn = (control: AbstractControl,): Valida
             let j = 1;
             for (const organization of personOrganizations.controls) {
               if (organization !== null) {
-                console.log('organization.get("name")?.value , organization.get("address")?.value', organization.get('name')?.value, organization.get('adress')?.value);
                 if ((organization.get('name')?.value ||
                   organization.get('adress')?.value) && creator.get('role')?.value === null ) {
                   currentErrors[error_types.CREATOR_ROLE_NOT_PROVIDED] = true;

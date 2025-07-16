@@ -4,7 +4,6 @@ import { Errors } from "src/app/model/errors";
 export const Utf8Validator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;
   const text: string = control.value;
-  console.log('control', control);
   if (text !== null && text !== '') {
       for (let i = 0; i < text.length; i++) {
       const chr = text.charCodeAt(i);
