@@ -40,10 +40,14 @@ export class FileUploadComponent {
   }
 
   onChange($event: any): void {
-    for (let file of $event.target.files) {
+    let files = $event.target.files as FileDbVO[]
+    for (let file of files) {
       file.storage = Storage.INTERNAL_MANAGED;
-      this.file_upload_form.push(this.fbs.file_FG(file))
+      //this.file_upload_form.push(this.fbs.file_FG(file))
     }
+    this.fileUploadNotice.emit(files);
+    console.log('$event.target', $event.target);
+    $event.target.value = '';
   }
 
   deleteFile(f: File) {

@@ -17,7 +17,7 @@ export class FileUploadDirective {
 
   constructor(private sanitizer: DomSanitizer) {//, private el: ElementRef) {
     //this.el.nativeElement.style.backgroundColor = 'yellow';
-    console.log("Directive included");
+    // console.log("Directive included");
   }
 
   /*
