@@ -165,6 +165,9 @@
                     <label for="file_copyrightDate" class="col-sm col-form-label">Copyright Date</label>
                     <input type="text" class="form-control" id="file_copyrightDate" name="copyrightDate"
                         formControlName="copyrightDate" placeholder="YYYY-MM-DD">
+                    @if (file_form.get('metadata')?.get('copyrightDate')?.hasError('pattern')) {
+                    <div class="text-danger">Date Format invalid</div>
+                    }
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
