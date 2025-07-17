@@ -9,7 +9,7 @@ import { MessagingComponent } from '../messaging/messaging.component';
   imports: [CommonModule, BreadcrumbComponent, MessagingComponent],
   templateUrl: './info-panel.component.html'
 })
-export class InfoPanelComponent { 
+export class InfoPanelComponent {
   isScrolled = false;
 
   @HostListener('window:scroll', ['$event'])

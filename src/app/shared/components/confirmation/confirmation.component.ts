@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
     selector: 'pure-confirmation',

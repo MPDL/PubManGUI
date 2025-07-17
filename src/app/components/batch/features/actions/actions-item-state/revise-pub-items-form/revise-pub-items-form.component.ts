@@ -29,7 +29,7 @@ export class RevisePubItemsFormComponent {
 
   onSubmit(): void {
     this.batchSvc.revisePubItems(this.revisePubItemsParams).subscribe(actionResponse => {
-      //console.log(actionResponse); 
+      //console.log(actionResponse);
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.router.navigate(['/batch/logs']);
     });

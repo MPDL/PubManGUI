@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AaService } from '../aa.service';
 import { MdsPublicationGenre } from 'src/app/model/inge';
 import { rxResource } from '@angular/core/rxjs-interop';

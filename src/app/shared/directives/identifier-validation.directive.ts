@@ -28,4 +28,4 @@ export const IdentifierValidator: ValidatorFn = (control: AbstractControl,): Val
     } // if
   } // if
   return null;
-} 
+}

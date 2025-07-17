@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Directive, ElementRef, OnDestroy, inject } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, inject, OnDestroy } from '@angular/core';
 
 @Directive({
     selector: '[pureFocus]',

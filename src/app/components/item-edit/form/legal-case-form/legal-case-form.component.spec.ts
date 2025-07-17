@@ -11,7 +11,7 @@ describe('LegalCaseFormComponent', () => {
       imports: [LegalCaseFormComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(LegalCaseFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

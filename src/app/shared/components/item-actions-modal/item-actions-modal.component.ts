@@ -1,14 +1,13 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {ItemVersionVO} from "../../../model/inge";
-import {ItemsService} from "../../../services/pubman-rest-client/items.service";
-import {MessageService} from "../../services/message.service";
-import {Router} from "@angular/router";
-import {Observable, Subscription} from "rxjs";
-import {TranslatePipe, TranslateService} from "@ngx-translate/core";
-import {LoadingComponent} from "../loading/loading.component";
-import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { ItemVersionVO } from "../../../model/inge";
+import { ItemsService } from "../../../services/pubman-rest-client/items.service";
+import { MessageService } from "../../services/message.service";
+import { Router } from "@angular/router";
+import { Observable, Subscription } from "rxjs";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { SanitizeHtmlPipe } from "../../services/pipes/sanitize-html.pipe";
 
 @Component({
   selector: 'pure-item-actions-modal',
@@ -16,7 +15,6 @@ import {SanitizeHtmlPipe} from "../../services/pipes/sanitize-html.pipe";
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
-    LoadingComponent,
     SanitizeHtmlPipe
   ],
   templateUrl: './item-actions-modal.component.html'

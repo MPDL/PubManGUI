@@ -1,11 +1,9 @@
-import {SearchCriterion} from "./SearchCriterion";
-import {Observable, of} from "rxjs";
-import {StandardSearchCriterion} from "./StandardSearchCriterion";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import {ContextDbVO, DegreeType, ItemVersionState, MdsPublicationGenre} from "../../../model/inge";
-import {baseElasticSearchQueryBuilder} from "../../../shared/services/search-utils";
-import {ContextsService} from "../../../services/pubman-rest-client/contexts.service";
-import {AaService} from "../../../services/aa.service";
+import { SearchCriterion } from "./SearchCriterion";
+import { Observable, of } from "rxjs";
+import { FormControl, FormGroup } from "@angular/forms";
+import { ContextDbVO } from "../../../model/inge";
+import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
+import { AaService } from "../../../services/aa.service";
 
 export class ContextListSearchCriterion extends SearchCriterion {
 

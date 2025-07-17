@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { SourceIdType } from 'src/app/model/inge';
 
@@ -9,8 +9,7 @@ import { BatchValidatorsService } from 'src/app/components/batch/services/batch-
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfaces/batch-params';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
+import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 
 @Component({
@@ -36,8 +35,8 @@ export class AddSourceIdentifierFormComponent {
     sourceNumber: ['1'],
     sourceIdentifierType: [this.translateSvc.instant(_('batch.actions.metadata.source.addId.default')), Validators.required],
     sourceIdentifier: ['', [Validators.required, Validators.minLength(1)]]
-  }, { 
-    validators: this.valSvc.allRequiredValidator() 
+  }, {
+    validators: this.valSvc.allRequiredValidator()
   });
 
   get addSourceIdentifierParams(): AddSourceIdentiferParams {

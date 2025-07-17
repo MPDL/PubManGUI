@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {map, Observable, of} from "rxjs";
+import { map, Observable } from "rxjs";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BatchService } from '../services/batch.service';

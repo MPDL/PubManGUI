@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { ctxs_suggest } from 'src/app/model/pure_queries';
 import { SelectedValue } from '../selector-datasource.service';
-import {ContextsService} from "../../../../../services/pubman-rest-client/contexts.service";
+import { ContextsService } from "../../../../../services/pubman-rest-client/contexts.service";
 
 export interface Ctx extends SelectedValue {
   id: string

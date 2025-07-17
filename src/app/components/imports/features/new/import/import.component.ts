@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { OnInit, Component, ChangeDetectorRef, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ContextDbRO, ImportFormat } from 'src/app/model/inge';
@@ -11,8 +11,7 @@ import type { PostImportParams } from 'src/app/components/imports/interfaces/imp
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 
 import { AaService } from 'src/app/services/aa.service';
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
+import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-imports-new-import',
@@ -45,7 +44,7 @@ export default class ImportComponent implements OnInit {
 
   importFormat = Object.keys(ImportFormat);
   user_contexts?: ContextDbRO[] = [];
-  
+
   public importForm: FormGroup = this.fb.group({
     contextId: [this.translateService.instant(_('imports.context')), [Validators.required]],
     importName: ['', [Validators.required]],

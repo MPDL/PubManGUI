@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, inject, HostListener, DOCUMENT } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DOCUMENT,
+  ElementRef,
+  HostListener,
+  inject,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AaService } from "../../../services/aa.service";
 
@@ -33,7 +42,7 @@ export class SidenavComponent implements AfterViewInit {
   importsSvc = inject(ImportsService);
   cartService = inject(CartService);
   private document = inject(DOCUMENT);
-    
+
   mobile: boolean | null = null;
   mobile_options: HTMLElement | null = null;
 

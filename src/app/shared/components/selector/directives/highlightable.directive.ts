@@ -1,5 +1,5 @@
 import { Highlightable } from '@angular/cdk/a11y';
-import { Directive, ElementRef, HostBinding, Input, inject } from '@angular/core';
+import { Directive, ElementRef, HostBinding, inject, Input } from '@angular/core';
 
 @Directive({
     selector: '[pureHighlightableOption]',

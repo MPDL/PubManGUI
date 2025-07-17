@@ -1,9 +1,10 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   catchError,
   debounceTime,
-  distinctUntilChanged, finalize,
+  distinctUntilChanged,
+  finalize,
   map,
   Observable,
   of,
@@ -11,10 +12,10 @@ import {
   switchMap,
   tap
 } from "rxjs";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
-import {OrganizationsService} from "../../../services/pubman-rest-client/organizations.service";
-import {TranslatePipe} from "@ngx-translate/core";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
+import { OrganizationsService } from "../../../services/pubman-rest-client/organizations.service";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-ou-autosuggest',

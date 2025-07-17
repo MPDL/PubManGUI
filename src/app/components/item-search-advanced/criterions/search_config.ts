@@ -1,26 +1,29 @@
-import {Parenthesis} from "./operators/Parenthesis";
-import {LogicalOperator} from "./operators/LogicalOperator";
+import { Parenthesis } from "./operators/Parenthesis";
+import { LogicalOperator } from "./operators/LogicalOperator";
 import {
   AnyFieldSearchCriterion,
-  ClassificationSearchCriterion, CollectionSearchCriterion, EventTitleSearchCriterion,
-  FulltextSearchCriterion, IdentifierSearchCriterion,
+  ClassificationSearchCriterion,
+  CollectionSearchCriterion,
+  EventTitleSearchCriterion,
+  FulltextSearchCriterion,
+  IdentifierSearchCriterion,
   JournalSearchCriterion,
   KeywordSearchCriterion,
-  LanguageSearchCriterion, LocalTagSearchCriterion,
-  OrcidSearchCriterion, ProjectInfoSearchCriterion,
-  SourceSearchCriterion, TitleSearchCriterion
+  LanguageSearchCriterion,
+  LocalTagSearchCriterion,
+  OrcidSearchCriterion,
+  ProjectInfoSearchCriterion,
+  SourceSearchCriterion,
+  TitleSearchCriterion
 } from "./StandardSearchCriterion";
-import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./DateSearchCriterion";
+import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./DateSearchCriterion";
 import {
   CreatedBySearchCriterion,
   ModifiedBySearchCriterion,
   OrganizationSearchCriterion,
   PersonSearchCriterion
 } from "./StringOrHiddenIdSearchCriterion";
-import {GenreSearchCriterion, ReviewMethodSearchCriterion, StateSearchCriterion} from "./EnumSearchCriterion";
-import {GenreListSearchCriterion} from "./GenreListSearchCriterion";
-import {PublicationStateSearchCriterion} from "./PublicationStateSearchCriterion";
-import {COMPONENT_SEARCH_TYPES, FileSectionSearchCriterion} from "./FileSectionSearchCriterion";
+import { GenreSearchCriterion, ReviewMethodSearchCriterion, StateSearchCriterion } from "./EnumSearchCriterion";
 
 
 export enum DisplayType {

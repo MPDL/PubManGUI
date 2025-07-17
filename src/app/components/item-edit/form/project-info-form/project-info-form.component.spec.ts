@@ -11,7 +11,7 @@ describe('ProjectInfoFormComponent', () => {
       imports: [ProjectInfoFormComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ProjectInfoFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

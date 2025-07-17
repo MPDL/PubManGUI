@@ -1,4 +1,12 @@
-import { date_query, genre_filter, ou_id_query, ou_name_query, person_id_query, person_name_query, title_query } from "./pure_queries";
+import {
+  date_query,
+  genre_filter,
+  ou_id_query,
+  ou_name_query,
+  person_id_query,
+  person_name_query,
+  title_query
+} from "./pure_queries";
 
 // interface fake_enum extends Record<string, any> { }
 

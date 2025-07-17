@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
@@ -10,8 +10,7 @@ import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFil
 import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from '@ngx-translate/core';
+import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 
 @Component({

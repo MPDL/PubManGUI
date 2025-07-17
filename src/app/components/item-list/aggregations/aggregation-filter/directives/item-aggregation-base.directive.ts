@@ -1,5 +1,4 @@
-import { Directive } from '@angular/core';
-import {AggregationResultView} from "../item-aggregation-filter.component";
+import { AggregationResultView } from "../item-aggregation-filter.component";
 
 
 export abstract class ItemAggregationBaseDirective {

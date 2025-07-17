@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeGenreParams } from 'src/app/components/batch/interfaces/batch-params';
-import { MdsPublicationGenre, DegreeType } from 'src/app/model/inge';
+import { DegreeType, MdsPublicationGenre } from 'src/app/model/inge';
 
 import { TranslatePipe } from "@ngx-translate/core";
 

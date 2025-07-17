@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output, signal, Signal} from '@angular/core';
-import {Form, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ActivatedRoute, Params, Route, Router} from "@angular/router";
+import { Component, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'pure-paginator',

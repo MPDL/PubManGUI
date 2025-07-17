@@ -6,8 +6,7 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import type { DeletePubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { TranslateService, _ } from "@ngx-translate/core";
+import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-delete-pub-items-form',

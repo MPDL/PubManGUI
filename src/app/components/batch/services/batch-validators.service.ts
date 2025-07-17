@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
-import { FormGroup, FormArray, ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { inject, Injectable } from '@angular/core';
+import { AbstractControl, FormArray, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
-import { TranslateService, _} from '@ngx-translate/core'
+import { _, TranslateService } from '@ngx-translate/core'
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,7 +39,7 @@ export class BatchValidatorsService {
           return this.translateSvc.instant(_('validation.notEquals'))
 
         case 'equals':
-          return this.translateSvc.instant(_('validation.equals')) 
+          return this.translateSvc.instant(_('validation.equals'))
 
         case 'notDuplicates':
           return this.translateSvc.instant(_('validation.notDuplicates'))
@@ -128,13 +129,13 @@ export class BatchValidatorsService {
   }
 
   // Validator repeated on Batch and Imports. TO-DO: unique validators service on shared components
-  allRequiredValidator(): ValidatorFn { 
+  allRequiredValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control instanceof FormGroup) {
         let error = false;
         Object.keys(control.controls).forEach(key => {
           const field = control.get(key);
-          if(field!.hasValidator(Validators.required) && !(field!.dirty)) { 
+          if(field!.hasValidator(Validators.required) && !(field!.dirty)) {
             error = true;
             return;
           }
@@ -142,7 +143,7 @@ export class BatchValidatorsService {
         control.setErrors(error ? { allRequired: true } : null );
         return error ? { allRequired: true } : null;
       }
-      
+
       return null;
     }
   }
