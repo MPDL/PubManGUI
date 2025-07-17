@@ -1,6 +1,6 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
     <h3 class="m-0 mb-4">{{ 'imports.fileImport' | translate }}</h3>
-  
+
     <form [formGroup]="importForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <label class="col-sm-3 col-form-label">{{ 'imports.fileImport.upload' | translate }}</label>
@@ -10,7 +10,7 @@
               <i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
               <p>Drag and drop file here or</p>
 	            <label for="fileName" class="form-control">Browse file</label>
-              <input type="file" id="fileName" formControlName="fileName" (change)="onChange($event)" style="opacity: 0;">
+              <input type="file" id="fileName" formControlName="fileName" (change)="onChange($event)" style="opacity: 0;" data-test="file-upload-input">
             </div>
           </div>
         </div>
@@ -20,7 +20,7 @@
       <div class="mb-3 row">
         <label for="context" class="col-sm-3 col-form-label">{{ 'imports.context' | translate }}</label>
         <div class="col-sm-9">
-          <select id="context" class="form-select" formControlName="contextId">
+          <select id="context" class="form-select" formControlName="contextId" data-test="import-context">
             <option [value]='' selected disabled>{{ 'imports.context' | translate }}</option>
             @for (contextObject of user_contexts; track contextObject) {
             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -28,7 +28,7 @@
           </select>
         </div>
       </div>
-  
+
       <div class="mb-3 row">
         <div class="col-sm-3">
           <label class="col-form-label">Format</label>
@@ -53,7 +53,7 @@
       </div>
 
       @if(hasConfig()) {
-    
+
         @if(hasSelect()) {
         <div class="mb-3 row">
           <div class="col-sm-3">
@@ -82,12 +82,12 @@
 
       <div class="row">
         <div class="offset-sm-9 col-sm-3">
-          <button type="submit" [disabled]="importForm.invalid || importForm.pristine" 
-            class="btn btn-outline-primary float-end">
+          <button type="submit" [disabled]="importForm.invalid || importForm.pristine"
+            class="btn btn-outline-primary float-end" data-test="import-button">
             GO
           </button>
         </div>
       </div>
     </form>
-  
+
 </div>

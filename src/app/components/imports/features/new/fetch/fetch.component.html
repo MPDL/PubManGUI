@@ -5,7 +5,7 @@
     <div class="mb-3 row">
       <label for="context" class="col-sm-3 col-form-label">{{ 'imports.context' | translate }}</label>
       <div class="col-sm-9">
-        <select id="context" class="form-select" formControlName="contextId">
+        <select id="context" class="form-select" formControlName="contextId" data-test="fetch-context">
           <option [value]='' selected disabled>{{ 'imports.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="offset-sm-9 col-sm-3">
         <button id="go" type="submit" [disabled]="fetchForm.invalid || fetchForm.pristine"
-          class="btn btn-outline-primary float-end">
+          class="btn btn-outline-primary float-end" data-test="fetch-button">
           GO
         </button>
       </div>

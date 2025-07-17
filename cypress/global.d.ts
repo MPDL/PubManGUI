@@ -26,6 +26,11 @@ declare namespace Cypress {
     deleteItemViaAPI(itemId: string): void
 
     /**
+     * Delete multiple Items using the REST API
+     */
+    deleteItemsViaAPI(itemIds: string[]): void
+
+    /**
      * Get Item using the REST API
      */
     getItemViaAPI(itemId: string): Chainable<Cypress.Response<any>>
@@ -47,8 +52,26 @@ declare namespace Cypress {
     ): Chainable<Cypress.Response<any>>
 
     /**
+     * Repeatedly sends a request until the response contains one of the given responseBodyValues or max attempts are reached
+     */
+    repeatedRequest(
+      method: string,
+      url: string,
+      body: any,
+      responseBodyKey: string,
+      responseBodyValues: string[],
+      maxNumberOfWaits: number,
+      waitTimeBetweenRequests: number
+    ): Chainable<Cypress.Response<any>>
+
+    /**
      * Add Local Tags via Batch using the REST API
      */
     addLocalTagsViaAPI(itemMetadata: string): Chainable<Cypress.Response<any>>
+
+    /**
+     * Get all successfully processed item IDs from the importLogItems request
+     */
+    getImportLogItemIdsViaAPI(importLogId: string): Chainable<string[]>
   }
 }
