@@ -4,7 +4,7 @@ import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular
 import { FundingInfoVO, FundingProgramVO, IdentifierVO, IdType } from 'src/app/model/inge';
 import {
   AddRemoveButtonsComponent
-} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
 import { Subscription } from 'rxjs';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 

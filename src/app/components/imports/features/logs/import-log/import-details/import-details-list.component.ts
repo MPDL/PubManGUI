@@ -7,15 +7,15 @@ import { ImportErrorLevel, ImportLogDbVO, ImportLogItemDbVO } from 'src/app/mode
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
+import { PaginatorComponent } from "src/app/components/shared/paginator/paginator.component";
 import { ImportDetailLogComponent } from "./import-detail-log/import-detail-log.component";
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
-import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
 
 @Component({
   selector: 'pure-import-details-list',

@@ -5,11 +5,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import { ImportLogItemDbVO } from 'src/app/model/inge';
 
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslatePipe } from "@ngx-translate/core";
-import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
 
 
 @Component({

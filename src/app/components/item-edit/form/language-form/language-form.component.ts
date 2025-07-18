@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AddRemoveButtonsComponent
-} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
 import {
   LanguageAutosuggestComponent
-} from 'src/app/shared/components/language-autosuggest/language-autosuggest.component';
+} from 'src/app/components/shared/language-autosuggest/language-autosuggest.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
 @Component({

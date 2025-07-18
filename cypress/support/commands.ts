@@ -59,6 +59,20 @@ Cypress.Commands.add('deleteItemViaAPI', (itemId) => {
   })
 })
 
+Cypress.Commands.add('deleteItemsViaAPI', (itemIds) => {
+  itemIds.forEach(itemId => {
+    cy.request({
+      'method': 'DELETE',
+      'url': Cypress.env('restUrl') + '/items/' + itemId,
+      'body': {
+        lastModificationDate: ""
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+})
+
 Cypress.Commands.add('getItemViaAPI', (itemId):  Chainable<Cypress.Response<any>> => {
   return cy.request({
     'method': 'GET',
@@ -110,5 +124,44 @@ Cypress.Commands.add('addLocalTagsViaAPI', (localTags):  Chainable<Cypress.Respo
     'body': localTags
   }).then((response) => {
     expect(response.status).to.eq(200)
+  })
+})
+
+Cypress.Commands.add('repeatedRequest', (method: string, url: string, body: any, responseBodyKey, responseBodyValues: string[],
+                                         maxNumberOfWaits: number, waitTimeBetweenRequests: number): Chainable<Cypress.Response<any>> => {
+  // @ts-ignore
+  function recursiveRequest() {
+    maxNumberOfWaits--;
+    return cy.request({method, url, body, failOnStatusCode: false}).then((response): any => {
+      const value = response.body[responseBodyKey];
+      if (responseBodyValues.includes(value) || maxNumberOfWaits <= 0) {
+        return response;
+      } else {
+        cy.wait(waitTimeBetweenRequests);
+        return recursiveRequest();
+      }
+    });
+  }
+
+  if (maxNumberOfWaits >= 1) {
+    return recursiveRequest();
+  } else {
+    throw new Error('maxNumberOfWaits < 1');
+  }
+})
+
+Cypress.Commands.add('getImportLogItemIdsViaAPI', (importLogId): Chainable<string[]> => {
+  return cy.request({
+    'method': 'GET',
+    'url': Cypress.env('restUrl') + '/import/importLogItems/' + importLogId
+  }).then((response) => {
+    expect(response.status).to.eq(200)
+    return response.body
+      // @ts-ignore
+      .filter(item => item.status === 'FINISHED'
+              && item.message === 'import_process_import_item'
+              && item.itemId != null)
+      // @ts-ignore
+      .map(item => item.itemId)
   })
 })

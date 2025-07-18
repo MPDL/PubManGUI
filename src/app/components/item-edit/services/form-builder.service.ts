@@ -32,14 +32,14 @@ import {
   SubjectVO,
   Visibility
 } from 'src/app/model/inge';
-import { creatorValidator } from 'src/app/shared/directives/creator-validation.directive';
-import { CreatorsOrganizationsValidator } from 'src/app/shared/directives/creators-organizations-validation.directive';
-import { datesValidator } from 'src/app/shared/directives/dates-validation.directive';
-import { EventValidator } from 'src/app/shared/directives/event-validation.directive';
-import { IdentifierValidator } from 'src/app/shared/directives/identifier-validation.directive';
-import { SourceRequiredValidator } from 'src/app/shared/directives/source-required-validation.directive';
-import { SourceValidator } from 'src/app/shared/directives/source-validation.directive';
-import { Utf8Validator } from 'src/app/shared/directives/utf8-validation.directive';
+import { creatorValidator } from 'src/app/directives/validation/creator-validation.directive';
+import { CreatorsOrganizationsValidator } from 'src/app/directives/validation/creators-organizations-validation.directive';
+import { datesValidator } from 'src/app/directives/validation/dates-validation.directive';
+import { EventValidator } from 'src/app/directives/validation/event-validation.directive';
+import { IdentifierValidator } from 'src/app/directives/validation/identifier-validation.directive';
+import { SourceRequiredValidator } from 'src/app/directives/validation/source-required-validation.directive';
+import { SourceValidator } from 'src/app/directives/validation/source-validation.directive';
+import { Utf8Validator } from 'src/app/directives/validation/utf8-validation.directive';
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 

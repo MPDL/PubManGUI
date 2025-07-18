@@ -8,9 +8,9 @@ import { MetadataFormComponent } from '../metadata-form/metadata-form.component'
 import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO, Storage } from 'src/app/model/inge';
 import {
   AddRemoveButtonsComponent
-} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
-import { remove_null_empty, remove_objects } from 'src/app/shared/services/utils_final';
-import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
+} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
+import { remove_null_empty, remove_objects } from 'src/app/utils/utils_final';
+import { ChipsComponent } from 'src/app/components/shared/chips/chips.component';
 import { AaService } from 'src/app/services/aa.service';
 import { ContextsService } from "../../../../services/pubman-rest-client/contexts.service";
 import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
@@ -18,7 +18,7 @@ import { FileFormComponent } from '../file-form/file-form.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'pure-item-form',

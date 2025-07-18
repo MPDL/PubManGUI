@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { map, Observable } from "rxjs";
 import { AaService } from "../../services/aa.service";
-import { baseElasticSearchQueryBuilder } from "../../shared/services/search-utils";
+import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
 import { ItemListComponent } from "../item-list/item-list.component";
 import { SortSelectorComponent } from "../item-list/filters/sort-selector/sort-selector.component";
 import { ItemFilterComponent } from "../item-list/filters/item-filter/item-filter.component";

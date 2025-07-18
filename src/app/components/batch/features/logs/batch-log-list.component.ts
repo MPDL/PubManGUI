@@ -8,7 +8,7 @@ import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 import { FormsModule } from '@angular/forms';
 
 import { MatBadgeModule } from '@angular/material/badge';
-import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
+import { PaginatorComponent } from "src/app/components/shared/paginator/paginator.component";
 import { BatchActionLogComponent } from "./batch-action-log/batch-action-log.component";
 
 import { TranslatePipe } from "@ngx-translate/core";

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavigationService } from './shared/services/navigation.service';
 import { HeaderComponent } from './components/header/header.component';
-import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { SidenavComponent } from './components/shared/sidenav/sidenav.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ScrollToTopComponent } from './shared/components/scroll-to-top/scroll-to-top.component';
-import { InfoPanelComponent } from "./shared/components/info-panel/info-panel.component";
+import { ScrollToTopComponent } from './components/shared/scroll-to-top/scroll-to-top.component';
+import { InfoPanelComponent } from "./components/shared/info-panel/info-panel.component";
 
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { NgbTooltipConfig } from "@ng-bootstrap/ng-bootstrap";
@@ -24,7 +23,6 @@ export class AppComponent {
   defaultTitle = 'MPG.PuRe';
 
   constructor(
-    private navigation: NavigationService,
     tooltipConfig: NgbTooltipConfig,
     private router: Router,
     private activatedRoute: ActivatedRoute,

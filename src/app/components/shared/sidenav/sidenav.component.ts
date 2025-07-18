@@ -1,0 +1,91 @@
+import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  DOCUMENT,
+  ElementRef,
+  HostListener,
+  inject,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AaService } from "../../../services/aa.service";
+
+import { MatBadgeModule } from '@angular/material/badge';
+import { BatchService } from 'src/app/components/batch/services/batch.service';
+import { ImportsService } from 'src/app/components/imports/services/imports.service';
+import { BatchNavComponent } from 'src/app/components/batch/batch-nav/batch-nav.component';
+import { ImportsNavComponent } from 'src/app/components/imports/imports-nav/imports-nav.component';
+import { CartService } from "../../../services/cart.service";
+
+import { TranslatePipe } from "@ngx-translate/core";
+
+import { AaComponent } from 'src/app/components/aa/aa.component';
+import { SearchComponent } from 'src/app/components/shared/search/search.component';
+import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
+
+
+@Component({
+  selector: 'pure-sidenav',
+  standalone: true,
+  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent, TranslatePipe, AaComponent, SearchComponent, LangSwitchComponent],
+  templateUrl: './sidenav.component.html'
+})
+export class SidenavComponent implements AfterViewInit {
+
+  @ViewChild('sidenav', { read: ElementRef }) nav!: ElementRef;
+  renderer = inject(Renderer2);
+
+  aaService = inject(AaService);
+  batchSvc = inject(BatchService);
+  importsSvc = inject(ImportsService);
+  cartService = inject(CartService);
+  private document = inject(DOCUMENT);
+
+  mobile: boolean | null = null;
+  mobile_options: HTMLElement | null = null;
+
+  ngOnInit() {
+    const viewWidth = document.documentElement.offsetWidth || 0;
+    this.mobile = viewWidth < 1400 ? true : false;
+  }
+
+  ngAfterViewInit(): void {
+    this.collapse();
+    this.batchSvc.items;
+  }
+
+  /*
+  ex_col() {
+    const expanded = this.nav.nativeElement.classList.contains('collapsed');
+    this.renderer[expanded ? 'removeClass' : 'addClass'](this.nav.nativeElement, 'collapsed');
+  }
+  */
+
+  expand() {
+    if (this.aaService.principal.getValue().isDepositor || this.aaService.principal.getValue().isModerator) {
+      if (!this.importsSvc.hasImports()) this.importsSvc.checkImports();
+    }
+    if (!this.mobile) {
+      this.renderer.removeClass(this.nav.nativeElement, 'collapsed');
+    }
+  }
+
+  collapse() {
+    if (this.mobile) {
+      if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
+      if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
+    }
+    else {
+      this.renderer.addClass(this.nav.nativeElement, 'collapsed');
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    const viewWidth = document.documentElement.offsetWidth || 0;
+    this.mobile = viewWidth < 1400 ? true : false;
+  }
+
+}

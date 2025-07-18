@@ -2,7 +2,7 @@ import { SearchCriterion } from "./SearchCriterion";
 import { defaultIfEmpty, forkJoin, map, Observable, of } from "rxjs";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { ContentCategories, OA_STATUS, Visibility } from "../../../model/inge";
-import { baseElasticSearchQueryBuilder } from "../../../shared/services/search-utils";
+import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./DateSearchCriterion";
 
 

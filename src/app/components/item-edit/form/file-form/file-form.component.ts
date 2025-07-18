@@ -4,8 +4,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } f
 import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
 import { ControlType } from '../../services/form-builder.service';
 import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { AddRemoveButtonsComponent } from 'src/app/shared/components/add-remove-buttons/add-remove-buttons.component';
-import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
+import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 
 @Component({
   selector: 'pure-file-form',

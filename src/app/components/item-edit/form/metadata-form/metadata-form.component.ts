@@ -25,7 +25,7 @@ import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.componen
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import {
   AddRemoveButtonsComponent
-} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
 import { EventFormComponent } from '../event-form/event-form.component';
 import { LanguageFormComponent } from '../language-form/language-form.component';
 import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';
@@ -37,10 +37,10 @@ import { AbstractFormComponent } from '../abstract-form/abstract-form.component'
 import { ProjectInfoFormComponent } from '../project-info-form/project-info-form.component';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 import { ContextsService } from 'src/app/services/pubman-rest-client/contexts.service';
 import { AaService } from 'src/app/services/aa.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 import { Errors } from 'src/app/model/errors';
 
 @Component({

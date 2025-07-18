@@ -3,15 +3,15 @@ import { FileDbVO, ItemVersionVO, Storage, Visibility } from 'src/app/model/inge
 import { NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PopoverDirective } from 'src/app/shared/directives/popover.directive';
+import { PopoverDirective } from 'src/app/deprecated/directives/popover.directive';
 import { Subscription } from 'rxjs';
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { SanitizeHtmlPipe } from "../../../shared/services/pipes/sanitize-html.pipe";
-import { ItemBadgesComponent } from "../../../shared/components/item-badges/item-badges.component";
-import { ItemSelectionService } from "../../../shared/services/item-selection.service";
+import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
+import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
+import { ItemSelectionService } from "../../../services/item-selection.service";
 import { environment } from 'src/environments/environment';
 import { TranslatePipe } from "@ngx-translate/core";
-import { itemToVersionId } from "../../../shared/services/utils";
+import { itemToVersionId } from "../../../utils/utils";
 
 @Component({
   selector: 'pure-item-list-element',

@@ -10,8 +10,8 @@ import { TitleSearchCriterion } from "./criterions/StandardSearchCriterion";
 import { OrganizationSearchCriterion, PersonSearchCriterion } from "./criterions/StringOrHiddenIdSearchCriterion";
 import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./criterions/DateSearchCriterion";
 import { forkJoin, map, Subscription, tap } from "rxjs";
-import { OuAutosuggestComponent } from "../../shared/components/ou-autosuggest/ou-autosuggest.component";
-import { PersonAutosuggestComponent } from "../../shared/components/person-autosuggest/person-autosuggest.component";
+import { OuAutosuggestComponent } from "../shared/ou-autosuggest/ou-autosuggest.component";
+import { PersonAutosuggestComponent } from "../shared/person-autosuggest/person-autosuggest.component";
 import { GenreListSearchCriterion } from "./criterions/GenreListSearchCriterion";
 import { PublicationStateSearchCriterion } from "./criterions/PublicationStateSearchCriterion";
 import { COMPONENT_SEARCH_TYPES, FileSectionSearchCriterion } from "./criterions/FileSectionSearchCriterion";
@@ -24,11 +24,11 @@ import { Component, HostListener, ViewEncapsulation } from "@angular/core";
 import { ContextListSearchCriterion } from "./criterions/ContextListSearchCriterion";
 import { SearchStateService } from "../search-result-list/search-state.service";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { SortByLabelPipe } from "../../shared/services/pipes/sort-by-label.pipe";
+import { SortByLabelPipe } from "../../pipes/sort-by-label.pipe";
 
 import {
   SavedSearchesModalComponent
-} from "../../shared/components/saved-searches-modal/saved-searches-modal.component";
+} from "../shared/saved-searches-modal/saved-searches-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({

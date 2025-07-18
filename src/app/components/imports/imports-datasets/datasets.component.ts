@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { ItemListComponent } from "../../item-list/item-list.component";
-import { baseElasticSearchQueryBuilder } from "../../../shared/services/search-utils";
+import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 import { SortSelectorComponent } from "../../item-list/filters/sort-selector/sort-selector.component";
 
 @Component({

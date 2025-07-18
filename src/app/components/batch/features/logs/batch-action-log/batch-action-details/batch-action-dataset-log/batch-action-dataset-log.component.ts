@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 
-import { SanitizeHtmlPipe } from "src/app//shared/services/pipes/sanitize-html.pipe";
+import { SanitizeHtmlPipe } from "src/app/pipes/sanitize-html.pipe";
 import { TranslatePipe } from "@ngx-translate/core";
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
