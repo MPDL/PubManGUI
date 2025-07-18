@@ -1,13 +1,13 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FileDbVO, Storage } from 'src/app/model/inge';
-import { FileUploadDirective } from 'src/app/shared/directives/file-upload.directive';
+import { FileUploadDirective } from 'src/app/directives/file-upload.directive';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
 import { AaService } from 'src/app/services/aa.service';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 
 @Component({
   selector: 'pure-file-upload',

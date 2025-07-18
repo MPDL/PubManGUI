@@ -48,6 +48,11 @@
       @else {
         <pure-loading/>
       }
+      @if(newsItemError) {
+        <div class="alert alert-danger" role="alert">
+          There was an error loading the news. Please try again later.
+        </div>
+      }
     </div>
   </div>
 
@@ -95,7 +100,7 @@
 
 
 <!---
-Color Combination 
+Color Combination
 
 backgroundColor: ['#00C2FF', '#7FFFD4', '#FAD02E', '#FF6B6B', '#A26EFF'],
 hoverBackgroundColor: ['#00A0D6', '#5FEFD0', '#E5BA1E', '#E14C4C', '#8C57E0']

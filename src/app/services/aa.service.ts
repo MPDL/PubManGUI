@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, EMPTY, forkJoin, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 import { environment } from 'src/environments/environment';
 import { AccountUserDbVO, ContextDbVO, ItemVersionState } from "../model/inge";
 import { ContextsService } from "./pubman-rest-client/contexts.service";

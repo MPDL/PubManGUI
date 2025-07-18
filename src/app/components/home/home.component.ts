@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, OnInit } from "@angular/core";
-import { baseElasticSearchQueryBuilder } from "../../shared/services/search-utils";
-import { map, Observable, of } from "rxjs";
+import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
+import { catchError, map, Observable, of } from "rxjs";
 import { ItemVersionVO } from "../../model/inge";
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AsyncPipe, DatePipe, SlicePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
-import { SanitizeHtmlPipe } from "../../shared/services/pipes/sanitize-html.pipe";
+import { SanitizeHtmlPipe } from "../../pipes/sanitize-html.pipe";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { LoadingComponent } from "../../shared/components/loading/loading.component";
+import { LoadingComponent } from "../shared/loading/loading.component";
 
 //My Imports
 import { Chart } from 'chart.js/auto';
@@ -31,6 +31,7 @@ import { CountUp } from 'countup.js';
 export class HomeComponent implements OnInit, AfterViewInit {
   latestReleasedItems: Observable<ItemVersionVO[]> = of([]);
   newsItems: Observable<PuReBlogEntry[]> = of([]);
+  newsItemError: boolean = false;
 
   publications: number = 0;   //Soll diese Hardcode immernoch hier bleiben - nach fetch? (Nein)
   targetNumber: number = 500000;
@@ -116,7 +117,12 @@ ngOnInit(): void {
   }
 
   loadNewsItems() {
-    this.newsItems = this.httpClient.request<PuReBlogEntry[]>('GET', environment.pure_blog_feed_url);
+    this.newsItems = this.httpClient.request<PuReBlogEntry[]>('GET', 'abc').pipe(
+      catchError(err => {
+        this.newsItemError = true;
+        return of([]);
+      })
+    );
   }
 
   loadGenreAggs(): void {

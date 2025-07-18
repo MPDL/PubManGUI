@@ -11,7 +11,7 @@ import type { GetArxivParams, GetCrossrefParams } from 'src/app/components/impor
 import { AaService } from 'src/app/services/aa.service';
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { MessageService } from "src/app/shared/services/message.service";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
   selector: 'pure-imports-new-fetch',

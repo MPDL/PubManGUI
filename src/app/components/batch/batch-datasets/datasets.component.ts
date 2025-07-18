@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BatchService } from '../services/batch.service';
 
 import { ItemListComponent } from "../../item-list/item-list.component";
-import { baseElasticSearchQueryBuilder } from "../../../shared/services/search-utils";
+import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 
 
 @Component({

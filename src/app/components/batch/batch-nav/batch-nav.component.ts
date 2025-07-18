@@ -3,7 +3,7 @@ import { Component, DOCUMENT, HostListener, inject, OnInit, signal } from '@angu
 import { Router, RouterModule } from '@angular/router';
 
 import { AaService } from 'src/app/services/aa.service';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 import { BatchService } from '../services/batch.service';
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";

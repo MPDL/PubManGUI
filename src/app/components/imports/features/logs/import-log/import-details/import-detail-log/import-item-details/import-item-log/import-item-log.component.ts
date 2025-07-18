@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import { ImportLogItemDetailDbVO } from 'src/app/model/inge';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 import xmlFormat from 'xml-formatter';

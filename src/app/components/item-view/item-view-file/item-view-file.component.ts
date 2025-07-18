@@ -2,12 +2,12 @@ import { Component, Input } from '@angular/core';
 import { FileDbVO, ItemVersionVO, OA_STATUS, Storage, Visibility } from "../../../model/inge";
 import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { environment } from 'src/environments/environment';
-import { EmptyPipe } from "../../../shared/services/pipes/empty.pipe";
+import { EmptyPipe } from "../../../pipes/empty.pipe";
 import { AaService } from "../../../services/aa.service";
-import { checkFileAccess, getFullItemId, isUrl } from "../../../shared/services/item-utils";
+import { checkFileAccess, getFullItemId, isUrl } from "../../../utils/item-utils";
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
 import { TranslatePipe } from "@ngx-translate/core";
-import { CopyButtonDirective } from "../../../shared/directives/copy-button.directive";
+import { CopyButtonDirective } from "../../../directives/copy-button.directive";
 
 @Component({
   selector: 'pure-item-view-file',

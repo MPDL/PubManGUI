@@ -15,7 +15,7 @@
     <div class="form-group">
       <label for="inputUsername">Username</label>
       <input type="text" class="form-control" id="inputUsername" formControlName="username" placeholder="Enter username" data-test="username"
-             [class.is-invalid]="loginForm.controls?.['username']?.invalid && loginForm.controls?.['username']?.touched">
+             [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
       <div class="invalid-feedback">
         Please choose a username.
       </div>
@@ -23,7 +23,7 @@
     <div class="form-group">
       <label for="inputPassword">Password</label>
       <input type="password" class="form-control" id="inputPassword" formControlName="password" placeholder="Enter password" data-test="password"
-             [class.is-invalid]="loginForm.controls?.['password']?.invalid && loginForm.controls?.['password']?.touched">
+             [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
       <div class="invalid-feedback">
         Please choose a password.
       </div>

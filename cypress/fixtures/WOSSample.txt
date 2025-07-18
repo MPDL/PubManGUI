@@ -1,0 +1,39 @@
+PT J
+AU Smith, John
+   Doe, Jane
+TI Sample Article One
+SO Journal of Testing
+PY 2022
+VL 10
+IS 1
+BP 1
+EP 10
+DI 10.1000/j.jt.2022.01.001
+ER
+
+PT J
+AU Brown, Alice
+TI Sample Article Two
+SO Testing Quarterly
+PY 2021
+VL 5
+IS 2
+BP 20
+EP 30
+DI 10.1000/tq.2021.02.002
+ER
+
+PT J
+AU Miller, Bob
+   White, Carol
+TI Sample Article Three
+SO Science Advances
+PY 2020
+VL 15
+IS 3
+BP 100
+EP 110
+DI 10.1000/sa.2020.03.003
+ER
+
+EF

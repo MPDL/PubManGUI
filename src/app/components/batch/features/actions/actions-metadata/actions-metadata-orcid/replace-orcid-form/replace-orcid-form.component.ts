@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ControlType } from "src/app/components/item-edit/services/form-builder.service";
 import { IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { ConePersonsDirective } from 'src/app/shared/components/selector/services/cone-persons/cone-persons.directive';
+import { ConePersonsDirective } from 'src/app/deprecated/selector/services/cone-persons/cone-persons.directive';
 import {
   ConePersonsService,
   PersonResource
-} from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
-import { SelectorComponent } from "src/app/shared/components/selector/selector.component";
-import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
+} from 'src/app/deprecated/selector/services/cone-persons/cone-persons.service';
+import { SelectorComponent } from "src/app/deprecated/selector/selector.component";
+import { OptionDirective } from 'src/app/deprecated/selector/directives/option.directive';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 

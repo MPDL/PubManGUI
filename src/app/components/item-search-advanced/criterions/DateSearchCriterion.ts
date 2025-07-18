@@ -1,6 +1,6 @@
 import { SearchCriterion } from "./SearchCriterion";
 import { FormControl, Validators } from "@angular/forms";
-import { buildDateRangeQuery } from "../../../shared/services/search-utils";
+import { buildDateRangeQuery } from "../../../utils/search-utils";
 import { Observable, of } from "rxjs";
 
 export enum DATE_SEARCH_TYPES {

@@ -8,7 +8,7 @@ import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 import { MatBadgeModule } from '@angular/material/badge';
 
 import { TranslatePipe } from "@ngx-translate/core";
-import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
 
 
 type detail = {

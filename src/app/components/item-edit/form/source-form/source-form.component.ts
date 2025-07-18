@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AddRemoveButtonsComponent
-} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { AlternativeTitleVO, CreatorVO, IdentifierVO, MdsPublicationGenre, PublishingInfoVO } from 'src/app/model/inge';

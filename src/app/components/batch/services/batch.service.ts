@@ -10,7 +10,7 @@ import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interc
 import { AaService } from 'src/app/services/aa.service';
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 import { ItemVersionVO } from 'src/app/model/inge';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 
 import { _, TranslateService } from '@ngx-translate/core';
 

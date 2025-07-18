@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { CreatorRole, CreatorType, IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { SelectorComponent } from 'src/app/shared/components/selector/selector.component';
-import { PureOusDirective } from 'src/app/shared/components/selector/services/pure_ous/pure-ous.directive';
-import { OptionDirective } from 'src/app/shared/components/selector/directives/option.directive';
+import { SelectorComponent } from 'src/app/deprecated/selector/selector.component';
+import { PureOusDirective } from 'src/app/deprecated/selector/services/pure_ous/pure-ous.directive';
+import { OptionDirective } from 'src/app/deprecated/selector/directives/option.directive';
 import {
   ConePersonsService,
   PersonResource
-} from 'src/app/shared/components/selector/services/cone-persons/cone-persons.service';
+} from 'src/app/deprecated/selector/services/cone-persons/cone-persons.service';
 import {
   AddRemoveButtonsComponent
-} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
-import { OuAutosuggestComponent } from 'src/app/shared/components/ou-autosuggest/ou-autosuggest.component';
-import { PersonAutosuggestComponent } from 'src/app/shared/components/person-autosuggest/person-autosuggest.component';
+} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
+import { OuAutosuggestComponent } from 'src/app/components/shared/ou-autosuggest/ou-autosuggest.component';
+import { PersonAutosuggestComponent } from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
 import { environment } from 'src/environments/environment';

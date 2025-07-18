@@ -9,7 +9,7 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { AddLocalTagsParams } from 'src/app/components/batch/interfaces/batch-params';
 
 import { ControlType } from 'src/app/components/item-edit/services/form-builder.service';
-import { ChipsComponent } from 'src/app/shared/components/chips/chips.component';
+import { ChipsComponent } from 'src/app/components/shared/chips/chips.component';
 
 import { TranslatePipe } from "@ngx-translate/core";
 

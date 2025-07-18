@@ -1,6 +1,6 @@
 import { SearchCriterion } from "./SearchCriterion";
 import { FormControl } from "@angular/forms";
-import { baseElasticSearchQueryBuilder } from "../../../shared/services/search-utils";
+import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 import { forkJoin, map, Observable, of } from "rxjs";
 import { OrganizationsService } from "../../../services/pubman-rest-client/organizations.service";
 

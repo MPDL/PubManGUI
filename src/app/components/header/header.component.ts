@@ -4,13 +4,13 @@ import { RouterLink } from '@angular/router';
 import { AaComponent } from '../aa/aa.component';
 import { NgClass } from '@angular/common';
 import { AaService } from 'src/app/services/aa.service';
-import { LangSwitchComponent } from 'src/app/shared/components/lang-switch/lang-switch.component';
-import { SidenavComponent } from 'src/app/shared/components/sidenav/sidenav.component';
+import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
+import { SidenavComponent } from 'src/app/components/shared/sidenav/sidenav.component';
 
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { SearchComponent } from 'src/app/components/shared/search/search.component';
 
 
 @Component({

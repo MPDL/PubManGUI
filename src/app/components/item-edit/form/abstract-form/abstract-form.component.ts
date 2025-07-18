@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AddRemoveButtonsComponent
-} from '../../../../shared/components/add-remove-buttons/add-remove-buttons.component';
+} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
 import { Errors } from 'src/app/model/errors';
 
 @Component({

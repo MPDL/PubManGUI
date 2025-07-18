@@ -8,17 +8,17 @@ import * as resp from 'src/app/components/batch/interfaces/batch-responses';
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 import { ItemVersionVO } from 'src/app/model/inge';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 
-import { PaginatorComponent } from "src/app/shared/components/paginator/paginator.component";
+import { PaginatorComponent } from "src/app/components/shared/paginator/paginator.component";
 import { BatchActionDatasetLogComponent } from "./batch-action-dataset-log/batch-action-dataset-log.component";
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
-import { LocalizeDatePipe } from "src/app/shared/services/pipes/localize-date.pipe";
+import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
 
 
 @Component({
