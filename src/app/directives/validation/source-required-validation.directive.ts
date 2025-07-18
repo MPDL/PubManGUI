@@ -7,7 +7,7 @@ export const SourceRequiredValidator: ValidatorFn = (control: AbstractControl,):
   const error_types = Errors;
   const metadata = control;
   const genre = metadata.get('genre')?.value;
-  genre?.markAsTouched();
+  metadata.get('genre')?.markAsTouched();
   if (genre === genre_types.ARTICLE ||
     genre === genre_types.BOOK_ITEM ||
     genre === genre_types.CONFERENCE_PAPER ||
