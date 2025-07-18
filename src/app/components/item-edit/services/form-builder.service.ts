@@ -54,7 +54,8 @@ export type ControlType<T> = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ORCID_PATTERN = /^http[s]?:\/\/orcid.org\/(\d{4})-(\d{4})-(\d{4})-(\d{3}[0-9X])$/;
-const DATE_PATTERN = /^[0-9]{4}-?(?:[01][0-9])?-?(?:[0-3][0-9])?$/
+const DATE_PATTERN = /^[0-9]{4}-?(?:[01][0-9])?-?(?:[0-3][0-9])?$/;
+const FILE_TITLE_AND_NAME_PATTERN = /^[^/]+$/;
 
 @Injectable({
   providedIn: 'root'
@@ -91,7 +92,7 @@ export class FormBuilderService {
   file_FG(file: FileDbVO | null) {
     const file_form = this.fb.group<ControlType<FileDbVO>>({
       objectId: this.fb.nonNullable.control(file?.objectId ? file.objectId : null),
-      name: this.fb.nonNullable.control(file?.name ? file.name : null),
+      name: this.fb.nonNullable.control(file?.name ? file.name : null, { validators: [Validators.pattern(FILE_TITLE_AND_NAME_PATTERN)], updateOn: 'blur' }),
       visibility: this.fb.nonNullable.control(file?.visibility ? file.visibility : Visibility.PUBLIC),
       pid: this.fb.nonNullable.control(file?.pid ? file.pid : null),
       content: this.fb.nonNullable.control(file?.content ? file.content : null),
@@ -110,7 +111,7 @@ export class FormBuilderService {
 
   mds_file_FG(fileMetadata: MdsFileVO | null) {
     const mdsFile_form = this.fb.group<ControlType<MdsFileVO>>({
-      title: this.fb.nonNullable.control(fileMetadata?.title ? fileMetadata.title : null, [Validators.required]),
+      title: this.fb.nonNullable.control(fileMetadata?.title ? fileMetadata.title : null, [Validators.required, Validators.pattern(FILE_TITLE_AND_NAME_PATTERN)]),
       contentCategory: this.fb.nonNullable.control(fileMetadata?.contentCategory ? fileMetadata.contentCategory : null),
       description: this.fb.nonNullable.control(fileMetadata?.description ? fileMetadata.description : null),
       identifiers: this.fb.array(fileMetadata?.identifiers ? fileMetadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : []),
@@ -174,7 +175,7 @@ export class FormBuilderService {
       titles: this.fb.array(person?.titles ? person.titles.map(t => this.fb.nonNullable.control(t) as AbstractControl) : []),
       alternativeNames: this.fb.array(person?.alternativeNames ? person.alternativeNames.map(an => this.fb.nonNullable.control(an) as AbstractControl) : []),
       pseudonyms: this.fb.array(person?.pseudonyms ? person.pseudonyms.map(p => this.fb.nonNullable.control(p) as AbstractControl) : []),
-      orcid: this.fb.nonNullable.control(person?.orcid ? person.orcid : null),
+      orcid: this.fb.nonNullable.control(person?.orcid ? person.orcid : null, { validators: [Validators.pattern(ORCID_PATTERN)], updateOn: 'blur' }),
       identifier: person?.identifier ? this.identifier_FG(person.identifier) : this.identifier_FG(null),
       organizations: this.fb.array(person?.organizations ? person.organizations.map(ou => this.organization_FG(ou) as AbstractControl) : [])
     });
