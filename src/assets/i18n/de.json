@@ -75,7 +75,19 @@
 			"name": "MPG.PuRe"
 		},
 		"search": "Suche",
-		"advancedSearch": "Erweiterte Suche"
+		"advancedSearch": "Erweiterte Suche",
+		"tools": {
+			"name": "Werkzeuge",
+			"admintool": "Admintool",
+			"cone": "CoNE",
+			"cslEditor": "Zitierstil-Editor (CSL)",
+			"restApi": "REST-Schnittstelle",
+			"restApi.swagger": "Swagger-Übersichtsseite",
+			"restApi.documentation": "Dokumentation",
+			"oaiPmh": "OAI-PMH-Schnittstelle",
+			"oaiPmh.url": "URL für den Metadaten-Abruf",
+			"oaiPmh.search": "Abfrage-Formular"
+		}
 	},
 	"footer": {
 		"cookies": "Cookie Einstellungen",
