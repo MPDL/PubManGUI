@@ -41,6 +41,7 @@ import { SourceRequiredValidator } from 'src/app/directives/validation/source-re
 import { SourceValidator } from 'src/app/directives/validation/source-validation.directive';
 import { Utf8Validator } from 'src/app/directives/validation/utf8-validation.directive';
 import { fileDataValidator } from 'src/app/directives/validation/file-data-validation';
+import { fileUrlValidator } from 'src/app/directives/validation/file-url-validation.directive';
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 
@@ -105,7 +106,7 @@ export class FormBuilderService {
       allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.nonNullable.control(audiencId) as AbstractControl) : []),
       sortkz: this.fb.nonNullable.control(file?.sortkz ? file.sortkz : null),
     },
-      { validators: [fileDataValidator], updateOn: 'blur' });
+      { validators: [fileDataValidator, fileUrlValidator], updateOn: 'blur' });
     return file_form;
   }
 

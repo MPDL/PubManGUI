@@ -66,6 +66,9 @@
                 @if (file_form.errors?.[error_types.COMPONENT_CONTENT_NOT_PROVIDED]) {
                 <div class="text-danger">Content is required</div>
                 }
+                @if (file_form.errors?.[error_types.LOCATOR_IS_NO_URI]) {
+                <div class="text-danger">Locator is no URI. Needs to start with http:// or https:// or ftp://</div>
+                }
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>
