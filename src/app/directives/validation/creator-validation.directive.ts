@@ -37,7 +37,7 @@ export const creatorValidator: ValidatorFn = (control: AbstractControl,): Valida
           if (orcid !== null && orcid.value !== null) {
             if (!orcid.value.startsWith(ORCID_HTTPS)) {
               currentErrors[error_types.CREATOR_ORCID_INVALID] = true;
-            } else if ((!orcid.value.substring(ORCID_HTTPS.length).matches(ORCID_REGEX))) {
+            } else if ((!orcid.value.substring(ORCID_HTTPS.length).match(ORCID_REGEX))) {
               currentErrors[error_types.CREATOR_ORCID_INVALID] = true;
             }
           } // if

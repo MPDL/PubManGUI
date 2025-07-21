@@ -110,10 +110,9 @@ export class PersonAutosuggestComponent {
   }
 
   updatePerson(coneId: string, ouName: string) {
-    const selected_person = ouName;
-    const selected_ou = selected_person.substring(selected_person.indexOf('(') + 1, selected_person.lastIndexOf(','));
-    console.log("Selected:", selected_person, selected_ou)
-    console.log("ConeId", coneId)
+    const selected_ou = ouName.substring(ouName.indexOf('(') + 1, ouName.lastIndexOf(','));
+    console.log("Selected:", selected_ou);
+    console.log("ConeId", coneId);
     this.coneService.getPersonResource("cone" + coneId).subscribe(
       (person: PersonResource) => {
         if (this.formForPersonsGivenName) {
@@ -122,9 +121,24 @@ export class PersonAutosuggestComponent {
         if (this.formForPersonsFamilyName) {
           this.formForPersonsFamilyName.setValue(person.http_xmlns_com_foaf_0_1_family_name);
         }
-        if (this.formForPersonsOrcid && person.http_xmlns_com_foaf_0_1_family_name) {
-          this.formForPersonsOrcid.setValue(person.http_xmlns_com_foaf_0_1_family_name);
+        if (Array.isArray(person.http_purl_org_dc_elements_1_1_identifier)) {
+          let orcid = person.http_purl_org_dc_elements_1_1_identifier.filter(identifier => identifier.http_www_w3_org_2001_XMLSchema_instance_type.includes('ORCID'));
+          if (this.formForPersonsOrcid) {
+            this.formForPersonsOrcid.setValue(orcid[0].http_www_w3_org_1999_02_22_rdf_syntax_ns_value);
+          }
+          else {
+            this.formForPersonsOrcid = this.fb.nonNullable.control(orcid[0].http_www_w3_org_1999_02_22_rdf_syntax_ns_value);
+          }
+        } else if (person.http_purl_org_dc_elements_1_1_identifier && person.http_purl_org_dc_elements_1_1_identifier.http_www_w3_org_2001_XMLSchema_instance_type === 'ORCID') {
+          let orcid = person.http_purl_org_dc_elements_1_1_identifier.http_www_w3_org_1999_02_22_rdf_syntax_ns_value;
+          if (this.formForPersonsOrcid) {
+            this.formForPersonsOrcid.setValue(orcid);
+          }
+          else {
+            this.formForPersonsOrcid = this.fb.nonNullable.control(orcid);
+          }
         }
+
         let ou_id = '', ou_name = '';
         if (Array.isArray(person.http_purl_org_escidoc_metadata_terms_0_1_position)) {
           const ou_2_display = person.http_purl_org_escidoc_metadata_terms_0_1_position.filter(ou => ou.http_purl_org_eprint_terms_affiliatedInstitution.includes(selected_ou));
