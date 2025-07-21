@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslatePipe } from "@ngx-translate/core";
+import { AaService } from "../../../services/aa.service";
 
 @Component({
   selector: 'pure-toolsnav',
@@ -7,4 +8,6 @@ import { TranslatePipe } from "@ngx-translate/core";
     standalone: true,
     imports: [TranslatePipe]
 })
-export class ToolsnavComponent {}
+export class ToolsnavComponent {
+    aaService = inject(AaService);
+}
