@@ -3,9 +3,8 @@ import { FileDbVO, ItemVersionVO, Storage, Visibility } from 'src/app/model/inge
 import { NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PopoverDirective } from 'src/app/deprecated/directives/popover.directive';
 import { Subscription } from 'rxjs';
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
 import { ItemSelectionService } from "../../../services/item-selection.service";
@@ -16,7 +15,7 @@ import { itemToVersionId } from "../../../utils/utils";
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, PopoverDirective, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })

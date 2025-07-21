@@ -117,9 +117,9 @@
       -->
 
       @if(abstract) {
-      <a purePopover pureTooltip class="btn btn-sm" tabindex="0" [attr.title]="item?.metadata?.title!"
-         data-bs-toggle="popover" ngbTooltip="Abstract"
-         [attr.data-bs-content]="abstract"><i class="bi bi-card-text"></i></a>
+      <a class="btn btn-sm" tabindex="0"
+          ngbTooltip="Abstract" [ngbPopover]="abstract" [popoverTitle]="item?.metadata?.title" popoverClass="custom-popover"
+         ><i class="bi bi-card-text"></i></a>
       }
     </div>
 
