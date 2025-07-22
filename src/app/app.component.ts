@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/shared/sidenav/sidenav.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ScrollToTopComponent } from './components/shared/scroll-to-top/scroll-to-top.component';
-import { InfoPanelComponent } from "./components/shared/info-panel/info-panel.component";
+import { InfoSubheaderComponent } from "./components/shared/info-subheader/info-subheader.component";
 
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { NgbTooltipConfig } from "@ng-bootstrap/ng-bootstrap";
@@ -15,7 +15,7 @@ import { Title } from "@angular/platform-browser";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoPanelComponent, TranslateModule],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoSubheaderComponent, TranslateModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

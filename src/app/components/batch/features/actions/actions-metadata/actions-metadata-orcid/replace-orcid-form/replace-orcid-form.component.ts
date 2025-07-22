@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ControlType } from "src/app/components/item-edit/services/form-builder.service";
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
 import { ConePersonsDirective } from 'src/app/deprecated/selector/services/cone-persons/cone-persons.directive';
 import {
@@ -18,6 +17,16 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/batch-params';
 
 import { TranslatePipe } from "@ngx-translate/core";
+
+type Unbox<T> = T extends Array<infer V> ? V : T;
+
+export type ControlType<T> = {
+  [K in keyof T]: T[K] extends Array<any>
+  ? FormArray<AbstractControl<Unbox<T[K]>>>
+  : T[K] extends Record<string, any>
+  ? FormGroup<ControlType<T[K]>>
+  : AbstractControl<T[K] | null>;
+};
 
 @Component({
   selector: 'pure-replace-orcid-form',
