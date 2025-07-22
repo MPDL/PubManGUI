@@ -1,17 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { AddLocalTagsParams } from 'src/app/components/batch/interfaces/batch-params';
 
-import { ControlType } from 'src/app/components/item-edit/services/form-builder.service';
 import { ChipsComponent } from 'src/app/components/shared/chips/chips.component';
 
 import { TranslatePipe } from "@ngx-translate/core";
+
+type Unbox<T> = T extends Array<infer V> ? V : T;
+
+export type ControlType<T> = {
+  [K in keyof T]: T[K] extends Array<any>
+  ? FormArray<AbstractControl<Unbox<T[K]>>>
+  : T[K] extends Record<string, any>
+  ? FormGroup<ControlType<T[K]>>
+  : AbstractControl<T[K] | null>;
+};
 
 @Component({
   selector: 'pure-add-local-tags-form',

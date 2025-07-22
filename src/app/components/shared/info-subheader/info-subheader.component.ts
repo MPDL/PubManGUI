@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-import { MessagingComponent } from '../messaging/messaging.component';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
-  selector: 'pure-info-panel',
+  selector: 'pure-info-subheader',
   standalone: true,
-  imports: [CommonModule, BreadcrumbComponent, MessagingComponent],
-  templateUrl: './info-panel.component.html'
+  imports: [CommonModule, BreadcrumbComponent, NotificationComponent],
+  templateUrl: './info-subheader.component.html'
 })
-export class InfoPanelComponent {
+export class InfoSubheaderComponent {
   isScrolled = false;
 
   @HostListener('window:scroll', ['$event'])

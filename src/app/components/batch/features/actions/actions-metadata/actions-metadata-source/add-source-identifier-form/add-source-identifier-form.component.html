@@ -23,7 +23,7 @@
         <select class="form-select" formControlName="sourceIdentifierType">
           <option [value]='' selected disabled>{{ 'batch.actions.metadata.source.addId.default' | translate }}</option>
           @for (type of sourceIdTypes; track type) {
-            <option [value]="type">{{ 'IdType.' + type | translate }}</option>
+            <option [value]="type">{{ 'SourceIdType.' + type | translate }}</option>
           }
         </select>
       </div>

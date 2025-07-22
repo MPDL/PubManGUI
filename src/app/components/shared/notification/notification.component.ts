@@ -3,14 +3,14 @@ import { Component, effect } from '@angular/core';
 import { MessageService } from "src/app/services/message.service";
 
 @Component({
-  selector: 'pure-messaging',
+  selector: 'pure-notification',
   standalone: true,
   imports: [
     CommonModule
   ],
-  templateUrl: './messaging.component.html',
+  templateUrl: './notification.component.html',
 })
-export class MessagingComponent {
+export class NotificationComponent {
   message: any = {};
   collapsed: boolean = true;
 

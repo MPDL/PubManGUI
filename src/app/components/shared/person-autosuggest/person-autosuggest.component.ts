@@ -111,9 +111,7 @@ export class PersonAutosuggestComponent {
 
   updatePerson(coneId: string, ouName: string) {
     const selected_ou = ouName.substring(ouName.indexOf('(') + 1, ouName.lastIndexOf(','));
-    console.log("Selected:", selected_ou);
-    console.log("ConeId", coneId);
-    this.coneService.getPersonResource("cone" + coneId).subscribe(
+    this.coneService.getPersonResource(coneId).subscribe(
       (person: PersonResource) => {
         if (this.formForPersonsGivenName) {
           this.formForPersonsGivenName.setValue(person.http_xmlns_com_foaf_0_1_givenname);

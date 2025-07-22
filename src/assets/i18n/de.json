@@ -580,7 +580,7 @@
 		"TV_BROADCAST": "TV-Sendung",
 		"WEB_PAGE": "Webseite"
 	},
-	"IdType": {
+	"SourceIdType": {
 		"BIBTEX_CITEKEY": "BibTex Citekey",
 		"CONE": "CoNE",
 		"DOI": "DOI",
