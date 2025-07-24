@@ -3,10 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { CreatorRole, CreatorType, IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import {
-  ConePersonsService,
-  PersonResource
-} from 'src/app/deprecated/selector/services/cone-persons/cone-persons.service';
+import { ConeService, PersonResource } from 'src/app/services/cone.service';
 import {
   AddRemoveButtonsComponent
 } from '../../../shared/add-remove-buttons/add-remove-buttons.component';
@@ -31,7 +28,7 @@ export class CreatorFormComponent {
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
 
-  coneService = inject(ConePersonsService);
+  coneService = inject(ConeService);
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
 
@@ -94,7 +91,7 @@ export class CreatorFormComponent {
   updatePerson(event: any) {
     const selected_person = event.selected as string;
     const selected_ou = selected_person.substring(selected_person.indexOf('(') + 1, selected_person.lastIndexOf(','));
-    this.coneService.resource(event.id).subscribe(
+    this.coneService.getPersonResource(event.id).subscribe(
       (person: PersonResource) => {
         const patched: Partial<PersonVO> = {
           givenName: person.http_xmlns_com_foaf_0_1_givenname,
