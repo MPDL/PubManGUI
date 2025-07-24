@@ -12,6 +12,7 @@ const icons = [
   "copy_all",
   "delete",
   "delete_forever",
+  "description",
   "do_not_disturb_on",
   "drag_indicator",
   "edit",
