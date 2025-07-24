@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../services/form-builder.service';
 import { CreatorRole, CreatorType, IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { SelectorComponent } from 'src/app/deprecated/selector/selector.component';
-import { PureOusDirective } from 'src/app/deprecated/selector/services/pure_ous/pure-ous.directive';
-import { OptionDirective } from 'src/app/deprecated/selector/directives/option.directive';
 import {
   ConePersonsService,
   PersonResource
@@ -23,7 +20,7 @@ import { CdkDragHandle } from "@angular/cdk/drag-drop";
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, SelectorComponent, PureOusDirective, OptionDirective, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })
@@ -73,8 +70,6 @@ export class CreatorFormComponent {
 
   type_change(event : Event ) {
     const val = (<HTMLInputElement>event.target).value;
-    console.log('type: ', val);
-    console.log('val.localeCompare("ORGANIZATION") === 0', val.localeCompare('ORGANIZATION') === 0)
     if (val?.localeCompare('ORGANIZATION') === 0) {
       // this.organizations.clear();
       // this.organizations.push(this.fbs.organization_FG(null))
@@ -88,6 +83,7 @@ export class CreatorFormComponent {
       this.creator_form.get('organization')?.disable();
       this.creator_form.get('role')?.reset();
     }
+    this.creator_form.get('type')?.setValue(val);
   }
 
   updateOU(event: any) {
