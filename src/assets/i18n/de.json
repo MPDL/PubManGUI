@@ -155,7 +155,7 @@
 		"actions.metadata.files.visibility.to": "Neue Sichtbarkeit",
 		"actions.metadata.files.visibility.invalid": "Bisherige und neue Dateiensichtbarkeit",
 		"actions.metadata.orcid.add": "ORCID Hinzufügen",
-		"actions.metadata.orcid.add.info": "Bei den Datensätzen wird für die ausgewählte Person deren in CONE hinterlegte ORCID ID eingetragen. Vorhandene Werte werden überschrieben.",
+		"actions.metadata.orcid.add.info": "Bei den Datensätzen wird für die ausgewählte Person deren in CONE hinterlegte ORCID eingetragen. Vorhandene Werte werden überschrieben.",
 		"actions.metadata.publication": "Publikation",
 		"actions.metadata.publication.keywordsAdd": "Schlagwörter hinzufügen",
 		"actions.metadata.publication.keywordsAdd.info": "Neue Schlagwörter werden zu ggf. schon vorhandenen Werten hinzugefügt.",
@@ -224,6 +224,7 @@
 	"imports": {
 		"name": "Import",
 		"context": "Kontext",
+		"format": "Format",
 		"edit": "Import Eingabe",
 		"fetch": "ID holen",
 		"fetch.id.error": "Ungültige Eingabe: Der Identifier darf keine URL sein.",

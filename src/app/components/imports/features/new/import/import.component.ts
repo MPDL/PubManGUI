@@ -48,7 +48,7 @@ export default class ImportComponent implements OnInit {
   public importForm: FormGroup = this.fb.group({
     contextId: [this.translateService.instant(_('imports.context')), [Validators.required]],
     importName: ['', [Validators.required]],
-    format: ['ENDNOTE_STRING'],
+    format: [this.translateService.instant(_('imports.format')), [Validators.required]],
     formatConfig: [''],
     cone: [''],
     fileName: ['', [Validators.required]]
