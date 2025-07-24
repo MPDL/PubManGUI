@@ -2,15 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { ConePersonsDirective } from 'src/app/deprecated/selector/services/cone-persons/cone-persons.directive';
 import {
   ConePersonsService,
   PersonResource
 } from 'src/app/deprecated/selector/services/cone-persons/cone-persons.service';
-import { SelectorComponent } from "src/app/deprecated/selector/selector.component";
-import { OptionDirective } from 'src/app/deprecated/selector/directives/option.directive';
+import { PersonAutosuggestComponent } from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 
@@ -34,9 +32,7 @@ export type ControlType<T> = {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ConePersonsDirective,
-    SelectorComponent,
-    OptionDirective,
+    PersonAutosuggestComponent,
     TranslatePipe
   ],
   templateUrl: './replace-orcid-form.component.html',
@@ -57,11 +53,11 @@ export class ReplaceOrcidFormComponent {
     organizations: this.fb.array<AbstractControl<OrganizationVO, OrganizationVO>>([]),
     identifier: this.fb.group<ControlType<IdentifierVO>>(
       {
-        id: this.fb.control('', [ Validators.required ]),
+        id: this.fb.control(''),
         type: this.fb.control(IdType.CONE),
       }
     ),
-    orcid: this.fb.control('', [ Validators.required ]),
+    orcid: this.fb.control(''),
 
   });
 
@@ -83,17 +79,8 @@ export class ReplaceOrcidFormComponent {
           familyName: person.http_xmlns_com_foaf_0_1_family_name,
           identifier: {
             type: IdType.CONE,
-            id: person.id.substring(person.id.lastIndexOf('/') + 1),
+            id: person.id.substring(24)
           },
-        };
-
-        if (Array.isArray(person.http_purl_org_dc_elements_1_1_identifier)) {
-          const additionalIDs = person.http_purl_org_dc_elements_1_1_identifier.filter(identifier => identifier.http_www_w3_org_2001_XMLSchema_instance_type.includes(IdType.DOI));
-          patched.orcid = additionalIDs[0].http_www_w3_org_1999_02_22_rdf_syntax_ns_value;
-        } else {
-          if (person.http_purl_org_dc_elements_1_1_identifier.http_www_w3_org_2001_XMLSchema_instance_type.includes(IdType.ORCID)) {
-            patched.orcid = person.http_purl_org_dc_elements_1_1_identifier.http_www_w3_org_1999_02_22_rdf_syntax_ns_value;
-          }
         };
 
         this.changeOrcidForm.patchValue(patched, { emitEvent: false });
