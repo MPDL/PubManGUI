@@ -150,9 +150,9 @@ export class MetadataFormComponent implements OnInit {
 
   updateAllowedGenres() {
     if (this.context.value.objectId) {
-      this.contextService.retrieve(this.context.value.objectId,).subscribe(completeContext => {
-        if (completeContext.allowedGenres) {
-          this.allowed_genre_types = completeContext.allowedGenres;
+      this.contextService.retrieve(this.context.value.objectId,).subscribe(resultContext => {
+        if (resultContext.allowedGenres) {
+          this.allowed_genre_types = resultContext.allowedGenres;
         }
       });
     }
