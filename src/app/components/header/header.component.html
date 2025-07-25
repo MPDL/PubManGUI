@@ -1,11 +1,11 @@
-<nav id="header" class="navbar navbar-light navbar-expand-xxl p-0 fixed-top header bg-light"
+<nav id="header" class="navbar navbar-light navbar-expand-xl p-0 fixed-top header bg-light"
   [ngClass]="{ 'scrolled': isScrolled }">
   <div class="container-fluid d-flex justify-content-start" id="header_container">
-    <div class="d-block d-xxl-none align-middle">
+    <div class="d-block d-xl-none align-middle">
       <pure-sidenav></pure-sidenav>
     </div>
 
-    <div id="brand" class="offset-0 offset-xxl-1 col-2 col-xxl-4 navbar-brand d-flex align-items-xxl-center">
+    <div id="brand" class="offset-0 offset-xxl-1 col-2 col-xl-4 navbar-brand d-flex align-items-xl-center">
       <div class="d-none d-sm-flex">
         <a [routerLink]="['/']">
           <img id="logo" src="assets/images/mpg_blue.svg" />
@@ -18,12 +18,12 @@
       </div>
     </div>
 
-    <div class="d-none d-xxl-flex row col-7">
+    <div class="d-none d-xl-flex row col-7 col-xl-8 col-xxl-7">
       <div class="col-7 d-flex align-items-center">
         <pure-search></pure-search>
       </div>
 
-      <div class="col-4 d-flex justify-content-end align-items-center">
+      <div class="offset-xl-1 offset-xxl-0 col-4 d-flex justify-content-end align-items-center">
         <!--<pure-switch-bs-theme class="me-4"></pure-switch-bs-theme>-->
         <div class="me-4">
           <a ngbTooltip="{{ 'common.help' | translate }}" placement="bottom-left" [routerLink]="['/help']"

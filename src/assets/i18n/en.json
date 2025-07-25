@@ -224,6 +224,7 @@
 	"imports": {
 		"name": "Import",
 		"context": "Context",
+		"format": "Format",
 		"edit": "Edit import",
 		"fetch": "ID Fetch",
 		"fetch.id.error": "Invalid input: The identifier must not be a URL.",

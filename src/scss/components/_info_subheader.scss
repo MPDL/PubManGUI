@@ -7,15 +7,13 @@ pure-info-subheader {
     padding-top: 15px;
 
     &.scrolled {
-      //visibility: hidden;
-      //position: fixed;
       top: 50px;
       transition: all 0.1s ease;
       background-color: var(--bs-body-bg) !important;
     }
   }
 
-  @media (max-width: 1399.98px) {
+  @media (max-width: 1199.98px) {
     .row {
       top: 50px;
     }
@@ -23,7 +21,7 @@ pure-info-subheader {
 }
 
 #content {
-  @media (max-width: 1399.98px) {
+  @media (max-width: 1199.98px) {
     margin-top: -50px;
   }
 }

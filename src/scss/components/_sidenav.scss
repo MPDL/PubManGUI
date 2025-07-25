@@ -44,6 +44,9 @@
     top: -1.5em;
   }
 
+  @media (max-width: 1399.98px) {
+    left: 2%;
+  }
 }
 
 .navbar-toggler:focus {
@@ -71,14 +74,8 @@
   overflow: hidden;
 
   .mat-badge {
-    top: -1.5rem;
-  }
-
-  @media (max-width: 1399.98px) {
-    .matBadge {
-      top: -1em;
-      left: -1em;
-    }
+    top: -1em;
+    left: -1em;
   }
 }
 

@@ -12,19 +12,34 @@
         <label class="col-form-label" for="changeOrcidForm">CoNE</label>
       </div>
       <div class="col-sm-8">
-        <pure-selector id="changeOrcidForm" [form]="changeOrcidForm" [control_name]="'completeName'"
-          (notice)="updatePerson($event)" pureConePersons
-          placeholder="{{ 'batch.actions.metadata.orcid.add' | translate }}">
-          <ng-container *pureOption="let item">{{ item.text }}</ng-container>
-        </pure-selector>
+
+        <pure-person-autosuggest id="changeOrcidForm" 
+          [formForPersonsCompleteName]="$any(changeOrcidForm.get('completeName'))"
+          [formForPersonsGivenName]="$any(changeOrcidForm.get('givenName'))"
+          [formForPersonsFamilyName]="$any(changeOrcidForm.get('familyName'))"
+          [formForPersonOrganizations]="$any(changeOrcidForm.get('organizations'))"
+          [formForPersonsIdValue]="$any(changeOrcidForm.get('identifier.id'))"
+          [formForPersonsIdType]="$any(changeOrcidForm.get('identifier.type'))"
+          [formForPersonsOrcid]="$any(changeOrcidForm.get('orcid'))"
+          [validationError]=false
+          data-test="changeOrcidForm-autosuggest">
+        </pure-person-autosuggest>
+
       </div>
-      @if(changeOrcidForm.get('orcid')?.value) {
+
       <div class="col-sm-1">
-        <a href="{{changeOrcidForm.get('orcid')?.value}}">
-          <img class="" height="24px" width="auto" src="assets/images/orcid.svg" />
-        </a>
+        @if(changeOrcidForm.get('identifier.type')?.value == 'CONE' && changeOrcidForm.get('identifier.id')?.value) {
+          <a target="_blank" [href]="'/cone'+changeOrcidForm.get('identifier.id')?.value">
+            <img alt="CoNE logo" src="assets/icons/CoNE_icon.svg" width="24" height="24">
+          </a>
+          &nbsp;
+        }
+        @if(changeOrcidForm.get('orcid')?.value) {
+          <a target="_blank" [href]="changeOrcidForm.get('orcid')?.value">
+            <img class="" height="24px" width="auto" src="assets/images/orcid.svg" />
+          </a>
+        }
       </div>
-      }
     </div>
 
     <div class="row">

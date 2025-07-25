@@ -117,7 +117,7 @@ ngOnInit(): void {
   }
 
   loadNewsItems() {
-    this.newsItems = this.httpClient.request<PuReBlogEntry[]>('GET', 'abc').pipe(
+    this.newsItems = this.httpClient.request<PuReBlogEntry[]>('GET', environment.pure_blog_feed_url).pipe(
       catchError(err => {
         this.newsItemError = true;
         return of([]);
@@ -170,7 +170,7 @@ ngOnInit(): void {
         }]
       },
       options: {
-        responsive: true,
+        //responsive: true,
         plugins: {
           legend: {
             labels: {

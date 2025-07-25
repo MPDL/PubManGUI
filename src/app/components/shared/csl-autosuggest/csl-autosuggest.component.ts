@@ -14,7 +14,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { HttpParams } from "@angular/common/http";
 import { ConeService } from "../../../services/cone.service";
-import { FormBuilderService } from "../../item-edit/services/form-builder.service";
+import { FormBuilderService } from "../../../services/form-builder.service";
 import { EmptyPipe } from "../../../pipes/empty.pipe";
 
 @Component({

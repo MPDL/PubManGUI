@@ -8,7 +8,7 @@
 <nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()">
   <div class="container px-0">
 
-    <div class="collapse navbar-collapse d-xxl-flex" id="side_nav">
+    <div class="collapse navbar-collapse d-flex" id="side_nav">
       <nav class="nav flex-column ps-4 py-2">
         <ng-container *ngTemplateOutlet="options"></ng-container>
       </nav>
@@ -75,19 +75,19 @@
 <ng-template #options>
 
   @if (aaService.principal.getValue().isDepositor) {
-  <a class="nav-link border-bottom py-2 py-xxl-3" [routerLink]="['edit']" (click)="collapse()" data-test="sidenav-entry">
+  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['edit']" (click)="collapse()" data-test="sidenav-entry">
     <span class="material-symbols-outlined">note_add</span>
     <span class="nav-label ms-3">{{'common.addItem'| translate }}</span>
   </a>
 
-  <a class="nav-link border-bottom py-2 py-xxl-3" [routerLink]="['my']" (click)="collapse()" data-test="sidenav-my-datasets">
+  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['my']" (click)="collapse()" data-test="sidenav-my-datasets">
     <span class="material-symbols-outlined">folder_shared</span>
     <span class="nav-label ms-3">{{'common.my'| translate }}</span>
   </a>
   }
 
   @if (aaService.principal.getValue().isModerator) {
-  <a class="nav-link border-bottom py-2 py-xxl-3" [routerLink]="['qa']" (click)="collapse()" data-test="sidenav-qa-area">
+  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['qa']" (click)="collapse()" data-test="sidenav-qa-area">
     <span class="material-symbols-outlined">workspace_premium</span>
     <span class="nav-label ms-3">{{'common.qa'| translate }}</span>
   </a>
@@ -95,7 +95,7 @@
 
   @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
   <div class="border-bottom show-more">
-    <a class="nav-link py-2 py-xxl-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.hasImports()}"
+    <a class="nav-link py-2 py-xl-3" [routerLink]="['imports']" [ngClass]="{'disabled' : importsSvc.hasImports()}"
       (click)="collapse()" data-test="sidenav-import">
       <span class="material-symbols-outlined">get_app</span>
       <span class="nav-label ms-3">{{'imports.name'| translate }}</span>
@@ -110,7 +110,7 @@
 
   @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
   <div class="border-bottom show-more">
-    <a class="nav-link py-2 py-xxl-3" [routerLink]="['batch']" [ngClass]="{'disabled pb-2' : batchSvc.areItemsSelected()}"
+    <a class="nav-link py-2 py-xl-3" [routerLink]="['batch']" [ngClass]="{'disabled pb-2' : batchSvc.areItemsSelected()}"
       (click)="collapse()" data-test="sidenav-batch">
       <span class="material-symbols-outlined">web_stories</span>
       <span class="nav-label ms-3 text-nowrap">{{'batch.name'| translate }}</span>
@@ -126,7 +126,7 @@
   </div>
   }
 
-  <a class="nav-link border-bottom py-2 py-xxl-3" [routerLink]="['cart']" (click)="collapse()" data-test="sidenav-basket">
+  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['cart']" (click)="collapse()" data-test="sidenav-basket">
     <svg fill="currentColor" height="24px" width="24px">
       <use href="assets/icons/icons.svg#cart"></use>
     </svg>
@@ -136,13 +136,13 @@
     <span class="nav-label ms-3">{{'common.basket'| translate }}</span>
   </a>
 
-  <a class="nav-link border-bottom py-2 py-xxl-3" [routerLink]="['ou_tree']" (click)="collapse()"
+  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['ou_tree']" (click)="collapse()"
     data-test="sidenav-organizational-units">
     <span class="material-symbols-outlined">account_tree</span>
     <span class="nav-label ms-3 text-nowrap">{{'common.ouTree'| translate }}</span>
   </a>
 
-  <a class="nav-link py-2 py-xxl-3" [routerLink]="['']" (click)="collapse()" data-test="sidenav-place">
+  <a class="nav-link py-2 py-xl-3" [routerLink]="['']" (click)="collapse()" data-test="sidenav-place">
     <span class="material-symbols-outlined">place</span>
   </a>
 </ng-template>

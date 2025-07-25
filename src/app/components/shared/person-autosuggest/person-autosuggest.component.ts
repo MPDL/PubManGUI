@@ -16,7 +16,7 @@ import {
 } from "rxjs";
 import { ConeService, PersonResource } from "../../../services/cone.service";
 import { HttpParams } from "@angular/common/http";
-import { FormBuilderService } from 'src/app/components/item-edit/services/form-builder.service';
+import { FormBuilderService } from 'src/app/services/form-builder.service';
 import { IdType, OrganizationVO } from 'src/app/model/inge';
 
 @Component({

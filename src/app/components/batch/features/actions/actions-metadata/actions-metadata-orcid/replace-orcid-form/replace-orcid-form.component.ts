@@ -2,15 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { ConePersonsDirective } from 'src/app/deprecated/selector/services/cone-persons/cone-persons.directive';
-import {
-  ConePersonsService,
-  PersonResource
-} from 'src/app/deprecated/selector/services/cone-persons/cone-persons.service';
-import { SelectorComponent } from "src/app/deprecated/selector/selector.component";
-import { OptionDirective } from 'src/app/deprecated/selector/directives/option.directive';
+import { PersonAutosuggestComponent } from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 
@@ -18,15 +12,7 @@ import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/bat
 
 import { TranslatePipe } from "@ngx-translate/core";
 
-type Unbox<T> = T extends Array<infer V> ? V : T;
-
-export type ControlType<T> = {
-  [K in keyof T]: T[K] extends Array<any>
-  ? FormArray<AbstractControl<Unbox<T[K]>>>
-  : T[K] extends Record<string, any>
-  ? FormGroup<ControlType<T[K]>>
-  : AbstractControl<T[K] | null>;
-};
+import { ControlType } from 'src/app/services/form-builder.service'; // Adjust 
 
 @Component({
   selector: 'pure-replace-orcid-form',
@@ -34,9 +20,7 @@ export type ControlType<T> = {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ConePersonsDirective,
-    SelectorComponent,
-    OptionDirective,
+    PersonAutosuggestComponent,
     TranslatePipe
   ],
   templateUrl: './replace-orcid-form.component.html',
@@ -45,7 +29,6 @@ export class ReplaceOrcidFormComponent {
   router = inject(Router);
   fb = inject(FormBuilder);
   batchSvc = inject(BatchService);
-  cone = inject(ConePersonsService);
 
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
     completeName: this.fb.control(''),
@@ -57,11 +40,11 @@ export class ReplaceOrcidFormComponent {
     organizations: this.fb.array<AbstractControl<OrganizationVO, OrganizationVO>>([]),
     identifier: this.fb.group<ControlType<IdentifierVO>>(
       {
-        id: this.fb.control('', [ Validators.required ]),
+        id: this.fb.control(''),
         type: this.fb.control(IdType.CONE),
       }
     ),
-    orcid: this.fb.control('', [ Validators.required ]),
+    orcid: this.fb.control(''),
 
   });
 
@@ -72,32 +55,6 @@ export class ReplaceOrcidFormComponent {
       itemIds: []
     }
     return actionParams;
-  }
-
-  updatePerson(event: any) {
-    this.cone.resource(event.id).subscribe(
-      (person: PersonResource) => {
-        const patched: Partial<PersonVO> = {
-          completeName: person.http_xmlns_com_foaf_0_1_family_name + ', ' + person.http_xmlns_com_foaf_0_1_givenname,
-          givenName: person.http_xmlns_com_foaf_0_1_givenname,
-          familyName: person.http_xmlns_com_foaf_0_1_family_name,
-          identifier: {
-            type: IdType.CONE,
-            id: person.id.substring(person.id.lastIndexOf('/') + 1),
-          },
-        };
-
-        if (Array.isArray(person.http_purl_org_dc_elements_1_1_identifier)) {
-          const additionalIDs = person.http_purl_org_dc_elements_1_1_identifier.filter(identifier => identifier.http_www_w3_org_2001_XMLSchema_instance_type.includes(IdType.DOI));
-          patched.orcid = additionalIDs[0].http_www_w3_org_1999_02_22_rdf_syntax_ns_value;
-        } else {
-          if (person.http_purl_org_dc_elements_1_1_identifier.http_www_w3_org_2001_XMLSchema_instance_type.includes(IdType.ORCID)) {
-            patched.orcid = person.http_purl_org_dc_elements_1_1_identifier.http_www_w3_org_1999_02_22_rdf_syntax_ns_value;
-          }
-        };
-
-        this.changeOrcidForm.patchValue(patched, { emitEvent: false });
-      });
   }
 
   onSubmit(): void {

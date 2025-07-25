@@ -5,7 +5,7 @@ import {
   AddRemoveButtonsComponent
 } from '../../../shared/add-remove-buttons/add-remove-buttons.component';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
-import { ControlType, FormBuilderService } from '../../services/form-builder.service';
+import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
 import { AlternativeTitleVO, CreatorVO, IdentifierVO, MdsPublicationGenre, PublishingInfoVO } from 'src/app/model/inge';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';

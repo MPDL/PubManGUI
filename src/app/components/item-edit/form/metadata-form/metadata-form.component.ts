@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ControlType, FormBuilderService } from '../../services/form-builder.service';
+import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
 import {
   AbstractVO,
   AlternativeTitleVO,

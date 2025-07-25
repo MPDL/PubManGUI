@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlType, FormBuilderService } from '../../services/form-builder.service';
+import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
