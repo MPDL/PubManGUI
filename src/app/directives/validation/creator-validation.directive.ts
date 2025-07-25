@@ -63,9 +63,6 @@ export const creatorValidator: ValidatorFn = (control: AbstractControl,): Valida
           break;
         } // if
     } // switch
-    if (creator.get('type')) {
-      creator.get('type')?.markAllAsTouched;
-    }
     return currentErrors;
   } // if
   return null;
