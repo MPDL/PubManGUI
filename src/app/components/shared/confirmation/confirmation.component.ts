@@ -4,7 +4,6 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 @Component({
     selector: 'pure-confirmation',
     templateUrl: './confirmation.component.html',
-    styleUrls: ['./confirmation.component.scss'],
     standalone: true
 })
 export class ConfirmationComponent {
