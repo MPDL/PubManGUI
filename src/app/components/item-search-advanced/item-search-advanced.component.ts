@@ -5,7 +5,7 @@ import { SearchCriterion } from "./criterions/SearchCriterion";
 import { LogicalOperator } from "./criterions/operators/LogicalOperator";
 import { DisplayType, searchTypes, searchTypesI } from "./criterions/search_config";
 import { Parenthesis, PARENTHESIS_TYPE } from "./criterions/operators/Parenthesis";
-import { CreatorRole, IdType } from "../../model/inge";
+import { CreatorRole, IdType, SubjectClassification } from "../../model/inge";
 import { TitleSearchCriterion } from "./criterions/StandardSearchCriterion";
 import { OrganizationSearchCriterion, PersonSearchCriterion } from "./criterions/StringOrHiddenIdSearchCriterion";
 import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./criterions/DateSearchCriterion";
@@ -30,12 +30,16 @@ import {
   SavedSearchesModalComponent
 } from "../shared/saved-searches-modal/saved-searches-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { LanguageAutosuggestComponent } from "../shared/language-autosuggest/language-autosuggest.component";
+import {
+  ClassificationAutosuggestComponent
+} from "../shared/classification-autosuggest/classification-autosuggest.component";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet
+    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, LanguageAutosuggestComponent, ClassificationAutosuggestComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
@@ -665,6 +669,8 @@ export class ItemSearchAdvancedComponent {
     })
 
   }
+
+  protected readonly SubjectClassification = SubjectClassification;
 }
 
 

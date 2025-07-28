@@ -173,20 +173,18 @@
                     <input class="form-control" type="text" formControlName="text"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CLASSIFICATION) {
-                  <div class="col-sm-3" formGroupName="content">
-                    <select class="form-select" formControlName="classificationType">
-                      <option value="todo">TODO</option>
-                      <!--
-                      @for(classificationType of identifierOptions; track classificationType) {
-                        <option [value]="classificationType">
-                          {{ idType }}
+                  <div class="col-sm-2" formGroupName="content">
+                    <select class="form-select" formControlName="classificationType" #classificationTypeSelect>
+                      @for(classificationType of (SubjectClassification | keyvalue); track classificationType) {
+                        <option [value]="classificationType.key">
+                          {{ classificationType.key }}
                         </option>
                       }
-                      -->
+
                     </select>
                   </div>
                   <div class="col" formGroupName="content">
-                    <input class="form-control" type="text" formControlName="text"/>
+                    <pure-classification-autosuggest [formForClassification]="$any(currentFormGroup).content.get('text')" [type]="classificationTypeSelect.value" [addQuotesForSearch]="true"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CONTEXT) {
                   <div class="col-sm-3" formGroupName="content">
@@ -198,6 +196,11 @@
                       }
                     </select>
                   </div>
+                } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.LANGUAGE) {
+                  <div class="col" formGroupName="content">
+                    <pure-language-autosuggest [formForLanguage]="$any(currentFormGroup).content.get('text')" iso="iso639-3"/>
+                  </div>
+
               } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
 
                   <div class="col" formGroupName="content">

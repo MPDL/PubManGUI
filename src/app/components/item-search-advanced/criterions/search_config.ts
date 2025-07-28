@@ -34,6 +34,7 @@ export enum DisplayType {
   CLASSIFICATION,
   CONTEXT,
   DATE,
+  LANGUAGE,
   ENUM,
   EXTERNAL_BLOCKS,
   OPERATOR,
@@ -87,7 +88,7 @@ export const searchTypes : searchTypesI = {
     handlerClass: OrcidSearchCriterion
   },
   language: {
-    displayType: DisplayType.STANDARD,
+    displayType: DisplayType.LANGUAGE,
     handlerClass: LanguageSearchCriterion
   },
   eventTitle: {

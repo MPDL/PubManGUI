@@ -2,7 +2,7 @@ import { SearchCriterion } from "./SearchCriterion";
 import { FormControl } from "@angular/forms";
 import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 import { Observable, of } from "rxjs";
-import { ContextDbVO } from "../../../model/inge";
+import { ContextDbVO, SubjectClassification } from "../../../model/inge";
 import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
 
 
@@ -63,7 +63,7 @@ export class ClassificationSearchCriterion extends StandardSearchCriterion {
 
   constructor() {
     super("classification");
-    this.content.addControl("classificationType", new FormControl(''));
+    this.content.addControl("classificationType", new FormControl(SubjectClassification.DDC.valueOf()));
   }
 
   override getElasticIndexes(): string[] {
@@ -75,19 +75,21 @@ export class ClassificationSearchCriterion extends StandardSearchCriterion {
   }
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
-    return of({
+    const q =  {
       nested: {
         path: this.getElasticSearchNestedPath(),
         query: {
           bool: {
             must: [
               baseElasticSearchQueryBuilder("metadata.subjects.type", this.content.get('classificationType')?.value),
-              super.toElasticSearchQuery()
+              baseElasticSearchQueryBuilder(this.getElasticIndexes(), this.content.get('text')?.value)
             ]
           }
         }
       }
-    })
+    };
+    console.log(q)
+    return of(q);
 
   }
 
