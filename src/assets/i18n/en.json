@@ -756,6 +756,8 @@
 		"searchButton": "Search",
 		"saveSearchButton": "Open/Save Search",
     "asc": "ascending",
-    "desc" : "descending"
+    "desc" : "descending",
+    "dateCreatedInternal": "Creation Date (technical)",
+    "dateModifiedInternal": "Modification Date (technical)"
 	}
 }

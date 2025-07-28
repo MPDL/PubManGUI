@@ -73,6 +73,8 @@
                       <option value="submittedDate">{{ 'MetadataFields.dateSubmitted' | translate }}</option>
                       <option value="modifiedDate">{{ 'MetadataFields.dateModified' | translate }}</option>
                       <option value="createdDate">{{ 'MetadataFields.dateCreated' | translate }}</option>
+                      <option value="modifiedInternalDate">{{ 'Search.dateModifiedInternal' | translate }}</option>
+                      <option value="createdInternalDate">{{ 'Search.dateCreatedInternal' | translate }}</option>
                     </optgroup>
                     <optgroup label="{{ 'MetadataFields.event' | translate }}">
                       <option value="eventTitle">{{ 'MetadataFields.eventTitle' | translate }}</option>
@@ -137,7 +139,7 @@
                     <input class="form-control" type="text" formControlName="hidden"/>
                   </div>
                   -->
-                  <div class="col-sm-2 form-check" formGroupName="content">
+                  <div class="col-sm-2 form-check form-switch" formGroupName="content">
                     <input id="predecessorsAndSuccessors" class="form-check-input" type="checkbox"
                            formControlName="includePredecessorsAndSuccessors"/>
                     <label class="form-check-label" style="font-size:12px;" for="predecessorsAndSuccessors">
@@ -260,8 +262,19 @@
           </button>
         </h2>
         <div id="accordionBodyContextsGroup" class="accordion-collapse collapse show">
+
           <div class="accordion-body mt-3 mb-3">
 
+
+            <div class="row mb-3">
+              <div class="col-md-6 col-xxl-4">
+                <div class="form-check">
+                  <input id="checkAllContexts" class="form-check-input" type="checkbox"
+                         (change)="contextListSearchCriterion.selectAll($event)"/>
+                  <label class="form-check-label" for="checkAllContexts">{{ 'common.selectAll' | translate }}</label>
+                </div>
+              </div>
+            </div>
 
             <div class="row mb-3">
               @for (context of contextListSearchCriterion.contextOptions | keyvalue; track context; let i = $index; ) {
