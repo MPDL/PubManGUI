@@ -5,7 +5,7 @@
   padding: 4rem 2rem;
   margin-bottom: 3rem;
   border-radius: 0.5rem;
-  min-height: 70vh;
+  //min-height: 70vh;
   display: flex;
   align-items: center;
   z-index: 1;
@@ -23,88 +23,12 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px) brightness(0.9); /* add blur and darken a bit oder mann das hier auch nutzen  background-color: rgba(0, 0, 0, 0.3);*/
+  filter: blur(2px) brightness(1.1); /* add blur and darken a bit oder mann das hier auch nutzen  background-color: rgba(0, 0, 0, 0.3);*/
   z-index: -1;
 }
 
 .infobox {
-  text-align: left;
-  padding: 2rem;
-  border-radius: 1rem;
-  background-color: rgba(255, 255, 255, 0.85); /* slightly less transparent */
-  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2); /* deeper shadow for more contrast */
-  color: #032032;
   backdrop-filter: blur(3px); /* subtle glass effect */
-  border: 1px solid rgba(0, 68, 95, 0.2); /* soft border with theme color */
-}
-
-.infobox p {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.search {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 14px;
-  border-radius: 28px;
-  background-color: rgba(255, 255, 255, 0.8);
-  transition: background 0.25s;
-}
-
-.search:focus-within {
-  background-color: rgba(255, 255, 255, 0.7);
-}
-
-.search-input {
-  font-size: 16px;
-  color: #032032;
-  margin-left: 14px;
-  outline: none;
-  border: none;
-  background: transparent;
-  width: 100%; /* Make search input fill available space */
-  min-width: 0; /* Fix flexbox shrinking issue */
-}
-
-//Teil2
-.dual-section-wrapper {
-  background-color: #00445f;
-  padding: 40px;
-  border-radius: 12px;
-  color: white;
-}
-
-.news-section .card,
-.releases-section .card {
-  background-color: #e3e8ed;
-
-  min-height: 22rem;
-  border-radius: 14px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(6px);
-}
-
-.news-section .card:hover,
-.releases-section .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-.card-title {
-  font-weight: 600;
-  font-size: 1rem;
-  color: #032032;
-}
-.card-header,
-.card-body {
-  padding: 1rem 1.25rem;
 }
 
 .card-img-top {
@@ -114,101 +38,6 @@
   object-position: top;
 }
 
-.news-section .card-header {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 1rem;
-}
-
-.releases-section .card-img-top {
-  max-height: 160px;
-  object-fit: cover;
-  width: 100%;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.stretched-link {
-  z-index: 1;
-}
-
-.card {
-  max-width: 100%;
-  height: auto;
-}
-
-.document-chart-section {
-  background-color: #00445f;
-  padding: 40px;
-  border-radius: 12px;
-  color: white;
-  margin-top: 3rem;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h4 {
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-  }
-
-  canvas {
-    max-width: 400px;
-    width: 100%;
-    height: auto !important;
-  }
-}
-
-@media (max-width: 576px) {
-  .card {
-    max-width: 100%;
-    margin: 0 auto; /* Center the card on smaller screens */
-  }
-
-  .infobox {
-    padding: 1rem; // ✅ Noch kompakter auf sehr kleinen Geräten
-  }
-
-  h4 {
-    font-size: 1.5rem; // ✅ Kleinere Section-Überschrift
-  }
-}
-@media (max-width: 768px) {
-  .dual-section-wrapper,
-  .document-chart-section {
-    padding: 20px;
-  }
-
-  .infobox {
-    padding: 1.5rem;
-    text-align: center;
-  }
-
-  .infobox h1 {
-    font-size: 1.8rem;
-  }
-
-  .infobox p,
-  .infobox span {
-    font-size: 1rem;
-  }
-
-  .card-header,
-  .card-body {
-    padding: 0.75rem;
-  }
-
-  .row {
-    margin: 0 !important;
-  }
-}
-@media (max-width: 1024px) {
-  .infobox {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-}
-@media (min-width: 1600px) {
-  .infobox {
-    padding: 5rem;
-  }
+.search {
+  transition: background 0.25s;
 }

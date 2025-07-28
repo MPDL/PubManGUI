@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -32,6 +32,7 @@ export default class FetchComponent implements OnInit {
   aaSvc = inject(AaService);
   translateService = inject(TranslateService);
   msgSvc = inject(MessageService);
+  elRef: ElementRef = inject(ElementRef);
 
   user_contexts?: ContextDbRO[] = [];
 
@@ -141,4 +142,13 @@ export default class FetchComponent implements OnInit {
     element.innerHTML = 'GO'
   }
 
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.fetchForm.reset();
+      this.fetchForm.controls['contextId'].setValue(this.translateService.instant(_('imports.context')));
+      this.fetchForm.controls['source'].setValue('crossref');
+      this.fetchForm.controls['fullText'].setValue('FULLTEXT_DEFAULT');
+    }
+  }
 }

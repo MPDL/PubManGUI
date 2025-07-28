@@ -251,7 +251,7 @@
 		"list.items.empty": "This import has no items available!",
 		"list.items.for": "Import",
 		"list.remove": "Remove from log",
-		"list.remove.confirmation": "Do you really want to remove this import log?",
+		"list.remove.confirmation": "Do you really want to remove import log {{name}}?",
 		"list.started.on": "started on",
 		"release.confirmation": "Do you really want to release this import?",
 		"remove.confirmation": "Do you really want to remove this import?",
@@ -756,6 +756,8 @@
 		"searchButton": "Search",
 		"saveSearchButton": "Open/Save Search",
     "asc": "ascending",
-    "desc" : "descending"
+    "desc" : "descending",
+    "dateCreatedInternal": "Creation Date (technical)",
+    "dateModifiedInternal": "Modification Date (technical)"
 	}
 }

@@ -4,16 +4,16 @@
       <div class="col-12 col-md-8 col-lg-6 ms-md-4 ms-lg-3">
         <!-- Wrap welcome + search -->
         <div class="welcome-search-wrapper d-flex flex-column gap-3">
-          <div class="infobox">
+          <div class="infobox bg-light opacity-75 rounded-4 text-secondary-emphasis p-4">
             <h1 class="mb-1 fw-bold">Welcome to MPG.PuRe</h1>
-            <p>The publication repository of the Max Planck Society</p>
-            <p class="m-0"><span id="pubCounter" class="fw-bold">0</span> publications available</p>
+            <p class="fs-5">The publication repository of the Max Planck Society</p>
+            <p class="fs-5"><span id="pubCounter" class="fw-bold">0</span> publications available</p>
           </div>
           <div class="search-wrapper">
             <form>
-              <div class="search">
+              <div class="search d-flex align-items-center bg-light opacity-75 rounded-5 p-3">
                 <span class="material-symbols-outlined">search</span>
-                <input type="search" class="search-input" placeholder="Search" />
+                <input type="search" class="form-control ms-3 border-0 bg-transparent w-100" placeholder="Search" />
               </div>
             </form>
           </div>
@@ -24,16 +24,16 @@
 </div>
 
 
-<div class="dual-section-wrapper">
+<div class="bg-mpg-blue text-white rounded-4 p-5">
   <!-- News Section -->
-  <div class="news-section mb-5">
+  <div id="news-section" class="mb-5">
     <h4>MPG.PuRe News</h4>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
       @if(newsItems | async; as blogEntries) {
         @for(blogEntry of blogEntries.slice(0,3); track blogEntry) {
           <div class="col">
             <div class="card h-100">
-              <div class="card-header">
+              <div class="card-header bg-white text-mpg-blue">
                 <small class="card-title">{{ blogEntry.date | date:'short' }}</small>
                 <h6 class="card-title">{{ blogEntry.title }}</h6>
               </div>
@@ -48,20 +48,15 @@
       @else {
         <pure-loading/>
       }
-      @if(newsItemError) {
-        <div class="alert alert-danger" role="alert">
-          There was an error loading the news. Please try again later.
-        </div>
-      }
     </div>
   </div>
 
   <!-- Latest Releases Section -->
-  <div class="releases-section">
+  <div id="releases-section">
     <h4>Latest Featured Releases</h4>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 g-4">
       @if(latestReleasedItems | async; as items) {
-        @for(item of items.slice(0,3); track item) {
+        @for(item of items.slice(0,5); track item) {
           <div class="col">
             <div class="card h-100">
               @let file = getFirstPublicThumbnail(item);
@@ -86,13 +81,17 @@
 </div>
 
 <!-- Document Types Distribution Section -->
-<div class="chart-section-wrapper mt-5">
-  <div class="card document-chart-section">
-    <div class="card-body">
-      <h4>Document Types Distribution</h4>
-      <canvas id="documentChart"></canvas>
-    </div>
+<div class="bg-mpg-blue text-white rounded-4 p-5 mt-5">
+
+
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col mx-auto text-center">
+              <h4>Document Types Distribution</h4>
+              <canvas id="documentChart"></canvas>
+        </div>
   </div>
+
 </div>
 
 

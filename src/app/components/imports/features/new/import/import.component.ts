@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -33,6 +33,7 @@ export default class ImportComponent implements OnInit {
   fb = inject(FormBuilder);
   aaSvc = inject(AaService);
   translateService = inject(TranslateService);
+  elRef: ElementRef = inject(ElementRef);
 
   formatObject: any = null;
   lastFormat: string = '';
@@ -61,10 +62,11 @@ export default class ImportComponent implements OnInit {
         this.user_contexts = p.depositorContexts;
       }
     );
-  }
 
-  ngDoCheck() {
-    this.getFormatConfiguration(this.importForm.get('format')!.value);
+    this.importForm.controls['format'].valueChanges.subscribe(format => {
+      if (format && format !== this.translateService.instant(_('imports.format'))) this.getFormatConfiguration(format);
+    });
+
   }
 
   getFormatConfiguration(format: string) {
@@ -107,6 +109,10 @@ export default class ImportComponent implements OnInit {
 
   setDefaultOption(): void {
     const defaultArray = this.formatObject["_default"];
+    if (!defaultArray || defaultArray.length === 1) {
+      return;
+    }
+    console.log("Default options:", defaultArray);
     const defaultValue = defaultArray.find((entry: string) => entry.startsWith(this.getSelectName())).split("=")[1];
     this.importForm.get('formatConfig')?.setValue(defaultValue);
   }
@@ -122,7 +128,7 @@ export default class ImportComponent implements OnInit {
     }
   }
 
-  onChange($event: any): void {
+  onFileChange($event: any): void {
     $event.preventDefault();
     if ($event.target.files && $event.target.files[0]) {
       this.getData($event.target.files[0]);
@@ -161,7 +167,7 @@ export default class ImportComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.importForm.invalid) {
+    if (this.importForm.invalid || this.importForm.pristine) {
       this.importForm.markAllAsTouched();
       return;
     }
@@ -169,5 +175,14 @@ export default class ImportComponent implements OnInit {
     this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
       this.router.navigate(['/imports/myimports']);
     });
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.importForm.reset();
+      this.importForm.controls['contextId'].setValue(this.translateService.instant(_('imports.context')));
+      this.importForm.controls['format'].setValue(this.translateService.instant(_('imports.format')));
+    }
   }
 }

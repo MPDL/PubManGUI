@@ -251,7 +251,7 @@
 		"list.items.empty": "Für diesen Import sind keine Datensätze verfügbar!",
 		"list.items.for": "Import",
 		"list.remove": "Aus dem Protokoll entfernen",
-		"list.remove.confirmation": "Möchten Sie dieses Importprotokoll wirklich entfernen?",
+		"list.remove.confirmation": "Möchten Sie Importprotokol {{name}} wirklich entfernen?",
 		"list.started.on": "gestartet am",
 		"release.confirmation": "Möchten Sie diesen Import wirklich freigeben?",
 		"remove.confirmation": "Möchten Sie diesen Import wirklich entfernen?",
@@ -756,6 +756,8 @@
 		"searchButton": "Suche",
 		"saveSearchButton": "Suche öffnen/speichern",
     "asc": "aufsteigend",
-    "desc" : "absteigend"
+    "desc" : "absteigend",
+    "dateCreatedInternal": "Erstellungsdatum (technisch)",
+    "dateModifiedInternal": "Änderungsdatum (technisch)"
 	}
 }

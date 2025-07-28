@@ -82,7 +82,7 @@ export class ImportLogComponent {
   }
 
   deleteImportLog(log: any): void {
-    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.list.remove.confirmation')), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant('imports.list.remove.confirmation', { name: log.name }), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.deleteImportLogEvent.emit(log);
