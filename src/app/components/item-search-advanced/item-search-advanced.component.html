@@ -125,7 +125,7 @@
                   </div>
                   <div class="col">
                     <pure-person-autosuggest [formForPersonsCompleteName]="$any(currentFormGroup).content.get('text')"
-                                             [formForPersonsIdValue]="$any(currentFormGroup).content.get('hidden')"/>
+                                             [formForPersonsIdValue]="$any(currentFormGroup).content.get('hidden')" [showConeAndOrcid]="true"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ORGANIZATION) {
 
