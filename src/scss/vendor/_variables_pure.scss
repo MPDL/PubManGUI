@@ -9,11 +9,13 @@ $font-family-base: 'Roboto300', "Segoe UI", 'Helvetica Neue Light', 'Helvetica N
 $headings-font-family: 'Merriweather', 'Times New Roman', Times, serif;
 
 
-$input-focus-box-shadow: 0 0 0 0 transparent;
-$form-select-focus-box-shadow: 0 0 0 0 transparent;
-$form-check-input-focus-box-shadow: 0 0 0 0 transparent;
+//$input-focus-box-shadow: 0 0 0 0 transparent;
+//$form-select-focus-box-shadow: 0 0 0 0 transparent;
+//$form-check-input-focus-box-shadow: 0 0 0 0 transparent;
 $list-group-border-width: 0;
 $form-check-input-checked-bg-color: $mpg-secondary-blue;
+
+$input-placeholder-color: $mpg-slate-gray-2;
 
 //bright mode
 $body-color:                $mpg-slate-gray-0;

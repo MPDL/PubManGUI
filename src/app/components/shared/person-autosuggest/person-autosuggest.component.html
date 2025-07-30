@@ -11,7 +11,7 @@
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." [ngClass]="{'is-invalid': validationError}"/>
   } @else if (formForPersonsGivenName && formForPersonsFamilyName) {
-    <input class="form-control" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
+    <input class="form-control {{formForPersonsFamilyName.value ? 'fw-bold' : ''}}" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." [ngClass]="{'is-invalid': validationError}"/>
   }
