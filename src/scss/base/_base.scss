@@ -26,6 +26,14 @@ ul {
   padding: 0;
 }
 
+.form-control {
+  padding: 0.25rem 0.5rem;
+}
+
+.form-select {
+  padding: 0.25rem 2.25rem 0.25rem 0.5rem;
+}
+
 .material-symbols-outlined {
   font-variation-settings: 'wght' 500, 'GRAD' 0, 'opsz' 48;
   vertical-align: middle;
@@ -37,6 +45,11 @@ ul {
   -moz-osx-font-smoothing: unset;
   */
 }
+
+
+
+
+
 
 button > .material-symbols-outlined {
   top: 0px;

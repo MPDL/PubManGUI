@@ -25,37 +25,6 @@
     --bs-dropdown-link-hover-bg: var(--bs-gray-200);
   }
 
-  .form-control,
-  .form-select {
-    // background-color: #{shade-color($background-content, 2%)};
-    background-color: $body-bg;
-  }
-
-  .form-control:focus,
-  .form-select:focus {
-    background-color: $body-bg;
-    border-color: #{tint-color($secondary, 10%)};
-  }
-
-  .header_color {
-    background-color: $body-secondary-bg;
-  }
-
-  .highlight {
-    color: $yellow-200;
-    background-color: $gray-600;
-  }
-
-  .highlighted {
-    color: black;
-    background-color: $gray-400;
-    // transform: translateX(.5rem);
-  }
-
-  .input-group-text {
-    background-color: $body-bg;
-  }
-
   .list-group-item {
     background-color: $body-secondary-bg;
 

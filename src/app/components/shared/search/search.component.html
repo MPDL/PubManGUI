@@ -1,6 +1,6 @@
 <form id="search" role="search" [formGroup]="search_form" (ngSubmit)="search()">
   <div class="input-group input-group-sm rounded border border-2">
-    <div class="input-group-text border-0 p-0">
+    <div class="input-group-text border-0 p-0 bg-body">
       <a role="button" class="btn col-1" (click)="search(); collapse()" [ngbTooltip]="'header.search' | translate">
         <span class="material-symbols-outlined">search</span>
       </a>
@@ -8,7 +8,7 @@
 
     <input id="text" class="form-control border-0 col-10" type="search" formControlName="text"
       [placeholder]="'header.search'| translate" aria-label="Search">
-    <div class="input-group-text border-0 p-0">
+    <div class="input-group-text border-0 p-0 bg-body">
       <a class="btn col-1" role="button" [ngbTooltip]="'header.advancedSearch' | translate"
         [routerLink]="['/advanced-search']" (click)="collapse()">
         <span class="material-symbols-outlined">tune</span>
