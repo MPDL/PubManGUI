@@ -1,0 +1,53 @@
+
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ ou?.name }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+
+  @if(ou) {
+    <pure-item-view-metadata-element>
+          <span label>
+            Name
+          </span>
+      <span content>
+            {{ou?.name}}
+          </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element>
+          <span label>
+            Id
+          </span>
+      <span content>
+            {{ou?.objectId}}
+          </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element>
+          <span label>
+            Alternative Names
+          </span>
+      <span content>
+            {{ou?.metadata?.alternativeNames}}
+          </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element>
+          <span label>
+            Descriptions
+          </span>
+      <span content>
+            {{ou?.metadata?.descriptions}}
+          </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element>
+          <span label>
+            Location
+          </span>
+      <span content>
+             {{ou?.metadata?.city}} {{ou?.metadata?.countryCode}}
+          </span>
+    </pure-item-view-metadata-element>
+  } @else {
+    <pure-loading></pure-loading>
+  }
+</div>
+

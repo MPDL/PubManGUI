@@ -76,7 +76,7 @@
                    ({{aff.identifier}})
                    <span class="me-2">
                       <button class="btn btn-link p-0"
-                              (click)="toggleAffPopover(affPopover, aff)">
+                              (click)="toggleAffPopover(aff)">
 
                         <span class="material-symbols-outlined">info</span>
 
@@ -93,59 +93,4 @@
       </span>
 
     </pure-item-view-metadata-element>
-
-    <ng-template #affPopover let-modal>
-
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{ selectedAffiliationForPopover?.name }}</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-      </div>
-      <div class="modal-body">
-
-        @if(selectedAffiliationForPopover) {
-        <pure-item-view-metadata-element>
-          <span label>
-            Name
-          </span>
-          <span content>
-            {{selectedAffiliationForPopover?.name}}
-          </span>
-        </pure-item-view-metadata-element>
-        <pure-item-view-metadata-element>
-          <span label>
-            Id
-          </span>
-          <span content>
-            {{selectedAffiliationForPopover?.objectId}}
-          </span>
-        </pure-item-view-metadata-element>
-        <pure-item-view-metadata-element>
-          <span label>
-            Alternative Names
-          </span>
-          <span content>
-            {{selectedAffiliationForPopover?.metadata?.alternativeNames}}
-          </span>
-        </pure-item-view-metadata-element>
-        <pure-item-view-metadata-element>
-          <span label>
-            Descriptions
-          </span>
-          <span content>
-            {{selectedAffiliationForPopover?.metadata?.descriptions}}
-          </span>
-        </pure-item-view-metadata-element>
-        <pure-item-view-metadata-element>
-          <span label>
-            Location
-          </span>
-          <span content>
-             {{selectedAffiliationForPopover?.metadata?.city}} {{selectedAffiliationForPopover?.metadata?.countryCode}}
-          </span>
-        </pure-item-view-metadata-element>
-        } @else {
-          <pure-loading></pure-loading>
-        }
-      </div>
-    </ng-template>
 

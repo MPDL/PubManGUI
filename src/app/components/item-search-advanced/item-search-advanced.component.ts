@@ -5,7 +5,7 @@ import { SearchCriterion } from "./criterions/SearchCriterion";
 import { LogicalOperator } from "./criterions/operators/LogicalOperator";
 import { DisplayType, searchTypes, searchTypesI } from "./criterions/search_config";
 import { Parenthesis, PARENTHESIS_TYPE } from "./criterions/operators/Parenthesis";
-import { CreatorRole, IdType } from "../../model/inge";
+import { CreatorRole, IdType, ItemVersionState, SubjectClassification } from "../../model/inge";
 import { TitleSearchCriterion } from "./criterions/StandardSearchCriterion";
 import { OrganizationSearchCriterion, PersonSearchCriterion } from "./criterions/StringOrHiddenIdSearchCriterion";
 import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./criterions/DateSearchCriterion";
@@ -30,12 +30,17 @@ import {
   SavedSearchesModalComponent
 } from "../shared/saved-searches-modal/saved-searches-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { LanguageAutosuggestComponent } from "../shared/language-autosuggest/language-autosuggest.component";
+import {
+  ClassificationAutosuggestComponent
+} from "../shared/classification-autosuggest/classification-autosuggest.component";
+import { AddRemoveButtonsComponent } from "../shared/add-remove-buttons/add-remove-buttons.component";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet
+    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, LanguageAutosuggestComponent, ClassificationAutosuggestComponent, AddRemoveButtonsComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
@@ -665,6 +670,67 @@ export class ItemSearchAdvancedComponent {
     })
 
   }
+
+  switchToAdmin(admin: boolean) {
+    if(admin) {
+
+      Object.keys(this.contextListSearchCriterion.contextListFormGroup.controls).forEach(key => {
+        this.contextListSearchCriterion.contextListFormGroup.get(key)?.setValue(true);
+      })
+
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.PENDING.valueOf())?.setValue(true);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.SUBMITTED.valueOf())?.setValue(true);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.RELEASED.valueOf())?.setValue(true);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.IN_REVISION.valueOf())?.setValue(true);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.WITHDRAWN.valueOf())?.setValue(false);
+    }
+    else {
+
+      Object.keys(this.contextListSearchCriterion.contextListFormGroup.controls).forEach(key => {
+        console.log(key)
+        this.contextListSearchCriterion.contextListFormGroup.get(key)?.setValue(false);
+      })
+
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.PENDING.valueOf())?.setValue(false);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.SUBMITTED.valueOf())?.setValue(false);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.RELEASED.valueOf())?.setValue(true);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.IN_REVISION.valueOf())?.setValue(false);
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.WITHDRAWN.valueOf())?.setValue(false);
+    }
+
+  }
+
+  get isAdmin() {
+   const anyContextSelected = Object.keys(this.contextListSearchCriterion.contextListFormGroup.controls)
+     .map(key => this.contextListSearchCriterion.contextListFormGroup.get(key)?.value)
+     .includes(true);
+
+   const anyAdminStatesSelected =
+     this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.PENDING.valueOf())?.value == true ||
+    this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.SUBMITTED.valueOf())?.value == true ||
+    //this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.RELEASED.valueOf())?.value == true ||
+    this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.IN_REVISION.valueOf())?.value == true
+    //this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.WITHDRAWN.valueOf())?.value == false;
+
+   return anyContextSelected || anyAdminStatesSelected;
+  }
+
+  get isPublic() {
+    const anyContextSelected = Object.keys(this.contextListSearchCriterion.contextListFormGroup.controls)
+      .map(key => this.contextListSearchCriterion.contextListFormGroup.get(key)?.value)
+      .includes(true);
+
+    const onlyReleasedSelected =
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.PENDING.valueOf())?.value == false &&
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.SUBMITTED.valueOf())?.value == false &&
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.RELEASED.valueOf())?.value == true &&
+      this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.IN_REVISION.valueOf())?.value == false
+    //this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.WITHDRAWN.valueOf())?.value == false;
+
+    return (!anyContextSelected) && onlyReleasedSelected;
+  }
+
+  protected readonly SubjectClassification = SubjectClassification;
 }
 
 

@@ -13,9 +13,11 @@ import {
   tap
 } from "rxjs";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { OrganizationsService } from "../../../services/pubman-rest-client/organizations.service";
 import { TranslatePipe } from "@ngx-translate/core";
+import { OrganizationVO } from "../../../model/inge";
+import { OuModalComponent } from "../ou-modal/ou-modal.component";
 
 @Component({
   selector: 'pure-ou-autosuggest',
@@ -28,13 +30,16 @@ export class OuAutosuggestComponent {
 
   @Input() formForOuName! : FormControl;
   @Input() formForOuId! : FormControl | undefined;
+  @Input() formForOuAddress! : FormControl | undefined;
 
   @Input() validationEnabled: boolean = false;
   @Input() validationError: boolean = false;
 
+  @Input() emphasize: boolean = false;
+
   searching: boolean = false;
 
-  constructor(private organizationsService: OrganizationsService) {
+  constructor(private organizationsService: OrganizationsService, private modalService:NgbModal) {
   }
 
   suggestOus: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
@@ -73,11 +78,15 @@ export class OuAutosuggestComponent {
     if(this.formForOuId) {
       this.formForOuId.setValue(event.item.objectId);
     }
+    if(this.formForOuAddress) {
+      this.formForOuAddress.setValue(event.item.metadata?.city);
+    }
     this.formForOuName.setValue(event.item.namePath.join(', '));
 
     //Prevent that the whole ou object is set in the form control
     event.preventDefault();
   }
+
 
   ouAutoSuggestElasticQuery(searchString: string) {
     return {
@@ -104,6 +113,12 @@ export class OuAutosuggestComponent {
   deleteFields() {
     this.formForOuName.setValue(null);
     this.formForOuId?.setValue(null);
+  }
+
+  toggleAffPopover(ouId: string) {
+    const componentInstance = this.modalService.open(OuModalComponent, {size: 'lg'}).componentInstance;
+    componentInstance.ouId = ouId;
+
   }
 
 }

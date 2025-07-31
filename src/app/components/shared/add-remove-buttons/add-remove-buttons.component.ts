@@ -14,6 +14,8 @@ export class AddRemoveButtonsComponent implements OnInit {
   @Input() add_val?: string;
   @Input() del_val?: string;
   @Input() hiddenAddButton?: boolean;
+  @Input() disableAdd: boolean = false;
+  @Input() disableRemove: boolean = false;
   @Output() notice = new EventEmitter();
   add_value: string | undefined;
   del_value: string | undefined;

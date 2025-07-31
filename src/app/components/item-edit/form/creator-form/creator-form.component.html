@@ -1,19 +1,21 @@
 <div [formGroup]="creator_form">
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-        <div class="col-sm ms-sm-3" [ngClass]="{'border-bottom': index !== index_length -1}">
+    <div class="d-sm-flex flex-sm-row gap-1 p-2 {{index < index_length-1 ? 'border-bottom':''}} {{index%2===0 ? '':'bg-mpg-bg-gray'}}">
+
+
+
+      <div class="col-sm">
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start ">
                 @if(creator_form.errors?.[error_types.CREATOR_ORCID_INVALID]) {
                 <div class="text-danger">Orcid invalid. Please change in CoNE</div>
                 }
             </div>
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start ">
-                <div class="col-sm-auto" cdkDragHandle>
-                    <label class="col-form-label pe-2">&nbsp;</label><br />
-                    <span class="material-symbols-outlined">
-                        drag_indicator
-                    </span>
-                </div>
-                <div class="col-sm-2">
+              <div class="col-sm-auto" cdkDragHandle>
+                <label class="col-form-label pe-2">&nbsp;</label><br/>
+                <div class="material-symbols-outlined drag-list-box">drag_indicator</div>
+              </div>
+
+              <div class="col-sm-2">
                     <label for="creator_type" class="col-form-label pe-2">type</label>
                     <select id="creator_type" class="form-select" formControlName="type" (change)="type_change($event)">
                         <!--TODO: type_change really needed?-->
@@ -40,26 +42,20 @@
                 <div class="col-sm" formGroupName="organization">
                     <label for="name" class="col-form-label pe-2">name</label>
                     <pure-ou-autosuggest id="organization{{index+1}}" [formForOuName]="$any(organization.controls.name)"
-                                [formForOuId]="$any(organization.controls.identifier)" [validationEnabled]="true"
+                                [formForOuId]="$any(organization.controls.identifier)" [validationEnabled]="true" [emphasize]="true"
                                 [validationError]="creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] ? true : false"></pure-ou-autosuggest>
-                                
+
+
                     @if(creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED]) {
-                    <div class="text-danger">Organization name is required</div>
+                      <div class="text-danger">Organization name is required</div>
                     }
+
                 </div>
-                <!--TODO link-->
-                <a routerLink="cone_uri{organization.controls.identifier.value}" routerLinkActive="active">
-                    <span class="material-symbols-outlined"
-                        [ngClass]="{'invisible': !organization.controls.identifier.value}"
-                        title="{{organization.controls.identifier.value}}">
-                        info
-                    </span>
-                </a>
                 }
                 @if (type.value === 'PERSON') {
 
                 <ng-container formGroupName="person">
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <label for="familyName" class="col-form-label pe-2">family</label>
                         <!--<input type="text" class="form-control" id="familyName"
                             formControlName="familyName">-->
@@ -71,29 +67,17 @@
                             [formForPersonsIdType]="$any(person.controls.identifier.controls.type)"
                             [formForPersonsOrcid]="$any(person.controls.orcid)"
                             [validationError]="creator_form.errors?.[error_types.CREATOR_FAMILY_NAME_NOT_PROVIDED] ? true : false"
+                            [showConeAndOrcid]="true"
                             data-test="familyname-autosuggest" />
+                      @if(creator_form.errors?.[error_types.CREATOR_FAMILY_NAME_NOT_PROVIDED] ? true : false) {
+                        <div class="text-danger">Creator family name is required</div>
+                      }
                     </div>
                     <div class="col-sm-3">
                         <label for="givenName" class="col-form-label pe-2">given</label>
                         <input type="text" class="form-control" id="givenName" formControlName="givenName"
                             data-test="givenname">
                     </div>
-                    @if(person.controls.identifier.controls.type.value == 'CONE') {
-                    <div class="col-sm-autoalign-items-start">
-                        <p>&nbsp;</p>
-                        <svg fill="currentColor" height="24px" width="24px">
-                            <use href="/assets/icons/icons.svg#cone"></use>
-                        </svg>
-                    </div>
-                    }
-                    @if(person.controls.orcid.value) {
-                    <div class="col-sm-autoalign-items-start">
-                        <p>&nbsp;</p>
-                        <svg fill="currentColor" height="24px" width="24px">
-                            <use href="/assets/icons/icons.svg#orcid"></use>
-                        </svg>
-                    </div>
-                    }
                     <!-- Just in case
                         <label for="orcid" class="col-sm-1 col-form-label text-end pe-2">orcid</label>
                         <div class="col-sm">
@@ -114,21 +98,31 @@
                 <div formArrayName="organizations">
                     @for (pou of organizations.controls; track pou; let i = $index) {
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start" [formGroupName]="i">
-                        <label for="ou_name" class="col-sm-1 col-form-label pe-2">ou
-                            {{i+1}}</label>
-                        <div class="col-sm">
-                            <!--
-                                <pure-selector [form]="pou" [control_name]="'name'" (notice)="updatePersonOU($event, i)"
-                                    purePureOus placeholder="search ous ...">
-                                    <ng-container *pureOption="let item">{{ item.text }}</ng-container>
-                                </pure-selector>
-                            -->
-                            <pure-ou-autosuggest id="personOu{{i+1}}" [formForOuName]="$any(pou.controls.name)"
-                                [formForOuId]="$any(pou.controls.identifier)" [validationEnabled]="true"
-                                [validationError]="creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] ? true : false"></pure-ou-autosuggest>
+                      <div class="col-sm-auto">
+                        <label for="ou_name" class="col-form-label">{{i+1}}</label>
+                      </div>
+
+                      <div class="col-sm-8">
+
+                          <pure-ou-autosuggest id="personOu{{i+1}}" [formForOuName]="$any(pou.controls.name)"
+                                               [formForOuId]="$any(pou.controls.identifier)" [validationEnabled]="true"
+                                               [formForOuAddress]="$any(pou.controls.address)"
+                                               [validationError]="creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] ? true : false"></pure-ou-autosuggest>
+
+                          @if(creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED]) {
+                            <div class="text-danger">Creator organization name is required</div>
+                          }
                         </div>
 
+
+                      <div class="col-sm-3">
+                        <!--<label for="ou_address" class="col-form-label pe-2">address</label>-->
+                        <textarea class="form-control" rows="1" type="text" id="givenName" formControlName="address"
+                                  data-test="ou_address" placeholder="Adress"></textarea>
+                      </div>
+
                         <!--TODO link-->
+                      <!--
                         <div class="col-sm-auto py-1" [ngClass]="{'invisible': !pou.controls.identifier.value}">
                             <a routerLink="/TODO" routerLinkActive="active">
                                 <span class="material-symbols-outlined"
@@ -137,6 +131,7 @@
                                 </span>
                             </a>
                         </div>
+                        -->
                         <div class="col-sm-1">
                             <pure-add-remove-buttons [index]="i"
                                 (notice)="add_remove_person_ou($event)"></pure-add-remove-buttons>
@@ -146,6 +141,7 @@
                     } @empty {
                     <div class="col-sm offset-sm-1"
                         [ngClass]="creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] ? 'is-invalid' : ''">
+
                         <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add organization'"
                             (notice)="add_remove_person_ou($event)"
                             data-test="add-remove-organizations"></pure-add-remove-buttons>

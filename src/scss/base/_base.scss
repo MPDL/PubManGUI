@@ -26,14 +26,6 @@ ul {
   padding: 0;
 }
 
-.form-control {
-  padding: 0.25rem 0.5rem;
-}
-
-.form-select {
-  padding: 0.25rem 2.25rem 0.25rem 0.5rem;
-}
-
 .material-symbols-outlined {
   font-variation-settings: 'wght' 500, 'GRAD' 0, 'opsz' 48;
   vertical-align: middle;
@@ -53,9 +45,5 @@ button > .material-symbols-outlined {
 /* Required for citations from backend */
 .Italic {
   font-style: italic;
-}
-
-input.ng-invalid.ng-touched {
-  border: 1px solid red;
 }
 

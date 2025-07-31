@@ -5,8 +5,8 @@
     <div class="mb-3 row">
       <label for="context" class="col-sm-3 col-form-label">{{ 'imports.context' | translate }}</label>
       <div class="col-sm-9">
-        <select id="context" class="form-select" formControlName="contextId" data-test="fetch-context">
-          <option [value]='' selected disabled>{{ 'imports.context' | translate }}</option>
+        <select id="context" class="form-select" formControlName="contextId" [ngClass]="{'border border-danger': fetchForm.get('contextId')?.pending}" data-test="fetch-context">
+          <option [value]="null" selected disable hidden>{{ 'imports.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
           }
@@ -26,7 +26,7 @@
       </div>
       <div class="col-sm-7">
         <input class="form-control" formControlName="identifier" placeholder="{{ dinamicPlaceholder }}" required minlength="4"
-          forbiddenTxt="http">
+          forbiddenTxt="http" [ngClass]="{'border border-danger': fetchForm.get('identifier')?.pending}">
       </div>
     </div>
     <div class="mb-2 row">
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="offset-sm-9 col-sm-3">
+      <div class="offset-sm-9 col-sm-3" (click)="checkIfAllRequired()">
         <button id="go" type="submit" [disabled]="fetchForm.invalid || fetchForm.pristine"
           class="btn btn-outline-primary float-end" data-test="fetch-button">
           GO

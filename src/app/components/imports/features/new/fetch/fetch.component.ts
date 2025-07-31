@@ -10,7 +10,7 @@ import { ImportsService } from 'src/app/components/imports/services/imports.serv
 import type { GetArxivParams, GetCrossrefParams } from 'src/app/components/imports/interfaces/imports-params';
 import { AaService } from 'src/app/services/aa.service';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { _, TranslatePipe } from "@ngx-translate/core";
 import { MessageService } from "src/app/services/message.service";
 
 @Component({
@@ -30,7 +30,6 @@ export default class FetchComponent implements OnInit {
   router = inject(Router);
   fb = inject(FormBuilder);
   aaSvc = inject(AaService);
-  translateService = inject(TranslateService);
   msgSvc = inject(MessageService);
   elRef: ElementRef = inject(ElementRef);
 
@@ -55,7 +54,7 @@ export default class FetchComponent implements OnInit {
   }
 
   public fetchForm: FormGroup = this.fb.group({
-    contextId: [this.translateService.instant(_('imports.context')), Validators.required],
+    contextId: [null, Validators.required],
     source: ['crossref'],
     identifier: ['', [Validators.required, this.valSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']
@@ -82,7 +81,7 @@ export default class FetchComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.fetchForm.invalid) {
+    if (this.fetchForm.valid) {
       this.fetchForm.markAllAsTouched();
       return;
     }
@@ -142,11 +141,22 @@ export default class FetchComponent implements OnInit {
     element.innerHTML = 'GO'
   }
 
+  checkIfAllRequired() {
+    if(this.fetchForm.invalid) {
+      Object.keys(this.fetchForm.controls).forEach(key => {
+        const field = this.fetchForm.get(key);
+      if (field!.hasValidator(Validators.required) && (field!.untouched)) {
+          field!.markAsPending();
+        }
+      });
+    }
+  }
+
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.fetchForm.reset();
-      this.fetchForm.controls['contextId'].setValue(this.translateService.instant(_('imports.context')));
+
       this.fetchForm.controls['source'].setValue('crossref');
       this.fetchForm.controls['fullText'].setValue('FULLTEXT_DEFAULT');
     }

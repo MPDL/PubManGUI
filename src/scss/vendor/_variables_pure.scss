@@ -9,11 +9,16 @@ $font-family-base: 'Roboto300', "Segoe UI", 'Helvetica Neue Light', 'Helvetica N
 $headings-font-family: 'Merriweather', 'Times New Roman', Times, serif;
 
 
-$input-focus-box-shadow: 0 0 0 0 transparent;
-$form-select-focus-box-shadow: 0 0 0 0 transparent;
-$form-check-input-focus-box-shadow: 0 0 0 0 transparent;
+$focus-ring-color: rgba($mpg-secondary-blue, 0.5);
+$form-feedback-invalid-color: $mpdl-red;
+
+//$input-focus-box-shadow: 0 0 0 0 transparent;
+//$form-select-focus-box-shadow: 0 0 0 0 transparent;
+//$form-check-input-focus-box-shadow: 0 0 0 0 transparent;
 $list-group-border-width: 0;
 $form-check-input-checked-bg-color: $mpg-secondary-blue;
+
+$input-placeholder-color: $mpg-slate-gray-2;
 
 //bright mode
 $body-color:                $mpg-slate-gray-0;
@@ -87,6 +92,7 @@ $custom-colors: (
   "mpg-slate-gray-1": $mpg-slate-gray-1,
   "mpg-slate-gray-2": $mpg-slate-gray-2,
   "mpg-gray": $mpg-gray,
+  "mpg-bg-gray": $mpg-bg-gray,
   "mpg-secondary-gray": $mpg-secondary-gray,
   "mpg-light-gray": $mpg-light-gray,
   "mpg-blue": $mpg-blue

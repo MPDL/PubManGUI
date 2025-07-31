@@ -1,4 +1,4 @@
-<div class="btn-group btn-group-sm d-flex justify-content-between">
-    <button type="button" [ngClass]="!hiddenAddButton ? 'btn btn-sm btn-outline-secondary' : 'invisible'" name="add" [innerHTML]="add_value" (click)="add(index)"></button>
-    <button type="button" class="btn btn-sm btn-outline-secondary" name="remove" [innerHTML]="del_value" (click)="remove(index)" [hidden]="del_value === 'hidden'"></button>
+<div class="d-flex">
+    <button type="button" [ngClass]="!hiddenAddButton ? 'btn btn-sm btn-outline-secondary me-1' : 'invisible'" name="add" [disabled]="disableAdd" [innerHTML]="add_value" (click)="add(index)"></button>
+    <button type="button" class="btn btn-sm btn-outline-secondary" name="remove" [innerHTML]="del_value" (click)="remove(index)" [disabled]="disableRemove" [hidden]="del_value === 'hidden'"></button>
 </div>

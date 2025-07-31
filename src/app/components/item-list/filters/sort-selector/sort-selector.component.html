@@ -27,14 +27,11 @@
 
   <div class="row">
     <div class="col">
-      <div class="">
-  <button type="button" class="btn btn-outline-secondary me-1 btn-sm p-0" (click)="addSortCriterion(0)">
-    <i class="bi bi-plus"></i>
-  </button>
-    <button type="button" class="btn btn btn-outline-secondary btn-sm p-0" (click)="removeSortCriterion(sortEntries.length -1)" [disabled]="sortEntries.length === 1">
-      <i class="bi bi-dash"></i>
-    </button>
-      </div>
+      <pure-add-remove-buttons [index]="0"
+                               (notice)="$event.action==='add' ? addSortCriterion(0) : removeSortCriterion(sortEntries.length -1)"
+                               [disableRemove]="sortEntries.length === 1">
+
+      </pure-add-remove-buttons>
     </div>
   </div>
 

@@ -1,30 +1,9 @@
 //Teil1
 .jumbotron {
-  position: relative;
-  overflow: hidden;
-  padding: 4rem 2rem;
-  margin-bottom: 3rem;
-  border-radius: 0.5rem;
-  //min-height: 70vh;
-  display: flex;
-  align-items: center;
-  z-index: 1;
-}
-
-
-.jumbotron::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 110%; /* zoom out a bit */
-  height: 110%;
-  background-image: url("../../../assets/images/newminback3.jpg");
+  background-image: url("../../../assets/images/newimback4.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px) brightness(1.1); /* add blur and darken a bit oder mann das hier auch nutzen  background-color: rgba(0, 0, 0, 0.3);*/
-  z-index: -1;
 }
 
 .infobox {

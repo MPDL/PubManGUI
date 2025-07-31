@@ -10,7 +10,7 @@
               <i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
               <p>Drag and drop file here</p>
               <div class="mb-3">
-                <input type="file" id="fileName" class="form-control" formControlName="fileName" (change)="onFileChange($event)" data-test="file-upload-input">
+                <input type="file" id="fileName" class="form-control" formControlName="fileName" (change)="onFileChange($event)" [ngClass]="{'border border-danger': importForm.get('fileName')?.pending}" data-test="file-upload-input">
               </div>
 	          </div>
           </div>
@@ -21,8 +21,8 @@
       <div class="mb-3 row">
         <label for="context" class="col-sm-3 col-form-label">{{ 'imports.context' | translate }}</label>
         <div class="col-sm-9">
-          <select id="context" class="form-select" formControlName="contextId" data-test="import-context">
-            <option [value]='' selected disabled>{{ 'imports.context' | translate }}</option>
+          <select id="context" class="form-select" formControlName="contextId" [ngClass]="{'border border-danger': importForm.get('contextId')?.pending}" data-test="import-context">
+            <option [value]="null" selected disable hidden>{{ 'imports.context' | translate }}</option>
             @for (contextObject of user_contexts; track contextObject) {
             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
             }
@@ -35,8 +35,8 @@
           <label class="col-form-label">Format</label>
         </div>
         <div class="col-sm-2">
-          <select class="form-select" formControlName="format">
-            <option [value]='' selected disabled>Format</option>
+          <select class="form-select" formControlName="format" [ngClass]="{'border border-danger': importForm.get('format')?.pending}" data-test="import-format">
+            <option [value]="null" selected disabled hidden>Format</option>
             @for (format of importFormat; track format) {
               <option [value]="format">{{ 'ImportFormat.' + format | translate }}</option>
             }
@@ -49,7 +49,7 @@
           <label class="col-form-label">Name</label>
         </div>
         <div class="col-sm-9">
-          <input class="form-control" formControlName="importName">
+          <input class="form-control" formControlName="importName" [ngClass]="{'border border-danger': importForm.get('importName')?.pending}" data-test="import-name">
         </div>
       </div>
 
@@ -62,7 +62,6 @@
           </div>
           <div class="col-sm-9">
             <select id="formatConfig" class="form-select" formControlName="formatConfig" size="1">
-              <option [value]='' selected disabled>{{ getSelectName() }}</option>
               @for (option of getOptionList(); track option) {
               <option [value]="option">{{ option }}</option>
               }
@@ -82,8 +81,8 @@
       }
 
       <div class="row">
-        <div class="offset-sm-9 col-sm-3">
-          <button type="submit" [disabled]="importForm.invalid || importForm.pristine" 
+        <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
+          <button type="submit" [disabled]="!importForm.valid" 
             class="btn btn-outline-primary float-end" data-test="import-button">
             GO
           </button>

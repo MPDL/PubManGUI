@@ -47,12 +47,12 @@ export default class ImportComponent implements OnInit {
   user_contexts?: ContextDbRO[] = [];
 
   public importForm: FormGroup = this.fb.group({
-    contextId: [this.translateService.instant(_('imports.context')), [Validators.required]],
-    importName: ['', [Validators.required]],
-    format: [this.translateService.instant(_('imports.format')), [Validators.required]],
+    contextId: [null, [Validators.required]],
+    importName: [null, [Validators.required]],
+    format: [null, [Validators.required]],
     formatConfig: [''],
     cone: [''],
-    fileName: ['', [Validators.required]]
+    fileName: [null]
   },
     { validators: [this.valSvc.allRequiredValidator()] });
 
@@ -66,7 +66,6 @@ export default class ImportComponent implements OnInit {
     this.importForm.controls['format'].valueChanges.subscribe(format => {
       if (format && format !== this.translateService.instant(_('imports.format'))) this.getFormatConfiguration(format);
     });
-
   }
 
   getFormatConfiguration(format: string) {
@@ -112,7 +111,6 @@ export default class ImportComponent implements OnInit {
     if (!defaultArray || defaultArray.length === 1) {
       return;
     }
-    console.log("Default options:", defaultArray);
     const defaultValue = defaultArray.find((entry: string) => entry.startsWith(this.getSelectName())).split("=")[1];
     this.importForm.get('formatConfig')?.setValue(defaultValue);
   }
@@ -122,17 +120,23 @@ export default class ImportComponent implements OnInit {
   }
 
   onFileDrop($event: any): void {
+    console.log("File dropped:", $event);
     $event.preventDefault();
-    if ($event.dataTransfer?.files && $event.dataTransfer.files[0]) {
+    if ($event.dataTransfer?.files && $event.dataTransfer.files[0]) {  
       this.getData($event.dataTransfer.files[0]);
     }
+    this.importForm.get('fileName')?.clearAsyncValidators();
+    this.importForm.get('fileName')?.updateValueAndValidity();
   }
 
   onFileChange($event: any): void {
+    console.log("File changed:", $event);
     $event.preventDefault();
     if ($event.target.files && $event.target.files[0]) {
       this.getData($event.target.files[0]);
     }
+    this.importForm.get('fileName')?.clearAsyncValidators();
+    this.importForm.get('fileName')?.updateValueAndValidity();
   }
 
   getData(file: File) {
@@ -141,6 +145,7 @@ export default class ImportComponent implements OnInit {
 
     const reader = file.stream().getReader();
     let result: any = '';
+
 
     reader.read().then(
       function processData({ done, value }): any {
@@ -167,22 +172,36 @@ export default class ImportComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.importForm.invalid || this.importForm.pristine) {
-      this.importForm.markAllAsTouched();
-      return;
-    }
-
-    this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
+    if (this.importForm.valid && this.data) {
+      this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
       this.router.navigate(['/imports/myimports']);
     });
+    }
+  }
+
+  checkIfAllRequired() {
+    if(this.importForm.invalid) {
+      Object.keys(this.importForm.controls).forEach(key => {
+        const field = this.importForm.get(key);
+        if (key === 'fileName') {
+          if (!this.data) field?.markAsPending();
+        } else if (field!.hasValidator(Validators.required) && (field!.untouched)) {
+          field!.markAsPending();
+        }
+      });
+    }
   }
 
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.importForm.reset();
-      this.importForm.controls['contextId'].setValue(this.translateService.instant(_('imports.context')));
-      this.importForm.controls['format'].setValue(this.translateService.instant(_('imports.format')));
+
+      this.formatObject = null;
+      this.data = null;
+
+      let element = document.getElementById('selectedFile') as HTMLElement;
+      element.innerHTML = ``;
     }
   }
 }

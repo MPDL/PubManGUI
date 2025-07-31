@@ -5,6 +5,7 @@ import { baseElasticSearchSortBuilder } from "../../../../utils/search-utils";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { AddRemoveButtonsComponent } from "../../../shared/add-remove-buttons/add-remove-buttons.component";
 
 @Component({
   selector: 'pure-sort-selector',
@@ -13,7 +14,8 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
-    NgbTooltip
+    NgbTooltip,
+    AddRemoveButtonsComponent
   ],
   templateUrl: './sort-selector.component.html',
   styleUrl: './sort-selector.component.scss'

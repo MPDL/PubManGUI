@@ -28,7 +28,7 @@ export class ContextListSearchCriterion extends SearchCriterion {
           this.contextOptions[c.objectId] = c;
         })
 
-      Object.keys(this.contextOptions).forEach(itemState => this.contextListFormGroup.addControl(itemState, new FormControl(false)));
+      Object.keys(this.contextOptions).forEach(itemState => this.contextListFormGroup.addControl(itemState, new FormControl(true)));
     })
 
 

@@ -121,7 +121,7 @@
                         <div class="col-sm">
                             <!-- TODO Add many -->
                             <div class="d-sm-flex flex-sm-row gap-1 pt-1 mb-3">
-                                <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="button" 
+                                <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="button"
                                     (click)="openAddMultipleCreatorsModal()"
                                     [ngClass]="{'disabled ': loading}">ADD multiple Creators
                                     @if(loading)
@@ -141,7 +141,7 @@
                                 <div cdkDropList class="drag-list" (cdkDropListDropped)="dropCreator($event)">
                                     @for (creature of creators.controls; track creature; let ci = $index) {
                                     <ng-container [formGroupName]="ci">
-                                        <div class="drag-list-box" cdkDrag>
+                                        <div cdkDrag>
                                             <pure-creator-form [creator_form]="creature" [index]="ci"
                                                 [index_length]="creators.length"
                                                 (notice)="handleCreatorNotification($event)"></pure-creator-form>
