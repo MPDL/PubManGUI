@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
@@ -292,6 +292,8 @@ export class ItemFormComponent implements OnInit {
     console.log('form.valid', JSON.stringify(this.form.valid));
     console.log('form.errors:', JSON.stringify(this.form.errors));
     */
+    // this.printValidationErrors(this.form); // call for debug function
+
     // submit form
     if (this.aaService.isLoggedIn) {
       if (this.form_2_submit.objectId) {
@@ -302,7 +304,34 @@ export class ItemFormComponent implements OnInit {
     } else {
       alert('You must be logged in to update/create a publication');
     }
+  }
 
+  // Debugging function to print validation errors
+  printValidationErrors(form: FormGroup, formField?: string) {
+    console.log('Form status:', form.status, formField);
+    console.log('Form errors:', form.errors);
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
+      if (control instanceof FormGroup) {
+        this.printValidationErrors(control, field);
+      } else {
+        if (control?.invalid && control?.touched) {
+          console.log(`Status ${field}:`, control?.status);
+          console.log(`Validation errors for ${field}:`, control?.errors,);
+          control.updateValueAndValidity();
+          console.log(`Status ${field}:`, control?.status);
+          console.log(`Validation errors for ${field}:`, control?.errors);
+          if (control instanceof FormArray) {
+            control.controls.forEach((arrayControl: AbstractControl, index) => {
+              console.log(`Validation errors for abstractControlArray[${index}]:`, arrayControl?.errors);
+              arrayControl.markAllAsTouched();
+              arrayControl.updateValueAndValidity();
+              console.log(`Validation errors for abstractControlArray[${index}]:`, arrayControl?.errors);
+            });
+          }
+        }
+      }
+    });
   }
 }
 

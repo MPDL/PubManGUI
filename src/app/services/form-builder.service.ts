@@ -196,7 +196,7 @@ export class FormBuilderService {
     const metadata_form = this.fb.group<ControlType<MdsPublicationVO>>({
       title: this.fb.nonNullable.control(metadata?.title ? metadata.title : null, { validators: [Validators.required, Utf8Validator], updateOn: 'blur' }),
       alternativeTitles: this.fb.array(metadata?.alternativeTitles ? metadata.alternativeTitles.map(at => this.alt_title_FG(at) as AbstractControl) : []),
-      creators: this.fb.array(metadata?.creators ? metadata.creators.map(creator => this.creator_FG(creator) as AbstractControl) : []),
+      creators: this.fb.array(metadata?.creators ? metadata.creators.map(creator => this.creator_FG(creator) as AbstractControl) : [this.creator_FG(null)]),
       dateAccepted: this.fb.nonNullable.control(metadata?.dateAccepted ? metadata.dateAccepted : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       dateCreated: this.fb.nonNullable.control(metadata?.dateCreated ? metadata.dateCreated : null),
       dateModified: this.fb.nonNullable.control(metadata?.dateModified ? metadata.dateModified : null, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
@@ -232,7 +232,7 @@ export class FormBuilderService {
       creators: this.fb.array(source?.creators ? source.creators.map(c => this.creator_FG(c) as AbstractControl) : []),
       volume: this.fb.nonNullable.control(source?.volume ? source.volume : null),
       issue: this.fb.nonNullable.control(source?.issue ? source.issue : null),
-      datePublishedInPrint: this.fb.nonNullable.control(source?.datePublishedInPrint ? source.datePublishedInPrint : new Date(), { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
+      // datePublishedInPrint: this.fb.nonNullable.control(source?.datePublishedInPrint ? source.datePublishedInPrint : new Date(), { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
       startPage: this.fb.nonNullable.control(source?.startPage ? source.startPage : null),
       endPage: this.fb.nonNullable.control(source?.endPage ? source.endPage : null),
       sequenceNumber: this.fb.nonNullable.control(source?.sequenceNumber ? source.sequenceNumber : null),
