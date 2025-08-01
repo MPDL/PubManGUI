@@ -81,7 +81,7 @@ export default class FetchComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.fetchForm.valid) {
+    if (this.fetchForm.invalid) {
       this.fetchForm.markAllAsTouched();
       return;
     }
