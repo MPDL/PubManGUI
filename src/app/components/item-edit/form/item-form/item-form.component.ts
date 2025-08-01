@@ -321,7 +321,7 @@ export class ItemFormComponent implements OnInit {
     console.log('form.valid', JSON.stringify(this.form.valid));
     console.log('form.errors:', JSON.stringify(this.form.errors));
     */
-    this.printValidationErrors(this.form); // call for debug function
+    // this.printValidationErrors(this.form); // call for debug function
 
     // submit form
     if (this.aaService.isLoggedIn) {
