@@ -5,8 +5,8 @@
         <div class="list-group" id="collapseExample">
           @for (author of creatorMap.keys(); track author; let i = $index) {
 
-            <div class="list-group-item p-0 pb-1
-            {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'mark' : ''}}
+            <div class="list-group-item list-group-item-action p-0 pb-1
+            {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'active' : ''}}
             {{i >= maxDisplay ? 'd-none' : ''}}"
 
                  (mouseenter)="highlightAffiliations(creatorMap.get(author))"
@@ -64,7 +64,7 @@
       <span content>
         <div class="list-group">
          @for (aff of affiliations; track aff; let i = $index) {
-           <div class="list-group-item p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'mark' : ''}}"
+           <div class="list-group-item list-group-item-action p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'active' : ''}}"
                 data-affiliation-id="i+1"
                 (mouseenter)="highlightAffiliations([i+1])"
                 (mouseleave)="unhighlightAffiliations()">

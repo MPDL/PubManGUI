@@ -1,6 +1,6 @@
 <div class="container pb-4">
   <h6>{{ label }}</h6>
-  <select class="form-select" (change)="handleInputChange($event)">
+  <select class="form-select" (change)="handleInputChange($event)" [(ngModel)]="selectedValue">
     @for (val of options | defaultKeyValue; track val.key) {
       <option [value]="val.key">
         {{ options[val.key] | translate}}

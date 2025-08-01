@@ -23,21 +23,25 @@ export class ItemAggregationFilterComponent {
   result: BehaviorSubject<any | undefined> = new BehaviorSubject<any | undefined>(undefined);
   resultView: Map<string,AggregationResultView> = new Map;
 
+  aggEvent: AggregationEvent;
+  selectedFilterEvent: FilterEvent | undefined = undefined;
+
   inputId = `${uniqueId++}`;
 
   constructor(private aggregationDirective: ItemAggregationBaseDirective) {
-  }
-
-  ngOnInit()
-  {
-    const aggEvent: AggregationEvent = {
+    this.aggEvent = {
       name: this.aggregationDirective.getName(),
       query: this.aggregationDirective.getAggregationQuery(),
       runtimeMapping: this.aggregationDirective.getRuntimeMapping(),
       result: this.result
     }
 
-    this.itemList.registerAggregation(aggEvent)
+    //this.itemList.registerAggregation(aggEvent)
+  }
+
+  ngOnInit()
+  {
+
     this.result.subscribe(res => {
       //console.log(JSON.stringify(res));
 
@@ -59,9 +63,11 @@ export class ItemAggregationFilterComponent {
     })
   }
 
-  ngAfterViewInit(){
-
+  reset() {
+    this.selectedFilterEvent = undefined;
+    this.result.next(undefined);
   }
+
 
   selectValue(val: AggregationResultView) {
     //console.log(val)
@@ -83,10 +89,8 @@ export class ItemAggregationFilterComponent {
       name: this.aggregationDirective.getName(),
       query: query
     }
-    this.itemList.updateFilter(fe)
-
-
-
+    this.selectedFilterEvent = fe;
+    this.itemList.updateFilterOrSort();
   }
 }
 

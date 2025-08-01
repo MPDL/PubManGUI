@@ -46,7 +46,7 @@
             </div>
             <div class="list-group list-group-flush">
                 @for (item of list; track item; let last = $last) {
-                <div class="list-group-item py-0">
+                <div class="list-group-item list-group-item-action py-0">
                     <pure-item-list-element [item]="item" [last_item]="last"
                         [authenticated]="aa.isLoggedIn"></pure-item-list-element>
                 </div>

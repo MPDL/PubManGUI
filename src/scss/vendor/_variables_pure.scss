@@ -15,7 +15,7 @@ $form-feedback-invalid-color: $mpdl-red;
 //$input-focus-box-shadow: 0 0 0 0 transparent;
 //$form-select-focus-box-shadow: 0 0 0 0 transparent;
 //$form-check-input-focus-box-shadow: 0 0 0 0 transparent;
-$list-group-border-width: 0;
+
 $form-check-input-checked-bg-color: $mpg-secondary-blue;
 
 $input-placeholder-color: $mpg-slate-gray-2;
@@ -50,9 +50,14 @@ $accordion-button-active-color: $mpg-light-gray;
 $accordion-icon-color: $mpg-light-gray;
 $accordion-icon-active-color: $mpg-light-gray;
 
+//list groups
+$list-group-border-width: 0;
 $list-group-bg: $mpg-light-gray;
-$list-group-hover-bg: $mpg-blue;
+$list-group-hover-bg: $mpg-bg-gray;
 $list-group-action-hover-color: $mpg-blue;
+$list-group-action-color: $mpg-blue;
+$list-group-active-bg: $mpg-bg-gray;
+$list-group-active-color: $mpg-blue;
 
 $dropdown-link-active-bg: $mpg-blue;
 

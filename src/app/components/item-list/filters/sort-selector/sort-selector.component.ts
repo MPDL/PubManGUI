@@ -25,54 +25,16 @@ export class SortSelectorComponent {
   @Input() defaultSort:string = "modificationDate";
 
   sortOptionEntries = Object.entries(sortOptions);
-  //@Input() defaultSortOrder:string = "desc";
-  //sortOptionNames = Object.keys(sortOptions);
-  //@Output() sortChanged = new EventEmitter<any>();
 
   sortEntries: {sort:string, sortOrder:string}[] = [];
-  //selectedSort!:string;
-  //selectedSortOrder!:string;
+
+  currentSortQuery: any;
+
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.sortEntries.push({sort: this.defaultSort, sortOrder: sortOptions[this.defaultSort].order})
-    //this.selectedSort = this.defaultSort;
-    //this.selectedSortOrder = sortOptions[this.selectedSort].order;
-    //this.selectedSort=route.snapshot.queryParamMap.get('sort') || this.defaultSort;
-    //this.selectedSortOrder = route.snapshot.queryParamMap.get('sortOrder' )|| sortOptions[this.selectedSort].order;
-
+    this.currentSortQuery = this.getCurrentSortQuery();
   }
-
-  ngOnInit(){
-    //this.selectedSort = this.defaultSort;
-    //console.log(this.getCurrentSortQuery())
-    //console.log(this.sortEntries)
-    this.itemList.registerSort(this.getCurrentSortQuery())
-
-  }
-
-  ngAfterViewInit() {
-    //this.updateQueryParams()
-  }
-
-  /*
-  private updateQueryParams() {
-    const queryParams: Params = {
-      sort: this.selectedSort,
-      sortOrder: this.selectedSortOrder
-    };
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams,
-        queryParamsHandling: 'merge', // remove to replace all query params by provided
-      }
-    );
-  }
-
-   */
-
-
 
   getCurrentSortQuery(){
     return this.sortEntries.map(entry => {
@@ -87,13 +49,8 @@ export class SortSelectorComponent {
 
     this.sortEntries[index].sort = targetVal;
     this.sortEntries[index].sortOrder = sortOptions[targetVal].order;
-    //this.selectedSort = targetVal;
-    //this.selectedSortOrder = sortOptions[targetVal].order;
-    const sortQuery = this.getCurrentSortQuery()
-
-    //console.log(this.selectedSort + ' / '+ this.selectedSortOrder)
-    this.itemList.updateSort(sortQuery);
-    //this.updateQueryParams()
+    this.currentSortQuery = this.getCurrentSortQuery();
+    this.itemList.updateFilterOrSort();
   }
 
   switchSortOrder(index: number) {
@@ -102,21 +59,24 @@ export class SortSelectorComponent {
       this.sortEntries[index].sortOrder = 'desc'
     else
       this.sortEntries[index].sortOrder = 'asc';
-    const sortQuery = this.getCurrentSortQuery()
-    //console.log(this.selectedSort + ' / '+ this.selectedSortOrder)
-    this.itemList.updateSort(sortQuery);
+    this.currentSortQuery = this.getCurrentSortQuery();
+    this.itemList.updateFilterOrSort();
     //this.updateQueryParams()
   }
 
   addSortCriterion(index:number) {
     const selectedSortEntry = this.sortEntries[index];
     this.sortEntries.push({sort: selectedSortEntry.sort, sortOrder: selectedSortEntry.sortOrder});
-    this.itemList.updateSort(this.getCurrentSortQuery());
+    this.currentSortQuery = this.getCurrentSortQuery();
+    this.itemList.updateFilterOrSort();
+    //this.itemList.updateSort(this.getCurrentSortQuery());
   }
 
   removeSortCriterion(index:number) {
     this.sortEntries.splice(index,1);
-    this.itemList.updateSort(this.getCurrentSortQuery());
+    this.currentSortQuery = this.getCurrentSortQuery();
+    this.itemList.updateFilterOrSort();
+    //this.itemList.updateSort(this.getCurrentSortQuery());
     }
 
 
@@ -270,35 +230,3 @@ export const sortOptions: SortOptionsType = {
 
 
 }
-/*
-
-RELEVANCE("", SearchSortCriteria.SortOrder.DESC, false),
-
-  MODIFICATION_DATE(modificationDatePubItemServiceDbImpl.INDEX_MODIFICATION_DATE, SearchSortCriteria.SortOrder.DESC, false),
-
-  CREATION_DATE(creationDatePubItemServiceDbImpl.INDEX_CREATION_DATE, SearchSortCriteria.SortOrder.ASC, false),
-
-  TITLE(metadata.titlePubItemServiceDbImpl.INDEX_METADATA_TITLE, SearchSortCriteria.SortOrder.ASC, false),
-
-  GENRE(metadata.genrenew String[] {PubItemServiceDbImpl.INDEX_METADATA_GENRE,
-  PubItemServiceDbImpl.INDEX_METADATA_DEGREE}, SearchSortCriteria.SortOrder.ASC, false),
-
-DATE(sort-metadata-dates-by-categoryPubItemServiceDbImpl.INDEX_METADATA_DATE_CATEGORY_SORT, SearchSortCriteria.SortOrder.DESC, false), //
-
-  CREATOR(sort-metadata-creators-compoundnew String[] {PubItemServiceDbImpl.INDEX_METADATA_CREATOR_SORT}, SearchSortCriteria.SortOrder.ASC, false),
-
-PUBLISHING_INFO(new String[] {PubItemServiceDbImpl.INDEX_METADATA_PUBLISHINGINFO_PUBLISHER_ID,
-  PubItemServiceDbImpl.INDEX_METADATA_PUBLISHINGINFO_PLACE,
-  PubItemServiceDbImpl.INDEX_METADATA_PUBLISHINGINFO_EDITION}, SearchSortCriteria.SortOrder.ASC, false), //
-
-EVENT_TITLE(PubItemServiceDbImpl.INDEX_METADATA_EVENT_TITLE, SearchSortCriteria.SortOrder.ASC, false),
-
-  REVIEW_METHOD(PubItemServiceDbImpl.INDEX_METADATA_REVIEW_METHOD, SearchSortCriteria.SortOrder.ASC, false), // ,
-
-
-  STATE(PubItemServiceDbImpl.INDEX_VERSION_STATE, SearchSortCriteria.SortOrder.ASC, true),
-
-  // OWNER(PubItemServiceDbImpl.INDEX_OWNER_TITLE, SortOrder.ASC),
-
-  COLLECTION(PubItemServiceDbImpl.INDEX_CONTEXT_TITLE, SearchSortCriteria.SortOrder.ASC, true);
-*/
