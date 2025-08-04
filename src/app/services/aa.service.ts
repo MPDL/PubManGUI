@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, EMPTY, forkJoin, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AccountUserDbVO, ContextDbVO, ItemVersionState } from "../model/inge";
 import { ContextsService } from "./pubman-rest-client/contexts.service";
 import { Router } from "@angular/router";
+import { SILENT_LOGOUT } from "./interceptors/http-error.interceptor";
 
 
 export class Principal{
@@ -123,8 +124,8 @@ export class AaService {
       if(res.status === 200) {
         console.log("Successfully logged out from backend");
       }
-      sessionStorage.clear();
-      localStorage.clear();
+      //sessionStorage.clear();
+      //localStorage.clear();
       this.principal.next(new Principal());
       this.message.info("Logged out successfully");
       this.router.navigate(['/'])
@@ -141,7 +142,8 @@ export class AaService {
     return this.http.request<AccountUserDbVO>('GET', whoUrl, {
       //headers: headers,
       observe: 'body',
-      withCredentials: true
+      withCredentials: true,
+      context: new HttpContext().set(SILENT_LOGOUT, true)
     }).pipe(
       catchError((error) => {
         console.log(error);
