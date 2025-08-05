@@ -207,8 +207,8 @@ export class FormBuilderService {
       event: metadata?.event ? this.event_FG(metadata.event) : this.event_FG(null),
       legalCase: metadata?.legalCase ? this.legal_case_FG(metadata.legalCase) : this.legal_case_FG(null),
       genre: this.fb.nonNullable.control(metadata?.genre ? metadata.genre : MdsPublicationGenre.ARTICLE),
-      identifiers: this.fb.array(metadata?.identifiers ? metadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : []),
-      languages: this.fb.array(metadata?.languages ? metadata.languages.map(l => this.fb.nonNullable.control(l) as AbstractControl) : []),
+      identifiers: this.fb.array(metadata?.identifiers ? metadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : [this.identifier_FG(null)]),
+      languages: this.fb.array(metadata?.languages ? metadata.languages.map(l => this.fb.nonNullable.control(l) as AbstractControl) : [this.fb.nonNullable.control(null)]),
       location: this.fb.nonNullable.control(metadata?.location ? metadata.location : null),
       publishingInfo: metadata?.publishingInfo ? this.publishing_info_FG(metadata.publishingInfo) : this.publishing_info_FG(null),
       reviewMethod: this.fb.nonNullable.control(metadata?.reviewMethod ? metadata.reviewMethod : ReviewMethod.NO_REVIEW),
@@ -217,8 +217,8 @@ export class FormBuilderService {
       subjects: this.fb.array(metadata?.subjects ? metadata.subjects.map(s => this.subject_FG(s) as AbstractControl) : []),
       tableOfContents: this.fb.nonNullable.control(metadata?.tableOfContents ? metadata.tableOfContents : null),
       totalNumberOfPages: this.fb.nonNullable.control(metadata?.totalNumberOfPages ? metadata.totalNumberOfPages : null),
-      abstracts: this.fb.array(metadata?.abstracts ? metadata.abstracts.map(a => this.abstract_FG(a) as AbstractControl) : []),
-      projectInfo: this.fb.array(metadata?.projectInfo ? metadata.projectInfo.map(pi => this.project_info_FG(pi) as AbstractControl) : []),
+      abstracts: this.fb.array(metadata?.abstracts ? metadata.abstracts.map(a => this.abstract_FG(a) as AbstractControl) : [this.abstract_FG(null)]),
+      projectInfo: this.fb.array(metadata?.projectInfo ? metadata.projectInfo.map(pi => this.project_info_FG(pi) as AbstractControl) : [this.project_info_FG(null)]),
     },
       { validators: [datesValidator, CreatorsOrganizationsValidator, SourceRequiredValidator], updateOn: 'blur' }
     );
@@ -229,7 +229,7 @@ export class FormBuilderService {
     const source_form = this.fb.group<ControlType<SourceVO>>({
       alternativeTitles: this.fb.array(source?.alternativeTitles ? source.alternativeTitles.map(at => this.alt_title_FG(at) as AbstractControl) : []),
       title: this.fb.nonNullable.control(source?.title ? source.title : null, { validators: [Validators.required], updateOn: 'blur' }),
-      creators: this.fb.array(source?.creators ? source.creators.map(c => this.creator_FG(c) as AbstractControl) : []),
+      creators: this.fb.array(source?.creators ? source.creators.map(c => this.creator_FG(c) as AbstractControl) : [this.creator_FG(null)]),
       volume: this.fb.nonNullable.control(source?.volume ? source.volume : null),
       issue: this.fb.nonNullable.control(source?.issue ? source.issue : null),
       // datePublishedInPrint: this.fb.nonNullable.control(source?.datePublishedInPrint ? source.datePublishedInPrint : new Date(), { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),

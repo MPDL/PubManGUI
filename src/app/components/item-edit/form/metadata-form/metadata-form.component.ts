@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, computed, effect, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
@@ -83,6 +83,13 @@ export class MetadataFormComponent implements OnInit {
   messageService = inject(MessageService);
   miscellaneousService = inject(MiscellaneousService);
   genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
+  /*computed(() => { 
+    if (this.miscellaneousService.genrePropertiesResource.hasValue()) {
+      return this.miscellaneousService.genrePropertiesResource
+    }
+    return null;
+  });
+  */
 
   allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
@@ -100,13 +107,20 @@ export class MetadataFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder, private modalService: NgbModal
   ) {
+    effect(() => {
+      if (this.genreSpecificResource.value()?.properties.sources.optional === false) {
+        this.sources.push(this.fbs.source_FG(null));
+      } else {
+        this.sources.clear;
+      }
+    });
   }
 
   ngOnInit() {
     let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
     this.miscellaneousService.selectedGenre.set(genre);
     this.updateAllowedGenres(); // Initialize allowed_genre_types with correct context specific values
-    this.context.valueChanges.subscribe((newContext) => {
+    this.context.valueChanges.subscribe(() => {
       this.updateAllowedGenres();
     });
   }
@@ -215,7 +229,7 @@ export class MetadataFormComponent implements OnInit {
   }
 
   openAddMultipleCreatorsModal() {
-   const modalRef = this.modalService.open(AddMultipleCreatorsModalComponent);
+    const modalRef = this.modalService.open(AddMultipleCreatorsModalComponent);
     modalRef.componentInstance.callback = this.addMultipleCreators.bind(this);
   }
 

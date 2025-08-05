@@ -1,4 +1,4 @@
-@if (genreSpecificResource.value()) {
+@if (genreSpecificResource.hasValue()) {
 <div [formGroup]="file_form" [ngClass]="{'d-none' : !genreSpecificResource.value().properties.files.display}">
 
     <div class="custom-drag-placeholder" *cdkDragPlaceholder></div>

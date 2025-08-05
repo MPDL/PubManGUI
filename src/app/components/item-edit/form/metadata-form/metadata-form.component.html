@@ -1,4 +1,4 @@
-@if (genreSpecificResource.value()) {
+@if (genreSpecificResource.hasValue()) {
 <div [formGroup]="meta_form">
     <div class="accordion" id="accordionPanelsMetadata">
         <!--GROUP Standard-->
@@ -557,6 +557,6 @@
         </div>
     </div>
 </div>
-} @else if (!genreSpecificResource.value()) {
+} @else if (!genreSpecificResource.hasValue()) {
 <pure-loading></pure-loading>
 }

@@ -13,6 +13,7 @@ import { IdentifierFormComponent } from '../identifier-form/identifier-form.comp
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 
 @Component({
   selector: 'pure-source-form',
@@ -22,6 +23,7 @@ import { Errors } from 'src/app/model/errors';
     CommonModule,
     CreatorFormComponent,
     IdentifierFormComponent,
+    LoadingComponent,
     PublishingInfoFormComponent,
     FormsModule,
     ReactiveFormsModule,
@@ -39,7 +41,7 @@ export class SourceFormComponent {
 
   fbs = inject(FormBuilderService);
   miscellaneousService = inject(MiscellaneousService);
-  genrePropertiesResource  = this.miscellaneousService.genrePropertiesResource;
+  genreSpecificResource  = this.miscellaneousService.genrePropertiesResource;
 
   error_types = Errors;
   genre_types = Object.keys(MdsPublicationGenre);

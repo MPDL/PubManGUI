@@ -1,9 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, resource, signal } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import { Observable } from 'rxjs';
-import { AaService } from '../aa.service';
+import { firstValueFrom, Observable } from 'rxjs';
 import { MdsPublicationGenre } from 'src/app/model/inge';
-import { rxResource } from '@angular/core/rxjs-interop';
 
 const ipListPath = 'getIpList';
 const genrePropertiesPath = 'getGenreProperties';
@@ -16,16 +14,17 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
 
   genre_types = Object.keys(MdsPublicationGenre);
 
-  private aaService = inject(AaService);
-
   // Can and will be set by connected Components
   public selectedGenre = signal('ARTICLE');
-  public genreProperties: GenrePresentationObject[] = [{}] as Array<GenrePresentationObject>;
   public genreSpecficProperties = signal<GenrePresentationObject>({} as GenrePresentationObject);
 
-  public genrePropertiesResource = rxResource({
+  public genrePropertiesResource = resource({
     params: () => this.selectedGenre(),
-    stream: ({ params: genre }) => { return this.getGenreProperties(genre) },
+    loader: async ({ params })  => { 
+      const response = await firstValueFrom(this.getGenreProperties(params));
+      const data: GenrePresentationObject = await response;
+      return data 
+    },
   });
 
   constructor() {
@@ -34,8 +33,6 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
       let genre = this.genre_types.at(i);
       if (genre) {
         this.getGenreProperties(genre).subscribe(genreJson => {
-          this.genreProperties.push(genreJson);
-          // console.log('NEW GENRE JSON SET', genreJson.genre);
           if (genreJson.genre == 'ARTICLE') {
             this.genreSpecficProperties.set(genreJson as GenrePresentationObject);
           }
@@ -45,7 +42,7 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
   }
 
 
-  getGenreProperties(genre: string): Observable<any> {
+  getGenreProperties(genre: string): Observable<GenrePresentationObject> {
     return this.httpGet(this.subPath + '/' + genrePropertiesPath + '?genre=' + genre);
   }
 
