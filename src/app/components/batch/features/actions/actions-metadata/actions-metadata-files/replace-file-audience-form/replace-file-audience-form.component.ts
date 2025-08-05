@@ -43,7 +43,6 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
       .subscribe(ous => {
         this.ous = ous.sort((a, b) => a.name.localeCompare(b.name));
       })
-    console.log(this.ous);  
   }
 
   public replaceFileAudienceForm: FormGroup = this.fb.group({
@@ -114,7 +113,6 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
     if (!this.elRef.nativeElement.contains(event.target)) {
-      //this.allowedAudienceIds.clear();
       this.replaceFileAudienceForm.reset();
     }
   }
