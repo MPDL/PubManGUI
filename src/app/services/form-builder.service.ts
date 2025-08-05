@@ -237,7 +237,7 @@ export class FormBuilderService {
       endPage: this.fb.nonNullable.control(source?.endPage ? source.endPage : null),
       sequenceNumber: this.fb.nonNullable.control(source?.sequenceNumber ? source.sequenceNumber : null),
       publishingInfo: source?.publishingInfo ? this.publishing_info_FG(source.publishingInfo) : this.publishing_info_FG(null),
-      identifiers: this.fb.array(source?.identifiers ? source.identifiers.map(i => this.identifier_FG(i) as AbstractControl) : []),
+      identifiers: this.fb.array(source?.identifiers ? source.identifiers.map(i => this.identifier_FG(i) as AbstractControl) : [this.identifier_FG(null)]),
       // sources: this.fb.array(source?.sources ? source.sources.map(s => this.source_FG(s) as any) : [this.source_FG(null)]),
       genre: this.fb.nonNullable.control(source?.genre ? source.genre : null),
       totalNumberOfPages: this.fb.nonNullable.control(source?.totalNumberOfPages ? source.totalNumberOfPages : null),
