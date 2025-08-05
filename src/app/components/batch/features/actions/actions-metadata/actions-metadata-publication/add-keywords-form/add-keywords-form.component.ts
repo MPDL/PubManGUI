@@ -3,6 +3,7 @@ import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { AddKeywordsParams } from 'src/app/components/batch/interfaces/batch-params';
 
@@ -21,6 +22,7 @@ import { TranslatePipe } from "@ngx-translate/core";
 export class AddKeywordsFormComponent {
   fb = inject(FormBuilder);
   router = inject(Router);
+  valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
   elRef: ElementRef = inject(ElementRef);
 

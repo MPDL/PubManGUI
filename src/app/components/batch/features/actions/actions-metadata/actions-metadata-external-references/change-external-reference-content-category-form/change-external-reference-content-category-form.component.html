@@ -7,9 +7,9 @@
     </div>
 
     <form [formGroup]="changeExternalReferenceContentCategoryForm" (ngSubmit)="onSubmit()" autocomplete="off">
-        <div class="mb-3 row">
+        <div class="row">
             <div class="col-sm-3">
-                <label class="col-form-label">{{ 'batch.actions.metadata.extRef.contentCategory.from' | translate
+                <label class="col-form-label text-nowrap text-truncate">{{ 'batch.actions.metadata.extRef.contentCategory.from' | translate
                     }}</label>
             </div>
             <div class="col-sm-9">
@@ -24,10 +24,21 @@
                 </select>
             </div>
         </div>
+        <div class="mb-3 row">
+            <div class="offset-sm-3 col-sm-6">
+                @if(valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryFrom'])) {
+                <span class="form-text text-danger small">
+                    {{ valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryFrom']) }}
+                </span>
+                } @else {
+                <span>&nbsp;</span>
+                }
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-sm-3">
-                <label class="col-form-label">{{ 'batch.actions.metadata.extRef.contentCategory.to' | translate
+                <label class="col-form-label text-nowrap text-truncate">{{ 'batch.actions.metadata.extRef.contentCategory.to' | translate
                     }}</label>
             </div>
             <div class="col-sm-9">
@@ -42,13 +53,15 @@
                 </select>
             </div>
         </div>
-        <div class="mb-2 row">
+        <div class="mb-3 row">
             <div class="offset-sm-3 col-sm-6">
                 @if
                 (valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo']))
                 {
                 <span class="form-text text-danger small">
-                    {{ valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo']) }}
+                    {{
+                    valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'])
+                    }}
                 </span>
                 } @else if(changeExternalReferenceContentCategoryForm.hasError('notEquals')) {
                 <span class="form-text text-danger small">
@@ -63,8 +76,7 @@
 
         <div class="row">
             <div (click)="checkIfAllRequired()">
-                <button type="submit"
-                    [disabled]="!changeExternalReferenceContentCategoryForm.valid"
+                <button type="submit" [disabled]="!changeExternalReferenceContentCategoryForm.valid"
                     class="btn btn-outline-primary float-end">
                     GO
                 </button>

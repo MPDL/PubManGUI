@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ReplaceKeywordsParams } from 'src/app/components/batch/interfaces/batch-params';
 
@@ -23,6 +24,7 @@ export class ReplaceKeywordsFormComponent {
   router = inject(Router);
   fb = inject(FormBuilder);
   batchSvc = inject(BatchService);
+  valSvc = inject(BatchValidatorsService);
   elRef: ElementRef = inject(ElementRef);
 
   public replaceKeywordsForm: FormGroup = this.fb.group({

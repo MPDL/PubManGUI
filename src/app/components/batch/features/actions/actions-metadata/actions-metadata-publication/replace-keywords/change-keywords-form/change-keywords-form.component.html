@@ -9,7 +9,7 @@
       <input class="form-control" formControlName="keywordsFrom" [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsFrom')?.pending}">
     </div>
   </div>
-    <div class="mb-2 row">
+  <div class="mb-2 row">
     <div class="offset-sm-3 col-sm-6">
       @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsFrom'])) {
       <span class="form-text text-danger small">
