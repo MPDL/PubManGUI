@@ -9,11 +9,14 @@
     <form [formGroup]="changeExternalReferenceContentCategoryForm" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="mb-3 row">
             <div class="col-sm-3">
-                <label class="col-form-label">{{ 'batch.actions.metadata.extRef.contentCategory.from' | translate }}</label>
+                <label class="col-form-label">{{ 'batch.actions.metadata.extRef.contentCategory.from' | translate
+                    }}</label>
             </div>
             <div class="col-sm-9">
-                <select class="form-select" formControlName="externalReferenceContentCategoryFrom">
-                    <option [value]='' selected disabled>{{ 'batch.actions.metadata.extRef.contentCategory' | translate }}
+                <select class="form-select" formControlName="externalReferenceContentCategoryFrom"
+                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.pending}">
+                    <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
+                        translate }}
                     </option>
                     @for (category of contentCategories; track category) {
                     <option [value]="category"> {{ 'ContentCategories.' + category | translate }}</option>
@@ -24,11 +27,14 @@
 
         <div class="row">
             <div class="col-sm-3">
-                <label class="col-form-label">{{ 'batch.actions.metadata.extRef.contentCategory.to' | translate }}</label>
+                <label class="col-form-label">{{ 'batch.actions.metadata.extRef.contentCategory.to' | translate
+                    }}</label>
             </div>
             <div class="col-sm-9">
-                <select class="form-select" formControlName="externalReferenceContentCategoryTo">
-                    <option [value]='' selected disabled>{{ 'batch.actions.metadata.extRef.contentCategory' | translate }}
+                <select class="form-select" formControlName="externalReferenceContentCategoryTo"
+                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.pending}">
+                    <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
+                        translate }}
                     </option>
                     @for (category of contentCategories; track category) {
                     <option [value]="category"> {{ 'ContentCategories.' + category | translate }}</option>
@@ -42,6 +48,10 @@
                 (valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo']))
                 {
                 <span class="form-text text-danger small">
+                    {{ valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo']) }}
+                </span>
+                } @else if(changeExternalReferenceContentCategoryForm.hasError('notEquals')) {
+                <span class="form-text text-danger small">
                     {{ 'batch.actions.metadata.extRef.contentCategory.invalid' | translate }} {{
                     valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm) }}
                 </span>
@@ -52,9 +62,9 @@
         </div>
 
         <div class="row">
-            <div>
+            <div (click)="checkIfAllRequired()">
                 <button type="submit"
-                    [disabled]="changeExternalReferenceContentCategoryForm.invalid || changeExternalReferenceContentCategoryForm.pristine"
+                    [disabled]="!changeExternalReferenceContentCategoryForm.valid"
                     class="btn btn-outline-primary float-end">
                     GO
                 </button>

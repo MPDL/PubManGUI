@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -28,12 +28,13 @@ export class ChangeSourceIdentifierFormComponent {
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
   translateSvc = inject(TranslateService);
+  elRef: ElementRef = inject(ElementRef);
 
   sourceIdTypes = Object.keys(SourceIdType);
 
   public changeSourceIdentifierForm: FormGroup = this.fb.group({
-    sourceNumber: ['1'],
-    sourceIdentifierType: [this.translateSvc.instant(_('batch.actions.metadata.source.replaceId.default')), Validators.required],
+    sourceNumber: ['1', [Validators.required]],
+    sourceIdentifierType: [null, Validators.required],
     sourceIdentifierFrom: ['', [Validators.required, Validators.minLength(1)]],
     sourceIdentifierTo: [''],
   },
@@ -53,14 +54,30 @@ export class ChangeSourceIdentifierFormComponent {
   }
 
   onSubmit(): void {
-    if (this.changeSourceIdentifierForm.invalid) {
-      this.changeSourceIdentifierForm.markAllAsTouched();
-      return;
+    if (this.changeSourceIdentifierForm.valid) {
+      this.batchSvc.changeSourceIdentifier(this.changeSourceIdentifierParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.router.navigate(['/batch/logs']);
+      });
     }
+  }
 
-    this.batchSvc.changeSourceIdentifier(this.changeSourceIdentifierParams).subscribe(actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
+  checkIfAllRequired() {
+    if (!this.changeSourceIdentifierForm.valid) {
+      Object.keys(this.changeSourceIdentifierForm.controls).forEach(key => {
+        const field = this.changeSourceIdentifierForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.changeSourceIdentifierForm.reset();
+      this.changeSourceIdentifierForm.controls['sourceNumber'].setValue('1');
+    }
   }
 }

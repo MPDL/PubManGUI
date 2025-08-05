@@ -9,21 +9,32 @@
   </div>
 
   <form [formGroup]="changeSourceGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
+    <div class="row">
       <div class="col-sm-3">
         <label class="col-form-label">
           {{ 'batch.actions.metadata.source.changeGenre.from' | translate }}
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="sourceGenreFrom">
-          <option [value]='' selected disabled>Genre</option>
+        <select class="form-select" formControlName="sourceGenreFrom" [ngClass]="{'border border-danger': changeSourceGenreForm.get('sourceGenreFrom')?.pending}">
+          <option [value]="null" selected disabled hidden>Genre</option>
           @for (genre of sourceGenres; track genre) {
             <option [value]="genre">{{ 'SourceGenre.' + genre | translate }}</option>
           }
         </select>
       </div>
     </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (valSvc.notValidField(changeSourceGenreForm.controls['sourceGenreFrom'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeSourceGenreForm.controls['sourceGenreFrom']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div>    
 
     <div class="row">
       <div class="col-sm-3">
@@ -32,8 +43,8 @@
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="sourceGenreTo">
-          <option [value]='' selected disabled>Genre</option>
+        <select class="form-select" formControlName="sourceGenreTo" [ngClass]="{'border border-danger': changeSourceGenreForm.get('sourceGenreTo')?.pending}">
+          <option [value]="null" selected disabled hidden>Genre</option>
           @for (genre of sourceGenres; track genre) {
             <option [value]="genre"> {{ 'SourceGenre.' + genre | translate }}</option>
           }
@@ -44,6 +55,10 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeSourceGenreForm.controls['sourceGenreTo'])) {
         <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeSourceGenreForm.controls['sourceGenreTo']) }}
+        </span>
+        } @else if(changeSourceGenreForm.hasError('notEquals')) {
+        <span class="form-text text-danger small">
           {{ 'batch.actions.metadata.source.changeGenre.invalid' | translate }} {{ valSvc.getErrorMsg(changeSourceGenreForm) }}
         </span>
         } @else {
@@ -53,8 +68,8 @@
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="changeSourceGenreForm.invalid || changeSourceGenreForm.pristine"
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!changeSourceGenreForm.valid"
           class="btn btn-outline-primary float-end">
           GO
         </button>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -27,12 +27,13 @@ export class ChangeFileContentCategoryFormComponent {
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
   translateSvc = inject(TranslateService);
+  elRef: ElementRef = inject(ElementRef);
 
   contentCategories = Object.keys(ContentCategories).sort();
 
   public changeFileContentCategoryForm: FormGroup = this.fb.group({
-    fileContentCategoryFrom: [this.translateSvc.instant(_('batch.actions.metadata.files.contentCategory')), [Validators.required]],
-    fileContentCategoryTo: [this.translateSvc.instant(_('batch.actions.metadata.files.contentCategory')), [Validators.required]],
+    fileContentCategoryFrom: [null, [Validators.required]],
+    fileContentCategoryTo: [null, [Validators.required]],
   },
     { validators: [this.valSvc.notEqualsValidator('fileContentCategoryFrom', 'fileContentCategoryTo')] });
 
@@ -54,7 +55,26 @@ export class ChangeFileContentCategoryFormComponent {
     this.batchSvc.changeFileContentCategory(this.changeFileContentCategoryParams).subscribe(actionResponse => {
       //console.log(actionResponse);
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+      this.changeFileContentCategoryForm.reset();
       this.router.navigate(['/batch/logs']);
     });
+  }
+
+  checkIfAllRequired() {
+    if (!this.changeFileContentCategoryForm.valid) {
+      Object.keys(this.changeFileContentCategoryForm.controls).forEach(key => {
+        const field = this.changeFileContentCategoryForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.changeFileContentCategoryForm.reset();
+    }
   }
 }

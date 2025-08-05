@@ -10,7 +10,7 @@
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
       <label class="col-sm-3 col-form-label" for="audienceId">{{ 'batch.actions.metadata.files.ipRanges.to' | translate }}</label>
 
-      <div class="col-sm">
+      <div class="col-sm"> 
         <ng-container formArrayName="allowedAudienceIds">
           @for (audience of allowedAudienceIds.controls; track audience; let audienceIdx = $index) {
           <ng-container [formGroupName]="audienceIdx">
@@ -25,21 +25,21 @@
     </div>
 
     <div class="mb-2 row">
-      <!--div class="offset-sm-2 col-sm-6">
-        @if (valSvc.noDuplicatesValidator(allowedAudienceIds)) {
+      <div class="offset-sm-3 col-sm-6">
+        @if (replaceFileAudienceForm.pending) {
         <span class="form-text text-danger small">
-          IP range {{ valSvc.getErrorMsg(allowedAudienceIds) }}
+          At least one IP range required
         </span>
         } @else {
         <span>&nbsp;</span>
         }
-      </div-->
+      </div> 
       <span>&nbsp;</span>
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="replaceFileAudienceForm.invalid || allowedAudienceIds.length <= 1"
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!replaceFileAudienceForm.valid || allowedAudienceIds.pristine"
           class="btn btn-outline-primary float-end">
           GO
         </button>

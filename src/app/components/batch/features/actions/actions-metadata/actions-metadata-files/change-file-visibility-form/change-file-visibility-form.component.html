@@ -20,6 +20,17 @@
         </select>
       </div>
     </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityFrom'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeFileVisibilityForm.controls['fileVisibilityFrom']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-sm-3">
@@ -38,8 +49,11 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
         <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.files.visibility.invalid' | translate }} {{
-          valSvc.getErrorMsg(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
+          {{ valSvc.getErrorMsg(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
+        </span>
+        } @else if(changeFileVisibilityForm.hasError('notEquals')) {
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.metadata.files.visibility.invalid' | translate }} {{ valSvc.getErrorMsg(changeFileVisibilityForm) }}
         </span>
         } @else {
         <span>&nbsp;</span>

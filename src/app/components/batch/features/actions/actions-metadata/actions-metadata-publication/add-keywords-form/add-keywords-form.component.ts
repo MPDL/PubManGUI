@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -22,6 +22,7 @@ export class AddKeywordsFormComponent {
   fb = inject(FormBuilder);
   router = inject(Router);
   batchSvc = inject(BatchService);
+  elRef: ElementRef = inject(ElementRef);
 
   public addKeywordsForm: FormGroup = this.fb.group({
     keywords: ['', [Validators.required]],
@@ -47,5 +48,17 @@ export class AddKeywordsFormComponent {
     });
   }
 
+  checkIfAllRequired() {
+    if (!this.addKeywordsForm.valid || this.addKeywordsForm.controls['keywords'].pristine) {
+      this.addKeywordsForm.controls['keywords'].markAsPending();
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.addKeywordsForm.reset();
+    }
+  }
   // TO-DO? No duplicated keywords validation.
 }

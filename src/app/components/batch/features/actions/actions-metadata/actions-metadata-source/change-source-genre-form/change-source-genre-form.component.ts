@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -25,6 +25,7 @@ export class ChangeSourceGenreFormComponent {
   fb = inject(FormBuilder);
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
+  elRef: ElementRef = inject(ElementRef);
 
   sourceGenres = Object.keys(SourceGenre).sort();
 
@@ -45,15 +46,30 @@ export class ChangeSourceGenreFormComponent {
   }
 
   onSubmit(): void {
-    if (this.changeSourceGenreForm.invalid) {
-      this.changeSourceGenreForm.markAllAsTouched();
-      return;
+    if (this.changeSourceGenreForm.valid) {
+
+      this.batchSvc.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.router.navigate(['/batch/logs']);
+      });
     }
+  }
 
-    this.batchSvc.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
+  checkIfAllRequired() {
+    if (!this.changeSourceGenreForm.valid) {
+      Object.keys(this.changeSourceGenreForm.controls).forEach(key => {
+        const field = this.changeSourceGenreForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
+  }
 
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.changeSourceGenreForm.reset();
+    }
   }
 }

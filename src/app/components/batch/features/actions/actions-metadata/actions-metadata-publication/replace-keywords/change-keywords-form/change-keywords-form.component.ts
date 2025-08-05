@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -26,10 +26,11 @@ export class ChangeKeywordsFormComponent {
   fb = inject(FormBuilder);
   batchSvc = inject(BatchService);
   valSvc = inject(BatchValidatorsService);
+  elRef: ElementRef = inject(ElementRef);
 
   public changeKeywordsForm: FormGroup = this.fb.group({
-    keywordsFrom: ['', [Validators.required]],
-    keywordsTo: ['', [Validators.required]],
+    keywordsFrom: [null, [Validators.required]],
+    keywordsTo: [null, [Validators.required]],
   }, {
     validators: this.valSvc.notEqualsValidator('keywordsFrom', 'keywordsTo')
   });
@@ -44,14 +45,29 @@ export class ChangeKeywordsFormComponent {
   }
 
   onSubmit(): void {
-    if (this.changeKeywordsForm.invalid) {
-      this.changeKeywordsForm.markAllAsTouched();
-      return;
+    if (this.changeKeywordsForm.valid) {
+      this.batchSvc.changeKeywords(this.changeKeywordsParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.router.navigate(['/batch/logs']);
+      });
     }
+  }
 
-    this.batchSvc.changeKeywords(this.changeKeywordsParams).subscribe(actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
+  checkIfAllRequired() {
+    if (!this.changeKeywordsForm.valid) {
+      Object.keys(this.changeKeywordsForm.controls).forEach(key => {
+        const field = this.changeKeywordsForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.changeKeywordsForm.reset();
+    }
   }
 }

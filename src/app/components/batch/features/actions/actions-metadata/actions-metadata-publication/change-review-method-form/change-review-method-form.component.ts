@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -27,12 +27,13 @@ export class ChangeReviewMethodFormComponent {
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
   translateSvc = inject(TranslateService);
+  elRef: ElementRef = inject(ElementRef);
 
   reviewMethods = Object.keys(ReviewMethod);
 
   public changeReviewMethodForm: FormGroup = this.fb.group({
-    reviewMethodFrom: [this.translateSvc.instant(_('batch.actions.metadata.publication.reviewType')), [Validators.required]],
-    reviewMethodTo: [this.translateSvc.instant(_('batch.actions.metadata.publication.reviewType')), [Validators.required]],
+    reviewMethodFrom: [null, [Validators.required]],
+    reviewMethodTo: [null, [Validators.required]],
   },
     { validators: [this.valSvc.notEqualsValidator('reviewMethodFrom', 'reviewMethodTo')] });
 
@@ -46,14 +47,30 @@ export class ChangeReviewMethodFormComponent {
   }
 
   onSubmit(): void {
-    if (this.changeReviewMethodForm.invalid) {
-      this.changeReviewMethodForm.markAllAsTouched();
-      return;
-    }
+    if (this.changeReviewMethodForm.valid) {
 
-    this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe(actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
+      this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.router.navigate(['/batch/logs']);
+      });
+    }
+  }
+
+  checkIfAllRequired() {
+    if (!this.changeReviewMethodForm.valid) {
+      Object.keys(this.changeReviewMethodForm.controls).forEach(key => {
+        const field = this.changeReviewMethodForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.changeReviewMethodForm.reset();
+    }
   }
 }

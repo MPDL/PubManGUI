@@ -50,6 +50,7 @@ export class ChangeFileVisibilityFormComponent {
     if (this.changeFileVisibilityForm.valid) {
       this.batchSvc.changeFileVisibility(this.changeFileVisibilityParams).subscribe(actionResponse => {
         this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.changeFileVisibilityForm.reset();
         this.router.navigate(['/batch/logs']);
       });
     }
@@ -59,7 +60,7 @@ export class ChangeFileVisibilityFormComponent {
     if (!this.changeFileVisibilityForm.valid) {
       Object.keys(this.changeFileVisibilityForm.controls).forEach(key => {
         const field = this.changeFileVisibilityForm.get(key);
-        if (field!.hasValidator(Validators.required) && (!field!.dirty)) {
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
           field!.markAsPending();
         }
       });

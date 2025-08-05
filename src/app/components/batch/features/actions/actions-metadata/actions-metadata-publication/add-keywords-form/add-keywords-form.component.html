@@ -11,12 +11,13 @@
       <label class="col-sm-3 col-form-label">
         {{ 'batch.actions.metadata.publication.keywordsAdd.to' | translate }}</label>
       <div class="col-sm-9">
-        <textarea class="form-control" formControlName="keywords"></textarea>
+        <textarea class="form-control" formControlName="keywords"
+        [ngClass]="{'border border-danger': addKeywordsForm.get('keywords')?.pending}"></textarea>
       </div>
     </div>
 
     <div class="row">
-      <div>
+      <div (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="addKeywordsForm.invalid || addKeywordsForm.pristine"
           class="btn btn-outline-primary float-end">
           GO

@@ -31,8 +31,8 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
   contentCategories = Object.keys(ContentCategories).sort();
 
   public changeExternalReferenceContentCategoryForm: FormGroup = this.fb.group({
-    externalReferenceContentCategoryFrom: [this.translateSvc.instant(_('batch.actions.metadata.extRef.contentCategory')), [ Validators.required ]],
-    externalReferenceContentCategoryTo: [this.translateSvc.instant(_('batch.actions.metadata.extRef.contentCategory')), [ Validators.required ]],
+    externalReferenceContentCategoryFrom: [null, [ Validators.required ]],
+    externalReferenceContentCategoryTo: [null, [ Validators.required ]],
   },
   { validators: [this.valSvc.notEqualsValidator('externalReferenceContentCategoryFrom','externalReferenceContentCategoryTo')] });
 
@@ -46,16 +46,24 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
   }
 
   onSubmit(): void {
-    if (this.changeExternalReferenceContentCategoryForm.invalid) {
-      this.changeExternalReferenceContentCategoryForm.markAllAsTouched();
-      return;
+    if (this.changeExternalReferenceContentCategoryForm.valid) {
+      this.batchSvc.changeExternalReferenceContentCategory(this.changeExternalReferenceContentCategoryParams).subscribe( actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.router.navigate(['/batch/logs']);
+      });
     }
+  }
 
-    this.batchSvc.changeExternalReferenceContentCategory(this.changeExternalReferenceContentCategoryParams).subscribe( actionResponse => {
-      //console.log(actionResponse);
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
+
+  checkIfAllRequired() {
+    if (!this.changeExternalReferenceContentCategoryForm.valid) {
+      Object.keys(this.changeExternalReferenceContentCategoryForm.controls).forEach(key => {
+        const field = this.changeExternalReferenceContentCategoryForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
   }
 
  }

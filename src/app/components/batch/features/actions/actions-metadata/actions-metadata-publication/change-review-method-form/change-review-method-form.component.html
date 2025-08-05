@@ -16,8 +16,8 @@
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="reviewMethodFrom">
-          <option [value]='' selected disabled>
+        <select class="form-select" formControlName="reviewMethodFrom" [ngClass]="{'border border-danger': changeReviewMethodForm.get('reviewMethodFrom')?.pending}">
+          <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
           <option [value]=''>---</option>
@@ -35,8 +35,8 @@
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="reviewMethodTo">
-          <option [value]='' selected disabled>
+        <select class="form-select" formControlName="reviewMethodTo" [ngClass]="{'border border-danger': changeReviewMethodForm.get('reviewMethodTo')?.pending}">
+          <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
           <option [value]=''>---</option>
@@ -50,6 +50,10 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])) {
         <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeReviewMethodForm.controls['reviewMethodTo']) }}
+        </span>
+        } @else if(changeReviewMethodForm.hasError('notEquals')) {  
+        <span class="form-text text-danger small">
           {{ 'batch.actions.metadata.publication.reviewType.invalid' | translate }} {{ valSvc.getErrorMsg(changeReviewMethodForm) }}
         </span>
         } @else {
@@ -59,8 +63,8 @@
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="changeReviewMethodForm.invalid || changeReviewMethodForm.pristine"
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!changeReviewMethodForm.valid"
           class="btn btn-outline-primary float-end">
           GO
         </button>

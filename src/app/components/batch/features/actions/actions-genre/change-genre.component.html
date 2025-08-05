@@ -70,11 +70,11 @@
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-2 col-form-label"
+      <label class="col-sm-3 col-form-label"
         [ngClass]="{'text-secondary': changeGenreForm.controls['genreTo'].value !== 'THESIS'}">
         {{ 'batch.actions.genre.change.type' | translate }}
       </label>
-      <div class="col-sm-10">
+      <div class="col-sm-9">
         <select class="form-select" formControlName="degreeType" [ngClass]="{'text-secondary': changeGenreForm.controls['genreTo'].value !== 'THESIS'}"
           [attr.disabled]="changeGenreForm.controls['genreTo'].value === 'THESIS' ? null : ''">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.genre.change.type' | translate }}</option>

@@ -16,22 +16,22 @@
         </label>
       </div>
       <div class="col-sm-1">
-        <select class="form-select" formControlName="sourceNumber">
+        <select class="form-select" formControlName="sourceNumber" [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceNumber')?.pending}">
           <option value="1" selected>1</option>
           <option value="2">2</option>
         </select>
       </div>
     </div>
 
-    <div class="mb-3 row">
+    <div class="row">
       <div class="col-sm-3">
         <label class="col-form-label">
           {{ 'batch.actions.metadata.source.replaceId.type' | translate }}
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="sourceIdentifierType">
-          <option [value]='' selected disabled>
+        <select class="form-select" formControlName="sourceIdentifierType" [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierType')?.pending}">
+          <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.source.replaceId.default' | translate }}
           </option>
           @for (type of sourceIdTypes; track type) {
@@ -40,15 +40,15 @@
         </select>
       </div>
     </div>
-
-    <div class="mb-3 row">
-      <div class="col-sm-3">
-        <label class="col-form-label">
-          {{ 'batch.actions.metadata.source.replaceId.from' | translate }}
-        </label>
-      </div>
-      <div class="col-sm-9">
-        <input class="form-control" formControlName="sourceIdentifierFrom">
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if(valSvc.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierType'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeSourceIdentifierForm.controls['sourceIdentifierType']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
       </div>
     </div>
 
@@ -59,12 +59,38 @@
         </label>
       </div>
       <div class="col-sm-9">
-        <input class="form-control" formControlName="sourceIdentifierTo">
+        <input class="form-control" formControlName="sourceIdentifierFrom" [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierFrom')?.pending}">
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if(valSvc.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierFrom'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeSourceIdentifierForm.controls['sourceIdentifierFrom']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="col-form-label">
+          {{ 'batch.actions.metadata.source.replaceId.to' | translate }}
+        </label>
+      </div>
+      <div class="col-sm-9">
+        <input class="form-control" formControlName="sourceIdentifierTo" [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierTo')?.pending}">
       </div>
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
         @if(valSvc.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeSourceIdentifierForm.controls['sourceIdentifierTo']) }}
+        </span>
+        } @else if(changeSourceIdentifierForm.hasError('notEquals')) {
         <span class="form-text text-danger small">
           {{ 'batch.actions.metadata.source.replaceId.invalid' | translate }} {{ valSvc.getErrorMsg(changeSourceIdentifierForm) }}
         </span>
@@ -75,8 +101,8 @@
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="changeSourceIdentifierForm.invalid || changeSourceIdentifierForm.pristine"
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!changeSourceIdentifierForm.valid"
           class="btn btn-outline-primary float-end">
           GO
         </button>
