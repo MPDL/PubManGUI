@@ -519,14 +519,14 @@
         <div class="accordion-item border-0 mb-3"
             [ngClass]="{'d-none' : !genreSpecificResource.value().properties.sources.display}">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodySourcesGroup" [attr.aria-expanded]="!genreSpecificResource.value().properties.sources.optional" 
                     aria-controls="accordionBodySourcesGroup"
                     [ngClass]="{'collapsed' : genreSpecificResource.value().properties.sources.optional}">
                     Sources Group
                 </button>
             </h2>
-            <div id="accordionBodySourcesGroup" class="accordion-collapse collapse">
+            <div id="accordionBodySourcesGroup" class="accordion-collapse collapse" [ngClass]="{'show' : !genreSpecificResource.value().properties.sources.optional}">
                 @if(meta_form.hasError(error_types.SOURCE_NOT_PROVIDED.toString())) {
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-auto">
