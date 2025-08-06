@@ -73,5 +73,15 @@ declare namespace Cypress {
      * Get all successfully processed item IDs from the importLogItems request
      */
     getImportLogItemIdsViaAPI(importLogId: string): Chainable<string[]>
+
+    /**
+     * Delete an import log via API
+     */
+    deleteImportLogViaAPI(importLogId: string): void
+
+    /**
+     * Start an import via API
+     */
+    createImportViaAPI(importName: string, contextId: string, format: string, importFileContent: string): Chainable<Cypress.Response<any>>
   }
 }
