@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AddRemoveButtonsComponent
 } from '../../../shared/add-remove-buttons/add-remove-buttons.component';
 import { Errors } from 'src/app/model/errors';
+import { LanguageAutosuggestComponent } from 'src/app/components/shared/language-autosuggest/language-autosuggest.component';
 
 @Component({
   selector: 'pure-abstract-form',
@@ -13,6 +14,7 @@ import { Errors } from 'src/app/model/errors';
     AddRemoveButtonsComponent,
     CommonModule,
     FormsModule,
+    LanguageAutosuggestComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './abstract-form.component.html',
@@ -26,6 +28,10 @@ export class AbstractFormComponent {
   @Output() notice = new EventEmitter();
 
   error_types = Errors;
+
+  get abstract_language () {
+    return this.abstract_form.get('language') as FormControl;
+  }
 
   add_remove_abstract(event: any) {
     this.notice.emit(event);
