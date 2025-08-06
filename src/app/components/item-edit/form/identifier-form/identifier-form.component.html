@@ -1,11 +1,11 @@
 <ng-container [formGroup]="identifier_form">
-    <div class="d-sm-flex flex-sm-row gap-1 align-items-start"
-        [ngClass]="{'mb-1': index !== index_length -1 && multi}">
+    <div class="d-sm-flex flex-sm-row gap-1 align-items-start" [ngClass]="{'mb-1': index !== index_length -1 && multi}">
         <div class="col-sm-4">
             <label for="identifier_type" class="visually-hidden">type</label>
-            <select id="identifier_type" class="form-select" formControlName="type" [ngClass]="identifier_form.errors?.[error_types.ID_TYPE_NOT_PROVIDED] ? 'is-invalid' : ''">
+            <select id="identifier_type" class="form-select" formControlName="type"
+                [ngClass]="identifier_form.errors?.[error_types.ID_TYPE_NOT_PROVIDED] ? 'is-invalid' : ''">
                 <option [ngValue]="null" selected disabled>type</option>
-                @for (t of identifier_types; track t) {
+                @for (t of identifier_display_types; track t) {
                 <option [ngValue]="t">{{t}}</option>
                 }
             </select>
@@ -16,7 +16,8 @@
             }
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control" id="identifier_value" formControlName="id" [ngClass]="identifier_form.errors?.[error_types.INCORRECT_ID_DOI_FORMAT] ? 'is-invalid' : ''">
+            <input type="text" class="form-control" id="identifier_value" formControlName="id"
+                [ngClass]="identifier_form.errors?.[error_types.INCORRECT_ID_DOI_FORMAT] ? 'is-invalid' : ''">
             @if(identifier_form.errors?.[error_types.INCORRECT_ID_DOI_FORMAT]) {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="text-danger">Incorrect ID format. Enter DOIs without leading http(s)://doi.org</div>
