@@ -302,8 +302,8 @@
                                     <select id="reviewMethod" class="form-select" formControlName="reviewMethod">
                                         <option [value]="null" selected disabled>Review Method</option>
                                         <option [value]="null">---</option>
-                                        @for (rm of review_method_types; track rm) {
-                                        <option [value]="rm">{{rm}}</option>
+                                        @for (review_method of review_method_types; track review_method) {
+                                        <option [value]="review_method">{{review_method}}</option>
                                         }
                                     </select>
                                 </div>

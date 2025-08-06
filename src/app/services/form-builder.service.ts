@@ -211,7 +211,7 @@ export class FormBuilderService {
       languages: this.fb.array(metadata?.languages ? metadata.languages.map(l => this.fb.nonNullable.control(l) as AbstractControl) : [this.fb.nonNullable.control(null)]),
       location: this.fb.nonNullable.control(metadata?.location ? metadata.location : null),
       publishingInfo: metadata?.publishingInfo ? this.publishing_info_FG(metadata.publishingInfo) : this.publishing_info_FG(null),
-      reviewMethod: this.fb.nonNullable.control(metadata?.reviewMethod ? metadata.reviewMethod : ReviewMethod.NO_REVIEW),
+      reviewMethod: this.fb.nonNullable.control(metadata?.reviewMethod ? metadata.reviewMethod : null),
       sources: this.fb.array(metadata?.sources ? metadata.sources.map(s => this.source_FG(s) as AbstractControl) : []),
       freeKeywords: this.fb.nonNullable.control(metadata?.freeKeywords ? metadata.freeKeywords : null),
       subjects: this.fb.array(metadata?.subjects ? metadata.subjects.map(s => this.subject_FG(s) as AbstractControl) : []),
