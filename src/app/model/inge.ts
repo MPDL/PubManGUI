@@ -324,7 +324,7 @@ export interface FundingProgramVO extends ValueObject, Cloneable {
 
 export interface SavedSearchVO extends BasicDbRO, Cloneable {
 
-    searchForm: any;
+  searchForm: any;
 }
 
 export enum AffiliationState {
@@ -477,11 +477,19 @@ export enum IdType {
     EARTHARXIV = "EARTHARXIV",
     EDARXIV = "EDARXIV",
     EDOC = "EDOC",
+    ESCIDOC = "ESCIDOC",
     ESS_OPEN_ARCHIVE = "ESS_OPEN_ARCHIVE",
+    GRANT_ID = "GRANT_ID",
     ISBN = "ISBN",
     ISI = "ISI",
     ISSN = "ISSN",
     MEDRXIV = "MEDRXIV",
+    MDB_ID = "MDB_ID",
+    MODELMETHOD = "MODELMETHOD",
+    OATYPE = "OATYPE",
+    OPEN_AIRE = "OPEN_AIRE",
+    ORGANISATIONALK = "ORGANISATIONALK",
+    ORCID = "ORCID",
     OTHER = "OTHER",
     PATENT_APPLICATION_NR = "PATENT_APPLICATION_NR",
     PATENT_NR = "PATENT_NR",
@@ -491,13 +499,17 @@ export enum IdType {
     PMID = "PMID",
     PND = "PND",
     PSYARXIV = "PSYARXIV",
-    REPORT_NR = "REPORT_NR",
+    PUBLISHER = "PUBLISHER",
     RESEARCH_SQUARE = "RESEARCH_SQUARE",
+    REGIONALK = "REGIONALK",
+    REPORT_NR = "REPORT_NR",
+    RESEARCHTK = "RESEARCHTK",
     SOCARXIV = "SOCARXIV",
     SSRN = "SSRN",
     URI = "URI",
     URN = "URN",
-    ZDB = "ZDB"
+    WORKINGGROUP = "WORKINGGROUP",
+    ZDB = "ZDB",
 }
 
 export enum CreatorRole {
@@ -578,50 +590,50 @@ export enum AlternativeTitleType {
 }
 
 export enum ContentCategories {
-    "any-fulltext" = "http://purl.org/escidoc/metadata/ves/content-categories/any-fulltext",
-    "pre-print" = "http://purl.org/escidoc/metadata/ves/content-categories/pre-print",
-    "post-print" = "http://purl.org/escidoc/metadata/ves/content-categories/post-print",
-    "publisher-version" = "http://purl.org/escidoc/metadata/ves/content-categories/publisher-version",
-    "abstract" = "http://purl.org/escidoc/metadata/ves/content-categories/abstract",
-    "table-of-contents" = "http://purl.org/escidoc/metadata/ves/content-categories/table-of-contents",
-    "supplementary-material" = "http://purl.org/escidoc/metadata/ves/content-categories/supplementary-material",
-    "correspondence" = "http://purl.org/escidoc/metadata/ves/content-categories/correspondence",
-    "copyright-transfer-agreement" = "http://purl.org/escidoc/metadata/ves/content-categories/copyright-transfer-agreement",
-    "research-data" = "http://purl.org/escidoc/metadata/ves/content-categories/research-data",
-    "multimedia" = "http://purl.org/escidoc/metadata/ves/content-categories/multimedia",
-    "code" = "http://purl.org/escidoc/metadata/ves/content-categories/code"
+  "any-fulltext" = "http://purl.org/escidoc/metadata/ves/content-categories/any-fulltext",
+  "pre-print" = "http://purl.org/escidoc/metadata/ves/content-categories/pre-print",
+  "post-print" = "http://purl.org/escidoc/metadata/ves/content-categories/post-print",
+  "publisher-version" = "http://purl.org/escidoc/metadata/ves/content-categories/publisher-version",
+  "abstract" = "http://purl.org/escidoc/metadata/ves/content-categories/abstract",
+  "table-of-contents" = "http://purl.org/escidoc/metadata/ves/content-categories/table-of-contents",
+  "supplementary-material" = "http://purl.org/escidoc/metadata/ves/content-categories/supplementary-material",
+  "correspondence" = "http://purl.org/escidoc/metadata/ves/content-categories/correspondence",
+  "copyright-transfer-agreement" = "http://purl.org/escidoc/metadata/ves/content-categories/copyright-transfer-agreement",
+  "research-data" = "http://purl.org/escidoc/metadata/ves/content-categories/research-data",
+  "multimedia" = "http://purl.org/escidoc/metadata/ves/content-categories/multimedia",
+  "code" = "http://purl.org/escidoc/metadata/ves/content-categories/code"
 }
 
 
 export interface ImportLog {
-    id: number;
-    status: ImportStatus;
-    errorLevel: ImportErrorLevel;
-    startDate: Date;
+  id: number;
+  status: ImportStatus;
+  errorLevel: ImportErrorLevel;
+  startDate: Date;
 }
 
 export interface ImportLogDbVO extends ImportLog {
-    endDate: Date;
-    userId: string;
-    name: string;
-    format: ImportFormat;
-    contextId: string;
-    percentage: number;
-    anzImportedItems: number;
-    anzFrom: number;
+  endDate: Date;
+  userId: string;
+  name: string;
+  format: ImportFormat;
+  contextId: string;
+  percentage: number;
+  anzImportedItems: number;
+  anzFrom: number;
 }
 
 export interface ImportLogItemDbVO extends ImportLog {
-    endDate: Date;
-    parent: ImportLogDbVO;
-    message: string;
-    itemId: string;
-    anzDetails: number;
+  endDate: Date;
+  parent: ImportLogDbVO;
+  message: string;
+  itemId: string;
+  anzDetails: number;
 }
 
 export interface ImportLogItemDetailDbVO extends ImportLog {
-    parent: ImportLogItemDbVO;
-    message: string;
+  parent: ImportLogItemDbVO;
+  message: string;
 }
 
 export enum ImportStatus {
