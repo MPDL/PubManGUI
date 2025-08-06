@@ -1,4 +1,5 @@
 describe('New Import', () => {
+  let importLogId: string;
   let itemIds: string[] = [];
 
   beforeEach(() => {
@@ -9,6 +10,7 @@ describe('New Import', () => {
   afterEach(() => {
     if(itemIds.length > 0){
       cy.deleteItemsViaAPI(itemIds)
+      cy.deleteImportLogViaAPI(importLogId)
     }
     cy.logoutViaAPI()
   })
@@ -29,7 +31,7 @@ describe('New Import', () => {
   iDfetchTestCases.forEach(({ description, source, identifier }) => {
     it(description, () => {
       // Given
-      cy.intercept('GET', '/rest/dataFetch/*').as('fetch')
+      cy.intercept('GET', '/rest/dataFetch/**').as('fetch')
 
       // When
       //TODO: Move the select of the source behind the context selection. As soon as the Context select error is fixed
@@ -90,16 +92,16 @@ describe('New Import', () => {
         expect(interception.response.statusCode).to.equal(200)
 
         // @ts-ignore
-        let importId = interception.response.body['id'];
+        importLogId = interception.response.body['id'];
 
-        cy.repeatedRequest('GET', Cypress.env('restUrl') + '/import/importLog/' + importId, null,
+        cy.repeatedRequest('GET', Cypress.env('restUrl') + '/import/importLog/' + importLogId, null,
           'status', ['FINISHED'], 10, 1000).then((response) => {
           // @ts-ignore
           expect(response.status).to.equal(200)
           // @ts-ignore
           expect(response.body['status']).to.equal('FINISHED')
 
-          cy.getImportLogItemIdsViaAPI(importId).then((itemIdsResponse) => {
+          cy.getImportLogItemIdsViaAPI(importLogId).then((itemIdsResponse) => {
             itemIds = itemIdsResponse;
             cy.log('Imported Item IDs: ' + itemIds.join(', '))
             expect(itemIdsResponse.length).to.be.equal(expectedItemCount)

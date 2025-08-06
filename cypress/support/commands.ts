@@ -165,3 +165,23 @@ Cypress.Commands.add('getImportLogItemIdsViaAPI', (importLogId): Chainable<strin
       .map(item => item.itemId)
   })
 })
+
+Cypress.Commands.add('deleteImportLogViaAPI', (importLogId: string) => {
+  return cy.request({
+    method: 'DELETE',
+    url: Cypress.env('restUrl') + '/import/importLog/' + importLogId
+  }).then((response) => {
+    expect(response.status).to.eq(200)
+  })
+})
+
+Cypress.Commands.add('createImportViaAPI', (importName: string, contextId: string, format: string, importFileContent: string) => {
+  return cy.request({
+    method: 'POST',
+    url: Cypress.env('restUrl') + '/import/import?' + 'contextId=' + contextId + '&importName=' + importName + '&format=' + format,
+    body: importFileContent
+  }).then((response) => {
+    expect(response.status).to.eq(200)
+  })
+})
+
