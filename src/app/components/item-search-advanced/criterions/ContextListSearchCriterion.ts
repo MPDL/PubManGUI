@@ -28,12 +28,18 @@ export class ContextListSearchCriterion extends SearchCriterion {
           this.contextOptions[c.objectId] = c;
         })
 
-      Object.keys(this.contextOptions).forEach(itemState => this.contextListFormGroup.addControl(itemState, new FormControl(false)));
+      Object.keys(this.contextOptions).forEach(itemState => this.contextListFormGroup.addControl(itemState, new FormControl(true)));
     })
 
 
 
 
+  }
+
+  selectAll(event: Event) {
+    const target = event.target as HTMLInputElement;
+    Object.keys(this.contextListFormGroup.controls)
+      .forEach(genre => this.contextListFormGroup.get(genre)?.setValue(target.checked));
   }
 
   override isEmpty(): boolean {

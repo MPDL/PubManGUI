@@ -76,7 +76,6 @@ export class ProjectInfoFormComponent {
   }
 
   get fundingProgramIdentifier() {
-    console.log('this.fundingProgramIdentifiers.at(0)', this.fundingProgramIdentifiers.at(0));
     return this.fundingProgramIdentifiers.at(0) as FormGroup<ControlType<IdentifierVO>>;
   }
 

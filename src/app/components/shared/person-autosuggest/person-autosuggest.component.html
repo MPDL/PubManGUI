@@ -11,14 +11,18 @@
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." [ngClass]="{'is-invalid': validationError}"/>
   } @else if (formForPersonsGivenName && formForPersonsFamilyName) {
-    <input class="form-control" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
+    <input class="form-control {{formForPersonsFamilyName.value ? 'fw-bold' : ''}}" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" placeholder="Start typing..." [ngClass]="{'is-invalid': validationError}"/>
   }
+
+  <!--
   @if (validationError) {
     <div class="text-danger">Creator family name is required</div>
   }
-  
+  -->
+
+
 
   @if(searching) {
 
@@ -28,8 +32,27 @@
   </button>
   }
   @if(formForPersonsIdValue && formForPersonsIdValue.value) {
+
+    @if(showConeAndOrcid) {
+
+      <a class="btn btn-outline-dark btn-sm" href="/cone{{formForPersonsIdValue.value}}" target="_blank">
+      <img alt="CoNE logo" src="assets/icons/CoNE_icon.svg" width="16" height="16"/>
+      </a>
+
+      @if(formForPersonsOrcid && formForPersonsOrcid.value) {
+
+        <a class="btn btn-outline-dark btn-sm" href="{{formForPersonsOrcid.value}}" target="_blank">
+          <img alt="ORCID logo" src="assets/images/ORCID-iD_icon_vector.svg" width="16" height="16"/>
+        </a>
+
+
+      }
+
+    }
   <button class="btn btn-outline-dark btn-sm" type="button" (click)="deleteFields()">
     <span class="bi bi-x"></span>
   </button>
+
+
   }
 </div>

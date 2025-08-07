@@ -1,14 +1,14 @@
 @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator)
 {
 <div class="container-fluid">
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form" (ngSubmit)="submit($event.submitter.id)">
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 mt-2 px-3 align-items-center" formGroupName="context">
             <label for="context" class="col-sm-2 col-form-label">Context</label>
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-sm">
-                        <select id="contextFromSelect" class="form-select" formControlName="objectId" data-test="context"
-                            (change)="context_change(contextFromSelect.value)" #contextFromSelect>
+                        <select id="contextFromSelect" class="form-select" formControlName="objectId"
+                            data-test="context" (change)="context_change(contextFromSelect.value)" #contextFromSelect>
                             <option [value]="null" selected disabled>Context</option>
                             @for (contextObject of user_contexts; track contextObject) {
                             <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -32,7 +32,7 @@
             <!--GROUP Files-->
             <div class="accordion-item border-0">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#accordionBodyFilesGroup" aria-expanded="true"
                         aria-controls="accordionBodyFilesGroup">
                         Files and Locators Group
@@ -43,7 +43,8 @@
                         <!-- TODO File upload -->
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label class="col-sm-2 col-form-label">File Upload</label>
-                            <pure-file-upload [file_upload_form]="internalFiles" (fileUploadNotice)="handleFileUploadNotification($event)"></pure-file-upload>
+                            <pure-file-upload [file_upload_form]="internalFiles"
+                                (fileUploadNotice)="handleFileUploadNotification($event)"></pure-file-upload>
                         </div>
                     </div>
                     @if (internalFiles && internalFiles.controls.length > 0) {
@@ -52,7 +53,7 @@
                             <label class="col-sm-2 col-form-label">Files</label>
                             <div class="form-check form-switch col-sm py-1">
                                 <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
-                                [checked]="switchFileSortingMode" (change)="changeSortingMode()">
+                                    [checked]="switchFileSortingMode" (change)="changeSortingMode()">
                                 <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
                             </div>
                         </div>
@@ -74,10 +75,9 @@
                                 </div>
                                 }
                                 @empty {
-                                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                                        [add_val]="'add fileIndex'"
-                                        (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
-                                    }
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add fileIndex'"
+                                    (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
+                                }
                             </div>
                         </div>
                     </div>
@@ -100,12 +100,12 @@
                                 externalUrlIndex = $index) {
                                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                     <div class="col-sm drag-list-box" cdkDrag>
-                                        <pure-file-form [file_form]="externalUrl" [index]="externalUrlIndex" 
+                                        <pure-file-form [file_form]="externalUrl" [index]="externalUrlIndex"
                                             [index_length]="externalReferences.controls.length"
                                             (notice)="handleExternalReferenceNotification($event)"></pure-file-form>
                                     </div>
                                     <div class="col-sm-1">
-                                        <pure-add-remove-buttons [index]="externalUrlIndex" 
+                                        <pure-add-remove-buttons [index]="externalUrlIndex"
                                             (notice)="handleExternalReferenceNotification($event)"></pure-add-remove-buttons>
                                     </div>
                                 </div>
@@ -149,9 +149,16 @@
                 </div>
             </div>
         </div>
-        <div class="d-sm-flex flex-sm-row mb-3 px-3">
-            <div class="col-sm offset-sm-2">
-                <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="submit" value="save" data-test="save">S A V E</button>
+        <hr />
+        <div class="d-sm-flex flex-sm-row mb-3 px-3 justify-content-end">
+            <div class="col-auto">
+                <button class="btn btn-primary me-3" id="save" type="submit" value="save" data-test="save">SAVE</button>
+                @if (!form.controls['objectId'].value || (authorizationInfo && authorizationInfo.actions['SUBMIT'])) {
+                <button class="btn btn-primary me-3" id="submit" type="submit" value="submit">SUBMIT</button>
+                }
+                @if (authorizationInfo && authorizationInfo.actions['RELEASE']) {
+                <button class="btn btn-primary" id="release" type="submit" value="release">RELEASE</button>
+                }
             </div>
         </div>
     </form>

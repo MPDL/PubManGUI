@@ -11,34 +11,56 @@
       <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.source.adjust' | translate }}</label>
       <div class="col-sm-1">
         <select class="form-select" formControlName="sourceNumber">
-          <option value="1" selected>1</option>
-          <option value="2">2</option>
+          <option [value]="1" selected>1</option>
+          <option [value]="2">2</option>
         </select>
       </div>
     </div>
 
-    <div class="mb-3 row">
+    <div class="row">
       <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.source.addId.type' | translate }}</label>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="sourceIdentifierType">
-          <option [value]='' selected disabled>{{ 'batch.actions.metadata.source.addId.default' | translate }}</option>
+        <select class="form-select" formControlName="sourceIdentifierType" [ngClass]="{'border border-danger': addSourceIdentifierForm.get('sourceIdentifierType')?.pending}">
+          <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.source.addId.default' | translate }}</option>
           @for (type of sourceIdTypes; track type) {
             <option [value]="type">{{ 'SourceIdType.' + type | translate }}</option>
           }
         </select>
       </div>
     </div>
-
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.source.addId.to' | translate }}</label>
-      <div class="col-sm-9">
-        <input class="form-control" formControlName="sourceIdentifier">
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (valSvc.notValidField(addSourceIdentifierForm.controls['sourceIdentifierType'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(addSourceIdentifierForm.controls['sourceIdentifierType']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
       </div>
-    </div>
+    </div> 
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="addSourceIdentifierForm.invalid || addSourceIdentifierForm.pristine"
+      <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.source.addId.to' | translate }}</label>
+      <div class="col-sm-9">
+        <input class="form-control" formControlName="sourceIdentifier" [ngClass]="{'border border-danger': addSourceIdentifierForm.get('sourceIdentifier')?.pending}">
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (valSvc.notValidField(addSourceIdentifierForm.controls['sourceIdentifier'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(addSourceIdentifierForm.controls['sourceIdentifier']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div> 
+
+    <div class="row">
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!addSourceIdentifierForm.valid"
           class="btn btn-outline-primary float-end">
           GO
         </button>

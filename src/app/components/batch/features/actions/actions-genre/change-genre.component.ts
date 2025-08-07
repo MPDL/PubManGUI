@@ -31,11 +31,11 @@ export class ActionsGenreComponent {
   degreeTypes = Object.keys(DegreeType);
 
   public changeGenreForm: FormGroup = this.fb.group({
-    genreFrom: ['Genre', [Validators.required]],
-    genreTo: ['Genre', [Validators.required]],
-    degreeType: [{ value: '', disabled: true }],
+    genreFrom: [null, [Validators.required]],
+    genreTo: [null, [Validators.required]],
+    degreeType: [{ value: null, disabled: true }],
   },
-    { validators: [this.valSvc.notEqualsValidator('genreFrom', 'genreTo'), this.valSvc.allRequiredValidator()] }
+    { validators: [this.valSvc.notEqualsValidator('genreFrom', 'genreTo')] }
   );
 
   get changeGenreParams(): ChangeGenreParams {
@@ -49,15 +49,24 @@ export class ActionsGenreComponent {
   }
 
   onSubmit(): void {
-    if (this.changeGenreForm.invalid) {
-      this.changeGenreForm.markAllAsTouched();
-      return;
+    if (this.changeGenreForm.valid) {
+      this.batchSvc.changeGenre(this.changeGenreParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.changeGenreForm.reset();
+        this.router.navigate(['/batch/logs']);
+      });
     }
-    this.batchSvc.changeGenre(this.changeGenreParams).subscribe(actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.changeGenreForm.reset();
-      this.router.navigate(['/batch/logs']);
-    });
+  }
+
+  checkIfAllRequired() {
+    if (this.changeGenreForm.invalid) {
+      Object.keys(this.changeGenreForm.controls).forEach(key => {
+        const field = this.changeGenreForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
   }
 
 }

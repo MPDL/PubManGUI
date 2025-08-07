@@ -100,23 +100,23 @@ export class ItemActionsModalComponent {
   }
 
   submit() {
-    return this.itemsService.submit(this.item!.objectId!, this.item!.lastModificationDate!, this.comment);
+    return this.itemsService.submit(this.item!.objectId!, this.item!.modificationDate!, this.comment);
   }
 
   release() {
-    return this.itemsService.release(this.item!.objectId!, this.item!.lastModificationDate!, this.comment);
+    return this.itemsService.release(this.item!.objectId!, this.item!.modificationDate!, this.comment);
   }
 
   revise() {
-    return this.itemsService.revise(this.item!.objectId!, this.item!.lastModificationDate!, this.comment);
+    return this.itemsService.revise(this.item!.objectId!, this.item!.modificationDate!, this.comment);
   }
 
   withdraw() {
-    return this.itemsService.withdraw(this.item!.objectId!, this.item!.lastModificationDate!, this.comment);
+    return this.itemsService.withdraw(this.item!.objectId!, this.item!.modificationDate!, this.comment);
   }
 
   delete() {
-    return this.itemsService.delete(this.item!.objectId!, this.item!.lastModificationDate!);
+    return this.itemsService.delete(this.item!.objectId!, this.item!.modificationDate!);
   }
 
   addDoi() {

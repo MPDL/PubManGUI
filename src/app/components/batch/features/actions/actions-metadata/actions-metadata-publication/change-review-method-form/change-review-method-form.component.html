@@ -9,22 +9,34 @@
   </div>
 
   <form [formGroup]="changeReviewMethodForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
+    <div class="row">
       <div class="col-sm-3">
         <label class=" col-form-label">
           {{ 'batch.actions.metadata.publication.reviewType.from' | translate }}
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="reviewMethodFrom">
-          <option [value]='' selected disabled>
+        <select class="form-select" formControlName="reviewMethodFrom"
+          [ngClass]="{'border border-danger': changeReviewMethodForm.get('reviewMethodFrom')?.pending}">
+          <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
           <option [value]=''>---</option>
           @for (method of reviewMethods; track method) {
-            <option [value]="method"> {{ 'ReviewMethod.' + method | translate}} </option>
+          <option [value]="method"> {{ 'ReviewMethod.' + method | translate}} </option>
           }
         </select>
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if(valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodFrom'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeReviewMethodForm.controls['reviewMethodFrom']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
       </div>
     </div>
 
@@ -35,13 +47,14 @@
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="reviewMethodTo">
-          <option [value]='' selected disabled>
+        <select class="form-select" formControlName="reviewMethodTo"
+          [ngClass]="{'border border-danger': changeReviewMethodForm.get('reviewMethodTo')?.pending}">
+          <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
           <option [value]=''>---</option>
           @for (method of reviewMethods; track method) {
-            <option [value]="method"> {{ 'ReviewMethod.' + method | translate}} </option>
+          <option [value]="method"> {{ 'ReviewMethod.' + method | translate}} </option>
           }
         </select>
       </div>
@@ -50,18 +63,22 @@
       <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])) {
         <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.publication.reviewType.invalid' | translate }} {{ valSvc.getFieldError(changeReviewMethodForm) }}
+          {{ valSvc.getErrorMsg(changeReviewMethodForm.controls['reviewMethodTo']) }}
+        </span>
+        } @else if(changeReviewMethodForm.hasError('notEquals')) {
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.metadata.publication.reviewType.invalid' | translate }} {{
+          valSvc.getErrorMsg(changeReviewMethodForm) }}
         </span>
         } @else {
-          <span>&nbsp;</span>
+        <span>&nbsp;</span>
         }
       </div>
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="changeReviewMethodForm.invalid || changeReviewMethodForm.pristine"
-          class="btn btn-outline-primary float-end">
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!changeReviewMethodForm.valid" class="btn btn-outline-primary float-end">
           GO
         </button>
       </div>

@@ -2,8 +2,7 @@
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm">
             <label for="abstract_language" class="col-sm-2 col-form-label">Language</label>
-            <input type="text" class="form-control" id="abstract_language" name="abstract_language"
-                formControlName="language">
+            <pure-language-autosuggest [iso]="'iso639-3'"[formForLanguage]="abstract_language"></pure-language-autosuggest>
         </div>
         <div class="col-sm-1">
             <pure-add-remove-buttons [index]="index" (notice)="add_remove_abstract($event)"></pure-add-remove-buttons>

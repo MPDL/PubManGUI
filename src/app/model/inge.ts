@@ -397,7 +397,6 @@ export enum SubjectClassification {
     DDC = "DDC",
     ISO639_3 = "ISO639_3",
     JEL = "JEL",
-    JUS = "JUS",
     MPINP = "MPINP",
     MPIPKS = "MPIPKS",
     MPIRG = "MPIRG",
@@ -405,7 +404,6 @@ export enum SubjectClassification {
     MPIS_PROJECTS = "MPIS_PROJECTS",
     MPIWG_PROJECTS = "MPIWG_PROJECTS",
     MPICC_PROJECTS = "MPICC_PROJECTS",
-    PACS = "PACS",
 }
 
 export enum Workflow {

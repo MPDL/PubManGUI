@@ -1,19 +1,30 @@
 <form [formGroup]="replaceKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">
-        {{ 'batch.actions.metadata.publication.keywordsReplace.to' | translate }}
-      </label>
-      <div class="col-sm-9">
-        <input class="form-control" formControlName="keywords">
-      </div>
+  <div class="row">
+    <label class="col-sm-3 col-form-label">
+      {{ 'batch.actions.metadata.publication.keywordsReplace.to' | translate }}
+    </label>
+    <div class="col-sm-9">
+      <input class="form-control" formControlName="keywords"
+        [ngClass]="{'border border-danger': replaceKeywordsForm.get('keywords')?.pending}">
     </div>
+  </div>
+  <div class="mb-2 row">
+    <div class="offset-sm-3 col-sm-6">
+      @if(valSvc.notValidField(replaceKeywordsForm.controls['keywords'])) {
+      <span class="form-text text-danger small">
+        {{ valSvc.getErrorMsg(replaceKeywordsForm.controls['keywords']) }}
+      </span>
+      } @else {
+      <span>&nbsp;</span>
+      }
+    </div>
+  </div>
 
-    <div class="row">
-      <div>
-        <button type="submit" [disabled]="replaceKeywordsForm.invalid || replaceKeywordsForm.pristine" 
-          class="btn btn-outline-primary float-end">
-          GO
-        </button>
-      </div>
+  <div class="row">
+    <div (click)="checkIfAllRequired()">
+      <button type="submit" [disabled]="!replaceKeywordsForm.valid" class="btn btn-outline-primary float-end">
+        GO
+      </button>
     </div>
-  </form>
+  </div>
+</form>

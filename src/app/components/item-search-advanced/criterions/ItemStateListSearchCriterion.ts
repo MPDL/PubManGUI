@@ -10,11 +10,24 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
 
   itemStateOptions = Object.keys(ItemVersionState);
 
+  aaService = AaService.instance;
 
   constructor() {
     super("itemStateList");
     this.content.addControl("publicationStates", new FormGroup({}));
     this.itemStateOptions.forEach(itemState => this.publicationStatesFormGroup.addControl(itemState, new FormControl(false)));
+
+    this.aaService.principal.subscribe(p => {
+      if(p.loggedIn) {
+        this.publicationStatesFormGroup.get(ItemVersionState.PENDING.valueOf())?.setValue(true);
+        this.publicationStatesFormGroup.get(ItemVersionState.SUBMITTED.valueOf())?.setValue(true);
+        this.publicationStatesFormGroup.get(ItemVersionState.RELEASED.valueOf())?.setValue(true);
+        this.publicationStatesFormGroup.get(ItemVersionState.IN_REVISION.valueOf())?.setValue(true);
+      }
+      else {
+        this.itemStateOptions.forEach(itemState => this.publicationStatesFormGroup.get(itemState)?.setValue(false));
+      }
+    })
 
   }
 
@@ -108,6 +121,7 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
   get publicationStatesFormGroup() {
     return this.content.get("publicationStates") as FormGroup;
   }
+
 
 
 }

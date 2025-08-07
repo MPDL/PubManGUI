@@ -30,7 +30,7 @@
 
     <div class="row">
       <div>
-        <button type="submit" [disabled]="tagsToAdd.value.length === 0 || addLocalTagsForm.invalid" 
+        <button type="submit" [disabled]="tagsToAdd.value.length === 0 || !addLocalTagsForm.valid" 
           class="btn btn-outline-primary float-end">
           GO
         </button>

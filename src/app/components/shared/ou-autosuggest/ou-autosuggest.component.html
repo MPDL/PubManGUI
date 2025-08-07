@@ -1,6 +1,6 @@
 
 <div class="input-group">
-  <input class="form-control" type="text" [formControl]="formForOuName" [ngbTypeahead]="suggestOus"
+  <input class="form-control {{emphasize && formForOuName.value ? 'fw-bold' : ''}}" type="text" [formControl]="formForOuName" [ngbTypeahead]="suggestOus"
     [ngClass]="{'is-invalid': validationError}" (selectItem)="suggestOusSelector($event)"
     [resultFormatter]="suggestOusFormatter" [inputFormatter]="suggestOusFormatter" [readonly]="formForOuId?.value"
     [placeholder]="'common.autosuggestPlaceholder' | translate" />
@@ -13,15 +13,16 @@
   }
 
   @if(formForOuId?.value) {
-  <button class="btn btn-outline-dark" type="button" (click)="deleteFields()">
+    <button type="button" class="btn btn-outline-dark btn-sm">
+      <span class="material-symbols-outlined"  title="{{formForOuId?.value}}" (click)="toggleAffPopover(formForOuId?.value)">info</span>
+    </button>
+
+  <button class="btn btn-outline-dark btn-sm" type="button" (click)="deleteFields()">
     <span class="bi bi-x"></span>
   </button>
   }
 
-  
+
 
 </div>
 
-@if(validationEnabled && validationError) {
-    <div class="text-danger">Creator organization name is required</div>
-  }

@@ -7,37 +7,24 @@
   </div>
 
   <form [formGroup]="changeContextForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
+    <div class="row">
       <label for="contextFrom" class="col-sm-3 col-form-label">{{ 'batch.actions.context.change.from' | translate
         }}</label>
       <div class="col-sm-9">
-        <select id="contextFrom" class="form-select" formControlName="contextFrom">
-          <option [value]='' selected disabled>{{ 'batch.actions.context' | translate }}</option>
+        <select id="contextFrom" class="form-select" formControlName="contextFrom"
+          [ngClass]="{'border border-danger': changeContextForm.get('contextFrom')?.pending}">
+          <option [value]="null" selected disable hidden>{{ 'batch.actions.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
           }
         </select>
       </div>
     </div>
-
-    <div class="row">
-      <label for="contextTo" class="col-sm-3 col-form-label">{{ 'batch.actions.context.change.to' | translate }}</label>
-      <div class="col-sm-9">
-        <select id="contextTo" class="form-select" formControlName="contextTo">
-          <option [value]='' selected disabled>{{ 'batch.actions.context' | translate }}</option>
-          @for (contextObject of user_contexts; track contextObject) {
-          <option [value]="contextObject.objectId">{{contextObject.name}}</option>
-          }
-        </select>
-      </div>
-    </div>
-
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        @if (valSvc.notValidField(changeContextForm.controls['contextTo'])) {
+        @if(valSvc.notValidField(changeContextForm.controls['contextFrom'])) {
         <span class="form-text text-danger small">
-          {{ 'batch.actions.context.change.invalid' | translate }} {{
-          valSvc.getFieldError(changeContextForm.controls['contextTo']) }}
+          {{ valSvc.getErrorMsg(changeContextForm.controls['contextFrom']) }}
         </span>
         } @else {
         <span>&nbsp;</span>
@@ -46,9 +33,36 @@
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="changeContextForm.invalid || changeContextForm.pristine"
-          class="btn btn-outline-primary float-end">
+      <label for="contextTo" class="col-sm-3 col-form-label">{{ 'batch.actions.context.change.to' | translate }}</label>
+      <div class="col-sm-9">
+        <select id="contextTo" class="form-select" formControlName="contextTo"
+          [ngClass]="{'border border-danger': changeContextForm.get('contextTo')?.pending}">
+          <option [value]="null" selected disable hidden>{{ 'batch.actions.context' | translate }}</option>
+          @for (contextObject of user_contexts; track contextObject) {
+          <option [value]="contextObject.objectId">{{contextObject.name}}</option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if(valSvc.notValidField(changeContextForm.controls['contextTo'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeContextForm.controls['contextTo']) }}
+        </span>
+        } @else if (changeContextForm.hasError('notEquals')) {
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.context.change.invalid' | translate }} {{valSvc.getErrorMsg(changeContextForm) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!changeContextForm.valid" class="btn btn-outline-primary float-end">
           GO
         </button>
       </div>

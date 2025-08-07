@@ -20,17 +20,30 @@
         </select>
       </div>
     </div>
-    <div class="mb-3 row">
+
+    <div class="row">
       <label class="col-sm-3 col-form-label">
         {{ 'batch.actions.metadata.source.adjustEdition.to' | translate }}
       </label>
       <div class="col-sm-9">
-        <input class="form-control" formControlName="sourceEdition">
+        <input class="form-control" formControlName="sourceEdition" [ngClass]="{'border border-danger': replaceSourceEditionForm.get('sourceEdition')?.pending}">
       </div>
     </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (valSvc.notValidField(replaceSourceEditionForm.controls['sourceEdition'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(replaceSourceEditionForm.controls['sourceEdition']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div> 
+
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="replaceSourceEditionForm.invalid || replaceSourceEditionForm.pristine"
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!replaceSourceEditionForm.valid"
           class="btn btn-outline-primary float-end">
           GO
         </button>

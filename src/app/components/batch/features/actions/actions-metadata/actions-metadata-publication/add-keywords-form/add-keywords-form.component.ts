@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { AddKeywordsParams } from 'src/app/components/batch/interfaces/batch-params';
 
@@ -21,7 +22,9 @@ import { TranslatePipe } from "@ngx-translate/core";
 export class AddKeywordsFormComponent {
   fb = inject(FormBuilder);
   router = inject(Router);
+  valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
+  elRef: ElementRef = inject(ElementRef);
 
   public addKeywordsForm: FormGroup = this.fb.group({
     keywords: ['', [Validators.required]],
@@ -47,5 +50,17 @@ export class AddKeywordsFormComponent {
     });
   }
 
+  checkIfAllRequired() {
+    if (!this.addKeywordsForm.valid || this.addKeywordsForm.controls['keywords'].pristine) {
+      this.addKeywordsForm.controls['keywords'].markAsPending();
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
+      this.addKeywordsForm.reset();
+    }
+  }
   // TO-DO? No duplicated keywords validation.
 }

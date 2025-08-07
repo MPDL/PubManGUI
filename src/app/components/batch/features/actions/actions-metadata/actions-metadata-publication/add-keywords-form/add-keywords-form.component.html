@@ -7,16 +7,28 @@
   </div>
 
   <form [formGroup]="addKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
+    <div class="row">
       <label class="col-sm-3 col-form-label">
         {{ 'batch.actions.metadata.publication.keywordsAdd.to' | translate }}</label>
       <div class="col-sm-9">
-        <textarea class="form-control" formControlName="keywords"></textarea>
+        <textarea class="form-control" formControlName="keywords"
+        [ngClass]="{'border border-danger': addKeywordsForm.get('keywords')?.pending}"></textarea>
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if(valSvc.notValidField(addKeywordsForm.controls['keywords'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(addKeywordsForm.controls['keywords']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
       </div>
     </div>
 
     <div class="row">
-      <div>
+      <div (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="addKeywordsForm.invalid || addKeywordsForm.pristine"
           class="btn btn-outline-primary float-end">
           GO

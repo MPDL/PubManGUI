@@ -7,39 +7,26 @@
   </div>
 
   <form [formGroup]="changeFileContentCategoryForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
-      <div class="col-sm-3">
-        <label class="col-form-label">{{ 'batch.actions.metadata.files.contentCategory.from' | translate }}</label>
-      </div>
-      <div class="col-sm-9">
-        <select class="form-select" formControlName="fileContentCategoryFrom">
-          <option [value]='' selected disabled>{{ 'batch.actions.metadata.files.contentCategory' | translate }}</option>
-          @for (category of contentCategories; track category) {
-          <option [value]="category"> {{ 'ContentCategories.' + category | translate}}</option>
-          }
-        </select>
-      </div>
-    </div>
-
     <div class="row">
       <div class="col-sm-3">
-        <label class="col-form-label">{{ 'batch.actions.metadata.files.contentCategory.to' | translate }}</label>
+        <label class="col-form-label text-nowrap text-truncate">{{ 'batch.actions.metadata.files.contentCategory.from' | translate }}</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="fileContentCategoryTo">
-          <option [value]='' selected disabled>{{ 'batch.actions.metadata.files.contentCategory' | translate }}</option>
+        <select class="form-select" formControlName="fileContentCategoryFrom"
+          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryFrom')?.pending}">
+          <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
+            }}</option>
           @for (category of contentCategories; track category) {
           <option [value]="category"> {{ 'ContentCategories.' + category | translate}}</option>
           }
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-3 row">
       <div class="offset-sm-3 col-sm-6">
-        @if (valSvc.notValidField(changeFileContentCategoryForm.controls['fileContentCategoryTo'])) {
+        @if(valSvc.notValidField(changeFileContentCategoryForm.controls['fileContentCategoryFrom'])) {
         <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.files.contentCategory.invalid' | translate }} {{
-          valSvc.getFieldError(changeFileContentCategoryForm.controls['fileContentCategoryTo']) }}
+          {{ valSvc.getErrorMsg(changeFileContentCategoryForm.controls['fileContentCategoryFrom']) }}
         </span>
         } @else {
         <span>&nbsp;</span>
@@ -48,9 +35,39 @@
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit"
-          [disabled]="changeFileContentCategoryForm.invalid || changeFileContentCategoryForm.pristine"
+      <div class="col-sm-3">
+        <label class="col-form-label text-nowrap text-truncate">{{ 'batch.actions.metadata.files.contentCategory.to' | translate }}</label>
+      </div>
+      <div class="col-sm-9">
+        <select class="form-select" formControlName="fileContentCategoryTo"
+          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryTo')?.pending}">
+          <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
+            }}</option>
+          @for (category of contentCategories; track category) {
+          <option [value]="category"> {{ 'ContentCategories.' + category | translate}}</option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (valSvc.notValidField(changeFileContentCategoryForm.controls['fileContentCategoryTo'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeFileContentCategoryForm.controls['fileContentCategoryTo']) }}
+        </span>
+        } @else if(changeFileContentCategoryForm.hasError('notEquals')) {
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.metadata.files.contentCategory.invalid' | translate }} {{ valSvc.getErrorMsg(changeFileContentCategoryForm) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!changeFileContentCategoryForm.valid"
           class="btn btn-outline-primary float-end">
           GO
         </button>

@@ -45,6 +45,8 @@ export class PersonAutosuggestComponent {
 
   @Input() validationError!: boolean;
 
+  @Input() showConeAndOrcid =  false;
+
 
   searching: boolean = false;
 

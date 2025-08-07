@@ -12,7 +12,7 @@ import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/bat
 
 import { TranslatePipe } from "@ngx-translate/core";
 
-import { ControlType } from 'src/app/services/form-builder.service'; // Adjust 
+import { ControlType } from 'src/app/services/form-builder.service'; 
 
 @Component({
   selector: 'pure-replace-orcid-form',

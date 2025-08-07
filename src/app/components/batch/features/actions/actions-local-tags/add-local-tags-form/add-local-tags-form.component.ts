@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,15 +12,7 @@ import { ChipsComponent } from 'src/app/components/shared/chips/chips.component'
 
 import { TranslatePipe } from "@ngx-translate/core";
 
-type Unbox<T> = T extends Array<infer V> ? V : T;
-
-export type ControlType<T> = {
-  [K in keyof T]: T[K] extends Array<any>
-  ? FormArray<AbstractControl<Unbox<T[K]>>>
-  : T[K] extends Record<string, any>
-  ? FormGroup<ControlType<T[K]>>
-  : AbstractControl<T[K] | null>;
-};
+import { ControlType } from 'src/app/services/form-builder.service';
 
 @Component({
   selector: 'pure-add-local-tags-form',
@@ -38,6 +30,7 @@ export class AddLocalTagsFormComponent {
   router = inject(Router);
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
+  elRef: ElementRef = inject(ElementRef);
 
   public addLocalTagsForm: FormGroup = this.fb.group({
     localTags: this.fb.array([])
@@ -56,16 +49,12 @@ export class AddLocalTagsFormComponent {
   }
 
   onSubmit(): void {
-    if (this.addLocalTagsForm.invalid) {
-      this.addLocalTagsForm.markAllAsTouched();
-      return;
+    if (this.addLocalTagsForm.valid) {
+      this.batchSvc.addLocalTags(this.addLocalTagsParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.router.navigate(['/batch/logs']);
+      });
     }
-
-    this.batchSvc.addLocalTags(this.addLocalTagsParams).subscribe( actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
-
   }
 
   get localTags() {
@@ -81,5 +70,11 @@ export class AddLocalTagsFormComponent {
     }
   }
 
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
+      this.addLocalTagsForm.reset();
+    }
+  }
 
 }

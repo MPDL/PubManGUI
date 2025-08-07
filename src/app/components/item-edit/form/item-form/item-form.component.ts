@@ -2,10 +2,10 @@ import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
-import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionVO, MdsPublicationVO, Storage } from 'src/app/model/inge';
+import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionRO, ItemVersionVO, MdsPublicationVO, Storage } from 'src/app/model/inge';
 import {
   AddRemoveButtonsComponent
 } from '../../../shared/add-remove-buttons/add-remove-buttons.component';
@@ -14,11 +14,15 @@ import { ChipsComponent } from 'src/app/components/shared/chips/chips.component'
 import { AaService } from 'src/app/services/aa.service';
 import { ContextsService } from "../../../../services/pubman-rest-client/contexts.service";
 import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
+import { ItemListStateService } from 'src/app/components/item-list/item-list-state.service';
 import { FileFormComponent } from '../file-form/file-form.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
 import { MessageService } from 'src/app/services/message.service';
+import { itemToVersionId } from 'src/app/utils/utils';
+import { ItemActionsModalComponent } from 'src/app/components/shared/item-actions-modal/item-actions-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'pure-item-form',
@@ -44,8 +48,12 @@ export class ItemFormComponent implements OnInit {
   fbs = inject(FormBuilderService);
   fileStagingService = inject(FileStagingService);
   itemService = inject(ItemsService);
+  listStateService = inject(ItemListStateService);
+
   messageService = inject(MessageService);
+  modalService = inject(NgbModal);
   route = inject(ActivatedRoute);
+  router = inject(Router);
 
   externalReferences!: FormArray<FormGroup<ControlType<FileDbVO>>>;
   form!: FormGroup;
@@ -56,6 +64,10 @@ export class ItemFormComponent implements OnInit {
 
   @Output() onChangeSwitchMode: EventEmitter<any> = new EventEmitter();
 
+  authorizationInfo: any;
+
+
+
   ngOnInit(): void {
     this.route.data.pipe(
       switchMap(data => {
@@ -64,15 +76,27 @@ export class ItemFormComponent implements OnInit {
       })
     ).subscribe(f => {
       this.form = f;
+      if (this.form.value !== null
+        && this.form.value !== undefined
+        && this.form.get('objectId')?.value !== null
+        && this.form.get('versionNumber')?.value !== undefined) {
+        this.itemService.retrieveAuthorizationInfo(itemToVersionId(this.form.value as ItemVersionRO)).subscribe(authInfo => {
+          this.authorizationInfo = authInfo;
+          console.log('this.authorizationInfo: ', this.authorizationInfo);
+        });
+      }
       this.initInternalAndExternalFiles();
       // manual Update for form validation
       //this.updateFormValidity(this.form);
     });
-    this.aaService.principal.subscribe(
-      p => {
-        this.user_contexts = p.depositorContexts;
+    this.aaService.principal.subscribe(p => {
+      this.user_contexts = p.depositorContexts;
+      if (!this.context.value.objectId && this.user_contexts.length > 0) {
+        // no contextService call needed, because we just need a contextDbRO
+        this.form.get('context')?.patchValue({ objectId: this.user_contexts[0].objectId, name: this.user_contexts[0].name });
       }
-    )
+    });
+
     /*
     this.contextService.getDepositorContextsForCurrentUser()
       .subscribe(
@@ -124,23 +148,6 @@ export class ItemFormComponent implements OnInit {
     }
   }
 
-  updateFormValidity(form: FormGroup | FormArray) {
-    console.log('updateFormValidity')
-    Object.keys(form.controls).forEach(field => {
-      const control = form.get(field);
-      console.log('control name', field);
-      console.log('control.value', JSON.stringify(control?.value));
-      if (control instanceof FormGroup || control instanceof FormArray) {
-        this.updateFormValidity(control);
-      } else {
-        control?.markAsTouched({ onlySelf: true });
-        control?.markAsDirty({ onlySelf: true });
-        control?.updateValueAndValidity();
-        console.log('control.valid', JSON.stringify(control?.valid));
-      }
-    });
-  }
-
   add_remove_local_tag(event: any) {
     if (event.action === 'add') {
       this.localTags.insert(event.index + 1, new FormControl());
@@ -150,8 +157,9 @@ export class ItemFormComponent implements OnInit {
   }
 
   context_change(contextObjectId: string) {
-    let selecteContext = this.user_contexts?.find((context) => context.objectId == contextObjectId)
-    this.form.get('context')?.patchValue({ objectId: contextObjectId, name: selecteContext?.name });
+    // no contextService call needed, because we just need a contextDbRO
+    let selectedContext = this.user_contexts?.find((context) => context.objectId == contextObjectId)
+    this.form.get('context')?.patchValue({ objectId: contextObjectId, name: selectedContext?.name });
   }
 
   changeSortingMode() {
@@ -264,7 +272,20 @@ export class ItemFormComponent implements OnInit {
     array.insert(toIndex, object);
   }
 
-  submit() {
+  openActionsModal(type: 'release' | 'submit', item: ItemVersionVO) {
+    const comp: ItemActionsModalComponent = this.modalService.open(ItemActionsModalComponent).componentInstance;
+    comp.item = item!;
+    comp.action = type;
+    comp.successfullyDone.subscribe(data => {
+      this.router.navigate(['/view/' + itemToVersionId(item! as ItemVersionRO)])
+    })
+
+  }
+
+  submit(submitterId: any) {
+    console.log('submitterId', typeof submitterId);
+    console.log('submitterId', submitterId);
+
     // reassembling files in "files" from "internalFiles" and externalReferences
     this.files.clear();
     if (this.internalFiles) {
@@ -292,17 +313,99 @@ export class ItemFormComponent implements OnInit {
     console.log('form.valid', JSON.stringify(this.form.valid));
     console.log('form.errors:', JSON.stringify(this.form.errors));
     */
+    // this.printValidationErrors(this.form); // call for debug function
+
     // submit form
     if (this.aaService.isLoggedIn) {
       if (this.form_2_submit.objectId) {
-        this.form.valid ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe(result => console.log('Updated Item:', JSON.stringify(result))) : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
+        switch (submitterId) {
+          case 'save': {
+            this.form.valid
+              ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe(result => {
+                this.form = this.fbs.item_FG(result);
+                if (this.form.get('objectId')?.value) {
+                  this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
+                }
+                this.messageService.success('Item updated successfully!');
+                console.log('Updated Item:', JSON.stringify(result))
+              })
+              : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
+            break;
+          }
+          case 'submit': {
+            this.form.valid
+              ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('submit', result))
+              : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
+            break;
+          }
+          case 'release': {
+            this.form.valid
+              ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('release', result))
+              : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
+            break;
+          }
+        }
       } else {
-        this.form.valid ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe(result => console.log('Created Item', JSON.stringify(result))) : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
+
+        switch (submitterId) {
+          case 'save': {
+            this.form.valid
+              ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe(result => {
+                this.form = this.fbs.item_FG(result);
+                if (this.form.get('objectId')?.value) {
+                  this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
+                }
+                this.messageService.success('Item created successfully!');
+                console.log('Created Item', JSON.stringify(result));
+              })
+              : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
+            break;
+          }
+          case 'submit': {
+            this.form.valid
+              ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('submit', result))
+              : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
+            break;
+          }
+          case 'release': {
+            this.form.valid
+              ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('submit', result))
+              : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
+            break;
+          }
+        }
       }
     } else {
       alert('You must be logged in to update/create a publication');
     }
+  }
 
+  // Debugging function to print validation errors
+  printValidationErrors(form: FormGroup, formField?: string) {
+    console.log('Form status:', form.status, formField);
+    console.log('Form errors:', form.errors);
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
+      if (control instanceof FormGroup) {
+        this.printValidationErrors(control, field);
+      } else if (control instanceof FormArray) {
+        control.controls.forEach((arrayControl, index) => {
+          if (arrayControl instanceof FormGroup) {
+            this.printValidationErrors(arrayControl, `${field}[${index}]`);
+          } else {
+            if (arrayControl?.invalid && arrayControl?.touched) {
+              console.log(`Status ${field}[${index}]:`, arrayControl?.status);
+              console.log(`Validation errors for ${field}[${index}]:`, arrayControl?.errors);
+            }
+          }
+        });
+      } else {
+        if (control?.invalid && control?.touched) {
+          console.log(`Status ${field}:`, control?.status);
+          console.log(`Validation errors for ${field}:`, control?.errors);
+        }
+      }
+    });
   }
 }
 

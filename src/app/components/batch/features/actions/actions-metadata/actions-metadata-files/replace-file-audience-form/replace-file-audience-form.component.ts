@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +31,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
   miscSvc = inject(MiscellaneousService);
+  elRef: ElementRef = inject(ElementRef);
 
   index!: number;
   index_length!: number;
@@ -39,20 +40,17 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.miscSvc.retrieveIpList()
-      .subscribe( ous => {
-        this.ous = ous.sort((a,b) => a.name.localeCompare(b.name));
+      .subscribe(ous => {
+        this.ous = ous.sort((a, b) => a.name.localeCompare(b.name));
       })
   }
 
   public replaceFileAudienceForm: FormGroup = this.fb.group({
     allowedAudienceIds: this.fb.array([{
-      name: '',
-      id: '',
+      name: null,
+      id: null,
       ipRanges: []
     }])
-  },
-  {
-    //validators: this.valSvc.noDuplicatesValidator(this.allowedAudienceIds)
   });
 
 
@@ -96,17 +94,26 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.replaceFileAudienceForm.invalid || this.allowedAudienceIds.length <= 1) {
-      this.replaceFileAudienceForm.markAllAsTouched();
-      return;
+    if (this.replaceFileAudienceForm.valid && this.allowedAudienceIds.valid) {
+      this.batchSvc.replaceFileAudience(this.replaceFileAudienceParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.allowedAudienceIds.clear();
+        this.replaceFileAudienceForm.reset();
+        this.router.navigate(['/batch/logs']);
+      });
     }
-
-    this.batchSvc.replaceFileAudience(this.replaceFileAudienceParams).subscribe( actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      // ( this.replaceFileAudienceForm.controls['allowedAudienceIds'] as FormArray ) = this.fb.array([]);
-      //this.replaceFileAudienceForm.reset();
-      this.router.navigate(['/batch/logs']);
-    } );
   }
 
+  checkIfAllRequired() {
+    if (this.replaceFileAudienceForm.get('allowedAudienceIds')?.pristine) {
+      this.replaceFileAudienceForm.markAsPending();
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
+      this.replaceFileAudienceForm.reset();
+    }
+  }
 }

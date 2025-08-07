@@ -43,10 +43,10 @@ export class ActionsContextComponent implements OnInit {
   }
 
   public changeContextForm: FormGroup = this.fb.group({
-    contextFrom: [this.translateSvc.instant(_('batch.actions.context')), Validators.required],
-    contextTo: [this.translateSvc.instant(_('batch.actions.context')), Validators.required]
+    contextFrom: [null, Validators.required],
+    contextTo: [null, Validators.required]
   },
-  { validators: [this.valSvc.notEqualsValidator('contextFrom','contextTo'), this.valSvc.allRequiredValidator()] }
+    { validators: [this.valSvc.notEqualsValidator('contextFrom', 'contextTo')] }
   );
 
   get changeContextParams(): ChangeContextParams {
@@ -59,14 +59,23 @@ export class ActionsContextComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.changeContextForm.invalid) {
-      this.changeContextForm.markAllAsTouched();
-      return;
+    if (this.changeContextForm.valid) {
+      this.batchSvc.changeContext(this.changeContextParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.router.navigate(['/batch/logs']);
+      });
     }
-    this.batchSvc.changeContext(this.changeContextParams).subscribe(actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
+  }
+
+  checkIfAllRequired() {
+    if (!this.changeContextForm.valid) {
+      Object.keys(this.changeContextForm.controls).forEach(key => {
+        const field = this.changeContextForm.get(key);
+        if (field!.hasValidator(Validators.required) && (!field!.dirty)) {
+          field!.markAsPending();
+        }
+      });
+    }
   }
 
 }

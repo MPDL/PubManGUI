@@ -11,6 +11,11 @@
       {{ errorMessage }}
     </div>
   }
+  @if(forcedLogout) {
+    <div class="alert alert-warning" role="alert">
+      Your login expired or is invalid. Please login again.
+    </div>
+  }
 
     <div class="form-group">
       <label for="inputUsername">Username</label>

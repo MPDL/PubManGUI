@@ -14,27 +14,38 @@
   </div>
 
   <form [formGroup]="changeGenreForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="mb-3 row">
-      <div class="col-sm-2">
+    <div class="row">
+      <div class="col-sm-3">
         <label class="col-form-label">{{ 'batch.actions.genre.change.from' | translate }}</label>
       </div>
-      <div class="col-sm-10">
-        <select class="form-select" formControlName="genreFrom" data-test="genre-to-be-replaced">
-          <option [value]='' selected disabled>Genre</option>
+      <div class="col-sm-9">
+        <select class="form-select" formControlName="genreFrom" [ngClass]="{'border border-danger': changeGenreForm.get('genreFrom')?.pending}" data-test="genre-to-be-replaced">
+          <option [value]="null" selected disable hidden>Genre</option>
           @for (genre of genres; track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
           }
         </select>
       </div>
     </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if (valSvc.notValidField(changeGenreForm.controls['genreFrom'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(changeGenreForm.controls['genreFrom']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
+      </div>
+    </div>
 
     <div class="row">
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <label class="col-form-label">{{ 'batch.actions.genre.change.to' | translate }}</label>
       </div>
-      <div class="col-sm-10">
-        <select class="form-select" formControlName="genreTo" data-test="replacing-genre">
-          <option [value]='' selected disabled>Genre</option>
+      <div class="col-sm-9">
+        <select class="form-select" formControlName="genreTo" [ngClass]="{'border border-danger': changeGenreForm.get('genreTo')?.pending}" data-test="replacing-genre">
+          <option [value]="null" selected disable hidden>Genre</option>
           @for (genre of genres; track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
           }
@@ -43,10 +54,14 @@
     </div>
 
     <div class="mb-2 row">
-      <div class="offset-sm-2 col-sm-6">
+      <div class="offset-sm-3 col-sm-6">
         @if (valSvc.notValidField(changeGenreForm.controls['genreTo'])) {
         <span class="form-text text-danger small">
-          {{ 'batch.actions.genre.change.invalid' | translate }} {{ valSvc.getFieldError(changeGenreForm.controls['genreTo']) }}
+          {{ valSvc.getErrorMsg(changeGenreForm.controls['genreTo']) }}
+        </span>
+        } @else if(changeGenreForm.hasError('notEquals')) {
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.genre.change.invalid' | translate }} {{ valSvc.getErrorMsg(changeGenreForm) }}
         </span>
         } @else {
         <span>&nbsp;</span>
@@ -55,14 +70,14 @@
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-2 col-form-label"
-        [ngClass]="{'text-secondary': !changeGenreForm.controls['genreTo'].value.includes('THESIS')}">
+      <label class="col-sm-3 col-form-label"
+        [ngClass]="{'text-secondary': changeGenreForm.controls['genreTo'].value !== 'THESIS'}">
         {{ 'batch.actions.genre.change.type' | translate }}
       </label>
-      <div class="col-sm-10">
-        <select class="form-select" formControlName="degreeType"
-          [attr.disabled]="changeGenreForm.controls['genreTo'].value.includes('THESIS') ? null : ''">
-          <option value=null selected disabled>{{ 'batch.actions.genre.change.type' | translate }}</option>
+      <div class="col-sm-9">
+        <select class="form-select" formControlName="degreeType" [ngClass]="{'text-secondary': changeGenreForm.controls['genreTo'].value !== 'THESIS'}"
+          [attr.disabled]="changeGenreForm.controls['genreTo'].value === 'THESIS' ? null : ''">
+          <option [value]="null" selected disable hidden>{{ 'batch.actions.genre.change.type' | translate }}</option>
           @for (degreeType of degreeTypes; track degreeType) {
           <option [value]="degreeType">{{ 'DegreeType.' + degreeType | translate }}</option>
           }
@@ -71,8 +86,8 @@
     </div>
 
     <div class="row">
-      <div>
-        <button type="submit" [disabled]="changeGenreForm.invalid || changeGenreForm.pristine"
+      <div (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="!changeGenreForm.valid"
           class="btn btn-outline-primary float-end">
           GO
         </button>

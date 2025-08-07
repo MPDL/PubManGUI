@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -27,14 +27,15 @@ export class ChangeFileVisibilityFormComponent {
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
   translateSvc = inject(TranslateService);
+  elRef: ElementRef = inject(ElementRef);
 
   visibility = Object.keys(Visibility);
 
   public changeFileVisibilityForm: FormGroup = this.fb.group({
-    fileVisibilityFrom: [this.translateSvc.instant(_('batch.actions.metadata.files.visibility')), [Validators.required]],
-    fileVisibilityTo: [this.translateSvc.instant(_('batch.actions.metadata.files.visibility')), [Validators.required]],
+    fileVisibilityFrom: [null, [Validators.required]],
+    fileVisibilityTo: [null, [Validators.required]],
   },
-  { validators: [this.valSvc.notEqualsValidator('fileVisibilityFrom','fileVisibilityTo'), this.valSvc.allRequiredValidator()] });
+    { validators: [this.valSvc.notEqualsValidator('fileVisibilityFrom', 'fileVisibilityTo')] });
 
   get changeFileVisibilityParams(): ChangeFileVisibilityParams {
     const actionParams: ChangeFileVisibilityParams = {
@@ -46,14 +47,30 @@ export class ChangeFileVisibilityFormComponent {
   }
 
   onSubmit(): void {
-    if (this.changeFileVisibilityForm.invalid) {
-      this.changeFileVisibilityForm.markAllAsTouched();
-      return;
+    if (this.changeFileVisibilityForm.valid) {
+      this.batchSvc.changeFileVisibility(this.changeFileVisibilityParams).subscribe(actionResponse => {
+        this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
+        this.changeFileVisibilityForm.reset();
+        this.router.navigate(['/batch/logs']);
+      });
     }
+  }
 
-    this.batchSvc.changeFileVisibility(this.changeFileVisibilityParams).subscribe( actionResponse => {
-      this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
-      this.router.navigate(['/batch/logs']);
-    });
+  checkIfAllRequired() {
+    if (!this.changeFileVisibilityForm.valid) {
+      Object.keys(this.changeFileVisibilityForm.controls).forEach(key => {
+        const field = this.changeFileVisibilityForm.get(key);
+        if (field!.hasValidator(Validators.required) && (field!.pristine)) {
+          field!.markAsPending();
+        }
+      });
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
+      this.changeFileVisibilityForm.reset();
+    }
   }
 }

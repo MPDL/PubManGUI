@@ -1,12 +1,23 @@
 <form [formGroup]="changeKeywordsForm" (ngSubmit)="onSubmit()" autocomplete="off">
-  <div class="mb-3 row">
+  <div class="row">
     <div class="col-sm-3">
       <label class="col-form-label">
         {{ 'batch.actions.metadata.publication.keywordsReplace.from' | translate }}
       </label>
     </div>
     <div class="col-sm-9">
-      <input class="form-control" formControlName="keywordsFrom">
+      <input class="form-control" formControlName="keywordsFrom" [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsFrom')?.pending}">
+    </div>
+  </div>
+  <div class="mb-2 row">
+    <div class="offset-sm-3 col-sm-6">
+      @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsFrom'])) {
+      <span class="form-text text-danger small">
+        {{ valSvc.getErrorMsg(changeKeywordsForm.controls['keywordsFrom']) }}
+      </span>
+      } @else {
+      <span>&nbsp;</span>
+      }
     </div>
   </div>
 
@@ -17,15 +28,19 @@
       </label>
     </div>
     <div class="col-sm-9">
-      <input class="form-control" formControlName="keywordsTo">
+      <input class="form-control" formControlName="keywordsTo" [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsTo')?.pending}">
     </div>
   </div>
   <div class="mb-2 row">
     <div class="offset-sm-3 col-sm-6">
       @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsTo'])) {
       <span class="form-text text-danger small">
-        {{ 'batch.actions.metadata.publication.keywordsReplace.invalid' | translate }} {{ valSvc.getFieldError(changeKeywordsForm.controls['keywordsTo']) }}
+        {{ valSvc.getErrorMsg(changeKeywordsForm.controls['keywordsTo']) }}
       </span>
+      } @else if(changeKeywordsForm.hasError('notEquals')) {
+        <span class="form-text text-danger small">
+          {{ 'batch.actions.metadata.publication.keywordsReplace.invalid' | translate }} {{ valSvc.getErrorMsg(changeKeywordsForm) }}
+        </span>
       } @else {
       <span>&nbsp;</span>
       }
@@ -33,8 +48,8 @@
   </div>
 
   <div class="row">
-    <div>
-      <button type="submit" [disabled]="changeKeywordsForm.invalid || changeKeywordsForm.pristine" 
+    <div (click)="checkIfAllRequired()">
+      <button type="submit" [disabled]="!changeKeywordsForm.valid" 
         class="btn btn-outline-primary float-end">
         GO
       </button>

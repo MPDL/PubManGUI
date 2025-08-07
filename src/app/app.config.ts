@@ -53,10 +53,11 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor, multi: true
     },
+    /*
     {
       provide: HTTP_INTERCEPTORS,
       useClass: WithCredentialsInterceptor, multi: true
-    },
+    },*/
 
     provideZoneChangeDetection({ eventCoalescing: true }),
 

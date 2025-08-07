@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-add-multiple-creators-title">
+        Add Multiple Creators
+    </h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+    <textarea class="form-control" id="multipleCreators" [(ngModel)]="multipleCreators"></textarea>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" aria-label="Add Multiple Creators" (click)="triggerCallback()">Add
+        Multiple Creators</button>
+</div>

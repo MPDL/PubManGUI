@@ -102,7 +102,7 @@
 		"actions.context.change.from": "Previous context",
 		"actions.context.change.info": "The items will be assigned to a new context if their genre is also admitted there.",
 		"actions.context.change.to": "New context",
-		"actions.context.change.invalid": "Previous and new contexts",
+		"actions.context.change.invalid": "Previous and new context",
 		"actions.genre": "Genre",
 		"actions.genre.change": "Change Genre",
 		"actions.genre.change.from": "Genre to be replaced",
@@ -110,7 +110,7 @@
 		"actions.genre.change.reminder": "Please note that all metadata fields not permitted in the new genre will automatically be deleted!",
 		"actions.genre.change.to": "Replacing genre",
 		"actions.genre.change.type": "Degree type",
-		"actions.genre.change.invalid": "Previous and new genres",
+		"actions.genre.change.invalid": "Previous and new genre",
 		"actions.item.state": "Dataset state",
 		"actions.item.state.delete": "Delete",
 		"actions.item.state.delete.confirmation": "Do you really want to delete this items?",
@@ -251,7 +251,7 @@
 		"list.items.empty": "This import has no items available!",
 		"list.items.for": "Import",
 		"list.remove": "Remove from log",
-		"list.remove.confirmation": "Do you really want to remove this import log?",
+		"list.remove.confirmation": "Do you really want to remove import log {{name}}?",
 		"list.started.on": "started on",
 		"release.confirmation": "Do you really want to release this import?",
 		"remove.confirmation": "Do you really want to remove this import?",
@@ -756,6 +756,8 @@
 		"searchButton": "Search",
 		"saveSearchButton": "Open/Save Search",
     "asc": "ascending",
-    "desc" : "descending"
+    "desc" : "descending",
+    "dateCreatedInternal": "Creation Date (technical)",
+    "dateModifiedInternal": "Modification Date (technical)"
 	}
 }

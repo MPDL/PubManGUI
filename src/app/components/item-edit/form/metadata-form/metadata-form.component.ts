@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, computed, effect, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
@@ -42,6 +42,8 @@ import { ContextsService } from 'src/app/services/pubman-rest-client/contexts.se
 import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Errors } from 'src/app/model/errors';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddMultipleCreatorsModalComponent } from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
 
 @Component({
   selector: 'pure-metadata-form',
@@ -81,6 +83,13 @@ export class MetadataFormComponent implements OnInit {
   messageService = inject(MessageService);
   miscellaneousService = inject(MiscellaneousService);
   genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
+  /*computed(() => { 
+    if (this.miscellaneousService.genrePropertiesResource.hasValue()) {
+      return this.miscellaneousService.genrePropertiesResource
+    }
+    return null;
+  });
+  */
 
   allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
@@ -89,16 +98,29 @@ export class MetadataFormComponent implements OnInit {
   multipleCreators = new FormControl<string>('');
   loading: boolean = false;
 
+  genrePriorityList = [MdsPublicationGenre.ARTICLE.toString()
+    , MdsPublicationGenre.CONFERENCE_PAPER.toString()
+    , MdsPublicationGenre.BOOK_ITEM.toString()
+    , MdsPublicationGenre.TALK_AT_EVENT.toString()
+    , MdsPublicationGenre.THESIS.toString()];
+
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder, private modalService: NgbModal
   ) {
+    effect(() => {
+      if (this.genreSpecificResource.value()?.properties.sources.optional === false) {
+        this.sources.push(this.fbs.source_FG(null));
+      } else {
+        this.sources.clear;
+      }
+    });
   }
 
   ngOnInit() {
     let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
     this.miscellaneousService.selectedGenre.set(genre);
     this.updateAllowedGenres(); // Initialize allowed_genre_types with correct context specific values
-    this.context.valueChanges.subscribe((newContext) => {
+    this.context.valueChanges.subscribe(() => {
       this.updateAllowedGenres();
     });
   }
@@ -150,24 +172,41 @@ export class MetadataFormComponent implements OnInit {
 
   updateAllowedGenres() {
     if (this.context.value.objectId) {
-      this.contextService.retrieve(this.context.value.objectId,).subscribe(completeContext => {
-        if (completeContext.allowedGenres) {
-          this.allowed_genre_types = completeContext.allowedGenres;
+      this.contextService.retrieve(this.context.value.objectId,).subscribe(resultContext => {
+        if (resultContext.allowedGenres) {
+          this.allowed_genre_types = resultContext.allowedGenres;
+          this.allowed_genre_types.sort((a, b) => {
+
+            const aIndex = this.genrePriorityList.indexOf(a);
+            const bIndex = this.genrePriorityList.indexOf(b);
+
+            if (aIndex !== -1 && bIndex !== -1) {
+              return aIndex - bIndex;
+            } else if (aIndex !== -1) {
+              return -1;
+            } else if (bIndex !== -1) {
+              return 1;
+            } else {
+              return a.localeCompare(b);
+            }
+          });
         }
       });
     }
   }
 
-  changeGenre() {
-    this.miscellaneousService.selectedGenre.set(this.meta_form.get('genre')?.value);
+  changeGenre($event: any) {
+    let updatedGenre = $event.target.value;
+    this.meta_form.get('genre')?.setValue(updatedGenre);
+    this.miscellaneousService.selectedGenre.set(updatedGenre);
+    this.genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
   }
 
-  addMultipleCreators() {
-    console.log('Adding multiple creators');
+  addMultipleCreators(creatorsString: string) {
     this.loading = true;
-    if (this.multipleCreators?.value != null) {
+    if (creatorsString !== null && creatorsString != '') {
       try {
-        this.miscellaneousService.getDecodedMultiplePersons(this.multipleCreators.value).subscribe(
+        this.miscellaneousService.getDecodedMultiplePersons(creatorsString).subscribe(
           (decodedCreators) => {
             for (let creator of decodedCreators) {
               let personVO: PersonVO = { completeName: creator.family + ', ' + creator.given, familyName: creator.family, givenName: creator.given, alternativeNames: [''], titles: [''], pseudonyms: [''], organizations: [], identifier: { id: '', type: IdType.OTHER }, orcid: '' };
@@ -187,6 +226,11 @@ export class MetadataFormComponent implements OnInit {
       this.messageService.error('Please enter multiple creators in the textfield.');
       this.loading = false;
     }
+  }
+
+  openAddMultipleCreatorsModal() {
+    const modalRef = this.modalService.open(AddMultipleCreatorsModalComponent);
+    modalRef.componentInstance.callback = this.addMultipleCreators.bind(this);
   }
 
   handleAltTitleNotification(event: any) {
