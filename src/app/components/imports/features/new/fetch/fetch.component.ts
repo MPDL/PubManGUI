@@ -152,11 +152,11 @@ export default class FetchComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
-    if (!this.elRef.nativeElement.contains(event.target)) {
+    if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.fetchForm.reset();
 
       this.fetchForm.controls['source'].setValue('crossref');
-      this.fetchForm.controls['fullText'].setValue('FULLTEXT_DEFAULT');
+      this.fetchForm.controls['fullText'].setValue('FULLTEXT_DEFAULT');""
     }
   }
 }
