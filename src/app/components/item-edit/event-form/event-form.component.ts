@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventVO, InvitationStatus } from 'src/app/model/inge';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { ControlType } from '../../../../services/form-builder.service';
+import { ControlType } from '../../../services/form-builder.service';
 import { Errors } from 'src/app/model/errors';
 
 export enum ValidationErrorsEnum {

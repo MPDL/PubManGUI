@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CdkDragHandle, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
-import { ControlType } from '../../../../services/form-builder.service';
+import { ControlType } from '../../../services/form-builder.service';
 import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';

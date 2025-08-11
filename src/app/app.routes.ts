@@ -4,7 +4,7 @@ import { HelpComponent } from './pages/help/help.component';
 import { DisclaimerComponent } from './pages/disclaimer/disclaimer.component';
 import { PrivacyComponent } from './pages/privacy-policy/privacy.component';
 import { OuTreeComponent } from './components/ou-tree/ou-tree.component';
-import { ItemFormComponent } from './components/item-edit/form/item-form/item-form.component';
+import { ItemFormComponent } from './components/item-edit/item-form/item-form.component';
 import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
 import { ItemSearchAdvancedComponent } from "./components/item-search-advanced/item-search-advanced.component";
 import { itemResolver } from "./services/pubman-rest-client/item-resolver";

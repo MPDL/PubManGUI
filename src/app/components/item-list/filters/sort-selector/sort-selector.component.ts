@@ -5,7 +5,7 @@ import { baseElasticSearchSortBuilder } from "../../../../utils/search-utils";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { AddRemoveButtonsComponent } from "../../../shared/add-remove-buttons/add-remove-buttons.component";
+import { AddRemoveButtonsComponent } from "src/app/components/shared/add-remove-buttons/add-remove-buttons.component";
 
 @Component({
   selector: 'pure-sort-selector',

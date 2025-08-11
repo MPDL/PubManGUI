@@ -1,7 +1,7 @@
 import { Component, computed, effect, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
+import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import {
   AbstractVO,
   AlternativeTitleVO,
@@ -25,7 +25,7 @@ import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.componen
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import {
   AddRemoveButtonsComponent
-} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
+} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { EventFormComponent } from '../event-form/event-form.component';
 import { LanguageFormComponent } from '../language-form/language-form.component';
 import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';

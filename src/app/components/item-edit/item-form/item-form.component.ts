@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlType, FormBuilderService } from '../../../../services/form-builder.service';
+import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
@@ -8,11 +8,11 @@ import { MetadataFormComponent } from '../metadata-form/metadata-form.component'
 import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionRO, ItemVersionVO, MdsPublicationVO, Storage } from 'src/app/model/inge';
 import {
   AddRemoveButtonsComponent
-} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
+} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { remove_null_empty, remove_objects } from 'src/app/utils/utils_final';
 import { ChipsComponent } from 'src/app/components/shared/chips/chips.component';
 import { AaService } from 'src/app/services/aa.service';
-import { ContextsService } from "../../../../services/pubman-rest-client/contexts.service";
+import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
 import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
 import { ItemListStateService } from 'src/app/components/item-list/item-list-state.service';
 import { FileFormComponent } from '../file-form/file-form.component';

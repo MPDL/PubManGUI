@@ -4,7 +4,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlternativeTitleType } from 'src/app/model/inge';
 import {
   AddRemoveButtonsComponent
-} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
+} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { Errors } from 'src/app/model/errors';
 
 @Component({

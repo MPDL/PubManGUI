@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AddRemoveButtonsComponent
-} from '../../../shared/add-remove-buttons/add-remove-buttons.component';
+} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { SubjectClassification } from 'src/app/model/inge';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
