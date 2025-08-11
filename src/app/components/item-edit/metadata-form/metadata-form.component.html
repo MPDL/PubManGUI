@@ -122,8 +122,8 @@
                             <!-- TODO Add many -->
                             <div class="d-sm-flex flex-sm-row gap-1 pt-1 mb-3">
                                 <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="button"
-                                    (click)="openAddMultipleCreatorsModal()"
-                                    [ngClass]="{'disabled ': loading}">ADD multiple Creators
+                                    (click)="openAddMultipleCreatorsModal()" [ngClass]="{'disabled ': loading}">ADD
+                                    multiple Creators
                                     @if(loading)
                                     {
                                     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -131,7 +131,7 @@
                                     }
                                 </button>
                             </div>
-                            <hr/>
+                            <hr />
                             @if(meta_form.errors?.[error_types.ORGANIZATIONAL_METADATA_NOT_PROVIDED]) {
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                 <div class="text-danger">At least one creator needs an organizational unit.</div>
@@ -195,7 +195,7 @@
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_published_online.display}">
                                     <label class="col-form-label">Date Published Online</label>
-                                     @if(meta_form.get('datePublishedOnline')?.hasError('pattern')) {
+                                    @if(meta_form.get('datePublishedOnline')?.hasError('pattern')) {
                                     <div class="text-danger">Incorrect date format. Expected format YYYY-MM-DD</div>
                                     }
                                     <input type="text" class="form-control" formControlName="datePublishedOnline"
@@ -360,7 +360,9 @@
                     </div>
                 </div>
                 <div class="d-sm-flex flex-sm-row">
-                    <hr />
+                    <div class="col-sm mx-3">
+                        <hr>
+                    </div>
                 </div>
                 <div class="accordion-body mt-3 mb-3">
                     <ng-container formArrayName="abstracts">
@@ -520,13 +522,15 @@
             [ngClass]="{'d-none' : !genreSpecificResource.value().properties.sources.display}">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#accordionBodySourcesGroup" [attr.aria-expanded]="!genreSpecificResource.value().properties.sources.optional" 
+                    data-bs-target="#accordionBodySourcesGroup"
+                    [attr.aria-expanded]="!genreSpecificResource.value().properties.sources.optional"
                     aria-controls="accordionBodySourcesGroup"
                     [ngClass]="{'collapsed' : genreSpecificResource.value().properties.sources.optional}">
                     Sources Group
                 </button>
             </h2>
-            <div id="accordionBodySourcesGroup" class="accordion-collapse collapse" [ngClass]="{'show' : !genreSpecificResource.value().properties.sources.optional}">
+            <div id="accordionBodySourcesGroup" class="accordion-collapse collapse"
+                [ngClass]="{'show' : !genreSpecificResource.value().properties.sources.optional}">
                 @if(meta_form.hasError(error_types.SOURCE_NOT_PROVIDED.toString())) {
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-auto">
