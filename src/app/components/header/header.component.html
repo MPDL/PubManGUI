@@ -36,8 +36,8 @@
 
         <div class="me-4">
           <a role="button" [ngbPopover]="ipInfo"
-             class="nav-link">
-            <span class="material-symbols-outlined">place</span>
+             class="nav-link" [ngbTooltip]="aa.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
+            <span class="material-symbols-outlined">{{aa.principal.value.matchedIpName ? 'location_on' : 'location_off' }}</span>
           </a>
           <ng-template #ipInfo>
             @if(aa.principal.value.matchedIpName) {
@@ -51,9 +51,6 @@
         </div>
 
         <pure-aa class="me-4"></pure-aa>
-
-
-
         <pure-lang-switch></pure-lang-switch>
 
       </div>

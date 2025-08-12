@@ -46,9 +46,9 @@ export class UsersService extends PubmanSearchableGenericRestClientService<Accou
     return this.httpPut(path, body, authenticate);
   }
 
-  changePassword(user: AccountUserDbVO, authenticate?: boolean): Observable<AccountUserDbVO> {
-    const path = this.subPath + '/' + user.objectId + '/password';
-    const body = user.password;
+  changePassword(userId: string, password: string, authenticate?: boolean): Observable<AccountUserDbVO> {
+    const path = this.subPath + '/' + userId + '/password';
+    const body = password;
 
     return this.httpPut(path, body, authenticate);
   }
