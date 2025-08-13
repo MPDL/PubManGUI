@@ -19,6 +19,10 @@ export class Principal{
   moderatorContexts: ContextDbVO[] = [];
   depositorContexts: ContextDbVO[] = [];
   allContexts: ContextDbVO[] = [];
+  ipAddress?:string;
+  matchedIpName?: string;
+  matchedIpId?: string;
+
 }
 
 @Injectable({
@@ -59,7 +63,11 @@ export class AaService {
     return this.who().pipe(
       switchMap(user => {
         let principal: Principal = new Principal();
-        if (!user) {
+        principal.ipAddress = user?.ipAddress;
+        principal.matchedIpName = user?.matchedIpName;
+        principal.matchedIpId = user?.matchedIpId;
+
+        if (!user || !user.active) {
           this.principal.next(principal);
           return of(principal);
         }
@@ -124,11 +132,21 @@ export class AaService {
       if(res.status === 200) {
         console.log("Successfully logged out from backend");
       }
+        this.principal.next(new Principal());
       //sessionStorage.clear();
       //localStorage.clear();
-      this.principal.next(new Principal());
-      this.message.info("Logged out successfully");
-      this.router.navigate(['/'])
+        /*
+      const  loggedOutprincipal = new Principal();
+      loggedOutprincipal.ipAddress = this.principal.value.ipAddress;
+      loggedOutprincipal.matchedIpName= this.principal.value.matchedIpName;
+      loggedOutprincipal.matchedIpId = this.principal.value.matchedIpId;
+      this.principal.next(loggedOutprincipal);
+         */
+        this.checkLogin().subscribe(res => {
+          this.message.info("Logged out successfully");
+          this.router.navigate(['/'])
+        })
+
     })
     ).subscribe()
 

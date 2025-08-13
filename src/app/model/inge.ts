@@ -14,6 +14,9 @@ export interface AccountUserDbVO extends BasicDbRO {
     grantList: GrantVO[];
     affiliation: AffiliationDbRO;
     password: string;
+    ipAddress: string;
+    matchedIpName?: string;
+    matchedIpId?: string;
 }
 
 export interface AffiliationDbRO extends BasicDbRO {

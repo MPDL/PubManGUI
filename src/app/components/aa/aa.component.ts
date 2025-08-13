@@ -4,13 +4,14 @@ import { MessageService } from 'src/app/services/message.service';
 import { AaService } from 'src/app/services/aa.service';
 import { LoginComponent } from './login/login.component';
 import { NgIf } from '@angular/common';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { UserProfileComponent } from "../user-profile/user-profile.component";
 
 @Component({
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
     standalone: true,
-  imports: [NgIf, RouterLink]
+  imports: [NgIf, RouterLink, NgbTooltip]
 })
 export class AaComponent {
 
@@ -31,4 +32,5 @@ export class AaComponent {
   }
 
   protected readonly LoginComponent = LoginComponent;
+  protected readonly UserProfileComponent = UserProfileComponent;
 }

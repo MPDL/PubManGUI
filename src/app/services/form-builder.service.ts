@@ -229,7 +229,7 @@ export class FormBuilderService {
     const source_form = this.fb.group<ControlType<SourceVO>>({
       alternativeTitles: this.fb.array(source?.alternativeTitles ? source.alternativeTitles.map(at => this.alt_title_FG(at) as AbstractControl) : []),
       title: this.fb.nonNullable.control(source?.title ? source.title : null, { validators: [Validators.required], updateOn: 'blur' }),
-      creators: this.fb.array(source?.creators ? source.creators.map(c => this.creator_FG(c) as AbstractControl) : [this.creator_FG(null)]),
+      creators: this.fb.array(source?.creators ? source.creators.map(c => this.creator_FG(c) as AbstractControl) : []),
       volume: this.fb.nonNullable.control(source?.volume ? source.volume : null),
       issue: this.fb.nonNullable.control(source?.issue ? source.issue : null),
       // datePublishedInPrint: this.fb.nonNullable.control(source?.datePublishedInPrint ? source.datePublishedInPrint : new Date(), { validators: [Validators.pattern(DATE_PATTERN)], updateOn: 'blur' }),
