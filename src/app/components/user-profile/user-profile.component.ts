@@ -7,9 +7,12 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { AaService, Principal } from "../../services/aa.service";
 import { UsersService } from "../../services/pubman-rest-client/users.service";
+import { catchError, EMPTY, of, tap } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
+import { PubManHttpErrorResponse } from "../../services/interceptors/http-error.interceptor";
 
 const strongPasswordRegx: RegExp =
-  /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,32}$/;
+  /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).{8,32}$/;
 
 @Component({
   selector: 'pure-user-profile',
@@ -60,20 +63,20 @@ export class UserProfileComponent {
       return;
     }
 
-    this.usersService.changePassword(this.principal.user?.objectId!, this.changePasswordForm.get('newPassword1')?.value).subscribe({
-      next: () => {
-        this.passwordChangeSuccess = true;
-      },
-      error: (e) => {
-        this.errorMessage = e;
-      },
-      complete: () => {
-        this.passwordChangeLoading = false;
-      }
+    this.usersService.changePassword(this.principal.user?.objectId!, this.changePasswordForm.get('newPassword1')?.value, {displayError: false})
+      .pipe(
+        tap((result) => {
+          this.passwordChangeLoading = false;
+          this.passwordChangeSuccess = true;
+          this.changePasswordForm.reset();
+        }),
+        catchError((error: PubManHttpErrorResponse) => {
 
-      }
+          this.errorMessage = error.userMessage;
+          return EMPTY;
+        })
 
-
-    )
+      )
+      .subscribe()
   }
 }

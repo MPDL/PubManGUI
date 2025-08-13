@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SearchResult } from "./pubman-generic-rest-client.service";
+import { HttpOptions, SearchResult } from "./pubman-generic-rest-client.service";
 import { AffiliationDbVO } from "../../model/inge";
 import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
 
@@ -18,67 +18,67 @@ export class OrganizationsService extends PubmanSearchableGenericRestClientServi
   }
 
 
-  getallChildOus(parentAffiliationIds: string[], ignoreOuId: string, authenticate: boolean): Observable<AffiliationDbVO[]> {
+  getallChildOus(parentAffiliationIds: string[], ignoreOuId: string, opts?: HttpOptions): Observable<AffiliationDbVO[]> {
     const path = this.subPath + '/allchildren/' + ignoreOuId;
     const body = parentAffiliationIds;
 
-    return this.httpPost(path, body, authenticate);
+    return this.httpPost(path, body, opts);
   }
 
-  getTopLevelOus(authenticate?: boolean): Observable<AffiliationDbVO[]> {
+  getTopLevelOus(opts?: HttpOptions): Observable<AffiliationDbVO[]> {
     const path = this.subPath + '/toplevel';
-    return this.httpGet(path, authenticate);
+    return this.httpGet(path, opts);
   }
 
-  getFirstLevelOus(authenticate?: boolean): Observable<AffiliationDbVO[]> {
+  getFirstLevelOus(opts?: HttpOptions): Observable<AffiliationDbVO[]> {
     const path = this.subPath + '/firstlevel';
-    return this.httpGet(path, authenticate);
+    return this.httpGet(path, opts);
   }
 
-  listChildren4Ou(id: string, authenticate?: boolean): Observable<AffiliationDbVO[]> {
+  listChildren4Ou(id: string, opts?: HttpOptions): Observable<AffiliationDbVO[]> {
     const path = this.subPath + '/' + id + '/children';
 
-    return this.httpGet(path, authenticate);
+    return this.httpGet(path, opts);
   }
 
-  getIdPath(id: string, authenticate?: boolean): Observable<string> {
+  getIdPath(id: string, opts?: HttpOptions): Observable<string> {
     const path = this.subPath + '/' + id + '/idPath';
 
-    return this.httpGet(path, authenticate);
+    return this.httpGet(path, opts);
   }
 
-  getOuPath(id: string, authenticate?: boolean): Observable<string> {
+  getOuPath(id: string, opts?: HttpOptions): Observable<string> {
     const path = this.subPath + '/' + id + '/ouPath';
 
-    return this.httpGet(path, authenticate);
+    return this.httpGet(path, opts);
   }
 
-  openOu(ou: AffiliationDbVO, authenticate?: boolean): Observable<AffiliationDbVO> {
+  openOu(ou: AffiliationDbVO, opts?: HttpOptions): Observable<AffiliationDbVO> {
     const path = this.subPath + '/' + ou.objectId + '/open';
     const body = ou.lastModificationDate;
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
   }
 
-  closeOu(ou: AffiliationDbVO, authenticate?: boolean): Observable<AffiliationDbVO> {
+  closeOu(ou: AffiliationDbVO, opts?: HttpOptions): Observable<AffiliationDbVO> {
     const path = this.subPath + '/' + ou.objectId + '/close';
     const body = ou.lastModificationDate;
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
   }
 
-  removePredecessor(ou: AffiliationDbVO, predecessorId: string, authenticate?: boolean): Observable<AffiliationDbVO> {
+  removePredecessor(ou: AffiliationDbVO, predecessorId: string, opts?: HttpOptions): Observable<AffiliationDbVO> {
     const path = this.subPath + '/' + ou.objectId + '/remove/' + predecessorId;
     const body = ou.lastModificationDate;
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
   }
 
-  addPredecessor(ou: AffiliationDbVO, predecessorId: string, authenticate?: boolean): Observable<AffiliationDbVO> {
+  addPredecessor(ou: AffiliationDbVO, predecessorId: string, opts?: HttpOptions): Observable<AffiliationDbVO> {
     const path = this.subPath + '/' + ou.objectId + '/add/' + predecessorId;
     const body = ou.lastModificationDate;
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
   }
 
   getSuccessors(id: string): Observable<SearchResult<AffiliationDbVO>> {

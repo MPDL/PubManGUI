@@ -5,9 +5,10 @@ import { ItemVersionVO } from "../../../model/inge";
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
 import { MessageService } from "../../../services/message.service";
 import { Router } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
+import { catchError, EMPTY, finalize, Observable, Subscription, tap } from "rxjs";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
+import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 
 @Component({
   selector: 'pure-item-actions-modal',
@@ -78,53 +79,52 @@ export class ItemActionsModalComponent {
       }
     }
     if(obs) {
-      this.subscription = obs.subscribe({
-          next: (data: any) => {
+      this.subscription = obs
+        .pipe(
+          tap(data => {
             this.messageService.success(this.translateService.instant('common.' + this.action) + " successful");
             this.activeModal.close();
             this.successfullyDone.emit(data);
-          },
-          error: (error) => {
-            this.errorMessage = error;
-          }
-        }
-      );
-        this.subscription.add(
-          () => {
-            console.log("completed")
+          }),
+          catchError((err: PubManHttpErrorResponse) => {
+            this.errorMessage = err.userMessage;
+            return EMPTY;
+          }),
+          finalize(() => {
             this.loading = false;
-          }
+          })
         )
+        .subscribe();
     }
     //this.successfullyDone.emit(this.comment);
   }
 
   submit() {
-    return this.itemsService.submit(this.item!.objectId!, this.item!.modificationDate!, this.comment);
+    return this.itemsService.submit(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
   }
 
   release() {
-    return this.itemsService.release(this.item!.objectId!, this.item!.modificationDate!, this.comment);
+    return this.itemsService.release(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
   }
 
   revise() {
-    return this.itemsService.revise(this.item!.objectId!, this.item!.modificationDate!, this.comment);
+    return this.itemsService.revise(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
   }
 
   withdraw() {
-    return this.itemsService.withdraw(this.item!.objectId!, this.item!.modificationDate!, this.comment);
+    return this.itemsService.withdraw(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
   }
 
   delete() {
-    return this.itemsService.delete(this.item!.objectId!, this.item!.modificationDate!);
+    return this.itemsService.delete(this.item!.objectId!, this.item!.modificationDate!, {displayError: false});
   }
 
   addDoi() {
-    return this.itemsService.addDoi(this.item!.objectId!);
+    return this.itemsService.addDoi(this.item!.objectId!, {displayError: false});
   }
 
   rollback() {
-    return this.itemsService.rollback(this.item!.objectId!, this.rollbackVersion!);
+    return this.itemsService.rollback(this.item!.objectId!, this.rollbackVersion!, {displayError: false});
   }
 
 }

@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DISPLAY_ERROR } from "../interceptors/http-error.interceptor";
 
 export interface SearchResult<Type> {
   numberOfRecords: number,
@@ -16,6 +17,15 @@ export interface TaskParamVO {
   lastModificationDate: Date
 }
 
+export interface HttpOptions {
+  displayError?: boolean;
+  withCredentials?: boolean;
+  headers?: HttpHeaders,
+  params?: HttpParams,
+  responseType?: "arraybuffer" | "blob" | "text" | "json" | undefined;
+  observe?:"body" | "events" | "response" | undefined
+}
+
 export abstract class PubmanGenericRestClientService<modelType> {
 
   // restUri = 'https://gui.inge.mpdl.mpg.de/rest';
@@ -28,21 +38,21 @@ export abstract class PubmanGenericRestClientService<modelType> {
     this.subPath = subPath;
   }
 
-  create(obj: modelType) : Observable<modelType> {
+  create(obj: modelType, opts?: HttpOptions) : Observable<modelType> {
     console.log('Creating: ', typeof obj);
-    return this.httpPost(this.subPath, obj);
+    return this.httpPost(this.subPath, obj, opts);
   }
 
-  retrieve(id: string, authenticate?: boolean): Observable<modelType> {
-    return this.httpGet(this.subPath + '/' + id, authenticate);
+  retrieve(id: string, opts?: HttpOptions): Observable<modelType> {
+    return this.httpGet(this.subPath + '/' + id, opts);
   }
 
-  update(id: string, obj: modelType): Observable<modelType> {
+  update(id: string, obj: modelType, opts?: HttpOptions): Observable<modelType> {
     console.log('Updating:', id, typeof id)
-    return this.httpPut(this.subPath + '/' + id, obj);
+    return this.httpPut(this.subPath + '/' + id, obj, opts);
   }
 
-  delete(id: string, lastModificationDate: Date|undefined): Observable<number> {
+  delete(id: string, lastModificationDate: Date|undefined, opts?: HttpOptions): Observable<number> {
     let taskParam = null;
     if (lastModificationDate) {
         const isoDate = new Date(lastModificationDate).toISOString();
@@ -50,94 +60,100 @@ export abstract class PubmanGenericRestClientService<modelType> {
           'lastModificationDate': isoDate
     }
   }
-    return this.httpDelete(this.subPath + '/' + id, taskParam);
+    return this.httpDelete(this.subPath + '/' + id, taskParam, opts);
   }
 
 
+  private getHttpClientOptions(body?:any, opts?:HttpOptions) {
+    const headers = opts?.headers;
+    const params = opts?.params;
+    const responseType = opts?.responseType ? opts.responseType : 'json';
+    const observe = opts?.observe ? opts.observe : 'body';
+    const withCredentials = opts?.withCredentials ? opts.withCredentials : true;
+    const context = this.addContext(opts);
 
-  private httpRequest(method: string, path: string, body?: any, authenticate:boolean = true, headers?: HttpHeaders, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined ): Observable<any> {
-    const requestUrl = this.restUri + path;
-    return this.httpClient.request(method, requestUrl, {
+    const options = {
       body,
       headers,
       params: params,
-      responseType: respType ? respType : 'json',
-      observe: observe ? observe : 'body',
-      withCredentials: authenticate
-
-    }).pipe(
-      //map((response: any) => response),
-      catchError((error) => {
-        return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
-      })
-    );
+      responseType: responseType,
+      observe: observe,
+      withCredentials: withCredentials,
+      context: context
+    }
+    return options;
   }
 
-  private getHttpStatus(method: string, path: string, body: Date | undefined, authenticate:boolean = true, headers?: HttpHeaders): Observable<number> {
+  protected createOrMergeHttpOptions(httpOptionsGiven?: HttpOptions, httpOptionsToMerge?: HttpOptions): HttpOptions {
+    const mergedHttpOptions = httpOptionsGiven ? httpOptionsGiven : {};
+    Object.assign(mergedHttpOptions, httpOptionsToMerge);
+    return mergedHttpOptions;
+
+  }
+
+  protected httpRequest(method: string, path: string, body?: any, opts?: HttpOptions): Observable<any> {
     const requestUrl = this.restUri + path;
-    return this.httpClient.request(method, requestUrl, {
-      body,
-      headers : undefined,
-      observe: 'response',
-      responseType: 'text',
-      withCredentials: authenticate
-    }).pipe(
+    return this.httpClient.request(method, requestUrl, this.getHttpClientOptions(body, opts));
+  }
+
+  private getHttpStatus(method: string, path: string, body: Date | undefined, opts?: HttpOptions): Observable<number> {
+    const requestUrl = this.restUri + path;
+    const mergedHttpOptions = this.createOrMergeHttpOptions(opts, {observe: "response", responseType: "text"})
+    return this.httpClient.request(method, requestUrl, this.getHttpClientOptions(body, mergedHttpOptions)).pipe(
       map((response) => {
         const status = response.status;
         return status;
-      }),
-      catchError((error) => {
-        return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
       })
     );
   }
 
-  protected addContentTypeHeader(): HttpHeaders {
+  protected addContentTypeHeader(opts: HttpOptions | undefined): HttpOptions {
+
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
-    return headers;
+    return this.createOrMergeHttpOptions(opts, {headers: headers});
   }
 
-  protected addAuhorizationHeader(token: string): HttpHeaders {
-    const headers = new HttpHeaders()
-      .set('Authorization', token);
-    return headers;
-  }
 
-  protected addAuthAndContentType(token: string): HttpHeaders {
-    const headers = new HttpHeaders()
-      .set('Authorization', token)
-      .set('Content-Type', 'application/json');
-    return headers;
+  protected addContext(opts?: HttpOptions) : HttpContext {
+    const context = new HttpContext();
+    if(opts && opts.displayError!==undefined) {
+      context.set(DISPLAY_ERROR, opts.displayError);
+    }
+    return context;
   }
 
 
 
-  protected httpGet(path: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
-      return this.httpRequest('GET', path, undefined, authenticate, undefined, params, respType);
+  protected httpGet(path: string,opts?: HttpOptions ): Observable<any> {
+      return this.httpRequest('GET', path, undefined, opts);
 
   }
 
-  protected httpHead(path: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
-      return this.httpRequest('HEAD', path, undefined, authenticate, undefined, params, respType, 'response');
+  protected httpHead(path: string, opts?: HttpOptions): Observable<any> {
+    const mergedOpts = this.createOrMergeHttpOptions(opts, {observe: 'response'});
+    return this.httpRequest('HEAD', path, undefined, mergedOpts);
   }
 
-  protected httpPost(path: string, resource: any, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined): Observable<any> {
+  protected httpPost(path: string, resource: any, opts?: HttpOptions): Observable<any> {
     const body = JSON.stringify(resource);
-    return this.httpRequest('POST', path, body, authenticate, this.addContentTypeHeader(), params, respType, observe);
+    const mergedOpts = this.addContentTypeHeader(opts);
+    return this.httpRequest('POST', path, body, mergedOpts);
   }
 
-  protected httpPut(path: string, resource: any, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined): Observable<any> {
+  protected httpPut(path: string, resource: any, opts?: HttpOptions): Observable<any> {
     const body = JSON.stringify(resource);
-    return this.httpRequest('PUT', path, body, authenticate, this.addContentTypeHeader(), params, respType, observe);
+    const mergedOpts = this.addContentTypeHeader(opts);
+    return this.httpRequest('PUT', path, body, mergedOpts);
   }
 
-  protected httpPutText(path: string, bodyText: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined): Observable<any> {
-    return this.httpRequest('PUT', path, bodyText, authenticate, this.addContentTypeHeader(), params, respType, observe);
+  protected httpPutText(path: string, bodyText: string, opts?: HttpOptions): Observable<any> {
+    const mergedOpts = this.addContentTypeHeader(opts);
+    return this.httpRequest('PUT', path, bodyText, mergedOpts);
   }
 
-  protected httpDelete(path: string, body: any, authenticate?: boolean): Observable<number> {
-    return this.getHttpStatus('DELETE', path, body, authenticate);
+  protected httpDelete(path: string, body: any, opts?: HttpOptions): Observable<number> {
+    return this.getHttpStatus('DELETE', path, body, opts);
   }
 
 }

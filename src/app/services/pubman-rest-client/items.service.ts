@@ -3,6 +3,7 @@ import { map, Observable } from 'rxjs';
 import { AuditDbVO, ItemVersionVO } from "../../model/inge";
 import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
 import { HttpParams } from "@angular/common/http";
+import { HttpOptions } from "./pubman-generic-rest-client.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,93 +14,96 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     super('/items');
   }
 
-  submit(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
+  submit(id: string, lastModificationDate: Date, comment:string, opts?: HttpOptions): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/submit', taskParam, authenticate);
+    return this.httpPut(this.subPath + '/' + id + '/submit', taskParam, opts);
   }
 
-  release(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
+  release(id: string, lastModificationDate: Date, comment:string, opts?: HttpOptions): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/release', taskParam, authenticate);
+    return this.httpPut(this.subPath + '/' + id + '/release', taskParam, opts);
   }
 
-  revise(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
+  revise(id: string, lastModificationDate: Date, comment:string, opts?: HttpOptions): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/revise', taskParam, authenticate);
+    return this.httpPut(this.subPath + '/' + id + '/revise', taskParam, opts);
   }
 
-  withdraw(id: string, lastModificationDate: Date, comment:string, authenticate?: boolean): Observable<ItemVersionVO> {
+  withdraw(id: string, lastModificationDate: Date, comment:string, opts?: HttpOptions): Observable<ItemVersionVO> {
     const isoDate = new Date(lastModificationDate).toISOString();
 
     const taskParam = {
       'lastModificationDate': isoDate,
       'comment': comment
     }
-    return this.httpPut(this.subPath + '/' + id + '/withdraw', taskParam, authenticate);
+    return this.httpPut(this.subPath + '/' + id + '/withdraw', taskParam, opts);
   }
 
-  retrieveHistory(id: string, authenticate?: boolean): Observable<AuditDbVO[]> {
-    return this.httpGet(this.subPath + '/' + id + '/history', authenticate);
+  retrieveHistory(id: string, opts?: HttpOptions): Observable<AuditDbVO[]> {
+    return this.httpGet(this.subPath + '/' + id + '/history', opts);
   }
 
-  retrieveAuthorizationInfo(itemId: string, authenticate?: boolean): Observable<any> {
-    return this.httpGet(this.subPath + '/' + itemId + '/authorization', authenticate);
+  retrieveAuthorizationInfo(itemId: string, opts?: HttpOptions): Observable<any> {
+    return this.httpGet(this.subPath + '/' + itemId + '/authorization', opts);
   }
 
-  retrieveFileAuthorizationInfo(itemId: string, fileId:string, authenticate?: boolean): Observable<any> {
-    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/authorization', authenticate);
+  retrieveFileAuthorizationInfo(itemId: string, fileId:string, opts?: HttpOptions): Observable<any> {
+    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/authorization', opts);
   }
 
-  retrieveSingleExport(id: string, format?: string, citation?:string, cslConeId?:string, authenticate?: boolean, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined): Observable<any> {
+  retrieveSingleExport(id: string, format?: string, citation?:string, cslConeId?:string, opts?: HttpOptions): Observable<any> {
     let params: HttpParams = new HttpParams()
     .set('format', format ? format : 'json_citation')
     .set('citation', citation ? citation : 'APA6');
     if(cslConeId) params=params.set('cslConeId', cslConeId);
-    return this.httpGet(this.subPath + '/' + id + '/export', authenticate, params, respType);
+
+    const mergedOpts = this.createOrMergeHttpOptions(opts, {params: params});
+
+    return this.httpGet(this.subPath + '/' + id + '/export', mergedOpts);
   }
 
-  retrieveSingleCitation(id: string, citation?:string, cslConeId?:string, authenticate?: boolean): Observable<string> {
+  retrieveSingleCitation(id: string, citation?:string, cslConeId?:string, opts?: HttpOptions): Observable<string> {
 
-    return this.retrieveSingleExport(id, 'json_citation', citation, cslConeId, authenticate).pipe(
+    return this.retrieveSingleExport(id, 'json_citation', citation, cslConeId, opts).pipe(
       map(jsonCitation => {
         return jsonCitation.records[0].data.bibliographicCitation;
       })
     )
   }
 
-  thumbnailAvalilable(itemId: string, fileId:string, authenticate?: boolean): Observable<boolean> {
-    return this.httpHead(this.subPath + '/' + itemId + '/component/' + fileId + '/thumbnail', authenticate).pipe(
+  thumbnailAvalilable(itemId: string, fileId:string, opts?: HttpOptions): Observable<boolean> {
+    return this.httpHead(this.subPath + '/' + itemId + '/component/' + fileId + '/thumbnail', opts).pipe(
       map(resp => {return resp.status === 200})
     );
 
   }
 
 
-  checkFileAudienceAccess(itemId: string, fileId: string) {
-    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/content');
+  checkFileAudienceAccess(itemId: string, fileId: string, opts?: HttpOptions) {
+    return this.httpGet(this.subPath + '/' + itemId + '/component/' + fileId + '/content', opts);
   }
 
-  addDoi(id: string, authenticate?: boolean): Observable<ItemVersionVO> {
-    return this.httpPut(this.subPath + '/' + id + '/addNewDoi',undefined, authenticate);
+  addDoi(id: string, opts?: HttpOptions): Observable<ItemVersionVO> {
+    return this.httpPut(this.subPath + '/' + id + '/addNewDoi',undefined, opts);
   }
 
-  rollback(id: string, versionNumber:number, authenticate?: boolean): Observable<ItemVersionVO> {
-    return this.httpPut(this.subPath + '/' + id + '_' + versionNumber + '/rollbackToVersion',undefined, authenticate);
+  rollback(id: string, versionNumber:number, opts?: HttpOptions): Observable<ItemVersionVO> {
+    return this.httpPut(this.subPath + '/' + id + '_' + versionNumber + '/rollbackToVersion',undefined, opts);
   }
 
 }

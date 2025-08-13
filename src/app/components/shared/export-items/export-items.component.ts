@@ -6,11 +6,12 @@ import { CslAutosuggestComponent } from "../csl-autosuggest/csl-autosuggest.comp
 import { environment } from 'src/environments/environment';
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemSelectionService } from "../../../services/item-selection.service";
-import { Subscription } from "rxjs";
+import { catchError, EMPTY, Subscription, tap } from "rxjs";
 import { LoadingComponent } from "../loading/loading.component";
 import { contentDispositionParser } from "../../../utils/utils";
 import { TranslatePipe } from "@ngx-translate/core";
 import { JsonPipe } from "@angular/common";
+import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 
 
 @Component({
@@ -97,13 +98,13 @@ export class ExportItemsComponent {
     if (!this.isFormat && this.isValid()) {
 
 
-      this.itemService.retrieveSingleCitation(this.itemIds[0], this.selectedCitationType, this.selectedCslId).subscribe({
+      this.itemService.retrieveSingleCitation(this.itemIds[0], this.selectedCitationType, this.selectedCslId, {displayError: false}).subscribe({
         next: (cit) => {
           //console.log('Citation: ' +cit)
           this.currentCitation = cit;
         },
         error: e => {
-          this.errorMessage = e;
+          this.errorMessage = e.error.message;
           this.loading = false;
         },
       })
@@ -191,37 +192,40 @@ export class ExportItemsComponent {
       searchQuery.from = this.selectedFrom;
     }
 
-    this.exportSubscription = this.itemService.searchAndExport(searchQuery, this.selectedExportType, this.selectedCitationType, this.selectedCitationType === citationTypes.CSL ? this.selectedCslId : undefined, true).subscribe({
-      next: result => {
-        if (result.body) {
-          const blob: Blob = result.body;
-          console.log("Blob type: " + blob.type);
-          const data = window.URL.createObjectURL(blob);
-          let filename = "download"
+    this.exportSubscription = this.itemService.searchAndExport(searchQuery, this.selectedExportType, this.selectedCitationType, this.selectedCitationType === citationTypes.CSL ? this.selectedCslId : undefined, {displayError: false})
+      .pipe(
+        tap(result => {
+          if (result.body) {
+            const blob: Blob = result.body;
+            console.log("Blob type: " + blob.type);
+            const data = window.URL.createObjectURL(blob);
+            let filename = "download"
 
 
-          const contentDispositionHeader = result.headers.get("Content-disposition");
-          const parsedContentDisposition = contentDispositionParser(contentDispositionHeader)
-          if (parsedContentDisposition) {
-            const parsedFileName = parsedContentDisposition['filename']
-            if(parsedFileName) {
-              filename = parsedFileName;
+            const contentDispositionHeader = result.headers.get("Content-disposition");
+            const parsedContentDisposition = contentDispositionParser(contentDispositionHeader)
+            if (parsedContentDisposition) {
+              const parsedFileName = parsedContentDisposition['filename']
+              if(parsedFileName) {
+                filename = parsedFileName;
+              }
             }
+            const link = document.createElement('a');
+            link.href = data;
+            link.download = filename;
+            link.click();
+            window.URL.revokeObjectURL(data);
+            link.remove();
+            this.loading = false;
           }
-          const link = document.createElement('a');
-          link.href = data;
-          link.download = filename;
-          link.click();
-          window.URL.revokeObjectURL(data);
-          link.remove();
+        }),
+        catchError((err:PubManHttpErrorResponse) => {
+          this.errorMessage = err.userMessage;
           this.loading = false;
-        }
-      },
-      error: e => {
-        this.errorMessage = e;
-        this.loading = false;
-      },
-    })
+          return EMPTY;
+         })
+      )
+      .subscribe()
   }
 }
 

@@ -16,7 +16,7 @@ import { AsyncPipe, DatePipe, ViewportScroller } from "@angular/common";
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
-import { forkJoin, map, Observable, timer } from "rxjs";
+import { catchError, EMPTY, forkJoin, map, Observable, tap, timer } from "rxjs";
 import { environment } from 'src/environments/environment';
 import {
   ItemViewMetadataElementComponent
@@ -40,6 +40,7 @@ import { itemToVersionId } from "../../utils/utils";
 import { UsersService } from "../../services/pubman-rest-client/users.service";
 import sanitizeHtml from "sanitize-html";
 import { CopyButtonDirective } from "../../directives/copy-button.directive";
+import { PubManHttpErrorResponse } from "../../services/interceptors/http-error.interceptor";
 
 @Component({
   selector: 'pure-item-view',
@@ -92,6 +93,7 @@ export class ItemViewComponent {
   metaTagElements: Element[] = [];
   copiedSuccessful: boolean = false;
 
+  errorMessages: string[] = [];
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
@@ -129,84 +131,97 @@ export class ItemViewComponent {
     this.authorizationInfo = undefined;
     this.latestVersionAuthorizationInfo = undefined;
     if (id)
-      this.item$ = this.itemsService.retrieve(id);
-      this.item$.subscribe(i => {
-      if (i && i.objectId) {
+      this.item$ = this.itemsService.retrieve(id, {displayError: false});
+      this.item$
+        .pipe(
+          tap(i => {
+            if (i.objectId) {
 
-        //set HTMl title
-        if(i.metadata?.title) {
-          const sanitizedTitle = sanitizeHtml(i.metadata.title, {allowedTags: []}) + ' | ' + this.title.getTitle();
-          this.title.setTitle(sanitizedTitle);
-        }
-
-
-        //init item in selection and state (for export, basket, batch, pagination etc)
-        this.listStateService.initItemId(i.objectId);
-        this.itemSelectionService.addToSelection(itemToVersionId(i));
-
-
-        //Get versions and create version map
-        this.versions$ = this.itemsService.retrieveHistory(i.objectId);
-        this.versionMap$ = this.versions$.pipe(
-          map(versions => {
-            const vMap: Map<number, AuditDbVO[]> = new Map();
-            versions.forEach((auditEntry) => {
-              const mapEntry = vMap.get(auditEntry.pubItem.versionNumber!);
-              let auditForVersionNumber: AuditDbVO[] = [];
-              if(mapEntry) {
-                auditForVersionNumber = mapEntry;
+              //set HTMl title
+              if (i.metadata?.title) {
+                const sanitizedTitle = sanitizeHtml(i.metadata.title, {allowedTags: []}) + ' | ' + this.title.getTitle();
+                this.title.setTitle(sanitizedTitle);
               }
-              auditForVersionNumber.push(auditEntry);
-              vMap.set(auditEntry.pubItem.versionNumber!, auditForVersionNumber);
-            })
-            return vMap;
-        }))
 
-        this.itemCreator$ = this.usersService.retrieve(i!.creator!.objectId);
-        this.itemModifier$ = this.usersService.retrieve(i!.modifier!.objectId);
+              //init item in selection and state (for export, basket, batch, pagination etc)
+              this.listStateService.initItemId(i.objectId);
+              this.itemSelectionService.addToSelection(itemToVersionId(i));
 
-        //retrieve authorization information for item (for relase, submit, etc...)
-        this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i)).subscribe(authInfo => {
-          this.authorizationInfo = authInfo;
-          if(i.latestVersion?.versionNumber===i.versionNumber) {
-            this.latestVersionAuthorizationInfo = this.authorizationInfo;
-          }
-          else {
-            if (i && i.objectId) {
-              this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i.latestVersion!)).subscribe(authInfoLv => {
-                this.latestVersionAuthorizationInfo = authInfoLv
+              //Get versions and create version map
+              this.initVersions(i);
+
+              //Get creator and modifier
+              this.itemCreator$ = this.usersService.retrieve(i!.creator!.objectId);
+              this.itemModifier$ = this.usersService.retrieve(i!.modifier!.objectId);
+
+              //retrieve authorization information for item (for relase, submit, etc...)
+              this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i))
+                .pipe(
+                  tap(authInfo => {
+                    this.authorizationInfo = authInfo;
+                    if (i.latestVersion?.versionNumber === i.versionNumber) {
+                      this.latestVersionAuthorizationInfo = this.authorizationInfo;
+                    } else {
+                      if (i && i.objectId) {
+                        this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i.latestVersion!)).subscribe(authInfoLv => {
+                          this.latestVersionAuthorizationInfo = authInfoLv
+                        })
+                      }
+                    }
+                  })
+                )
+                .subscribe()
+
+              //Retrieve citation for item view
+              this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined, undefined).subscribe(citation => {
+                this.citation = citation;
               })
+
+
+              //retrieve thumbnail, if available
+              this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType === 'application/pdf'));
+              if (this.firstPublicPdfFile) {
+                this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
+                  this.thumbnailUrl = this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
+                })
+              }
+
+              this.addMetaTags(i);
+
+              //Set item
+              this.item = i;
             }
-          }
-        })
-
-        //Retrieve citation for item view
-        this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined,undefined).subscribe(citation => {
-          this.citation = citation;
-        })
-
-
-        //retrieve thumbnail, if available
-        this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType==='application/pdf'));
-        if(this.firstPublicPdfFile) {
-          this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
-              this.thumbnailUrl =  this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
+          }),
+          catchError((err: PubManHttpErrorResponse) => {
+            this.errorMessages.push(err.userMessage);
+            return EMPTY;
           })
-        }
 
-
-        this.addMetaTags(i);
-
-
-        //Set item
-        this.item = i;
-      }
-    })
+        )
+        .subscribe()
   }
 
   ngOnDestroy() {
     //Remove meta tags from DOM
     this.removeMetaTags();
+  }
+
+  initVersions(i: ItemVersionVO) {
+    this.versions$ = this.itemsService.retrieveHistory(i.objectId!);
+    this.versionMap$ = this.versions$.pipe(
+      map(versions => {
+        const vMap: Map<number, AuditDbVO[]> = new Map();
+        versions.forEach((auditEntry) => {
+          const mapEntry = vMap.get(auditEntry.pubItem.versionNumber!);
+          let auditForVersionNumber: AuditDbVO[] = [];
+          if (mapEntry) {
+            auditForVersionNumber = mapEntry;
+          }
+          auditForVersionNumber.push(auditEntry);
+          vMap.set(auditEntry.pubItem.versionNumber!, auditForVersionNumber);
+        })
+        return vMap;
+      }))
   }
 
   removeMetaTags() {
@@ -222,8 +237,8 @@ export class ItemViewComponent {
     if(i.versionState== ItemVersionState.RELEASED && i.publicState== ItemVersionState.RELEASED) {
       //Add DC and highwire Press citation meta tags
       forkJoin({
-        dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Dc_Xml", undefined, undefined, true, "text"),
-        highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Highwirepress_Cit_Xml", undefined, undefined, true, "text")
+        dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Dc_Xml", undefined, undefined, {responseType: "text"}),
+        highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Highwirepress_Cit_Xml", undefined, undefined, {responseType: "text"})
       })
         .subscribe(
           res => {

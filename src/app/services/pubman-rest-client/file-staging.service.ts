@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FileDbVO } from 'src/app/model/inge';
-import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
+import { HttpOptions, PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class FileStagingService extends PubmanGenericRestClientService<FileDbVO>
     super('/staging');
   }
 
-  createStageFile(file: FileDbVO, authenticate?:boolean) : Observable<String> {
+  createStageFile(file: FileDbVO, opts?: HttpOptions) : Observable<String> {
     // console.log('trying to stage file');
-    return super.httpPost(this.subPath + '/' + file.name, file.content, authenticate);
+    return super.httpPost(this.subPath + '/' + file.name, file.content, opts);
   }
 }

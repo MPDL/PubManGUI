@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { OrganizationsService } from './organizations.service';
 import { AccountUserDbVO, GrantVO } from "../../model/inge";
 import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
+import { HttpOptions } from "./pubman-generic-rest-client.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,46 +18,46 @@ export class UsersService extends PubmanSearchableGenericRestClientService<Accou
     super('/users');
   }
 
-  activate(user: AccountUserDbVO, authenticate?: boolean): Observable<AccountUserDbVO> {
+  activate(user: AccountUserDbVO, opts?: HttpOptions): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/activate';
     const body = user.lastModificationDate;
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
   }
 
-  deactivate(user: AccountUserDbVO, authenticate?: boolean): Observable<AccountUserDbVO> {
+  deactivate(user: AccountUserDbVO, opts?: HttpOptions): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/deactivate';
     const body = user.lastModificationDate;
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
 
   }
 
-  addGrants(user: AccountUserDbVO, grants: GrantVO[], authenticate?: boolean): Observable<AccountUserDbVO> {
+  addGrants(user: AccountUserDbVO, grants: GrantVO[], opts?: HttpOptions): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/add';
     const body = JSON.stringify(grants);
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
   }
 
-  removeGrants(user: AccountUserDbVO, grants: GrantVO[], authenticate?: boolean): Observable<AccountUserDbVO> {
+  removeGrants(user: AccountUserDbVO, grants: GrantVO[], opts?: HttpOptions): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + user.objectId + '/remove';
     const body = JSON.stringify(grants);
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPut(path, body, opts);
   }
 
-  changePassword(userId: string, password: string, authenticate?: boolean): Observable<AccountUserDbVO> {
+  changePassword(userId: string, password: string, opts?: HttpOptions): Observable<AccountUserDbVO> {
     const path = this.subPath + '/' + userId + '/password';
     const body = password;
 
-    return this.httpPutText(path, body, authenticate);
+    return this.httpPutText(path, body, opts);
   }
 
-  generateRandomPassword(authenticate?: boolean): Observable<string> {
+  generateRandomPassword(opts?: HttpOptions): Observable<string> {
     const path = this.subPath + '/generateRandomPassword';
 
-    return this.httpGet(path, authenticate);
+    return this.httpGet(path, opts);
   }
 
   /*

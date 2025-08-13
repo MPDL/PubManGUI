@@ -20,11 +20,7 @@ export class ConeService {
       body,
       headers,
       params,
-    }).pipe(
-      map((response: any) => response),
-      catchError((error) => {
-        return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
-      })
+    }
     );
   }
 
@@ -35,12 +31,7 @@ export class ConeService {
   getPersonResource(path: string) {
     const requestUrl = this.rest_uri + path;
     const params = new HttpParams().set('format', 'json');
-    return this.http.get<PersonResource>(requestUrl, { params }).pipe(
-      map((response: any) => response),
-      catchError((error) => {
-        return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
-      })
-    );
+    return this.http.get<PersonResource>(requestUrl, { params })
   }
 }
 

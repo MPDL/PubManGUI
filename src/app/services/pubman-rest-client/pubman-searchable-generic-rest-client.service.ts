@@ -1,4 +1,4 @@
-import { PubmanGenericRestClientService, SearchResult } from "./pubman-generic-rest-client.service";
+import { HttpOptions, PubmanGenericRestClientService, SearchResult } from "./pubman-generic-rest-client.service";
 import { catchError, map, Observable, throwError } from "rxjs";
 import { HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 
@@ -9,49 +9,43 @@ export abstract class PubmanSearchableGenericRestClientService<modelType> extend
   }
 
 
-  list(q?: string, size?: number, from?: number, authenticate?:boolean):Observable<SearchResult<modelType>> {
+  list(q?: string, size?: number, from?: number, opts?:HttpOptions):Observable<SearchResult<modelType>> {
     const params = new HttpParams({fromObject: {
         ...q && {q: q},
         ...size && {size: size},
         ...from && {from: from}
       }});
 
-    return this.httpGet(this.subPath, authenticate, params);
+    const mergedOpts = this.createOrMergeHttpOptions(opts, {params: params})
+    return this.httpGet(this.subPath, mergedOpts);
   }
 
-  search(elasticBody: any, authenticate?:boolean): Observable<SearchResult<modelType>> {
-    return this.getSearchResults(this.subPath.concat('/search'), elasticBody, authenticate, this.addContentTypeHeader());
+  search(elasticBody: any, opts?:HttpOptions): Observable<SearchResult<modelType>> {
+    const mergedOpts = this.addContentTypeHeader(opts);
+    return this.getSearchResults(this.subPath.concat('/search'), elasticBody, mergedOpts);
   }
 
-  elasticSearch(elasticBody: any, authenticate?:boolean): Observable<any> {
-      return this.getElasticSearchResults('POST', this.subPath.concat('/elasticsearch'), elasticBody, authenticate, this.addContentTypeHeader());
+  elasticSearch(elasticBody: any, opts?:HttpOptions): Observable<any> {
+    const mergedOpts = this.addContentTypeHeader(opts);
+      return this.getElasticSearchResults('POST', this.subPath.concat('/elasticsearch'), elasticBody, mergedOpts);
   }
 
-  searchAndExport(elasticBody: any, format?:string, citation?:string, cslConeId?: string, authenticate?:boolean): Observable<HttpResponse<Blob>> {
+  searchAndExport(elasticBody: any, format?:string, citation?:string, cslConeId?: string, opts?:HttpOptions): Observable<HttpResponse<Blob>> {
     let params: HttpParams = new HttpParams()
       .set('format', format ? format : 'json_citation')
       .set('citation', citation ? citation : 'APA6');
     if(cslConeId) params=params.set('cslConeId', cslConeId);
 
-    return this.getSearchResults(this.subPath.concat('/search'), elasticBody, authenticate, this.addContentTypeHeader(), params, "blob", "response");
+    const mergedOpts = this.createOrMergeHttpOptions(opts, {params: params, responseType: "blob", observe: "response"});
+
+    return this.getSearchResults(this.subPath.concat('/search'), elasticBody, mergedOpts);
   }
 
-  private getSearchResults(path: string, body?: any, authenticate:boolean =true, headers?: HttpHeaders, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined): Observable<any> {
-    return this.httpPost(path, body, authenticate, params, respType, observe);
+  private getSearchResults(path: string, body?: any, opts?:HttpOptions): Observable<any> {
+    return this.httpPost(path, body, opts);
   }
 
-  private getElasticSearchResults(method: string, path: string, body?: any, authenticate:boolean =true, headers?: HttpHeaders, params?: HttpParams): Observable<SearchResult<modelType>> {
-    const requestUrl = this.restUri + path;
-    return this.httpClient.request<any>(method, requestUrl, {
-      body,
-      headers,
-      params,
-      withCredentials: authenticate
-    }).pipe(
-      map((searchResult: any) => searchResult),
-      catchError((error) => {
-        return throwError(() => new Error(JSON.stringify(error) || 'UNKNOWN ERROR!'));
-      })
-    );
+  private getElasticSearchResults(method: string, path: string, body?: any, opts?:HttpOptions): Observable<SearchResult<modelType>> {
+    return this.httpRequest(method, path, body, opts);
   }
 }

@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { AaService } from "../../../services/aa.service";
-import { tap } from "rxjs";
+import { catchError, EMPTY, tap, throwError } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
+import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 
 @Component({
     selector: 'pure-login',
@@ -40,15 +42,14 @@ export class LoginComponent implements OnInit {
         .pipe(
           tap( p=> {
             this.activeModal.dismiss("login_success");
+          }),
+          catchError ((err: PubManHttpErrorResponse) => {
+            this.errorMessage = err.userMessage
+            return EMPTY;
+
           })
         )
-        .subscribe(
-          {
-            error : (e) => {
-              this.errorMessage = "Could not log in";
-            }
-          }
-        )
+        .subscribe()
 
     }
   }

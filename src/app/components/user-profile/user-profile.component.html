@@ -58,7 +58,7 @@
   <hr/>
   <h5>Change password</h5>
 
-  <form [formGroup]="changePasswordForm">
+  <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
     <!--
     <div class="form-group mb-2">
       <label for="oldPassword" class="form-label">Old password</label>
@@ -95,7 +95,7 @@
       </div>
     }
 
-    <button type="submit" class="btn btn-primary" (click)="changePassword()" [disabled]="passwordChangeLoading">Set new password</button>
+    <button type="submit" class="btn btn-primary" [disabled]="passwordChangeLoading">Set new password</button>
 
   </form>
 

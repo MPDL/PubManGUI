@@ -170,7 +170,7 @@ export class BatchService {
   getSelectedItems(): ItemVersionVO[] {
     let datasets: ItemVersionVO[] = [];
     for (var id of this.items) {
-        this.itemSvc.retrieve(id, true)
+        this.itemSvc.retrieve(id)
           .subscribe( actionResponse => {
             datasets.push(actionResponse);
             console.log(id);
