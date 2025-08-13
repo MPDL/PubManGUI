@@ -50,7 +50,7 @@ export class UsersService extends PubmanSearchableGenericRestClientService<Accou
     const path = this.subPath + '/' + userId + '/password';
     const body = password;
 
-    return this.httpPut(path, body, authenticate);
+    return this.httpPutText(path, body, authenticate);
   }
 
   generateRandomPassword(authenticate?: boolean): Observable<string> {

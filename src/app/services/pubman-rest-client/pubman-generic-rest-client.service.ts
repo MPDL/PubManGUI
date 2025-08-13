@@ -132,6 +132,10 @@ export abstract class PubmanGenericRestClientService<modelType> {
     return this.httpRequest('PUT', path, body, authenticate, this.addContentTypeHeader(), params, respType, observe);
   }
 
+  protected httpPutText(path: string, bodyText: string, authenticate?: boolean, params?: HttpParams, respType?: "arraybuffer" | "blob" | "text" | "json" | undefined, observe?:"body" | "events" | "response" | undefined): Observable<any> {
+    return this.httpRequest('PUT', path, bodyText, authenticate, this.addContentTypeHeader(), params, respType, observe);
+  }
+
   protected httpDelete(path: string, body: any, authenticate?: boolean): Observable<number> {
     return this.getHttpStatus('DELETE', path, body, authenticate);
   }
