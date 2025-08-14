@@ -62,8 +62,8 @@ export class MessageService {
 
   warning(message: string) {
     const msg = { type: 'warning', text: message };
-    this.displayMessage(msg);
-    //this.displayOnArea(msg);
+    //this.displayMessage(msg);
+    this.displayOnArea(msg);
   }
 
   error(message: string) {
