@@ -1,7 +1,7 @@
 @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator)
 {
 <div class="container-fluid">
-    <form [formGroup]="form" (ngSubmit)="submit($event.submitter.id)">
+    <form [formGroup]="form" >
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 mt-2 px-3 align-items-center" formGroupName="context">
             <label for="context" class="col-sm-2 col-form-label">Context</label>
             <div class="col-sm">
@@ -139,12 +139,12 @@
         <hr />
         <div class="d-sm-flex flex-sm-row mb-3 px-3 justify-content-end">
             <div class="col-auto">
-                <button class="btn btn-primary me-3" id="save" type="submit" value="save" data-test="save">SAVE</button>
+                <button class="btn btn-primary me-3" id="save" type="button" value="save" data-test="save" onClick="submit(this.id)">SAVE</button>
                 @if (!form.controls['objectId'].value || (authorizationInfo && authorizationInfo.actions['SUBMIT'])) {
-                <button class="btn btn-primary me-3" id="submit" type="submit" value="submit">SUBMIT</button>
+                <button class="btn btn-primary me-3" id="submit" type="button" value="submit" onClick="submit(this.id)">SUBMIT</button>
                 }
                 @if (authorizationInfo && authorizationInfo.actions['RELEASE']) {
-                <button class="btn btn-primary" id="release" type="submit" value="release">RELEASE</button>
+                <button class="btn btn-primary" id="release" type="button" value="release" onClick="submit(this.id)">RELEASE</button>
                 }
             </div>
         </div>
