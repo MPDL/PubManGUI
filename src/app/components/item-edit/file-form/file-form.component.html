@@ -165,7 +165,11 @@
                     <select id="oaStatus" class="form-select" formControlName="oaStatus">
                         <option [value]="null" selected disabled>OA-Status</option>
                         @for (oaStatusType of oaStatus_types; track oaStatusType) {
-                        <option [value]="oaStatusType">{{oaStatusType}}</option>
+                            @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED' && oaStatusType !== 'CLOSED_ACCESS') {
+                            <option [value]="oaStatusType">{{oaStatusType}}</option>
+                            } @else if(file_form.get('storage')?.value == 'EXTERNAL_URL'){
+                                <option [value]="oaStatusType">{{oaStatusType}}</option>
+                            }
                         }
                     </select>
                 </div>
