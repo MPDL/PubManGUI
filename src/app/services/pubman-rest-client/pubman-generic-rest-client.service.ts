@@ -18,7 +18,7 @@ export interface TaskParamVO {
 }
 
 export interface HttpOptions {
-  displayError?: boolean;
+  globalErrorDisplay?: boolean;
   withCredentials?: boolean;
   headers?: HttpHeaders,
   params?: HttpParams,
@@ -117,8 +117,8 @@ export abstract class PubmanGenericRestClientService<modelType> {
 
   protected addContext(opts?: HttpOptions) : HttpContext {
     const context = new HttpContext();
-    if(opts && opts.displayError!==undefined) {
-      context.set(DISPLAY_ERROR, opts.displayError);
+    if(opts && opts.globalErrorDisplay!==undefined) {
+      context.set(DISPLAY_ERROR, opts.globalErrorDisplay);
     }
     return context;
   }

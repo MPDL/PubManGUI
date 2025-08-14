@@ -100,31 +100,31 @@ export class ItemActionsModalComponent {
   }
 
   submit() {
-    return this.itemsService.submit(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
+    return this.itemsService.submit(this.item!.objectId!, this.item!.modificationDate!, this.comment, {globalErrorDisplay: false});
   }
 
   release() {
-    return this.itemsService.release(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
+    return this.itemsService.release(this.item!.objectId!, this.item!.modificationDate!, this.comment, {globalErrorDisplay: false});
   }
 
   revise() {
-    return this.itemsService.revise(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
+    return this.itemsService.revise(this.item!.objectId!, this.item!.modificationDate!, this.comment, {globalErrorDisplay: false});
   }
 
   withdraw() {
-    return this.itemsService.withdraw(this.item!.objectId!, this.item!.modificationDate!, this.comment, {displayError: false});
+    return this.itemsService.withdraw(this.item!.objectId!, this.item!.modificationDate!, this.comment, {globalErrorDisplay: false});
   }
 
   delete() {
-    return this.itemsService.delete(this.item!.objectId!, this.item!.modificationDate!, {displayError: false});
+    return this.itemsService.delete(this.item!.objectId!, this.item!.modificationDate!, {globalErrorDisplay: false});
   }
 
   addDoi() {
-    return this.itemsService.addDoi(this.item!.objectId!, {displayError: false});
+    return this.itemsService.addDoi(this.item!.objectId!, {globalErrorDisplay: false});
   }
 
   rollback() {
-    return this.itemsService.rollback(this.item!.objectId!, this.rollbackVersion!, {displayError: false});
+    return this.itemsService.rollback(this.item!.objectId!, this.rollbackVersion!, {globalErrorDisplay: false});
   }
 
 }

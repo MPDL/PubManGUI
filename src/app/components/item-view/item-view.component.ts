@@ -131,7 +131,7 @@ export class ItemViewComponent {
     this.authorizationInfo = undefined;
     this.latestVersionAuthorizationInfo = undefined;
     if (id)
-      this.item$ = this.itemsService.retrieve(id, {displayError: false});
+      this.item$ = this.itemsService.retrieve(id, {globalErrorDisplay: false});
       this.item$
         .pipe(
           tap(i => {
