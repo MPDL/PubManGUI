@@ -32,7 +32,7 @@
   <td class="d-flex d-none d-lg-table-cell col-0 col-lg-1">
     @if(item.anzDetails) {
 
-      <a [routerLink]="['log']" [state]="{ item: item }">
+      <a [routerLink]="['log']" [state]="{ item: item }" data-test="import-details-item-log-link">
         <span class="material-symbols-outlined my-0">
           integration_instructions
         </span>

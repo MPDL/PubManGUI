@@ -69,7 +69,7 @@
   </td>
 
   <td class="d-flex d-none col-0 col-sm-1 d-sm-table-cell justify-content-center">
-    <a [routerLink]="['/imports/myimports/', log.id]">
+    <a [routerLink]="['/imports/myimports/', log.id]" data-test="import-details-link">
       <span class="material-symbols-outlined ms-2 my-0 matBadge "
         matBadge='{{ log.anzImportedItems > 0 ? log.anzImportedItems : null }}'>
         list

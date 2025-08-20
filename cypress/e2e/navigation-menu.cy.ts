@@ -90,7 +90,8 @@ describe('Navigation Menu', () => {
   })
 
   /**
-   * Remove trailing forward slashes from baseUrl (Angulars default baseUrl http://localhost:4200/ has a trailing slash)
+   * Remove trailing forward slashes from baseUrl
+   * (Angulars default baseUrl http://localhost:4200/ has a trailing slash, the baseUrl configured in cypress.config.ts has none)
    */
   function baseUrlWithoutTrailingSlashes() {
     // @ts-ignore

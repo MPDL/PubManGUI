@@ -15,7 +15,7 @@
       <div class="d-flex flex-column flex-lg-row col-12 justify-content-between mt-5 mb-3 border-bottom">
         <div class="text-nowrap text-truncate">
           @if( item?.itemId ) {
-          <span>{{ 'imports.list.details.for' | translate }}</span>: <strong class="fw-bolder">{{ item?.itemId }}
+          <span>{{ 'imports.list.details.for' | translate }}</span>: <strong class="fw-bolder" data-test="item-id">{{ item?.itemId }}
           </strong>
           }
         </div>
