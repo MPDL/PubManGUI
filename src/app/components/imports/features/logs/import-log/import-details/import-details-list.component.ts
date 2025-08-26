@@ -213,12 +213,11 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doDelete(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.remove.confirmation')), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.remove.confirmation'), { name: this.import.name }), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.importsSvc.deleteImportedItems(this.import.id).subscribe(importsResponse => {
-          console.log(importsResponse);
-          const msg = this.translateSvc.instant(_('imports.list.details.delete')) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
+          const msg = this.translateSvc.instant(_('imports.list.details.delete'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
           this.msgSvc.success(msg);
           setTimeout(() => {
             this.router.navigate(['/imports/myimports']);
@@ -247,13 +246,12 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doSubmit(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.submit.confirmation')), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.submit.confirmation'), { name: this.import.name }), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         let submitModus = 'SUBMIT';
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
-          console.log(importsResponse);
-          const msg = this.translateSvc.instant(_('imports.list.details.submit')) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
+          const msg = this.translateSvc.instant(_('imports.list.details.submit'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
           this.msgSvc.success(msg);
 
           let element = document.getElementById('submit') as HTMLButtonElement;
@@ -266,13 +264,12 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doRelease(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.release.confirmation')), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
+    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.release.confirmation'), { name: this.import.name }), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         let submitModus = this.caseSubmitAndRelease() ? 'SUBMIT_AND_RELEASE' : 'RELEASE';
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
-          console.log(importsResponse);
-          const msg = this.translateSvc.instant(_('imports.list.details.release')) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
+          const msg = this.translateSvc.instant(_('imports.list.details.release'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
           this.msgSvc.success(msg);
 
           let element = document.getElementById('release') as HTMLButtonElement;

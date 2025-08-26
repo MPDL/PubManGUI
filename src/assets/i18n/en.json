@@ -253,9 +253,9 @@
 		"list.remove": "Remove from log",
 		"list.remove.confirmation": "Do you really want to remove import log {{name}}?",
 		"list.started.on": "started on",
-		"release.confirmation": "Do you really want to release this import?",
-		"remove.confirmation": "Do you really want to remove this import?",
-		"submit.confirmation": "Do you really want to submit this import?"
+		"release.confirmation": "Do you really want to release this import \"{{name}}\"?",
+		"remove.confirmation": "Do you really want to remove this import \"{{name}}\"?",
+		"submit.confirmation": "Do you really want to submit this import \"{{name}}\"?"
 	},
 	"BatchProcessLogDetailState": {
 		"ERROR": "Error",

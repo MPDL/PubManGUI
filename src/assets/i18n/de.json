@@ -253,9 +253,9 @@
 		"list.remove": "Aus dem Protokoll entfernen",
 		"list.remove.confirmation": "Möchten Sie Importprotokol {{name}} wirklich entfernen?",
 		"list.started.on": "gestartet am",
-		"release.confirmation": "Möchten Sie diesen Import wirklich freigeben?",
-		"remove.confirmation": "Möchten Sie diesen Import wirklich entfernen?",
-		"submit.confirmation": "Möchten Sie diesen Import wirklich einstellen?"
+		"release.confirmation": "Möchten Sie diesen Import \"{{name}}\" wirklich freigeben?",
+		"remove.confirmation": "Möchten Sie diesen Import \"{{name}}\" wirklich löschen?",
+		"submit.confirmation": "Möchten Sie diesen Import \"{{name}}\" wirklich einstellen?"
 	},
 	"BatchProcessLogDetailState": {
 		"ERROR": "Fehlgeschlagen",
