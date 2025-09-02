@@ -2,37 +2,37 @@
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
-                <label class="col-form-label">Title</label>
+                <label class="col-form-label">{{ 'MetadataFields.eventTitle' | translate }}</label>
                 <input type="text" class="form-control" formControlName="title"
                     [ngClass]="event_form.errors?.[error_types.EVENT_TITLE_NOT_PROVIDED] || event_form.errors?.[error_types.EVENT_TITLE_NOT_PROVIDED] ? 'is-invalid' : ''">
                 @if (event_form.errors?.[error_types.EVENT_TITLE_NOT_PROVIDED]) {
-                <div class="text-danger">Event title is required if any other field is not null</div>
+                <div class="pure-invalid">Event title is required if any other field is not null</div>
                 }
             </div>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
             <div class="col-sm-2">
-                <label class="col-form-label">Start Date</label>
+                <label class="col-form-label">{{ 'MetadataFields.eventStartDate' | translate }}</label>
                 <input type="text" class="form-control" formControlName="startDate">
                 @if (event_form.get('startDate')?.errors) {
-                <div class="text-danger">Date format incorrect</div>
+                <div class="pure-invalid">Date format incorrect</div>
                 }
             </div>
             <div class="col-sm-2">
-                <label class="col-form-label">End Date</label>
+                <label class="col-form-label">{{ 'MetadataFields.eventEndDate' | translate }}</label>
                 <input type="text" class="form-control" formControlName="endDate">
                 @if (event_form.get('endDate')?.errors) {
-                <div class="text-danger">Date format incorrect</div>
+                <div class="pure-invalid">Date format incorrect</div>
                 }
             </div>
             <div class="col-sm-2">
-                <label class="col-form-label">Place</label>
+                <label class="col-form-label">{{ 'MetadataFields.eventPlace' | translate }}</label>
                 <input type="text" class="form-control" formControlName="place">
             </div>
             <div class="col-sm-2 form-check form-switch">
                 <input id="invitation-status" class="form-check-input" type="checkbox" role="switch"
                     [formControl]="invitationBoolean" (change)="change_invitation_status($event)">
-                <label class="form-check-label" for="invitation-status">Invited</label>
+                <label class="form-check-label" for="invitation-status">{{ 'MetadataFields.eventInvited' | translate }}</label>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ import {
 } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
+import { TranslatePipe } from "@ngx-translate/core";
 
 
 @Component({
@@ -16,6 +17,7 @@ import { Errors } from 'src/app/model/errors';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslatePipe,
   ],
   templateUrl: './subject-form.component.html',
   styleUrl: './subject-form.component.scss'

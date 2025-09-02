@@ -3,7 +3,7 @@
     <div class="col-sm-10">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
-                <label class="col-sm-2 col-form-label">Title</label>
+                <label class="col-sm-2 col-form-label">{{ 'MetadataFields.title' | translate }}</label>
                 <input type="text" class="form-control" formControlName="title">
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -11,16 +11,16 @@
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm-4">
-                <label class="col-form-label">Court Name</label>
+                <label class="col-form-label">{{ 'MetadataFields.legalCaseCourt' | translate }}</label>
                 <input type="text" class="form-control" formControlName="courtName">
             </div>
             <div class="col-sm-4">
-                <label class="col-form-label">Identifier</label>
+                <label class="col-form-label">{{ 'MetadataFields.legalCaseRefNumber' | translate }}</label>
                 <input type="text" class="form-control" formControlName="identifier">
             </div>
             <div class="col-sm-2">
-                <label class="col-form-label">Date Published</label>
-                <input type="text" class="form-control" formControlName="datePublished" placeholder="YYYY-MM-DD">
+                <label class="col-form-label">{{ 'MetadataFields.datePublishedInPrint' | translate }}</label>
+                <input type="text" class="form-control" formControlName="datePublished" [placeholder]="'common.dateFormat' | translate">
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>

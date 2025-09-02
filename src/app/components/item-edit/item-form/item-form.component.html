@@ -3,8 +3,11 @@
   <pure-item-badges [item]="item" [showVersion]="true" [showMetadata]="false"></pure-item-badges>
 <div class="container-fluid">
     <form [formGroup]="form" >
+      <!-- context selection only for new items -->
+      @if(!item?.objectId) {
+
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 mt-2 px-3 align-items-center" formGroupName="context">
-            <label for="context" class="col-sm-2 col-form-label">Context</label>
+            <label for="context" class="col-sm-2 col-form-label">{{ 'MetadataFields.context' | translate }}</label>
             <div class="col-sm">
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-sm">
@@ -24,6 +27,7 @@
                 </div>
             </div>
         </div>
+      }
         <!--<div class="row g-1 mb-1">-->
         <pure-metadata-form [meta_form]="metadata_form" [context]="context" (notice)="handleNotification($event)">
         </pure-metadata-form>
@@ -36,35 +40,34 @@
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#accordionBodyFilesGroup" aria-expanded="true"
                         aria-controls="accordionBodyFilesGroup">
-                        Files and Locators Group
+                      {{ 'MetadataFields.filesLocators' | translate }}
                     </button>
                 </h2>
                 <div id="accordionBodyFilesGroup" class="accordion-collapse collapse show">
-                    <div class="accordion-body mt-3 mb-3">
-                        <!-- TODO File upload -->
-                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                            <label class="col-sm-2 col-form-label">File Upload</label>
-                            <pure-file-upload [file_upload_form]="internalFiles"
-                                (fileUploadNotice)="handleFileUploadNotification($event)"></pure-file-upload>
-                        </div>
-                    </div>
-                    @if (internalFiles && internalFiles.controls.length > 0) {
+
+                  @let filesAvailable = internalFiles && internalFiles.controls.length > 0;
+
                     <div class="accordion-body mt-3 mb-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                            <label class="col-sm-2 col-form-label">Files</label>
-                            <div class="form-check form-switch col-sm py-1">
-                                <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
-                                    [checked]="switchFileSortingMode" (change)="changeSortingMode()">
-                                <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
+
+                          <div class="col-sm-2">
+                            <label class="col-form-label small">{{ 'common.files' | translate }}</label>
+                            @if (filesAvailable) {
+                            <div class="form-check form-switch small py-1">
+                              <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
+                                     [checked]="switchFileSortingMode" (change)="changeSortingMode()">
+                              <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
                             </div>
-                        </div>
-                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                            <div class="col-sm-2"></div>
+                            }
+                          </div>
+
+                        <div class="col-sm">
+                          @if(filesAvailable) {
                             <div cdkDropList class="col-sm drag-list" (cdkDropListDropped)="dropInternalFiles($event)">
                                 @for (file of internalFiles.controls; track file; let
                                 fileIndex = $index) {
                                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                                    <div cdkDrag class="col-sm"> <!-- (cdkDragMoved)="onDragMove($event)" -->
+                                    <div cdkDrag class="col-sm drag-list-box"> <!-- (cdkDragMoved)="onDragMove($event)" -->
                                         <pure-file-form [file_form]="file" [index]="fileIndex"
                                             [index_length]="internalFiles.controls.length"
                                             (notice)="handleInternalFileNotification($event)"></pure-file-form>
@@ -74,27 +77,45 @@
                                             (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
                                     </div>
                                 </div>
+                                  <hr/>
                                 }
                                 @empty {
                                 <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add fileIndex'"
                                     (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
                                 }
                             </div>
+                          }
+
+
+                          <div class="col-sm-10">
+                            <pure-file-upload [file_upload_form]="internalFiles"
+                                              (fileUploadNotice)="handleFileUploadNotification($event)"></pure-file-upload>
+                          </div>
+
+                        </div>
                         </div>
                     </div>
-                    }
-                    @if (externalReferences && externalReferences.controls.length > 0) {
+
+
+                  <hr/>
+
+                  @let locatorsAvailable = externalReferences && externalReferences.controls.length > 0;
                     <div class="accordion-body mt-3 mb-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                            <label class="col-sm-2 col-form-label">External References</label>
-                            <div class="form-check form-switch col-sm py-1">
+                          <div class="col-sm-2">
+                            <label class="col-form-label">{{ 'common.links' | translate }}</label>
+                            @if(locatorsAvailable) {
+                              <div class="form-check form-switch small">
                                 <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
-                                    [checked]="switchFileSortingMode" (change)="changeSortingMode()">
+                                       [checked]="switchFileSortingMode" (change)="changeSortingMode()">
                                 <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
-                            </div>
-                        </div>
-                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                            <div class="col-sm-2"></div>
+                              </div>
+                            }
+                          </div>
+
+
+                        <div class="col-sm">
+                          @if (locatorsAvailable) {
                             <div cdkDropList class="col-sm drag-list"
                                 (cdkDropListDropped)="dropExternalReferences($event)">
                                 @for (externalUrl of externalReferences.controls; track externalUrl; let
@@ -111,15 +132,18 @@
                                     </div>
                                 </div>
                                 }
-                                @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                                    [add_val]="'add externalReference'"
-                                    (notice)="handleExternalReferenceNotification($event)"></pure-add-remove-buttons>
-                                }
                             </div>
+                          }
+                          @else {
+                            <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
+                                                     [add_val]="'add externalReference'"
+                                                     (notice)="handleNoExternalReferences()"></pure-add-remove-buttons>
+                          }
                         </div>
                     </div>
-                    }
+                    </div>
+
+
                 </div>
             </div>
         </div>

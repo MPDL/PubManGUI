@@ -13,11 +13,12 @@ import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscel
 import { Errors } from 'src/app/model/errors';
 import { environment } from 'src/environments/environment';
 import { CdkDragHandle } from "@angular/cdk/drag-drop";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle, TranslatePipe],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })
@@ -51,7 +52,7 @@ export class CreatorFormComponent {
       } else {
         this.creator_form.get('role')?.setValue(CreatorRole.AUTHOR);
       }
-      
+
     } else if (!this.creator_form.get('role')?.value && this.type.value === CreatorType.ORGANIZATION) {
       this.creator_form.get('role')?.setValue(CreatorRole.EDITOR);
     }

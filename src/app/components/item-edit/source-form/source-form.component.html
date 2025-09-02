@@ -3,15 +3,15 @@
     <div
         [ngClass]="genreSpecificResource.value().properties.sources_source_basic_source_genre.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
-            <label for="genre" class="col-sm-2 col-form-label">genre</label>
+            <label for="genre" class="col-sm-2 col-form-label">{{ 'MetadataFields.genre' | translate }}</label>
             <select id="genre" class="form-select" formControlName="genre" (change)="genre_change($event)">
-                <option [value]="null" selected disabled>genre</option>
+                <option [value]="null" selected>-</option>
                 @for (g of genre_types; track g) {
-                <option [value]="g">{{g}}</option>
+                <option [value]="g">{{'MdsPublicationGenre.' + g | translate}}</option>
                 }
             </select>
             @if(source_form.hasError(error_types.SOURCE_GENRE_NOT_PROVIDED.toString())) {
-            <div class="text-danger p-3">Source Genre required</div>
+            <div class="pure-invalid">Source Genre required</div>
             }
         </div>
         <div class="col-sm-1">
@@ -21,10 +21,10 @@
     <div
         [ngClass]="genreSpecificResource.value().properties.sources_source_basic_source_title.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
-            <label for="source_title" class="col-sm-2 col-form-label">Title</label>
+            <label for="source_title" class="col-sm-2 col-form-label">{{ 'MetadataFields.title' | translate }}</label>
             <input type="text" class="form-control" id="source_title" name="title" formControlName="title">
             @if (source_form.get('title')?.hasError('required')) {
-            <div class="text-danger">Title is required</div>
+            <div class="pure-invalid">Title is required</div>
             }
         </div>
         <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -33,7 +33,7 @@
     <div
         [ngClass]="genreSpecificResource.value().properties.sources_source_basic_source_title_alternative.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
-            <label for="alt_titles" class="col-sm-2 col-form-label">alternative titles</label>
+            <label for="alt_titles" class="col-sm-2 col-form-label">{{ 'MetadataFields.alternativeTitle' | translate }}</label>
             <ng-container formArrayName="alternativeTitles">
                 @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
                 <ng-container [formGroupName]="ati">
@@ -53,7 +53,7 @@
     <div
         [ngClass]="genreSpecificResource.value().properties.sources_source_person_organization.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
-            <label for="creatures" class="col-sm-2 col-form-label">Creators</label>
+            <label for="creatures" class="col-sm-2 col-form-label">{{ 'MetadataFields.creators' | translate }}</label>
             <ng-container formArrayName="creators">
                 <div cdkDropList class="drag-list" (cdkDropListDropped)="dropCreator($event)">
                     @for (creature of creators.controls; track creature; let ci = $index) {
@@ -84,7 +84,7 @@
     <ng-container>
         <div
             class="genreSpecificResource.value().properties.sources_source_identifiers.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-            <label class="col-sm-2 col-form-label">Identifiers</label>
+            <label class="col-sm-2 col-form-label">{{ 'MetadataFields.identifiers' | translate }}</label>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
@@ -111,12 +111,12 @@
         [ngClass]="genreSpecificResource.value().properties.sources_source_volume_issue_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-end' : 'd-none'">
         <div
             [ngClass]="genreSpecificResource.value().properties.sources_source_volume_issue_pages_source_volume.display ? 'col-sm-2' : 'd-none'">
-            <label for="source_volume" class="col-form-label">Volume</label>
+            <label for="source_volume" class="col-form-label">{{ 'MetadataFields.volume' | translate }}</label>
             <input type="text" class="form-control" id="source_volume" name="volume" formControlName="volume">
         </div>
         <div
             [ngClass]="genreSpecificResource.value().properties.sources_source_volume_issue_pages_source_issue.display ? 'col-sm-2' : 'd-none'">
-            <label for="source_issue" class="col-form-label">Issue</label>
+            <label for="source_issue" class="col-form-label">{{ 'MetadataFields.issue' | translate }}</label>
             <input type="text" class="form-control" id="source_issue" name="issue" formControlName="issue">
         </div>
         <div
@@ -128,24 +128,23 @@
         [ngClass]="genreSpecificResource.value().properties.sources_source_volume_issue_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-end' : 'd-none'">
         <div
             [ngClass]="genreSpecificResource.value().properties.sources_source_volume_issue_pages_source_start_page.display ? 'col-sm-2' : 'd-none'">
-            <label for="source_startPage" class="col-form-label">Start page</label>
+            <label for="source_startPage" class="col-form-label">{{ 'MetadataFields.startPage' | translate }}</label>
             <input type="text" class="form-control" id="source_startPage" name="startPage" formControlName="startPage">
         </div>
         <div
             [ngClass]="genreSpecificResource.value().properties.sources_source_volume_issue_pages_source_end_page.display ? 'col-sm-2' : 'd-none'">
-            <label for="source_endPage" class="col-form-label">End page</label>
+            <label for="source_endPage" class="col-form-label">{{ 'MetadataFields.endPage' | translate }}</label>
             <input type="text" class="form-control" id="source_endPage" name="endPage" formControlName="endPage">
         </div>
         <div
             [ngClass]="genreSpecificResource.value().properties.sources_source_sequence_number_source_sequence_number.display ? 'col-sm-2' : 'd-none'">
-            <label for="source_sequenceNumber" class="col-form-label">Sequence number</label>
+            <label for="source_sequenceNumber" class="col-form-label">{{ 'MetadataFields.sequenceNumber' | translate }}</label>
             <input type="text" class="form-control" id="source_sequenceNumber" name="sequenceNumber"
                 formControlName="sequenceNumber">
         </div>
         <div
             [ngClass]="genreSpecificResource.value().properties.sources_source_total_number_of_pages.display ? 'col-sm-2' : 'd-none'">
-            <label for="source_totalNumberOfPages" class="col-form-label">Total number of
-                Pages</label>
+            <label for="source_totalNumberOfPages" class="col-form-label">{{ 'MetadataFields.totalNumberOfPages' | translate }}</label>
             <input type="text" class="form-control" id="source_totalNumberOfPages" name="totalNumberOfPages"
                 formControlName="totalNumberOfPages">
         </div>

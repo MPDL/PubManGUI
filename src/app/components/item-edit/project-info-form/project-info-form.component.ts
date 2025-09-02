@@ -7,11 +7,12 @@ import {
 } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { Subscription } from 'rxjs';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-project-info-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, TranslatePipe],
   templateUrl: './project-info-form.component.html',
   styleUrl: './project-info-form.component.scss'
 })

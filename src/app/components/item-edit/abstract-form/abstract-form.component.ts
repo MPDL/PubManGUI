@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { Errors } from 'src/app/model/errors';
 import { LanguageAutosuggestComponent } from 'src/app/components/shared/language-autosuggest/language-autosuggest.component';
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-abstract-form',
@@ -14,6 +15,7 @@ import { LanguageAutosuggestComponent } from 'src/app/components/shared/language
     FormsModule,
     LanguageAutosuggestComponent,
     ReactiveFormsModule,
+    TranslatePipe,
   ],
   templateUrl: './abstract-form.component.html',
   styleUrl: './abstract-form.component.scss'

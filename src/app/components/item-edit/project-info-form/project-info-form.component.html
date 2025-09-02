@@ -2,7 +2,7 @@
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
-                <label class="col-sm-2 col-form-label">Project Name</label>
+                <label class="col-sm-2 col-form-label">{{ 'MetadataFields.projectInfoName' | translate }}</label>
                 <input type="text" class="form-control" formControlName="title">
             </div>
             <div class="col-sm-1">
@@ -12,7 +12,7 @@
         </div>
         <div formGroupName="grantIdentifier" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
             <div class="col-sm">
-                <label class="col-form-label">Grant Identifier</label>
+                <label class="col-form-label">{{ 'MetadataFields.projectInfoGrantId' | translate }}</label>
                 <input type="text" class="form-control" id="grant_identifier_type" formControlName="type" hidden>
                 <input type="text" class="form-control" id="grant_identifier_value" formControlName="id">
             </div>
@@ -21,12 +21,12 @@
         </div>
         <ng-container formGroupName="fundingInfo">
             <div formGroupName="fundingProgram" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-4">
-                    <label class="col-form-label">Funding Program</label>
+                <div class="col-sm-7">
+                    <label class="col-form-label">{{ 'MetadataFields.projectInfoFundingProgram' | translate }}</label>
                     <input type="text" class="form-control" formControlName="title">
                 </div>
                 <div [formGroup]="fundingProgramIdentifier" class="col-sm">
-                    <label class="col-sm col-form-label">Program Identifier</label>
+                    <label class="col-sm col-form-label">{{ 'MetadataFields.projectInfoFundingProgramId' | translate }}</label>
                     <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
                     <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
                 </div>
@@ -34,12 +34,12 @@
                 </div>
             </div>
             <div formGroupName="fundingOrganization" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                <div class="col-sm-4">
-                    <label class="col-form-label">Funding Organization</label>
+                <div class="col-sm-7">
+                    <label class="col-form-label">{{ 'MetadataFields.projectInfoFundingOrganization' | translate }}</label>
                     <input type="text" class="form-control" formControlName="title">
                 </div>
                 <div [formGroup]="fundingOrganizationIdentifier" class="col-sm">
-                    <label class="col-sm col-form-label">Organization Identifier</label>
+                    <label class="col-sm col-form-label">{{ 'MetadataFields.projectInfoFundingOrganizationId' | translate }}</label>
                     <input type="text" class="form-control" id="progam_identifier_type" formControlName="type" hidden>
                     <input type="text" class="form-control" id="progam_identifier_value" formControlName="id">
                 </div>

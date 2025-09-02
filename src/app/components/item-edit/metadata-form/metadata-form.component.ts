@@ -45,6 +45,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { Errors } from 'src/app/model/errors';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddMultipleCreatorsModalComponent } from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-metadata-form',
@@ -68,6 +69,7 @@ import { AddMultipleCreatorsModalComponent } from '../add-multiple-creators-moda
     ProjectInfoFormComponent,
     CdkDropList,
     CdkDrag,
+    TranslatePipe,
   ],
   templateUrl: './metadata-form.component.html',
   styleUrls: ['./metadata-form.component.scss']
@@ -84,7 +86,7 @@ export class MetadataFormComponent implements OnInit {
   messageService = inject(MessageService);
   miscellaneousService = inject(MiscellaneousService);
   genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
-  /*computed(() => { 
+  /*computed(() => {
     if (this.miscellaneousService.genrePropertiesResource.hasValue()) {
       return this.miscellaneousService.genrePropertiesResource
     }

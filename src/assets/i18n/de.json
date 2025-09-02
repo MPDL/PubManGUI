@@ -17,6 +17,7 @@
 		"failed": "fehlgeschlagen",
 		"file": "Datei",
 		"files": "Dateien",
+    "fileUpload" : "Datei Upload",
 		"help": "Hilfe",
 		"home": "Home",
 		"item": "Datensatz",
@@ -59,7 +60,10 @@
     "handle": "PID (ePIC Handle)",
     "latestVersion": "Neueste Version",
     "latestRelease": "Neueste Freigabe",
-    "year" : "Jahr"
+    "year" : "Jahr",
+    "role" : "Rolle",
+    "type" : "Typ",
+    "value" : "Wert"
 	},
 	"chips.localTags.placeholder": "Lokalen Tag hinzufügen",
 	"validation": {
@@ -644,6 +648,7 @@
 		"abstract": "Abstract",
 		"details": "Details",
 		"languages": "Sprachen",
+    "language": "Sprache",
 		"datePublishedInPrint": "Erschienen",
 		"datePublishedOnline": "Online veröffentlicht",
 		"dateAccepted": "Angenommen",
@@ -665,7 +670,7 @@
 		"projectInfoFundingProgram": "Förderprogramm",
 		"projectInfoFundingProgramId": "Programm ID",
 		"projectInfoFundingOrganization": "Förderorganisation",
-		"projectInfoFundingProgramm": "Org. ID",
+		"projectInfoFundingOrganizationId": "Org. ID",
 		"volume": "Band",
 		"issue": "Heftnummer",
 		"startPage": "Startseite",
@@ -680,7 +685,14 @@
     "modifier": "Bearbeiter",
     "subjectType": "Klassifikation Typ",
     "subjectValue" : "Klassifikation Wert",
-    "journal" : "Zeitschrift"
+    "subjects" : "Klassifikationen",
+    "journal" : "Zeitschrift",
+    "alternativeTitle" : "Alternativer Titel",
+    "familyName" : "Nachname",
+    "givenName": "Vorname",
+    "basicData": "Basisdaten",
+    "personsOrganizations" : "Personen & Organisationen",
+    "filesLocators" : "Dateien & Referenzen"
 	},
 	"FileMetadataFields": {
 		"visibility": "Sichtbarkeit",
@@ -692,7 +704,9 @@
     "checksum" : "Checksumme",
     "description" : "Beschreibung",
     "license" : "Lizenz",
-    "copyright": "Copyright"
+    "copyright": "Copyright",
+    "copyrightDate": "Copyright Datum",
+    "url" : "URL"
 	},
 	"CreatorRoles": {
 		"ARTIST": "Künstler",

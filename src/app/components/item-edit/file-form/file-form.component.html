@@ -9,14 +9,14 @@
             </span>
         </div>
         @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED') {
-        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. File -
+        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. {{ 'common.file' | translate }} -
             {{file_form.get('name')?.value}}</label>
         } @else if (file_form.get('storage')?.value == 'EXTERNAL_URL') {
-        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. External Reference -
+        <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. {{ 'common.link' | translate }}
             {{file_form.get('metadata')?.get('title')?.value}}</label>
         }
         @if(file_form.errors?.[error_types.COMPONENT_CONTENT_NOT_PROVIDED]) {
-        <div class="text-danger">Content is required</div>
+        <div class="pure-invalid">Content is required</div>
         }
     </div>
     <div class="containerHideOnSort"><!-- #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed"> -->
@@ -24,17 +24,17 @@
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm">
 
-                    <label for="contentCategory" class="col-sm-2 col-form-label">ContentCategory</label>
+                    <label for="contentCategory" class="col-sm-2 col-form-label">{{ 'FileMetadataFields.contentCategory' | translate }}</label>
                     <select id="contentCategory" class="form-select" formControlName="contentCategory"
                         [ngClass]="file_form.errors?.[error_types.COMPONENT_CONTENT_CATEGORY_NOT_PROVIDED] ? 'is-invalid' : ''">
                         (change)="contentCategory_change($event)">
-                        <option [value]="null" selected disabled>contentCategory</option>
+                        <option [value]="null" selected>-</option>
                         @for (contentCategoryType of contentCategory_types; track contentCategoryType) {
-                        <option [value]="contentCategoryType">{{contentCategoryType}}</option>
+                        <option [value]="contentCategoryType">{{'ContentCategories.' + contentCategoryType | translate}}</option>
                         }
                     </select>
                     @if(file_form.errors?.[error_types.COMPONENT_CONTENT_CATEGORY_NOT_PROVIDED]) {
-                    <div class="text-danger">Content Category is required</div>
+                    <div class="pure-invalid">Content Category is required</div>
                     }
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -42,14 +42,14 @@
             </div>
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm">
-                    <label for="file_title" class="col-sm-2 col-form-label">Title</label>
+                    <label for="file_title" class="col-sm-2 col-form-label">{{ 'MetadataFields.title' | translate }}</label>
                     <input type="text" class="form-control" id="file_title" name="title" formControlName="title"
                         [ngClass]="file_form.errors?.[error_types.COMPONENT_FILE_NAME_NOT_PROVIDED] ? 'is-invalid' : ''">
                     @if (file_form.errors?.[error_types.COMPONENT_FILE_NAME_NOT_PROVIDED]) {
-                    <div class="text-danger">File Title is required</div>
+                    <div class="pure-invalid">File Title is required</div>
                     }
                     @if (metadata.controls.title.errors?.['pattern']) {
-                    <div class="text-danger">File Title pattern does not allow '/'</div>
+                    <div class="pure-invalid">File Title pattern does not allow '/'</div>
                     }
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -60,14 +60,14 @@
         @if (file_form.get('storage')?.value == 'EXTERNAL_URL') {
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
-                <label for="file_content" class="col-sm-2 col-form-label">URL</label>
+                <label for="file_content" class="col-sm-2 col-form-label">{{ 'FileMetadataFields.url' | translate }}</label>
                 <input type="text" class="form-control" id="file_content" name="content" formControlName="content"
                     [ngClass]="file_form.errors?.[error_types.COMPONENT_CONTENT_NOT_PROVIDED] ? 'is-invalid' : ''">
                 @if (file_form.errors?.[error_types.COMPONENT_CONTENT_NOT_PROVIDED]) {
-                <div class="text-danger">Content is required</div>
+                <div class="pure-invalid">Content is required</div>
                 }
                 @if (file_form.errors?.[error_types.LOCATOR_IS_NO_URI]) {
-                <div class="text-danger">Locator is no URI. Needs to start with http:// or https:// or ftp://</div>
+                <div class="pure-invalid">Locator is no URI. Needs to start with http:// or https:// or ftp://</div>
                 }
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -77,17 +77,17 @@
         @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED') {
         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
             <div class="col-sm">
-                <label for="visibility" class="col-sm-2 col-form-label">Visibility</label>
+                <label for="visibility" class="col-sm-2 col-form-label">{{ 'FileMetadataFields.visibility' | translate }}</label>
                 <select id="visibility" class="form-select" formControlName="visibility"
                     [ngClass]="file_form.errors?.[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED] ? 'is-invalid' : ''"
                     (change)="visibility_change($event)">
-                    <option [value]="null" selected disabled>visibility</option>
+                    <option [value]="null" selected>-</option>
                     @for (visibility of visibility_types; track visibility) {
-                    <option [value]="visibility">{{visibility}}</option>
+                    <option [value]="visibility">{{'Visibility.' + visibility | translate}}</option>
                     }
                 </select>
                 @if (file_form.errors?.[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED]) {
-                <div class="text-danger">Content is required</div>
+                <div class="pure-invalid">Content is required</div>
                 }
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -99,18 +99,18 @@
         <ng-container formArrayName="allowedAudienceIds">
             @if (file_form.errors?.[error_types.COMPONENT_IP_RANGE_NOT_PROVIDED]) {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="text-danger">IP-Range is required</div>
+                <div class="pure-invalid">IP-Range is required</div>
             </div>
             }
             @for (audienceId of allowedAudienceIds.controls; track audienceId; let audienceIdIndex = $index) {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm-2">
-                    <label class="col-smcol-form-label">{{audienceIdIndex + 1}}. Audience IP</label>
+                    <label class="col-smcol-form-label">{{audienceIdIndex + 1}}. IP-Range</label>
                 </div>
                 <div class="col-sm">
                     <select id="audienceId" class="form-select" name="audienceIp[audienceIdIndex]"
                         [formControl]="audienceId">
-                        <option [value]="null" selected disabled>Audience Id</option>
+                        <option [value]="null" selected>-</option>
                         <optgroup label="Most used">
                             @for (ipEntry of ipRangeCompleteList; track ipEntry) {
                             @if (audiencePriorityList.includes(ipEntry.id)) {
@@ -146,7 +146,7 @@
             'INTERNAL_MANAGED') {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm-2">
-                    <label for="file_embargoUntil" class="col-sm-2 col-form-label">EmbargoUntil</label>
+                    <label for="file_embargoUntil" class="col-sm-2 col-form-label">{{ 'FileMetadataFields.embargoDate' | translate }}</label>
                 </div>
                 <div class="col-sm">
                     <input type="text" class="form-control" id="file_embargoUntil" name="embargoUntil"
@@ -159,16 +159,16 @@
             @if (file_form.get('visibility')?.value == 'PUBLIC' || file_form.get('storage')?.value == 'EXTERNAL_URL') {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm-2">
-                    <label for="oaStatus" class="col-sm-2 col-form-label">OA-Status</label>
+                    <label for="oaStatus" class="col-sm-2 col-form-label">{{ 'FileMetadataFields.oaStatus' | translate }}</label>
                 </div>
                 <div class="col-sm">
                     <select id="oaStatus" class="form-select" formControlName="oaStatus">
-                        <option [value]="null" selected disabled>OA-Status</option>
+                        <option [value]="null" selected>-</option>
                         @for (oaStatusType of oaStatus_types; track oaStatusType) {
                             @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED' && oaStatusType !== 'CLOSED_ACCESS') {
-                            <option [value]="oaStatusType">{{oaStatusType}}</option>
+                            <option [value]="oaStatusType">{{'OAStatus.' + oaStatusType | translate}}</option>
                             } @else if(file_form.get('storage')?.value == 'EXTERNAL_URL'){
-                                <option [value]="oaStatusType">{{oaStatusType}}</option>
+                                <option [value]="oaStatusType">{{'OAStatus.' + oaStatusType | translate}}</option>
                             }
                         }
                     </select>
@@ -179,9 +179,9 @@
             }
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm">
-                    <label for="file_description" class="col-sm-2 col-form-label">Description</label>
-                    <input type="text" class="form-control" id="file_description" name="description"
-                        formControlName="description">
+                    <label for="file_description" class="col-sm-2 col-form-label">{{ 'FileMetadataFields.description' | translate }}</label>
+                    <textarea type="text" class="form-control" id="file_description" name="description"
+                              formControlName="description"></textarea>
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
@@ -192,7 +192,7 @@
                 <div class="col-sm-2"><!--NEEDED to keep the layout (first collumn for lable)-->
                 </div>
                 <div class="col-sm">
-                    <label for="file_license" class="col-sm col-form-label">License</label>
+                    <label for="file_license" class="col-sm col-form-label">{{ 'FileMetadataFields.license' | translate }}</label>
                     <input type="text" class="form-control" id="file_license" name="license" formControlName="license">
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -200,18 +200,18 @@
             </div>
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm-2">
-                    <label class="col-sm-2 col-form-label">Rights</label>
+                    <label class="col-sm-2 col-form-label">{{ 'FileMetadataFields.copyright' | translate }}</label>
                 </div>
                 <div class="col-sm">
-                    <label for="file_rights" class="col-sm col-form-label">Copyright statement</label>
+                    <label for="file_rights" class="col-sm col-form-label">{{ 'FileMetadataFields.copyright' | translate }}</label>
                     <input type="text" class="form-control" id="file_rights" name="rights" formControlName="rights">
                 </div>
                 <div class="col-sm">
-                    <label for="file_copyrightDate" class="col-sm col-form-label">Copyright Date</label>
+                    <label for="file_copyrightDate" class="col-sm col-form-label">{{ 'FileMetadataFields.copyrightDate' | translate }}</label>
                     <input type="text" class="form-control" id="file_copyrightDate" name="copyrightDate"
                         formControlName="copyrightDate" placeholder="YYYY-MM-DD">
                     @if (metadata.controls.copyrightDate.errors?.['pattern']) {
-                    <div class="text-danger">Date Format invalid</div>
+                    <div class="pure-invalid">Date Format invalid</div>
                     }
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -222,7 +222,7 @@
 
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 d-none" [ngClass]="{'d-sm-none': index == index_length -1}">
             <div class="col-sm">
-                <hr>
+
             </div>
             <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
             </div>

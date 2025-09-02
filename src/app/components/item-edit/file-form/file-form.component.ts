@@ -8,6 +8,7 @@ import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-clie
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 import { Errors } from 'src/app/model/errors';
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-file-form',
@@ -18,7 +19,8 @@ import { Errors } from 'src/app/model/errors';
     LoadingComponent,
     ReactiveFormsModule,
     CdkDragHandle,
-    CdkDragPlaceholder
+    CdkDragPlaceholder,
+    TranslatePipe
   ],
   templateUrl: './file-form.component.html',
   styleUrl: './file-form.component.scss'
@@ -38,15 +40,15 @@ export class FileFormComponent {
   oaStatus_types = Object.keys(OA_STATUS);
 
   ipRangeCompleteList: IpEntry[] = [] as IpEntry[];
-  
+
   error_types = Errors;
 
   audiencePriorityList = ['mpg'];
 
   constructor(miscellaneousService: MiscellaneousService) {
     miscellaneousService.retrieveIpList().subscribe(
-      result => { 
-        this.sortAudienceList(result); /* console.log('Miscellaneous IPList: ', this.ipRangeCompleteList) */ 
+      result => {
+        this.sortAudienceList(result); /* console.log('Miscellaneous IPList: ', this.ipRangeCompleteList) */
       }
     )
   }

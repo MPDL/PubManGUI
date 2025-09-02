@@ -17,6 +17,7 @@
 		"failed": "failed",
 		"file": "File",
 		"files": "Files",
+    "fileUpload" : "File Upload",
 		"help": "Help",
 		"home": "Home",
 		"item": "Dataset",
@@ -59,7 +60,10 @@
     "handle": "PID (ePIC Handle)",
     "latestVersion": "Latest version",
     "latestRelease": "Latest release",
-    "year" : "Year"
+    "year" : "Year",
+    "role" : "Role",
+    "type" : "Type",
+    "value" : "Value"
 	},
 	"chips.localTags.placeholder": "Add local tag",
 	"validation": {
@@ -644,6 +648,7 @@
 		"abstract": "Abstract",
 		"details": "Details",
 		"languages": "Languages",
+    "language": "Language",
 		"datePublishedInPrint": "Issued",
 		"datePublishedOnline": "Published online",
 		"dateAccepted": "Accepted",
@@ -665,7 +670,7 @@
 		"projectInfoFundingProgram": "Funding program",
 		"projectInfoFundingProgramId": "Program ID",
 		"projectInfoFundingOrganization": "Funding Organisation",
-		"projectInfoFundingProgramm": "Org. ID",
+		"projectInfoFundingOrganizationId": "Org. ID",
 		"volume": "Volume",
 		"issue": "Issue",
 		"startPage": "Start page",
@@ -680,7 +685,14 @@
     "modifier": "Modifier",
     "subjectType": "Classification type",
     "subjectValue" : "Classification value",
-    "journal" : "Journal"
+    "subjects" : "Classifications",
+    "journal" : "Journal",
+    "alternativeTitle" : "Alternativer Titel",
+    "familyName" : "Family Name",
+    "givenName": "Given Name",
+    "basicData": "Basic",
+    "personsOrganizations" : "Persons & Organizations",
+    "filesLocators" : "Files & Locators"
 	},
 	"FileMetadataFields": {
 		"visibility": "Visibility",
@@ -692,7 +704,9 @@
     "checksum" : "Checksum",
     "description" : "Description",
     "license" : "License",
-    "copyright": "Copyright"
+    "copyright": "Copyright",
+    "copyrightDate": "Copyright Date",
+    "url" : "URL"
 	},
 	"CreatorRoles": {
 		"ARTIST": "Artist",

@@ -24,6 +24,7 @@ import { itemToVersionId } from 'src/app/utils/utils';
 import { ItemActionsModalComponent } from 'src/app/components/shared/item-actions-modal/item-actions-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-form',
@@ -37,7 +38,7 @@ import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.compon
     MetadataFormComponent,
     AddRemoveButtonsComponent,
     CdkDropList,
-    CdkDrag, ItemBadgesComponent],
+    CdkDrag, ItemBadgesComponent, TranslatePipe],
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss'],
 })
@@ -222,7 +223,13 @@ export class ItemFormComponent implements OnInit {
   }
 
   handleNoExternalReferences() {
-    this.externalReferences.push(this.fbs.file_FG(null));
+    if(!this.externalReferences) {
+      this.externalReferences = this.fb.array([this.fbs.file_FG(null)]);
+    }
+    else {
+      this.externalReferences.push(this.fbs.file_FG(null));
+    }
+
   }
 
   addExternalReference(index: number) {
@@ -276,10 +283,6 @@ export class ItemFormComponent implements OnInit {
       this.router.navigate(['/view/' + itemToVersionId(item! as ItemVersionRO)])
     })
 
-  }
-
-  get formAsItem() {
-    return this.form.value as ItemVersionVO;
   }
 
   private itemUpdated(item: ItemVersionVO) {

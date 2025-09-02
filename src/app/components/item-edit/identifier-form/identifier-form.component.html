@@ -4,14 +4,14 @@
             <label for="identifier_type" class="visually-hidden">type</label>
             <select id="identifier_type" class="form-select" formControlName="type"
                 [ngClass]="identifier_form.errors?.[error_types.ID_TYPE_NOT_PROVIDED] ? 'is-invalid' : ''">
-                <option [ngValue]="null" selected disabled>type</option>
+                <option [ngValue]="null" selected>-</option>
                 @for (t of identifier_display_types; track t) {
-                <option [ngValue]="t">{{t}}</option>
+                <option [ngValue]="t">{{'SourceIdType.' + t | translate}}</option>
                 }
             </select>
             @if(identifier_form.errors?.[error_types.ID_TYPE_NOT_PROVIDED]) {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="text-danger">ID-Type required</div>
+                <div class="pure-invalid">ID-Type required</div>
             </div>
             }
         </div>
@@ -20,7 +20,7 @@
                 [ngClass]="identifier_form.errors?.[error_types.INCORRECT_ID_DOI_FORMAT] ? 'is-invalid' : ''">
             @if(identifier_form.errors?.[error_types.INCORRECT_ID_DOI_FORMAT]) {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                <div class="text-danger">Incorrect ID format. Enter DOIs without leading http(s)://doi.org</div>
+                <div class="pure-invalid">Incorrect ID format. Enter DOIs without leading http(s)://doi.org</div>
             </div>
             }
         </div>

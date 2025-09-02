@@ -23,7 +23,7 @@
         <div class="col-sm-8">
             <input type="text" class="form-control" id="alt_title_value" formControlName="value">
             @if (alt_title_form.get('value')?.hasError(error_types.NO_UTF8_CHAR_IN_ABSTRACT.toString())) {
-            <div class="text-danger">Invalid UTF-8 Character</div>
+            <div class="pure-invalid">Invalid UTF-8 Character</div>
             }
         </div>
         <div class="col-sm-1">

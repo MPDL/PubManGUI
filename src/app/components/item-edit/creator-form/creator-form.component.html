@@ -6,7 +6,7 @@
       <div class="col-sm">
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start ">
                 @if(creator_form.errors?.[error_types.CREATOR_ORCID_INVALID]) {
-                <div class="text-danger">Orcid invalid. Please change in CoNE</div>
+                <div class="pure-invalid">Orcid invalid. Please change in CoNE</div>
                 }
             </div>
             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start ">
@@ -16,38 +16,38 @@
               </div>
 
               <div class="col-sm-2">
-                    <label for="creator_type" class="col-form-label pe-2">type</label>
+                    <label for="creator_type" class="col-form-label pe-2">{{ 'common.type' | translate }}</label>
                     <select id="creator_type" class="form-select" formControlName="type" (change)="type_change($event)">
                         <!--TODO: type_change really needed?-->
                         <option [value]="null" selected disabled>type</option>
                         @for (t of creator_types; track t) {
-                        <option [value]="t">{{t}}</option>
+                        <option [value]="t">{{'MetadataFields.' + t.toLowerCase() | translate}}</option>
                         }
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <label for="creator_role" class="col-form-label pe-2">role</label>
+                    <label for="creator_role" class="col-form-label pe-2">{{ 'common.role' | translate }}</label>
                     <select id="creator_role" class="form-select" formControlName="role" data-test="creator"
                         [ngClass]="creator_form.errors?.[error_types.CREATOR_ROLE_NOT_PROVIDED] ? 'is-invalid' : ''">
                         <option [value]="null" selected disabled>role</option>
                         @for (r of creator_roles; track r) {
-                        <option [value]="r">{{r}}</option>
+                        <option [value]="r">{{'CreatorRoles.' + r | translate}}</option>
                         }
                     </select>
                     @if(creator_form.errors?.[error_types.CREATOR_ROLE_NOT_PROVIDED]) {
-                    <div class="text-danger">Creator role is required</div>
+                    <div class="pure-invalid">Creator role is required</div>
                     }
                 </div>
                 @if (type.value === 'ORGANIZATION') {
                 <div class="col-sm" formGroupName="organization">
-                    <label for="name" class="col-form-label pe-2">name</label>
+                    <label for="name" class="col-form-label pe-2">{{ 'MetadataFields.organization' | translate }}</label>
                     <pure-ou-autosuggest id="organization{{index+1}}" [formForOuName]="$any(organization.controls.name)"
                                 [formForOuId]="$any(organization.controls.identifier)" [validationEnabled]="true" [emphasize]="true"
                                 [validationError]="creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] ? true : false"></pure-ou-autosuggest>
 
 
                     @if(creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED]) {
-                      <div class="text-danger">Organization name is required</div>
+                      <div class="pure-invalid">Organization name is required</div>
                     }
 
                 </div>
@@ -56,7 +56,7 @@
 
                 <ng-container formGroupName="person">
                     <div class="col-sm-4">
-                        <label for="familyName" class="col-form-label pe-2">family</label>
+                        <label for="familyName" class="col-form-label pe-2">{{ 'MetadataFields.familyName' | translate }}</label>
                         <!--<input type="text" class="form-control" id="familyName"
                             formControlName="familyName">-->
                         <pure-person-autosuggest id="familyName"
@@ -70,11 +70,11 @@
                             [showConeAndOrcid]="true"
                             data-test="familyname-autosuggest" />
                       @if(creator_form.errors?.[error_types.CREATOR_FAMILY_NAME_NOT_PROVIDED] ? true : false) {
-                        <div class="text-danger">Creator family name is required</div>
+                        <div class="pure-invalid">Creator family name is required</div>
                       }
                     </div>
                     <div class="col-sm-3">
-                        <label for="givenName" class="col-form-label pe-2">given</label>
+                        <label for="givenName" class="col-form-label pe-2">{{ 'MetadataFields.givenName' | translate }}</label>
                         <input type="text" class="form-control" id="givenName" formControlName="givenName"
                             data-test="givenname">
                     </div>
@@ -110,7 +110,7 @@
                                                [validationError]="creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED] ? true : false"></pure-ou-autosuggest>
 
                           @if(creator_form.errors?.[error_types.CREATOR_ORGANIZATION_NAME_NOT_PROVIDED]) {
-                            <div class="text-danger">Creator organization name is required</div>
+                            <div class="pure-invalid">Creator organization name is required</div>
                           }
                         </div>
 

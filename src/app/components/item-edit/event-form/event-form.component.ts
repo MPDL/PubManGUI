@@ -5,6 +5,7 @@ import { EventVO, InvitationStatus } from 'src/app/model/inge';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { ControlType } from '../../../services/form-builder.service';
 import { Errors } from 'src/app/model/errors';
+import { TranslatePipe } from "@ngx-translate/core";
 
 export enum ValidationErrorsEnum {
   END_DATE_WITHOUT_START_DATE = "EndDateWithoutStartDate",
@@ -18,7 +19,7 @@ export enum ValidationErrorsEnum {
 @Component({
   selector: 'pure-event-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.scss'
 })
