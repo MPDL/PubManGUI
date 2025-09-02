@@ -25,8 +25,8 @@
       }
     }
   }
-
-  ul li {
+/*
+  __ul li {
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
     padding-left: 3.5rem !important;
@@ -39,7 +39,7 @@
       color: var(--accent-bg-color) !important;
     }
   }
-
+*/
   .matBadge {
     top: -1.5em;
   }
@@ -58,7 +58,7 @@
 }
 
 .side_nav.collapsed {
-  width: 6.5rem;
+  width: 7.2rem;
 }
 
 .side_nav.collapsed .bi {
@@ -82,8 +82,8 @@
     left: -1em;
   }
 }
-
-.show-more {
+/*
+.__show-more {
   &:not(:hover) {
     .more-to-show {
       display: none;
@@ -96,3 +96,4 @@
     }
   }
 }
+*/

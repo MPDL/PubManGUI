@@ -1,29 +1,63 @@
 .imports {
 
-    .top_nav_pos {
-        overflow: visible;
+  .top_nav_pos {
+    overflow: visible;
+  }
+
+  .logs {
+    a {
+      .material-symbols-outlined {
+        font-size: 160%;
+
+        &:hover {
+          border-radius: 25%;
+          background-color: color-mix(in srgb, var(--bs-dark), transparent 75%);
+        }
+      }
     }
 
-    .logs {
-
-        a {
-            
-            .material-symbols-outlined {
-                font-size: 160%;
-
-                &:hover {
-                    border-radius: 25%;
-                    background-color: color-mix(in srgb, var(--bs-dark), transparent 75%); 
-                }
-            }
-
-        }
-
-        /* anchor focus */
-        :target {
-            display: block;
-            position: relative;
-            top: -200px; 
-        }
+    /* anchor focus */
+    :target {
+      display: block;
+      position: relative;
+      top: -200px;
     }
+  }
+
+  .show-more {
+    &:not(:hover) {
+      .more-to-show {
+        display: none;
+      }
+    }
+
+    &:hover {
+      .more-to-show {
+        display: block;
+      }
+    }
+  
+    ul li {
+      @media (min-width: 1400px) {
+        line-height: 90%;
+      }
+      padding-left: 2.2rem !important;
+
+      &:last-of-type {
+        margin-bottom: 1rem;
+      }
+
+      &:hover {
+        color: var(--accent-bg-color) !important;
+      }
+
+      .disabled {
+        pointer-events: none;
+        opacity: 0.6;
+      }
+    }
+  }
+
+
 }
+

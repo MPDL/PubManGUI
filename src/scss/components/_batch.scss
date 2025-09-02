@@ -1,71 +1,95 @@
 .batch {
 
-    .top_nav_pos {
-        overflow: visible;
+  .top_nav_pos {
+    overflow: visible;
+  }
+
+  .datasets {
+    #topnav {
+      nav:nth-child(1),
+      .nav-link:nth-of-type(2n),
+      .nav-link:nth-of-type(3n),
+      .nav-link:nth-of-type(4n),
+      .nav-link:nth-of-type(7n) {
+        display: none;
+      }
     }
 
-    .datasets {
-
-        #topnav {
-
-            nav:nth-child(1),
-            .nav-link:nth-of-type(2n),
-            .nav-link:nth-of-type(3n),
-            .nav-link:nth-of-type(4n),
-            .nav-link:nth-of-type(7n) {
-                display: none;
-            }
+    pure-item-list {
+      .row:nth-of-type(2n) {
+        .col-lg-3 {
+          display: none !important;
         }
+      }
+    }
+  }
 
-        pure-item-list {
-            .row:nth-of-type(2n) {
-                .col-lg-3 {
-                    display: none !important;
-                }
+  .actions {
+    .accordion {
+      .accordion-button {
+        box-shadow: none !important;
+      }
 
-            }
+      .header_second_color {
+        .accordion-button {
+          opacity: 0.75;
         }
+      }
     }
 
-    .actions {
-
-        .accordion {
-
-            .accordion-button {
-                box-shadow: none !important;
-            }
-
-            .header_second_color {
-
-                .accordion-button {
-                    opacity: 0.75;
-                }
-            }
-
-        }
-
-        .form-control::placeholder {
-            font-style: italic;
-        }
-
-        .mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
-            margin-left: 0 !important;
-        }
+    .form-control::placeholder {
+      font-style: italic;
     }
 
-    .logs {
-
-        a {
-            
-            .material-symbols-outlined {
-                font-size: 160%;
-
-                &:hover {
-                    border-radius: 25%;
-                    background-color: color-mix(in srgb, var(--bs-dark), transparent 75%); 
-                }
-            }
-
-        }
+    .mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
+      margin-left: 0 !important;
     }
+  }
+
+  .logs {
+    a {
+      .material-symbols-outlined {
+        font-size: 160%;
+
+        &:hover {
+          border-radius: 25%;
+          background-color: color-mix(in srgb, var(--bs-dark), transparent 75%);
+        }
+      }
+    }
+  }
+
+  .show-more {
+    &:not(:hover) {
+      .more-to-show {
+        display: none;
+      }
+    }
+
+    &:hover {
+      .more-to-show {
+        display: block;
+      }
+    }
+
+    ul li {
+      @media (min-width: 1400px) {
+        line-height: 90%;
+      }
+      padding-left: 2.2rem !important;
+
+      &:last-of-type {
+        margin-bottom: 1rem;
+      }
+
+      &:hover {
+        color: var(--accent-bg-color) !important;
+      }
+
+      .disabled {
+        pointer-events: none;
+        opacity: 0.6;
+      }
+    }
+  }
 }

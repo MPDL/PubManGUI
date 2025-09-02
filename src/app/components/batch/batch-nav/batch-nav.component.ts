@@ -6,13 +6,9 @@ import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/services/message.service';
 import { BatchService } from '../services/batch.service';
 
+import { MatBadgeModule } from '@angular/material/badge';
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
-interface NavOption {
-  route: string;
-  label: string;
-  disabled: boolean;
-}
 
 @Component({
   selector: 'pure-batch-nav',
@@ -21,6 +17,7 @@ interface NavOption {
   imports: [
     CommonModule,
     RouterModule,
+    MatBadgeModule,
     TranslatePipe]
 })
 export class BatchNavComponent implements OnInit {
@@ -35,17 +32,10 @@ export class BatchNavComponent implements OnInit {
   mobile: boolean | null = null;
   mobile_options: HTMLElement | null = null;
 
-  public navList = signal<NavOption[]>([
-    { route: '/batch/datasets', label: 'datasets', disabled: false },
-    { route: '/batch/actions', label: 'actions', disabled: false },
-    { route: '/batch/logs', label: 'logs', disabled: false },
-  ]);
-
+  display: boolean = false;
 
   ngOnInit(): void {
     this.batchSvc.items;
-    this.navList()[0].disabled = !this.batchSvc.areItemsSelected();
-    this.navList()[1].disabled = !this.batchSvc.areItemsSelected() || this.batchSvc.isProcessRunning();
 
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;
@@ -85,6 +75,11 @@ export class BatchNavComponent implements OnInit {
       if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
       if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
     }
+  }
+
+  showMore(): boolean {
+    this.display = !this.display;
+    return this.display;
   }
 
   @HostListener('window:resize', ['$event'])

@@ -8,11 +8,6 @@ import { ImportsService } from 'src/app/components/imports/services/imports.serv
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
-interface NavOption {
-  route: string;
-  label: string;
-  disabled: boolean;
-}
 
 @Component({
   selector: 'pure-imports-nav',
@@ -35,15 +30,9 @@ export class ImportsNavComponent implements OnInit {
   mobile: boolean | null = null;
   mobile_options: HTMLElement | null = null;
 
-  public navList = signal<NavOption[]>([
-    { route: '/imports/new', label: 'new', disabled: false },
-    { route: '/imports/myimports', label: 'myimports', disabled: false },
-  ]);
+  display: boolean = false;
 
   ngOnInit(): void {
-    this.navList()[0].disabled = !this.importsSvc.hasImports();
-    this.navList()[1].disabled = !this.importsSvc.hasImports();
-
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;
   }
@@ -75,6 +64,11 @@ export class ImportsNavComponent implements OnInit {
       if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
       if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
     }
+  }
+
+  showMore(): boolean {
+    this.display = !this.display;
+    return this.display;
   }
 
   @HostListener('window:resize', ['$event'])
