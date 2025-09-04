@@ -237,7 +237,7 @@
 		"fetch.source": "Quelle",
 		"fileImport": "Datei Import",
 		"fileImport.running": "Bitte warten, es läuft ein Import!",
-		"fileImport.upload": "Datei hochladen",
+		"fileImport.upload": "Um Datei hochzuladen",
 		"list.details": "Log",
 		"list.details.count": "Datensätze importiert",
 		"list.details.delete": "Löschen",
