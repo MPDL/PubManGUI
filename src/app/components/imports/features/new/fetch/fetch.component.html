@@ -37,7 +37,7 @@
         </select>
       </div>
       <div class="col-sm-7">
-        <input class="form-control" formControlName="identifier" placeholder="{{ dinamicPlaceholder }}" required
+        <input id="identifier" class="form-control" formControlName="identifier" placeholder="{{ dinamicPlaceholder }}" required
           minlength="4" forbiddenTxt="http" [ngClass]="{'border border-danger': fetchForm.get('identifier')?.pending}">
       </div>
     </div>

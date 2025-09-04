@@ -1,25 +1,46 @@
 <div class="form-control border-0 rounded-0 px-4 py-3 mb-2 action-card bg-light">
   <h3 class="m-0 mb-4">{{ 'imports.fileImport' | translate }}</h3>
 
-  <form [formGroup]="importForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-      <label class="col-sm-3 col-form-label">{{ 'imports.fileImport.upload' | translate }}</label>
-      <div class="col-sm-4">
-        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-          <div class="dropzone col-sm" pureFileImport (drop)="onFileDrop($event)" (dragover)="onDragOver($event)">
-            <i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
-            <p>Drag and drop file here</p>
-            <div class="mb-3">
-              <input type="file" id="fileName" class="form-control" formControlName="fileName"
-                (change)="onFileChange($event)"
-                [ngClass]="{'border border-danger': importForm.get('fileName')?.pending, 'text-white': data}"
-                data-test="file-upload-input">
-            </div>
+
+  <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+    <label class="col-sm-3 col-form-text">{{ 'imports.fileImport.upload' | translate }}</label>
+    <div class="col-sm-4">
+      <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+        <div class="dropzone col-sm" pureFileImport (drop)="onFileDrop($event)" (dragover)="onDragOver($event)">
+          <i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
+          <p class="mb-1">{{ 'common.dragAndDrop' | translate }}</p>
+          <p class="mb-2">{{ 'common.or' | translate }}</p>
+          <div class="mb-3">
+            <label for="fileChoose" class="btn btn-outline-secondary px-4" data-test="file-upload-label">
+              {{ 'common.choose.file' | translate }}
+            </label>
+            <input type="file" id="fileChoose" class="form-control d-none" (change)="onFileChange($event)"
+              data-test="file-upload-input">
           </div>
         </div>
       </div>
-      <div>
-        <p id="selectedFile" class="ms-4"></p>
+    </div>
+  </div>
+
+  <form [formGroup]="importForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="col-form-label">{{ 'common.file' | translate }}</label>
+      </div>
+      <div class="col-sm-9">
+        <input id="fileName" class="form-control disabled placeholder-glow" formControlName="fileName" readonly placeholder="{{ 'common.choose.noFileChosen' | translate }}"
+          [ngClass]="{'border border-danger': importForm.get('fileName')?.pending}" data-test="file-name">
+      </div>
+    </div>
+    <div class="mb-2 row">
+      <div class="offset-sm-3 col-sm-6">
+        @if(valSvc.notValidField(importForm.controls['fileName'])) {
+        <span class="form-text text-danger small">
+          {{ valSvc.getErrorMsg(importForm.controls['fileName']) }}
+        </span>
+        } @else {
+        <span>&nbsp;</span>
+        }
       </div>
     </div>
 
@@ -95,21 +116,20 @@
     </div>
 
     @if(hasConfig()) {
-
-    @if(hasSelect()) {
-    <div class="mb-3 row">
-      <div class="col-sm-3">
-        <label class="col-form-label">{{ getSelectName() | separate | titlecase }}</label>
+      @if(hasSelect()) {
+      <div class="mb-3 row">
+        <div class="col-sm-3">
+          <label class="col-form-label">{{ getSelectName() | separate | titlecase }}</label>
+        </div>
+        <div class="col-sm-9">
+          <select id="formatConfig" class="form-select" formControlName="formatConfig" size="1">
+            @for (option of getOptionList(); track option) {
+            <option [value]="option">{{ option }}</option>
+            }
+          </select>
+        </div>
       </div>
-      <div class="col-sm-9">
-        <select id="formatConfig" class="form-select" formControlName="formatConfig" size="1">
-          @for (option of getOptionList(); track option) {
-          <option [value]="option">{{ option }}</option>
-          }
-        </select>
-      </div>
-    </div>
-    }
+      }
 
     <div class="mb-3 row">
       <div class="offset-md-3 col-sm-3">

@@ -39,8 +39,6 @@ export default class ImportComponent implements OnInit {
   lastFormat: string = '';
   data: any = '';
 
-  element: any = null;
-
   constructor(
     private changeDetector: ChangeDetectorRef
   ) { }
@@ -54,7 +52,7 @@ export default class ImportComponent implements OnInit {
     format: [null, [Validators.required]],
     formatConfig: [''],
     cone: [''],
-    fileName: [null]
+    fileName: [null, [Validators.required]]
   });
 
   ngOnInit(): void {
@@ -67,8 +65,6 @@ export default class ImportComponent implements OnInit {
     this.importForm.controls['format'].valueChanges.subscribe(format => {
       if (format && format !== this.translateService.instant(_('imports.format'))) this.getFormatConfiguration(format);
     });
-
-    this.element = document.getElementById('selectedFile') as HTMLElement;
   }
 
   getFormatConfiguration(format: string) {
@@ -127,8 +123,10 @@ export default class ImportComponent implements OnInit {
   onFileDrop($event: any): void {
     $event.preventDefault();
     if ($event.dataTransfer?.files && $event.dataTransfer.files[0]) {
+      this.importForm.controls['fileName'].setValue($event.dataTransfer.files[0].name);
       this.getData($event.dataTransfer.files[0]);
-    }
+    } 
+ 
     this.importForm.get('fileName')?.clearAsyncValidators();
     this.importForm.get('fileName')?.updateValueAndValidity();
   }
@@ -136,18 +134,17 @@ export default class ImportComponent implements OnInit {
   onFileChange($event: any): void {
     $event.preventDefault();
     if ($event.target.files && $event.target.files[0]) {
+      this.importForm.controls['fileName'].setValue($event.target.files[0].name);
       this.getData($event.target.files[0]);
-    }
+    } 
+
     this.importForm.get('fileName')?.clearAsyncValidators();
     this.importForm.get('fileName')?.updateValueAndValidity();
   }
 
   getData(file: File) {
-    this.element.innerHTML = `<span class="material-symbols-outlined">description</span> <strong> ${file?.name} </strong>`;
-
     const reader = file.stream().getReader();
     let result: any = '';
-
 
     reader.read().then(
       function processData({ done, value }): any {
@@ -174,7 +171,7 @@ export default class ImportComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.importForm.valid && this.data) {
+    if (this.importForm.valid) {
       this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
         this.router.navigate(['/imports/myimports']);
       });
@@ -185,9 +182,7 @@ export default class ImportComponent implements OnInit {
     if (this.importForm.invalid) {
       Object.keys(this.importForm.controls).forEach(key => {
         const field = this.importForm.get(key);
-        if (key === 'fileName') {
-          if (!this.data) field?.markAsPending();
-        } else if (field!.hasValidator(Validators.required) && (field!.untouched)) {
+        if (field!.hasValidator(Validators.required) && (field!.invalid || field!.untouched)) {
           field!.markAsPending();
         }
       });
@@ -198,11 +193,8 @@ export default class ImportComponent implements OnInit {
   clickOutside(event: Event) {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.importForm.reset();
-
       this.formatObject = null;
       this.data = null;
-
-      this.element.innerHTML = ``;
     }
   }
 }

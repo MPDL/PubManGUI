@@ -58,6 +58,32 @@
     }
   }
 
+  #fileChoose {
+    &::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+  } 
+
+  #fileName {
+      border-color: var(--bs-body-bg);
+      color: var(--bs-success);
+      font-weight: bold;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &::placeholder {
+      font-weight: normal;
+      font-style: italic;
+    }
+
+  } 
+
+  #identifier {
+    &::placeholder {
+      font-style: italic;
+    }
+  }
 
 }
-
