@@ -36,7 +36,8 @@ export default class ImportComponent implements OnInit {
   elRef: ElementRef = inject(ElementRef);
 
   formatObject: any = null;
-  //lastFormat: string = '';
+  lastFormat: string = '';
+  coneSwitch!: HTMLInputElement;
   data: any = '';
 
   constructor(
@@ -62,19 +63,27 @@ export default class ImportComponent implements OnInit {
       }
     );
 
-    this.importForm.controls['format'].valueChanges.subscribe(format => {
-      if (format && format !== this.translateService.instant(_('imports.format'))) this.getFormatConfiguration(format);
-    });
+    //this.coneSwitch = this.elRef.nativeElement.querySelector('#cone');
+    //this.importForm.controls['format'].valueChanges.subscribe(format => {
+      //if (format && format !== this.translateService.instant(_('imports.format'))) this.getFormatConfiguration(format);
+      //if (format) this.getFormatConfiguration(format);
+    //});
+  }
+
+  onFormatChange($event: any): void {
+    $event.preventDefault();
+    this.getFormatConfiguration($event.target.value);
   }
 
   getFormatConfiguration(format: string) {
     this.importsSvc.getFormatConfiguration(format).subscribe(response => {
       this.formatObject = response;
       this.changeDetector.detectChanges();
-      //if (format !== this.lastFormat) {
-        this.setDefaultOption();
-        //this.lastFormat = format;
-      //};
+      if (format !== this.lastFormat) {
+        this.setSelectDefaultOption();
+        this.isCoNE();
+        this.lastFormat = format;
+      };
     });
   }
 
@@ -82,15 +91,13 @@ export default class ImportComponent implements OnInit {
     return (this.formatObject !== null && Object.keys(this.formatObject).length > 0);
   }
 
-  isCoNE(): boolean {
-    if (this.hasConfig()) {
-      const defaultArray = this.formatObject["_default"];
-      const coNEEntry = defaultArray.find((entry: string) => entry.startsWith("CoNE="));
-      if (coNEEntry) {
-        return (coNEEntry.split("=")[1] === "true");
-      }
+  isCoNE(): void {
+    const defaultArray = this.formatObject["_default"];
+    const coNEEntry = defaultArray.find((entry: string) => entry.startsWith("CoNE="));
+    if (coNEEntry) {
+      this.coneSwitch = document.getElementById("cone") as HTMLInputElement;
+      this.coneSwitch.checked = (coNEEntry.split("=")[1] === "true");
     }
-    return false;
   }
 
   hasSelect(): boolean {
@@ -101,18 +108,17 @@ export default class ImportComponent implements OnInit {
     return Object.keys(this.formatObject)[2];
   }
 
-  getOptionList(): string[] {
+  getSelectOptionList(): string[] {
     return Object.entries(this.formatObject)[2][1] as string[];
   }
 
-  setDefaultOption(): void {
+  setSelectDefaultOption(): void {
     if (this.formatObject) {
       const defaultArray = this.formatObject["_default"];
       if (!defaultArray || defaultArray.length === 1) {
         return;
       }
       const defaultValue = defaultArray.find((entry: string) => entry.startsWith(this.getSelectName())).split("=")[1];
-      console.log("Default value for " + this.getSelectName() + ": " + defaultValue);
       this.importForm.get('formatConfig')?.setValue(defaultValue);
     }
   }
@@ -175,9 +181,9 @@ export default class ImportComponent implements OnInit {
 
   onSubmit(): void {
     if (this.importForm.valid) {
-      //this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
-        //this.router.navigate(['/imports/myimports']);
-      //});
+      this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
+        this.router.navigate(['/imports/myimports']);
+      });
     }
   }
 

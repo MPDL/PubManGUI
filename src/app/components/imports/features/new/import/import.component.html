@@ -74,7 +74,7 @@
       </div>
       <div class="col-sm-2">
         <select class="form-select" formControlName="format"
-          [ngClass]="{'border border-danger': importForm.get('format')?.pending}" data-test="import-format">
+          [ngClass]="{'border border-danger': importForm.get('format')?.pending}" (change)="onFormatChange($event)" data-test="import-format">
           <option [value]="null" selected disabled hidden>Format</option>
           @for (format of importFormat; track format) {
           <option [value]="format">{{ 'ImportFormat.' + format | translate }}</option>
@@ -123,7 +123,7 @@
         </div>
         <div class="col-sm-9">
           <select id="formatConfig" class="form-select" formControlName="formatConfig" size="1">
-            @for (option of getOptionList(); track option) {
+            @for (option of getSelectOptionList(); track option) {
             <option [value]="option">{{ option }}</option>
             }
           </select>
@@ -134,7 +134,7 @@
     <div class="mb-3 row">
       <div class="offset-md-3 col-sm-3">
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="cone" [checked]="isCoNE()">
+          <input class="form-check-input" type="checkbox" role="switch" id="cone">
           <label class="form-check-label" for="cone">CoNE</label>
         </div>
       </div>
