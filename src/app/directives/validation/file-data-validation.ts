@@ -4,20 +4,19 @@ import { Errors } from "src/app/model/errors";
 import { isFormValueEmpty } from "../../utils/utils";
 
 export const fileDataValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
-  console.log("FileDataValidator")
   const error_types = Errors;
   const file = control.value as FileDbVO;
   let currentErrors = {} as ValidationErrors;
   if (file != null) {
     //External reference with missing content
-    if ((Storage.EXTERNAL_URL === file.storage) && (isFormValueEmpty(file.content === null))) {
+    if ((Storage.EXTERNAL_URL === file.storage) && (isFormValueEmpty(file.content))) {
       control.get("content")?.setErrors({[error_types.COMPONENT_CONTENT_NOT_PROVIDED] : true});
       currentErrors[error_types.COMPONENT_CONTENT_NOT_PROVIDED] =  true;
     }
     //File with missing content or missing objectId
     if (Storage.INTERNAL_MANAGED === file.storage) {
       if (isFormValueEmpty(file.content)
-      && (isFormValueEmpty(file.objectId == ''))) {
+      && (isFormValueEmpty(file.objectId))) {
         control.get("content")?.setErrors({[error_types.COMPONENT_CONTENT_NOT_PROVIDED] : true});
         currentErrors[error_types.COMPONENT_CONTENT_NOT_PROVIDED] = true;
       }

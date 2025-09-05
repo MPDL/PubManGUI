@@ -26,6 +26,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ValidationErrorComponent } from "../validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-item-form',
@@ -39,7 +40,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     MetadataFormComponent,
     AddRemoveButtonsComponent,
     CdkDropList,
-    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective],
+    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, ValidationErrorComponent],
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss'],
 })
@@ -84,7 +85,7 @@ export class ItemFormComponent implements OnInit {
 
       this.itemUpdated(item);
 
-      this.initInternalAndExternalFiles();
+
       // manual Update for form validation
       //this.updateFormValidity(this.form);
     });
@@ -129,6 +130,8 @@ export class ItemFormComponent implements OnInit {
   }
 
   initInternalAndExternalFiles() {
+    this.internalFiles?.clear();
+    this.externalReferences?.clear();
     for (let i = 0; i < this.files.length; i++) {
       if (this.files.at(i).value.storage == 'INTERNAL_MANAGED') {
         if (!this.internalFiles) {
@@ -291,6 +294,7 @@ export class ItemFormComponent implements OnInit {
   private itemUpdated(item: ItemVersionVO) {
     this.item = item;
     this.form = this.fbs.item_FG(item);
+    this.initInternalAndExternalFiles();
     if (this.form.value !== null
       && this.form.value !== undefined
       && this.form.get('objectId')?.value !== null
