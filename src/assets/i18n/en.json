@@ -788,7 +788,8 @@
     "dateModifiedInternal": "Modification Date (technical)"
 	},
   "Edit" : {
-    "addMultipleCreators" : "Add multiple creators (Copy-Paste)"
+    "addMultipleCreators" : "Add multiple creators (Copy-Paste)",
+    "validationErrorsExist" : "Validation errors! Please fix all errors before saving."
 
   }
 }

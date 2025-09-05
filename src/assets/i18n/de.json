@@ -789,7 +789,8 @@
     "dateModifiedInternal": "Änderungsdatum (technisch)"
 	},
   "Edit" : {
-    "addMultipleCreators" : "Mehrere Autoren hinzufügen (Copy-Paste)"
+    "addMultipleCreators" : "Mehrere Autoren hinzufügen (Copy-Paste)",
+    "validationErrorsExist" : "Validierungsfehler! Bitte beheben Sie alle Fehler vor dem Speichern."
 
   }
 }

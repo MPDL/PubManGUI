@@ -188,6 +188,7 @@ export class ItemFormComponent implements OnInit {
             } else {
               this.internalFiles.push(this.fbs.file_FG(file));
             }
+
           })
 
       } else {
@@ -299,6 +300,12 @@ export class ItemFormComponent implements OnInit {
         console.log('this.authorizationInfo: ', this.authorizationInfo);
       });
     }
+  }
+
+  get allValid() {
+    return this.form.valid &&
+      (this.internalFiles ? this.internalFiles.valid : true) &&
+      (this.externalReferences ? this.externalReferences.valid : true)
   }
 
   submit(submitterId: any) {
@@ -426,6 +433,7 @@ export class ItemFormComponent implements OnInit {
       }
     });
   }
+
 }
 
 /*
