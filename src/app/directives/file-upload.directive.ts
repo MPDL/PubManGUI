@@ -12,7 +12,7 @@ enum DropColor {
   standalone: true,
 })
 export class FileUploadDirective {
-  @Output() dropFiles: EventEmitter<FileDbVO[]> = new EventEmitter();
+  @Output() dropFiles: EventEmitter<FileList | undefined> = new EventEmitter();
   @HostBinding("style.background") backgroundColor = "none";
 
   constructor(private sanitizer: DomSanitizer) {//, private el: ElementRef) {
@@ -51,6 +51,8 @@ export class FileUploadDirective {
     this.backgroundColor = DropColor.Default;
 
     let fileList = event.dataTransfer?.files;
+    this.dropFiles.emit(fileList);
+    /*
     let files: FileDbVO[] = [];
 
     if(fileList) {
@@ -67,6 +69,8 @@ export class FileUploadDirective {
     if (files.length > 0) {
       this.dropFiles.emit(files);
     }
+
+     */
   }
 
 }

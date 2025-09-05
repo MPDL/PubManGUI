@@ -5,10 +5,16 @@ import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFo
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
-import { ContextDbRO, ContextDbVO, FileDbVO, ItemVersionRO, ItemVersionVO, MdsPublicationVO, Storage } from 'src/app/model/inge';
 import {
-  AddRemoveButtonsComponent
-} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+  ContextDbRO,
+  ContextDbVO,
+  FileDbVO,
+  ItemVersionRO,
+  ItemVersionVO,
+  MdsPublicationVO,
+  Storage
+} from 'src/app/model/inge';
+import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { remove_null_empty, remove_objects } from 'src/app/utils/utils_final';
 import { ChipsComponent } from 'src/app/components/shared/chips/chips.component';
 import { AaService } from 'src/app/services/aa.service';
@@ -16,7 +22,7 @@ import { ContextsService } from "../../../services/pubman-rest-client/contexts.s
 import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
 import { ItemListStateService } from 'src/app/components/item-list/item-list-state.service';
 import { FileFormComponent } from '../file-form/file-form.component';
-import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { FileUploadComponent, UploadedFile } from '../file-upload/file-upload.component';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -26,7 +32,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorComponent } from "../validation-error/validation-error.component";
+import { LoadingComponent } from "../../shared/loading/loading.component";
+import { MiscellaneousService } from "../../../services/pubman-rest-client/miscellaneous.service";
 
 @Component({
   selector: 'pure-item-form',
@@ -40,7 +47,7 @@ import { ValidationErrorComponent } from "../validation-error/validation-error.c
     MetadataFormComponent,
     AddRemoveButtonsComponent,
     CdkDropList,
-    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, ValidationErrorComponent],
+    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, LoadingComponent],
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss'],
 })
@@ -54,6 +61,7 @@ export class ItemFormComponent implements OnInit {
   fileStagingService = inject(FileStagingService);
   itemService = inject(ItemsService);
   listStateService = inject(ItemListStateService);
+  miscellaneousService = inject(MiscellaneousService)
 
   messageService = inject(MessageService);
   modalService = inject(NgbModal);
@@ -71,6 +79,8 @@ export class ItemFormComponent implements OnInit {
   @Output() onChangeSwitchMode: EventEmitter<any> = new EventEmitter();
 
   authorizationInfo: any;
+
+  genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
 
 
@@ -179,30 +189,27 @@ export class ItemFormComponent implements OnInit {
 
   }
 
-  handleFileUploadNotification(files: FileDbVO[]) {
-    for (let file of files) {
-      file.storage = Storage.INTERNAL_MANAGED;
-      if (this.aaService.isLoggedIn) {
-        this.fileStagingService.createStageFile(file)
-          .subscribe(stagedFileId => {
-            file.content = stagedFileId.toString();
-
-            const internalFile = this.fbs.file_FG(file);
-            //Set title as filename (can be changed)
-            internalFile.get("metadata")?.get("title")?.setValue(file.name);
-            if (!this.internalFiles) {
-              this.internalFiles = this.fb.array([internalFile]);
-            } else {
-              this.internalFiles.push(internalFile);
-            }
+  handleFileUploadNotification(uploadedFiles: UploadedFile[]) {
 
 
-          })
+    if(uploadedFiles) {
+      for(const file of uploadedFiles) {
+        const internalFile = this.fbs.file_FG(null);
+        internalFile.get("storage")?.setValue(Storage.INTERNAL_MANAGED);
+        internalFile.get("name")?.setValue(file.name);
+        internalFile.get("content")?.setValue(file.stagingId);
+        internalFile.get("metadata")?.get("title")?.setValue(file.name);
 
+        if (!this.internalFiles) {
+          this.internalFiles = this.fb.array([internalFile]);
+        } else {
+          this.internalFiles.push(internalFile);
+        }
+      }
       } else {
         this.messageService.error('Authentication error. You need to be logged in, to stage a file');
       }
-    }
+
   }
 
   handleInternalFileNotification(event: any) {

@@ -17,13 +17,13 @@ export class ValidationService extends PubmanGenericRestClientService<any> {
   validateEvent(eventJson: any): Observable<any> {
     console.log('validateEvent validationService');
     console.log('eventJson', eventJson);
-    return this.httpPost(this.subPath + '/' + validateEvent, eventJson);
+    return this.httpPostJson(this.subPath + '/' + validateEvent, eventJson);
   }
 
   validateCreator(creatorJson: any): Observable<any> {
     console.log('validateCreator validationService');
     console.log('creatorJson', creatorJson);
-    return this.httpPost(this.subPath + '/' + validateCreator, creatorJson);
+    return this.httpPostJson(this.subPath + '/' + validateCreator, creatorJson);
   }
 }
 

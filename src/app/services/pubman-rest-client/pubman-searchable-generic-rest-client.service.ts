@@ -42,7 +42,7 @@ export abstract class PubmanSearchableGenericRestClientService<modelType> extend
   }
 
   private getSearchResults(path: string, body?: any, opts?:HttpOptions): Observable<any> {
-    return this.httpPost(path, body, opts);
+    return this.httpPostJson(path, body, opts);
   }
 
   private getElasticSearchResults(method: string, path: string, body?: any, opts?:HttpOptions): Observable<SearchResult<modelType>> {

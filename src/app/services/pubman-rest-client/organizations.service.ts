@@ -22,7 +22,7 @@ export class OrganizationsService extends PubmanSearchableGenericRestClientServi
     const path = this.subPath + '/allchildren/' + ignoreOuId;
     const body = parentAffiliationIds;
 
-    return this.httpPost(path, body, opts);
+    return this.httpPostJson(path, body, opts);
   }
 
   getTopLevelOus(opts?: HttpOptions): Observable<AffiliationDbVO[]> {

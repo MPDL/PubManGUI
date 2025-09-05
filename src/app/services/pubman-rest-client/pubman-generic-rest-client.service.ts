@@ -18,12 +18,15 @@ export interface TaskParamVO {
 }
 
 export interface HttpOptions {
+
   globalErrorDisplay?: boolean;
   withCredentials?: boolean;
   headers?: HttpHeaders,
   params?: HttpParams,
-  responseType?: "arraybuffer" | "blob" | "text" | "json" | undefined;
-  observe?:"body" | "events" | "response" | undefined
+  responseType?: "arraybuffer" | "blob" | "text" | "json" | undefined,
+  observe?:"body" | "events" | "response" | undefined,
+  reportProgress?: boolean;
+
 }
 
 export abstract class PubmanGenericRestClientService<modelType> {
@@ -40,7 +43,7 @@ export abstract class PubmanGenericRestClientService<modelType> {
 
   create(obj: modelType, opts?: HttpOptions) : Observable<modelType> {
     console.log('Creating: ', typeof obj);
-    return this.httpPost(this.subPath, obj, opts);
+    return this.httpPostJson(this.subPath, obj, opts);
   }
 
   retrieve(id: string, opts?: HttpOptions): Observable<modelType> {
@@ -71,6 +74,7 @@ export abstract class PubmanGenericRestClientService<modelType> {
     const observe = opts?.observe ? opts.observe : 'body';
     const withCredentials = opts?.withCredentials ? opts.withCredentials : true;
     const context = this.addContext(opts);
+    const reportProgress = opts?.reportProgress ? opts?.reportProgress : false;
 
     const options = {
       body,
@@ -79,7 +83,9 @@ export abstract class PubmanGenericRestClientService<modelType> {
       responseType: responseType,
       observe: observe,
       withCredentials: withCredentials,
-      context: context
+      context: context,
+      reportProgress: reportProgress,
+
     }
     return options;
   }
@@ -135,10 +141,15 @@ export abstract class PubmanGenericRestClientService<modelType> {
     return this.httpRequest('HEAD', path, undefined, mergedOpts);
   }
 
-  protected httpPost(path: string, resource: any, opts?: HttpOptions): Observable<any> {
+  protected httpPostJson(path: string, resource: any, opts?: HttpOptions): Observable<any> {
     const body = JSON.stringify(resource);
     const mergedOpts = this.addContentTypeHeader(opts);
     return this.httpRequest('POST', path, body, mergedOpts);
+  }
+
+  protected httpPostAny(path: string, resource: any, opts?: HttpOptions): Observable<any> {
+    const mergedOpts = this.addContentTypeHeader(opts);
+    return this.httpRequest('POST', path, resource, mergedOpts);
   }
 
   protected httpPut(path: string, resource: any, opts?: HttpOptions): Observable<any> {

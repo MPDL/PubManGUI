@@ -20,10 +20,10 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
 
   public genrePropertiesResource = resource({
     params: () => this.selectedGenre(),
-    loader: async ({ params })  => { 
+    loader: async ({ params })  => {
       const response = await firstValueFrom(this.getGenreProperties(params));
       const data: GenrePresentationObject = await response;
-      return data 
+      return data
     },
   });
 
@@ -47,7 +47,7 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
   }
 
   getDecodedMultiplePersons(multiplePersonNameString: string): Observable<PersonName[]>{
-      return this.httpPost(this.subPath + '/' + aiPersonNamePath, multiplePersonNameString);
+      return this.httpPostJson(this.subPath + '/' + aiPersonNamePath, multiplePersonNameString);
   }
 
   retrieveIpList(): Observable<IpEntry[]> {

@@ -1,6 +1,6 @@
-@if (genreSpecificResource.hasValue()) {
+
 <form formArray="file_upload_form">
-	<div [ngClass]="genreSpecificResource.value().properties.files.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+	<div class = "d-sm-flex flex-sm-row gap-1 mb-1">
 		<div class="dropzone col-sm" pureFileUpload (dropFiles)="onDropFiles($event)">
 			<i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
 			<p>Drag and drop file here</p>
@@ -8,15 +8,5 @@
 				<input class="form-control" type="file" id="formFileMultiple" multiple (change)="onChange($event)">
 			</div>
 		</div>
-		<!--
-	<div lass="col-sm">
-		@for (file of file_upload_form.controls; track $index) {
-		<p>{{file.value | json}}</p>
-		}
-	</div>
-	-->
 	</div>
 </form>
-} @else if (!genreSpecificResource.value()) {
-    <pure-loading></pure-loading>
-}
