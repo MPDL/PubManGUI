@@ -30,7 +30,7 @@ export class ImportsNavComponent implements OnInit {
   mobile: boolean | null = null;
   mobile_options: HTMLElement | null = null;
 
-  display: boolean = false;
+  isMoreShown: boolean = false;
 
   ngOnInit(): void {
     if (!this.importsSvc.hasImports()) this.importsSvc.checkImports();
@@ -68,8 +68,8 @@ export class ImportsNavComponent implements OnInit {
   }
 
   showMore(): boolean {
-    this.display = !this.display;
-    return this.display;
+    this.isMoreShown = !this.isMoreShown;
+    return this.isMoreShown;
   }
 
   @HostListener('window:resize', ['$event'])

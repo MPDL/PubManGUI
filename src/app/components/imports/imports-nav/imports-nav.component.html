@@ -3,7 +3,11 @@
         <a class="nav-link py-2 py-xl-3" (click)="showMore()" data-test="sidenav-import">
             <span class="material-symbols-outlined">get_app</span>
             <span class="nav-label ms-3">{{'imports.name'| translate }}</span>
+            @if (!isMoreShown) {
             <span class="material-symbols-outlined">arrow_drop_down</span>
+            } @else {
+            <span class="material-symbols-outlined">arrow_drop_up</span>
+            }
         </a>
 
         @if ( importsSvc.hasImports() ) {

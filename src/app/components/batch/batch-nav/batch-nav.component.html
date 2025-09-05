@@ -3,7 +3,11 @@
         <a class="nav-link py-2 py-xl-3" (click)="showMore()" data-test="sidenav-batch">
             <span class="material-symbols-outlined">web_stories</span>
             <span class="nav-label ms-3 text-nowrap">{{'batch.name'| translate }}</span>
+            @if (!isMoreShown) {
             <span class="material-symbols-outlined">arrow_drop_down</span>
+            } @else {
+            <span class="material-symbols-outlined">arrow_drop_up</span>
+            }
             @if ( batchSvc.areItemsSelected() ) {
             <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' data-test="batch-badge"></div>
             }

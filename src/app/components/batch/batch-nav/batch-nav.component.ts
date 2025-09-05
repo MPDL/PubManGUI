@@ -32,7 +32,7 @@ export class BatchNavComponent implements OnInit {
   mobile: boolean | null = null;
   mobile_options: HTMLElement | null = null;
 
-  display: boolean = false;
+  isMoreShown: boolean = false;
 
   ngOnInit(): void {
     this.batchSvc.items;
@@ -78,8 +78,8 @@ export class BatchNavComponent implements OnInit {
   }
 
   showMore(): boolean {
-    this.display = !this.display;
-    return this.display;
+    this.isMoreShown = !this.isMoreShown;
+    return this.isMoreShown;
   }
 
   @HostListener('window:resize', ['$event'])
