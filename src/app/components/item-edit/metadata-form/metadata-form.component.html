@@ -87,7 +87,7 @@
                                         (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
                                 </ng-container>
                                 } @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add title'"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                                     (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -115,9 +115,10 @@
                         <div class="col-sm">
                             <!-- TODO Add many -->
                             <div class="d-sm-flex flex-sm-row gap-1 pt-1 mb-3">
-                                <button class="ms-sm-1 btn btn-sm btn-outline-secondary" type="button"
-                                    (click)="openAddMultipleCreatorsModal()" [ngClass]="{'disabled ': loading}">ADD
-                                    multiple Creators
+                                <button class="ms-sm-1 btn btn-sm btn-link" type="button"
+                                    (click)="openAddMultipleCreatorsModal()" [ngClass]="{'disabled ': loading}">{{
+                                    'Edit.addMultipleCreators' | translate
+                                  }}
                                     @if(loading)
                                     {
                                     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -146,7 +147,7 @@
                                     } @empty {
                                     <div class="col-sm">
                                         <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                                            [add_val]="'add creator'" (notice)="handleCreatorNotification($event)"
+                                            [add_val]="'common.add' | translate" (notice)="handleCreatorNotification($event)"
                                             data-test="add-remove-creators"></pure-add-remove-buttons>
                                     </div>
                                     }
@@ -284,7 +285,7 @@
                                 </ng-container>
                                 }
                                 @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add language'"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                                     (notice)="handleLanguageNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -361,7 +362,7 @@
                                 </ng-container>
                                 }
                                 @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add identifier'"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                                     (notice)="handleIdentifierNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -392,7 +393,7 @@
                         </div>
                         }
                         @empty {
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add abstract'"
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                             (notice)="handleAbstractNotification($event)"></pure-add-remove-buttons>
                         }
                     </ng-container>
@@ -425,7 +426,7 @@
                                 </ng-container>
                                 }
                                 @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add subject'"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                                     (notice)="handleSubjectNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -500,7 +501,7 @@
                     }
                     @empty {
                     <div class="accordion-body mt-3 mb-3">
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add projectInfo'"
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                             (notice)="handleProjectInfoNotification($event)"></pure-add-remove-buttons>
                     </div>
                     }
@@ -562,7 +563,7 @@
                     </div>
                     } @empty {
                     <div class="accordion-body mt-3 mb-3">
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add source'"
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                             (notice)="handleSourceNotification($event)"></pure-add-remove-buttons>
                     </div>
                     }

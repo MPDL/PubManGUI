@@ -13,7 +13,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
 @Component({
   selector: 'pure-language-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, LanguageAutosuggestComponent, BootstrapValidationDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, LanguageAutosuggestComponent],
   templateUrl: './language-form.component.html',
   styleUrl: './language-form.component.scss'
 })

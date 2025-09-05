@@ -12,7 +12,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
 @Component({
   selector: 'pure-alt-title-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, TranslatePipe, BootstrapValidationDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, BootstrapValidationDirective],
   templateUrl: './alt-title-form.component.html',
   styleUrls: ['./alt-title-form.component.scss']
 })

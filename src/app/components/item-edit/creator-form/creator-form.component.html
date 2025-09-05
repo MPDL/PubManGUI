@@ -150,7 +150,7 @@
                     } @empty {
                     <div class="col-sm offset-sm-1">
 
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add organization'"
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="`<i class='bi bi-plus-lg'></i> ` + ('MetadataFields.organization' | translate)"
                             (notice)="add_remove_person_ou($event)"
                             data-test="add-remove-organizations"></pure-add-remove-buttons>
 

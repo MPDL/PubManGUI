@@ -63,7 +63,10 @@
     "year" : "Jahr",
     "role" : "Rolle",
     "type" : "Typ",
-    "value" : "Wert"
+    "value" : "Wert",
+    "add" : "Hinzufügen",
+    "remove" : "Entfernen"
+
 	},
 	"chips.localTags.placeholder": "Lokalen Tag hinzufügen",
 	"validation": {
@@ -784,5 +787,9 @@
     "desc" : "absteigend",
     "dateCreatedInternal": "Erstellungsdatum (technisch)",
     "dateModifiedInternal": "Änderungsdatum (technisch)"
-	}
+	},
+  "Edit" : {
+    "addMultipleCreators" : "Mehrere Autoren hinzufügen (Copy-Paste)"
+
+  }
 }

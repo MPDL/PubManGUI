@@ -80,7 +80,7 @@
                                   <hr/>
                                 }
                                 @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'add fileIndex'"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
                                     (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
                                 }
                             </div>
@@ -137,7 +137,7 @@
                           }
                           @else {
                             <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                                                     [add_val]="'add externalReference'"
+                                                     [add_val]="'common.add' | translate"
                                                      (notice)="handleNoExternalReferences()"></pure-add-remove-buttons>
                           }
                         </div>

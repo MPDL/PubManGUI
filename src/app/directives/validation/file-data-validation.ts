@@ -4,6 +4,7 @@ import { Errors } from "src/app/model/errors";
 import { isFormValueEmpty } from "../../utils/utils";
 
 export const fileDataValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
+  console.log("FileDataValidator")
   const error_types = Errors;
   const file = control.value as FileDbVO;
   let currentErrors = {} as ValidationErrors;
@@ -28,7 +29,7 @@ export const fileDataValidator: ValidatorFn = (control: AbstractControl,): Valid
           }
         }
         if (!ok) {
-          control.get("visibility")?.setErrors({[error_types.COMPONENT_IP_RANGE_NOT_PROVIDED] : true});
+          control.get("allowedAudienceIds")?.setErrors({[error_types.COMPONENT_IP_RANGE_NOT_PROVIDED] : true});
           //currentErrors[error_types.COMPONENT_IP_RANGE_NOT_PROVIDED] = true;
         }
       }

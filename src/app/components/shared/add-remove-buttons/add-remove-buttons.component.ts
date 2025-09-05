@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-add-remove-buttons',
@@ -20,8 +21,13 @@ export class AddRemoveButtonsComponent implements OnInit {
   add_value: string | undefined;
   del_value: string | undefined;
 
+  constructor(private translateService: TranslateService) { }
   ngOnInit() {
     this.add_value = this.add_val ? this.add_val : '<i class="bi bi-plus"></i>';
+    if(this.add_val && this.add_val === this.translateService.instant("common.add")) {
+      //this.add_value = '<span class="material-symbols-outlined">' + this.add_symbol + '</span> ' + this.add_value;
+      this.add_value = '<i class="bi bi-plus-lg"></i> ' + this.add_value;
+    }
     this.del_value = this.del_val ? this.del_val : '<i class="bi bi-dash"></i>';
   }
 
