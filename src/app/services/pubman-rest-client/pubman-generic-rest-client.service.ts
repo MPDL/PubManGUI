@@ -148,8 +148,8 @@ export abstract class PubmanGenericRestClientService<modelType> {
   }
 
   protected httpPostAny(path: string, resource: any, opts?: HttpOptions): Observable<any> {
-    const mergedOpts = this.addContentTypeHeader(opts);
-    return this.httpRequest('POST', path, resource, mergedOpts);
+    //const mergedOpts = this.addContentTypeHeader(opts);
+    return this.httpRequest('POST', path, resource, opts);
   }
 
   protected httpPut(path: string, resource: any, opts?: HttpOptions): Observable<any> {

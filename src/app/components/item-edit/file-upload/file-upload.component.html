@@ -1,12 +1,50 @@
 
-<form formArray="file_upload_form">
-	<div class = "d-sm-flex flex-sm-row gap-1 mb-1">
-		<div class="dropzone col-sm" pureFileUpload (dropFiles)="onDropFiles($event)">
-			<i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
-			<p>Drag and drop file here</p>
-			<div class="mb-3">
-				<input class="form-control" type="file" id="formFileMultiple" multiple (change)="onChange($event)">
-			</div>
-		</div>
-	</div>
-</form>
+@if(!uploadInProgress) {
+  <form formArray="file_upload_form">
+    <div class = "d-sm-flex flex-sm-row gap-1 mb-1">
+      <div class="dropzone col-sm" pureFileUpload (dropFiles)="onDropFiles($event)">
+        <i class="bi bi-cloud-upload" style="font-size: 3rem"></i>
+        <p>Drag and drop file here</p>
+        <div class="mb-3">
+          <input class="form-control" type="file" id="formFileMultiple" multiple (change)="onChange($event)">
+        </div>
+      </div>
+    </div>
+  </form>
+} @else {
+  <div class="dropzone">
+
+    @for(tf of transferringFilesMap.values(); track tf.file) {
+      <div class = "row mb-2">
+        <div class="text-start small">{{tf.file.name}}</div>
+        <div class="progress">
+          @let loadedPercent = Math.round((tf.loaded/tf.total)*100);
+          <div class="progress-bar progress-bar-striped" [class.progress-bar-animated]="!tf.finished" [class.bg-success]="tf.finished" role="progressbar" [style.width]="loadedPercent + '%'" [attr.aria-valuenow]="loadedPercent" aria-valuemin="0" aria-valuemax="100">
+            {{loadedPercent}}%
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+<div class="dropzone">
+<div class = "row mb-2">
+  <div class="text-start small">Desert.jpg</div>
+  <div class="progress">
+    @let loadedPercent = 25;
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="loadedPercent + '%'" [attr.aria-valuenow]="loadedPercent" aria-valuemin="0" aria-valuemax="100">
+      {{loadedPercent}}%
+    </div>
+  </div>
+</div>
+  <div class = "row mb-2">
+    <div class="text-start small">Desert.jpg</div>
+    <div class="progress">
+      @let loadedPercent2 = 89;
+      <div class="progress-bar progress-bar-striped progress-bar-animated" [class.progress-bar-animated]="" role="progressbar" [style.width]="loadedPercent2 + '%'" [attr.aria-valuenow]="loadedPercent2" aria-valuemin="0" aria-valuemax="100">
+        {{loadedPercent2}}%
+      </div>
+    </div>
+  </div>
+</div>

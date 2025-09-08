@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FileDbVO } from 'src/app/model/inge';
 import { HttpOptions, PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
 import { Observable, switchMap, tap } from 'rxjs';
-import { HttpEvent } from "@angular/common/http";
+import { HttpEvent, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +15,21 @@ export class FileStagingService extends PubmanGenericRestClientService<FileDbVO>
 
   createStageFile(file: File) : Observable<HttpEvent<string>> {
     // console.log('trying to stage file');
+    const headers = new HttpHeaders()
+      .set('Content-Length', file.size.toString())
+      .set('Content-Type', "application/octet-stream");
 
+
+    return super.httpPostAny(this.subPath + '/' + file.name, file, {headers: headers, responseType: "text", observe:'events', reportProgress:true});
+    /*
     return this.fileToByteStream(file).pipe(
       switchMap(arrayBuffer => {
-        return super.httpPostAny(this.subPath + '/' + file.name, arrayBuffer, {observe:'events', reportProgress:true});
+
         }
       )
     );
+
+     */
 
   }
 

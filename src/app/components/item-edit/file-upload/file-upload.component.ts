@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FileUploadDirective } from 'src/app/directives/file-upload.directive';
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
-import { forkJoin, Observable, of, tap } from "rxjs";
+import { catchError, finalize, forkJoin, Observable, of, tap } from "rxjs";
 import { HttpEventType } from "@angular/common/http";
 import { filter, map } from "rxjs/operators";
 
@@ -21,6 +21,10 @@ export class FileUploadComponent {
 
   stagingFileService = inject(FileStagingService);
 
+  transferringFilesMap : Map<string, TransferringFile> = new Map();
+
+  uploadInProgress = false;
+
   onDropFiles(fileList: FileList | undefined): void {
     this.upload(fileList);
   }
@@ -32,10 +36,26 @@ export class FileUploadComponent {
   }
 
   upload(fileList: FileList | undefined) {
+    this.transferringFilesMap.clear();
     if(fileList) {
 
-      const uploadObservables = Array.from(fileList).map(file =>
+      const fileArray = Array.from(fileList);
+
+      fileArray.forEach(file => {
+
+        const tf: TransferringFile = {
+          file: file,
+          loaded: 0,
+          total: file.size,
+          finished: false
+        }
+        this.transferringFilesMap.set(file.name, tf);
+      })
+
+      this.uploadInProgress = true;
+      const uploadObservables = fileArray.map(file =>
         this.stagingFileService.createStageFile(file).pipe(
+
           tap(stageFileEvent => {
             console.log(stageFileEvent.type);
             //console.log(stageFileEvent);
@@ -44,6 +64,8 @@ export class FileUploadComponent {
               console.log(stageFileEvent.loaded + " / " + stageFileEvent.total);
             }
             if(stageFileEvent.type === HttpEventType.UploadProgress) {
+              this.transferringFilesMap.get(file.name)!.loaded = stageFileEvent.loaded;
+              //this.transferringFilesMap.get(file.name)!.total = stageFileEvent.total;
               console.log("Upload Progress");
               console.log(stageFileEvent.loaded + " / " + stageFileEvent.total);
             }
@@ -52,6 +74,9 @@ export class FileUploadComponent {
           map(stageFileEvent => {
             const uploadedFile: UploadedFile = {stagingId : stageFileEvent.body!, name : file.name};
             return uploadedFile;
+          }),
+          finalize(() => {
+            this.transferringFilesMap.get(file.name)!.finished = true;
           })
         )
       );
@@ -60,15 +85,30 @@ export class FileUploadComponent {
       forkJoin(uploadObservables).pipe(
         tap(uploadedFiles => {
           this.fileUploadNotice.emit(uploadedFiles);
+        }),
+        catchError(err => {
+          return [];
+        }),
+        finalize(() => {
+          this.uploadInProgress = false;
         })
       ).subscribe();
     }
     //return of([]);
   }
 
+  protected readonly Math = Math;
 }
 
 export interface UploadedFile {
   stagingId: string
   name: string
+}
+
+export interface TransferringFile {
+  file: File,
+  error?: any,
+  loaded: number,
+  total: number,
+  finished: boolean
 }

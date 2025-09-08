@@ -47,7 +47,8 @@ export const appConfig: ApplicationConfig = {
 
     provideHttpClient(
       withInterceptorsFromDi(),
-      withFetch()
+      //Cannot be used right now, as withFetch() does not provide Upload progress reporting: https://github.com/angular/angular/issues/53650
+      //withFetch()
     ),
     {
       provide: HTTP_INTERCEPTORS,
