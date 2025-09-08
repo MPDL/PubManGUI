@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of, switchMap } from 'rxjs';
+import { catchError, EMPTY, Observable, of, pipe, switchMap, tap, throwError } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
 import {
   ContextDbRO,
@@ -150,6 +150,7 @@ export class ItemFormComponent implements OnInit {
           this.internalFiles.push(this.files.at(i));
         }
       }
+
       if (this.files.at(i).value.storage == 'EXTERNAL_URL') {
         if (!this.externalReferences) {
           this.externalReferences = this.fb.array([this.files.at(i)]);
@@ -158,6 +159,8 @@ export class ItemFormComponent implements OnInit {
         }
       }
     }
+    this.internalFiles?.updateValueAndValidity();
+    this.externalReferences?.updateValueAndValidity();
   }
 
   add_remove_local_tag(event: any) {
@@ -335,9 +338,9 @@ export class ItemFormComponent implements OnInit {
 
   }
 
-  submit(submitterId: any) {
-    console.log('submitterId', typeof submitterId);
-    console.log('submitterId', submitterId);
+  submit(saveType: 'save'|'submit'|'release') {
+    console.log('submitterId', typeof saveType);
+    console.log('submitterId', saveType);
 
     // reassembling files in "files" from "internalFiles" and externalReferences
     this.files.clear();
@@ -360,6 +363,7 @@ export class ItemFormComponent implements OnInit {
     // cleanup form
     this.form_2_submit = remove_null_empty(this.form.value);
     this.form_2_submit = remove_objects(this.form_2_submit);
+
     /*
     console.log('form_2_submit.valid:', JSON.stringify(this.form_2_submit.valid));
     console.log('form_2_submit.errors:', JSON.stringify(this.form_2_submit.errors));
@@ -368,69 +372,55 @@ export class ItemFormComponent implements OnInit {
     */
     // this.printValidationErrors(this.form); // call for debug function
 
+    let valid = saveType === "save" ? this.validForSave : this.allValid;
+    if(!valid) {
+      alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
+      return;
+    }
+    //To test error handling
+    //this.form_2_submit.metadata.title = null;
+
     // submit form
     if (this.aaService.isLoggedIn) {
       if (this.form_2_submit.objectId) {
-        switch (submitterId) {
-          case 'save': {
-            this.validForSave
-              ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe(result => {
-                this.itemUpdated(result);
-                if (this.form.get('objectId')?.value) {
-                  this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
-                }
-                this.messageService.success('Item updated successfully!');
-                console.log('Updated Item:', JSON.stringify(result))
-              })
-              : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
-            break;
-          }
-          case 'submit': {
-            this.allValid
-              ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('submit', result))
-              : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
-            break;
-          }
-          case 'release': {
-            this.allValid
-              ? (this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('release', result))
-              : alert('Validation Error when updating existing Publication: ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.errors));
-            break;
-          }
-        }
+        //Update item
+        this.itemService.update(this.form_2_submit.objectId, this.form_2_submit as ItemVersionVO).pipe(
+          this.savePipe(saveType)
+          //this.savePipe
+        ).subscribe();
       } else {
-
-        switch (submitterId) {
-          case 'save': {
-            this.validForSave
-              ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe(result => {
-                this.itemUpdated(result);
-                if (this.form.get('objectId')?.value) {
-                  this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
-                }
-                this.messageService.success('Item created successfully!');
-                console.log('Created Item', JSON.stringify(result));
-              })
-              : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
-            break;
-          }
-          case 'submit': {
-            this.allValid
-              ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('submit', result))
-              : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
-            break;
-          }
-          case 'release': {
-            this.allValid
-              ? (this.itemService.create(this.form_2_submit as ItemVersionVO)).subscribe((result: ItemVersionVO) => this.openActionsModal('submit', result))
-              : alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
-            break;
-          }
-        }
+        //Create item
+        this.itemService.create(this.form_2_submit as ItemVersionVO).pipe(
+          this.savePipe(saveType)
+        ).subscribe();
       }
     } else {
       alert('You must be logged in to update/create a publication');
     }
+  }
+
+  savePipe(saveType: 'save' | 'submit' | 'release') {
+    return pipe(
+      tap((result: ItemVersionVO) => {
+        //console.log("TAP" + result);
+        this.itemUpdated(result);
+        if (this.form.get('objectId')?.value) {
+          this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
+        }
+        this.messageService.success('Item saved successfully!');
+        console.log('Saved Item', JSON.stringify(result));
+
+        if(saveType !== "save") {
+          this.openActionsModal(saveType, result)
+        }
+      }),
+      catchError((err) => {
+        //return  EMPTY;
+        //TODO Better error handling?
+        return throwError(() => err);
+      })
+    )
+
   }
 
   // Debugging function to print validation errors

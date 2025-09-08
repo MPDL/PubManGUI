@@ -189,10 +189,15 @@
     </form>
 </div>
 
-<pre>valid? {{allValid}}</pre>
 
-<div class="container-fluid d-sm-flex flex-sm-row mb-1">
-    <pre class="col-sm">{{form.value | json}}</pre>
+
+
+  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapseJSON'" aria-expanded="true" aria-controls="collapseOne">Show JSON</button>
+
+<div class="container-fluid d-sm-flex flex-sm-row mb-1" id="collapseJSON" class="collapse">
+  <pre>valid? {{allValid}}</pre>
+  <pre class="col-sm">{{form.value | json}}</pre>
     <pre class="col-sm">{{form_2_submit | json}}</pre>
 </div>
 

@@ -47,6 +47,7 @@ export class FileUploadComponent {
           file: file,
           loaded: 0,
           total: file.size,
+          percentage: 0,
           finished: false
         }
         this.transferringFilesMap.set(file.name, tf);
@@ -57,17 +58,23 @@ export class FileUploadComponent {
         this.stagingFileService.createStageFile(file).pipe(
 
           tap(stageFileEvent => {
-            console.log(stageFileEvent.type);
+            //console.log(stageFileEvent.type);
             //console.log(stageFileEvent);
             if(stageFileEvent.type === HttpEventType.DownloadProgress) {
-              console.log("DownloadProg");
-              console.log(stageFileEvent.loaded + " / " + stageFileEvent.total);
+              //console.log("DownloadProg");
+              //console.log(stageFileEvent.loaded + " / " + stageFileEvent.total);
             }
             if(stageFileEvent.type === HttpEventType.UploadProgress) {
-              this.transferringFilesMap.get(file.name)!.loaded = stageFileEvent.loaded;
-              //this.transferringFilesMap.get(file.name)!.total = stageFileEvent.total;
-              console.log("Upload Progress");
-              console.log(stageFileEvent.loaded + " / " + stageFileEvent.total);
+              const tf = this.transferringFilesMap.get(file.name)!;
+              tf.loaded = stageFileEvent.loaded;
+              if (stageFileEvent.total) {
+                tf.total = stageFileEvent.total;
+              }
+              this.transferringFilesMap.get(file.name)!.percentage = Math.round((tf.loaded / tf.total) * 100);
+
+
+              //console.log("Upload Progress");
+              //console.log(stageFileEvent.loaded + " / " + stageFileEvent.total);
             }
           }),
           filter(stageFileEvent => stageFileEvent.type === HttpEventType.Response),
@@ -110,5 +117,6 @@ export interface TransferringFile {
   error?: any,
   loaded: number,
   total: number,
+  percentage: number,
   finished: boolean
 }

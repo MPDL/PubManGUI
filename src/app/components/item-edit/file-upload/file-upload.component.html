@@ -15,12 +15,11 @@
   <div class="dropzone">
 
     @for(tf of transferringFilesMap.values(); track tf.file) {
-      <div class = "row mb-2">
+      <div class = "container p-0 mb-2">
         <div class="text-start small">{{tf.file.name}}</div>
-        @let loadedPercent = Math.round((tf.loaded/tf.total)*100);
-        <div class="progress" role="progressbar" [attr.aria-valuenow]="loadedPercent" aria-valuemin="0" aria-valuemax="100">
-          <div class="progress-bar progress-bar-striped" [style.width.%]="loadedPercent"  [class.progress-bar-animated]="!tf.finished" [class.bg-success]="tf.finished" >
-            {{loadedPercent}}%
+        <div class="progress" role="progressbar" [attr.aria-valuenow]="tf.percentage" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped" [style.width.%]="tf.percentage"  [class.progress-bar-animated]="!tf.finished" [class.bg-success]="tf.finished" >
+            {{tf.percentage}}%
           </div>
         </div>
       </div>
