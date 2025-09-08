@@ -190,7 +190,7 @@ export class FormBuilderService {
       id: this.fb.nonNullable.control(identifier?.id ? identifier.id : null),
       type: this.fb.nonNullable.control(identifier?.type ? identifier.type : null)
     },
-      { validators: [IdentifierValidator], updateOn: 'blur' });
+      { validators: [IdentifierValidator], updateOn: VALIDATION_UPDATE_ON });
     return identifier_form;
   }
 
