@@ -20,20 +20,20 @@
             <li class="pt-0 pb-0 mx-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/datasets' ]"
                     (click)="warning('/batch/datasets')"
-                    [ngClass]="{'disabled pb-2' : !batchSvc.areItemsSelected()}">
+                    [ngClass]="{'disabled pb-2' : !batchSvc.areItemsSelected()}" data-test="sidenav-batch-datasets">
                     <span> {{'common.datasets' | translate}}</span>
                 </a>
             </li>
             <li class="pt-0 pb-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/actions' ]"
                     (click)="warning('/batch/actions')"
-                    [ngClass]="{'disabled pb-2' : !batchSvc.areItemsSelected() || this.batchSvc.isProcessRunning()}">
+                    [ngClass]="{'disabled pb-2' : !batchSvc.areItemsSelected() || this.batchSvc.isProcessRunning()}" data-test="sidenav-batch-actions">
                     <span> {{'common.actions' | translate}}</span>
                 </a>
             </li>
             <li class="pt-0 pb-2">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/logs' ]" (click)="warning('/batch/logs')"
-                [ngClass]="{'disabled' : false}">
+                [ngClass]="{'disabled' : false}" data-test="sidenav-batch-logs">
                     <span> {{'common.logs' | translate}}</span>
                 </a>
             </li>
@@ -41,6 +41,6 @@
 <!--
         }
         }
--->        
+-->
     </div>
 </div>

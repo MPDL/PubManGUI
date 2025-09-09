@@ -39,27 +39,52 @@ describe('Navigation Menu', () => {
     cy.url().should('eq', baseUrl + '/qa')
   })
 
-  it('Imports', () => {
+  it('Import - New', () => {
     //Given
     cy.visit('/')
     //When
-    cy.get('[data-test="sidenav-qa-area"]').filter(':visible').click()
+    cy.get('pure-imports-nav').filter(':visible').find('[data-test="sidenav-import-new"]').click({force: true})
     //Then
-    cy.url().should('eq', baseUrl + '/qa')
+    cy.url().should('eq', baseUrl + '/imports/new')
   })
 
-  //TODO: Add Tests for: New & My Imports
-
-  it('Batch', () => {
+  it('Import - My imports', () => {
     //Given
     cy.visit('/')
     //When
-    cy.get('[data-test="sidenav-batch"]').filter(':visible').click()
+    cy.get('pure-imports-nav').filter(':visible').find('[data-test="sidenav-import-myimports"]').click({force: true})
+    //Then
+    cy.url().should('eq', baseUrl + '/imports/myimports')
+  })
+
+  it('Batch - Datasets', () => {
+    //Given
+    cy.visit('/')
+    window.localStorage.setItem('dataset-list', JSON.stringify(new Array("itemId")))
+    //When
+    cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-datasets"]').click({force: true})
+    //Then
+    cy.url().should('eq', baseUrl + '/batch/datasets')
+  })
+
+  it('Batch - Actions', () => {
+    //Given
+    cy.visit('/')
+    window.localStorage.setItem('dataset-list', JSON.stringify(new Array("itemId")))
+    //When
+    cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-actions"]').click({force: true})
+    //Then
+    cy.url().should('eq', baseUrl + '/batch/actions')
+  })
+
+  it('Batch - Logs', () => {
+    //Given
+    cy.visit('/')
+    //When
+    cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-logs"]').click({force: true})
     //Then
     cy.url().should('eq', baseUrl + '/batch/logs')
   })
-
-  //TODO: Add Tests for: Batch Datasets, Batch Actions & Batch Logs
 
   it('Basket', () => {
     //Given
