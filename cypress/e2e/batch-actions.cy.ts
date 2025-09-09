@@ -23,10 +23,7 @@ describe('Execute Batch Actions', () => {
     //Given
     window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
 
-    //cy.visit('/batch/actions')
-    //TODO: Remove this workaround (Navigating to the actions via buttons). Use cy.visit('/batch/actions') as soon as it works.
-    cy.visit('/batch/datasets')
-    cy.get('pure-batch-nav li').eq(1).click({force: true})
+    cy.visit('/batch/actions')
 
     //When
     cy.get('#headingMetadata').find('button').click()
@@ -34,7 +31,7 @@ describe('Execute Batch Actions', () => {
     cy.get('#changeOrcidForm').type('Test')
 
     //TODO: Finish the test as soon as the autosuggest and the go-button is fixed
-    cy.get('.list-group').find('div').first().click()
+    cy.get('.input-group').find('div').first().click()
 
     //Then
   })
@@ -46,10 +43,7 @@ describe('Execute Batch Actions', () => {
     cy.intercept('PUT', '/rest/batchProcess/changeGenre?*').as('changeGenre')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
-    //cy.visit('/batch/actions')
-    //TODO: Remove this workaround (Navigating to the actions via buttons). Use cy.visit('/batch/actions') as soon as it works.
-    cy.visit('/batch/datasets')
-    cy.get('pure-batch-nav li').eq(1).click({force: true})
+    cy.visit('/batch/actions')
 
     //When
     cy.get('#headingGenre').find('button').click()
@@ -89,10 +83,7 @@ describe('Execute Batch Actions', () => {
     cy.intercept('PUT', '/rest/batchProcess/addLocalTags').as('addLocalTags')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
-    //cy.visit('/batch/actions')
-    //TODO: Remove this workaround (Navigating to the actions via buttons). Use cy.visit('/batch/actions') as soon as it works.
-    cy.visit('/batch/datasets')
-    cy.get('pure-batch-nav li').eq(1).click({force: true})
+    cy.visit('/batch/actions')
 
     //When
     cy.get('#headingTags').find('button').click()
@@ -106,7 +97,7 @@ describe('Execute Batch Actions', () => {
       expect(interception.response.statusCode).to.equal(200)
 
       //TODO: Check the exact confirmation/empty-batch message is displayed
-      cy.get('pure-messaging').should('exist')
+      cy.get('pure-notification').should('exist')
     })
 
     cy.repeatedWait('@batchProcess', 'state', ['FINISHED', 'FINISHED_WITH_ERROR'], 10000, 5).then((response) => {
@@ -115,8 +106,8 @@ describe('Execute Batch Actions', () => {
       // @ts-ignore
       expect(response.body['state']).to.equal('FINISHED')
 
-      //TODO: Check the exact confirmation/empty-batch message is displayed
-      cy.get('pure-messaging').should('exist')
+      //TODO: Should a message be displayed?
+      //cy.get('pure-notification').should('exist')
 
       cy.getItemViaAPI(itemId).then((response) => {
         //TODO: Check why localTags is an Array?

@@ -30,10 +30,7 @@ describe('Check Batch Logs', () => {
       cy.addLocalTagsViaAPI(localTags).as('addLocalTags')
     })
 
-    //cy.visit('/batch/logs')
-    //TODO: Remove this workaround (Navigating to the logs via buttons). Use cy.visit('/batch/logs') as soon as it works.
-    cy.visit('/batch/datasets')
-    cy.get('pure-batch-nav li').eq(2).click({force: true})
+    cy.visit('/batch/logs')
 
     //When
     cy.get('@addLocalTags').then(response => {
