@@ -6,8 +6,10 @@ export const SourceValidator: ValidatorFn = (control: AbstractControl,): Validat
   const source = control;
   if (source.get('genre')?.value === null || source.get('genre')?.value === '') {
     source.get('genre')?.setErrors({[error_types.SOURCE_GENRE_NOT_PROVIDED] : true});
-    return{};
     //return { [error_types.SOURCE_GENRE_NOT_PROVIDED] : true };
+  }
+  else {
+    source.get('genre')?.setErrors(null);
   }
   return null;
 }

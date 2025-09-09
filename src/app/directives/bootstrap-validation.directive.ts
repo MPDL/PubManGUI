@@ -131,5 +131,5 @@ export class BootstrapValidationDirective {
 
 }
 export function showValidationError(control: AbstractControl | undefined | null): boolean {
-  return control !==null && control!== undefined && control.invalid// && control.touched;
+  return control !==null && control!== undefined && control.invalid && control.touched;
 }

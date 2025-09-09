@@ -159,8 +159,8 @@ export class ItemFormComponent implements OnInit {
         }
       }
     }
-    this.internalFiles?.updateValueAndValidity();
-    this.externalReferences?.updateValueAndValidity();
+    //this.internalFiles?.updateValueAndValidity();
+    //this.externalReferences?.updateValueAndValidity();
   }
 
   add_remove_local_tag(event: any) {
@@ -319,7 +319,7 @@ export class ItemFormComponent implements OnInit {
         console.log('this.authorizationInfo: ', this.authorizationInfo);
       });
     }
-    this.form.updateValueAndValidity();
+    //this.form.updateValueAndValidity();
   }
 
   get allValid() {

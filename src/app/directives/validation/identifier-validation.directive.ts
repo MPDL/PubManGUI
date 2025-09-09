@@ -12,8 +12,11 @@ export const IdentifierValidator: ValidatorFn = (control: AbstractControl,): Val
       if (isFormValueEmpty(identifier.get('type')?.value)) {
         identifier.get('type')?.setErrors({[error_types.ID_TYPE_NOT_PROVIDED] : true});
         //return { [error_types.ID_TYPE_NOT_PROVIDED]: true };
-        return {};
-      } else { // Check format of the IDs
+
+      }
+      else {
+        identifier.get('type')?.setErrors(null);
+        // Check format of the IDs
         if ((id_type.BIORXIV.valueOf() === identifier.get('type')?.value ||
           id_type.CHEMRXIV.valueOf() === identifier.get('type')?.value ||
           id_type.DOI.valueOf() === identifier.get('type')?.value ||
@@ -28,8 +31,11 @@ export const IdentifierValidator: ValidatorFn = (control: AbstractControl,): Val
 
           identifier.get('id')?.setErrors({[error_types.INCORRECT_ID_DOI_FORMAT] : true});
           //return { [error_types.INCORRECT_ID_DOI_FORMAT]: true };
-          return {};
-        } // if
+
+        }// if
+        else {
+          identifier.get('id')?.setErrors(null);
+        }
       } // else
     } // if
   } // if

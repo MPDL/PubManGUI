@@ -13,12 +13,18 @@ export const fileDataValidator: ValidatorFn = (control: AbstractControl,): Valid
       control.get("content")?.setErrors({[error_types.COMPONENT_CONTENT_NOT_PROVIDED] : true});
       currentErrors[error_types.COMPONENT_CONTENT_NOT_PROVIDED] =  true;
     }
+    else {
+      control.get("content")?.setErrors(null);
+    }
     //File with missing content or missing objectId
     if (Storage.INTERNAL_MANAGED === file.storage) {
       if (isFormValueEmpty(file.content)
       && (isFormValueEmpty(file.objectId))) {
         control.get("content")?.setErrors({[error_types.COMPONENT_CONTENT_NOT_PROVIDED] : true});
         currentErrors[error_types.COMPONENT_CONTENT_NOT_PROVIDED] = true;
+      }
+      else {
+        control.get("content")?.setErrors(null);
       }
       if (Visibility.AUDIENCE === file.visibility) {
         let ok = false;
@@ -31,6 +37,9 @@ export const fileDataValidator: ValidatorFn = (control: AbstractControl,): Valid
           control.get("allowedAudienceIds")?.setErrors({[error_types.COMPONENT_IP_RANGE_NOT_PROVIDED] : true});
           //currentErrors[error_types.COMPONENT_IP_RANGE_NOT_PROVIDED] = true;
         }
+        else {
+          control.get("allowedAudienceIds")?.setErrors(null);
+        }
       }
     }
     // Metadata validation
@@ -40,16 +49,25 @@ export const fileDataValidator: ValidatorFn = (control: AbstractControl,): Valid
         control.get("metadata.title")?.setErrors({[error_types.COMPONENT_FILE_NAME_NOT_PROVIDED] : true});
         //currentErrors[error_types.COMPONENT_FILE_NAME_NOT_PROVIDED] = true;
       }
+      else {
+        control.get("metadata.title")?.setErrors(null);
+      }
       // File with missing content category
       if (isFormValueEmpty(file.metadata.contentCategory)) {
         control.get("metadata.contentCategory")?.setErrors({[error_types.COMPONENT_CONTENT_CATEGORY_NOT_PROVIDED] : true});
         //currentErrors[error_types.COMPONENT_CONTENT_CATEGORY_NOT_PROVIDED] = true;
+      }
+      else {
+        control.get("metadata.contentCategory")?.setErrors(null);
       }
     }
     //File with missing visibility (internal managed files only)
     if (Storage.EXTERNAL_URL !== file.storage && isFormValueEmpty(file.visibility)) {
       control.get("visibility")?.setErrors({[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED] : true});
       //currentErrors[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED] =  true;
+    }
+    else {
+      control.get("visibility")?.setErrors(null);
     }
 
   } // if

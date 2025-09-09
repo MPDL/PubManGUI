@@ -27,17 +27,17 @@ export class ValidationErrorComponent {
     if(this.control) {
       //console.log("Control" + this.control);
 
-      if(showValidationError(this.control)) {
+      //if(showValidationError(this.control)) {
         this.updateMessages(this.control?.errors);
-      }
+      //}
       this.statusSubscription = this.control.events.subscribe(status => {
-        if(showValidationError(this.control))
-        {
+        //if(showValidationError(this.control))
+        //{
           this.updateMessages(this.control?.errors)
-        }
-        else {
-          this.errorMessages = []
-        }
+        //}
+        //else {
+        //  this.errorMessages = []
+        //}
 
       })
     }

@@ -544,7 +544,7 @@
                 @if(meta_form.hasError(error_types.SOURCE_NOT_PROVIDED.toString())) {
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-auto">
-                        <div class="pure-invalid">Source required for current publication genre</div>
+                      <pure-validation-error [validationError]="{'21' : true}"/>
                     </div>
                 </div>
                 }
