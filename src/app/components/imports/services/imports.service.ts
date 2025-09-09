@@ -59,7 +59,7 @@ export class ImportsService {
   checkImports() {
     this.getImportLogs()
       .subscribe(response => {
-        this.#hasImports.set(response.length ? true : false);
+        this.#hasImports.set(response.length > 0 ? true : false);
       }
       );
   }
