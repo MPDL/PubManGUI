@@ -13,7 +13,9 @@ export const fileUrlValidator: ValidatorFn = (control: AbstractControl,): Valida
     if (!isFormValueEmpty(content) && !URL_PATTERN.test(content)) {
       control.get("content")?.setErrors({[error_types.LOCATOR_IS_NO_URI] : true});
         //return {[error_types.LOCATOR_IS_NO_URI]: true};
-      return {};
+    }
+    else {
+      control.get("content")?.setErrors(null);
     }
   }
   return null;

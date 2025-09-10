@@ -8,6 +8,8 @@ import { checkFileAccess, getFullItemId, isUrl } from "../../../utils/item-utils
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
 import { TranslatePipe } from "@ngx-translate/core";
 import { CopyButtonDirective } from "../../../directives/copy-button.directive";
+import { humanFileSize } from "../../../utils/utils";
+import { FileSizePipe } from "../../../pipes/file-size.pipe";
 
 @Component({
   selector: 'pure-item-view-file',
@@ -17,7 +19,8 @@ import { CopyButtonDirective } from "../../../directives/copy-button.directive";
     EmptyPipe,
     NgbPopover,
     TranslatePipe,
-    CopyButtonDirective
+    CopyButtonDirective,
+    FileSizePipe
   ],
   templateUrl: './item-view-file.component.html',
   styleUrl: './item-view-file.component.scss'
@@ -74,6 +77,7 @@ export class ItemViewFileComponent {
     }
     return undefined;
   }
+
 
   protected readonly isUrl = isUrl;
 }

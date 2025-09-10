@@ -139,16 +139,16 @@ export interface GrantVO extends ValueObject {
 }
 
 export interface MdsOrganizationalUnitDetailsVO extends MetadataSetVO {
-    city: string;
-    coordinates: Coordinates;
-    countryCode: string;
-    descriptions: string[];
-    identifiers: IdentifierVO[];
-    name: string;
-    alternativeNames: string[];
-    type: string;
-    startDate: string;
-    endDate: string;
+    city?: string;
+    coordinates?: Coordinates;
+    countryCode?: string;
+    descriptions?: string[];
+    identifiers?: IdentifierVO[];
+    name?: string;
+    alternativeNames?: string[];
+    type?: string;
+    startDate?: string;
+    endDate?: string;
 }
 
 export interface Searchable extends Cloneable {
@@ -171,30 +171,30 @@ export interface MdsFileVO extends MetadataSetVO {
 }
 
 export interface MdsPublicationVO extends MetadataSetVO, Cloneable {
-    alternativeTitles: AlternativeTitleVO[];
-    creators: CreatorVO[];
-    dateAccepted: string;
-    dateCreated: string;
-    dateModified: string;
-    datePublishedInPrint: string;
-    datePublishedOnline: string;
-    dateSubmitted: string;
-    degree: DegreeType;
-    event: EventVO;
-    legalCase: LegalCaseVO;
-    genre: MdsPublicationGenre;
-    identifiers: IdentifierVO[];
-    languages: string[];
-    location: string;
-    publishingInfo: PublishingInfoVO;
-    reviewMethod: ReviewMethod;
-    sources: SourceVO[];
-    freeKeywords: string;
-    subjects: SubjectVO[];
-    tableOfContents: string;
-    totalNumberOfPages: string;
-    abstracts: AbstractVO[];
-    projectInfo: ProjectInfoVO[];
+    alternativeTitles?: AlternativeTitleVO[];
+    creators?: CreatorVO[];
+    dateAccepted?: string;
+    dateCreated?: string;
+    dateModified?: string;
+    datePublishedInPrint?: string;
+    datePublishedOnline?: string;
+    dateSubmitted?: string;
+    degree?: DegreeType;
+    event?: EventVO;
+    legalCase?: LegalCaseVO;
+    genre?: MdsPublicationGenre;
+    identifiers?: IdentifierVO[];
+    languages?: string[];
+    location?: string;
+    publishingInfo?: PublishingInfoVO;
+    reviewMethod?: ReviewMethod;
+    sources?: SourceVO[];
+    freeKeywords?: string;
+    subjects?: SubjectVO[];
+    tableOfContents?: string;
+    totalNumberOfPages?: string;
+    abstracts?: AbstractVO[];
+    projectInfo?: ProjectInfoVO[];
 }
 
 export interface ValueObject extends Serializable {
@@ -207,8 +207,8 @@ export interface Coordinates extends Serializable {
 }
 
 export interface IdentifierVO extends ValueObject, Cloneable {
-    id: string;
-    type: IdType;
+    id?: string;
+    type?: IdType;
 }
 
 export interface MetadataSetVO extends ValueObject, Cloneable {
@@ -224,105 +224,105 @@ export interface FormatVO extends ValueObject {
 }
 
 export interface AlternativeTitleVO extends ValueObject, Cloneable {
-    language: string;
-    value: string;
-    type: AlternativeTitleType;
+    language?: string;
+    value?: string;
+    type?: AlternativeTitleType;
 }
 
 export interface CreatorVO extends ValueObject, Cloneable {
-    organization: OrganizationVO;
-    person: PersonVO;
-    role: CreatorRole;
-    type: CreatorType;
+    organization?: OrganizationVO;
+    person?: PersonVO;
+    role?: CreatorRole;
+    type?: CreatorType;
 }
 
 export interface EventVO extends ValueObject, Cloneable {
-    endDate: string;
-    invitationStatus: InvitationStatus;
-    place: string;
-    startDate: string;
-    title: string;
+    endDate?: string;
+    invitationStatus?: InvitationStatus;
+    place?: string;
+    startDate?: string;
+    title?: string;
 }
 
 export interface LegalCaseVO extends ValueObject, Cloneable {
-    title: string;
-    courtName: string;
-    identifier: string;
-    datePublished: string;
+    title?: string;
+    courtName?: string;
+    identifier?: string;
+    datePublished?: string;
 }
 
 export interface PublishingInfoVO extends ValueObject, Cloneable {
-    edition: string;
-    place: string;
-    publisher: string;
+    edition?: string;
+    place?: string;
+    publisher?: string;
 }
 
 export interface SourceVO extends ValueObject, Cloneable {
-    title: string;
-    alternativeTitles: AlternativeTitleVO[];
-    creators: CreatorVO[];
-    volume: string;
-    issue: string;
+    title?: string;
+    alternativeTitles?: AlternativeTitleVO[];
+    creators?: CreatorVO[];
+    volume?: string;
+    issue?: string;
     datePublishedInPrint?: Date;
-    startPage: string;
-    endPage: string;
-    sequenceNumber: string;
-    publishingInfo: PublishingInfoVO;
-    identifiers: IdentifierVO[];
+    startPage?: string;
+    endPage?: string;
+    sequenceNumber?: string;
+    publishingInfo?: PublishingInfoVO;
+    identifiers?: IdentifierVO[];
     sources?: SourceVO[];
-    genre: SourceGenre;
-    totalNumberOfPages: string;
+    genre?: SourceGenre;
+    totalNumberOfPages?: string;
 }
 
 export interface SubjectVO extends ValueObject, Cloneable {
-    language: string;
-    value: string;
-    type: string;
+    language?: string;
+    value?: string;
+    type?: string;
 }
 
 export interface AbstractVO extends ValueObject, Cloneable {
-    language: string;
-    value: string;
+    language?: string;
+    value?: string;
 }
 
 export interface ProjectInfoVO extends ValueObject, Cloneable {
-    title: string;
-    grantIdentifier: IdentifierVO;
-    fundingInfo: FundingInfoVO;
+    title?: string;
+    grantIdentifier?: IdentifierVO;
+    fundingInfo?: FundingInfoVO;
 }
 
 export interface OrganizationVO extends ValueObject, Cloneable {
     address?: string;
-    identifier: string;
-    name: string;
+    identifier?: string;
+    name?: string;
     identifierPath?: string[];
 }
 
 export interface PersonVO extends ValueObject, Cloneable {
-    completeName: string;
-    givenName: string;
-    familyName: string;
-    alternativeNames: string[];
-    titles: string[];
-    pseudonyms: string[];
-    organizations: OrganizationVO[];
-    identifier: IdentifierVO;
-    orcid: string;
+    completeName?: string;
+    givenName?: string;
+    familyName?: string;
+    alternativeNames?: string[];
+    titles?: string[];
+    pseudonyms?: string[];
+    organizations?: OrganizationVO[];
+    identifier?: IdentifierVO;
+    orcid?: string;
 }
 
 export interface FundingInfoVO extends ValueObject, Cloneable {
-    fundingOrganization: FundingOrganizationVO;
-    fundingProgram: FundingProgramVO;
+    fundingOrganization?: FundingOrganizationVO;
+    fundingProgram?: FundingProgramVO;
 }
 
 export interface FundingOrganizationVO extends ValueObject, Cloneable {
-    title: string;
-    identifiers: IdentifierVO[];
+    title?: string;
+    identifiers?: IdentifierVO[];
 }
 
 export interface FundingProgramVO extends ValueObject, Cloneable {
-    title: string;
-    identifiers: IdentifierVO[];
+    title?: string;
+    identifiers?: IdentifierVO[];
 }
 
 export interface SavedSearchVO extends BasicDbRO, Cloneable {

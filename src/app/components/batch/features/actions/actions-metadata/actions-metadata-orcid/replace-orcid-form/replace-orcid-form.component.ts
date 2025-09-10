@@ -12,7 +12,7 @@ import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/bat
 
 import { TranslatePipe } from "@ngx-translate/core";
 
-import { ControlType } from 'src/app/services/form-builder.service'; 
+import { ControlType } from 'src/app/services/form-builder.service';
 
 @Component({
   selector: 'pure-replace-orcid-form',
@@ -31,20 +31,20 @@ export class ReplaceOrcidFormComponent {
   batchSvc = inject(BatchService);
 
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
-    completeName: this.fb.control(''),
-    givenName: this.fb.control(''),
-    familyName: this.fb.control(''),
+    completeName: this.fb.nonNullable.control(''),
+    givenName: this.fb.nonNullable.control(''),
+    familyName: this.fb.nonNullable.control(''),
     alternativeNames: this.fb.array<AbstractControl<string, string>>([]),
     titles: this.fb.array<AbstractControl<string, string>>([]),
     pseudonyms: this.fb.array<AbstractControl<string, string>>([]),
     organizations: this.fb.array<AbstractControl<OrganizationVO, OrganizationVO>>([]),
     identifier: this.fb.group<ControlType<IdentifierVO>>(
       {
-        id: this.fb.control(''),
-        type: this.fb.control(IdType.CONE),
+        id: this.fb.nonNullable.control(''),
+        type: this.fb.nonNullable.control(IdType.CONE),
       }
     ),
-    orcid: this.fb.control(''),
+    orcid: this.fb.nonNullable.control(''),
 
   });
 

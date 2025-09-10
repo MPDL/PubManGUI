@@ -31,7 +31,7 @@ export class ItemViewMetadataComponent {
   }
 
 
-  publishingInfoString(pubInfo: PublishingInfoVO) {
+  publishingInfoString(pubInfo?: PublishingInfoVO) {
     let pubInfoString = '';
     if (pubInfo) {
       //place
@@ -75,28 +75,31 @@ export class ItemViewMetadataComponent {
 
   }
 
-  identifierUrl(id: IdentifierVO) {
-    if (IdType.DOI === id.type){
-      return 'https://doi.org/' + id.id;
-    } else if (IdType.ADS == id.type) {
-      return 'https://ui.adsabs.harvard.edu/abs/'+ id.id;
-    } else if (IdType.ARXIV == id.type) {
-      return 'https://arxiv.org/abs/' + id.id;
-    } else if (IdType.CONE == id.type) {
-      return this.coneUri + id.id;
-    } else if (IdType.ISI == id.type) {
-      return 'http://gateway.isiknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcAuth=SFX&SrcApp=SFX&DestLinkType=FullRecord&DestApp=WOS&KeyUT=' + id.id;
-    } else if (IdType.PMC == id.type) {
-      return 'https://www.ncbi.nlm.nih.gov/pmc/articles/' + id.id;
-    } else if (IdType.PMID == id.type) {
-      return 'https://pubmed.ncbi.nlm.nih.gov/' + id.id;
-    } else if (IdType.SSRN == id.type) {
-      return 'https://ssrn.com/abstract=' + id.id;
-    } else if (IdType.ZDB == id.type) {
-      'https://ld.zdb-services.de/resource/' + id.id;
-    } else if (isUrl(id.id)) {
-      return id.id;
+  identifierUrl(id?: IdentifierVO) {
+    if(id) {
+      if (IdType.DOI === id.type){
+        return 'https://doi.org/' + id.id;
+      } else if (IdType.ADS == id.type) {
+        return 'https://ui.adsabs.harvard.edu/abs/'+ id.id;
+      } else if (IdType.ARXIV == id.type) {
+        return 'https://arxiv.org/abs/' + id.id;
+      } else if (IdType.CONE == id.type) {
+        return this.coneUri + id.id;
+      } else if (IdType.ISI == id.type) {
+        return 'http://gateway.isiknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcAuth=SFX&SrcApp=SFX&DestLinkType=FullRecord&DestApp=WOS&KeyUT=' + id.id;
+      } else if (IdType.PMC == id.type) {
+        return 'https://www.ncbi.nlm.nih.gov/pmc/articles/' + id.id;
+      } else if (IdType.PMID == id.type) {
+        return 'https://pubmed.ncbi.nlm.nih.gov/' + id.id;
+      } else if (IdType.SSRN == id.type) {
+        return 'https://ssrn.com/abstract=' + id.id;
+      } else if (IdType.ZDB == id.type) {
+        'https://ld.zdb-services.de/resource/' + id.id;
+      } else if (id.id && isUrl(id.id)) {
+        return id.id;
+      }
     }
+
     return undefined;
   }
 

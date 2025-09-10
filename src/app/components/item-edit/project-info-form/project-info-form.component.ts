@@ -41,10 +41,10 @@ export class ProjectInfoFormComponent {
       idValue => idValue ? this.project_info_form.get('grantIdentifier')?.get('type')?.patchValue(IdType.GRANT_ID) : this.project_info_form.get('grantIdentifier')?.get('type')?.patchValue(null)
     );
     this.fundingOrganizationIdentifierSubscription = this.fundingOrganizationIdentifier?.get('id')?.valueChanges.subscribe(
-      idValue => idValue ? this.fundingOrganizationIdentifier?.get('type')?.patchValue(IdType.OPEN_AIRE) : this.fundingOrganizationIdentifier?.get('type')?.patchValue(null)
+      idValue => idValue ? this.fundingOrganizationIdentifier?.get('type')?.patchValue(IdType.OPEN_AIRE) : this.fundingOrganizationIdentifier?.get('type')?.patchValue(undefined)
     );
     this.fundingProgramIdentifierSubscription = this.fundingProgramIdentifier?.get('id')?.valueChanges.subscribe(
-      idValue => idValue ? this.fundingProgramIdentifier?.get('type')?.patchValue(IdType.OPEN_AIRE) : this.fundingProgramIdentifier?.get('type')?.patchValue(null)
+      idValue => idValue ? this.fundingProgramIdentifier?.get('type')?.patchValue(IdType.OPEN_AIRE) : this.fundingProgramIdentifier?.get('type')?.patchValue(undefined)
     );
   }
 

@@ -753,7 +753,8 @@
     "license" : "Lizenz",
     "copyright": "Copyright",
     "copyrightDate": "Copyright Datum",
-    "url" : "URL"
+    "url" : "URL",
+    "size" : "Größe"
 	},
 	"CreatorRoles": {
 		"ARTIST": "Künstler",

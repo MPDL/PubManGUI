@@ -58,13 +58,13 @@ export class ItemViewCreatorsComponent {
             //console.log("Handling aff " + creatorOu.name);
 
             let index = 0;
-            if (this.affiliationMap.has(creatorOu.name)) {
+            if (this.affiliationMap.has(creatorOu.name!)) {
 
-              index = this.affiliations.indexOf(this.affiliationMap.get(creatorOu.name)!) + 1;
+              index = this.affiliations.indexOf(this.affiliationMap.get(creatorOu.name!)!) + 1;
 
 
             } else {
-              this.affiliationMap.set(creatorOu.name, creatorOu);
+              this.affiliationMap.set(creatorOu.name!, creatorOu);
               this.affiliations.push(creatorOu);
               index = this.affiliations.length;
             }

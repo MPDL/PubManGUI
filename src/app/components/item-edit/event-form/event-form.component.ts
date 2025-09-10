@@ -43,7 +43,7 @@ export class EventFormComponent {
 
   change_invitation_status(event: any) {
     console.log('change_invitation_status', this.invitationBoolean.value); // Debugging line
-    this.event_form.get('invitationStatus')?.setValue(this.invitationBoolean.value ? InvitationStatus.INVITED : null);
+    this.event_form.get('invitationStatus')?.setValue(this.invitationBoolean.value ? InvitationStatus.INVITED : undefined);
   }
 }
 

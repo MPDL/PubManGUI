@@ -202,8 +202,11 @@
 
 <div class="container-fluid d-sm-flex flex-sm-row mb-1" id="collapseJSON" class="collapse">
   <pre>valid? {{allValid}}</pre>
-  <pre class="col-sm">{{form.value | json}}</pre>
-    <pre class="col-sm">{{form_2_submit | json}}</pre>
+  <div class="row">
+    <div class="col-sm"><pre>{{form.value | json}}</pre></div>
+    <div class="col-sm"><pre>{{form_2_submit | json}}</pre></div>
+  </div>
+
 </div>
 
 } @else {

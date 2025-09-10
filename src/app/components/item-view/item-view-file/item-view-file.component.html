@@ -89,10 +89,10 @@
               {{ file.name }}
             </div>
             <div class="mt-1">
-              <strong>{{ 'FileMetadataFields.mimeType' | translate }} / {{ 'FileMetadataFields.checksum' | translate }}</strong>
+              <strong>{{ 'FileMetadataFields.size' | translate }} / {{ 'FileMetadataFields.mimeType' | translate }} / {{ 'FileMetadataFields.checksum' | translate }}</strong>
             </div>
             <div>
-              {{ file.mimeType }} | <button type="button" class="btn btn-sm btn-link m-0 p-0" [ngbPopover]="checksumPopup" [autoClose]="'outside'">{{file.checksumAlgorithm}}</button>
+              {{file.size | fileSize}} | {{ file.mimeType }} | <button type="button" class="btn btn-sm btn-link m-0 p-0" [ngbPopover]="checksumPopup" [autoClose]="'outside'">{{file.checksumAlgorithm}}</button>
             </div>
             <ng-template #checksumPopup>
               {{ file.checksum }}

@@ -273,7 +273,7 @@
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.fundingInfo?.fundingProgram | empty)">
                 <span label>{{'MetadataFields.projectInfoFundingProgram' | translate}}</span>
                 <span content>
-                    {{ pi.fundingInfo?.fundingProgram?.title }} {{ pi.fundingInfo?.fundingProgram?.identifiers ? '(' + pi.fundingInfo.fundingProgram?.identifiers![0].id + ')' : '' }}
+                    {{ pi.fundingInfo?.fundingProgram?.title }} {{ pi.fundingInfo?.fundingProgram?.identifiers ? '(' + pi.fundingInfo?.fundingProgram?.identifiers![0].id + ')' : '' }}
                 </span>
             </pure-item-view-metadata-element>
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.fundingInfo?.fundingOrganization | empty)">

@@ -69,8 +69,8 @@
                             [formForPersonsGivenName]="$any(person.controls.givenName)"
                             [formForPersonsFamilyName]="$any(person.controls.familyName)"
                             [formForPersonOrganizations]="$any(person.controls.organizations)"
-                            [formForPersonsIdValue]="$any(person.controls.identifier.controls.id)"
-                            [formForPersonsIdType]="$any(person.controls.identifier.controls.type)"
+                            [formForPersonsIdValue]="$any(person.controls.identifier).controls.id"
+                            [formForPersonsIdType]="$any(person.controls.identifier).controls.type"
                             [formForPersonsOrcid]="$any(person.controls.orcid)"
                             [showConeAndOrcid]="true"
                             data-test="familyname-autosuggest" />

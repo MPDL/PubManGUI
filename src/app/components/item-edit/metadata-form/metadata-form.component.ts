@@ -48,6 +48,7 @@ import { AddMultipleCreatorsModalComponent } from '../add-multiple-creators-moda
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../validation-error/validation-error.component";
+import { remove_null_empty } from "../../../utils/utils_final";
 
 @Component({
   selector: 'pure-metadata-form',
@@ -239,9 +240,10 @@ export class MetadataFormComponent implements OnInit {
         this.miscellaneousService.getDecodedMultiplePersons(creatorsString).subscribe(
           (decodedCreators) => {
             for (let creator of decodedCreators) {
-              let personVO: PersonVO = { completeName: creator.family + ', ' + creator.given, familyName: creator.family, givenName: creator.given, alternativeNames: [''], titles: [''], pseudonyms: [''], organizations: [], identifier: { id: '', type: IdType.OTHER }, orcid: '' };
-              let creatorVO: CreatorVO = { person: personVO, role: CreatorRole.AUTHOR, type: CreatorType.PERSON, organization: { identifier: '', name: '' } };
+              let personVO: PersonVO = { completeName: undefined, familyName: creator.family, givenName: creator.given, alternativeNames: undefined, titles: undefined, pseudonyms: undefined, organizations: undefined, identifier: undefined, orcid: undefined };
+              let creatorVO: CreatorVO = { person: personVO, role: CreatorRole.AUTHOR, type: CreatorType.PERSON, organization: undefined };
               this.creators.push(this.fbs.creator_FG(creatorVO));
+              //remove_null_empty(this.creators.value);
             }
             this.messageService.success('Adding multiple creators successful. Please review the list of creators.');
             this.multipleCreators.setValue('');
