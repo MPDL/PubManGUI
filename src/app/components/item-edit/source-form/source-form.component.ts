@@ -1,12 +1,19 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  AddRemoveButtonsComponent
-} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
-import { AlternativeTitleVO, CreatorVO, IdentifierVO, SourceGenre, PublishingInfoVO } from 'src/app/model/inge';
+import {
+  AlternativeTitleType,
+  AlternativeTitleVO,
+  CreatorVO,
+  IdentifierVO,
+  IdType,
+  PublishingInfoVO,
+  SourceGenre,
+  SourceVO
+} from 'src/app/model/inge';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
 import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
@@ -16,6 +23,10 @@ import { Errors } from 'src/app/model/errors';
 import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { JournalAutosuggestComponent } from "../../shared/journal-autosuggest/journal-autosuggest.component";
+import { ConeService } from "../../../services/cone.service";
+import { tap } from "rxjs";
+import { identifierUriToEnum } from "../../../utils/utils";
 
 @Component({
   selector: 'pure-source-form',
@@ -31,7 +42,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     ReactiveFormsModule,
     CdkDropList,
     CdkDrag, TranslatePipe,
-    BootstrapValidationDirective
+    BootstrapValidationDirective, JournalAutosuggestComponent
   ],
   templateUrl: './source-form.component.html',
   styleUrl: './source-form.component.scss'
@@ -48,6 +59,8 @@ export class SourceFormComponent {
 
   error_types = Errors;
   genre_types = Object.keys(SourceGenre).sort();
+
+  coneService = inject(ConeService);
 
   get alternativeTitles() {
     return this.source_form.get('alternativeTitles') as FormArray<FormGroup<ControlType<AlternativeTitleVO>>>;
@@ -141,4 +154,72 @@ export class SourceFormComponent {
     array.insert(toIndex, object);
   }
 
+  journalSelected(coneId: any) {
+    console.log(coneId);
+    if (coneId) {
+      this.coneService.getConeResource(coneId).pipe(
+        tap(data => {
+          console.log(data);
+          this.coneJournalToSourceVO(data);
+        })
+      ).subscribe();
+
+    }
+
+
+  }
+
+  private coneJournalToSourceVO(journalConeData: any) {
+    const title = journalConeData.http_purl_org_dc_elements_1_1_title;
+    this.source_form.get('title')?.setValue(title);
+
+    const publisher = journalConeData.http_purl_org_dc_elements_1_1_publisher;
+    this.source_form.get('publishingInfo.publisher')?.setValue(publisher);
+
+    const place = journalConeData.http_purl_org_dc_terms_publisher;
+    this.source_form.get('publishingInfo.place')?.setValue(place);
+
+    //Alternative Titles
+    const altTitles = journalConeData.http_purl_org_dc_terms_alternative;
+    const abbrevs = journalConeData.http_purl_org_escidoc_metadata_terms_0_1_abbreviation;
+    const altTitleFormArray = (this.source_form.get('alternativeTitles') as FormArray)
+    altTitleFormArray.clear();
+    if (abbrevs) {
+      Array.isArray(abbrevs) ?
+        abbrevs.forEach(t => {
+          altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.ABBREVIATION, value: t}));
+        }) :
+        altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.ABBREVIATION, value: altTitles}));
+    }
+    if (altTitles) {
+      Array.isArray(altTitles) ?
+        altTitles.forEach(t => {
+          altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.OTHER, value: t}));
+        }) :
+        altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.OTHER, value: altTitles}));
+    }
+
+    //identifiers
+    const identifiers = journalConeData.http_purl_org_dc_elements_1_1_identifier;
+    const identifierFormArray = this.source_form.get('identifiers') as FormArray;
+    identifierFormArray.clear();
+    if (identifiers) {
+      if (Array.isArray(identifiers)) {
+        identifiers.forEach(t => {
+          const type = identifierUriToEnum(t.http_www_w3_org_2001_XMLSchema_instance_type) || IdType.OTHER;
+          identifierFormArray.push(this.fbs.identifier_FG({
+            type: type,
+            id: t.http_www_w3_org_1999_02_22_rdf_syntax_ns_value
+          }));
+        })
+      } else {
+        const type = identifierUriToEnum(identifiers.http_www_w3_org_2001_XMLSchema_instance_type) || IdType.OTHER;
+        identifierFormArray.push(this.fbs.identifier_FG({
+          type: type,
+          id: identifiers.http_www_w3_org_1999_02_22_rdf_syntax_ns_value
+        }));
+      }
+    }
+
+  }
 }

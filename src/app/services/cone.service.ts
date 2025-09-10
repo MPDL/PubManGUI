@@ -33,6 +33,12 @@ export class ConeService {
     const params = new HttpParams().set('format', 'json');
     return this.http.get<PersonResource>(requestUrl, { params })
   }
+
+  getConeResource(path: string, format="json") {
+    const requestUrl = this.rest_uri + path;
+    const params = new HttpParams().set('format', format);
+    return this.http.get<any>(requestUrl, { params })
+  }
 }
 
 export interface PersonResource {

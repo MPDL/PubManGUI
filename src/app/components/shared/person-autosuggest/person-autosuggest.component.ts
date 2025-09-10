@@ -73,7 +73,7 @@ export class PersonAutosuggestComponent {
           catchError(() => {
             //this.searchFailed = true;
             console.log('search failed');
-            return of([]);
+            return [];
           }),
         )
       }),
