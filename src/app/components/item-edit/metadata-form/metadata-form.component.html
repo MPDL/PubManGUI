@@ -183,7 +183,7 @@
                             </div>
                             -->
                             }
-                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
+                            <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_issued.display}">
                                     <label class="col-form-label">{{ 'MetadataFields.datePublishedInPrint' | translate }}</label>
@@ -193,7 +193,7 @@
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="datePublishedInPrint"
-                                        [placeholder]="'common.dateFormat' | translate" validationMessagePosition="top">
+                                        [placeholder]="'common.dateFormat' | translate">
                                 </div>
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_published_online.display}">
@@ -204,7 +204,7 @@
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="datePublishedOnline"
-                                           [placeholder]="'common.dateFormat' | translate" validationMessagePosition="top">
+                                           [placeholder]="'common.dateFormat' | translate">
                                 </div>
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_accepted.display}">
@@ -215,7 +215,7 @@
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateAccepted"
-                                           [placeholder]="'common.dateFormat' | translate" validationMessagePosition="top">
+                                           [placeholder]="'common.dateFormat' | translate">
                                 </div>
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_submitted.display}">
@@ -226,7 +226,7 @@
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateSubmitted"
-                                           [placeholder]="'common.dateFormat' | translate" validationMessagePosition="top">
+                                           [placeholder]="'common.dateFormat' | translate" >
                                 </div>
                             </div>
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
@@ -238,7 +238,7 @@
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateCreated"
-                                           [placeholder]="'common.dateFormat' | translate" data-test="date-created" validationMessagePosition="top">
+                                           [placeholder]="'common.dateFormat' | translate" data-test="date-created" >
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="col-form-label">{{ 'MetadataFields.dateModified' | translate }}</label>
@@ -248,7 +248,7 @@
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateModified"
-                                           [placeholder]="'common.dateFormat' | translate" validationMessagePosition="top">
+                                           [placeholder]="'common.dateFormat' | translate" >
                                 </div>
                             </div>
                             <div class="col-sm-1">
@@ -374,7 +374,7 @@
                         <hr>
                     </div>
                 </div>
-                <div class="accordion-body mt-3 mb-3">
+                <div class="accordion-body mb-3">
                     <ng-container formArrayName="abstracts">
                         @for (abstract of abstracts.controls; track abstractIndex; let abstractIndex = $index) {
                         <div

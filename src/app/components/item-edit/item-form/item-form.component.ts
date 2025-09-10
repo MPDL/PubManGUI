@@ -1,9 +1,17 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, EMPTY, Observable, of, pipe, switchMap, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, Observable, of, pipe, Subscription, switchMap, tap, throwError } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
 import {
   ContextDbRO,
@@ -83,6 +91,8 @@ export class ItemFormComponent implements OnInit {
   genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
 
+  allValidationErrorSubscription?: Subscription;
+  allValidationErrors: any[] = [];
 
   ngOnInit(): void {
     this.route.data.pipe(
@@ -116,6 +126,18 @@ export class ItemFormComponent implements OnInit {
       );
 
      */
+  }
+
+  ngAfterViewInit(): void {
+    /*
+    this.allValidationErrorSubscription = this.form.valueChanges.subscribe(value => {
+      this.allValidationErrors = this.findErrorsRecursive(this.form)
+    })
+     */
+  }
+
+  ngOnDestroy(): void {
+    this.allValidationErrorSubscription?.unsubscribe();
   }
 
   get context() {
@@ -449,6 +471,30 @@ export class ItemFormComponent implements OnInit {
         }
       }
     });
+  }
+
+  get errors() {
+    return this.findErrorsRecursive(this.form);
+  }
+
+  findErrorsRecursive(
+    formToInvestigate: FormGroup | FormArray
+  ): ValidationErrors[] {
+    let errors: any[] = [];
+    const recursiveFunc = (form: FormGroup | FormArray) => {
+      Object.keys(form.controls).forEach((field) => {
+        const control = form.get(field);
+        if (control?.errors) {
+          errors.push({name: field,errors: control.errors});
+        }
+        if (control instanceof FormGroup || control instanceof FormArray) {
+          recursiveFunc(control);
+        }
+      });
+    };
+    recursiveFunc(formToInvestigate);
+    console.log(errors);
+    return errors;
   }
 
 }

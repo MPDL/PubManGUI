@@ -58,6 +58,7 @@ export type ControlType<T> = {
 export const ORCID_PATTERN = /^http[s]?:\/\/orcid.org\/(\d{4})-(\d{4})-(\d{4})-(\d{3}[0-9X])$/;
 export const DATE_PATTERN = /^[0-9]{4}-?(?:[01][0-9])?-?(?:[0-3][0-9])?$/;
 export const FILE_TITLE_AND_NAME_PATTERN = /^[^/]+$/;
+export const DOI_PATTERN = /^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i;
 
 const VALIDATION_UPDATE_ON = 'change';
 @Injectable({
