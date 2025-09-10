@@ -38,7 +38,7 @@ export class ImportsNavComponent implements OnInit {
     this.mobile = viewWidth < 1400 ? true : false;
   }
 
-  warning(option: string) {
+  whenReady(option: string) {
     switch (option) {
       case '/imports/myimports':
         if (!this.importsSvc.hasImports()) {

@@ -2,24 +2,25 @@
     <div class="border-bottom show-more">
         <a class="nav-link py-2 py-xl-3" (click)="showMore()" data-test="sidenav-import">
             <span class="material-symbols-outlined">get_app</span>
-            <span class="nav-label ms-3">{{'imports.name'| translate }}</span>
-            @if (!isMoreShown) {
-            <span class="material-symbols-outlined">arrow_drop_down</span>
-            } @else {
-            <span class="material-symbols-outlined">arrow_drop_up</span>
-            }
+            <span class="nav-label ms-3">{{'imports.name'| translate }}
+                @if (!isMoreShown) {
+                <span class="material-symbols-outlined">arrow_drop_down</span>
+                } @else {
+                <span class="material-symbols-outlined">arrow_drop_up</span>
+                }
+            </span>
         </a>
 
         <ul class="more-to-show" [ngClass]="{'d-block' : showMore(), 'd-none' : !showMore()}" id="imports-options">
             <li class="pt-0 pb-0 mx-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/imports/new' ]"
-                (click)="warning('/imports/new')" data-test="sidenav-import-new">
+                (click)="whenReady('/imports/new')" data-test="sidenav-import-new">
                     <span> {{'common.new' | translate}}</span>
                 </a>
             </li>
             <li class="pt-0 pb-2">
                 <a class="nav-link nav-label" [routerLink]="[ '/imports/myimports' ]"
-                    (click)="warning('/imports/myimports')"
+                    (click)="whenReady('/imports/myimports')"
                     [ngClass]="{'disabled' : !importsSvc.hasImports()}" data-test="sidenav-import-myimports">
                     <span> {{'common.myimports' | translate}}</span>
                 </a>

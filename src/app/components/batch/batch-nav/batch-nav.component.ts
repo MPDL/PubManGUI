@@ -41,8 +41,7 @@ export class BatchNavComponent implements OnInit {
     this.mobile = viewWidth < 1400 ? true : false;
   }
 
-  // TO-DO ???
-  warning(option: string) {
+  whenReady(option: string) {
     switch (option) {
       case '/batch/datasets':
         if (!this.batchSvc.areItemsSelected()) {

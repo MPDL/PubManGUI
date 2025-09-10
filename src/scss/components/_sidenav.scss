@@ -2,7 +2,7 @@
   left: 9.7%;
   position: fixed;
   top: 150px;
-  width: 16.6rem;
+  width: 16.4em;
   z-index: 1032;
   overflow: hidden;
   border-radius: 0.4rem;
@@ -44,7 +44,7 @@
 }
 
 .side_nav.collapsed {
-  width: 7.2rem;
+  width: 6.2rem;
 }
 
 .side_nav.collapsed .bi {
@@ -56,7 +56,6 @@
 }
 
 .side_nav_mobile {
-  //right: 1rem;
   position: fixed;
   top: 1rem;
   width: 100%;

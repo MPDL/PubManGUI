@@ -2,45 +2,41 @@
     <div class="batch border-bottom show-more">
         <a class="nav-link py-2 py-xl-3" (click)="showMore()" data-test="sidenav-batch">
             <span class="material-symbols-outlined">web_stories</span>
-            <span class="nav-label ms-3 text-nowrap">{{'batch.name'| translate }}</span>
-            @if (!isMoreShown) {
-            <span class="material-symbols-outlined">arrow_drop_down</span>
-            } @else {
-            <span class="material-symbols-outlined">arrow_drop_up</span>
-            }
+            <span class="nav-label ms-3 text-nowrap">{{'batch.name'| translate }}
+                @if (!isMoreShown) {
+                <span class="material-symbols-outlined">arrow_drop_down</span>
+                } @else {
+                <span class="material-symbols-outlined">arrow_drop_up</span>
+                }
+            </span>
             @if ( batchSvc.areItemsSelected() ) {
             <div class="matBadge" matBadge='{{ batchSvc.getItemsCount() }}' data-test="batch-badge"></div>
             }
+
         </a>
-<!--
-        @if ( batchSvc.areItemsSelected() ) {
-        @defer {
--->
+
         <ul class="more-to-show" [ngClass]="{'d-block' : showMore(), 'd-none' : !showMore()}" id="batch-options">
             <li class="pt-0 pb-0 mx-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/datasets' ]"
-                    (click)="warning('/batch/datasets')"
+                    (click)="whenReady('/batch/datasets')"
                     [ngClass]="{'disabled pb-2' : !batchSvc.areItemsSelected()}" data-test="sidenav-batch-datasets">
                     <span> {{'common.datasets' | translate}}</span>
                 </a>
             </li>
             <li class="pt-0 pb-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/actions' ]"
-                    (click)="warning('/batch/actions')"
+                    (click)="whenReady('/batch/actions')"
                     [ngClass]="{'disabled pb-2' : !batchSvc.areItemsSelected() || this.batchSvc.isProcessRunning()}" data-test="sidenav-batch-actions">
                     <span> {{'common.actions' | translate}}</span>
                 </a>
             </li>
             <li class="pt-0 pb-2">
-                <a class="nav-link nav-label" [routerLink]="[ '/batch/logs' ]" (click)="warning('/batch/logs')"
+                <a class="nav-link nav-label" [routerLink]="[ '/batch/logs' ]" (click)="whenReady('/batch/logs')"
                 [ngClass]="{'disabled' : false}" data-test="sidenav-batch-logs">
                     <span> {{'common.logs' | translate}}</span>
                 </a>
             </li>
         </ul>
-<!--
-        }
-        }
--->
+
     </div>
 </div>
