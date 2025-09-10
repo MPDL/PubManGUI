@@ -11,7 +11,7 @@ import {
   ValidationErrors
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, EMPTY, Observable, of, pipe, Subscription, switchMap, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, finalize, Observable, of, pipe, Subscription, switchMap, tap, throwError } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
 import {
   ContextDbRO,
@@ -93,6 +93,7 @@ export class ItemFormComponent implements OnInit {
 
   allValidationErrorSubscription?: Subscription;
   allValidationErrors: any[] = [];
+  protected saveInProgress: boolean = false;
 
   ngOnInit(): void {
     this.route.data.pipe(
@@ -403,6 +404,7 @@ export class ItemFormComponent implements OnInit {
     //this.form_2_submit.metadata.title = null;
 
     // submit form
+    this.saveInProgress = true;
     if (this.aaService.isLoggedIn) {
       if (this.form_2_submit.objectId) {
         //Update item
@@ -440,6 +442,9 @@ export class ItemFormComponent implements OnInit {
         //return  EMPTY;
         //TODO Better error handling?
         return throwError(() => err);
+      }),
+      finalize(() => {
+        this.saveInProgress = false;
       })
     )
 

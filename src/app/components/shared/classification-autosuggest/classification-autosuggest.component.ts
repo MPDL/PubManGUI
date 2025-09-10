@@ -77,9 +77,13 @@ export class ClassificationAutosuggestComponent {
     }
 
      */
-    if(this.formForClassification && this.addQuotesForSearch) {
-      this.formForClassification.setValue('"' + event.item + '"');
+    let value = event.item;
+    if(this.addQuotesForSearch) {
+      value = '"' + value + '"'
     }
+
+    this.formForClassification?.setValue(value);
+
     this.selected = true;
     //Prevent that the whole ou object is set in the form control
     event.preventDefault();

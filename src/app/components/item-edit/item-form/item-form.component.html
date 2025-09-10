@@ -177,15 +177,19 @@
        }
         <div class="d-sm-flex flex-sm-row mb-3 px-3 justify-content-end">
             <div class="col-auto">
-                <button class="btn btn-primary me-3" id="save" type="button" value="save" data-test="save" (click)="submit('save')" [disabled]="!validForSave">
+                <button class="btn btn-primary me-3" id="save" type="button" value="save" data-test="save" (click)="submit('save')" [disabled]="!validForSave || saveInProgress">
+                  @if(saveInProgress) {
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span class="visually-hidden" role="status">Loading...</span>
+                  }
                   {{'common.save' | translate}}</button>
                 @if (!form.controls['objectId'].value || (authorizationInfo && authorizationInfo.actions['SUBMIT'])) {
-                <button class="btn btn-primary me-3" id="submit" type="button" value="submit" (click)="submit('submit')" [disabled]="!allValid">
+                <button class="btn btn-primary me-3" id="submit" type="button" value="submit" (click)="submit('submit')" [disabled]="!allValid || saveInProgress">
                   {{'common.submit' | translate}}
                 </button>
                 }
                 @if (authorizationInfo && authorizationInfo.actions['RELEASE']) {
-                <button class="btn btn-primary" id="release" type="button" value="release" (click)="submit('release')" [disabled]="!allValid">
+                <button class="btn btn-primary" id="release" type="button" value="release" (click)="submit('release')" [disabled]="!allValid || saveInProgress">
                   {{'common.release' | translate}}
                 </button>
                 }
