@@ -35,12 +35,13 @@ import {
   ClassificationAutosuggestComponent
 } from "../shared/classification-autosuggest/classification-autosuggest.component";
 import { AddRemoveButtonsComponent } from "../shared/add-remove-buttons/add-remove-buttons.component";
+import { JournalAutosuggestComponent } from "../shared/journal-autosuggest/journal-autosuggest.component";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, LanguageAutosuggestComponent, ClassificationAutosuggestComponent, AddRemoveButtonsComponent
+    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, LanguageAutosuggestComponent, ClassificationAutosuggestComponent, AddRemoveButtonsComponent, JournalAutosuggestComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
