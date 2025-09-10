@@ -3,7 +3,7 @@
         <div class="col-sm">
             <label for="alt_title_type" class="visually-hidden">type</label>
             <select id="alt_title_type" class="form-select" formControlName="type">
-                <option [ngValue]="null" selected disabled>type</option>
+              <option [ngValue]="null" selected>-</option>
                 @for (t of alt_title_types; track t) {
                 <option [ngValue]="t">{{t}}</option>
                 }
