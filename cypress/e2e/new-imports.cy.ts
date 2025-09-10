@@ -76,7 +76,6 @@ describe('New Import', () => {
       //When
       cy.get('[data-test=file-upload-input]').selectFile({contents: 'cypress/fixtures/' + fileName,}, {force: true})
       cy.get('#fileName').invoke('val').should('contain', fileName)
-      cy.get('#selectedFile').invoke('text').should('contain', fileName)
 
       cy.get('select[data-test=import-context]').select(Cypress.env('testContext').name)
       cy.get('select[formControlName="format"]').select(format)

@@ -46,7 +46,7 @@
     "@angular/compiler-cli": "^20.1.0",
     "@cypress/schematic": "^2.5.2",
     "@types/jasmine": "~5.1.0",
-    "cypress": "^14.5.4",
+    "cypress": "^15.1.0",
     "jasmine-core": "~5.8.0",
     "typescript": "~5.8.3"
   }

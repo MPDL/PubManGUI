@@ -12,15 +12,15 @@
 
         <ul class="more-to-show" [ngClass]="{'d-block' : showMore(), 'd-none' : !showMore()}" id="imports-options">
             <li class="pt-0 pb-0 mx-0">
-                <a class="nav-link nav-label" [routerLink]="[ '/imports/new' ]" 
-                (click)="warning('/imports/new')">
+                <a class="nav-link nav-label" [routerLink]="[ '/imports/new' ]"
+                (click)="warning('/imports/new')" data-test="sidenav-import-new">
                     <span> {{'common.new' | translate}}</span>
                 </a>
             </li>
             <li class="pt-0 pb-2">
                 <a class="nav-link nav-label" [routerLink]="[ '/imports/myimports' ]"
-                    (click)="warning('/imports/myimports')" 
-                    [ngClass]="{'disabled' : !importsSvc.hasImports()}">
+                    (click)="warning('/imports/myimports')"
+                    [ngClass]="{'disabled' : !importsSvc.hasImports()}" data-test="sidenav-import-myimports">
                     <span> {{'common.myimports' | translate}}</span>
                 </a>
             </li>
