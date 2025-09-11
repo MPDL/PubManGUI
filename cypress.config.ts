@@ -5,7 +5,7 @@ export default defineConfig({
   viewportWidth: 1200,
   e2e: {
     //baseUrl is set to 'http://localhost:4200/' by default by Angular, if Cypress is started with `ng e2e`
-    baseUrl: 'https://localhost:4200',
+    baseUrl: 'http://localhost:4200',
 
     // To consider connections to localhost as secure even when they are routed through a (Cypress) proxy,
     // we need to set the Firefox preference 'network.proxy.testing_localhost_is_secure_when_hijacked' to true.
