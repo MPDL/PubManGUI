@@ -28,27 +28,21 @@ export default class DatasetsComponent {
   constructor(
     public batchSvc: BatchService
   ) {
-
-    /*
-    this.searchQuery = of({
-      bool: {
-        must: [
-          baseElasticSearchQueryBuilder("objectId", batchSvc.items),
-          {
-            script: {
-              script: "doc['latestVersion.versionNumber']==doc['versionNumber']"
-            }
-          }
-        ]
-      }
-    })
-    */
-
     this.searchQuery = batchSvc.objectIds$.pipe(
       map(objIds => {
-        return baseElasticSearchQueryBuilder("objectId", batchSvc.items);
+        return {
+          bool: {
+            must: [
+              baseElasticSearchQueryBuilder("objectId", batchSvc.items),
+              {
+                script: {
+                  script: "doc['latestVersion.versionNumber']==doc['versionNumber']"
+                }
+              }
+            ]
+          }
+        }
       }))
-
   }
 
 }
