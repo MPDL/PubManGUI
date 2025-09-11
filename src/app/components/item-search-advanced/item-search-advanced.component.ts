@@ -26,22 +26,16 @@ import { SearchStateService } from "../search-result-list/search-state.service";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { SortByLabelPipe } from "../../pipes/sort-by-label.pipe";
 
-import {
-  SavedSearchesModalComponent
-} from "../shared/saved-searches-modal/saved-searches-modal.component";
+import { SavedSearchesModalComponent } from "../shared/saved-searches-modal/saved-searches-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { LanguageAutosuggestComponent } from "../shared/language-autosuggest/language-autosuggest.component";
-import {
-  ClassificationAutosuggestComponent
-} from "../shared/classification-autosuggest/classification-autosuggest.component";
 import { AddRemoveButtonsComponent } from "../shared/add-remove-buttons/add-remove-buttons.component";
-import { JournalAutosuggestComponent } from "../shared/journal-autosuggest/journal-autosuggest.component";
+import { ConeAutosuggestComponent } from "../shared/cone-autosuggest/cone-autosuggest.component";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, LanguageAutosuggestComponent, ClassificationAutosuggestComponent, AddRemoveButtonsComponent, JournalAutosuggestComponent
+    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, AddRemoveButtonsComponent, ConeAutosuggestComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',

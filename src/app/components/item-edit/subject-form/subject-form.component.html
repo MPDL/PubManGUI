@@ -22,7 +22,7 @@
             <label for="subject_value" class="col-sm-2 col-form-label">{{ 'common.value' | translate }}</label>
           @let type = subject_form.get('type')?.value;
           @if(type) {
-            <pure-classification-autosuggest [formForClassification]="$any(subject_form.get('value'))" [type]="subject_form.get('type')?.value"></pure-classification-autosuggest>
+            <pure-cone-autosuggest [form]="$any(subject_form.get('value'))" [coneType]="subject_form.get('type')?.value"/>
           }
           @else {
             <input type="text" class="form-control" id="subject_value" name="subject_value" formControlName="value">

@@ -18,7 +18,7 @@ import { SubjectClassification } from "../../../model/inge";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 
 @Component({
-  selector: 'pure-journal-autosuggest',
+  selector: 'pure-cone-autosuggest',
   imports: [
     FormsModule,
     NgbTypeahead,
@@ -26,24 +26,29 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     ReactiveFormsModule,
     BootstrapValidationDirective
   ],
-  templateUrl: './journal-autosuggest.component.html',
-  styleUrl: './journal-autosuggest.component.scss'
+  templateUrl: './cone-autosuggest.component.html',
+  styleUrl: './cone-autosuggest.component.scss'
 })
-export class JournalAutosuggestComponent {
-  @Input() type: string ="DDC";
-  @Input() formForJournalTitle!: FormControl;
+export class ConeAutosuggestComponent {
+  @Input() coneType: string ="DDC";
+  @Input() form!: FormControl;
   @Input() addQuotesForSearch:boolean = false;
+  @Input() lockIfFilled:boolean = true;
 
-  @Output() journalSelected = new EventEmitter();
+  @Output() valueSelected = new EventEmitter();
 
   //language = computed(() => {return this.translateSvc.currentLang}); //language that will be searched for the search term (e.g. en, de [ISO639-1])
   searching: boolean = false;
   selected: boolean = false;
-
-
   //  constructor(private coneService: ConeService, private fb: FormBuilder, private fbs: FormBuilderService) {
   constructor(private coneService: ConeService, private translateSvc: TranslateService) {
 
+  }
+
+  ngOnInit() {
+    if(this.form && this.form.value) {
+      this.selected = true;
+    }
   }
 
   suggest: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
@@ -54,8 +59,8 @@ export class JournalAutosuggestComponent {
       switchMap((term) => {
         const params = new HttpParams().set('q', term).set('format', 'json');
 
-        const coneType = this.type.valueOf().replaceAll("_","-").toLowerCase();
-        return this.coneService.find('/journals/query', params).pipe(
+        const coneType = this.coneType.valueOf().replaceAll("_","-").toLowerCase();
+        return this.coneService.find('/' + coneType + '/query', params).pipe(
           catchError(() => {
             return [];
           }),
@@ -69,13 +74,16 @@ export class JournalAutosuggestComponent {
     if(this.addQuotesForSearch) {
       value = '"' + value + '"'
     }
-    this.formForJournalTitle?.setValue(value);
+
+    this.form?.setValue(value);
     this.selected = true;
 
     const coneId = event.item.id.substring(event.item.id.lastIndexOf("/cone/") + 5, event.item.id.length)
+    event.item.parsedId = coneId;
 
-    this.journalSelected.emit(coneId);
-    //Prevent that the whole ou object is set in the form control
+    this.valueSelected.emit(event.item);
+
+    //Prevent that the whole return object is set in the form control
     event.preventDefault();
   }
 
@@ -84,7 +92,8 @@ export class JournalAutosuggestComponent {
   }
 
   deleteFields() {
-    this.formForJournalTitle.setValue('');
+    this.form.setValue('');
     this.selected = false;
+    this.valueSelected.emit(undefined);
   }
 }

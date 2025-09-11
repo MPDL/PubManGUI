@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { citationTypes, exportTypes } from "../../../model/inge";
-import { FormsModule } from "@angular/forms";
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
-import { CslAutosuggestComponent } from "../csl-autosuggest/csl-autosuggest.component";
 import { environment } from 'src/environments/environment';
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemSelectionService } from "../../../services/item-selection.service";
@@ -12,6 +11,7 @@ import { contentDispositionParser } from "../../../utils/utils";
 import { TranslatePipe } from "@ngx-translate/core";
 import { JsonPipe } from "@angular/common";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
+import { ConeAutosuggestComponent } from "../cone-autosuggest/cone-autosuggest.component";
 
 
 @Component({
@@ -19,10 +19,11 @@ import { PubManHttpErrorResponse } from "../../../services/interceptors/http-err
   standalone: true,
   imports: [
     FormsModule,
-    CslAutosuggestComponent,
     LoadingComponent,
     TranslatePipe,
-    JsonPipe
+    JsonPipe,
+    ConeAutosuggestComponent,
+    ReactiveFormsModule
   ],
   templateUrl: './export-items.component.html',
   styleUrl: './export-items.component.scss'
@@ -44,10 +45,10 @@ export class ExportItemsComponent {
 
   itemIds: string[] = [];
 
-  selectedExportType: string = exportTypes.ENDNOTE;
-  selectedCitationType: string = citationTypes.APA;
-  selectedCslId = "";
-  selectedCslName = "";
+  selectedExportType: FormControl<string>;
+  selectedCitationType: FormControl<string>;
+  selectedCslId: FormControl<string>;
+  selectedCslName: FormControl<string>;
   selectedSize = 500;
   selectedFrom = 0;
 
@@ -59,8 +60,12 @@ export class ExportItemsComponent {
 
   protected atomFeedUrl = "";
 
-  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService) {
+  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService, formBuilder: FormBuilder) {
 
+    this.selectedExportType = formBuilder.nonNullable.control(exportTypes.ENDNOTE);
+    this.selectedCitationType  = formBuilder.nonNullable.control(citationTypes.APA);
+    this.selectedCslId = formBuilder.nonNullable.control("");
+    this.selectedCslName = formBuilder.nonNullable.control("");
   }
 
   ngOnInit() {
@@ -68,11 +73,11 @@ export class ExportItemsComponent {
     const exportType = localStorage.getItem("exportType");
     if (exportType) {
       const expType: ExportType = JSON.parse(exportType);
-      this.selectedExportType = expType.exportType;
-      this.selectedCitationType = expType.citationType;
-      this.selectedCslId = expType.cslId;
-      this.selectedCslId = expType.cslId;
-      this.selectedCslName = expType.cslName;
+      this.selectedExportType.setValue(expType.exportType);
+      this.selectedCitationType.setValue(expType.citationType);
+      this.selectedCslId.setValue(expType.cslId);
+      this.selectedCslId.setValue(expType.cslId);
+      this.selectedCslName.setValue(expType.cslName);
     }
 
     if(this.type === 'exportSelected') {
@@ -86,10 +91,10 @@ export class ExportItemsComponent {
   updateStoredExportInfo() {
     this.errorMessage = "";
     const exportType: ExportType = {
-      exportType: this.selectedExportType,
-      citationType: this.selectedCitationType,
-      cslId: this.selectedCslId,
-      cslName: this.selectedCslName,
+      exportType: this.selectedExportType.value,
+      citationType: this.selectedCitationType.value,
+      cslId: this.selectedCslId.value,
+      cslName: this.selectedCslName.value,
     }
     localStorage.setItem("exportType", JSON.stringify(exportType));
   }
@@ -98,7 +103,7 @@ export class ExportItemsComponent {
     if (!this.isFormat && this.isValid()) {
 
 
-      this.itemService.retrieveSingleCitation(this.itemIds[0], this.selectedCitationType, this.selectedCslId, {globalErrorDisplay: false}).subscribe({
+      this.itemService.retrieveSingleCitation(this.itemIds[0], this.selectedCitationType.value, this.selectedCslId.value, {globalErrorDisplay: false}).subscribe({
         next: (cit) => {
           //console.log('Citation: ' +cit)
           this.currentCitation = cit;
@@ -114,7 +119,7 @@ export class ExportItemsComponent {
 
   isValid(): boolean {
     return this.itemIds.length > 0 &&
-      (this.selectedCitationType !== citationTypes.CSL || (this.selectedCslId?.length > 0));
+      (this.selectedCitationType.value !== citationTypes.CSL || (this.selectedCslId?.value?.length > 0));
   }
 
   handleFormatChange($event: Event) {
@@ -139,23 +144,30 @@ export class ExportItemsComponent {
   }
 
   selectCsl(event: any) {
-    this.selectedCslId = event.id;
-    this.selectedCslName = event.value;
-    if (this.selectedCslId)
-      this.loadCitation();
+    if(event) {
+      this.selectedCslId.setValue(event.id);
+      this.selectedCslName.setValue(event.value);
+      if (this.selectedCslId.value)
+        this.loadCitation();
+      else {
+        this.currentCitation = '';
+      }
+
+      this.updateStoredExportInfo();
+    }
     else {
+      this.selectedCslId.setValue('');
       this.currentCitation = '';
     }
+    }
 
-    this.updateStoredExportInfo();
-  }
 
   get isFormat() {
-    return this.selectedExportType === exportTypes.ENDNOTE ||
-      this.selectedExportType === exportTypes.BIBTEX ||
-      this.selectedExportType === exportTypes.JSON ||
-      this.selectedExportType === exportTypes.ESCIDOC_ITEMLIST_XML ||
-      this.selectedExportType === exportTypes.MARC_XML;
+    return this.selectedExportType.value === exportTypes.ENDNOTE ||
+      this.selectedExportType.value === exportTypes.BIBTEX ||
+      this.selectedExportType.value === exportTypes.JSON ||
+      this.selectedExportType.value === exportTypes.ESCIDOC_ITEMLIST_XML ||
+      this.selectedExportType.value === exportTypes.MARC_XML;
 
   }
 
@@ -168,9 +180,9 @@ export class ExportItemsComponent {
 
   get downloadLink() {
     return this.restUri + '/items/' + this.itemIds[0]
-      + '/export?format=' + this.selectedExportType
-      + (this.selectedCitationType ? '&citation=' + this.selectedCitationType : '')
-      + (this.selectedCslId ? '&cslConeId=' + this.selectedCslId : '')
+      + '/export?format=' + this.selectedExportType.value
+      + (this.selectedCitationType.value ? '&citation=' + this.selectedCitationType.value : '')
+      + (this.selectedCslId.value ? '&cslConeId=' + this.selectedCslId.value : '')
   }
 
   download() {
@@ -192,7 +204,7 @@ export class ExportItemsComponent {
       searchQuery.from = this.selectedFrom;
     }
 
-    this.exportSubscription = this.itemService.searchAndExport(searchQuery, this.selectedExportType, this.selectedCitationType, this.selectedCitationType === citationTypes.CSL ? this.selectedCslId : undefined, {globalErrorDisplay: false})
+    this.exportSubscription = this.itemService.searchAndExport(searchQuery, this.selectedExportType.value, this.selectedCitationType.value, this.selectedCitationType.value === citationTypes.CSL ? this.selectedCslId.value : undefined, {globalErrorDisplay: false})
       .pipe(
         tap(result => {
           if (result.body) {

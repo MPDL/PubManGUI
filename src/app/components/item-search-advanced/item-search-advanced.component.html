@@ -242,12 +242,12 @@
                     </select>
                   </div>
                   <div class="col" formGroupName="content">
-                    <pure-classification-autosuggest [formForClassification]="$any(currentFormGroup).content.get('text')" [type]="classificationTypeSelect.value" [addQuotesForSearch]="true"/>
+                    <pure-cone-autosuggest [form]="$any(currentFormGroup).content.get('text')" [coneType]="classificationTypeSelect.value" [addQuotesForSearch]="true"/>
                   </div>
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.JOURNAL) {
                   <div class="col" formGroupName="content">
-                    <pure-journal-autosuggest [formForJournalTitle]="$any(currentFormGroup).content.get('text')" [addQuotesForSearch]="true"></pure-journal-autosuggest>
+                    <pure-cone-autosuggest coneType="journals" [form]="$any(currentFormGroup).content.get('text')" [addQuotesForSearch]="true"></pure-cone-autosuggest>
                   </div>
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CONTEXT) {
@@ -262,7 +262,7 @@
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.LANGUAGE) {
                   <div class="col" formGroupName="content">
-                    <pure-language-autosuggest [formForLanguage]="$any(currentFormGroup).content.get('text')" iso="iso639-3"/>
+                    <pure-cone-autosuggest [form]="$any(currentFormGroup).content.get('text')" coneType="iso639-3" (valueSelected)="$any(currentFormGroup).content.get('text').setValue($event?.value?.substring(0,3))"/>
                   </div>
 
               } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {

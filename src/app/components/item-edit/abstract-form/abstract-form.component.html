@@ -2,7 +2,7 @@
     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
         <div class="col-sm">
             <label for="abstract_language" class="col-sm-2 col-form-label">{{ 'MetadataFields.language' | translate }}</label>
-            <pure-language-autosuggest [iso]="'iso639-3'"[formForLanguage]="abstract_language"></pure-language-autosuggest>
+            <pure-cone-autosuggest [form]="abstract_language" coneType="iso639-3" (valueSelected)="abstract_language.setValue($event?.value?.substring(0,3))"/>
         </div>
         <div class="col-sm-1">
             <pure-add-remove-buttons [index]="index" (notice)="add_remove_abstract($event)"></pure-add-remove-buttons>

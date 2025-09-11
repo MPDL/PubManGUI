@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CslAutosuggestComponent } from "../shared/csl-autosuggest/csl-autosuggest.component";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { JsonPipe } from "@angular/common";
 import { LoadingComponent } from "../shared/loading/loading.component";

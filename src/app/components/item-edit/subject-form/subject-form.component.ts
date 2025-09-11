@@ -1,16 +1,12 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  AddRemoveButtonsComponent
-} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import {
-  ClassificationAutosuggestComponent
-} from "../../shared/classification-autosuggest/classification-autosuggest.component";
+import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
 
 
 @Component({
@@ -23,7 +19,7 @@ import {
     ReactiveFormsModule,
     TranslatePipe,
     BootstrapValidationDirective,
-    ClassificationAutosuggestComponent
+    ConeAutosuggestComponent
   ],
   templateUrl: './subject-form.component.html',
   styleUrl: './subject-form.component.scss'

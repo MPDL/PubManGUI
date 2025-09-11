@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { Errors } from 'src/app/model/errors';
-import { LanguageAutosuggestComponent } from 'src/app/components/shared/language-autosuggest/language-autosuggest.component';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
 
 @Component({
   selector: 'pure-abstract-form',
@@ -14,10 +14,10 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     AddRemoveButtonsComponent,
     CommonModule,
     FormsModule,
-    LanguageAutosuggestComponent,
     ReactiveFormsModule,
     TranslatePipe,
     BootstrapValidationDirective,
+    ConeAutosuggestComponent,
   ],
   templateUrl: './abstract-form.component.html',
   styleUrl: './abstract-form.component.scss'

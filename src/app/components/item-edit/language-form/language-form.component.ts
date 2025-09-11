@@ -1,19 +1,14 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  AddRemoveButtonsComponent
-} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import {
-  LanguageAutosuggestComponent
-} from 'src/app/components/shared/language-autosuggest/language-autosuggest.component';
+import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
 
 @Component({
   selector: 'pure-language-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, LanguageAutosuggestComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, ConeAutosuggestComponent],
   templateUrl: './language-form.component.html',
   styleUrl: './language-form.component.scss'
 })

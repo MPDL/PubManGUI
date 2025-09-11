@@ -23,10 +23,10 @@ import { Errors } from 'src/app/model/errors';
 import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { JournalAutosuggestComponent } from "../../shared/journal-autosuggest/journal-autosuggest.component";
 import { ConeService } from "../../../services/cone.service";
 import { tap } from "rxjs";
 import { identifierUriToEnum } from "../../../utils/utils";
+import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
 
 @Component({
   selector: 'pure-source-form',
@@ -42,7 +42,7 @@ import { identifierUriToEnum } from "../../../utils/utils";
     ReactiveFormsModule,
     CdkDropList,
     CdkDrag, TranslatePipe,
-    BootstrapValidationDirective, JournalAutosuggestComponent
+    BootstrapValidationDirective, ConeAutosuggestComponent
   ],
   templateUrl: './source-form.component.html',
   styleUrl: './source-form.component.scss'
@@ -154,10 +154,10 @@ export class SourceFormComponent {
     array.insert(toIndex, object);
   }
 
-  journalSelected(coneId: any) {
-    console.log(coneId);
-    if (coneId) {
-      this.coneService.getConeResource(coneId).pipe(
+  journalSelected(coneQueryResult: any) {
+
+    if (coneQueryResult && coneQueryResult.parsedId) {
+      this.coneService.getConeResource(coneQueryResult.parsedId).pipe(
         tap(data => {
           console.log(data);
           this.coneJournalToSourceVO(data);
