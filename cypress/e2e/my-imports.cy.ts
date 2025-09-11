@@ -8,6 +8,7 @@ describe('My Imports', () => {
   const baseUrl = baseUrlWithoutTrailingSlashes()
 
   beforeEach(() => {
+    window.localStorage.setItem('locale', 'en')
     cy.loginViaAPI(loginName, password)
 
     // Create import

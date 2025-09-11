@@ -7,7 +7,7 @@
             <select id="genre" class="form-select" formControlName="genre" (change)="genre_change($event)">
                 <option [ngValue]="null" selected>-</option>
                 @for (g of genre_types; track g) {
-                <option [value]="g">{{'MdsPublicationGenre.' + g | translate}}</option>
+                <option [value]="g">{{'SourceGenre.' + g | translate}}</option>
                 }
             </select>
           <!--
@@ -24,7 +24,15 @@
         [ngClass]="genreSpecificResource.value().properties.sources_source_basic_source_title.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
         <div class="col-sm">
             <label for="source_title" class="col-sm-2 col-form-label">{{ 'MetadataFields.title' | translate }}</label>
+          @let type =  source_form.get("genre")?.value;
+          @if(type === 'JOURNAL') {
+            <pure-journal-autosuggest [formForJournalTitle]="$any(source_form.get('title'))" (journalSelected)="journalSelected($event)"></pure-journal-autosuggest>
+          }
+          @else {
             <input type="text" class="form-control" id="source_title" name="title" formControlName="title">
+          }
+
+
             <!--
           @if (source_form.get('title')?.hasError('required')) {
             <div class="pure-invalid">{{ 'validation.required' | translate}}</div>

@@ -35,6 +35,7 @@ export enum DisplayType {
   CONTEXT,
   DATE,
   LANGUAGE,
+  JOURNAL,
   ENUM,
   EXTERNAL_BLOCKS,
   OPERATOR,
@@ -100,7 +101,7 @@ export const searchTypes : searchTypesI = {
     handlerClass: SourceSearchCriterion
   },
   journal: {
-    displayType: DisplayType.STANDARD,
+    displayType: DisplayType.JOURNAL,
     handlerClass: JournalSearchCriterion
   },
   localTag: {

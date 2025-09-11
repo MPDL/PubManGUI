@@ -43,6 +43,7 @@ import { SubjectValidator } from 'src/app/directives/validation/subject-validati
 import { Utf8Validator } from 'src/app/directives/validation/utf8-validation.directive';
 import { fileDataValidator } from 'src/app/directives/validation/file-data-validation';
 import { fileUrlValidator } from 'src/app/directives/validation/file-url-validation.directive';
+import { alternativeTitleValidator } from "../directives/validation/alternative-title.validation.directive";
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 
@@ -56,7 +57,7 @@ export type ControlType<T> = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ORCID_PATTERN = /^http[s]?:\/\/orcid.org\/(\d{4})-(\d{4})-(\d{4})-(\d{3}[0-9X])$/;
-export const DATE_PATTERN = /^[0-9]{4}-?(?:[01][0-9])?-?(?:[0-3][0-9])?$/;
+export const DATE_PATTERN = /^\d{4}(?:-(?:0[1-9]|1[0-2])(?:-(?:0[1-9]|[12]\d|3[01]))?)?$/;
 export const FILE_TITLE_AND_NAME_PATTERN = /^[^/]+$/;
 export const DOI_PATTERN = /^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i;
 
@@ -144,7 +145,7 @@ export class FormBuilderService {
       type: this.fb.nonNullable.control(at?.type ? at.type : undefined),
       language: this.fb.nonNullable.control(at?.language ? at.language : undefined),
       value: this.fb.nonNullable.control(at?.value ? at.value : undefined, { validators: [Utf8Validator], updateOn: VALIDATION_UPDATE_ON }),
-    });
+    }, { validators: [alternativeTitleValidator], updateOn: VALIDATION_UPDATE_ON });
     return atf;
   }
 
@@ -201,7 +202,7 @@ export class FormBuilderService {
       alternativeTitles: this.fb.array(metadata?.alternativeTitles ? metadata.alternativeTitles.map(at => this.alt_title_FG(at) as AbstractControl) : []),
       creators: this.fb.array(metadata?.creators ? metadata.creators.map(creator => this.creator_FG(creator) as AbstractControl) : [this.creator_FG(null)], {validators: [CreatorsOrganizationsValidator], updateOn: VALIDATION_UPDATE_ON}),
       dateAccepted: this.fb.nonNullable.control(metadata?.dateAccepted ? metadata.dateAccepted : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
-      dateCreated: this.fb.nonNullable.control(metadata?.dateCreated ? metadata.dateCreated : undefined),
+      dateCreated: this.fb.nonNullable.control(metadata?.dateCreated ? metadata.dateCreated : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
       dateModified: this.fb.nonNullable.control(metadata?.dateModified ? metadata.dateModified : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
       datePublishedInPrint: this.fb.nonNullable.control(metadata?.datePublishedInPrint ? metadata.datePublishedInPrint : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
       datePublishedOnline: this.fb.nonNullable.control(metadata?.datePublishedOnline ? metadata.datePublishedOnline : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),

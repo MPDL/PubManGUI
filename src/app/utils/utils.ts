@@ -1,4 +1,4 @@
-import { ItemVersionRO } from "../model/inge";
+import { IdType, ItemVersionRO } from "../model/inge";
 
 const reParamSplit = /\s*;\s*/
 const reHeaderSplit = /\s*:\s*/
@@ -60,6 +60,15 @@ export const humanFileSize = (bytes: number): `${number} ${'B' | 'KB' | 'MB' | '
   const index = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${Number((bytes / Math.pow(1024, index)).toFixed(2)) * 1} ${(['B', 'KB', 'MB', 'GB', 'TB'] as const)[index]}`;
 };
+
+export const identifierUriToEnum = (idUri: string): IdType | undefined => {
+  if(idUri) {
+    const val = idUri.substring(idUri.lastIndexOf('/')+1, idUri.length);
+
+    return (<any>IdType)[val];
+  }
+  return undefined;
+}
 
 export {
   contentDispositionParser,

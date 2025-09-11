@@ -20,7 +20,15 @@
         </div>
         <div class="col-sm">
             <label for="subject_value" class="col-sm-2 col-form-label">{{ 'common.value' | translate }}</label>
+          @let type = subject_form.get('type')?.value;
+          @if(type) {
+            <pure-classification-autosuggest [formForClassification]="$any(subject_form.get('value'))" [type]="subject_form.get('type')?.value"></pure-classification-autosuggest>
+          }
+          @else {
             <input type="text" class="form-control" id="subject_value" name="subject_value" formControlName="value">
+          }
+
+
         </div>
         <div class="col-sm-1">
             <pure-add-remove-buttons [index]="index" (notice)="add_remove_subject($event)"></pure-add-remove-buttons>

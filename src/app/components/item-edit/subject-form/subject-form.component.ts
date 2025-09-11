@@ -8,6 +8,9 @@ import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscel
 import { Errors } from 'src/app/model/errors';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import {
+  ClassificationAutosuggestComponent
+} from "../../shared/classification-autosuggest/classification-autosuggest.component";
 
 
 @Component({
@@ -19,7 +22,8 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
-    BootstrapValidationDirective
+    BootstrapValidationDirective,
+    ClassificationAutosuggestComponent
   ],
   templateUrl: './subject-form.component.html',
   styleUrl: './subject-form.component.scss'

@@ -9,16 +9,23 @@ export const IdentifierValidator: ValidatorFn = (control: AbstractControl,): Val
   const id_type = IdType;
   let identifier = control;
   if (identifier !== null) {
-    if (!isFormValueEmpty(identifier.get('id')?.value)) {
-      if (isFormValueEmpty(identifier.get('type')?.value)) {
-        identifier.get('type')?.setErrors({[error_types.ID_TYPE_NOT_PROVIDED] : true});
-        //return { [error_types.ID_TYPE_NOT_PROVIDED]: true };
 
-      }
-      else {
-        identifier.get('type')?.setErrors(null);
-        // Check format of the IDs
-        if ((id_type.BIORXIV.valueOf() === identifier.get('type')?.value ||
+    if (isFormValueEmpty(identifier.get('id')?.value) && !isFormValueEmpty(identifier.get('type')?.value)) {
+      identifier.get('id')?.setErrors({[error_types.ID_TYPE_NOT_PROVIDED]: true});
+    } else {
+      identifier.get('id')?.setErrors(null);
+    }
+
+    if (!isFormValueEmpty(identifier.get('id')?.value) && isFormValueEmpty(identifier.get('type')?.value)) {
+      identifier.get('type')?.setErrors({[error_types.ID_TYPE_NOT_PROVIDED]: true});
+    } else {
+      identifier.get('type')?.setErrors(null);
+
+
+
+    if (!isFormValueEmpty(identifier.get('id')?.value)) {
+      // Check format of the IDs
+      if ((id_type.BIORXIV.valueOf() === identifier.get('type')?.value ||
           id_type.CHEMRXIV.valueOf() === identifier.get('type')?.value ||
           id_type.DOI.valueOf() === identifier.get('type')?.value ||
           id_type.EARTHARXIV.valueOf() === identifier.get('type')?.value ||
@@ -28,18 +35,19 @@ export const IdentifierValidator: ValidatorFn = (control: AbstractControl,): Val
           id_type.PSYARXIV.valueOf() === identifier.get('type')?.value ||
           id_type.RESEARCH_SQUARE.valueOf() === identifier.get('type')?.value ||
           id_type.SOCARXIV.valueOf() === identifier.get('type')?.value) &&
-          (!DOI_PATTERN.test(identifier.get('id')?.value))) {
-          //(identifier.get('id')?.value.startsWith("https://doi.org") || identifier.get('id')?.value.startsWith("http://doi.org"))) {
+        (!DOI_PATTERN.test(identifier.get('id')?.value))) {
+        //(identifier.get('id')?.value.startsWith("https://doi.org") || identifier.get('id')?.value.startsWith("http://doi.org"))) {
 
-          identifier.get('id')?.setErrors({[error_types.INCORRECT_ID_DOI_FORMAT] : true});
-          //return { [error_types.INCORRECT_ID_DOI_FORMAT]: true };
+        identifier.get('id')?.setErrors({[error_types.INCORRECT_ID_DOI_FORMAT]: true});
+        //return { [error_types.INCORRECT_ID_DOI_FORMAT]: true };
 
-        }// if
-        else {
-          identifier.get('id')?.setErrors(null);
-        }
-      } // else
-    } // if
-  } // if
+
+      } else {
+        identifier.get('id')?.setErrors(null);
+      }
+    } // else
+
+  }
+  }  // if
   return null;
 }

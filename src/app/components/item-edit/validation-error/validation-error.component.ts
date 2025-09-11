@@ -80,7 +80,12 @@ export class ValidationErrorComponent {
       case Errors.EVENT_TITLE_NOT_PROVIDED.toString() :
       case Errors.ID_TYPE_NOT_PROVIDED.toString() :
       case Errors.SOURCE_GENRE_NOT_PROVIDED.toString() :
-      case Errors.SUBJECT_TYPE_NOT_PROVIDED.toString() : {
+      case Errors.SUBJECT_TYPE_NOT_PROVIDED.toString() :
+      case Errors.SUBJECT_VALUE_NOT_PROVIDED.toString() :
+      case Errors.ALT_TITLE_VALUE_NOT_PROVIDED.toString() :
+      case Errors.ALT_TITLE_TYPE_NOT_PROVIDED.toString() :
+      {
+
         return this.translateService.instant('validation.required');
       }
       case 'pattern' : {

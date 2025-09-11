@@ -22,7 +22,7 @@
                     <label for="creator_type" class="col-form-label pe-2">{{ 'common.type' | translate }}</label>
                     <select id="creator_type" class="form-select" formControlName="type" (change)="type_change($event)">
                         <!--TODO: type_change really needed?-->
-                        <option [ngValue]="null" selected disabled>type</option>
+                        <option [ngValue]="null" selected disabled>{{ 'common.type' | translate }}</option>
                         @for (t of creator_types; track t) {
                         <option [value]="t">{{'MetadataFields.' + t.toLowerCase() | translate}}</option>
                         }
@@ -31,7 +31,7 @@
                 <div class="col-sm-2">
                     <label for="creator_role" class="col-form-label pe-2">{{ 'common.role' | translate }}</label>
                     <select id="creator_role" class="form-select" formControlName="role" data-test="creator">
-                        <option [ngValue]="null" selected disabled>role</option>
+                        <option [ngValue]="null" selected disabled>{{ 'common.role' | translate }}</option>
                         @for (r of creator_roles; track r) {
                         <option [value]="r">{{'CreatorRoles.' + r | translate}}</option>
                         }

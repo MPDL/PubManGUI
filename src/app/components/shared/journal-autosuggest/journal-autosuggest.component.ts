@@ -1,4 +1,4 @@
-import { Component, computed, Input } from '@angular/core';
+import { Component, computed, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
@@ -6,7 +6,7 @@ import { ConeService } from "../../../services/cone.service";
 import {
   catchError,
   debounceTime,
-  distinctUntilChanged,
+  distinctUntilChanged, finalize,
   map,
   Observable, of,
   OperatorFunction,
@@ -18,7 +18,7 @@ import { SubjectClassification } from "../../../model/inge";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 
 @Component({
-  selector: 'pure-classification-autosuggest',
+  selector: 'pure-journal-autosuggest',
   imports: [
     FormsModule,
     NgbTypeahead,
@@ -26,13 +26,15 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     ReactiveFormsModule,
     BootstrapValidationDirective
   ],
-  templateUrl: './classification-autosuggest.component.html',
-  styleUrl: './classification-autosuggest.component.scss'
+  templateUrl: './journal-autosuggest.component.html',
+  styleUrl: './journal-autosuggest.component.scss'
 })
-export class ClassificationAutosuggestComponent {
+export class JournalAutosuggestComponent {
   @Input() type: string ="DDC";
-  @Input() formForClassification!: FormControl;
+  @Input() formForJournalTitle!: FormControl;
   @Input() addQuotesForSearch:boolean = false;
+
+  @Output() journalSelected = new EventEmitter();
 
   //language = computed(() => {return this.translateSvc.currentLang}); //language that will be searched for the search term (e.g. en, de [ISO639-1])
   searching: boolean = false;
@@ -44,8 +46,7 @@ export class ClassificationAutosuggestComponent {
 
   }
 
-
-  suggestLanguage: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
+  suggest: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(100),
       distinctUntilChanged(),
@@ -54,43 +55,36 @@ export class ClassificationAutosuggestComponent {
         const params = new HttpParams().set('q', term).set('format', 'json');
 
         const coneType = this.type.valueOf().replaceAll("_","-").toLowerCase();
-        return this.coneService.find('/' + coneType + '/query', params).pipe(
-          map(response => {
-              console.log('ResponseSuggest', response)
-              return response.map((hit: any) => hit.value);
-            }
-          ),
+        return this.coneService.find('/journals/query', params).pipe(
           catchError(() => {
-            this.searching = false;
-            return of([]);
+            return [];
           }),
         )
       }),
-      tap(() => (this.searching = false)),
+      finalize(() => (this.searching = false)),
     );
 
-  suggestClassificationSelector = (event: any) => {
-    /*
-    console.log("set Language" + JSON.stringify(event.item));
-    if (this.formForClassification) {
-      this.formForClassification.setValue((event.item.substring(0, 3)).trim());
-    }
-
-     */
-    let value = event.item;
+  suggestSelector = (event: any) => {
+    let value = event.item.value;
     if(this.addQuotesForSearch) {
       value = '"' + value + '"'
     }
-
-    this.formForClassification?.setValue(value);
-
+    this.formForJournalTitle?.setValue(value);
     this.selected = true;
+
+    const coneId = event.item.id.substring(event.item.id.lastIndexOf("/cone/") + 5, event.item.id.length)
+
+    this.journalSelected.emit(coneId);
     //Prevent that the whole ou object is set in the form control
     event.preventDefault();
   }
 
+  resultFormatter(item: any) {
+    return item.value;
+  }
+
   deleteFields() {
-    this.formForClassification.setValue('');
+    this.formForJournalTitle.setValue('');
     this.selected = false;
   }
 }

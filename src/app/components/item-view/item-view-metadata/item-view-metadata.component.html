@@ -175,7 +175,7 @@
           @for (id of item.metadata?.identifiers; track id) {
             <pure-item-view-metadata-element [sub]="true" [highlight]="false">
 
-              <span label>{{ 'IdType.' + id.type | translate}}:</span>
+              <span label>{{ 'SourceIdType.' + id.type | translate}}:</span>
               <span content>
             @if(identifierUrl(id) | empty) {
               <a href="{{identifierUrl(id)}}" target="_blank">{{id.id}}</a>
@@ -312,7 +312,7 @@
       <pure-item-view-metadata-element [sub]="true" [condition]="(source.genre | empty)">
       <span label>{{'MetadataFields.genre' | translate}}</span>
       <span content>
-        {{ source.genre }}
+        {{ 'MdsPublicationGenre.' + source.genre | translate }}
       </span>
     </pure-item-view-metadata-element>
 
@@ -355,7 +355,7 @@
           @for (id of source.identifiers; track id) {
             <pure-item-view-metadata-element [sub]="true" [highlight]="false">
 
-              <span label>{{'IdType' + id.type | translate}}</span>
+              <span label>{{'SourceIdType.' + id.type | translate}}</span>
               <span content>
             @if(identifierUrl(id) | empty) {
               <a href="{{identifierUrl(id)}}" target="_blank">{{id.id}}</a>

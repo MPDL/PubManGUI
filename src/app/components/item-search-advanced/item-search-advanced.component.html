@@ -244,6 +244,12 @@
                   <div class="col" formGroupName="content">
                     <pure-classification-autosuggest [formForClassification]="$any(currentFormGroup).content.get('text')" [type]="classificationTypeSelect.value" [addQuotesForSearch]="true"/>
                   </div>
+
+                } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.JOURNAL) {
+                  <div class="col" formGroupName="content">
+                    <pure-journal-autosuggest [formForJournalTitle]="$any(currentFormGroup).content.get('text')" [addQuotesForSearch]="true"></pure-journal-autosuggest>
+                  </div>
+
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CONTEXT) {
                   <div class="col-sm-3" formGroupName="content">
                     <select class="form-select" formControlName="text">
