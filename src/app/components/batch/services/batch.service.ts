@@ -42,6 +42,9 @@ export class BatchService {
   }
 
   lastPageNumFrom = signal({logs: 1, details: 1});
+  
+  #hasLogs = signal(false);
+  public hasLogs = computed(() => this.#hasLogs());
 
   #logFilters = signal<resp.BatchProcessLogDetailState[]>([]);
   public getLogFilters = computed( () => this.#logFilters() );
@@ -196,6 +199,14 @@ export class BatchService {
   }
 
   // Logs
+
+  checkLogs() {
+    this.getAllBatchProcessLogHeaders()
+      .subscribe(response => {
+        this.#hasLogs.set(response.length > 0 ? true : false);
+      }
+      );
+  }
 
   getAllBatchProcessLogHeaders(): Observable<resp.BatchProcessLogHeaderDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/getAllBatchProcessLogHeaders`;

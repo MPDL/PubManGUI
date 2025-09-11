@@ -9,8 +9,8 @@
   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
     data-bs-toggle="dropdown" aria-expanded="false" data-test="user">
       <i class="bi bi-person"></i>
-      <span class="d-none d-xxl-inline"  data-test="username" >{{aa.principal.getValue().user?.name}}</span>
-      <span class="d-inline d-xxl-none"  data-test="username" >{{aa.principal.getValue().user?.name!.split(" ")[0]}}</span>
+      <span class="d-none d-xxl-inline" data-test="username">{{aa.principal.getValue().user?.name}}</span>
+      <span class="d-inline d-xxl-none">{{aa.principal.getValue().user?.name!.split(" ")[0]}}</span>
   </a>
   <ul class="dropdown-menu m-0" aria-labelledby="navbarDropdown">
     <li><a class="dropdown-item" role="button" (click)="modalService.open(UserProfileComponent, {size: 'lg'})">Profile</a></li>

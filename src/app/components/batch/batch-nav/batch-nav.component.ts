@@ -36,6 +36,7 @@ export class BatchNavComponent implements OnInit {
 
   ngOnInit(): void {
     this.batchSvc.items;
+     if (!this.batchSvc.hasLogs()) this.batchSvc.checkLogs();
 
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;
@@ -64,8 +65,15 @@ export class BatchNavComponent implements OnInit {
           })
         }
         break;
-    }
-
+      case '/batch/logs':
+        if (!this.batchSvc.hasLogs()) {
+          this.msgSvc.warning(this.translateSvc.instant(_('batch.logs.details.empty')) + '\n');
+          this.msgSvc.dialog.afterAllClosed.subscribe(result => {
+            this.router.navigate(['/batch'])
+          })
+        }
+        break;
+      }
     this.collapse();
   }
 
