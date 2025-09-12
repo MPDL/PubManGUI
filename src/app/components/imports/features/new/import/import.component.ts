@@ -182,6 +182,7 @@ export default class ImportComponent implements OnInit {
   onSubmit(): void {
     if (this.importForm.valid) {
       this.importsSvc.postImport(this.getImportParams, this.data).subscribe(() => {
+        this.importsSvc.checkImports();
         this.router.navigate(['/imports/myimports']);
       });
     }

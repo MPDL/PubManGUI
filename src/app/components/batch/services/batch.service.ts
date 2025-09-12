@@ -133,6 +133,7 @@ export class BatchService {
     this.#processRunning.set(false);
 
     this.msgSvc.success(this.translateSvc.instant(_('batch.actions.stop')) + '\n');
+    this.checkLogs();
   }
 
   #processRunning = signal(false);

@@ -33,7 +33,7 @@ export class ImportsNavComponent implements OnInit {
   isMoreShown: boolean = false;
 
   ngOnInit(): void {
-    if (!this.importsSvc.hasImports()) this.importsSvc.checkImports();
+    this.importsSvc.checkImports();
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;
   }

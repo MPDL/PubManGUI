@@ -36,7 +36,7 @@ export class BatchNavComponent implements OnInit {
 
   ngOnInit(): void {
     this.batchSvc.items;
-     if (!this.batchSvc.hasLogs()) this.batchSvc.checkLogs();
+    this.batchSvc.checkLogs();
 
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;

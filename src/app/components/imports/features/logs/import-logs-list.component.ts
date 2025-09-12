@@ -127,7 +127,8 @@ export default class ImportLogsListComponent implements OnInit {
 
   deleteImportLog(log: any): void {
     this.importsSvc.deleteImportLog(log.id).subscribe(importsResponse => {
-      console.log(importsResponse);
+      this.importsSvc.checkImports();
+      // console.log(importsResponse);
     })
 
     let element = document.getElementById(log.id) as HTMLElement;
