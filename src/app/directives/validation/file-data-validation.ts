@@ -3,19 +3,28 @@ import { FileDbVO, Storage, Visibility } from "src/app/model/inge";
 import { Errors } from "src/app/model/errors";
 import { isFormValueEmpty } from "../../utils/utils";
 
+const URL_PATTERN = /^(https?:\/\/|ftp:\/\/).*/;
+
 export const fileDataValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;
   const file = control.value as FileDbVO;
   let currentErrors = {} as ValidationErrors;
   if (file != null) {
     //External reference with missing content
-    if ((Storage.EXTERNAL_URL === file.storage) && (isFormValueEmpty(file.content))) {
-      control.get("content")?.setErrors({[error_types.COMPONENT_CONTENT_NOT_PROVIDED] : true});
-      currentErrors[error_types.COMPONENT_CONTENT_NOT_PROVIDED] =  true;
+    if (Storage.EXTERNAL_URL === file.storage) {
+       if(isFormValueEmpty(file.content)) {
+        control.get("content")?.setErrors({[error_types.COMPONENT_CONTENT_NOT_PROVIDED] : true});
+        currentErrors[error_types.COMPONENT_CONTENT_NOT_PROVIDED] =  true;
+      }
+       else if(!URL_PATTERN.test(file.content)) {
+         control.get("content")?.setErrors({[error_types.LOCATOR_IS_NO_URI] : true});
+       }
+      else {
+        control.get("content")?.setErrors(null);
+      }
     }
-    else {
-      control.get("content")?.setErrors(null);
-    }
+
+
     //File with missing content or missing objectId
     if (Storage.INTERNAL_MANAGED === file.storage) {
       if (isFormValueEmpty(file.content)
@@ -41,7 +50,16 @@ export const fileDataValidator: ValidatorFn = (control: AbstractControl,): Valid
           control.get("allowedAudienceIds")?.setErrors(null);
         }
       }
+      //File with missing visibility (internal managed files only)
+      if (isFormValueEmpty(file.visibility)) {
+        control.get("visibility")?.setErrors({[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED] : true});
+        //currentErrors[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED] =  true;
+      }
+      else {
+        control.get("visibility")?.setErrors(null);
+      }
     }
+
     // Metadata validation
     if (file.metadata !== null && file.metadata !== undefined) {
       // File with missing title
@@ -61,14 +79,7 @@ export const fileDataValidator: ValidatorFn = (control: AbstractControl,): Valid
         control.get("metadata.contentCategory")?.setErrors(null);
       }
     }
-    //File with missing visibility (internal managed files only)
-    if (Storage.EXTERNAL_URL !== file.storage && isFormValueEmpty(file.visibility)) {
-      control.get("visibility")?.setErrors({[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED] : true});
-      //currentErrors[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED] =  true;
-    }
-    else {
-      control.get("visibility")?.setErrors(null);
-    }
+
 
   } // if
   return currentErrors;

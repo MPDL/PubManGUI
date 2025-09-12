@@ -42,7 +42,6 @@ import { SourceValidator } from 'src/app/directives/validation/source-validation
 import { SubjectValidator } from 'src/app/directives/validation/subject-validation.directive';
 import { Utf8Validator } from 'src/app/directives/validation/utf8-validation.directive';
 import { fileDataValidator } from 'src/app/directives/validation/file-data-validation';
-import { fileUrlValidator } from 'src/app/directives/validation/file-url-validation.directive';
 import { alternativeTitleValidator } from "../directives/validation/alternative-title.validation.directive";
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
@@ -110,7 +109,7 @@ export class FormBuilderService {
       allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.nonNullable.control(audiencId) as AbstractControl) : []),
       sortkz: this.fb.nonNullable.control(file?.sortkz ? file.sortkz : undefined),
     },
-      { validators: [fileDataValidator, fileUrlValidator], updateOn: VALIDATION_UPDATE_ON });
+      { validators: [fileDataValidator], updateOn: VALIDATION_UPDATE_ON });
     return file_form;
   }
 
@@ -122,7 +121,7 @@ export class FormBuilderService {
       identifiers: this.fb.array(fileMetadata?.identifiers ? fileMetadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : []),
       formats: this.fb.array(fileMetadata?.formats ? fileMetadata.formats.map(format => this.format_FG(format) as AbstractControl) : []),
       size: this.fb.nonNullable.control(fileMetadata?.size ? fileMetadata.size : undefined),
-      embargoUntil: this.fb.nonNullable.control(fileMetadata?.embargoUntil ? fileMetadata.embargoUntil : undefined),
+      embargoUntil: this.fb.nonNullable.control(fileMetadata?.embargoUntil ? fileMetadata.embargoUntil : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON  }),
       copyrightDate: this.fb.nonNullable.control(fileMetadata?.copyrightDate ? fileMetadata.copyrightDate : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON  }),
       rights: this.fb.nonNullable.control(fileMetadata?.rights ? fileMetadata.rights : undefined),
       license: this.fb.nonNullable.control(fileMetadata?.license ? fileMetadata.license : undefined),
