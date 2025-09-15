@@ -246,7 +246,7 @@ export class MetadataFormComponent implements OnInit {
            tap((decodedCreators) => {
               if(decodedCreators?.length > 0 && this.creators.length > 0) {
                 //const firstCreator = this.creators.at(0).value as CreatorVO;
-                remove_null_empty(this.creators.value);
+                //remove_null_empty(this.creators.value);
               }
               for (let creator of decodedCreators) {
                 let personVO: PersonVO = { completeName: undefined, familyName: creator.family, givenName: creator.given, alternativeNames: undefined, titles: undefined, pseudonyms: undefined, organizations: undefined, identifier: undefined, orcid: undefined };
