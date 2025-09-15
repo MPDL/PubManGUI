@@ -4,7 +4,7 @@ import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import type * as params from '../interfaces/imports-params';
-// import type * as resp from '../interfaces/imports-responses';
+
 import {
   ImportErrorLevel,
   ImportLogDbVO,
@@ -65,7 +65,6 @@ export class ImportsService {
   }
 
   getCrossref(importParams: params.GetCrossrefParams): Observable<ItemVersionVO> {
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/dataFetch/getCrossref`;
     const query = `?contextId=${importParams.contextId}&identifier=${importParams.identifier}`;
 
@@ -73,7 +72,6 @@ export class ImportsService {
   }
 
   getArxiv(importParams: params.GetArxivParams): Observable<ItemVersionVO> {
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const url = `${this.#baseUrl}/dataFetch/getArxiv`;
     const query = `?contextId=${importParams.contextId}&identifier=${importParams.identifier}&fullText=${importParams.fullText}`;
 
@@ -94,42 +92,37 @@ export class ImportsService {
 
   getImportLog(id: number): Observable<ImportLogDbVO> {
     const url = `${this.#baseUrl}/import/importLog/${id}`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
     return this.http.get<ImportLogDbVO>(url, { withCredentials: true });
   }
 
   getImportLogs(): Observable<ImportLogDbVO[]> {
     const url = `${this.#baseUrl}/import/getImportLogs`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
     return this.http.get<ImportLogDbVO[]>(url, { withCredentials: true });
   }
 
   getImportLogItems(id: number): Observable<ImportLogItemDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItems/${id}`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
     return this.http.get<ImportLogItemDbVO[]>(url, { withCredentials: true });
   }
 
   getImportLogItemDetails(id: number): Observable<ImportLogItemDetailDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItemDetails/${id}`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
     return this.http.get<ImportLogItemDetailDbVO[]>(url, { withCredentials: true });
   }
 
   deleteImportLog(id: number): Observable<any> {
     const url = `${this.#baseUrl}/import/importLog/${id}`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
     return this.http.delete<any>(url, { withCredentials: true });
   }
 
   getFormatConfiguration(format: string): Observable<any> {
     const url = `${this.#baseUrl}/import/getFormatConfiguration`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
+
     const query = `?format=${format}`;
 
     return this.http.get<any>(url + query, { withCredentials: true });
@@ -138,7 +131,6 @@ export class ImportsService {
   postImport(importParams: params.PostImportParams, data: any): Observable<any> {
     const url = `${this.#baseUrl}/import/import`;
     const headers = new HttpHeaders()
-      //.set('Authorization', this.token!)
       .set('Content-Type', 'application/octet-stream')
       .set('Content-Disposition', 'attachment');
     const query = `?contextId=${importParams.contextId}&importName=${importParams.importName}&format=${importParams.format}`;
@@ -148,14 +140,12 @@ export class ImportsService {
 
   getContexts(ctxId: string): Observable<any> {
     const url = `${this.#baseUrl}/contexts/${ctxId}`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
 
     return this.http.get<any>(url, { withCredentials: true });
   }
 
   deleteImportedItems(importLogId: number): Observable<any> {
     const url = `${this.#baseUrl}/import/deleteImportedItems`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const query = `?importLogId=${importLogId}`;
 
     const response: Observable<any> = this.http.put<any>(url + query,'', { withCredentials: true  })
@@ -169,7 +159,6 @@ export class ImportsService {
 
   submitImportedItems(importLogId: number, submitModus: string): Observable<any> {
     const url = `${this.#baseUrl}/import/submitImportedItems`;
-    //const headers = new HttpHeaders().set('Authorization', this.token!);
     const query = `?importLogId=${importLogId}&submitModus=${submitModus}`;
 
     const response: Observable<any> = this.http.put<any>(url + query,'', { withCredentials: true })
