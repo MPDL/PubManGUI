@@ -1,4 +1,4 @@
-import { Component, computed, effect, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
@@ -11,7 +11,6 @@ import {
   CreatorVO,
   EventVO,
   IdentifierVO,
-  IdType,
   LegalCaseVO,
   MdsPublicationGenre,
   PersonVO,
@@ -19,14 +18,11 @@ import {
   PublishingInfoVO,
   ReviewMethod,
   SourceVO,
-  SubjectClassification,
   SubjectVO
 } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
-import {
-  AddRemoveButtonsComponent
-} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { EventFormComponent } from '../event-form/event-form.component';
 import { LanguageFormComponent } from '../language-form/language-form.component';
 import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';
@@ -44,12 +40,15 @@ import { AaService } from 'src/app/services/aa.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Errors } from 'src/app/model/errors';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddMultipleCreatorsModalComponent } from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
+import {
+  AddMultipleCreatorsModalComponent
+} from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../validation-error/validation-error.component";
 import { remove_null_empty } from "../../../utils/utils_final";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
+import { catchError, finalize, tap, throwError } from "rxjs";
 
 @Component({
   selector: 'pure-metadata-form',
@@ -136,10 +135,15 @@ export class MetadataFormComponent implements OnInit {
           this.projectInfo.reset([this.fbs.project_info_FG(null).value]);
       }
       // Sources
-      if (this.genreSpecificResource.value()?.properties.sources.optional === false && this.sources.value.length === 0) {
-        this.sources.push(this.fbs.source_FG(null));
-      } else if (this.genreSpecificResource.value()?.properties.sources.display === false){
-        this.sources.reset([this.fbs.source_FG(null).value]);
+      if (this.genreSpecificResource.value()?.properties.sources.display === false) {
+        this.sources.clear();
+      }
+      else {
+        if (this.genreSpecificResource.value()?.properties.sources.optional === false && this.sources.value.length === 0) {
+          this.sources.push(this.fbs.source_FG(null));
+        } else if (this.genreSpecificResource.value()?.properties.sources.optional === true && this.sources.value.length >= 0) {
+          this.sources.clear();
+        }
       }
     });
   }
@@ -238,24 +242,33 @@ export class MetadataFormComponent implements OnInit {
   addMultipleCreators(creatorsString: string) {
     this.loading = true;
     if (creatorsString !== null && creatorsString != '') {
-      try {
-        this.miscellaneousService.getDecodedMultiplePersons(creatorsString).subscribe(
-          (decodedCreators) => {
-            for (let creator of decodedCreators) {
-              let personVO: PersonVO = { completeName: undefined, familyName: creator.family, givenName: creator.given, alternativeNames: undefined, titles: undefined, pseudonyms: undefined, organizations: undefined, identifier: undefined, orcid: undefined };
-              let creatorVO: CreatorVO = { person: personVO, role: CreatorRole.AUTHOR, type: CreatorType.PERSON, organization: undefined };
-              this.creators.push(this.fbs.creator_FG(creatorVO));
-              //remove_null_empty(this.creators.value);
+        this.miscellaneousService.getDecodedMultiplePersons(creatorsString).pipe(
+           tap((decodedCreators) => {
+              if(decodedCreators?.length > 0 && this.creators.length > 0) {
+                //const firstCreator = this.creators.at(0).value as CreatorVO;
+                remove_null_empty(this.creators.value);
+              }
+              for (let creator of decodedCreators) {
+                let personVO: PersonVO = { completeName: undefined, familyName: creator.family, givenName: creator.given, alternativeNames: undefined, titles: undefined, pseudonyms: undefined, organizations: undefined, identifier: undefined, orcid: undefined };
+                let creatorVO: CreatorVO = { person: personVO, role: CreatorRole.AUTHOR, type: CreatorType.PERSON, organization: undefined };
+                this.creators.push(this.fbs.creator_FG(creatorVO));
+
+              }
+              this.messageService.success('Adding multiple creators successful. Please review the list of creators.');
+              this.multipleCreators.setValue('');
             }
-            this.messageService.success('Adding multiple creators successful. Please review the list of creators.');
-            this.multipleCreators.setValue('');
+          ),
+          catchError((error: any) => {
+            return throwError(error)
+            //this.messageService.error('Error decoding multiple creators. Please check the format and try again. ' + error.message);
+            //return [];
+          }),
+          finalize(() => {
             this.loading = false;
-          }
-        );
-      } catch (error) {
-        this.messageService.error('Error decoding multiple creators. Please check the format and try again.');
-        this.loading = false;
-      }
+            }
+          )
+        )
+          .subscribe();
     } else {
       this.messageService.error('Please enter multiple creators in the textfield.');
       this.loading = false;
