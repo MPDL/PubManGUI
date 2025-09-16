@@ -169,9 +169,9 @@
         <hr />
        @if(!allValid ){
          <div class="alert" [class.alert-danger]="!allValid && !validForSave" [class.alert-warning]="!allValid && validForSave" >
-           <p>{{ 'Edit.validationErrorsExist' | translate }}</p>
+           {{ 'Edit.validationErrorsExist' | translate }}
            @if(validForSave) {
-             <p>{{ 'Edit.validForSave' | translate }}</p>
+             <br/>{{ 'Edit.validForSave' | translate }}
            }
          </div>
        }

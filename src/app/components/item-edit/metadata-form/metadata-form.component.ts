@@ -49,6 +49,7 @@ import { ValidationErrorComponent } from "../validation-error/validation-error.c
 import { remove_null_empty } from "../../../utils/utils_final";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
 import { catchError, finalize, tap, throwError } from "rxjs";
+import { isEmptyCreator } from "../../../utils/item-utils";
 
 @Component({
   selector: 'pure-metadata-form',
@@ -245,8 +246,10 @@ export class MetadataFormComponent implements OnInit {
         this.miscellaneousService.getDecodedMultiplePersons(creatorsString).pipe(
            tap((decodedCreators) => {
               if(decodedCreators?.length > 0 && this.creators.length > 0) {
-                //const firstCreator = this.creators.at(0).value as CreatorVO;
-                //remove_null_empty(this.creators.value);
+                const firstCreator = this.creators.at(0).value as CreatorVO;
+                if(isEmptyCreator(firstCreator)) {
+                  this.creators.removeAt(0);
+                }
               }
               for (let creator of decodedCreators) {
                 let personVO: PersonVO = { completeName: undefined, familyName: creator.family, givenName: creator.given, alternativeNames: undefined, titles: undefined, pseudonyms: undefined, organizations: undefined, identifier: undefined, orcid: undefined };

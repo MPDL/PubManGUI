@@ -1,5 +1,6 @@
-import { FileDbVO, ItemVersionVO, Visibility } from "../model/inge";
+import { CreatorVO, FileDbVO, ItemVersionVO, OrganizationVO, PersonVO, Visibility } from "../model/inge";
 import { Principal } from "../services/aa.service";
+import { isFormValueEmpty } from "./utils";
 
 export const checkFileAccess = (file: FileDbVO, item: ItemVersionVO, principal: Principal): boolean => {
   //console.log(file.visibility === Visibility.PUBLIC)
@@ -25,4 +26,18 @@ export const isUrl = (urlString: string) => {
 
 export const getFullItemId = (item: ItemVersionVO) => {
   return item.objectId + '_' + item.versionNumber;
+}
+
+export const isEmptyCreator = (creator?: CreatorVO) => {
+  return isEmptyPerson(creator?.person) && isEmptyOrg(creator?.organization);
+}
+
+const isEmptyPerson = (person: PersonVO | undefined) => {
+  return isFormValueEmpty(person?.familyName) && isFormValueEmpty(person?.givenName) && isFormValueEmpty(person?.identifier?.id);
+
+}
+
+const isEmptyOrg = (org: OrganizationVO | undefined) => {
+  return isFormValueEmpty(org?.name) && isFormValueEmpty(org?.address) && isFormValueEmpty(org?.identifier);
+
 }
