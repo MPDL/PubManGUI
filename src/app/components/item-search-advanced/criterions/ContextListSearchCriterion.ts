@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ContextDbVO } from "../../../model/inge";
 import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
 import { AaService } from "../../../services/aa.service";
+import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 
 export class ContextListSearchCriterion extends SearchCriterion {
 
@@ -49,8 +50,13 @@ export class ContextListSearchCriterion extends SearchCriterion {
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
 
-    return of({
-    })
+    const contexts: string[] = Object.keys(this.contextListFormGroup.controls)
+      .filter(context => this.contextListFormGroup.get(context)?.value);
+
+    if (contexts.length > 0) {
+      return of(baseElasticSearchQueryBuilder("context.objectId", contexts));
+    }
+    return of(undefined)
 
 
   }
