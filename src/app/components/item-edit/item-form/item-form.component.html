@@ -4,8 +4,6 @@
 <div class="container-fluid">
     <form [formGroup]="form" >
       <!-- context selection only for new items -->
-      @if(!item?.objectId) {
-
         <div class="d-sm-flex flex-sm-row gap-1 mb-3 mt-2 px-3 align-items-center" formGroupName="context">
             <label for="context" class="col-sm-2 col-form-label">{{ 'MetadataFields.context' | translate }}</label>
             <div class="col-sm">
@@ -27,7 +25,6 @@
                 </div>
             </div>
         </div>
-      }
         <!--<div class="row g-1 mb-1">-->
         <pure-metadata-form [meta_form]="metadata_form" [context]="context" (notice)="handleNotification($event)">
         </pure-metadata-form>
