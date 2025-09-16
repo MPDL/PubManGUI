@@ -189,7 +189,7 @@ export class SourceFormComponent {
         abbrevs.forEach(t => {
           altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.ABBREVIATION, value: t}));
         }) :
-        altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.ABBREVIATION, value: altTitles}));
+        altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.ABBREVIATION, value: abbrevs}));
     }
     if (altTitles) {
       Array.isArray(altTitles) ?

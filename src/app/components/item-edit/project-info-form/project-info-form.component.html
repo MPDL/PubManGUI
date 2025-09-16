@@ -36,7 +36,7 @@
             <div formGroupName="fundingOrganization" class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                 <div class="col-sm-7">
                     <label class="col-form-label">{{ 'MetadataFields.projectInfoFundingOrganization' | translate }}</label>
-                  <pure-cone-autosuggest coneType="funding-organizations" [form]="$any(fundingOrganization.get('title'))" (valueSelected)="fundingOrganizationConeSelected($event)"/>
+                  <pure-cone-autosuggest coneType="funding-organizations" [form]="$any(fundingOrganization.get('title'))" (valueSelected)="fundingOrganizationConeSelected($event)" #fundingOrgAutosuggest/>
                 </div>
                 <div [formGroup]="fundingOrganizationIdentifier" class="col-sm">
                     <label class="col-sm col-form-label">{{ 'MetadataFields.projectInfoFundingOrganizationId' | translate }}</label>

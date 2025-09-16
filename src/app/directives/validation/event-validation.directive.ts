@@ -6,11 +6,11 @@ export const EventValidator: ValidatorFn = (control: AbstractControl,): Validati
   const event = control;
   const error_types = Errors;
   if (event !== null) {
-    if ((isFormValueEmpty(event.get('title')?.value)) &&
-        (!isFormValueEmpty(event.get('endDate')?.value)) ||
-        (!isFormValueEmpty(event.get('invitationStatus')?.value))  ||
-        (!isFormValueEmpty(event.get('place')?.value)) ||
-        (!isFormValueEmpty(event.get('startDate')?.value))) {
+    if (isFormValueEmpty(event.get('title')?.value) &&
+        (!isFormValueEmpty(event.get('endDate')?.value) ||
+        !isFormValueEmpty(event.get('invitationStatus')?.value)  ||
+        !isFormValueEmpty(event.get('place')?.value) ||
+        !isFormValueEmpty(event.get('startDate')?.value))) {
       event.get('title')?.setErrors({[error_types.EVENT_TITLE_NOT_PROVIDED] : true});
       //return { [error_types.EVENT_TITLE_NOT_PROVIDED]: true };
     }

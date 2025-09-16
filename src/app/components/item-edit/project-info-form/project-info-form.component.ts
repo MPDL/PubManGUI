@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FundingInfoVO, FundingProgramVO, IdentifierVO, IdType } from 'src/app/model/inge';
@@ -23,6 +23,8 @@ export class ProjectInfoFormComponent {
   @Input() index_length!: number;
   @Input() multi!: boolean;
   @Output() notice = new EventEmitter();
+
+  @ViewChild('fundingOrgAutosuggest') fundingOrgAutosuggestComponent!: ConeAutosuggestComponent;
 
   fbs = inject(FormBuilderService);
   coneService = inject(ConeService);
@@ -143,6 +145,17 @@ export class ProjectInfoFormComponent {
               type: IdType.GRANT_ID
             });
           }
+          if(data.http_purl_org_dc_elements_1_1_relation) {
+            const orgData = data.http_purl_org_dc_elements_1_1_relation;
+            this.fundingOrganization.get('title')?.setValue(orgData.http_purl_org_dc_elements_1_1_title);
+            if(orgData.http_purl_org_dc_elements_1_1_identifier) {
+              this.fundingOrganizationIdentifier.setValue({
+                id: orgData.http_purl_org_dc_elements_1_1_identifier,
+                type: IdType.GRANT_ID
+              });
+              this.fundingOrgAutosuggestComponent.selected = true;
+            }
+          }
         }),
       )
       .subscribe();
@@ -150,6 +163,9 @@ export class ProjectInfoFormComponent {
     else {
       this.fundingProgram.get('title')?.setValue('');
       this.fundingProgramIdentifier.setValue(this.fbs.identifier_FG(null).value);
+      this.fundingOrganization.get('title')?.setValue('');
+      this.fundingOrganizationIdentifier.setValue(this.fbs.identifier_FG(null).value);
+      this.fundingOrgAutosuggestComponent.selected = false;
     }
 
   }
