@@ -24,6 +24,14 @@ export class Principal{
   matchedIpName?: string;
   matchedIpId?: string;
 
+  isModeratorForContext(contextId:string): boolean {
+    return this.moderatorContexts.some(contextObj => contextObj.objectId === contextId);
+  }
+
+  isDepositorForContext(contextId:string): boolean {
+    return this.depositorContexts.some(contextObj => contextObj.objectId === contextId);
+  }
+
 }
 
 @Injectable({

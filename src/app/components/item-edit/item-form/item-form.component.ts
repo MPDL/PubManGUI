@@ -11,13 +11,14 @@ import {
   ValidationErrors
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, EMPTY, finalize, Observable, of, pipe, Subscription, switchMap, tap, throwError } from 'rxjs';
+import { catchError, finalize, of, pipe, Subscription, switchMap, tap, throwError } from 'rxjs';
 import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
 import {
   ContextDbRO,
   ContextDbVO,
   FileDbVO,
-  ItemVersionRO, ItemVersionState,
+  ItemVersionRO,
+  ItemVersionState,
   ItemVersionVO,
   MdsPublicationVO,
   Storage
@@ -83,7 +84,7 @@ export class ItemFormComponent implements OnInit {
   form_2_submit: any;
   internalFiles!: FormArray<FormGroup<ControlType<FileDbVO>>>;
   switchFileSortingMode: boolean = false;
-  user_contexts?: ContextDbRO[];
+  user_contexts: ContextDbRO[] = [];
 
   @Output() onChangeSwitchMode: EventEmitter<any> = new EventEmitter();
 
@@ -97,6 +98,9 @@ export class ItemFormComponent implements OnInit {
   protected saveInProgress: boolean = false;
 
   ngOnInit(): void {
+    this.user_contexts = this.aaService.principal.value.depositorContexts;
+
+
     this.route.data.pipe(
       switchMap(data => {
         // console.log('Data', JSON.stringify(data));
@@ -111,13 +115,17 @@ export class ItemFormComponent implements OnInit {
       // manual Update for form validation
       //this.updateFormValidity(this.form);
     });
-    this.aaService.principal.subscribe(p => {
-      this.user_contexts = p.depositorContexts;
-      if (!this.context.value.objectId && this.user_contexts.length > 0) {
-        // no contextService call needed, because we just need a contextDbRO
-        this.form.get('context')?.patchValue({ objectId: this.user_contexts[0].objectId, name: this.user_contexts[0].name });
-      }
+    /*
+    this.context.valueChanges.subscribe(() => {
+      console.log("Context changed!!!!");
+      this.updateAuthInfo();
     });
+
+     */
+
+
+
+
 
     /*
     this.contextService.getDepositorContextsForCurrentUser()
@@ -199,6 +207,7 @@ export class ItemFormComponent implements OnInit {
     // no contextService call needed, because we just need a contextDbRO
     let selectedContext = this.user_contexts?.find((context) => context.objectId == contextObjectId)
     this.form.get('context')?.patchValue({ objectId: contextObjectId, name: selectedContext?.name });
+    this.updateAuthInfo();
   }
 
   changeSortingMode() {
@@ -333,17 +342,38 @@ export class ItemFormComponent implements OnInit {
   private itemUpdated(item: ItemVersionVO) {
     this.item = item;
     this.form = this.fbs.item_FG(item);
-    this.initInternalAndExternalFiles();
-    if (this.form.value !== null
-      && this.form.value !== undefined
-      && this.form.get('objectId')?.value !== null
-      && this.form.get('versionNumber')?.value !== undefined) {
-      this.itemService.retrieveAuthorizationInfo(itemToVersionId(this.form.value as ItemVersionRO)).subscribe(authInfo => {
-        this.authorizationInfo = authInfo;
-        console.log('this.authorizationInfo: ', this.authorizationInfo);
-      });
+
+    if (!this.context.value.objectId && this.user_contexts.length > 0) {
+      // no contextService call needed, because we just need a contextDbRO
+      this.form.get('context')?.patchValue({ objectId: this.user_contexts[0].objectId, name: this.user_contexts[0].name });
     }
+
+    this.initInternalAndExternalFiles();
+    this.updateAuthInfo();
     //this.form.updateValueAndValidity();
+  }
+
+  updateAuthInfo() {
+    if (this.form.value !== null
+      && this.form.value !== undefined) {
+
+
+
+      if(this.item?.objectId) {
+        this.itemService.retrieveAuthorizationInfo(this.item.objectId, true).subscribe(authInfo => {
+          this.authorizationInfo = authInfo;
+          console.log('this.authorizationInfo: ', this.authorizationInfo);
+        });
+      }
+      else {
+        this.itemService.retrieveAuthorizationInfoForCreation(this.context.value.objectId || '', true).subscribe(authInfo => {
+          this.authorizationInfo = authInfo;
+          console.log('this.authorizationInfo: ', this.authorizationInfo);
+        });
+      }
+
+
+    }
   }
 
   get allValid() {

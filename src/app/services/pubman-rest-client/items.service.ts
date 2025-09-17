@@ -58,8 +58,19 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     return this.httpGet(this.subPath + '/' + id + '/history', opts);
   }
 
-  retrieveAuthorizationInfo(itemId: string, opts?: HttpOptions): Observable<any> {
-    return this.httpGet(this.subPath + '/' + itemId + '/authorization', opts);
+  retrieveAuthorizationInfo(itemId: string, afterSave:boolean=false, opts?: HttpOptions): Observable<any> {
+    let params: HttpParams = new HttpParams()
+      .set('afterSave', afterSave);
+    const mergedOpts = this.createOrMergeHttpOptions(opts, {params: params});
+    return this.httpGet(this.subPath + '/' + itemId + '/authorization', mergedOpts);
+  }
+
+  retrieveAuthorizationInfoForCreation(contextId:string, afterSave:boolean=false, opts?: HttpOptions): Observable<any> {
+    let params: HttpParams = new HttpParams()
+      .set('contextId', contextId)
+      .set('afterSave', afterSave);
+    const mergedOpts = this.createOrMergeHttpOptions(opts, {params: params});
+    return this.httpGet(this.subPath + '/authorization', mergedOpts);
   }
 
   retrieveFileAuthorizationInfo(itemId: string, fileId:string, opts?: HttpOptions): Observable<any> {

@@ -180,7 +180,7 @@
                     <span class="visually-hidden" role="status">Loading...</span>
                   }
                   {{'common.save' | translate}}</button>
-                @if (!form.controls['objectId'].value || (authorizationInfo && authorizationInfo.actions['SUBMIT'])) {
+                @if (authorizationInfo && authorizationInfo.actions['SUBMIT']) {
                 <button class="btn btn-primary me-3" id="submit" type="button" value="submit" (click)="submit('submit')" [disabled]="!allValid || saveInProgress">
                   {{'common.submit' | translate}}
                 </button>
