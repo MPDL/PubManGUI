@@ -38,6 +38,10 @@
     }
 */
   .nav-toggler {
+    &:hover {
+      background-color: color-mix(in srgb, var(--bs-dark), transparent 96%);
+    }
+
     ul {
       li {
         @media (min-width: 1400px) {
