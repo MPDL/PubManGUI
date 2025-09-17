@@ -1,6 +1,6 @@
 <div class="batch">
-    <div class="batch border-bottom show-more">
-        <a class="nav-link py-2 py-xl-3" (click)="showMore()" data-test="sidenav-batch">
+    <div class="batch border-bottom nav-toggler pb-2">
+        <a class="nav-link pt-2 pt-xl-3" (click)="showMore()" data-test="sidenav-batch">
             <span class="material-symbols-outlined">web_stories</span>
             <span class="nav-label ms-3 text-nowrap">{{'batch.name'| translate }}
                 @if (!isMoreShown) {
@@ -14,8 +14,8 @@
             }
 
         </a>
-
-        <ul class="more-to-show" [ngClass]="{'d-block' : showMore(), 'd-none' : !showMore()}" id="batch-options">
+        
+        <ul [ngClass]="isMoreShown ? 'd-block' : 'd-none'" id="batch-options">
             <li class="pt-0 pb-0 mx-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/datasets' ]"
                     (click)="whenReady('/batch/datasets')"
@@ -30,10 +30,10 @@
                     <span> {{'common.actions' | translate}}</span>
                 </a>
             </li>
-            <li class="pt-0 pb-2">
+            <li class="pt-0 pb-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/logs' ]" 
                     (click)="whenReady('/batch/logs')"
-                    [ngClass]="{'disabled' : !batchSvc.hasLogs()}" data-test="sidenav-batch-logs">
+                    [ngClass]="{'disabled pb-2' : !batchSvc.hasLogs()}" data-test="sidenav-batch-logs">
                     <span> {{'common.logs' | translate}}</span>
                 </a>
             </li>

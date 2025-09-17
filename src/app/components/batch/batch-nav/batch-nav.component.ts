@@ -81,7 +81,7 @@ export class BatchNavComponent implements OnInit {
     if (this.mobile) {
       if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
       if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
-    }
+    } 
   }
 
   showMore(): boolean {
@@ -94,5 +94,7 @@ export class BatchNavComponent implements OnInit {
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;
   }
+
+  //style = window.getComputedStyle(document.querySelector('#batch-options')!);
 
 }
