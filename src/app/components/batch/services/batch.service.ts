@@ -23,7 +23,7 @@ export class BatchService {
 
   objectIds$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
-  datasetList = "dataset-list";
+  datasetList = "batch-items";
   savedSelection = "datasets-checked";
 
   updateDelay = 1;

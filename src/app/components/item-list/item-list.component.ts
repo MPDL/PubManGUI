@@ -43,8 +43,7 @@ import { SortSelectorComponent } from "./filters/sort-selector/sort-selector.com
     NgbTooltip,
     TranslatePipe
   ],
-  templateUrl: './item-list.component.html',
-  styleUrl: './item-list.component.scss'
+  templateUrl: './item-list.component.html'
 })
 export class ItemListComponent implements AfterViewInit{
 
