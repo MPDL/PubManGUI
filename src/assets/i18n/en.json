@@ -259,7 +259,7 @@
 		"list.details.count": "items imported",
 		"list.details.delete": "Delete",
 		"list.details.empty": "This detail has no logs available!",
-		"list.details.filter": "Item reports to show",
+		"list.details.filter": "Reports to show",
 		"list.details.for": "Item",
 		"list.details.release": "Release",
 		"list.details.remove": "Remove from 'My Imports'",

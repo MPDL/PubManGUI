@@ -208,7 +208,8 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   updateFilteredLogs(): void {
-    this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel) || !item.itemId);
+    //this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel) || !item.itemId);
+    this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel));    
     this.filteredSize = this.filteredLogs.length;
   }
 
