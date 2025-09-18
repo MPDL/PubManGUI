@@ -35,10 +35,10 @@ export class ProjectInfoFormComponent {
 
   ngOnInit(): void {
     if (this.fundingProgramIdentifiers.length < 1) {
-      this.fundingProgramIdentifiers.push(this.fbs.identifier_FG(null));
+      this.fundingProgramIdentifiers.push(this.fbs.identifier_FG(null, false));
     }
     if (this.fundingOrganizationIdentifiers.length < 1) {
-      this.fundingOrganizationIdentifiers.push(this.fbs.identifier_FG(null));
+      this.fundingOrganizationIdentifiers.push(this.fbs.identifier_FG(null, false));
     }
     this.grantIdentiferSubscription = this.project_info_form.get('grantIdentifier')?.get('id')?.valueChanges.subscribe(
       idValue => idValue ? this.project_info_form.get('grantIdentifier')?.get('type')?.patchValue(IdType.GRANT_ID) : this.project_info_form.get('grantIdentifier')?.get('type')?.patchValue(null)
@@ -97,11 +97,11 @@ export class ProjectInfoFormComponent {
   }
 
   handleNoFundingOrganizationIdentifiers() {
-    this.fundingOrganizationIdentifiers.push(this.fbs.identifier_FG(null));
+    this.fundingOrganizationIdentifiers.push(this.fbs.identifier_FG(null, false));
   }
 
   addFundingOrganizationIdentifier(index: number) {
-    this.fundingOrganizationIdentifiers.insert( index + 1, this.fbs.identifier_FG(null));
+    this.fundingOrganizationIdentifiers.insert( index + 1, this.fbs.identifier_FG(null, false));
   }
 
   removeFundingOrganizationIdentifier(index: number) {
@@ -117,11 +117,11 @@ export class ProjectInfoFormComponent {
   }
 
   handleNoFundingProgramIdentifiers() {
-    this.fundingProgramIdentifiers.push(this.fbs.identifier_FG(null));
+    this.fundingProgramIdentifiers.push(this.fbs.identifier_FG(null, false));
   }
 
   addFundingProgramIdentifier(index: number) {
-    this.fundingProgramIdentifiers.insert( index + 1, this.fbs.identifier_FG(null));
+    this.fundingProgramIdentifiers.insert( index + 1, this.fbs.identifier_FG(null, false));
   }
 
   removeFundingProgramIdentifier(index: number) {
@@ -162,9 +162,9 @@ export class ProjectInfoFormComponent {
     }
     else {
       this.fundingProgram.get('title')?.setValue('');
-      this.fundingProgramIdentifier.setValue(this.fbs.identifier_FG(null).value);
+      this.fundingProgramIdentifier.setValue(this.fbs.identifier_FG(null, false).value);
       this.fundingOrganization.get('title')?.setValue('');
-      this.fundingOrganizationIdentifier.setValue(this.fbs.identifier_FG(null).value);
+      this.fundingOrganizationIdentifier.setValue(this.fbs.identifier_FG(null, false).value);
       this.fundingOrgAutosuggestComponent.selected = false;
     }
 
@@ -187,7 +187,7 @@ export class ProjectInfoFormComponent {
     }
     else {
       this.fundingOrganization.get('title')?.setValue('');
-      this.fundingOrganizationIdentifier.setValue(this.fbs.identifier_FG(null).value);
+      this.fundingOrganizationIdentifier.setValue(this.fbs.identifier_FG(null, false).value);
     }
 
   }
