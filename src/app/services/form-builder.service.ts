@@ -187,12 +187,12 @@ export class FormBuilderService {
     return person_form;
   }
 
-  identifier_FG(identifier: IdentifierVO | null) {
+  identifier_FG(identifier: IdentifierVO | null, addValidations:boolean = true) {
     const identifier_form = this.fb.group<ControlType<IdentifierVO>>({
       id: this.fb.nonNullable.control(identifier?.id ? identifier.id : undefined),
       type: this.fb.nonNullable.control(identifier?.type ? identifier.type : undefined)
     },
-      { validators: [IdentifierValidator], updateOn: VALIDATION_UPDATE_ON });
+      addValidations ? { validators: [IdentifierValidator], updateOn: VALIDATION_UPDATE_ON } : {});
     return identifier_form;
   }
 
@@ -306,7 +306,7 @@ export class FormBuilderService {
     const pi_form = this.fb.group<ControlType<ProjectInfoVO>>({
       title: this.fb.nonNullable.control(pi?.title ? pi.title : undefined),
       fundingInfo: pi?.fundingInfo ? this.funding_info_FG(pi.fundingInfo) : this.funding_info_FG(null),
-      grantIdentifier: pi?.grantIdentifier ? this.identifier_FG(pi.grantIdentifier) : this.identifier_FG(null)
+      grantIdentifier: pi?.grantIdentifier ? this.identifier_FG(pi.grantIdentifier, false) : this.identifier_FG(null, false)
     });
     return pi_form
   }
@@ -322,7 +322,7 @@ export class FormBuilderService {
   funding_org_FG(fo: FundingOrganizationVO | null) {
     const fo_form = this.fb.group<ControlType<FundingOrganizationVO>>({
       title: this.fb.nonNullable.control(fo?.title ? fo.title : undefined),
-      identifiers: this.fb.array(fo?.identifiers ? fo.identifiers.map(i => this.identifier_FG(i) as AbstractControl) : [])
+      identifiers: this.fb.array(fo?.identifiers ? fo.identifiers.map(i => this.identifier_FG(i, false) as AbstractControl) : [])
     });
     return fo_form
   }
@@ -330,7 +330,7 @@ export class FormBuilderService {
   funding_prog_FG(fp: FundingProgramVO | null) {
     const fp_form = this.fb.group<ControlType<FundingProgramVO>>({
       title: this.fb.nonNullable.control(fp?.title ? fp.title : undefined),
-      identifiers: this.fb.array(fp?.identifiers ? fp.identifiers.map(i => this.identifier_FG(i) as AbstractControl) : [])
+      identifiers: this.fb.array(fp?.identifiers ? fp.identifiers.map(i => this.identifier_FG(i, false) as AbstractControl) : [])
     });
     return fp_form
   }
