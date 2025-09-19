@@ -127,4 +127,11 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
 
   }
 
+  changeContext(id: string, contextId: string, opts?: HttpOptions) {
+    let params: HttpParams = new HttpParams()
+      .set('contextId', contextId);
+    const mergedOpts = this.createOrMergeHttpOptions(opts, {params: params});
+    return this.httpGet(this.subPath + '/' + id + '/changecontext', mergedOpts);
+  }
+
 }

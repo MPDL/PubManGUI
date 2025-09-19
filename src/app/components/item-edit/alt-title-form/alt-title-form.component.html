@@ -1,11 +1,11 @@
 <div [formGroup]="alt_title_form">
     <div class="d-sm-flex flex-sm-row gap-1 align-items-start" [ngClass]="{'mb-1': index !== index_length -1}">
         <div class="col-sm">
-            <label for="alt_title_type" class="visually-hidden">type</label>
+            <label for="alt_title_type" class="visually-hidden">Alternative Title Type</label>
             <select id="alt_title_type" class="form-select" formControlName="type">
               <option [ngValue]="null" selected>-</option>
                 @for (t of alt_title_types; track t) {
-                <option [ngValue]="t">{{t}}</option>
+                <option [ngValue]="t">{{'AlternativeTitleType.' + t | translate}}</option>
                 }
             </select>
         </div>

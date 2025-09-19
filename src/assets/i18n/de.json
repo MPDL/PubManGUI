@@ -56,6 +56,7 @@
     "useAsTemplate": "Als Vorlage verwenden",
     "addDoi": "DOI hinzufügen",
     "rollback": "Wiederherstellen",
+    "changeContext" : "Kontext ändern",
     "comment": "Kommentar",
     "actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?",
     "dateFormat": "JJJJ-MM-TT",
@@ -666,6 +667,14 @@
 		"submitted": "Eingereicht",
 		"not-specified": "Keine Angabe"
 	},
+  "AlternativeTitleType": {
+    "ABBREVIATION": "Kurztitel",
+    "HTML": "Html",
+    "LATEX": "Latex",
+    "MATHML": "MathML",
+    "OTHER": "Andere",
+    "SUBTITLE": "Untertitel"
+  },
 	"MetadataFields": {
 		"state": "Status",
 		"context": "Kontext",
