@@ -1,18 +1,31 @@
 <h4>Organizational Units</h4>
 <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding class="flat-tree-node">
-        <button class="btn btn-sm btn-outline border-0" (click)="info(node)"><i class="bi-dash"
-                [style.visibility]="'hidden'"></i><span
-                [ngClass]="{'text-muted': node.item.publicStatus === 'CLOSED'}">{{node.item.name}}</span></button>
+        <button class="btn btn-sm btn-outline border-0">
+            <i class="bi-dash" [style.visibility]="'hidden'"></i>
+            <span [ngClass]="{'text-muted': node.item.publicStatus === 'CLOSED' }" style="cursor: default">{{node.item.name}}</span>
+        </button>
+        <span>
+            <button class="btn btn-link p-0" (click)="info(node)">
+                <span class="material-symbols-outlined">info</span>
+            </button>
+        </span>
     </cdk-tree-node>
     <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChildren" cdkTreeNodePadding class="flat-tree-node">
-        <button class="btn btn-sm btn-outline border-0" cdkTreeNodeToggle (click)="info(node)">
+        <button class="btn btn-sm btn-outline border-0" cdkTreeNodeToggle>
             <i class="text-primary"
                 [ngClass]="{'bi-chevron-down': treeControl.isExpanded(node), 'bi-chevron-right': !treeControl.isExpanded(node)}"></i>
             <span [ngClass]="{'text-muted': node.item.publicStatus === 'CLOSED'}">{{node.item.name}}</span>
         </button>
-        <div *ngIf="node.isLoading" class="spinner-border spinner-border-sm text-primary" role="status">
+        <span>
+            <button class="btn btn-link p-0" (click)="info(node)">
+                <span class="material-symbols-outlined">info</span>
+            </button>
+        </span>
+        @if (node.isLoading) {
+        <div class="ms-2 spinner-border spinner-border-sm text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
+        }
     </cdk-tree-node>
 </cdk-tree>
