@@ -318,6 +318,9 @@
             <span label>{{ 'MetadataFields.context' | translate }}</span>
             <span content>
             {{ item.context.name }}
+              <button class="btn btn-sm btn-outline-secondary" (click)="openChangeContextModal()">
+                {{'common.changeContext' | translate}}
+                </button>
           </span>
           </pure-item-view-metadata-element>
           <pure-item-view-metadata-element [sub]="true" [hl]="true">

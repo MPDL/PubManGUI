@@ -44,6 +44,8 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
 import { LoadingComponent } from "../../shared/loading/loading.component";
 import { MiscellaneousService } from "../../../services/pubman-rest-client/miscellaneous.service";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
+import { ChangeContextModalComponent } from "../../shared/change-context-modal/change-context-modal.component";
+import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 
 @Component({
   selector: 'pure-item-form',
@@ -57,7 +59,7 @@ import { AccordionGroupValidationDirective } from "../../../directives/accordion
     MetadataFormComponent,
     AddRemoveButtonsComponent,
     CdkDropList,
-    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, AccordionGroupValidationDirective, LoadingComponent],
+    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, AccordionGroupValidationDirective, LoadingComponent, SanitizeHtmlPipe],
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss'],
 })
@@ -109,7 +111,7 @@ export class ItemFormComponent implements OnInit {
       })
     ).subscribe(item => {
 
-      this.itemUpdated(item);
+      this.itemUpdated(item, true);
 
 
       // manual Update for form validation
@@ -339,14 +341,23 @@ export class ItemFormComponent implements OnInit {
 
   }
 
-  private itemUpdated(item: ItemVersionVO) {
+  private itemUpdated(item: ItemVersionVO, initial:boolean=false) {
     this.item = item;
     this.form = this.fbs.item_FG(item);
 
-    if (!this.context.value.objectId && this.user_contexts.length > 0) {
-      // no contextService call needed, because we just need a contextDbRO
-      this.form.get('context')?.patchValue({ objectId: this.user_contexts[0].objectId, name: this.user_contexts[0].name });
+    if(initial) {
+      if (this.user_contexts.length > 0) {
+        // no contextService call needed, because we just need a contextDbRO
+        this.form.get('context')?.patchValue({ objectId: this.user_contexts[0].objectId, name: this.user_contexts[0].name });
+      }
     }
+    else {
+      if (this.form.get('objectId')?.value) {
+        this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
+      }
+    }
+
+
 
     this.initInternalAndExternalFiles();
     this.updateAuthInfo();
@@ -472,9 +483,7 @@ export class ItemFormComponent implements OnInit {
       tap((result: ItemVersionVO) => {
         //console.log("TAP" + result);
         this.itemUpdated(result);
-        if (this.form.get('objectId')?.value) {
-          this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
-        }
+
         this.messageService.success('Item saved successfully!');
         console.log('Saved Item', JSON.stringify(result));
 
@@ -546,6 +555,13 @@ export class ItemFormComponent implements OnInit {
     return errors;
   }
 
+  openChangeContextModal() {
+    const changeContextComp: ChangeContextModalComponent = this.modalService.open(ChangeContextModalComponent).componentInstance;
+    changeContextComp.item = this.item;
+    changeContextComp.successfullyDone.subscribe(data => {
+        this.itemUpdated(data);
+    })
+  }
 }
 
 /*

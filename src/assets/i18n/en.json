@@ -56,6 +56,7 @@
 		"useAsTemplate": "Use as template",
 		"addDoi": "Add DOI",
 		"rollback": "Revert",
+    "changeContext" : "Change context",
 		"comment": "Comment",
 		"actionWarning": "This action is irreversible. Are you sure?",
 		"dateFormat": "YYYY-MM-DD",
@@ -666,6 +667,14 @@
 		"submitted": "Submitted",
 		"not-specified": "Not specified"
 	},
+  "AlternativeTitleType": {
+    "ABBREVIATION": "Abbreviation",
+    "HTML": "Html",
+    "LATEX": "Latex",
+    "MATHML": "MathML",
+    "OTHER": "Other",
+    "SUBTITLE": "Untertitel"
+  },
 	"MetadataFields": {
 		"state": "State",
 		"context": "Context",

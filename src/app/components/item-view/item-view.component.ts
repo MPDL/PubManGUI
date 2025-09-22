@@ -41,6 +41,7 @@ import { UsersService } from "../../services/pubman-rest-client/users.service";
 import sanitizeHtml from "sanitize-html";
 import { CopyButtonDirective } from "../../directives/copy-button.directive";
 import { PubManHttpErrorResponse } from "../../services/interceptors/http-error.interceptor";
+import { ChangeContextModalComponent } from "../shared/change-context-modal/change-context-modal.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -333,4 +334,15 @@ export class ItemViewComponent {
   }
 
   protected readonly timer = timer;
+
+
+  openChangeContextModal() {
+    const changeContextComp: ChangeContextModalComponent = this.modalService.open(ChangeContextModalComponent).componentInstance;
+    changeContextComp.item = this.item!;
+    changeContextComp.successfullyDone.subscribe(data => {
+      this.listStateService.itemUpdated.next(this.item?.objectId);
+      this.init(this.item?.objectId!);
+    })
+  }
+
 }

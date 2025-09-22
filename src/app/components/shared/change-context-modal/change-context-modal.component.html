@@ -1,0 +1,56 @@
+
+
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{ 'common.changeContext' | translate }}
+  </h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+
+
+<form #commentForm="ngForm">
+<div class="modal-body">
+  @if(errorMessage) {
+    <div class="alert alert-danger text-break" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <p>{{'common.item' | translate}} {{item.objectId}}<br/>
+  <b [innerHTML]="item.metadata.title | sanitizeHtml"></b>
+  </p>
+
+  <div class="form-group">
+    @for(context of contextList; track context.context.objectId; let index = $index) {
+      <div class="form-check">
+        <input class="form-check-input" type="radio" [value]="context.context.objectId" [(ngModel)]="selectedContextId" id="contextOption{{index}}" name="contextOption{{index}}" [disabled]="context.invalid">
+        <label class="form-check-label" for="contextOption{{index}}">
+          <span [class.fw-bold]="context.context.objectId === item.context.objectId">{{ context.context.name }} ({{context.context.workflow}})</span>
+        </label>
+      </div>
+    }
+  </div>
+
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">{{'common.cancel' | translate}}
+
+
+  </button>
+  <button type="submit" class="btn btn-primary btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'common.changeContext' | translate }}
+    @if(loading)
+    {
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span class="visually-hidden" role="status">Loading...</span>
+    }
+  </button>
+
+
+</div>
+</form>
+
+
+
+
+

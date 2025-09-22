@@ -302,7 +302,7 @@
 
           @for (altTitle of source.alternativeTitles; track altTitle) {
             <pure-item-view-metadata-element [sub]="true">
-              <span label>{{altTitle.type}}</span>
+              <span label>{{'AlternativeTitleType.' + altTitle.type | translate}}</span>
               <span content>
                 {{ altTitle.value }}
               </span>
