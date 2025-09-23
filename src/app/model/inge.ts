@@ -342,6 +342,8 @@ export enum EventType {
     REVISE = "REVISE",
     WITHDRAW = "WITHDRAW",
     UPDATE = "UPDATE",
+    CHANGE_CONTEXT = "CHANGE_CONTEXT",
+    UPDATE_LOCAL_TAGS = "UPDATE_LOCAL_TAGS",
 }
 
 export enum MdsPublicationGenre {

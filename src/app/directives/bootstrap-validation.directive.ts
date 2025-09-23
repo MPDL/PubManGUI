@@ -72,20 +72,6 @@ export class BootstrapValidationDirective {
 
     this.control = this.cont?.control || this.cd?.control;
 
-    //console.log(this.controlName, this.control?.valid, this.headingElement);
-
-    //this.addRemoveValidationInfoToHeader();
-
-    /*
-    this.control?.statusChanges.subscribe(status => {
-      this.addRemoveValidationInfoToHeader();
-      if(this.controlName === 'title') {
-        //console.log("Heading for " + this.controlName, this.headingElement);
-      }
-    })
-
-     */
-
 
 
     if(this.validationMessagePosition !== 'ignore'){
@@ -127,6 +113,7 @@ export class BootstrapValidationDirective {
       //Create validation message component
       const errorCompRef = this.viewContainerRef.createComponent(ValidationErrorComponent);
       errorCompRef.instance.name = this.controlName;
+      errorCompRef.instance.onlyForTouched = false;
       if(this.cd?.control) {
         errorCompRef.instance.control = this.cd.control;
       }

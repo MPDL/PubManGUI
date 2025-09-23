@@ -18,6 +18,8 @@ export class ValidationErrorComponent {
   @Input() validationError?: ValidationErrors;
   @Input() name = '';
 
+  @Input() onlyForTouched = true;
+
   errorMessages: string[] = [];
   statusSubscription?: Subscription;
 

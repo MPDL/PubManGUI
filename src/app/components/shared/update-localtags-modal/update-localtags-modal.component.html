@@ -1,0 +1,49 @@
+
+
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{ 'common.updateLocalTags' | translate }}
+  </h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+
+
+<form #commentForm="ngForm">
+<div class="modal-body">
+  @if(errorMessage) {
+    <div class="alert alert-danger text-break" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <p>{{'common.item' | translate}} {{item.objectId}}<br/>
+  <b [innerHTML]="item.metadata.title | sanitizeHtml"></b>
+  </p>
+
+  <div class="form-group">
+    <pure-chips [form]="formGroup" [chips]="tmpLocalTags" [control_name]="'localTags'"></pure-chips>
+  </div>
+
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary btn-sm border-2" (click)="activeModal.close()" [disabled]="loading">{{'common.cancel' | translate}}
+
+
+  </button>
+  <button type="submit" class="btn btn-primary btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'common.updateLocalTags' | translate }}
+    @if(loading)
+    {
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span class="visually-hidden" role="status">Loading...</span>
+    }
+  </button>
+
+
+</div>
+</form>
+
+
+
+
+
