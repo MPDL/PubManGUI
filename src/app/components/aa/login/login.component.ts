@@ -5,13 +5,14 @@ import { AaService } from "../../../services/aa.service";
 import { catchError, EMPTY, tap, throwError } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
+import { ValidationErrorComponent } from "../../item-edit/validation-error/validation-error.component";
 
 @Component({
     selector: 'pure-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule]
+  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent]
 })
 export class LoginComponent implements OnInit {
 
