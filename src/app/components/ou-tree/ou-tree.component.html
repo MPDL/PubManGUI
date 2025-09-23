@@ -1,25 +1,31 @@
 <h4>Organizational Units</h4>
 <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding class="flat-tree-node">
-        <button class="btn btn-sm btn-outline border-0">
+        <button class="btn btn-lg btn-outline border-0">
             <i class="bi-dash" [style.visibility]="'hidden'"></i>
-            <span [ngClass]="{'text-muted': node.item.publicStatus === 'CLOSED' }" class="ms-2" style="cursor: default">{{node.item.name}}</span>
+            <span [ngClass]="{'text-secondary': node.item.publicStatus === 'CLOSED' }" class="ms-2" style="cursor: default">{{node.item.name}}</span>
         </button>
         <span>
+            @if(node.item.publicStatus === 'CLOSED') {
+                <span class="badge bg-dark mt-1 me-2">Closed</span>
+            }
             <button class="btn btn-link p-0 ms-1" (click)="info(node)">
-                <span class="material-symbols-outlined">info</span>
+                <span class="material-symbols-outlined mb-1">info</span>
             </button>
         </span>
     </cdk-tree-node>
     <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChildren" cdkTreeNodePadding class="flat-tree-node">
-        <button class="btn btn-sm btn-outline border-0" cdkTreeNodeToggle>
+        <button class="btn btn-lg btn-outline border-0" cdkTreeNodeToggle>
             <i class="text-primary"
                 [ngClass]="{'bi-chevron-down': treeControl.isExpanded(node), 'bi-chevron-right': !treeControl.isExpanded(node)}"></i>
-            <span [ngClass]="{'text-muted': node.item.publicStatus === 'CLOSED'}" class="ms-2" >{{node.item.name}}</span>
+            <span [ngClass]="{'text-secondary': node.item.publicStatus === 'CLOSED'}" class="ms-2" >{{node.item.name}}</span>
         </button>
         <span>
+            @if(node.item.publicStatus === 'CLOSED') {
+                <span class="badge bg-dark mt-1 me-2">Closed</span>
+            }
             <button class="btn btn-link p-0 ms-1" (click)="info(node)">
-                <span class="material-symbols-outlined">info</span>
+                <span class="material-symbols-outlined mb-1">info</span>
             </button>
         </span>
         @if (node.isLoading) {

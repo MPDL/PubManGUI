@@ -62,5 +62,6 @@ export class OuTreeComponent {
   info(node: any) {
     const componentInstance = this.modalService.open(OuModalComponent, { size: 'lg' }).componentInstance;
     componentInstance.ouId = node.item.objectId;
+    console.log(JSON.stringify(node)); 
   }
 }
