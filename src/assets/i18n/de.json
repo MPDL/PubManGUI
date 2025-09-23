@@ -57,6 +57,7 @@
     "addDoi": "DOI hinzufügen",
     "rollback": "Wiederherstellen",
     "changeContext" : "Kontext ändern",
+    "updateLocalTags" : "Lokale Tags ändern",
     "comment": "Kommentar",
     "actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?",
     "dateFormat": "JJJJ-MM-TT",

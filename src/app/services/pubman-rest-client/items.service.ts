@@ -134,4 +134,9 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     return this.httpGet(this.subPath + '/' + id + '/changecontext', mergedOpts);
   }
 
+  updateLocalTags(id: string, localTags: string[], opts?: HttpOptions) {
+
+    return this.httpPut(this.subPath + '/' + id + '/localtags', localTags, opts);
+  }
+
 }

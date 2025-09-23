@@ -59,7 +59,7 @@ import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
     MetadataFormComponent,
     AddRemoveButtonsComponent,
     CdkDropList,
-    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, AccordionGroupValidationDirective, LoadingComponent, SanitizeHtmlPipe],
+    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, AccordionGroupValidationDirective, LoadingComponent],
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss'],
 })

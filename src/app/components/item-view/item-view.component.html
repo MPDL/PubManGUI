@@ -367,6 +367,9 @@
               @for(localTag of item.localTags; track localTag) {
                 <span class="badge bg-secondary me-2">{{localTag}}</span>
                 }
+              <button class="btn btn-sm btn-outline-secondary" (click)="openUpdateLocalTagsModal()">
+                {{'common.updateLocalTags' | translate}}
+                </button>
           </span>
           </pure-item-view-metadata-element>
 

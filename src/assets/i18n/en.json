@@ -57,6 +57,7 @@
 		"addDoi": "Add DOI",
 		"rollback": "Revert",
     "changeContext" : "Change context",
+    "updateLocalTags" : "Change local tags",
 		"comment": "Comment",
 		"actionWarning": "This action is irreversible. Are you sure?",
 		"dateFormat": "YYYY-MM-DD",

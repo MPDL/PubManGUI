@@ -42,6 +42,7 @@ import sanitizeHtml from "sanitize-html";
 import { CopyButtonDirective } from "../../directives/copy-button.directive";
 import { PubManHttpErrorResponse } from "../../services/interceptors/http-error.interceptor";
 import { ChangeContextModalComponent } from "../shared/change-context-modal/change-context-modal.component";
+import { UpdateLocaltagsModalComponent } from "../shared/update-localtags-modal/update-localtags-modal.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -341,7 +342,16 @@ export class ItemViewComponent {
     changeContextComp.item = this.item!;
     changeContextComp.successfullyDone.subscribe(data => {
       this.listStateService.itemUpdated.next(this.item?.objectId);
-      this.init(this.item?.objectId!);
+      this.init(itemToVersionId(this.item!));
+    })
+  }
+
+  openUpdateLocalTagsModal() {
+    const updateLocalTagsModal: UpdateLocaltagsModalComponent = this.modalService.open(UpdateLocaltagsModalComponent).componentInstance;
+    updateLocalTagsModal.item = this.item!;
+    updateLocalTagsModal.successfullyDone.subscribe(data => {
+      this.listStateService.itemUpdated.next(this.item?.objectId);
+      this.init(itemToVersionId(this.item!));
     })
   }
 
