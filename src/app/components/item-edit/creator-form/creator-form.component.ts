@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 import { CdkDragHandle } from "@angular/cdk/drag-drop";
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorComponent } from "../validation-error/validation-error.component";
+import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-creator-form',

@@ -45,7 +45,7 @@ import {
 } from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorComponent } from "../validation-error/validation-error.component";
+import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
 import { remove_null_empty } from "../../../utils/utils_final";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
 import { catchError, finalize, tap, throwError } from "rxjs";

@@ -11,7 +11,7 @@ import {
   ViewRef
 } from '@angular/core';
 import { AbstractControl, AbstractControlDirective, ControlContainer, NgControl } from "@angular/forms";
-import { ValidationErrorComponent } from "../components/item-edit/validation-error/validation-error.component";
+import { ValidationErrorComponent } from "../components/shared/validation-error/validation-error.component";
 
 /**
  * Directive to automatically handle bootstrap-styled validation for form controls.
