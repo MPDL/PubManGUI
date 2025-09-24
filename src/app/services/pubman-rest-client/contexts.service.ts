@@ -39,7 +39,7 @@ export class ContextsService extends PubmanSearchableGenericRestClientService<Co
       }
     };
     var termCounter = 0;
-    for (var i = 0; i < user.grantList.length; i++) {
+    for (var i = 0; i < user.grantList?.length; i++) {
       var grant = user.grantList[i];
       /*
       console.log("userGrantType: " + grant.grantType

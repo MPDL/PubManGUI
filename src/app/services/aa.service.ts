@@ -92,9 +92,10 @@ export class AaService {
 
         principal.loggedIn = true;
         principal.user = user;
-        principal.isAdmin = !!user.grantList.find((grant: any) => grant.role === 'SYSADMIN');
-        principal.isLocalAdmin = !!user.grantList.find((grant: any) => grant.role === 'LOCAL_ADMIN');
-        principal.isReporter = !!user.grantList.find((grant: any) => grant.role === 'REPORTER');
+        principal.isAdmin = !!user.grantList?.find((grant: any) => grant.role === 'SYSADMIN');
+        principal.isLocalAdmin = !!user.grantList?.find((grant: any) => grant.role === 'LOCAL_ADMIN');
+        principal.isReporter = !!user.grantList?.find((grant: any) => grant.role === 'REPORTER');
+        console.log(principal.isAdmin)
 
         return forkJoin([
           this.contextService.getContextsForCurrentUser("DEPOSITOR", user),
@@ -105,9 +106,15 @@ export class AaService {
               principal.depositorContexts = depositorResults.records.map(rec => rec.data);
               principal.isDepositor = principal.depositorContexts.length > 0;
             }
+            else {
+              principal.depositorContexts = [];
+            }
             if (moderatorResults) {
               principal.moderatorContexts = moderatorResults.records.map(rec => rec.data);
               principal.isModerator = principal.moderatorContexts.length > 0;
+            }
+            else {
+              principal.moderatorContexts = [];
             }
 
             this.principal.next(principal);

@@ -6,13 +6,16 @@ import { catchError, EMPTY, tap, throwError } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
+import { ChangePasswordComponent } from "../../shared/change-password/change-password.component";
+import { MessageService } from "../../../services/message.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'pure-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent]
+  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent]
 })
 export class LoginComponent implements OnInit {
 
@@ -22,10 +25,14 @@ export class LoginComponent implements OnInit {
 
   @Input() forcedLogout = false;
 
+  showPasswordChange:boolean = false;
+
   constructor(
     private builder: FormBuilder,
     protected activeModal: NgbActiveModal,
-    private aa: AaService
+    private aa: AaService,
+    private messageService: MessageService,
+    private translateService: TranslateService,
   ) {
 
   }
@@ -46,6 +53,9 @@ export class LoginComponent implements OnInit {
           }),
           catchError ((err: PubManHttpErrorResponse) => {
             this.errorMessage = err.userMessage
+            if(err.jsonMessage?.passwordChangeRequired) {
+              this.showPasswordChange = true;
+            }
             return EMPTY;
 
           })
@@ -55,4 +65,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  passwordChanged(newPasswd: any) {
+    this.showPasswordChange = false;
+    this.loginForm.get('password')?.setValue(newPasswd);
+    this.messageService.success(this.translateService.instant('common.updateSuccessful'));
+
+  }
 }

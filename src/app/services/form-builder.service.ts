@@ -60,6 +60,8 @@ export const ORCID_PATTERN = /^http[s]?:\/\/orcid.org\/(\d{4})-(\d{4})-(\d{4})-(
 export const DATE_PATTERN = /^\d{4}(?:-(?:0[1-9]|1[0-2])(?:-(?:0[1-9]|[12]\d|3[01]))?)?$/;
 export const FILE_TITLE_AND_NAME_PATTERN = /^[^/]+$/;
 export const DOI_PATTERN = /^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i;
+export const STRONG_PASSWORD_REGEX_PATTERN: RegExp =
+  /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).{8,32}$/;
 
 const VALIDATION_UPDATE_ON = 'change';
 @Injectable({
