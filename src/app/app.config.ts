@@ -22,7 +22,6 @@ import {
   withInterceptorsFromDi
 } from '@angular/common/http';
 import { httpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
-import { WithCredentialsInterceptor } from "./services/interceptors/with-credentials.interceptor";
 
 import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
