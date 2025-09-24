@@ -3,11 +3,11 @@ import {
   HttpContextToken,
   HttpErrorResponse,
   HttpEvent,
-  HttpHandler, HttpHeaders,
+  HttpHandler, HttpHandlerFn, HttpHeaders,
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MessageService } from 'src/app/services/message.service';
@@ -26,17 +26,12 @@ export function ignoredStatuses(statuses: number[]) {
 }
 
 
-
-@Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
-
-    constructor(private message: MessageService, private aaService: AaService, private modalService: NgbModal, private router: Router) { }
-
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
         const ignoredStatuses = request.context.get(IGNORED_STATUSES);
         const silentLogout = request.context.get(SILENT_LOGOUT);
         const displayError = request.context.get(DISPLAY_ERROR);
-        return next.handle(request)
+        const message = inject(MessageService);
+        return next(request)
             .pipe(
                 catchError((err: HttpErrorResponse) => {
 
@@ -47,12 +42,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
                     //Only triggered on new app initialization
                     if(silentLogout) {
-                      this.message.info("Token expired/invalid -- Silent Logout!")
-                      return next.handle(request);
+                      message.info("Token expired/invalid -- Silent Logout!")
+                      return next(request);
                     }
                     //Otherwise, the app is already loaded and some user is working here. Open a dialog to login again
                     else {
-                      const loginCompRef: NgbModalRef = this.modalService.open(LoginComponent, {backdrop: 'static'});
+                      const modalService = inject(NgbModal);
+                      const loginCompRef: NgbModalRef = modalService.open(LoginComponent, {backdrop: 'static'});
                       loginCompRef.componentInstance.forcedLogout = true;
 
                       return loginCompRef.dismissed.pipe(
@@ -61,9 +57,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                           if(val==="login_success") {
                           }
                           else {
-                            this.aaService.logout();
+
+                            inject(AaService).logout();
                           }
-                          return next.handle(request);
+                          return next(request);
                         })
                       )
 
@@ -75,7 +72,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     const pubmanErrorResp = new PubManHttpErrorResponse(err);
                     if (displayError && !ignoredStatuses?.includes(err.status)) {
                       const error = `${err.status} ${err.statusText}:\n${err.url}\n${pubmanErrorResp.userMessage}`
-                      this.message.error(error);
+                      message.error(error);
                     }
                     //throw PubmanErrorResponse to handle in further catchErrors
                     return throwError(() => pubmanErrorResp);
@@ -83,7 +80,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 })
             );
     }
-}
+
 
 export class PubManHttpErrorResponse extends HttpErrorResponse {
 
@@ -91,25 +88,29 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
   jsonMessage: any = undefined;
 
   constructor(errorResponse: HttpErrorResponse) {
-    super({error: errorResponse.error, headers: errorResponse.headers, status: errorResponse.status, statusText: errorResponse.statusText, url:errorResponse.url!})
+    super({
+      error: errorResponse.error,
+      headers: errorResponse.headers,
+      status: errorResponse.status,
+      statusText: errorResponse.statusText,
+      url: errorResponse.url!
+    })
 
-    if(this.error) {
+    if (this.error) {
       //errors from PubMan backend are JSON objects. However, when requesting "text" in Angular HTTP client, the error is a string encoded JSON
-      if(typeof this.error === 'object') {
+      if (typeof this.error === 'object') {
         this.jsonMessage = this.error;
         this.userMessage = this.error.message || this.error.error || 'UNKNOWN ERROR'
 
-      }
-      else if(typeof this.error === 'string') {
+      } else if (typeof this.error === 'string') {
         //try to parse as JSON
         try {
           const json = JSON.parse(this.error);
           //check if it's a PubMan backend error response, by checking if it has some properties
-          if(json.timestamp) {
+          if (json.timestamp) {
             this.jsonMessage = json;
             this.userMessage = json.message || json.error || 'UNKNOWN ERROR'
-          }
-          else {
+          } else {
             //It's any kind of string
             this.userMessage = this.error;
           }
@@ -117,19 +118,13 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
         } catch (e) {
           this.userMessage = this.error;
         }
-      }
-      else {
+      } else {
         this.userMessage = this.message;
       }
-    }
-    else {
+    } else {
       this.userMessage = this.message;
     }
 
   }
-
-
-
-
 
 }

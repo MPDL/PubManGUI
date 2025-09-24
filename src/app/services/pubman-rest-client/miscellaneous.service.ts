@@ -23,6 +23,7 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
     loader: async ({ params })  => {
       const response = await firstValueFrom(this.getGenreProperties(params));
       const data: GenrePresentationObject = await response;
+      console.log("genrespecific", data)
       return data
     },
   });
