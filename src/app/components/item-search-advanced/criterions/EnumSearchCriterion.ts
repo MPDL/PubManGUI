@@ -4,8 +4,8 @@ import { ItemVersionState, MdsPublicationGenre, ReviewMethod } from "../../../mo
 export abstract class EnumSearchCriterion extends StandardSearchCriterion {
 
   keys : string[] = []
-  protected constructor(type: string, keys:string[]) {
-    super(type);
+  protected constructor(type: string, keys:string[], opts?:any) {
+    super(type, opts);
     this.keys=keys;
     this.content.get("text")?.setValue(keys[0]);
   }
@@ -19,8 +19,8 @@ export abstract class EnumSearchCriterion extends StandardSearchCriterion {
 export class GenreSearchCriterion extends EnumSearchCriterion {
 
 
-  constructor() {
-    super("genre", Object.keys(MdsPublicationGenre));
+  constructor(opts?:any) {
+    super("genre", Object.keys(MdsPublicationGenre), opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -32,8 +32,8 @@ export class GenreSearchCriterion extends EnumSearchCriterion {
 export class ReviewMethodSearchCriterion extends EnumSearchCriterion {
 
 
-  constructor() {
-    super("reviewMethod", Object.keys(ReviewMethod));
+  constructor(opts?:any) {
+    super("reviewMethod", Object.keys(ReviewMethod), opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -43,8 +43,8 @@ export class ReviewMethodSearchCriterion extends EnumSearchCriterion {
 
 export class StateSearchCriterion extends EnumSearchCriterion {
 
-  constructor() {
-    super("state", Object.keys(ItemVersionState));
+  constructor(opts?:any) {
+    super("state", Object.keys(ItemVersionState), opts);
   }
 
   override getElasticIndexes(): string[] {

@@ -17,22 +17,31 @@
     </div>
   }
 
-    <div class="form-group">
-      <label for="inputUsername">Username</label>
+    <div class="form-group mb-2">
+      <label for="inputUsername" class="form-label">Username</label>
       <input type="text" class="form-control" id="inputUsername" formControlName="username" placeholder="Enter username" data-test="username"
              [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
       <pure-validation-error [control]="loginForm.get('username')"/>
     </div>
-    <div class="form-group">
-      <label for="inputPassword">Password</label>
+    <div class="form-group mb-2">
+      <label for="inputPassword" class="form-label">Password</label>
       <input type="password" class="form-control" id="inputPassword" formControlName="password" placeholder="Enter password" data-test="password"
              [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
         <pure-validation-error [control]="loginForm.get('password')"/>
     </div>
 
+  @if(showPasswordChange) {
+    <pure-change-password [username]="loginForm.get('username')?.value" [oneTimePassword]="loginForm.get('password')?.value" (passwordChanged)="passwordChanged($event)"/>
+  }
+
+
+
 </div>
 <div class="modal-footer">
-  <button type="submit" class="btn btn-primary btn-sm border-2" data-test="sign-in">Sign In</button>
+  @if (!showPasswordChange) {
+    <button type="submit" class="btn btn-primary btn-sm border-2" data-test="sign-in">Sign In</button>
+  }
+
 </div>
 
 </form>

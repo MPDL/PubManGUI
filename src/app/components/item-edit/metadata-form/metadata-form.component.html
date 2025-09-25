@@ -414,8 +414,8 @@
                         </div>
                     </div>
                     <div
-                        [ngClass]="genreSpecificResource.value().properties.content_item_subject.display && subject_classification_types.length > 0 ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                        <label for="subjects" class="col-sm-2 col-form-label">{{ 'MetadataFields.subjects' | translate }}</label>
+                        [ngClass]="genreSpecificResource.value().properties.content_item_subject.display && (subject_classification_types.length > 0 || subjects.controls.length > 0) ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
+                      <label for="subjects" class="col-sm-2 col-form-label">{{ 'MetadataFields.subjects' | translate }}</label>
                         <div class="col-sm" id="subjects">
                             <ng-container formArrayName="subjects">
                                 @for (subject of subjects.controls; track subjectIndex; let subjectIndex = $index) {

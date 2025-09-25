@@ -18,11 +18,10 @@ import {
   HTTP_INTERCEPTORS,
   HttpClient,
   provideHttpClient,
-  withFetch,
+  withFetch, withInterceptors,
   withInterceptorsFromDi
 } from '@angular/common/http';
-import { HttpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
-import { WithCredentialsInterceptor } from "./services/interceptors/with-credentials.interceptor";
+import { httpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
 
 import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -47,19 +46,10 @@ export const appConfig: ApplicationConfig = {
 
     provideHttpClient(
       withInterceptorsFromDi(),
-      //Cannot be used right now, as withFetch() does not provide Upload progress reporting: https://github.com/angular/angular/issues/53650
+      withInterceptors([httpErrorInterceptor])
+      //withFetch() cannot be used right now, as it does not provide Upload progress reporting: https://github.com/angular/angular/issues/53650
       //withFetch()
     ),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor, multi: true
-    },
-    /*
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: WithCredentialsInterceptor, multi: true
-    },*/
-
     provideZoneChangeDetection({ eventCoalescing: true }),
 
     //Use the language from ngx translate for the global LOCALE_ID

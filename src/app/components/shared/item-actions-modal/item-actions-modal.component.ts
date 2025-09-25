@@ -82,7 +82,7 @@ export class ItemActionsModalComponent {
       this.subscription = obs
         .pipe(
           tap(data => {
-            this.messageService.success(this.translateService.instant('common.' + this.action) + " successful");
+            this.messageService.success(this.translateService.instant('common.' + this.action) + " " + this.translateService.instant('common.succeeded'));
             this.activeModal.close();
             this.successfullyDone.emit(data);
           }),

@@ -20,8 +20,8 @@ export enum DATE_SEARCH_TYPES {
 
 export class DateSearchCriterion extends SearchCriterion {
 
-  constructor(type: string) {
-    super(type);
+  constructor(type: string, opts?:any) {
+    super(type, opts);
     const validator = Validators.pattern(/^\d{4}((-\d{2})?(-\d{2}))?$/);
     this.content.addControl("from", new FormControl('', [validator]));
     this.content.addControl("to", new FormControl('', [validator]));

@@ -54,6 +54,12 @@ export class UsersService extends PubmanSearchableGenericRestClientService<Accou
     return this.httpPutText(path, body, opts);
   }
 
+  changePasswordOneTime(username: string, oneTimePassword: string, newPassword: string, opts?: HttpOptions): Observable<any> {
+    const path = '/changepassword';
+    const body = username + ':' + oneTimePassword + ':' + newPassword;
+    return this.httpPostAny(path, body, opts);
+  }
+
   generateRandomPassword(opts?: HttpOptions): Observable<string> {
     const path = this.subPath + '/generateRandomPassword';
 

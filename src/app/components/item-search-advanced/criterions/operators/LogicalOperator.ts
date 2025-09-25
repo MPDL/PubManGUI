@@ -5,8 +5,8 @@ import { Observable, of } from "rxjs";
 export class LogicalOperator extends SearchCriterion {
 
 
-  constructor(type: string) {
-    super(type);
+  constructor(type: string, opts?:any) {
+    super(type, opts);
     this.content.addControl(
       "operator" , new FormControl(type)
     );

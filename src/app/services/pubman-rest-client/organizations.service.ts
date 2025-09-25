@@ -10,11 +10,8 @@ import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-ge
 })
 export class OrganizationsService extends PubmanSearchableGenericRestClientService<AffiliationDbVO>{
 
-  static instance: OrganizationsService;
-
   constructor() {
     super('/ous');
-    OrganizationsService.instance = this;
   }
 
 

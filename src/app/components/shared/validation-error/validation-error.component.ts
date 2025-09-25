@@ -3,8 +3,12 @@ import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { Errors } from "../../../model/errors";
 import { Subscription } from "rxjs";
-import { DATE_PATTERN, FILE_TITLE_AND_NAME_PATTERN, ORCID_PATTERN } from "../../../services/form-builder.service";
-import { isShowValidationError } from "../../../directives/bootstrap-validation.directive";
+import {
+  DATE_PATTERN,
+  FILE_TITLE_AND_NAME_PATTERN,
+  ORCID_PATTERN,
+  STRONG_PASSWORD_REGEX_PATTERN
+} from "../../../services/form-builder.service";
 
 @Component({
   selector: 'pure-validation-error',
@@ -102,6 +106,9 @@ export class ValidationErrorComponent {
           }
           case FILE_TITLE_AND_NAME_PATTERN.toString() : {
             return this.translateService.instant('validation.invalidFileName');
+          }
+          case STRONG_PASSWORD_REGEX_PATTERN.toString() : {
+            return this.translateService.instant('validation.passwordRule');
           }
           default :{
             return "Invalid pattern, expected " + val.requiredPattern;

@@ -9,17 +9,17 @@ import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 export class ContextListSearchCriterion extends SearchCriterion {
 
 
-  contextService = ContextsService.instance;
-  aaService = AaService.instance;
+
   contextOptions: {[key:string]: ContextDbVO} = {};
 
 
-  constructor() {
-    super("contextList");
+  constructor(opts?:any) {
+    super("contextList", opts);
 
     this.content.addControl("contexts", new FormGroup({}));
 
-    this.aaService.principal.subscribe(p => {
+    const aaService: AaService = opts.aaService;
+    aaService.principal.subscribe(p => {
       const moderatorContexts = p.moderatorContexts ? p.moderatorContexts : [];
       const depositorContexts  = p.depositorContexts ? p.depositorContexts : [];
       //Merge both arrays and de-duplicate

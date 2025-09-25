@@ -21,8 +21,8 @@ export class FileSectionSearchCriterion extends SearchCriterion {
   embargoDateSearchCriterion = new DateSearchCriterion(DATE_SEARCH_TYPES.COMPONENT_EMBARGO_DATE);
   oaStatusSearchCriterion = new ComponentOaStatusSearchCriterion();
 
-  constructor(fileType: COMPONENT_SEARCH_TYPES) {
-    super(fileType);
+  constructor(fileType: COMPONENT_SEARCH_TYPES, opts?:any) {
+    super(fileType, opts);
     this.content.addControl("component_available", new FormControl("WHATEVER"));
     this.content.addControl("fields", new FormArray([
       this.componentVisibilitySearchCriterion,
@@ -111,8 +111,8 @@ export abstract class ComponentAvailabiltySearchCriterion extends SearchCriterio
 
   availabilityOptions = ['YES', 'NO', 'WHATEVER']
 
-  constructor(type: string) {
-    super(type);
+  constructor(type: string, opts?:any) {
+    super(type, opts);
 
     this.content.addControl("available", new FormControl("WHATEVER"));
 
@@ -154,8 +154,8 @@ export abstract class ComponentAvailabiltySearchCriterion extends SearchCriterio
 }
 
 export class FilesAvailabiltySearchCriterion extends ComponentAvailabiltySearchCriterion {
-  constructor() {
-    super("filesAvailable");
+  constructor(opts?:any) {
+    super("filesAvailable", opts);
   }
 
   getStorageType(): string {
@@ -164,8 +164,8 @@ export class FilesAvailabiltySearchCriterion extends ComponentAvailabiltySearchC
 }
 
 export class LocatorAvailabiltySearchCriterion extends ComponentAvailabiltySearchCriterion {
-  constructor() {
-    super("locatorsAailable");
+  constructor(opts?:any) {
+    super("locatorsAailable", opts);
   }
 
   getStorageType(): string {
@@ -179,8 +179,8 @@ export class ComponentContentCategorySearchCriterion extends SearchCriterion {
   contentCategoryOptions = Object.keys(ContentCategories);
 
 
-  constructor() {
-    super("contentCategoryList");
+  constructor(opts?:any) {
+    super("contentCategoryList", opts);
     this.content.addControl("contentCategories", new FormGroup({}));
     this.contentCategoryOptions.forEach(cc => this.contentCategoryFormGroup.addControl(cc, new FormControl(false)));
   }
@@ -215,8 +215,8 @@ export class ComponentVisibilitySearchCriterion extends SearchCriterion {
   visibilityOptions = Object.keys(Visibility)
 
 
-  constructor() {
-    super("componentVisibility");
+  constructor(opts?:any) {
+    super("componentVisibility", opts);
     this.content.addControl("componentVisibility", new FormGroup({}));
     this.visibilityOptions.forEach(cc => this.componentVisibilityFormGroup.addControl(cc, new FormControl(false)));
   }
@@ -250,8 +250,8 @@ export class ComponentOaStatusSearchCriterion extends SearchCriterion {
   oaStatusOptions = Object.keys(OA_STATUS);
 
 
-  constructor() {
-    super("oaStatus");
+  constructor(opts?:any) {
+    super("oaStatus", opts);
     this.content.addControl("oaStatus", new FormGroup({}));
     this.oaStatusOptions.forEach(cc => this.oaStatusFormGroup.addControl(cc, new FormControl(false)));
   }

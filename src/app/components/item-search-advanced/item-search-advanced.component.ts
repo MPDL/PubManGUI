@@ -30,6 +30,8 @@ import { SavedSearchesModalComponent } from "../shared/saved-searches-modal/save
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AddRemoveButtonsComponent } from "../shared/add-remove-buttons/add-remove-buttons.component";
 import { ConeAutosuggestComponent } from "../shared/cone-autosuggest/cone-autosuggest.component";
+import { ContextsService } from "../../services/pubman-rest-client/contexts.service";
+import { OrganizationsService } from "../../services/pubman-rest-client/organizations.service";
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -54,12 +56,12 @@ export class ItemSearchAdvancedComponent {
   possibleCriterionsForClosingParenthesisMap: SearchCriterion[] = []
   protected readonly DisplayType = DisplayType;
 
-  contextListSearchCriterion = new ContextListSearchCriterion();
-  itemStateListSearchCriterion = new ItemStateListSearchCriterion();
-  genreListSearchCriterion = new GenreListSearchCriterion(this.translateService);
-  publicationStateSearchCriterion = new PublicationStateSearchCriterion();
-  fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
-  locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
+  contextListSearchCriterion!: ContextListSearchCriterion;
+  itemStateListSearchCriterion!: ItemStateListSearchCriterion;
+  genreListSearchCriterion!: GenreListSearchCriterion;
+  publicationStateSearchCriterion!: PublicationStateSearchCriterion;
+  fileSectionSearchCriterion!: FileSectionSearchCriterion;
+  locatorSectionSearchCriterion!: FileSectionSearchCriterion;
 
   private principalSubscription?: Subscription;
 
@@ -67,6 +69,8 @@ export class ItemSearchAdvancedComponent {
   anzGenreRows: number = 0;
   genreRows: number[] = [];
   genreCols: number[] = [];
+
+  private servicesForCriterions: any;
 
   constructor(
     private router: Router,
@@ -77,8 +81,16 @@ export class ItemSearchAdvancedComponent {
     private clipboard: Clipboard,
     private searchStateService: SearchStateService,
     private translateService: TranslateService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private contextsService: ContextsService,
+    private ouService: OrganizationsService,
 ) {
+    this.servicesForCriterions = {
+      contextsService: this.contextsService,
+      ouService: this.ouService,
+      aaService: this.aaService,
+    }
+    this.initCriterions();
     this.initializeGenres();
   }
 
@@ -96,6 +108,16 @@ export class ItemSearchAdvancedComponent {
   ngOnDestroy() {
     console.log("Destroying advanced search");
     this.principalSubscription?.unsubscribe();
+  }
+
+  initCriterions() {
+    this.contextListSearchCriterion = new ContextListSearchCriterion(this.servicesForCriterions);
+    this.itemStateListSearchCriterion = new ItemStateListSearchCriterion(this.servicesForCriterions);
+    this.genreListSearchCriterion = new GenreListSearchCriterion(this.servicesForCriterions);
+    this.publicationStateSearchCriterion = new PublicationStateSearchCriterion(this.servicesForCriterions);
+    this.fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES, this.servicesForCriterions);
+    this.locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS, this.servicesForCriterions);
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -118,12 +140,7 @@ export class ItemSearchAdvancedComponent {
   }
 
   reset() {
-    this.itemStateListSearchCriterion = new ItemStateListSearchCriterion();
-    this.genreListSearchCriterion = new GenreListSearchCriterion(this.translateService);
-    this.publicationStateSearchCriterion = new PublicationStateSearchCriterion();
-    this.fileSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.FILES);
-    this.locatorSectionSearchCriterion = new FileSectionSearchCriterion(COMPONENT_SEARCH_TYPES.LOCATORS);
-    this.contextListSearchCriterion = new ContextListSearchCriterion();
+    this.initCriterions();
 
     this.searchForm = this.fb.group({
 
@@ -136,13 +153,13 @@ export class ItemSearchAdvancedComponent {
       locators: this.locatorSectionSearchCriterion
     });
 
-    this.flexibleFields.push(new TitleSearchCriterion());
+    this.flexibleFields.push(new TitleSearchCriterion(this.servicesForCriterions));
     this.flexibleFields.push(new LogicalOperator("and"));
-    this.flexibleFields.push(new PersonSearchCriterion());
+    this.flexibleFields.push(new PersonSearchCriterion(this.servicesForCriterions));
     this.flexibleFields.push(new LogicalOperator("and"));
-    this.flexibleFields.push(new OrganizationSearchCriterion());
+    this.flexibleFields.push(new OrganizationSearchCriterion(this.servicesForCriterions));
     this.flexibleFields.push(new LogicalOperator("and"));
-    this.flexibleFields.push(new DateSearchCriterion(DATE_SEARCH_TYPES.ANYDATE));
+    this.flexibleFields.push(new DateSearchCriterion(DATE_SEARCH_TYPES.ANYDATE, this.servicesForCriterions));
   }
 
   parseFormJson(formJson: any) {
@@ -156,7 +173,7 @@ export class ItemSearchAdvancedComponent {
         this.flexibleFields.clear();
         //Recreate flexible search criterions and patch form values
         for (let currentField of (value as any[])) {
-          const newSearchCriterion: SearchCriterion = new searchTypes[currentField.type].handlerClass(currentField.type);
+          const newSearchCriterion: SearchCriterion = new searchTypes[currentField.type].handlerClass(currentField.type, this.servicesForCriterions);
           newSearchCriterion.patchValue(currentField);
           this.flexibleFields.push(newSearchCriterion);
         }
@@ -171,7 +188,7 @@ export class ItemSearchAdvancedComponent {
   changeType(index: number, newType: string) {
     //console.log("Change criterion at index " + index + " to type " + newType);
 
-    const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass(newType);
+    const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass(newType, this.servicesForCriterions);
     this.flexibleFields.removeAt(index);
     this.flexibleFields.insert(index, newSearchCriterion);
   }
@@ -205,7 +222,7 @@ export class ItemSearchAdvancedComponent {
     if (DisplayType.PARENTHESIS === this.searchTypes[searchCriterion.type].displayType) {
       newSearchCriterion = new TitleSearchCriterion();
     } else {
-      newSearchCriterion = new searchTypes[searchCriterion.type].handlerClass(searchCriterion.type);
+      newSearchCriterion = new searchTypes[searchCriterion.type].handlerClass(searchCriterion.type, this.servicesForCriterions);
     }
 
     newSearchCriterion.level = searchCriterion.level;

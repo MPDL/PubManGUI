@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
@@ -35,6 +35,16 @@ export class SubjectFormComponent {
   error_types = Errors;
 
   miscellaneousService = inject(MiscellaneousService);
+
+
+  ngOnInit() {
+
+    //set type value to null if type does not exist, e.g. because the context was changed before
+    const type = this.subject_form.get('type')?.value;
+    if(type && !this.subject_classification_types.includes(type)) {
+      this.subject_form.get("type")?.setValue(null);
+    }
+  }
 
   add_remove_subject(event: any) {
     this.notice.emit(event);

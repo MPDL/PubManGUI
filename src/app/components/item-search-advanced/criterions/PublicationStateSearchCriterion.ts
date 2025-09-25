@@ -8,8 +8,8 @@ export class PublicationStateSearchCriterion extends SearchCriterion {
   pubStateOptions = ['not-specified', 'submitted', 'accepted', 'published-online', 'published-in-print']
 
 
-  constructor() {
-    super("publicationStateList");
+  constructor(opts?:any) {
+    super("publicationStateList", opts);
     this.content.addControl("publicationStates", new FormGroup({}));
     this.pubStateOptions.forEach(genre => this.publicationStatesFormGroup.addControl(genre, new FormControl(false)));
 

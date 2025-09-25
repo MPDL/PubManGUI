@@ -14,8 +14,8 @@ export class Parenthesis extends SearchCriterion{
 
   partnerParenthesis : Parenthesis | undefined;
 
-  constructor(type: string) {
-    super(type);
+  constructor(type: string, opts?:any) {
+    super(type, opts);
     this.content.addControl(
       "parenthesis" , new FormControl(type)
     );

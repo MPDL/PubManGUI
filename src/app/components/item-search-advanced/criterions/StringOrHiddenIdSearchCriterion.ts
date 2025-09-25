@@ -7,8 +7,8 @@ import { OrganizationsService } from "../../../services/pubman-rest-client/organ
 
 export abstract class StringOrHiddenIdSearchCriterion extends SearchCriterion {
 
-  protected constructor(type: string) {
-    super(type);
+  protected constructor(type: string, opts?:any) {
+    super(type, opts);
     this.content.addControl("text", new FormControl(''));
     this.content.addControl("hidden", new FormControl(''));
   }
@@ -45,8 +45,8 @@ export abstract class StringOrHiddenIdSearchCriterion extends SearchCriterion {
 
 export class PersonSearchCriterion extends StringOrHiddenIdSearchCriterion {
 
-  constructor() {
-    super("person");
+  constructor(opts?:any) {
+    super("person", opts);
     this.content.addControl("role", new FormControl(""));
   }
 
@@ -111,9 +111,11 @@ export class PersonSearchCriterion extends StringOrHiddenIdSearchCriterion {
 export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion {
 
   includeSource: boolean = false;
+  ouService: OrganizationsService;
 
-  constructor() {
-    super("organization");
+  constructor(opts?:any) {
+    super("organization", opts);
+    this.ouService = opts.ouService;
     this.content.addControl("includePredecessorsAndSuccessors", new FormControl(false));
   }
 
@@ -139,13 +141,13 @@ export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion
       let idSources: Observable<string | string[]>[] = [of(hidden)];
 
       idSources.push(
-        OrganizationsService.instance.retrieve(hidden)
+        this.ouService.retrieve(hidden)
           .pipe(
             map(ou => ou.predecessorAffiliations?.map(pa => pa.objectId))
           )
       );
       idSources.push(
-        OrganizationsService.instance.getSuccessors(hidden)
+        this.ouService.getSuccessors(hidden)
           .pipe(
             map(sr => sr.records?.map(rec => rec.data.objectId))
           )
@@ -166,8 +168,8 @@ export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion
 
 
 export class CreatedBySearchCriterion extends StringOrHiddenIdSearchCriterion {
-  constructor() {
-    super("createdBy");
+  constructor(opts?:any) {
+    super("createdBy", opts);
   }
 
   protected getElasticSearchFieldForHiddenId(): string[] {
@@ -181,8 +183,8 @@ export class CreatedBySearchCriterion extends StringOrHiddenIdSearchCriterion {
 }
 
 export class ModifiedBySearchCriterion extends StringOrHiddenIdSearchCriterion {
-  constructor() {
-    super("modifiedBy");
+  constructor(opts?:any) {
+    super("modifiedBy", opts);
   }
 
   protected getElasticSearchFieldForHiddenId(): string[] {

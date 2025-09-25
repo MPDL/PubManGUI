@@ -57,7 +57,7 @@ export class SearchComponent implements OnInit{
   search(): void {
     const search_term = this.search_form.get('text')?.value;
     if (search_term) {
-      const filterOutQuery = AaService.instance.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
+      const filterOutQuery = this.aaService.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
       const query = {
         bool: {
           must: [{ query_string: { query: search_term } }],

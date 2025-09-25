@@ -12,8 +12,8 @@ export class GenreListSearchCriterion extends SearchCriterion {
 
   degreeOptions = Object.keys(DegreeType);
 
-  constructor(private translateService: TranslateService) {
-    super("genreList");
+  constructor(opts?:any) {
+    super("genreList", opts);
 
     this.content.addControl("genres", new FormGroup({}));
     this.content.addControl("degrees", new FormGroup({}));

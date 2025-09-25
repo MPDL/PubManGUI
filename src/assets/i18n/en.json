@@ -73,7 +73,8 @@
 		"type": "Type",
 		"value": "Value",
 		"add": "Add",
-		"remove": "Remove"
+		"remove": "Remove",
+		"updateSuccessful": "Update successful"
 	},
 	"chips.localTags.placeholder": "Add local tag",
 	"validation": {
@@ -94,6 +95,7 @@
 		"invalidUtfChar": "Invalid (non-UTF8) characters found in text",
 		"sourceNotProvided": "At least one source is required",
 		"ipRangeNotProvided": "IP-Range is required",
+		"passwordRule": "Please choose a password with a length between 8 and 32 characters, and at least one uppercase, one lowercase, one digit and one special character (no ':').",
 		"forbiddenUrl": "Invalid input: The identifier must not be a URL"
 	},
 	"header": {

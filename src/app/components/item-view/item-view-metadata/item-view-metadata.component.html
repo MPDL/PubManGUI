@@ -35,14 +35,14 @@
           {{ item.metadata?.freeKeywords }},
         </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [sub]="true" [condition]="item.metadata?.subjects?.length | empty">
-        <span label>DDC</span>
-        <span content>
-            @for (sub of item.metadata?.subjects; track sub; let i = $index) {
-              <div> {{ sub.value }}</div>
-            }
-        </span>
-    </pure-item-view-metadata-element>
+    @for (sub of item.metadata?.subjects; track sub; let i = $index) {
+      <pure-item-view-metadata-element [sub]="true" [condition]="item.metadata?.subjects?.length | empty">
+          <span label>{{ sub.type }}</span>
+          <span content>
+            <div> {{ sub.value }}</div>
+          </span>
+      </pure-item-view-metadata-element>
+    }
     @for (abs of item.metadata?.abstracts; track abs; ) {
       <pure-item-view-metadata-element [sub]="true">
         <span label>{{'MetadataFields.abstract' | translate}} {{ abs.language ? '(' + abs.language + ')' : '' }}</span>

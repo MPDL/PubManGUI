@@ -341,19 +341,28 @@ export class ItemFormComponent implements OnInit {
 
   }
 
+  get isNewItem() {
+    return !this.form.get('objectId')?.value
+  }
+
+  get objectId() {
+    return this.form.get('objectId')?.value
+  }
+
+
   private itemUpdated(item: ItemVersionVO, initial:boolean=false) {
     this.item = item;
     this.form = this.fbs.item_FG(item);
 
     if(initial) {
-      if (this.user_contexts.length > 0) {
+      if (this.user_contexts.length > 0 && this.isNewItem) {
         // no contextService call needed, because we just need a contextDbRO
         this.form.get('context')?.patchValue({ objectId: this.user_contexts[0].objectId, name: this.user_contexts[0].name });
       }
     }
     else {
-      if (this.form.get('objectId')?.value) {
-        this.listStateService.itemUpdated.next(this.form.get('objectId')?.value);
+      if (!this.isNewItem) {
+        this.listStateService.itemUpdated.next(this.objectId);
       }
     }
 
@@ -370,8 +379,8 @@ export class ItemFormComponent implements OnInit {
 
 
 
-      if(this.item?.objectId) {
-        this.itemService.retrieveAuthorizationInfo(this.item.objectId, true).subscribe(authInfo => {
+      if(!this.isNewItem) {
+        this.itemService.retrieveAuthorizationInfo(this.objectId, true).subscribe(authInfo => {
           this.authorizationInfo = authInfo;
           console.log('this.authorizationInfo: ', this.authorizationInfo);
         });
@@ -394,7 +403,7 @@ export class ItemFormComponent implements OnInit {
   }
 
   get validForSave() {
-    if(!this.form.get("objectId")?.value || this.form.get("publicState")?.value === ItemVersionState.PENDING) {
+    if(this.isNewItem || this.form.get("publicState")?.value === ItemVersionState.PENDING) {
       return this.form?.get("metadata")?.get("title")?.valid;
     }
     else {
@@ -454,7 +463,7 @@ export class ItemFormComponent implements OnInit {
 
     if(saveType !== "save" && !this.anyDirty) {
       //skip save as nothing was edited
-      this.openActionsModal(saveType, this.item)
+      this.openActionsModal(saveType, this.form_2_submit)
       return;
     }
 
@@ -555,6 +564,7 @@ export class ItemFormComponent implements OnInit {
     return errors;
   }
 
+  /*
   openChangeContextModal() {
     const changeContextComp: ChangeContextModalComponent = this.modalService.open(ChangeContextModalComponent).componentInstance;
     changeContextComp.item = this.item;
@@ -562,6 +572,8 @@ export class ItemFormComponent implements OnInit {
         this.itemUpdated(data);
     })
   }
+
+   */
 }
 
 /*

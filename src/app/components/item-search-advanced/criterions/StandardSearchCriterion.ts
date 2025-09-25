@@ -8,8 +8,8 @@ import { ContextsService } from "../../../services/pubman-rest-client/contexts.s
 
 export abstract class StandardSearchCriterion extends SearchCriterion {
 
-  protected constructor(type: string) {
-    super(type);
+  protected constructor(type: string, opts?:any) {
+    super(type, opts);
     this.content.addControl("text", new FormControl(''));
   }
 
@@ -37,8 +37,8 @@ export abstract class StandardSearchCriterion extends SearchCriterion {
 }
 
 export class TitleSearchCriterion extends StandardSearchCriterion {
-  constructor() {
-    super("title");
+  constructor(opts?:any) {
+    super("title", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -49,8 +49,8 @@ export class TitleSearchCriterion extends StandardSearchCriterion {
 
 export class KeywordSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("keyword");
+  constructor(opts?:any) {
+    super("keyword", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -61,8 +61,8 @@ export class KeywordSearchCriterion extends StandardSearchCriterion {
 
 export class ClassificationSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("classification");
+  constructor(opts?:any) {
+    super("classification", opts);
     this.content.addControl("classificationType", new FormControl(SubjectClassification.DDC.valueOf()));
   }
 
@@ -98,8 +98,8 @@ export class ClassificationSearchCriterion extends StandardSearchCriterion {
 export class IdentifierSearchCriterion extends StandardSearchCriterion {
 
 
-  constructor() {
-    super("identifier");
+  constructor(opts?:any) {
+    super("identifier", opts);
     this.content.addControl("identifierType", new FormControl(''));
   }
 
@@ -156,24 +156,16 @@ export class CollectionSearchCriterion extends StandardSearchCriterion {
 
   contextList: ContextDbVO[] = [];
 
+  private contextsService: ContextsService;
 
-  constructor() {
-    super("collection");
+  constructor(opts?:any) {
+    super("collection", opts);
+    this.contextsService = opts.contextsService;
 
 
-    /*
-    const elasticsearchBody = {
-      query: {match_all:{}},
-      fields: ["objectId", "name"],
-      size: 1000,
-      _source: false,
-      sort: [{"name.keyword" :{order:"asc"}}]
-    }
-    ContextsService.instance.elasticSearch(elasticsearchBody)
-      .subscribe();
-*/
+
     //Retrieve all contexts and sort them by their name
-    ContextsService.instance.list(undefined, 1000, 0)
+    this.contextsService.list(undefined, 1000, 0)
       .subscribe( result => this.contextList = result.records
         .map(res => res.data)
         .sort((c1, c2) => c1.name.localeCompare(c2.name))
@@ -188,8 +180,8 @@ export class CollectionSearchCriterion extends StandardSearchCriterion {
 
 export class AnyFieldSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("anyField");
+  constructor(opts?:any) {
+    super("anyField", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -204,8 +196,8 @@ export class AnyFieldSearchCriterion extends StandardSearchCriterion {
 
 export class FulltextSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?:string) {
-    super(type ? type : "fulltext");
+  constructor(type?:string, opts?:any) {
+    super(type ? type : "fulltext", opts);
   }
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
@@ -236,8 +228,8 @@ export class FulltextSearchCriterion extends StandardSearchCriterion {
 
 export class AnyFieldAndFulltextSearchCriterion extends FulltextSearchCriterion {
 
-  constructor() {
-    super("anyFieldAndFulltext");
+  constructor(opts?:any) {
+    super("anyFieldAndFulltext", opts);
   }
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
@@ -257,8 +249,8 @@ export class AnyFieldAndFulltextSearchCriterion extends FulltextSearchCriterion 
 
 export class ComponentContentCategorySearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("componentContentCategory");
+  constructor(opts?:any) {
+    super("componentContentCategory", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -275,8 +267,8 @@ export class ComponentContentCategorySearchCriterion extends StandardSearchCrite
 
 export class ComponentVisibilitySearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("componentVisibility");
+  constructor(opts?:any) {
+    super("componentVisibility",opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -290,8 +282,8 @@ export class ComponentVisibilitySearchCriterion extends StandardSearchCriterion 
 
 export class DegreeSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("degree");
+  constructor(opts?:any) {
+    super("degree", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -301,8 +293,8 @@ export class DegreeSearchCriterion extends StandardSearchCriterion {
 
 export class EventTitleSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("eventTitle");
+  constructor(opts?:any) {
+    super("eventTitle", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -312,8 +304,8 @@ export class EventTitleSearchCriterion extends StandardSearchCriterion {
 
 export class JournalSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("journal");
+  constructor(opts?:any) {
+    super("journal", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -327,8 +319,8 @@ export class JournalSearchCriterion extends StandardSearchCriterion {
 
 export class LanguageSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("language");
+  constructor(opts?:any) {
+    super("language", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -338,8 +330,8 @@ export class LanguageSearchCriterion extends StandardSearchCriterion {
 
 export class LocalTagSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("localTag");
+  constructor(opts?:any) {
+    super("localTag", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -349,8 +341,8 @@ export class LocalTagSearchCriterion extends StandardSearchCriterion {
 
 export class OrcidSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("orcid");
+  constructor(opts?:any) {
+    super("orcid", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -360,8 +352,8 @@ export class OrcidSearchCriterion extends StandardSearchCriterion {
 
 export class ProjectInfoSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("projectInfo");
+  constructor(opts?:any) {
+    super("projectInfo", opts);
   }
 
   override getElasticIndexes(): string[] {
@@ -371,8 +363,8 @@ export class ProjectInfoSearchCriterion extends StandardSearchCriterion {
 
 export class SourceSearchCriterion extends StandardSearchCriterion {
 
-  constructor() {
-    super("source");
+  constructor(opts?:any) {
+    super("source", opts);
   }
 
   override getElasticIndexes(): string[] {

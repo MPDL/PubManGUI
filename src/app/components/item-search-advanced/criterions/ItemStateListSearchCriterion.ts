@@ -10,13 +10,14 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
 
   itemStateOptions = Object.keys(ItemVersionState);
 
-  aaService = AaService.instance;
+  aaService:AaService;
 
-  constructor() {
-    super("itemStateList");
+  constructor(opts?:any) {
+    super("itemStateList", opts);
     this.content.addControl("publicationStates", new FormGroup({}));
     this.itemStateOptions.forEach(itemState => this.publicationStatesFormGroup.addControl(itemState, new FormControl(false)));
 
+    this.aaService = opts.aaService;
     this.aaService.principal.subscribe(p => {
       if(p.loggedIn) {
         this.publicationStatesFormGroup.get(ItemVersionState.PENDING.valueOf())?.setValue(true);
@@ -53,7 +54,7 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
 
     //if no states are selected, filter withdrawn items and duplicate versions
     if(selectedStates.length === 0) {
-      const filterOutQuery = AaService.instance.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
+      const filterOutQuery = this.aaService.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
       return of(
         {
         bool: {
@@ -87,7 +88,7 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
               must: [baseElasticSearchQueryBuilder("versionState", pubState)],
               must_not:[
                 baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
-                AaService.instance.filterOutQuery([pubState])
+                this.aaService.filterOutQuery([pubState])
               ],
             }
           });

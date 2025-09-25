@@ -9,12 +9,15 @@ export abstract class SearchCriterion extends FormGroup<any> {
   type: any;
   content!: FormGroup;
   query: Object | undefined;
+
+  options: any;
   //formGroup!: FormGroup;
   //properties!: any
 
-  protected constructor(type: string) {
+  protected constructor(type: string, opts:any) {
     super({type : new FormControl(type)});
     this.type = type;
+    this.options = opts;
     //this.properties = (searchTypes as any)[type];
     this.content = this.fb.group({});
     this.addControl("content", this.content);

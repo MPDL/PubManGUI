@@ -9,11 +9,8 @@ import { HttpOptions } from "./pubman-generic-rest-client.service";
 })
 export class ContextsService extends PubmanSearchableGenericRestClientService<ContextDbVO>{
 
-  static instance: ContextsService;
-
   constructor() {
     super('/contexts');
-    ContextsService.instance = this;
   }
 
 
@@ -42,7 +39,7 @@ export class ContextsService extends PubmanSearchableGenericRestClientService<Co
       }
     };
     var termCounter = 0;
-    for (var i = 0; i < user.grantList.length; i++) {
+    for (var i = 0; i < user.grantList?.length; i++) {
       var grant = user.grantList[i];
       /*
       console.log("userGrantType: " + grant.grantType
