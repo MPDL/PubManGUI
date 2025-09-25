@@ -100,20 +100,14 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
     if (this.error) {
       //errors from PubMan backend are JSON objects. However, when requesting "text" in Angular HTTP client, the error is a string encoded JSON
       if (typeof this.error === 'object') {
-        this.handlePubmanError(this.error);
+        this.handleJsonError(this.error);
 
       } else if (typeof this.error === 'string') {
         //try to parse as JSON
         try {
           const json = JSON.parse(this.error);
           //check if it's a PubMan backend error response, by checking if it has some properties
-          if (json.timestamp) {
-            this.handlePubmanError(json);
-
-          } else {
-            //It's any kind of string
-            this.userMessage = this.error;
-          }
+          this.handleJsonError(json);
 
         } catch (e) {
           this.userMessage = this.error;
@@ -127,7 +121,7 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
 
   }
 
-  private handlePubmanError(errorObj: any) {
+  private handleJsonError(errorObj: any) {
     this.jsonMessage = errorObj
     this.userMessage = errorObj.message || errorObj.error || 'UNKNOWN ERROR'
 
