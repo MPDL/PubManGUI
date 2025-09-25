@@ -8,7 +8,6 @@
         <select id="context" class="form-select" formControlName="contextId"
           [class.is-invalid]="fetchForm.get('contextId')?.invalid && fetchForm.get('contextId')?.touched || fetchForm.get('contextId')?.pending" 
           data-test="fetch-context">
-          <!--[ngClass]="{'border border-danger': fetchForm.get('contextId')?.pending}"-->
           <option [value]="null" selected disable hidden>{{ 'imports.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -19,15 +18,6 @@
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
         <pure-validation-error [control]="fetchForm.get('contextId')"/>
-        <!--
-        @if(valSvc.notValidField(fetchForm.controls['contextId'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(fetchForm.controls['contextId']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
       </div>
     </div>
 
@@ -44,24 +34,10 @@
       <div class="col-sm-7">
         <input id="identifier" class="form-control" formControlName="identifier" placeholder="{{ dinamicPlaceholder }}" 
           [class.is-invalid]="fetchForm.get('identifier')?.invalid && fetchForm.get('identifier')?.touched || fetchForm.get('identifier')?.pending">
-          <!--required minlength="4" forbiddenTxt="http" [ngClass]="{'border border-danger': fetchForm.get('identifier')?.pending}"-->
       </div>
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-5 col-sm-6">
-        <!--
-        @if(fetchForm.controls['identifier'].errors?.['forbiddenURL']) {
-        <span class="form-text text-danger small">
-          {{ 'imports.fetch.id.error' | translate }}
-        </span>
-        } @else if(valSvc.notValidField(fetchForm.controls['identifier'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(fetchForm.controls['identifier']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="fetchForm.get('identifier')"/>
       </div>
     </div>

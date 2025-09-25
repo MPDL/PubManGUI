@@ -32,20 +32,10 @@
           class="form-control disabled placeholder-glow" 
           [class.is-invalid]="importForm.get('fileName')?.invalid &&importForm.get('fileName')?.touched || importForm.get('fileName')?.pending"  
           data-test="file-name">
-        <!--[ngClass]="{'border border-danger': importForm.get('fileName')?.pending}"-->
       </div>
     </div>
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(importForm.controls['fileName'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(importForm.controls['fileName']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="importForm.get('fileName')"/>
       </div>
     </div>
@@ -56,7 +46,6 @@
         <select id="context" class="form-select" formControlName="contextId"
           [class.is-invalid]="importForm.get('contextId')?.invalid && importForm.get('contextId')?.touched || importForm.get('contextId')?.pending"
           data-test="import-context">
-          <!--[ngClass]="{'border border-danger': importForm.get('contextId')?.pending}" -->
           <option [value]="null" selected disable hidden>{{ 'imports.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -67,15 +56,6 @@
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
         <pure-validation-error [control]="importForm.get('contextId')"/>
-        <!--
-        @if(valSvc.notValidField(importForm.controls['contextId'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(importForm.controls['contextId']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
       </div>
     </div>
 
@@ -88,7 +68,6 @@
           [class.is-invalid]="importForm.get('format')?.invalid && importForm.get('format')?.touched || importForm.get('format')?.pending" 
           (change)="onFormatChange($event)" 
           data-test="import-format">
-          <!--[ngClass]="{'border border-danger': importForm.get('format')?.pending}"-->
           <option [value]="null" selected disabled hidden>Format</option>
           @for (format of importFormat; track format) {
           <option [value]="format">{{ 'ImportFormat.' + format | translate }}</option>
@@ -99,13 +78,6 @@
     <div class="mb-2 row">
       <div class="offset-sm-3 col-sm-6">
         <pure-validation-error [control]="importForm.get('format')"/>
-        <!--@if(valSvc.notValidField(importForm.controls['format'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(importForm.controls['format']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }-->
       </div>
     </div>
 
@@ -117,7 +89,6 @@
         <input class="form-control" formControlName="importName"
           [class.is-invalid]="importForm.get('importName')?.invalid && importForm.get('importName')?.touched || importForm.get('importName')?.pending"
           data-test="import-name">
-          <!--[ngClass]="{'border border-danger': importForm.get('importName')?.pending}" -->
       </div>
     </div>
     <div class="mb-2 row">

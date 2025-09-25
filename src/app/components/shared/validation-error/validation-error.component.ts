@@ -125,6 +125,8 @@ export class ValidationErrorComponent {
         return this.translateService.instant('validation.sourceNotProvided');
       case Errors.COMPONENT_IP_RANGE_NOT_PROVIDED.toString() :
         return this.translateService.instant('validation.ipRangeNotProvided');
+      case Errors.FORBIDDEN_URL.toString() :
+        return this.translateService.instant('validation.forbiddenUrl');  
       default : {
         const errorNumber = parseInt(key);
         if(!isNaN(errorNumber)) {
