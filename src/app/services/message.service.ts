@@ -97,7 +97,11 @@ export class MessageService {
       title = this.translateService.instant('validation.validationError')
       let validations = '<ul class="list-group list-group-flush bg-transparent">';
       error.jsonMessage?.['validation-report']?.items?.forEach((valrep: any) => {
-        validations = validations + '<li class="list-group-item bg-transparent"><span class="bi bi-info-circle-fill me-2"></span>' + valrep.content + '</li>';
+        validations = validations +
+          `<li class="list-group-item bg-transparent">
+            <span class="bi bi-info-circle-fill me-2"></span>
+             ${this.translateService.instant('backendValidation.' + valrep.content)}
+            </li>`;
       });
       text = validations + '</ul>';
       collapsed = false;
