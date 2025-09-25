@@ -20,6 +20,7 @@ import { FormBuilderService } from 'src/app/services/form-builder.service';
 import { IdType, OrganizationVO } from 'src/app/model/inge';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-person-autosuggest',
@@ -30,7 +31,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     NgbHighlight,
     CommonModule,
     TranslatePipe,
-    BootstrapValidationDirective
+    BootstrapValidationDirective, ValidationErrorMessageDirective
   ],
   templateUrl: './person-autosuggest.component.html',
   styleUrl: './person-autosuggest.component.scss'

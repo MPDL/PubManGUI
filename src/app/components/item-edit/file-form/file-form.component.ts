@@ -10,6 +10,7 @@ import { LoadingComponent } from 'src/app/components/shared/loading/loading.comp
 import { Errors } from 'src/app/model/errors';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-file-form',
@@ -22,7 +23,8 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     CdkDragHandle,
     CdkDragPlaceholder,
     TranslatePipe,
-    BootstrapValidationDirective
+    BootstrapValidationDirective,
+    ValidationErrorMessageDirective
   ],
   templateUrl: './file-form.component.html',
   styleUrl: './file-form.component.scss'

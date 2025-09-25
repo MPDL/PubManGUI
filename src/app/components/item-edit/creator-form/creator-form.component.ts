@@ -16,11 +16,12 @@ import { CdkDragHandle } from "@angular/cdk/drag-drop";
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle, TranslatePipe, BootstrapValidationDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })

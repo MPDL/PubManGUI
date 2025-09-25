@@ -50,6 +50,7 @@ import { remove_null_empty } from "../../../utils/utils_final";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
 import { catchError, finalize, tap, throwError } from "rxjs";
 import { isEmptyCreator } from "../../../utils/item-utils";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-metadata-form',
@@ -75,6 +76,7 @@ import { isEmptyCreator } from "../../../utils/item-utils";
     CdkDrag,
     TranslatePipe,
     BootstrapValidationDirective,
+    ValidationErrorMessageDirective,
     AccordionGroupValidationDirective,
     ValidationErrorComponent
   ],

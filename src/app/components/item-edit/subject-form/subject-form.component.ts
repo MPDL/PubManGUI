@@ -7,6 +7,7 @@ import { Errors } from 'src/app/model/errors';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 
 @Component({
@@ -19,6 +20,7 @@ import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-aut
     ReactiveFormsModule,
     TranslatePipe,
     BootstrapValidationDirective,
+    ValidationErrorMessageDirective,
     ConeAutosuggestComponent
   ],
   templateUrl: './subject-form.component.html',

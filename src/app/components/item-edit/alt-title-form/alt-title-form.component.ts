@@ -8,11 +8,12 @@ import {
 import { Errors } from 'src/app/model/errors';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-alt-title-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, BootstrapValidationDirective, TranslatePipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, BootstrapValidationDirective, ValidationErrorMessageDirective, TranslatePipe],
   templateUrl: './alt-title-form.component.html',
   styleUrls: ['./alt-title-form.component.scss']
 })

@@ -27,6 +27,7 @@ import { ConeService } from "../../../services/cone.service";
 import { tap } from "rxjs";
 import { identifierUriToEnum } from "../../../utils/utils";
 import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-source-form',
@@ -42,7 +43,7 @@ import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-aut
     ReactiveFormsModule,
     CdkDropList,
     CdkDrag, TranslatePipe,
-    BootstrapValidationDirective, ConeAutosuggestComponent
+    BootstrapValidationDirective, ConeAutosuggestComponent, ValidationErrorMessageDirective
   ],
   templateUrl: './source-form.component.html',
   styleUrl: './source-form.component.scss'

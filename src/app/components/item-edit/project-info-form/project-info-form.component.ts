@@ -9,11 +9,12 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
 import { ConeService } from "../../../services/cone.service";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-project-info-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, TranslatePipe, BootstrapValidationDirective, ConeAutosuggestComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, TranslatePipe, BootstrapValidationDirective, ConeAutosuggestComponent, ValidationErrorMessageDirective],
   templateUrl: './project-info-form.component.html',
   styleUrl: './project-info-form.component.scss'
 })

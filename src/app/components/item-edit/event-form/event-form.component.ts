@@ -7,6 +7,7 @@ import { ControlType } from '../../../services/form-builder.service';
 import { Errors } from 'src/app/model/errors';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 export enum ValidationErrorsEnum {
   END_DATE_WITHOUT_START_DATE = "EndDateWithoutStartDate",
@@ -20,7 +21,7 @@ export enum ValidationErrorsEnum {
 @Component({
   selector: 'pure-event-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.scss'
 })

@@ -48,6 +48,7 @@ import { ChangeContextModalComponent } from "../../shared/change-context-modal/c
 import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 import { HttpErrorResponse } from "@angular/common/http";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-item-form',
@@ -61,7 +62,7 @@ import { PubManHttpErrorResponse } from "../../../services/interceptors/http-err
     MetadataFormComponent,
     AddRemoveButtonsComponent,
     CdkDropList,
-    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, AccordionGroupValidationDirective, LoadingComponent],
+    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective, AccordionGroupValidationDirective, LoadingComponent],
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss'],
 })
