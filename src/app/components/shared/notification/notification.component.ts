@@ -22,6 +22,7 @@ export class NotificationComponent {
 
   public onAreaMessage = effect(() => {
     this.message = this.messageSvc.lastMessage();
+    this.collapsed = this.message?.collapsed;
     this.dress(this.message);
     return true;
   });

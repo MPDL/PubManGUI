@@ -6,10 +6,7 @@
   </div>
 }
 
-
-
-
-
+@if(!loading) {
 @if (item) {
 
   <pure-topnav>
@@ -475,7 +472,9 @@
     </div>
   </div>
 
-} @else {
+}
+}
+@else {
   <pure-loading/>
 }
 

@@ -46,6 +46,8 @@ import { MiscellaneousService } from "../../../services/pubman-rest-client/misce
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
 import { ChangeContextModalComponent } from "../../shared/change-context-modal/change-context-modal.component";
 import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
+import { HttpErrorResponse } from "@angular/common/http";
+import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 
 @Component({
   selector: 'pure-item-form',
@@ -87,6 +89,8 @@ export class ItemFormComponent implements OnInit {
   internalFiles!: FormArray<FormGroup<ControlType<FileDbVO>>>;
   switchFileSortingMode: boolean = false;
   user_contexts: ContextDbRO[] = [];
+
+  saveErrorMessage? :string;
 
   @Output() onChangeSwitchMode: EventEmitter<any> = new EventEmitter();
 
@@ -503,6 +507,8 @@ export class ItemFormComponent implements OnInit {
       catchError((err) => {
         //return  EMPTY;
         //TODO Better error handling?
+
+
         return throwError(() => err);
       }),
       finalize(() => {

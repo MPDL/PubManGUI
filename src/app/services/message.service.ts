@@ -3,6 +3,8 @@ import { Dialog } from '@angular/cdk/dialog';
 
 import { MessageComponent } from '../components/shared/message/message.component';
 import { ConfirmationComponent } from '../components/shared/confirmation/confirmation.component';
+import { PubManHttpErrorResponse } from "./interceptors/http-error.interceptor";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class MessageService {
 
   public lastMessage = signal<any>({});
 
-  constructor(public dialog: Dialog) { }
+  constructor(public dialog: Dialog, private translateService: TranslateService) { }
 
   displayMessage(message?: { type: string; text: string; }) {
     // this.messageDialogRef = this.dialog.open(MessageComponent, {
@@ -37,7 +39,7 @@ export class MessageService {
     return ref;
   }
 
-  displayOnArea(message?: { type: string; title?: string, text: string; }) {
+  displayOnArea(message?: { type: string; title?: string, text: string; collapsed?: boolean }) {
     this.lastMessage.set(message);
   }
 
@@ -77,6 +79,42 @@ export class MessageService {
     }
     //this.displayMessage(msg);
     this.displayOnArea(msg);
+  }
+
+  httpError(error: PubManHttpErrorResponse) {
+    let title = error.userMessage;
+    let text = error.userMessage;
+    let collapsed = true;
+
+    if(error.status===404) {
+      title = this.translateService.instant('common.notFound');
+    }
+    else if(error.status===401 || error.status===403) {
+      title = this.translateService.instant('common.notAuthorized');
+    }
+
+    if(error.jsonMessage?.['validation-report']) {
+      title = this.translateService.instant('validation.validationError')
+      let validations = '<ul class="list-group list-group-flush bg-transparent">';
+      error.jsonMessage?.['validation-report']?.items?.forEach((valrep: any) => {
+        validations = validations +
+          `<li class="list-group-item bg-transparent">
+            <span class="bi bi-info-circle-fill me-2"></span>
+             ${this.translateService.instant('backendValidation.' + valrep.content)}
+            </li>`;
+      });
+      text = validations + '</ul>';
+      collapsed = false;
+    }
+    else if(error.jsonMessage?.timestamp) {
+      text =
+        `${error.jsonMessage.message}<br/>
+         ${error.jsonMessage.status}: ${error.jsonMessage.error}<br/>
+         ${error.jsonMessage.exception}<br/>
+         ${error.jsonMessage.timestamp}
+        `
+    }
+    this.displayOnArea({type: 'danger', title: title, text: text, collapsed: collapsed});
   }
 
   splitMessage(message: string): { title: string, content: string } {

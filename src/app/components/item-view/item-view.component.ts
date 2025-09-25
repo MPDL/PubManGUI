@@ -16,7 +16,7 @@ import { AsyncPipe, DatePipe, ViewportScroller } from "@angular/common";
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
-import { catchError, EMPTY, forkJoin, map, Observable, tap, timer } from "rxjs";
+import { catchError, EMPTY, finalize, forkJoin, map, Observable, tap, throwError, timer } from "rxjs";
 import { environment } from 'src/environments/environment';
 import {
   ItemViewMetadataElementComponent
@@ -72,6 +72,9 @@ import { UpdateLocaltagsModalComponent } from "../shared/update-localtags-modal/
 })
 export class ItemViewComponent {
   protected ingeUri = environment.inge_uri;
+
+  loading=false;
+
   currentSubMenuSelection = "abstract";
 
   versions$!: Observable<AuditDbVO[]>;
@@ -126,6 +129,7 @@ export class ItemViewComponent {
 
     //console.log("init " + id);
 
+    this.loading = true;
     this.removeMetaTags();
     this.item = undefined
     this.thumbnailUrl = undefined;
@@ -133,7 +137,7 @@ export class ItemViewComponent {
     this.authorizationInfo = undefined;
     this.latestVersionAuthorizationInfo = undefined;
     if (id)
-      this.item$ = this.itemsService.retrieve(id, {globalErrorDisplay: false});
+      this.item$ = this.itemsService.retrieve(id, {globalErrorDisplay: true});
       this.item$
         .pipe(
           tap(i => {
@@ -195,9 +199,13 @@ export class ItemViewComponent {
             }
           }),
           catchError((err: PubManHttpErrorResponse) => {
-            this.errorMessages.push(err.userMessage);
-            return EMPTY;
-          })
+            //this.errorMessages.push(err.userMessage);
+            //return EMPTY;
+            return throwError(err)
+          }),
+           finalize(() => {
+             this.loading = false;
+           })
 
         )
         .subscribe()

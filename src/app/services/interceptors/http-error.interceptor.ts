@@ -31,6 +31,8 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
         const silentLogout = request.context.get(SILENT_LOGOUT);
         const displayError = request.context.get(DISPLAY_ERROR);
         const message = inject(MessageService);
+        const aaService = inject(AaService)
+        const modalService = inject(NgbModal);
         return next(request)
             .pipe(
                 catchError((err: HttpErrorResponse) => {
@@ -47,7 +49,6 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
                     }
                     //Otherwise, the app is already loaded and some user is working here. Open a dialog to login again
                     else {
-                      const modalService = inject(NgbModal);
                       const loginCompRef: NgbModalRef = modalService.open(LoginComponent, {backdrop: 'static'});
                       loginCompRef.componentInstance.forcedLogout = true;
 
@@ -58,7 +59,7 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
                           }
                           else {
 
-                            inject(AaService).logout();
+                            aaService.logout();
                           }
                           return next(request);
                         })
@@ -71,8 +72,8 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
 
                     const pubmanErrorResp = new PubManHttpErrorResponse(err);
                     if (displayError && !ignoredStatuses?.includes(err.status)) {
-                      const error = `${err.status} ${err.statusText}:\n${err.url}\n${pubmanErrorResp.userMessage}`
-                      message.error(error);
+                      //const error = `${err.status} ${err.statusText}:\n${err.url}\n${pubmanErrorResp.userMessage}`
+                      message.httpError(pubmanErrorResp);
                     }
                     //throw PubmanErrorResponse to handle in further catchErrors
                     return throwError(() => pubmanErrorResp);
@@ -84,7 +85,7 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
 
 export class PubManHttpErrorResponse extends HttpErrorResponse {
 
-  userMessage: string;
+  userMessage!: string;
   jsonMessage: any = undefined;
 
   constructor(errorResponse: HttpErrorResponse) {
@@ -99,8 +100,7 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
     if (this.error) {
       //errors from PubMan backend are JSON objects. However, when requesting "text" in Angular HTTP client, the error is a string encoded JSON
       if (typeof this.error === 'object') {
-        this.jsonMessage = this.error;
-        this.userMessage = this.error.message || this.error.error || 'UNKNOWN ERROR'
+        this.handlePubmanError(this.error);
 
       } else if (typeof this.error === 'string') {
         //try to parse as JSON
@@ -108,8 +108,8 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
           const json = JSON.parse(this.error);
           //check if it's a PubMan backend error response, by checking if it has some properties
           if (json.timestamp) {
-            this.jsonMessage = json;
-            this.userMessage = json.message || json.error || 'UNKNOWN ERROR'
+            this.handlePubmanError(json);
+
           } else {
             //It's any kind of string
             this.userMessage = this.error;
@@ -126,5 +126,21 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
     }
 
   }
+
+  private handlePubmanError(errorObj: any) {
+    this.jsonMessage = errorObj
+    this.userMessage = errorObj.message || errorObj.error || 'UNKNOWN ERROR'
+
+    /*
+    errorObj?.['validation-report']?.items?.forEach((item: any) => {
+
+      this.userMessage = this.userMessage + '\n' + item.content;
+    });
+    console.log(this.userMessage);
+
+     */
+  }
+
+
 
 }
