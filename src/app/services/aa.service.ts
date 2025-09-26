@@ -183,8 +183,10 @@ export class AaService {
     this.who().pipe(
       tap(user => {
         if(this.principal?.value?.user?.loginname != user?.loginname) {
-          this.message.warning("The login is not valid anymore (Did you login in another window/tab?");
-          this.checkLogin();
+          this.message.warning("The login is not valid anymore and was updated (Did you login in another window/tab?");
+          this.checkLogin().subscribe(res => {
+
+          });
           this.router.navigate(['/'])
         }
 
