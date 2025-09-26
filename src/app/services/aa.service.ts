@@ -61,7 +61,7 @@ export class AaService {
     private http: HttpClient,
     private contextService: ContextsService,
     private message: MessageService,
-    private router: Router
+    private router: Router,
   ) {
     const principal: Principal = new Principal();
     this.principal = new BehaviorSubject<Principal>(principal);
@@ -178,6 +178,24 @@ export class AaService {
     ).subscribe()
 
   }
+
+  checkLoginChanged() {
+    this.who().pipe(
+      tap(user => {
+        if(this.principal?.value?.user?.loginname != user?.loginname) {
+          this.message.warning("The login is not valid anymore (Did you login in another window/tab?");
+          this.checkLogin();
+          this.router.navigate(['/'])
+        }
+
+        }
+      )
+    ).subscribe();
+  }
+
+
+
+
 
   private who(): Observable<AccountUserDbVO> {
     //const headers = new HttpHeaders().set('Authorization', token);

@@ -85,7 +85,6 @@ export class SourceFormComponent {
 
         const translatedA = this.translateService.instant('SourceGenre.' + a);
         const translatedB = this.translateService.instant('SourceGenre.' + b);
-        console.log("Sort", translatedA, translatedB);
         return translatedA.localeCompare(translatedB);
       }
     )
