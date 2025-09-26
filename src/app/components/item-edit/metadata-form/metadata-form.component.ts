@@ -43,12 +43,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   AddMultipleCreatorsModalComponent
 } from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
-import { TranslatePipe } from "@ngx-translate/core";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
 import { remove_null_empty } from "../../../utils/utils_final";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
-import { catchError, finalize, tap, throwError } from "rxjs";
+import { catchError, finalize, Subject, takeUntil, tap, throwError } from "rxjs";
 import { isEmptyCreator } from "../../../utils/item-utils";
 import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
@@ -111,6 +111,8 @@ export class MetadataFormComponent implements OnInit {
   multipleCreators = new FormControl<string>('');
   loading: boolean = false;
 
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   genrePriorityList = [MdsPublicationGenre.ARTICLE.toString()
     , MdsPublicationGenre.CONFERENCE_PAPER.toString()
     , MdsPublicationGenre.BOOK_ITEM.toString()
@@ -118,7 +120,7 @@ export class MetadataFormComponent implements OnInit {
     , MdsPublicationGenre.THESIS.toString()];
 
   constructor(
-    private fb: FormBuilder, private modalService: NgbModal
+    private fb: FormBuilder, private modalService: NgbModal, private translateService: TranslateService,
   ) {
     effect(() => {
       // Events
@@ -155,9 +157,20 @@ export class MetadataFormComponent implements OnInit {
     let genre = this.meta_form.get('genre')?.value ? this.meta_form.get('genre')?.value : undefined;
     this.miscellaneousService.selectedGenre.set(genre);
     this.updateAllowedGenresAndSubjects(); // Initialize allowed_genre_types with correct context specific values
-    this.context.valueChanges.subscribe(() => {
+    this.context.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
       this.updateAllowedGenresAndSubjects();
     });
+
+    this.translateService.onLangChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(lang => {this.updateAllowedGenresAndSubjects()})
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
 
@@ -222,7 +235,9 @@ export class MetadataFormComponent implements OnInit {
             } else if (bIndex !== -1) {
               return 1;
             } else {
-              return a.localeCompare(b);
+              const translatedA = this.translateService.instant('MdsPublicationGenre.' + a);
+              const translatedB = this.translateService.instant('MdsPublicationGenre.' + b);
+              return translatedA.localeCompare(translatedB);
             }
           });
         }
