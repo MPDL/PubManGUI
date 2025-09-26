@@ -10,6 +10,7 @@ import { Visibility } from 'src/app/model/inge';
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-change-file-visibility-form',
@@ -17,7 +18,8 @@ import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-file-visibility-form.component.html',
 })
@@ -34,8 +36,8 @@ export class ChangeFileVisibilityFormComponent {
   public changeFileVisibilityForm: FormGroup = this.fb.group({
     fileVisibilityFrom: [null, [Validators.required]],
     fileVisibilityTo: [null, [Validators.required]],
-  },
-    { validators: [this.valSvc.notEqualsValidator('fileVisibilityFrom', 'fileVisibilityTo')] });
+    }, 
+    { validators: [this.valSvc.notSameValues('fileVisibilityFrom', 'fileVisibilityTo')] });
 
   get changeFileVisibilityParams(): ChangeFileVisibilityParams {
     const actionParams: ChangeFileVisibilityParams = {
@@ -44,6 +46,10 @@ export class ChangeFileVisibilityFormComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit(): void {
+    this.changeFileVisibilityForm.reset();
   }
 
   onSubmit(): void {

@@ -5,7 +5,7 @@ import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-
 
 import type { IpEntry } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { _, TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-audience-form',
@@ -26,14 +26,6 @@ export class AudienceFormComponent {
   @Input() index!: number;
   @Input() index_length!: number;
   @Output() notice = new EventEmitter();
-
-  translateSvc = inject(TranslateService);
-
-  ngOnInit() {
-    if(this.audienceId.value.name === '') {
-      this.audienceId.setValue(this.translateSvc.instant(_('batch.actions.metadata.files.ipRanges.singular')));
-    }
-  }
 
   add_remove_audience(event: any) {
     this.notice.emit(event);

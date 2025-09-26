@@ -9,7 +9,7 @@
   <form [formGroup]="addSourceIdentifierForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
       <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.source.adjust' | translate }}</label>
-      <div class="col-sm-1">
+      <div class="col-sm-2">
         <select class="form-select" formControlName="sourceNumber">
           <option [value]="1" selected>1</option>
           <option [value]="2">2</option>
@@ -28,8 +28,9 @@
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if (valSvc.notValidField(addSourceIdentifierForm.controls['sourceIdentifierType'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(addSourceIdentifierForm.controls['sourceIdentifierType']) }}
@@ -37,6 +38,8 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="addSourceIdentifierForm.get('sourceIdentifierType')"/>
       </div>
     </div> 
 
@@ -46,8 +49,9 @@
         <input class="form-control" formControlName="sourceIdentifier" [ngClass]="{'border border-danger': addSourceIdentifierForm.get('sourceIdentifier')?.pending}">
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if (valSvc.notValidField(addSourceIdentifierForm.controls['sourceIdentifier'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(addSourceIdentifierForm.controls['sourceIdentifier']) }}
@@ -55,11 +59,13 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="addSourceIdentifierForm.get('sourceIdentifier')"/>
       </div>
     </div> 
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="!addSourceIdentifierForm.valid"
           class="btn btn-outline-primary float-end">
           GO

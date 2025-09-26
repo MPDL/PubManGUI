@@ -121,6 +121,8 @@ export class ValidationErrorComponent {
         return this.translateService.instant('validation.ipRangeNotProvided');
       case Errors.FORBIDDEN_URL.toString() :
         return this.translateService.instant('validation.forbiddenUrl');
+      case Errors.OLD_AND_NEW_ARE_SAME.toString() :
+        return this.translateService.instant('validation.notSameValues');  
       default : {
         const errorNumber = parseInt(key);
         if(!isNaN(errorNumber)) {

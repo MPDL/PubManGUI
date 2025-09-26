@@ -24,8 +24,9 @@
                 </select>
             </div>
         </div>
-        <div class="mb-3 row">
+        <div class="mb-3 row validation-error">
             <div class="offset-sm-3 col-sm-6">
+                <!--
                 @if(valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryFrom'])) {
                 <span class="form-text text-danger small">
                     {{ valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryFrom']) }}
@@ -33,6 +34,8 @@
                 } @else {
                 <span>&nbsp;</span>
                 }
+                -->
+                <pure-validation-error [control]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')"/>
             </div>
         </div>
 
@@ -53,8 +56,9 @@
                 </select>
             </div>
         </div>
-        <div class="mb-3 row">
+        <div class="mb-3 row validation-error">
             <div class="offset-sm-3 col-sm-6">
+                <!--
                 @if
                 (valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo']))
                 {
@@ -71,11 +75,14 @@
                 } @else {
                 <span>&nbsp;</span>
                 }
+                -->
+                <pure-validation-error [control]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')"/>
+                <pure-validation-error [control]="changeExternalReferenceContentCategoryForm"/>
             </div>
         </div>
 
         <div class="row">
-            <div (click)="checkIfAllRequired()">
+            <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
                 <button type="submit" [disabled]="!changeExternalReferenceContentCategoryForm.valid"
                     class="btn btn-outline-primary float-end">
                     GO

@@ -11,13 +11,17 @@ import { ContentCategories } from 'src/app/model/inge';
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
+
 @Component({
   selector: 'pure-change-external-reference-content-category-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-external-reference-content-category-form.component.html',
 })
@@ -34,7 +38,7 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
     externalReferenceContentCategoryFrom: [null, [ Validators.required ]],
     externalReferenceContentCategoryTo: [null, [ Validators.required ]],
   },
-  { validators: [this.valSvc.notEqualsValidator('externalReferenceContentCategoryFrom','externalReferenceContentCategoryTo')] });
+  { validators: [this.valSvc.notSameValues('externalReferenceContentCategoryFrom','externalReferenceContentCategoryTo')] });
 
   get changeExternalReferenceContentCategoryParams(): ChangeExternalReferenceContentCategoryParams {
     const actionParams: ChangeExternalReferenceContentCategoryParams = {
@@ -45,6 +49,10 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
     return actionParams;
   }
 
+  ngOnInit(): void {  
+    this.changeExternalReferenceContentCategoryForm.reset();
+  }
+  
   onSubmit(): void {
     if (this.changeExternalReferenceContentCategoryForm.valid) {
       this.batchSvc.changeExternalReferenceContentCategory(this.changeExternalReferenceContentCategoryParams).subscribe( actionResponse => {
@@ -53,7 +61,6 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
       });
     }
   }
-
 
   checkIfAllRequired() {
     if (!this.changeExternalReferenceContentCategoryForm.valid) {

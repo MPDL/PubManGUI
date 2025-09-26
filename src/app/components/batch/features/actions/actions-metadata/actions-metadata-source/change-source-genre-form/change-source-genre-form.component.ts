@@ -10,13 +10,17 @@ import { SourceGenre } from 'src/app/model/inge';
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
+
 @Component({
   selector: 'pure-change-source-genre-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-source-genre-form.component.html',
 })
@@ -33,7 +37,7 @@ export class ChangeSourceGenreFormComponent {
     sourceGenreFrom: ['Genre', [Validators.required]],
     sourceGenreTo: ['Genre', [Validators.required]],
   }, {
-    validators: [this.valSvc.notEqualsValidator('sourceGenreFrom', 'sourceGenreTo')]
+    validators: [this.valSvc.notSameValues('sourceGenreFrom', 'sourceGenreTo')]
   });
 
   get changeSourceGenreParams(): ChangeSourceGenreParams {
@@ -45,9 +49,12 @@ export class ChangeSourceGenreFormComponent {
     return actionParams;
   }
 
+  ngOnInit(): void {
+    this.changeSourceGenreForm.reset();
+  }
+  
   onSubmit(): void {
     if (this.changeSourceGenreForm.valid) {
-
       this.batchSvc.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => {
         this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
         this.router.navigate(['/batch/logs']);

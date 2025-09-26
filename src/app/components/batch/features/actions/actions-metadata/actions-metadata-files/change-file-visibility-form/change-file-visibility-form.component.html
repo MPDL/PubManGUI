@@ -20,8 +20,9 @@
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityFrom'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeFileVisibilityForm.controls['fileVisibilityFrom']) }}
@@ -29,6 +30,8 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeFileVisibilityForm.get('fileVisibilityFrom')"/>
       </div>
     </div>
 
@@ -37,7 +40,8 @@
         <label class="col-form-label">{{ 'batch.actions.metadata.files.visibility.to' | translate }}</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="fileVisibilityTo" [ngClass]="{'border border-danger': changeFileVisibilityForm.get('fileVisibilityTo')?.pending}">
+        <select class="form-select" formControlName="fileVisibilityTo" 
+          [ngClass]="{'border border-danger': changeFileVisibilityForm.get('fileVisibilityTo')?.pending}">
           <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
           @for (fileVisibility of visibility; track fileVisibility) {
           <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
@@ -45,8 +49,9 @@
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
@@ -58,11 +63,14 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeFileVisibilityForm.get('fileVisibilityTo')"/>
+        <pure-validation-error [control]="changeFileVisibilityForm"/>
       </div>
     </div>
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="!changeFileVisibilityForm.valid"
           class="btn btn-outline-primary float-end">
           GO

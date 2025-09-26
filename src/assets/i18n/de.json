@@ -83,7 +83,7 @@
     "required": "Wert ist erforderlich",
     "minlength": "mindestens {{minLength}} Zeichen erforderlich",
     "singleWord": "kann nicht mehrere Wörter enthalten",
-    "notEquals": "müssen sich unterscheiden",
+    "notSameValues": "Bisheriger und neuer wert müssen sich unterscheiden",
     "equals": "stimmen nicht überein",
     "notDuplicates": "dupliziert",
     "allRequired": "nicht alle erforderlichen Werte",

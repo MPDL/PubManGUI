@@ -11,13 +11,16 @@ import { DegreeType, MdsPublicationGenre } from 'src/app/model/inge';
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 @Component({
   selector: 'pure-batch-change-genre',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-genre.component.html',
 })
@@ -35,7 +38,7 @@ export class ActionsGenreComponent {
     genreTo: [null, [Validators.required]],
     degreeType: [{ value: null, disabled: true }],
   },
-    { validators: [this.valSvc.notEqualsValidator('genreFrom', 'genreTo')] }
+    { validators: [this.valSvc.notSameValues('genreFrom', 'genreTo')] }
   );
 
   get changeGenreParams(): ChangeGenreParams {
@@ -46,6 +49,10 @@ export class ActionsGenreComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit(): void {
+    this.changeGenreForm.reset();
   }
 
   onSubmit(): void {

@@ -9,13 +9,16 @@ import type { AddKeywordsParams } from 'src/app/components/batch/interfaces/batc
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 @Component({
   selector: 'pure-add-keywords-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './add-keywords-form.component.html',
 })
@@ -36,6 +39,10 @@ export class AddKeywordsFormComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit(): void {
+    this.addKeywordsForm.reset();
   }
 
   onSubmit(): void {

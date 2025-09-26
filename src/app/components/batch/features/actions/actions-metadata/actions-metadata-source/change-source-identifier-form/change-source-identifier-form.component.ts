@@ -12,13 +12,17 @@ import type { ChangeSourceIdentifierParams } from 'src/app/components/batch/inte
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
+
 @Component({
   selector: 'pure-change-source-identifier-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-source-identifier-form.component.html',
 })
@@ -39,7 +43,7 @@ export class ChangeSourceIdentifierFormComponent {
     sourceIdentifierTo: [''],
   },
     {
-      validators: [this.valSvc.notEqualsValidator('sourceIdentifierFrom', 'sourceIdentifierTo')]
+      validators: [this.valSvc.notSameValues('sourceIdentifierFrom', 'sourceIdentifierTo')]
     });
 
   get changeSourceIdentifierParams(): ChangeSourceIdentifierParams {
@@ -51,6 +55,10 @@ export class ChangeSourceIdentifierFormComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit(): void {
+    this.changeSourceIdentifierForm.reset();
   }
 
   onSubmit(): void {

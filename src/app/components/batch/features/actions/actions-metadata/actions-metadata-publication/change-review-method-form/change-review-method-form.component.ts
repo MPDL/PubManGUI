@@ -11,13 +11,16 @@ import { ReviewMethod } from 'src/app/model/inge';
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 @Component({
   selector: 'pure-change-review-method-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-review-method-form.component.html',
 })
@@ -35,7 +38,7 @@ export class ChangeReviewMethodFormComponent {
     reviewMethodFrom: [null, [Validators.required]],
     reviewMethodTo: [null, [Validators.required]],
   },
-    { validators: [this.valSvc.notEqualsValidator('reviewMethodFrom', 'reviewMethodTo')] });
+    { validators: [this.valSvc.notSameValues('reviewMethodFrom', 'reviewMethodTo')] });
 
   get changeReviewMethodParams(): ChangeReviewMethodParams {
     const actionParams: ChangeReviewMethodParams = {
@@ -46,6 +49,10 @@ export class ChangeReviewMethodFormComponent {
     return actionParams;
   }
 
+  ngOnInit(): void {
+    this.changeReviewMethodForm.reset();
+  } 
+  
   onSubmit(): void {
     if (this.changeReviewMethodForm.valid) {
 

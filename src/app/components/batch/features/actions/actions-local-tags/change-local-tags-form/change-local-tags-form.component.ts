@@ -10,13 +10,16 @@ import type { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/b
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 @Component({
   selector: 'pure-change-local-tags-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-local-tags-form.component.html',
 })
@@ -30,12 +33,11 @@ export class ChangeLocalTagsFormComponent {
   public changeLocalTagsForm: FormGroup = this.fb.group({
     localTagFrom: [null, [Validators.required]],
     localTagTo: [null, [Validators.required]],
-  },
-    {
+  }, {
       validators: [
-        this.valSvc.notEqualsValidator('localTagFrom', 'localTagTo')
+        this.valSvc.notSameValues('localTagFrom', 'localTagTo')
       ]
-    });
+  });
 
 
   get changeLocalTagsParams(): ChangeLocalTagParams {
@@ -47,6 +49,10 @@ export class ChangeLocalTagsFormComponent {
     return actionParams;
   }
 
+  ngOnInit(): void {
+    this.changeLocalTagsForm.reset();
+  } 
+  
   onSubmit(): void {
     if (this.changeLocalTagsForm.valid) {
       this.batchSvc.changeLocalTags(this.changeLocalTagsParams).subscribe(actionResponse => {

@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Errors } from "src/app/model/errors";
 
 import { _, TranslateService } from '@ngx-translate/core'
 
@@ -36,8 +37,9 @@ export class BatchValidatorsService {
     return null;
   }
 
-  notEqualsValidator(field1: string, field2: string): ValidatorFn {
+  notSameValues(field1: string, field2: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      const error_types = Errors;
       if (control instanceof FormGroup) {
         if (control.get(field1)?.dirty || control.get(field2)?.dirty) {
           let field1Value = control.get(field1)?.value;
@@ -50,7 +52,8 @@ export class BatchValidatorsService {
           };
           if (field1Value !== null && field2Value !== null) {
             if (field2Value.length > 0 && (field1Value === field2Value)) {
-              return { notEquals: true }
+              return { [error_types.OLD_AND_NEW_ARE_SAME]: {value: control.value} };
+              //return { notEquals: true }
             }
           }
         }

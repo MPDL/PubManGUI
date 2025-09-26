@@ -27,8 +27,9 @@
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if (valSvc.notValidField(changeGenreForm.controls['genreFrom'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeGenreForm.controls['genreFrom']) }}
@@ -36,6 +37,8 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeGenreForm.get('genreFrom')"/> 
       </div>
     </div>
 
@@ -53,8 +56,9 @@
       </div>
     </div>
 
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if (valSvc.notValidField(changeGenreForm.controls['genreTo'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeGenreForm.controls['genreTo']) }}
@@ -66,6 +70,9 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeGenreForm.get('genreTo')"/>
+        <pure-validation-error [control]="changeGenreForm"/>
       </div>
     </div>
 
@@ -86,7 +93,7 @@
     </div>
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="!changeGenreForm.valid"
           class="btn btn-outline-primary float-end">
           GO

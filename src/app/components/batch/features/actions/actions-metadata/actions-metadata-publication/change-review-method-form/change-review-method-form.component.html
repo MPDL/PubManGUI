@@ -28,8 +28,9 @@
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if(valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodFrom'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeReviewMethodForm.controls['reviewMethodFrom']) }}
@@ -37,6 +38,8 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeReviewMethodForm.get('reviewMethodFrom')"/>
       </div>
     </div>
 
@@ -59,8 +62,9 @@
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if (valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeReviewMethodForm.controls['reviewMethodTo']) }}
@@ -73,11 +77,14 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeReviewMethodForm.get('reviewMethodTo')"/>
+        <pure-validation-error [control]="changeReviewMethodForm"/>
       </div>
     </div>
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="!changeReviewMethodForm.valid" class="btn btn-outline-primary float-end">
           GO
         </button>

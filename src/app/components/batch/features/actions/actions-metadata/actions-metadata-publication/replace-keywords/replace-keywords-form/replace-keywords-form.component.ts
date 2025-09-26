@@ -10,13 +10,16 @@ import type { ReplaceKeywordsParams } from 'src/app/components/batch/interfaces/
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 @Component({
   selector: 'pure-replace-keywords-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './replace-keywords-form.component.html',
 })
@@ -39,6 +42,10 @@ export class ReplaceKeywordsFormComponent {
     return actionParams;
   }
 
+  ngOnInit(): void {
+    this.replaceKeywordsForm.reset();
+  } 
+  
   onSubmit(): void {
     if (this.replaceKeywordsForm.valid) {
       this.batchSvc.replaceKeywords(this.replaceKeywordsParams).subscribe(actionResponse => {
@@ -59,6 +66,8 @@ export class ReplaceKeywordsFormComponent {
     }
   }
 
+  // TODO: This is a workaround to reset the form when clicking outside the form area
+  //       A better approach would be to implement a more robust click outside detection mechanism
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {

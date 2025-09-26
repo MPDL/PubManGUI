@@ -9,8 +9,9 @@
       <input class="form-control" formControlName="keywordsFrom" [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsFrom')?.pending}">
     </div>
   </div>
-  <div class="mb-2 row">
+  <div class="mb-2 row validation-error">
     <div class="offset-sm-3 col-sm-6">
+      <!--
       @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsFrom'])) {
       <span class="form-text text-danger small">
         {{ valSvc.getErrorMsg(changeKeywordsForm.controls['keywordsFrom']) }}
@@ -18,6 +19,8 @@
       } @else {
       <span>&nbsp;</span>
       }
+      -->
+      <pure-validation-error [control]="changeKeywordsForm.get('keywordsFrom')"/>
     </div>
   </div>
 
@@ -31,8 +34,9 @@
       <input class="form-control" formControlName="keywordsTo" [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsTo')?.pending}">
     </div>
   </div>
-  <div class="mb-2 row">
+  <div class="mb-2 row validation-error">
     <div class="offset-sm-3 col-sm-6">
+      <!--
       @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsTo'])) {
       <span class="form-text text-danger small">
         {{ valSvc.getErrorMsg(changeKeywordsForm.controls['keywordsTo']) }}
@@ -43,12 +47,14 @@
         </span>
       } @else {
       <span>&nbsp;</span>
-      }
+      }-->
+      <pure-validation-error [control]="changeKeywordsForm.get('keywordsTo')"/>
+      <pure-validation-error [control]="changeKeywordsForm"/>
     </div>
   </div>
 
   <div class="row">
-    <div (click)="checkIfAllRequired()">
+    <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
       <button type="submit" [disabled]="!changeKeywordsForm.valid" 
         class="btn btn-outline-primary float-end">
         GO

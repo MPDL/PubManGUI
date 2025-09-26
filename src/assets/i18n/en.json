@@ -83,7 +83,7 @@
     "required": "Value is required",
     "minlength": "at least {{minLength}} characters required",
     "singleWord": "can't contain multiple words",
-    "notEquals": "cannot be the same",
+    "notSameValues": "Previous and new values cannot be the same",
     "equals": "do not match",
     "notDuplicates": "duplicate",
     "allRequired": "not all required values",

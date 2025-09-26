@@ -24,8 +24,9 @@
       </div>
     </div>
 
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+
         @if (replaceFileAudienceForm.pending) {
         <span class="form-text text-danger small">
           At least one IP range required
@@ -33,12 +34,13 @@
         } @else {
         <span>&nbsp;</span>
         }
+        <pure-validation-error [control]="replaceFileAudienceForm"/>  
       </div> 
       <span>&nbsp;</span>
     </div>
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="!replaceFileAudienceForm.valid || allowedAudienceIds.pristine"
           class="btn btn-outline-primary float-end">
           GO

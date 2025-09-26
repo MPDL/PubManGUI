@@ -16,8 +16,9 @@
           [ngClass]="{'border border-danger': changeLocalTagsForm.get('localTagFrom')?.pending}">
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-2 col-sm-6">
+        <!--
         @if(valSvc.notValidField(changeLocalTagsForm.controls['localTagFrom'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeLocalTagsForm.controls['localTagFrom']) }}
@@ -25,6 +26,8 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeLocalTagsForm.get('localTagFrom')"/>
       </div>
     </div>
 
@@ -37,8 +40,9 @@
           [ngClass]="{'border border-danger': changeLocalTagsForm.get('localTagTo')?.pending}">
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-2 col-sm-6">
+        <!--
         @if(valSvc.notValidField(changeLocalTagsForm.controls['localTagTo'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeLocalTagsForm.controls['localTagTo']) }}
@@ -49,12 +53,14 @@
         </span>
         } @else {
         <span>&nbsp;</span>
-        }
+        }-->
+        <pure-validation-error [control]="changeLocalTagsForm.get('localTagTo')"/>
+        <pure-validation-error [control]="changeLocalTagsForm"/>
       </div>
     </div>
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="!changeLocalTagsForm.valid" class="btn btn-outline-primary float-end">
           GO
         </button>

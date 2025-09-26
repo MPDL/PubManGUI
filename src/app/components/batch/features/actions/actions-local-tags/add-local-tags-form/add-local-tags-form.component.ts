@@ -48,6 +48,10 @@ export class AddLocalTagsFormComponent {
     return actionParams;
   }
 
+  ngOnInit(): void {
+    this.addLocalTagsForm.reset();
+  }
+
   onSubmit(): void {
     if (this.addLocalTagsForm.valid) {
       this.batchSvc.addLocalTags(this.addLocalTagsParams).subscribe(actionResponse => {

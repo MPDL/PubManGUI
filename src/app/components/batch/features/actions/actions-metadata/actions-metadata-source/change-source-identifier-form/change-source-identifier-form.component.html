@@ -15,7 +15,7 @@
           {{ 'batch.actions.metadata.source.adjust' | translate }}
         </label>
       </div>
-      <div class="col-sm-1">
+      <div class="col-sm-2">
         <select class="form-select" formControlName="sourceNumber" [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceNumber')?.pending}">
           <option value="1" selected>1</option>
           <option value="2">2</option>
@@ -40,8 +40,9 @@
         </select>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if(valSvc.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierType'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeSourceIdentifierForm.controls['sourceIdentifierType']) }}
@@ -49,6 +50,8 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeSourceIdentifierForm.get('sourceIdentifierType')"/>
       </div>
     </div>
 
@@ -62,8 +65,9 @@
         <input class="form-control" formControlName="sourceIdentifierFrom" [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierFrom')?.pending}">
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if(valSvc.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierFrom'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeSourceIdentifierForm.controls['sourceIdentifierFrom']) }}
@@ -71,6 +75,8 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeSourceIdentifierForm.get('sourceIdentifierFrom')"/>
       </div>
     </div>
 
@@ -84,8 +90,9 @@
         <input class="form-control" formControlName="sourceIdentifierTo" [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierTo')?.pending}">
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if(valSvc.notValidField(changeSourceIdentifierForm.controls['sourceIdentifierTo'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(changeSourceIdentifierForm.controls['sourceIdentifierTo']) }}
@@ -97,11 +104,14 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="changeSourceIdentifierForm.get('sourceIdentifierTo')"/>
+        <pure-validation-error [control]="changeSourceIdentifierForm"/>
       </div>
     </div>
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="!changeSourceIdentifierForm.valid"
           class="btn btn-outline-primary float-end">
           GO

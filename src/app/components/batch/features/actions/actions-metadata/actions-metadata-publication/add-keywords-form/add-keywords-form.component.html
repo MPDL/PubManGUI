@@ -15,8 +15,9 @@
         [ngClass]="{'border border-danger': addKeywordsForm.get('keywords')?.pending}"></textarea>
       </div>
     </div>
-    <div class="mb-2 row">
+    <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
+        <!--
         @if(valSvc.notValidField(addKeywordsForm.controls['keywords'])) {
         <span class="form-text text-danger small">
           {{ valSvc.getErrorMsg(addKeywordsForm.controls['keywords']) }}
@@ -24,11 +25,13 @@
         } @else {
         <span>&nbsp;</span>
         }
+        -->
+        <pure-validation-error [control]="addKeywordsForm.get('keywords')"/>
       </div>
     </div>
 
     <div class="row">
-      <div (click)="checkIfAllRequired()">
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
         <button type="submit" [disabled]="addKeywordsForm.invalid || addKeywordsForm.pristine"
           class="btn btn-outline-primary float-end">
           GO

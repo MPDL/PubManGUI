@@ -11,6 +11,7 @@ import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfac
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-add-source-identifier-form',
@@ -18,7 +19,8 @@ import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './add-source-identifier-form.component.html',
 })
@@ -33,7 +35,7 @@ export class AddSourceIdentifierFormComponent {
   sourceIdTypes = Object.keys(SourceIdType);
 
   public addSourceIdentifierForm: FormGroup = this.fb.group({
-    sourceNumber: ['1'],
+    sourceNumber: ["1", Validators.required],
     sourceIdentifierType: [null, Validators.required],
     sourceIdentifier: [null, [Validators.required, Validators.minLength(1)]]
   });
@@ -46,6 +48,11 @@ export class AddSourceIdentifierFormComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit(): void {
+    this.addSourceIdentifierForm.reset();
+    this.addSourceIdentifierForm.controls['sourceNumber'].setValue('1');
   }
 
   onSubmit(): void {

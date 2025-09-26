@@ -11,13 +11,16 @@ import { ContentCategories } from 'src/app/model/inge';
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 @Component({
   selector: 'pure-change-file-content-category-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './change-file-content-category-form.component.html',
 })
@@ -35,7 +38,7 @@ export class ChangeFileContentCategoryFormComponent {
     fileContentCategoryFrom: [null, [Validators.required]],
     fileContentCategoryTo: [null, [Validators.required]],
   },
-    { validators: [this.valSvc.notEqualsValidator('fileContentCategoryFrom', 'fileContentCategoryTo')] });
+    { validators: [this.valSvc.notSameValues('fileContentCategoryFrom', 'fileContentCategoryTo')] });
 
   get changeFileContentCategoryParams(): ChangeFileContentCategoryParams {
     const actionParams: ChangeFileContentCategoryParams = {
@@ -44,6 +47,10 @@ export class ChangeFileContentCategoryFormComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit(): void {
+    this.changeFileContentCategoryForm.reset();
   }
 
   onSubmit(): void {

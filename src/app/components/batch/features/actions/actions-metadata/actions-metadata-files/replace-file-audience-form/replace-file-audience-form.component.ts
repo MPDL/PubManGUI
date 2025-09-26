@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -13,6 +13,7 @@ import {
   AudienceFormComponent
 } from 'src/app/components/batch/features/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
 import { TranslatePipe } from "@ngx-translate/core";
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -21,7 +22,8 @@ import { TranslatePipe } from "@ngx-translate/core";
     CommonModule,
     ReactiveFormsModule,
     AudienceFormComponent,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './replace-file-audience-form.component.html',
 })
@@ -43,6 +45,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
       .subscribe(ous => {
         this.ous = ous.sort((a, b) => a.name.localeCompare(b.name));
       })
+      this.replaceFileAudienceForm.reset();
   }
 
   public replaceFileAudienceForm: FormGroup = this.fb.group({
@@ -50,7 +53,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
       name: null,
       id: null,
       ipRanges: []
-    }])
+    }], [Validators.required, Validators.minLength(1)])
   });
 
 
@@ -105,6 +108,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   checkIfAllRequired() {
+    // TODO: check if this is really needed
     if (this.replaceFileAudienceForm.get('allowedAudienceIds')?.pristine) {
       this.replaceFileAudienceForm.markAsPending();
     }

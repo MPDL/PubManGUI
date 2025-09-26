@@ -9,13 +9,16 @@ import type { ReplaceSourceEditionParams } from 'src/app/components/batch/interf
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 @Component({
   selector: 'pure-replace-source-edition-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './replace-source-edition-form.component.html',
 })
@@ -28,7 +31,7 @@ export class ReplaceSourceEditionFormComponent {
 
   public replaceSourceEditionForm: FormGroup = this.fb.group({
     sourceNumber: ['1', [Validators.required]],
-    sourceEdition: ['', [Validators.required]],
+    sourceEdition: [null, [Validators.required]],
   });
 
   get replaceSourceEditionParams(): ReplaceSourceEditionParams {
@@ -38,6 +41,11 @@ export class ReplaceSourceEditionFormComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit(): void {
+    this.replaceSourceEditionForm.reset();
+    this.replaceSourceEditionForm.controls['sourceNumber'].setValue('1');
   }
 
   onSubmit(): void {
