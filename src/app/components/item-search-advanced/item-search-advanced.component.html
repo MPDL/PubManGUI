@@ -95,7 +95,7 @@
                 }
               } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PARENTHESIS) {
                 <!-- Remove parenthesis button -->
-                <div class="col-sm-1">
+                <div class="col-sm-1 mb-auto">
                   <span>{{ $any(currentFormGroup).type === 'opening_parenthesis' ? '(' : ')' }}</span>
                   <button type="button" class="btn btn-sm btn-outline-secondary p-0 m-1" (click)="removeParenthesis(i)">
                     <span class="bi bi-x"></span>
@@ -103,7 +103,7 @@
                 </div>
 
               } @else {
-                <div class="col-auto">
+                <div class="col-auto mb-auto">
                   <!-- Add parenthesis button -->
                   @if (currentlyOpenedParenthesis === undefined) {
                     <button type="button" class="btn btn-sm btn-outline-secondary"
@@ -113,7 +113,7 @@
                     </button>
                   }
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 mb-auto">
                   <select class="form-select" formControlName="type" (change)="changeType(i, t.value)" #t>
                     <option value="title">{{ 'MetadataFields.title' | translate }}</option>
                     <option value="keyword">{{ 'MetadataFields.keywords' | translate }}</option>
@@ -165,11 +165,11 @@
 
                 <!-- Input -->
                 @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.STANDARD) {
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <input class="form-control" type="text" formControlName="text"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PERSON) {
-                  <div class="col-sm-2" formGroupName="content">
+                  <div class="col-sm-2 mb-auto" formGroupName="content">
                     <select class="form-select" formControlName="role">
                       <option value="">
                         {{ 'MetadataFields.person' | translate}}
@@ -181,13 +181,13 @@
                       }
                     </select>
                   </div>
-                  <div class="col">
+                  <div class="col mb-auto">
                     <pure-person-autosuggest [formForPersonsCompleteName]="$any(currentFormGroup).content.get('text')"
                                              [formForPersonsIdValue]="$any(currentFormGroup).content.get('hidden')" [showConeAndOrcid]="true"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ORGANIZATION) {
 
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <pure-ou-autosuggest [formForOuName]="$any(currentFormGroup).content.get('text')"
                                          [formForOuId]="$any(currentFormGroup).content.get('hidden')"/>
                   </div>
@@ -197,7 +197,7 @@
                     <input class="form-control" type="text" formControlName="hidden"/>
                   </div>
                   -->
-                  <div class="col-sm-2 form-check form-switch" formGroupName="content">
+                  <div class="col-sm-2 form-check form-switch mb-auto" formGroupName="content">
                     <input id="predecessorsAndSuccessors" class="form-check-input" type="checkbox"
                            formControlName="includePredecessorsAndSuccessors"/>
                     <label class="form-check-label" style="font-size:12px;" for="predecessorsAndSuccessors">
@@ -207,15 +207,17 @@
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.DATE) {
 
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <input class="form-control" type="text" formControlName="from" [placeholder]="'common.dateFormat' | translate"/>
+                    <pure-validation-error [control]="currentFormGroup.get('content.from')"/>
                   </div>
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <input class="form-control" type="text" formControlName="to" [placeholder]="'common.dateFormat' | translate"/>
+                    <pure-validation-error [control]="currentFormGroup.get('content.to')"/>
                   </div>
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.IDENTIFIER) {
-                  <div class="col-sm-3" formGroupName="content">
+                  <div class="col-sm-3 mb-auto" formGroupName="content">
                     <select class="form-select" formControlName="identifierType">
                       <option value="">
                         -
@@ -227,11 +229,11 @@
                       }
                     </select>
                   </div>
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <input class="form-control" type="text" formControlName="text"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CLASSIFICATION) {
-                  <div class="col-sm-2" formGroupName="content">
+                  <div class="col-sm-2 mb-auto" formGroupName="content">
                     <select class="form-select" formControlName="classificationType" #classificationTypeSelect>
                       @for(classificationType of (SubjectClassification | keyvalue); track classificationType) {
                         <option [value]="classificationType.key">
@@ -241,17 +243,17 @@
 
                     </select>
                   </div>
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <pure-cone-autosuggest [form]="$any(currentFormGroup).content.get('text')" [coneType]="classificationTypeSelect.value" [addQuotesForSearch]="true"/>
                   </div>
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.JOURNAL) {
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <pure-cone-autosuggest coneType="journals" [form]="$any(currentFormGroup).content.get('text')" [addQuotesForSearch]="true"></pure-cone-autosuggest>
                   </div>
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CONTEXT) {
-                  <div class="col-sm-3" formGroupName="content">
+                  <div class="col-sm-3 mb-auto" formGroupName="content">
                     <select class="form-select" formControlName="text">
                       @for (context of $any(currentFormGroup).contextList; track context) {
                         <option [value]="context.objectId">
@@ -261,13 +263,13 @@
                     </select>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.LANGUAGE) {
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <pure-cone-autosuggest [form]="$any(currentFormGroup).content.get('text')" coneType="iso639-3" (valueSelected)="$any(currentFormGroup).content.get('text').setValue($event?.value?.substring(0,3))"/>
                   </div>
 
               } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
 
-                  <div class="col" formGroupName="content">
+                  <div class="col mb-auto" formGroupName="content">
                     <select class="form-select" formControlName="text">
                       @for (val of $any(currentFormGroup).getValues(); track val) {
                         <option [value]="val">
@@ -278,7 +280,7 @@
                   </div>
                 }
 
-                <div class="col-sm-1">
+                <div class="col-sm-1 mb-auto">
                   <pure-add-remove-buttons [index]="i" (notice)="$event.action==='add' ? addSearchCriterion(i, $any(currentFormGroup)) : removeSearchCriterion(i) "></pure-add-remove-buttons>
                 </div>
 
@@ -289,7 +291,7 @@
             <!-- Possible closing parenthesis-->
             @if (possibleCriterionsForClosingParenthesisMap.includes($any(currentFormGroup))) {
               <div class="row" style="margin-left: {{($any(currentFormGroup).level-1) * 15}}px">
-                <div class="col-sm-1">
+                <div class="col-sm-1 mb-auto">
                   <button type="button" class="btn btn-sm btn-outline-secondary m-1 " (click)="addClosingParenthesis(i)">
                     )
                   </button>
@@ -436,11 +438,10 @@
 
   <div class="m-2">
   <button type="submit" class="btn btn btn-primary me-2"
-          [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="search()">
+          [disabled]="!isValid" (click)="search()">
     {{ 'Search.searchButton' | translate }}
   </button>
-  <button type="button" class="btn btn btn-outline-primary me-2"
-          [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="reset()">
+  <button type="button" class="btn btn btn-outline-primary me-2" (click)="reset()">
     Reset
   </button>
 

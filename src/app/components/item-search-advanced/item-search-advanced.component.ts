@@ -33,12 +33,13 @@ import { ConeAutosuggestComponent } from "../shared/cone-autosuggest/cone-autosu
 import { ContextsService } from "../../services/pubman-rest-client/contexts.service";
 import { OrganizationsService } from "../../services/pubman-rest-client/organizations.service";
 import { BootstrapValidationDirective } from "../../directives/bootstrap-validation.directive";
+import { ValidationErrorComponent } from "../shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, AddRemoveButtonsComponent, ConeAutosuggestComponent, BootstrapValidationDirective
+    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, AddRemoveButtonsComponent, ConeAutosuggestComponent, BootstrapValidationDirective, ValidationErrorComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
@@ -161,6 +162,9 @@ export class ItemSearchAdvancedComponent {
     this.flexibleFields.push(new OrganizationSearchCriterion(this.servicesForCriterions));
     this.flexibleFields.push(new LogicalOperator("and"));
     this.flexibleFields.push(new DateSearchCriterion(DATE_SEARCH_TYPES.ANYDATE, this.servicesForCriterions));
+
+    this.currentlyOpenedParenthesis = undefined;
+    this.possibleCriterionsForClosingParenthesisMap = [];
   }
 
   parseFormJson(formJson: any) {
@@ -741,6 +745,10 @@ export class ItemSearchAdvancedComponent {
     //this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.WITHDRAWN.valueOf())?.value == false;
 
     return (!anyContextSelected) && onlyReleasedSelected;
+  }
+
+  get isValid() {
+    return this.searchForm.valid && this.currentlyOpenedParenthesis === undefined && this.flexibleFields.controls.length > 0;
   }
 
   protected readonly SubjectClassification = SubjectClassification;
