@@ -21,10 +21,10 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
 import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
-import { TranslatePipe } from "@ngx-translate/core";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ConeService } from "../../../services/cone.service";
-import { tap } from "rxjs";
+import { Subject, takeUntil, tap } from "rxjs";
 import { identifierUriToEnum } from "../../../utils/utils";
 import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
 import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
@@ -59,9 +59,36 @@ export class SourceFormComponent {
   genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
   error_types = Errors;
-  genre_types = Object.keys(SourceGenre).sort();
+  genre_types: string[] = Object.keys(SourceGenre);
 
   coneService = inject(ConeService);
+  translateService = inject(TranslateService);
+  private destroy$: Subject<void> = new Subject();
+
+  constructor() {
+    this.sortGenres();
+    this.translateService.onLangChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(lang => {this.sortGenres()})
+  }
+
+
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private sortGenres() {
+    this.genre_types.sort(
+      (a, b) => {
+
+        const translatedA = this.translateService.instant('SourceGenre.' + a);
+        const translatedB = this.translateService.instant('SourceGenre.' + b);
+        return translatedA.localeCompare(translatedB);
+      }
+    )
+  }
 
   get alternativeTitles() {
     return this.source_form.get('alternativeTitles') as FormArray<FormGroup<ControlType<AlternativeTitleVO>>>;

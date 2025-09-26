@@ -21,7 +21,7 @@ import {
   withFetch, withInterceptors,
   withInterceptorsFromDi
 } from '@angular/common/http';
-import { httpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
+import { httpBlobErrorInterceptor, httpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
 
 import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -45,8 +45,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(DialogModule),
 
     provideHttpClient(
-      withInterceptorsFromDi(),
-      withInterceptors([httpErrorInterceptor])
+      //withInterceptorsFromDi(),
+      withInterceptors([httpErrorInterceptor, httpBlobErrorInterceptor])
       //withFetch() cannot be used right now, as it does not provide Upload progress reporting: https://github.com/angular/angular/issues/53650
       //withFetch()
     ),

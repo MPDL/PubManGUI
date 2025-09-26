@@ -32,12 +32,13 @@ import { AddRemoveButtonsComponent } from "../shared/add-remove-buttons/add-remo
 import { ConeAutosuggestComponent } from "../shared/cone-autosuggest/cone-autosuggest.component";
 import { ContextsService } from "../../services/pubman-rest-client/contexts.service";
 import { OrganizationsService } from "../../services/pubman-rest-client/organizations.service";
+import { BootstrapValidationDirective } from "../../directives/bootstrap-validation.directive";
 
 @Component({
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, AddRemoveButtonsComponent, ConeAutosuggestComponent
+    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, AddRemoveButtonsComponent, ConeAutosuggestComponent, BootstrapValidationDirective
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',

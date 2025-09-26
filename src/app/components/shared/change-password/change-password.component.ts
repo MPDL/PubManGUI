@@ -8,6 +8,7 @@ import { PubManHttpErrorResponse } from "../../../services/interceptors/http-err
 import { ValidationErrorComponent } from "../validation-error/validation-error.component";
 import { STRONG_PASSWORD_REGEX_PATTERN } from "../../../services/form-builder.service";
 import { TranslatePipe } from "@ngx-translate/core";
+import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 
 
 @Component({
@@ -17,6 +18,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ReactiveFormsModule,
     ValidationErrorComponent,
     TranslatePipe,
+    BootstrapValidationDirective
   ],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss'

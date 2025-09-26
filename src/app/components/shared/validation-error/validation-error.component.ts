@@ -31,25 +31,14 @@ export class ValidationErrorComponent {
   }
   ngOnInit() {
     if(this.control) {
-      //console.log("Control" + this.control);
 
-      //if(showValidationError(this.control)) {
-        this.updateMessages(this.control?.errors);
-      //}
+      this.updateMessages(this.control?.errors);
       this.statusSubscription = this.control.events.subscribe(status => {
-        //if(showValidationError(this.control))
-        //{
           this.updateMessages(this.control?.errors)
-        //}
-        //else {
-        //  this.errorMessages = []
-        //}
-
       })
     }
 
     if(this.validationError) {
-      //console.log("validation error " + this.validationError);
       this.updateMessages(this.validationError)
     }
   }
@@ -95,8 +84,6 @@ export class ValidationErrorComponent {
         return this.translateService.instant('validation.required');
       }
       case 'pattern' : {
-        console.log(val.requiredPattern);
-        console.log(DATE_PATTERN);
         switch(val.requiredPattern) {
           case DATE_PATTERN.toString() : {
             return this.translateService.instant('validation.invalidDateFormat');
@@ -147,11 +134,4 @@ export class ValidationErrorComponent {
       }
     }
   }
-
 }
-/*
-CREATOR_ORCID_INVALID
-Orcid invalid. Please change in CoNE
-CREATOR_ROLE_NOT_PROVIDED
-CREATOR_ORGANIZATION_NAME_NOT_PROVIDED
-*/

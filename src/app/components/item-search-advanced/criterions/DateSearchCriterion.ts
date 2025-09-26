@@ -2,6 +2,7 @@ import { SearchCriterion } from "./SearchCriterion";
 import { FormControl, Validators } from "@angular/forms";
 import { buildDateRangeQuery } from "../../../utils/search-utils";
 import { Observable, of } from "rxjs";
+import { DATE_PATTERN } from "../../../services/form-builder.service";
 
 export enum DATE_SEARCH_TYPES {
   ANYDATE = "anyDate",
@@ -22,11 +23,10 @@ export class DateSearchCriterion extends SearchCriterion {
 
   constructor(type: string, opts?:any) {
     super(type, opts);
-    const validator = Validators.pattern(/^\d{4}((-\d{2})?(-\d{2}))?$/);
+    const validator = Validators.pattern(DATE_PATTERN);
     this.content.addControl("from", new FormControl('', [validator]));
     this.content.addControl("to", new FormControl('', [validator]));
   }
-
 
   override getElasticSearchNestedPath(): string | undefined {
     if (this.type == DATE_SEARCH_TYPES.COMPONENT_EMBARGO_DATE) {

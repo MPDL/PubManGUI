@@ -83,7 +83,10 @@ export class MessageService {
 
   httpError(error: PubManHttpErrorResponse) {
     let title = error.userMessage;
-    let text = error.userMessage;
+    let text = `
+        ${(error.url || '')}<br/>
+        ${error.status}: ${error.statusText}<br/>
+        `
     let collapsed = true;
 
     if(error.status===404) {
@@ -107,12 +110,21 @@ export class MessageService {
       collapsed = false;
     }
     else if(error.jsonMessage?.timestamp) {
-      text =
-        `${error.jsonMessage.message}<br/>
-         ${error.jsonMessage.status}: ${error.jsonMessage.error}<br/>
+      text = text +
+        `${error.jsonMessage.message || '-'}<br/>
          ${error.jsonMessage.exception}<br/>
          ${error.jsonMessage.timestamp}
         `
+    }
+    else {
+
+      if(error.jsonMessage) {
+        text = text + JSON.stringify(error.jsonMessage);
+      }
+      else {
+        text = text + error.error;
+      }
+
     }
     this.displayOnArea({type: 'danger', title: title, text: text, collapsed: collapsed});
   }

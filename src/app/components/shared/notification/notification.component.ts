@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect } from '@angular/core';
 import { MessageService } from "src/app/services/message.service";
+import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 
 @Component({
   selector: 'pure-notification',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    SanitizeHtmlPipe
   ],
   templateUrl: './notification.component.html',
 })

@@ -24,13 +24,12 @@
 
   <div class="mb-3">
     <label for="year">{{ 'common.year' | translate }}</label>
-    <input class="form-control" formControlName="year" id="year" [class.is-invalid]="reportForm.get('year')?.invalid && reportForm.get('year')?.touched">
+    <input class="form-control" formControlName="year" id="year">
 
   </div>
   <div class="mb-3">
     <label for="org">{{ 'MetadataFields.organization' | translate }}</label>
-    <pure-ou-autosuggest id="org" [formForOuName]="$any(this.reportForm).controls.orgName" [formForOuId]="$any(this.reportForm).controls.orgId"
-                         [validationError]="(reportForm.get('orgId')?.invalid && reportForm.get('orgName')?.touched) || false"></pure-ou-autosuggest>
+    <pure-ou-autosuggest id="org" [formForOuName]="$any(this.reportForm).controls.orgName" [formForOuId]="$any(this.reportForm).controls.orgId"></pure-ou-autosuggest>
   </div>
   </form>
 

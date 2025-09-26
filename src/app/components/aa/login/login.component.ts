@@ -9,13 +9,14 @@ import { ValidationErrorComponent } from "../../shared/validation-error/validati
 import { ChangePasswordComponent } from "../../shared/change-password/change-password.component";
 import { MessageService } from "../../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
+import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 
 @Component({
     selector: 'pure-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent]
+  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent, BootstrapValidationDirective]
 })
 export class LoginComponent implements OnInit {
 

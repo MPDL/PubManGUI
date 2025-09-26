@@ -10,6 +10,7 @@ import { contentDispositionParser } from "../../../utils/utils";
 import { TranslatePipe } from "@ngx-translate/core";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 import { OuAutosuggestComponent } from "../ou-autosuggest/ou-autosuggest.component";
+import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 
 
 @Component({
@@ -19,7 +20,8 @@ import { OuAutosuggestComponent } from "../ou-autosuggest/ou-autosuggest.compone
     FormsModule,
     TranslatePipe,
     OuAutosuggestComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BootstrapValidationDirective
   ],
   templateUrl: './jus-report.component.html'
 })

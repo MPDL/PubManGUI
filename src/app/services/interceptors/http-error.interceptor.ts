@@ -8,7 +8,7 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { async, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MessageService } from 'src/app/services/message.service';
 import { AaService } from "../aa.service";
@@ -83,6 +83,41 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
     }
 
 
+// https://github.com/angular/angular/issues/19888
+// When request of type Blob, the error is also in Blob instead of object of the json data
+export function httpBlobErrorInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
+  return next(req).pipe(
+    catchError(err => {
+      if (err instanceof HttpErrorResponse && err.error instanceof Blob && err.error.type === "application/json") {
+
+        return new Promise<any>((resolve, reject) => {
+          let reader = new FileReader();
+          reader.onload = (e: Event) => {
+            try {
+              const errmsg = JSON.parse((<any>e.target).result);
+              reject(new HttpErrorResponse({
+                error: errmsg,
+                headers: err.headers,
+                status: err.status,
+                statusText: err.statusText,
+                url: err.url || undefined
+              }));
+            } catch (e) {
+              reject(err);
+            }
+          };
+          reader.onerror = (e) => {
+            reject(err);
+          };
+          reader.readAsText(err.error);
+        });
+      }
+      throw err;
+    })
+  );
+}
+
+
 export class PubManHttpErrorResponse extends HttpErrorResponse {
 
   userMessage!: string;
@@ -98,38 +133,38 @@ export class PubManHttpErrorResponse extends HttpErrorResponse {
     })
 
     if (this.error) {
-      //errors from PubMan backend are JSON objects. However, when requesting "text" in Angular HTTP client, the error is a string encoded JSON
+      //errors from PubMan backend are JSON objects. However, when requesting "text" or "blob" in Angular HTTP client, the error is a string or blob encoded JSON
+      //see https://github.com/angular/angular/issues/19148
+
       if (typeof this.error === 'object') {
-        this.handlePubmanError(this.error);
-
-      } else if (typeof this.error === 'string') {
-        //try to parse as JSON
-        try {
-          const json = JSON.parse(this.error);
-          //check if it's a PubMan backend error response, by checking if it has some properties
-          if (json.timestamp) {
-            this.handlePubmanError(json);
-
-          } else {
-            //It's any kind of string
-            this.userMessage = this.error;
-          }
-
-        } catch (e) {
-          this.userMessage = this.error;
-        }
-      } else {
-        this.userMessage = this.message;
+        this.handleJsonError(this.error);
+      }
+      else if (typeof this.error === 'string') {
+        this.handleStringError(this.error);
+      }
+      else {
+        this.userMessage = this.message || 'UNKNOWN ERROR';
       }
     } else {
-      this.userMessage = this.message;
+      this.userMessage = this.message || 'UNKNOWN ERROR';
     }
 
   }
 
-  private handlePubmanError(errorObj: any) {
-    this.jsonMessage = errorObj
-    this.userMessage = errorObj.message || errorObj.error || 'UNKNOWN ERROR'
+  handleStringError(stringBody: string) {
+    try {
+      const json = JSON.parse(stringBody);
+      //check if it's a PubMan backend error response, by checking if it has some properties
+      this.handleJsonError(json);
+
+    } catch (e) {
+      this.userMessage = stringBody;
+    }
+  }
+
+  private handleJsonError(jsonObj: any) {
+    this.jsonMessage = jsonObj
+    this.userMessage = jsonObj.message || jsonObj.error || 'UNKNOWN ERROR'
 
     /*
     errorObj?.['validation-report']?.items?.forEach((item: any) => {
