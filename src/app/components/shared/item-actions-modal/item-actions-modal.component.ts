@@ -10,6 +10,8 @@ import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 import { NotificationComponent } from "../notification/notification.component";
+import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ValidationErrorComponent } from "../validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-item-actions-modal',
@@ -18,7 +20,9 @@ import { NotificationComponent } from "../notification/notification.component";
     ReactiveFormsModule,
     TranslatePipe,
     SanitizeHtmlPipe,
-    NotificationComponent
+    NotificationComponent,
+    BootstrapValidationDirective,
+    ValidationErrorComponent
   ],
   templateUrl: './item-actions-modal.component.html'
 })

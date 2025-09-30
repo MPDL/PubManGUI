@@ -10,19 +10,20 @@ import { ChangePasswordComponent } from "../../shared/change-password/change-pas
 import { MessageService } from "../../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { NotificationComponent } from "../../shared/notification/notification.component";
 
 @Component({
     selector: 'pure-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent, BootstrapValidationDirective]
+  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent, BootstrapValidationDirective, NotificationComponent]
 })
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
 
-  errorMessage?:string
+  errorMessage?: any;
 
   @Input() forcedLogout = false;
 
@@ -53,7 +54,7 @@ export class LoginComponent implements OnInit {
             this.activeModal.dismiss("login_success");
           }),
           catchError ((err: PubManHttpErrorResponse) => {
-            this.errorMessage = err.userMessage
+            this.errorMessage = this.messageService.httpErrorToMessage(err);
             if(err.jsonMessage?.passwordChangeRequired) {
               this.showPasswordChange = true;
             }

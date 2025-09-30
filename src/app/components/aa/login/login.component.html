@@ -6,11 +6,7 @@
 
 <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
 <div class="modal-body">
-  @if(errorMessage) {
-    <div class="alert alert-danger" role="alert">
-      {{ errorMessage }}
-    </div>
-  }
+
   @if(forcedLogout) {
     <div class="alert alert-warning" role="alert">
       Your login expired or is invalid. Please login again.
@@ -32,7 +28,9 @@
     <pure-change-password [username]="loginForm.get('username')?.value" [oneTimePassword]="loginForm.get('password')?.value" (passwordChanged)="passwordChanged($event)"/>
   }
 
-
+  @if(errorMessage) {
+    <pure-notification [message]="errorMessage"/>
+  }
 
 </div>
 <div class="modal-footer">
