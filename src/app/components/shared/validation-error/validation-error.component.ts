@@ -7,7 +7,7 @@ import {
   DATE_PATTERN,
   FILE_TITLE_AND_NAME_PATTERN,
   ORCID_PATTERN,
-  STRONG_PASSWORD_REGEX_PATTERN
+  STRONG_PASSWORD_REGEX_PATTERN, URL_PATTERN
 } from "../../../services/form-builder.service";
 
 @Component({
@@ -97,6 +97,9 @@ export class ValidationErrorComponent {
           case STRONG_PASSWORD_REGEX_PATTERN.toString() : {
             return this.translateService.instant('validation.passwordRule');
           }
+          case URL_PATTERN.toString() : {
+            return this.translateService.instant('validation.invalidUrlFormat');
+          }
           default :{
             return "Invalid pattern, expected " + val.requiredPattern;
           }
@@ -122,7 +125,7 @@ export class ValidationErrorComponent {
       case Errors.FORBIDDEN_URL.toString() :
         return this.translateService.instant('validation.forbiddenUrl');
       case Errors.OLD_AND_NEW_ARE_SAME.toString() :
-        return this.translateService.instant('validation.notSameValues');  
+        return this.translateService.instant('validation.notSameValues');
       default : {
         const errorNumber = parseInt(key);
         if(!isNaN(errorNumber)) {

@@ -2,8 +2,9 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { FileDbVO, Storage, Visibility } from "src/app/model/inge";
 import { Errors } from "src/app/model/errors";
 import { isFormValueEmpty } from "../../utils/utils";
+import { URL_PATTERN } from "../../services/form-builder.service";
 
-const URL_PATTERN = /^(https?:\/\/|ftp:\/\/).*/;
+
 
 export const fileDataValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;

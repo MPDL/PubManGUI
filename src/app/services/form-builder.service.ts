@@ -62,6 +62,7 @@ export const FILE_TITLE_AND_NAME_PATTERN = /^[^/]+$/;
 export const DOI_PATTERN = /^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i;
 export const STRONG_PASSWORD_REGEX_PATTERN: RegExp =
   /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d)(?=.*[!"#$%&'()*+,\-./;<=>?@[\\\]^_`{|}~]).{8,32}$/;
+export const URL_PATTERN = /^(https?:\/\/|ftp:\/\/).*/;
 
 const VALIDATION_UPDATE_ON = 'change';
 @Injectable({
@@ -127,7 +128,7 @@ export class FormBuilderService {
       embargoUntil: this.fb.nonNullable.control(fileMetadata?.embargoUntil ? fileMetadata.embargoUntil : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON  }),
       copyrightDate: this.fb.nonNullable.control(fileMetadata?.copyrightDate ? fileMetadata.copyrightDate : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON  }),
       rights: this.fb.nonNullable.control(fileMetadata?.rights ? fileMetadata.rights : undefined),
-      license: this.fb.nonNullable.control(fileMetadata?.license ? fileMetadata.license : undefined),
+      license: this.fb.nonNullable.control(fileMetadata?.license ? fileMetadata.license : undefined, { validators: [Validators.pattern(URL_PATTERN)], updateOn: VALIDATION_UPDATE_ON  }),
       oaStatus: this.fb.nonNullable.control(fileMetadata?.oaStatus ? fileMetadata.oaStatus : OA_STATUS.NOT_SPECIFIED),
     });
     return mdsFile_form;
