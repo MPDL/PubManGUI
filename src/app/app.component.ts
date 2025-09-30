@@ -34,7 +34,6 @@ export class AppComponent {
     private messageService: MessageService,
   )
   {
-    messageService.error("bla blub\nmllllll")
     // Check login every time the focus is on the window, e.g. if a user has logged in/out in another tab or admin tool
     window.onfocus = function() {
       aaService.checkLoginChanged();
