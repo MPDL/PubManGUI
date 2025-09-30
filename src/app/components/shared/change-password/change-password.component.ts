@@ -9,6 +9,8 @@ import { ValidationErrorComponent } from "../validation-error/validation-error.c
 import { STRONG_PASSWORD_REGEX_PATTERN } from "../../../services/form-builder.service";
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { NotificationComponent } from "../notification/notification.component";
+import { MessageService } from "../../../services/message.service";
 
 
 @Component({
@@ -18,7 +20,8 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     ReactiveFormsModule,
     ValidationErrorComponent,
     TranslatePipe,
-    BootstrapValidationDirective
+    BootstrapValidationDirective,
+    NotificationComponent
   ],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss'
@@ -28,7 +31,7 @@ export class ChangePasswordComponent {
   changePasswordForm!: FormGroup;
   passwordChangeSuccess = false;
   passwordChangeLoading = false;
-  errorMessage?: string;
+  errorMessage?: any;
 
   //Set principal if user is logged in
   @Input() principal : Principal | undefined;
@@ -38,7 +41,7 @@ export class ChangePasswordComponent {
   @Output() passwordChanged = new EventEmitter();
 
 
-  constructor(protected activeModal: NgbActiveModal, private formBuilder: FormBuilder, private usersService: UsersService) {
+  constructor(protected activeModal: NgbActiveModal, private formBuilder: FormBuilder, private usersService: UsersService, private messageService: MessageService) {
 
 
     this.changePasswordForm = this.formBuilder.group({
@@ -88,7 +91,7 @@ export class ChangePasswordComponent {
           this.passwordChanged.emit(newPasswd)
         }),
         catchError((error: PubManHttpErrorResponse) => {
-          this.errorMessage = error.userMessage;
+          this.errorMessage = this.messageService.httpErrorToMessage(error);
           return EMPTY;
         })
 

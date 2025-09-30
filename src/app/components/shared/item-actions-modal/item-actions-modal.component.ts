@@ -9,6 +9,7 @@ import { catchError, EMPTY, finalize, Observable, Subscription, tap } from "rxjs
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
+import { NotificationComponent } from "../notification/notification.component";
 
 @Component({
   selector: 'pure-item-actions-modal',
@@ -16,7 +17,8 @@ import { PubManHttpErrorResponse } from "../../../services/interceptors/http-err
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    NotificationComponent
   ],
   templateUrl: './item-actions-modal.component.html'
 })
@@ -29,7 +31,7 @@ export class ItemActionsModalComponent {
 
   protected comment : string = '';
 
-  protected errorMessage: string = '';
+  protected errorMessage: any = undefined;
 
   protected loading = false;
 
@@ -87,7 +89,7 @@ export class ItemActionsModalComponent {
             this.successfullyDone.emit(data);
           }),
           catchError((err: PubManHttpErrorResponse) => {
-            this.errorMessage = err.userMessage;
+            this.errorMessage = this.messageService.httpErrorToMessage(err);
             return EMPTY;
           }),
           finalize(() => {

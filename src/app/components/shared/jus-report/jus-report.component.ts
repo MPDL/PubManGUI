@@ -11,6 +11,8 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 import { OuAutosuggestComponent } from "../ou-autosuggest/ou-autosuggest.component";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { NotificationComponent } from "../notification/notification.component";
+import { MessageService } from "../../../services/message.service";
 
 
 @Component({
@@ -21,7 +23,8 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     TranslatePipe,
     OuAutosuggestComponent,
     ReactiveFormsModule,
-    BootstrapValidationDirective
+    BootstrapValidationDirective,
+    NotificationComponent
   ],
   templateUrl: './jus-report.component.html'
 })
@@ -32,11 +35,11 @@ export class JusReportComponent {
   reportForm: FormGroup<any>;
 
   protected loading = false;
-  protected errorMessage: string = "";
+  protected errorMessage?: any;
   private exportSubscription?: Subscription;
 
 
-  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService, private formBuilder: FormBuilder) {
+  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private messageService: MessageService, private formBuilder: FormBuilder) {
 
     this.reportForm = formBuilder.group({
       exportFormat: [exportTypes.JUS_HTML_XML],
@@ -108,7 +111,7 @@ export class JusReportComponent {
           }
         }),
         catchError((err:PubManHttpErrorResponse) => {
-          this.errorMessage = err.userMessage;
+          this.errorMessage = this.messageService.httpErrorToMessage(err);
           this.loading = false;
           return EMPTY;
          })

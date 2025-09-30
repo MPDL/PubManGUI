@@ -12,6 +12,7 @@ import { AaService } from "../../../services/aa.service";
 import { removeDuplicates } from "../../../utils/utils";
 import { ChipsComponent } from "../chips/chips.component";
 import { FormBuilderService } from "../../../services/form-builder.service";
+import { NotificationComponent } from "../notification/notification.component";
 
 @Component({
   selector: 'pure-item-actions-modal',
@@ -20,7 +21,8 @@ import { FormBuilderService } from "../../../services/form-builder.service";
     ReactiveFormsModule,
     TranslatePipe,
     SanitizeHtmlPipe,
-    ChipsComponent
+    ChipsComponent,
+    NotificationComponent
   ],
   templateUrl: './update-localtags-modal.component.html'
 })
@@ -33,7 +35,7 @@ export class UpdateLocaltagsModalComponent {
   formGroup: FormGroup;
   tmpLocalTags: string[] = []
 
-  errorMessage: string = '';
+  errorMessage: any = undefined;
 
   loading = false;
 
@@ -72,7 +74,7 @@ export class UpdateLocaltagsModalComponent {
             this.successfullyDone.emit(data);
           }),
           catchError((err: PubManHttpErrorResponse) => {
-            this.errorMessage = err.userMessage;
+            this.errorMessage = this.messageService.httpErrorToMessage(err);
             return EMPTY;
           }),
           finalize(() => {

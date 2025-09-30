@@ -15,11 +15,6 @@
 
 <form #commentForm="ngForm">
 <div class="modal-body">
-  @if(errorMessage) {
-    <div class="alert alert-danger text-break" role="alert">
-      {{ errorMessage }}
-    </div>
-  }
 
 
   <p>{{'common.item' | translate}} {{item.objectId}}<br/>
@@ -54,6 +49,10 @@
 
   @if(colorClass === 'danger') {
     <p class="text-danger">{{'common.actionWarning' | translate}}</p>
+  }
+
+  @if(errorMessage) {
+      <pure-notification [message]="errorMessage"/>
   }
 
 </div>

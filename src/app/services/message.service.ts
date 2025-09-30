@@ -112,6 +112,7 @@ export class MessageService {
       });
       text = validations + '</ul>';
       collapsed = false;
+      return {type: 'danger', title: title, text: text, collapsed: collapsed}
     }
     else if(error.jsonMessage?.timestamp) {
       text = text +
@@ -130,7 +131,7 @@ export class MessageService {
       }
 
     }
-    title = this.translateService.instant('common.errorOccured') + ": " + title;
+    //title = this.translateService.instant('common.errorOccured') + ": " + title;
     text = '<small><b>Technical information:</b><br/>' + text + '</small>';
     return {type: 'danger', title: title, text: text, collapsed: collapsed}
   }

@@ -10,6 +10,7 @@ import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 import { AaService } from "../../../services/aa.service";
 import { removeDuplicates } from "../../../utils/utils";
+import { NotificationComponent } from "../notification/notification.component";
 
 @Component({
   selector: 'pure-item-actions-modal',
@@ -17,7 +18,8 @@ import { removeDuplicates } from "../../../utils/utils";
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    NotificationComponent
   ],
   templateUrl: './change-context-modal.component.html'
 })
@@ -30,7 +32,7 @@ export class ChangeContextModalComponent {
   contextList : {context: ContextDbVO, invalid:boolean }[] = [];
   selectedContextId = '';
 
-  errorMessage: string = '';
+  errorMessage: any = {};
 
   loading = false;
 
@@ -85,7 +87,7 @@ export class ChangeContextModalComponent {
             this.successfullyDone.emit(data);
           }),
           catchError((err: PubManHttpErrorResponse) => {
-            this.errorMessage = err.userMessage;
+            this.errorMessage = this.messageService.httpErrorToMessage(err);
             return EMPTY;
           }),
           finalize(() => {

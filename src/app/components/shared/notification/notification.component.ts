@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect } from '@angular/core';
+import { Component, effect, Input } from '@angular/core';
 import { MessageService } from "src/app/services/message.service";
 import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
 
@@ -13,7 +13,7 @@ import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
   templateUrl: './notification.component.html',
 })
 export class NotificationComponent {
-  message: any = {};
+  @Input() message: any = {};
   collapsed: boolean = true;
 
   fg_color = 'text-info-emphasis';
@@ -22,6 +22,7 @@ export class NotificationComponent {
 
   constructor( private messageSvc: MessageService) { }
 
+  /*
   public onAreaMessage = effect(() => {
     this.message = this.messageSvc.lastMessage();
     this.collapsed = this.message?.collapsed;
@@ -29,7 +30,16 @@ export class NotificationComponent {
     return true;
   });
 
+   */
+
+  ngOnChanges() {
+    this.dress(this.message);
+  }
+
   dress(content: any): void {
+    this.collapsed = content?.collapsed === undefined ? true : content.collapsed;
+    console.log("Message", content);
+    console.log("Collapsed", this.collapsed);
     switch (content.type) {
       case 'error':
       case 'danger':
@@ -48,7 +58,7 @@ export class NotificationComponent {
         this.severity_icon = 'task_alt';
         setTimeout(() => {
           this.close();
-        }, 20000);
+        }, 5000);
         break;
       case 'info':
         this.fg_color = 'text-info-emphasis';
@@ -56,7 +66,7 @@ export class NotificationComponent {
         this.severity_icon = 'info';
         setTimeout(() => {
           this.close();
-        }, 20000);
+        }, 5000);
     }
   }
 

@@ -12,6 +12,8 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { JsonPipe } from "@angular/common";
 import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
 import { ConeAutosuggestComponent } from "../cone-autosuggest/cone-autosuggest.component";
+import { NotificationComponent } from "../notification/notification.component";
+import { MessageService } from "../../../services/message.service";
 
 
 @Component({
@@ -23,7 +25,8 @@ import { ConeAutosuggestComponent } from "../cone-autosuggest/cone-autosuggest.c
     TranslatePipe,
     JsonPipe,
     ConeAutosuggestComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NotificationComponent
   ],
   templateUrl: './export-items.component.html',
   styleUrl: './export-items.component.scss'
@@ -55,12 +58,12 @@ export class ExportItemsComponent {
   currentCitation: string = '';
 
   protected loading = false;
-  protected errorMessage: string = "";
+  protected errorMessage: any = {};
   private exportSubscription?: Subscription;
 
   protected atomFeedUrl = "";
 
-  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService, formBuilder: FormBuilder) {
+  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService, formBuilder: FormBuilder, private messageService: MessageService) {
 
     this.selectedExportType = formBuilder.nonNullable.control(exportTypes.ENDNOTE);
     this.selectedCitationType  = formBuilder.nonNullable.control(citationTypes.APA);
@@ -109,7 +112,7 @@ export class ExportItemsComponent {
           this.currentCitation = cit;
         },
         error: e => {
-          this.errorMessage = e.error.message;
+          this.errorMessage = this.messageService.httpErrorToMessage(e);
           this.loading = false;
         },
       })
@@ -232,7 +235,7 @@ export class ExportItemsComponent {
           }
         }),
         catchError((err:PubManHttpErrorResponse) => {
-          this.errorMessage = err.userMessage;
+          this.errorMessage = this.messageService.httpErrorToMessage(err);
           this.loading = false;
           return EMPTY;
          })

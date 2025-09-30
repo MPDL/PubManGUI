@@ -36,11 +36,11 @@
 
 
 
-@if(errorMessage) {
-  <div class="alert alert-danger" role="alert">
-    {{ errorMessage }}
-  </div>
-}
+  @if(errorMessage) {
+    <div class="mt-2">
+      <pure-notification class="mt-5" [message]="errorMessage"/>
+    </div>
+  }
 
 <div class="modal-footer">
 
