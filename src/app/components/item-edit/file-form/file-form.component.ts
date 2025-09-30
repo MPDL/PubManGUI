@@ -11,6 +11,9 @@ import { Errors } from 'src/app/model/errors';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
+import { tap } from "rxjs";
+import { ConeService } from "../../../services/cone.service";
 
 @Component({
   selector: 'pure-file-form',
@@ -24,7 +27,8 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     CdkDragPlaceholder,
     TranslatePipe,
     BootstrapValidationDirective,
-    ValidationErrorMessageDirective
+    ValidationErrorMessageDirective,
+    ConeAutosuggestComponent
   ],
   templateUrl: './file-form.component.html',
   styleUrl: './file-form.component.scss'
@@ -49,7 +53,7 @@ export class FileFormComponent {
 
   audiencePriorityList = ['mpg'];
 
-  constructor(miscellaneousService: MiscellaneousService) {
+  constructor(miscellaneousService: MiscellaneousService, private coneService: ConeService) {
     miscellaneousService.retrieveIpList().subscribe(
       result => {
         this.sortAudienceList(result); /* console.log('Miscellaneous IPList: ', this.ipRangeCompleteList) */
@@ -120,4 +124,19 @@ export class FileFormComponent {
   }
 
   protected readonly Visibility = Visibility;
+
+
+  licenseSelected(coneQueryResult: any) {
+
+    if (coneQueryResult && coneQueryResult.parsedId) {
+      this.coneService.getConeResource(coneQueryResult.parsedId).pipe(
+        tap(data => {
+          console.log(data);
+          this.metadata.get("license")?.setValue(data.http_purl_org_dc_elements_1_1_relation);
+        })
+      ).subscribe();
+
+    }
+
+  }
 }

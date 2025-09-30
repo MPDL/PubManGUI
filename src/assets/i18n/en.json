@@ -766,6 +766,7 @@
     "checksum": "Checksum",
     "description": "Description",
     "license": "License",
+    "licenseUrl": "License URL",
     "copyright": "Copyright",
     "copyrightDate": "Copyright Date",
     "url": "URL",

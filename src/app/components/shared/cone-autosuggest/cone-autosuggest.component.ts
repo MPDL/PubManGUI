@@ -16,6 +16,7 @@ import {
 import { HttpParams } from "@angular/common/http";
 import { SubjectClassification } from "../../../model/inge";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-cone-autosuggest',
@@ -25,6 +26,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
     TranslatePipe,
     ReactiveFormsModule,
     BootstrapValidationDirective,
+    ValidationErrorMessageDirective,
     NgbHighlight
   ],
   templateUrl: './cone-autosuggest.component.html',
