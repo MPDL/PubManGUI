@@ -222,7 +222,7 @@ export class AaService {
   public filterOutQuery(states: string[]) {
     let moderatorQuery: any = undefined;
     let depositorQuery: any = undefined;
-    const depositorStates:string[] = states.filter(state => state === ItemVersionState.PENDING.valueOf());
+    const depositorStates:string[] = states.filter(state => state === ItemVersionState.PENDING.valueOf() || state === ItemVersionState.SUBMITTED.valueOf() || state === ItemVersionState.IN_REVISION.valueOf());
     const moderatorStates:string[] = states.filter(state => state === ItemVersionState.SUBMITTED.valueOf() || state === ItemVersionState.IN_REVISION.valueOf());
 
     if(this.principal.getValue().moderatorContexts.length > 0 && moderatorStates.length > 0)
