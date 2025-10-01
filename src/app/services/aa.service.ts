@@ -180,7 +180,7 @@ export class AaService {
   }
 
   checkLoginChanged() {
-    this.who().pipe(
+    this.who(false).pipe(
       tap(user => {
         if(this.principal?.value?.user?.loginname != user?.loginname) {
           this.message.warning("Your former login is not valid anymore and was changed (Did you login in another window/tab?)");
@@ -197,7 +197,7 @@ export class AaService {
 
 
 
-  private who(): Observable<AccountUserDbVO> {
+  private who(silentLogout=true): Observable<AccountUserDbVO> {
     //const headers = new HttpHeaders().set('Authorization', token);
     const whoUrl = this.loginUrl + '/who';
     let user: any;
@@ -206,7 +206,7 @@ export class AaService {
       //headers: headers,
       observe: 'body',
       withCredentials: true,
-      context: new HttpContext().set(SILENT_LOGOUT, true)
+      context: new HttpContext().set(SILENT_LOGOUT, silentLogout)
     });
   }
 

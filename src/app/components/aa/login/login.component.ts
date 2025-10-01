@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
           }),
           catchError ((err: PubManHttpErrorResponse) => {
             this.errorMessage = this.messageService.httpErrorToMessage(err);
-            if(err.jsonMessage?.passwordChangeRequired) {
+            if(err.jsonMessage?.reason === 'PASSWORD_CHANGE_REQUIRED') {
               this.showPasswordChange = true;
             }
             return EMPTY;

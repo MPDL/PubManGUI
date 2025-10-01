@@ -87,22 +87,27 @@ export class MessageService {
   }
 
   httpErrorToMessage(error: PubManHttpErrorResponse): Message {
-    let title = error.userMessage;
+    let title = "";
+    if(error.jsonMessage?.reason) {
+      title = this.translateService.instant('backendErrors.' + error.jsonMessage.reason);
+    }
+    else if(error.status===404) {
+      title = this.translateService.instant('backendErrors.GENERIC_NOT_FOUND');
+    }
+    else if(error.status===401 || error.status===403) {
+      title = this.translateService.instant('backendErrors.PERMISSION_DENIED');
+    }
+    else {
+      title = error.userMessage;
+    }
+
     let text = `
         ${(error.url || '')}<br/>
         ${error.status}: ${error.statusText}<br/>
         `
     let collapsed = true;
 
-    if(error.status===404) {
-      title = this.translateService.instant('common.notFound');
-    }
-    else if(error.status===401 || error.status===403) {
-      title = this.translateService.instant('common.notAuthorized');
-    }
-
     if(error.jsonMessage?.['validation-report']) {
-      title = this.translateService.instant('validation.validationError')
       let validations = '<ul class="list-group list-group-flush bg-transparent">';
       error.jsonMessage?.['validation-report']?.items?.forEach((valrep: any) => {
         validations = validations +
@@ -118,6 +123,7 @@ export class MessageService {
     else if(error.jsonMessage?.timestamp) {
       text = text +
         `${error.jsonMessage.message || '-'}<br/>
+         ${error.jsonMessage.reason || '-'}<br/>
          ${error.jsonMessage.exception}<br/>
          ${error.jsonMessage.timestamp}
         `

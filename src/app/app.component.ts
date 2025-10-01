@@ -13,6 +13,7 @@ import { filter } from "rxjs/operators";
 import { Title } from "@angular/platform-browser";
 import { AaService } from "./services/aa.service";
 import { MessageService } from "./services/message.service";
+import { WindowFocusCheckLoginService } from "./services/window-focus-check-login.service";
 
 @Component({
   selector: 'app-root',
@@ -32,12 +33,11 @@ export class AppComponent {
     private translate: TranslateService,
     private aaService: AaService,
     private messageService: MessageService,
+    private windowFocusCheckLoginService: WindowFocusCheckLoginService,
   )
   {
-    // Check login every time the focus is on the window, e.g. if a user has logged in/out in another tab or admin tool
-    window.onfocus = function() {
-      aaService.checkLoginChanged();
-    };
+    windowFocusCheckLoginService.enabled = true;
+
 
     //Set HTML title to the breadcrumb label
     this.router.events

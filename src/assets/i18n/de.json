@@ -74,9 +74,7 @@
     "value": "Wert",
     "add": "Hinzufügen",
     "remove": "Entfernen",
-    "updateSuccessful": "Änderung erfolgreich",
-    "notFound": "Der Datensatz wurde nicht gefunden",
-    "notAuthorized": "Sie haben keine Berechtigung"
+    "updateSuccessful": "Änderung erfolgreich"
   },
   "chips.localTags.placeholder": "Lokalen Tag hinzufügen",
   "validation": {
@@ -924,5 +922,27 @@
     "TitleNotProvided": "Bitte geben Sie einen Titel ein.",
     "TotalNumberOfPagesNotProvided": "Die Gesamtseitenzahl kann angegeben werden.",
     "UnknownLanguageCode": "Der eingegebene Sprachcode existiert nicht in ISO639-3"
+  },
+  "backendErrors": {
+    "TOKEN_INVALID": "Das Token ist ungültig",
+    "LOGIN_INVALID": "Benutzername oder Passwort ungültig",
+    "USER_NOT_FOUND": "Der Nutzer wurde nicht gefunden",
+    "LOGIN_USER_BLOCKED": "Der Nutzer wurde wegen zu vieler falscher Login-Versuche geblockt.",
+    "PASSWORD_PATTERN_INVALID": "Das Passwort entspricht nicht den Regeln",
+    "PASSWORD_CHANGE_REQUIRED": "Das Passwort muss geändert werden",
+    "PERMISSION_DENIED": "Sie haben keine Berechtigung",
+
+    "ITEM_NOT_FOUND": "Der Datensatz wurde nicht gefunden",
+    "CONTEXT_NOT_FOUND": "Der Kontext wurde nicht gefunden",
+    "CONTEXT_CLOSED": "Der Kontext ist geschlossen",
+    "PID_ERROR": "Es ist ein Fehler bei der Zuweisung der PID (Handle) aufgetreten",
+    "DOI_TECHNICAL_ERROR": "Es ist ein Fehler bei der Zuweisung der DOI aufgetreten",
+    "DOI_ITEM_NOT_VALID": "Der Datensatz ist nicht für die Zuweisung einer DOI geeignet",
+    "FILE_UPLOAD_ERROR": "Es ist ein Fehler beim Upload aufgetreten",
+    "VALIDATION_ERROR": "Validierungsfehler",
+    "TRANSFORMATION_ERROR": "Fehler bei der Transformation in das ausgewählte Format",
+
+    "OPTIMISTIC_LOCKING_ERROR": "Der Datensatz wurde in der Zwischenzeit geändert",
+    "GENERIC_NOT_FOUND": "Das Objekt wurde nicht gefunden"
   }
 }

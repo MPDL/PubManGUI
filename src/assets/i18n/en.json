@@ -74,9 +74,7 @@
     "value": "Value",
     "add": "Add",
     "remove": "Remove",
-    "updateSuccessful": "Update successful",
-    "notFound": "The item was not found",
-    "notAuthorized": "You have no permission"
+    "updateSuccessful": "Update successful"
   },
   "chips.localTags.placeholder": "Add local tag",
   "validation": {
@@ -924,5 +922,27 @@
     "TitleNotProvided": "Title is required.",
     "TotalNumberOfPagesNotProvided": "The total number of pages can be provided",
     "UnknownLanguageCode": "The given language code does not exist in ISO639-3"
+  },
+  "backendErrors": {
+    "TOKEN_INVALID": "The token is invalid",
+    "LOGIN_INVALID": "Username or password invalid",
+    "USER_NOT_FOUND": "The user was not found",
+    "LOGIN_USER_BLOCKED": "The user was blocked (too many login requests)",
+    "PASSWORD_PATTERN_INVALID": "The password does not match the password rules",
+    "PASSWORD_CHANGE_REQUIRED": "The password needs to be changed",
+    "PERMISSION_DENIED": "You have no permission",
+
+    "ITEM_NOT_FOUND": "The dataset was not found",
+    "CONTEXT_NOT_FOUND": "The context was not found",
+    "CONTEXT_CLOSED": "The context is closed",
+    "PID_ERROR": "An error occured when applying the PID (handle)",
+    "DOI_TECHNICAL_ERROR": "An error occured when applying the DOI",
+    "DOI_ITEM_NOT_VALID": "The dataset is not valid for a DOI",
+    "FILE_UPLOAD_ERROR": "An error occured during upload",
+    "VALIDATION_ERROR": "Validation error",
+    "TRANSFORMATION_ERROR": "Error while transforming to the selected format",
+
+    "OPTIMISTIC_LOCKING_ERROR": "The dataset was changed in the meantime",
+    "GENERIC_NOT_FOUND": "The object was not found"
   }
 }

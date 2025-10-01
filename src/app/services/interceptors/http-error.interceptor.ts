@@ -8,13 +8,14 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { async, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { async, finalize, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MessageService } from 'src/app/services/message.service';
 import { AaService } from "../aa.service";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { LoginComponent } from "../../components/aa/login/login.component";
 import { Router } from "@angular/router";
+import { WindowFocusCheckLoginService } from "../window-focus-check-login.service";
 
 
 export const IGNORED_STATUSES = new HttpContextToken<number[]>(() => []);
@@ -33,6 +34,7 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
         const message = inject(MessageService);
         const aaService = inject(AaService)
         const modalService = inject(NgbModal);
+        const windowFocusCheckLoginService = inject(WindowFocusCheckLoginService);
         return next(request)
             .pipe(
                 catchError((err: HttpErrorResponse) => {
@@ -49,6 +51,8 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
                     }
                     //Otherwise, the app is already loaded and some user is working here. Open a dialog to login again
                     else {
+                      //Pause change login check
+                      windowFocusCheckLoginService.enabled = false;
                       const loginCompRef: NgbModalRef = modalService.open(LoginComponent, {backdrop: 'static'});
                       loginCompRef.componentInstance.forcedLogout = true;
 
@@ -62,6 +66,9 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
                             aaService.logout();
                           }
                           return next(request);
+                        }),
+                        finalize(() => {
+                          windowFocusCheckLoginService.enabled = true;
                         })
                       )
 
