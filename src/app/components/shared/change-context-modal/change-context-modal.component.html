@@ -37,7 +37,7 @@
 
 
   </button>
-  <button type="submit" class="btn btn-primary btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'common.changeContext' | translate }}
+  <button type="submit" class="btn btn-primary btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid || !canSubmit">{{ 'common.changeContext' | translate }}
     @if(loading)
     {
       <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>

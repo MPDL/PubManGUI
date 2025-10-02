@@ -56,6 +56,11 @@ export class ChangeContextModalComponent {
         })
   }
 
+  get canSubmit():boolean {
+    return !this.contextList.find(ce => ce.context.objectId === this.selectedContextId)?.invalid;
+
+  }
+
   private isInvalid(context: ContextDbVO) {
     return context.state === ContextState.CLOSED
     || context.objectId === this.item.context.objectId
@@ -82,7 +87,7 @@ export class ChangeContextModalComponent {
       this.subscription = this.itemsService.changeContext(this.item!.objectId!, this.selectedContextId)
         .pipe(
           tap(data => {
-            this.messageService.success(this.translateService.instant('common.changeContext') + " successful");
+            this.messageService.success(this.translateService.instant('common.changeContext') + " " + this.translateService.instant('common.succeeded'), true);
             this.activeModal.close();
             this.successfullyDone.emit(data);
           }),

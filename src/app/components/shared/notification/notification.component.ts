@@ -1,19 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, Input } from '@angular/core';
-import { MessageService } from "src/app/services/message.service";
-import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
+import { Component, Input } from '@angular/core';
+import { Message, MessageService } from "src/app/services/message.service";
 
 @Component({
   selector: 'pure-notification',
   standalone: true,
   imports: [
-    CommonModule,
-    SanitizeHtmlPipe
+    CommonModule
   ],
   templateUrl: './notification.component.html',
 })
 export class NotificationComponent {
-  @Input() message: any = {};
+  @Input() message?: Message;
   collapsed: boolean = true;
 
   fg_color = 'text-info-emphasis';
@@ -33,7 +31,10 @@ export class NotificationComponent {
    */
 
   ngOnChanges() {
-    this.dress(this.message);
+    if(this.message) {
+      this.dress(this.message);
+    }
+
 
   }
 
@@ -72,7 +73,7 @@ export class NotificationComponent {
   }
 
   close(): void {
-    this.message = {};
+    this.message = undefined;
   }
 
   slide(): void {

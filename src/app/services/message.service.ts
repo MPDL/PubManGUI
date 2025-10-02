@@ -5,6 +5,7 @@ import { MessageComponent } from '../components/shared/message/message.component
 import { ConfirmationComponent } from '../components/shared/confirmation/confirmation.component';
 import { PubManHttpErrorResponse } from "./interceptors/http-error.interceptor";
 import { TranslateService } from "@ngx-translate/core";
+import sanitizeHtml from "sanitize-html";
 
 @Injectable({
   providedIn: 'root'
@@ -43,13 +44,13 @@ export class MessageService {
     this.lastMessage.set(message);
   }
 
-  info(message: string) {
-    const msg: Message = { type: 'info', text: message };
+  info(message: string, keepAfterNavigation:boolean=false) {
+    const msg: Message = { type: 'info', text: message, keepAfterNavigation: keepAfterNavigation };
     //this.displayMessage(msg);
     this.displayOnArea(msg);
   }
 
-  success(message: string) {
+  success(message: string, keepAfterNavigation:boolean=false) {
     let title = null;
     let msg: Message | undefined;
     if (message.lastIndexOf('\n')>=0) {
@@ -59,17 +60,18 @@ export class MessageService {
     } else {
       msg = { type: 'success', text: message };
     }
+    msg.keepAfterNavigation = keepAfterNavigation;
     //this.displayMessage(msg);
     this.displayOnArea(msg);
   }
 
-  warning(message: string) {
-    const msg: Message = { type: 'warning', text: message };
+  warning(message: string, keepAfterNavigation:boolean=false) {
+    const msg: Message = { type: 'warning', text: message, keepAfterNavigation: keepAfterNavigation };
     //this.displayMessage(msg);
     this.displayOnArea(msg);
   }
 
-  error(message: string) {
+  error(message: string, keepAfterNavigation:boolean=false) {
     let msg: Message | undefined = undefined;
     if (message.lastIndexOf('\n')>=0) {
       const formattedMsg = this.splitRawError(message);
@@ -78,6 +80,7 @@ export class MessageService {
     } else {
       msg = { type: 'danger', text: message };
     }
+    msg.keepAfterNavigation = keepAfterNavigation;
     //this.displayMessage(msg);
     this.displayOnArea(msg);
   }
@@ -98,7 +101,7 @@ export class MessageService {
       title = this.translateService.instant('backendErrors.PERMISSION_DENIED');
     }
     else {
-      title = error.userMessage;
+      title = sanitizeHtml(error.userMessage);
     }
 
     let text = `
@@ -113,7 +116,7 @@ export class MessageService {
         validations = validations +
           `<li class="list-group-item bg-transparent">
             <span class="bi bi-info-circle-fill me-2"></span>
-             ${this.translateService.instant('backendValidation.' + valrep.content)}
+             ${this.translateService.instant('backendValidation.' + sanitizeHtml(valrep.content))}
             </li>`;
       });
       text = validations + '</ul>';
@@ -122,19 +125,19 @@ export class MessageService {
     }
     else if(error.jsonMessage?.timestamp) {
       text = text +
-        `${error.jsonMessage.message || '-'}<br/>
+        `${sanitizeHtml(error.jsonMessage.message) || '-'}<br/>
          ${error.jsonMessage.reason || '-'}<br/>
-         ${error.jsonMessage.exception}<br/>
+         ${sanitizeHtml(error.jsonMessage.exception)}<br/>
          ${error.jsonMessage.timestamp}
         `
     }
     else {
 
       if(error.jsonMessage) {
-        text = text + JSON.stringify(error.jsonMessage);
+        text = text + sanitizeHtml(JSON.stringify(error.jsonMessage));
       }
       else {
-        text = text + error.error;
+        text = text + sanitizeHtml(error.error);
       }
 
     }
@@ -168,4 +171,5 @@ export interface Message {
   collapsed?: boolean;
   confirm?:string,
   cancel?:string
+  keepAfterNavigation?:boolean;
 }

@@ -1,4 +1,4 @@
-@if(message.text || message.title) {
+@if(message?.text || message?.title) {
 <div [ngClass]="{'collapsed': !collapsed}" class="m-0">
   <div class="rounded-1 p1" [ngClass]="[bg_color, fg_color]">
     <div class="d-flex justify-content-between align-top">
@@ -6,9 +6,9 @@
         {{ severity_icon }}
       </span>
 
-      @if(message.title) {
+      @if(message?.title) {
       <span class="title pt-1 text-break">
-        {{ message.title }}
+        {{ message?.title }}
       </span>
       <div>
         @if(collapsed) {
@@ -19,15 +19,15 @@
       </div>
       } @else {
       <span class="title pt-1 text-break">
-        {{ message.text }}
+        {{ message?.text }}
       </span>
       }
       <span class="material-symbols-outlined close" (click)="close()">close</span>
     </div>
 
-    @if(message.title && !collapsed) {
+    @if(message?.title && !collapsed) {
     <div class="d-flex justify-content-center align-bottom p-1">
-      <span [ngClass]="[bg_color, fg_color]" class="text-break" [innerHTML]="message.text | sanitizeHtml:['br','b','i','small']"></span>
+      <span [ngClass]="[bg_color, fg_color]" class="text-break" [innerHTML]="message?.text"></span>
     </div>
     }
   </div>
