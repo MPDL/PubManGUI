@@ -42,7 +42,7 @@ export class BatchService {
   }
 
   lastPageNumFrom = signal({logs: 1, details: 1});
-  
+
   #hasLogs = signal(false);
   public hasLogs = computed(() => this.#hasLogs());
 
@@ -412,7 +412,7 @@ export class BatchService {
     actionParams.itemIds = this.items;
 
     const url = `${this.#baseUrl}/batchProcess/replaceFileAudience`;
-    const body = actionParams; 
+    const body = actionParams;
 
     const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url, body, { withCredentials: true })
       .pipe(
@@ -585,4 +585,8 @@ export class BatchService {
     return actionResponse;
   }
 
+  removeAll() {
+    this.items = [];
+    this.objectIds$.next([]);
+  }
 }

@@ -1,1 +1,7 @@
-<pure-item-list [searchQuery]="searchQuery" #itemList/>
+<pure-item-list [searchQuery]="searchQuery" #itemList>
+  <ng-container furtherTopNavElements>
+    <button start class="btn btn-link nav-link" [ngbTooltip]="('common.clearAll' | translate)" (click)="batchSvc.removeAll()">
+      <span class="material-symbols-outlined">delete</span>
+    </button>
+  </ng-container>
+</pure-item-list>

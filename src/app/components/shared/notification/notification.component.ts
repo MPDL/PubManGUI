@@ -40,9 +40,9 @@ export class NotificationComponent {
         takeWhile(n => n<=ticks && this.countdownEnabled),
         tap((n) => {
           this.progress = Math.round((ticks-n)*100 / ticks);
-          console.log('countdown', n, this.progress)
+          //console.log('countdown', n, this.progress)
           if(n>=ticks) {
-            console.log('close');
+            //console.log('close');
             this.close();
           }
         }),

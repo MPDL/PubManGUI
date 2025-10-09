@@ -7,6 +7,8 @@ import { BatchService } from '../services/batch.service';
 
 import { ItemListComponent } from "../../item-list/item-list.component";
 import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
+import { TranslatePipe } from "@ngx-translate/core";
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -16,7 +18,9 @@ import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ItemListComponent
+    ItemListComponent,
+    TranslatePipe,
+    NgbTooltip
   ],
   templateUrl: './datasets.component.html'
 })

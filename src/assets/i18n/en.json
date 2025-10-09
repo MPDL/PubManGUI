@@ -79,7 +79,8 @@
     "datasets.empty": "No datasets were selected",
     "datasets.filled": "item/items added",
     "datasets.missing": "was/were ignored",
-    "datasets.removed": "item/items removed"
+    "datasets.removed": "item/items removed",
+    "clearAll": "Clear"
   },
   "chips.localTags.placeholder": "Add local tag",
   "validation": {

@@ -79,7 +79,8 @@
     "datasets.empty": "Es wurden keine Datensätze ausgewählt",
     "datasets.filled": "Datensatz/Datensätze wird/wurden hinzugefügt",
     "datasets.missing": "wird/wurden ignoriert",
-    "datasets.removed": "Datensatz/Datensätze wird/wurden entfernt"
+    "datasets.removed": "Datensatz/Datensätze wird/wurden entfernt",
+    "clearAll": "Leeren"
   },
   "chips.localTags.placeholder": "Lokalen Tag hinzufügen",
   "validation": {

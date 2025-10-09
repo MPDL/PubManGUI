@@ -1,4 +1,9 @@
 <pure-item-list [searchQuery]="searchQuery" #itemList>
   <pure-sort-selector [itemList]="itemList"/>
+  <ng-container furtherTopNavElements>
+    <button start class="btn btn-link nav-link" [ngbTooltip]="('common.clearAll' | translate)" (click)="cartService.removeAll()">
+      <span class="material-symbols-outlined">delete</span>
+    </button>
+  </ng-container>
 </pure-item-list>
 
