@@ -22,15 +22,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityFrom'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeFileVisibilityForm.controls['fileVisibilityFrom']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeFileVisibilityForm.get('fileVisibilityFrom')"/>
       </div>
     </div>
@@ -51,19 +42,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(changeFileVisibilityForm.controls['fileVisibilityTo'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeFileVisibilityForm.controls['fileVisibilityTo']) }}
-        </span>
-        } @else if(changeFileVisibilityForm.hasError('notEquals')) {
-        <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.files.visibility.invalid' | translate }} {{ valSvc.getErrorMsg(changeFileVisibilityForm) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeFileVisibilityForm.get('fileVisibilityTo')"/>
         <pure-validation-error [control]="changeFileVisibilityForm"/>
       </div>

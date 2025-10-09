@@ -18,15 +18,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-2 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(changeLocalTagsForm.controls['localTagFrom'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeLocalTagsForm.controls['localTagFrom']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeLocalTagsForm.get('localTagFrom')"/>
       </div>
     </div>
@@ -42,18 +33,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-2 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(changeLocalTagsForm.controls['localTagTo'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeLocalTagsForm.controls['localTagTo']) }}
-        </span>
-        } @else if(changeLocalTagsForm.hasError('notEquals')) {
-        <span class="form-text text-danger small">
-          {{ 'batch.actions.localTags' | translate }} {{ valSvc.getErrorMsg(changeLocalTagsForm) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }-->
         <pure-validation-error [control]="changeLocalTagsForm.get('localTagTo')"/>
         <pure-validation-error [control]="changeLocalTagsForm"/>
       </div>

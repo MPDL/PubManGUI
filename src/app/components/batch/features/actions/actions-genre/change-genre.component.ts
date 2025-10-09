@@ -36,7 +36,7 @@ export class ActionsGenreComponent {
   public changeGenreForm: FormGroup = this.fb.group({
     genreFrom: [null, [Validators.required]],
     genreTo: [null, [Validators.required]],
-    degreeType: [{ value: null, disabled: true }],
+    degreeType: [{ value: null, disabled: true }, [Validators.required]],
   },
     { validators: [this.valSvc.notSameValues('genreFrom', 'genreTo')] }
   );
@@ -53,6 +53,15 @@ export class ActionsGenreComponent {
 
   ngOnInit(): void {
     this.changeGenreForm.reset();
+
+    this.changeGenreForm.get('genreTo')?.valueChanges.subscribe(value => {
+      if (this.changeGenreForm.get('genreTo')?.value !== 'THESIS') {
+        this.changeGenreForm.get('degreeType')?.reset();
+        this.changeGenreForm.get('degreeType')?.disable();
+      } else {
+        this.changeGenreForm.get('degreeType')?.enable();
+      }
+    });
   }
 
   onSubmit(): void {

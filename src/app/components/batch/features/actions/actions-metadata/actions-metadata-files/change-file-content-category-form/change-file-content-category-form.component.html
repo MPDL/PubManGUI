@@ -24,15 +24,6 @@
     </div>
     <div class="mb-3 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(changeFileContentCategoryForm.controls['fileContentCategoryFrom'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeFileContentCategoryForm.controls['fileContentCategoryFrom']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeFileContentCategoryForm.get('fileContentCategoryFrom')"/>
       </div>
     </div>
@@ -54,19 +45,6 @@
     </div>
     <div class="mb-3 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(changeFileContentCategoryForm.controls['fileContentCategoryTo'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeFileContentCategoryForm.controls['fileContentCategoryTo']) }}
-        </span>
-        } @else if(changeFileContentCategoryForm.hasError('notEquals')) {
-        <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.files.contentCategory.invalid' | translate }} {{ valSvc.getErrorMsg(changeFileContentCategoryForm) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeFileContentCategoryForm.get('fileContentCategoryTo')"/>
         <pure-validation-error [control]="changeFileContentCategoryForm"/>
       </div>

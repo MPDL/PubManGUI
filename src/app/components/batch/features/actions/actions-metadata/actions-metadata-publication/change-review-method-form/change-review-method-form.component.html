@@ -30,15 +30,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodFrom'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeReviewMethodForm.controls['reviewMethodFrom']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeReviewMethodForm.get('reviewMethodFrom')"/>
       </div>
     </div>
@@ -64,20 +55,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(changeReviewMethodForm.controls['reviewMethodTo'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeReviewMethodForm.controls['reviewMethodTo']) }}
-        </span>
-        } @else if(changeReviewMethodForm.hasError('notEquals')) {
-        <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.publication.reviewType.invalid' | translate }} {{
-          valSvc.getErrorMsg(changeReviewMethodForm) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeReviewMethodForm.get('reviewMethodTo')"/>
         <pure-validation-error [control]="changeReviewMethodForm"/>
       </div>

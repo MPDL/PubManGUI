@@ -22,15 +22,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(changeContextForm.controls['contextFrom'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeContextForm.controls['contextFrom']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeContextForm.get('contextFrom')"/>
       </div>
     </div>
@@ -49,19 +40,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(changeContextForm.controls['contextTo'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeContextForm.controls['contextTo']) }}
-        </span>
-        } @else if (changeContextForm.hasError('notEquals')) {
-        <span class="form-text text-danger small">
-          {{ 'batch.actions.context.change.invalid' | translate }} {{valSvc.getErrorMsg(changeContextForm) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeContextForm.get('contextTo')"/>
         <pure-validation-error [control]="changeContextForm"/>
       </div>

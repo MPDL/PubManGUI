@@ -242,7 +242,7 @@
     "logs.details.fill.all": "Alle Datensätze übernehmen",
     "logs.details.fill.errors": "Nur Fehler übernehmen",
     "logs.details.filter.failed": "Fehlgeschlagen",
-    "logs.details.filter.succeded": "Erfolgreich",
+    "logs.details.filter.successful": "Erfolgreich",
     "logs.details.for": "Aktion",
     "logs.details.total": "insgesamt",
     "logs.header.date": "Datum",

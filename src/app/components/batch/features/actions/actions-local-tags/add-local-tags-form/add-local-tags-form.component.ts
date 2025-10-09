@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
@@ -13,6 +13,8 @@ import { ChipsComponent } from 'src/app/components/shared/chips/chips.component'
 import { TranslatePipe } from "@ngx-translate/core";
 
 import { ControlType } from 'src/app/services/form-builder.service';
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 
 @Component({
   selector: 'pure-add-local-tags-form',
@@ -21,7 +23,8 @@ import { ControlType } from 'src/app/services/form-builder.service';
     CommonModule,
     ReactiveFormsModule,
     ChipsComponent,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './add-local-tags-form.component.html',
 })
@@ -33,7 +36,7 @@ export class AddLocalTagsFormComponent {
   elRef: ElementRef = inject(ElementRef);
 
   public addLocalTagsForm: FormGroup = this.fb.group({
-    localTags: this.fb.array([])
+    localTags: this.fb.array([], Validators.required)
   });
 
   get tagsToAdd() {

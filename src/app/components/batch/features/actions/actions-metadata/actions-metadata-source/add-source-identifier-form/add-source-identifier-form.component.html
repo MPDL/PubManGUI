@@ -30,15 +30,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(addSourceIdentifierForm.controls['sourceIdentifierType'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(addSourceIdentifierForm.controls['sourceIdentifierType']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="addSourceIdentifierForm.get('sourceIdentifierType')"/>
       </div>
     </div> 
@@ -51,15 +42,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(addSourceIdentifierForm.controls['sourceIdentifier'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(addSourceIdentifierForm.controls['sourceIdentifier']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="addSourceIdentifierForm.get('sourceIdentifier')"/>
       </div>
     </div> 

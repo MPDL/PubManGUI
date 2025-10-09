@@ -26,15 +26,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(changeSourceGenreForm.controls['sourceGenreFrom'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeSourceGenreForm.controls['sourceGenreFrom']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeSourceGenreForm.get('sourceGenreFrom')"/>
       </div>
     </div>    
@@ -56,19 +47,6 @@
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if (valSvc.notValidField(changeSourceGenreForm.controls['sourceGenreTo'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(changeSourceGenreForm.controls['sourceGenreTo']) }}
-        </span>
-        } @else if(changeSourceGenreForm.hasError('notEquals')) {
-        <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.source.changeGenre.invalid' | translate }} {{ valSvc.getErrorMsg(changeSourceGenreForm) }}
-        </span>
-        } @else {
-          <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="changeSourceGenreForm.get('sourceGenreTo')"/>
         <pure-validation-error [control]="changeSourceGenreForm"/>
       </div>
