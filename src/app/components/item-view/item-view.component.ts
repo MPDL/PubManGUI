@@ -338,8 +338,7 @@ export class ItemViewComponent {
 
 
   useAsTemplate() {
-    alert('To do')
-
+    this.router.navigate(['/edit'], {queryParams: {'template' : itemToVersionId(this.item!)}});
   }
 
   protected readonly timer = timer;
