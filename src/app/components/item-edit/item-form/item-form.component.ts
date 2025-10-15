@@ -106,17 +106,24 @@ export class ItemFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.user_contexts = this.aaService.principal.value.depositorContexts;
-
-
     this.route.data.pipe(
+      /*
       switchMap(data => {
         // console.log('Data', JSON.stringify(data));
         //this.item = data['item'];
         return of(data['item']);
       })
-    ).subscribe(item => {
 
-      this.itemUpdated(item, true);
+       */
+    ).subscribe(data => {
+
+      if(data['templateItem']) {
+        this.startFromTemplate(data['templateItem']);
+      }
+      else {
+        this.itemUpdated(data['item'], true);
+      }
+
 
 
       // manual Update for form validation
@@ -354,6 +361,13 @@ export class ItemFormComponent implements OnInit {
     return this.form.get('objectId')?.value
   }
 
+
+  private startFromTemplate(item: ItemVersionVO) {
+    const templateItem:ItemVersionVO = {
+      metadata: item.metadata,
+    }
+    this.itemUpdated(templateItem, true);
+  }
 
   private itemUpdated(item: ItemVersionVO, initial:boolean=false) {
     this.item = item;
