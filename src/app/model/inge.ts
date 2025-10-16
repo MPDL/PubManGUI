@@ -41,8 +41,8 @@ export interface AuditDbVO extends Serializable {
 }
 
 export interface BasicDbRO extends Serializable {
-    objectId: string;
-    name: string;
+    objectId?: string;
+    name?: string;
     lastModificationDate?: Date;
     creationDate?: Date;
     creator?: AccountUserDbRO;
@@ -102,16 +102,16 @@ export interface ItemVersionRO extends Serializable {
 }
 
 export interface ItemVersionVO extends ItemVersionRO {
-    message: string;
+    message?: string;
     lastModificationDate?: Date;
     publicState?: ItemVersionState;
     objectPid?: string;
     creator?: AccountUserDbRO;
-    context: ContextDbRO;
+    context?: ContextDbRO;
     creationDate?: Date;
     latestRelease?: ItemVersionRO;
     latestVersion?: ItemVersionRO;
-    localTags: string[];
+    localTags?: string[];
     metadata: MdsPublicationVO;
     files?: FileDbVO[];
 }

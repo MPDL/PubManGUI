@@ -40,7 +40,7 @@ export class QaWorkspaceComponent {
         return {
           bool: {
             must: [
-              baseElasticSearchQueryBuilder("context.objectId", p.moderatorContexts.map(con => con.objectId)),
+              baseElasticSearchQueryBuilder("context.objectId", p.moderatorContexts.map(con => con.objectId!)),
               baseElasticSearchQueryBuilder("versionState", [ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION, ItemVersionState.RELEASED]),
               /*
               {

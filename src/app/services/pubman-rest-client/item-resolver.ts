@@ -12,22 +12,37 @@ export const itemResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
     const service = inject(ItemsService);
 
     const item_id = route.paramMap.get('id');
+    const templateItemId = route.queryParamMap.get('template');
 
-    if (item_id == null) {
-        message.warning('Invalid item id');
-        router.navigate(['pure/pure']);
-        return EMPTY
-    } else {
+    if (item_id !== null) {
         return service.retrieve(item_id).pipe(
             mergeMap(item => {
                 if (item) {
                     return of(item);
                 } else {
                     message.warning('Invalid item id');
-                    router.navigate(['pure/pure']);
+                    //router.navigate(['pure/pure']);
                     return EMPTY;
                 }
             })
         );
     }
+
+  if (templateItemId !== null) {
+    return service.retrieve(templateItemId).pipe(
+      mergeMap(item => {
+        if (item) {
+          return of(item);
+        } else {
+          message.warning('Invalid item id');
+          //router.navigate(['pure/pure']);
+          return EMPTY;
+        }
+      })
+    );
+  }
+
+    return undefined;
 }
+
+

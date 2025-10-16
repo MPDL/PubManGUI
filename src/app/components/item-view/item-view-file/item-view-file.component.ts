@@ -40,8 +40,8 @@ export class ItemViewFileComponent {
 
     // Get authorization info for each AUDIENCE file
     this.files?.filter(f => f.visibility=== Visibility.AUDIENCE).forEach(f => {
-      this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), f.objectId).subscribe(authInfo => {
-        this.audienceInfos.set(f.objectId, authInfo);
+      this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), f.objectId!).subscribe(authInfo => {
+        this.audienceInfos.set(f.objectId!, authInfo);
         //console.log(this.audienceInfos)
       })
     })
@@ -49,14 +49,14 @@ export class ItemViewFileComponent {
 
   ipOrganizations(file: FileDbVO) {
     //console.log(JSON.stringify(this.audienceInfos))
-    return Object.values(this.audienceInfos?.get(file.objectId)?.ipInfo || {});
+    return Object.values(this.audienceInfos?.get(file.objectId!)?.ipInfo || {});
   }
 
   fileAccessGranted(file: FileDbVO) {
 
     const genericFileAccess = checkFileAccess(file, this.item, this.aaService.principal.value);
     if(file.visibility=== Visibility.AUDIENCE) {
-      const audienceAccess:boolean = this.audienceInfos?.get(file.objectId)?.actions?.READ_FILE || false;
+      const audienceAccess:boolean = this.audienceInfos?.get(file.objectId!)?.actions?.READ_FILE || false;
       return genericFileAccess || audienceAccess;
     }
     return genericFileAccess;

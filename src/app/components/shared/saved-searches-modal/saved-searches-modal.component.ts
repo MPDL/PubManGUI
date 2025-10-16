@@ -112,7 +112,7 @@ export class SavedSearchesModalComponent {
 
   deleteSavedSearch(value: number) {
     this.savedSearchesLoading = true;
-    this.savedSearchService.delete(this.savedSearches[value].objectId, undefined).subscribe(
+    this.savedSearchService.delete(this.savedSearches[value].objectId!, undefined).subscribe(
       {
         next : search => {this.updateSavedSearchList();},
         error : (err) => {this.errorMessage = err}

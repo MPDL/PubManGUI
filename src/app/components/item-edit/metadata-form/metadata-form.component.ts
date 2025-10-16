@@ -8,7 +8,7 @@ import {
   ContextDbVO,
   CreatorRole,
   CreatorType,
-  CreatorVO,
+  CreatorVO, DegreeType,
   EventVO,
   IdentifierVO,
   LegalCaseVO,
@@ -105,6 +105,7 @@ export class MetadataFormComponent implements OnInit {
 
   allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
+  degree_types = Object.keys(DegreeType);
   subject_classification_types :string[] = [];
   error_types = Errors;
 

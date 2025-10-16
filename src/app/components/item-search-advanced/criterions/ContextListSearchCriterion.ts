@@ -26,7 +26,7 @@ export class ContextListSearchCriterion extends SearchCriterion {
       moderatorContexts.concat(depositorContexts)
         .filter((val, pos, arr) => arr.indexOf(val)===pos)
         .forEach(c => {
-          this.contextOptions[c.objectId] = c;
+          this.contextOptions[c.objectId!] = c;
         })
 
       Object.keys(this.contextOptions).forEach(itemState => this.contextListFormGroup.addControl(itemState, new FormControl(true)));

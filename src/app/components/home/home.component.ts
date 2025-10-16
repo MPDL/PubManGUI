@@ -13,6 +13,7 @@ import { LoadingComponent } from "../shared/loading/loading.component";
 //My Imports
 import { Chart } from 'chart.js/auto';
 import { CountUp } from 'countup.js';
+import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 
 @Component({
   selector: 'pure-home',
@@ -112,8 +113,9 @@ ngOnInit(): void {
     );
   }
 
-  getFirstPublicThumbnail(item: ItemVersionVO) {
-    return item.files?.find(f => f.visibility === 'PUBLIC' && f.mimeType === 'application/pdf');
+  getFirstPublicThumbnailUrl(item: ItemVersionVO) {
+    const file = item.files?.find(f => f.visibility === 'PUBLIC' && f.mimeType === 'application/pdf');
+    return getThumbnailUrlForFile(file);
   }
 
   loadNewsItems() {

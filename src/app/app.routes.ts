@@ -107,7 +107,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'edit', component: ItemFormComponent,
+    path: 'edit', component: ItemFormComponent, resolve: { templateItem: itemResolver },
     data: {
       breadcrumb: {
         labelKey: 'common.edit',

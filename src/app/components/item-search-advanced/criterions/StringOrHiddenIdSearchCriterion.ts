@@ -143,13 +143,13 @@ export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion
       idSources.push(
         this.ouService.retrieve(hidden)
           .pipe(
-            map(ou => ou.predecessorAffiliations?.map(pa => pa.objectId))
+            map(ou => ou.predecessorAffiliations?.map(pa => pa.objectId!))
           )
       );
       idSources.push(
         this.ouService.getSuccessors(hidden)
           .pipe(
-            map(sr => sr.records?.map(rec => rec.data.objectId))
+            map(sr => sr.records?.map(rec => rec.data.objectId!))
           )
       );
 

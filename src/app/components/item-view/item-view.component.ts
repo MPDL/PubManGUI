@@ -43,6 +43,7 @@ import { CopyButtonDirective } from "../../directives/copy-button.directive";
 import { PubManHttpErrorResponse } from "../../services/interceptors/http-error.interceptor";
 import { ChangeContextModalComponent } from "../shared/change-context-modal/change-context-modal.component";
 import { UpdateLocaltagsModalComponent } from "../shared/update-localtags-modal/update-localtags-modal.component";
+import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 
 @Component({
   selector: 'pure-item-view',
@@ -71,8 +72,6 @@ import { UpdateLocaltagsModalComponent } from "../shared/update-localtags-modal/
   styleUrl: './item-view.component.scss'
 })
 export class ItemViewComponent {
-  protected ingeUri = environment.inge_uri;
-
   loading=false;
 
   currentSubMenuSelection = "abstract";
@@ -91,6 +90,7 @@ export class ItemViewComponent {
 
   thumbnailUrl: string | undefined;
   firstPublicPdfFile: FileDbVO | undefined;
+  firstPublicPdfFileUrl: string | undefined;
 
   itemModifier$!: Observable<AccountUserDbVO>;
   itemCreator$!: Observable<AccountUserDbVO>;
@@ -186,9 +186,11 @@ export class ItemViewComponent {
 
               //retrieve thumbnail, if available
               this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType === 'application/pdf'));
+              this.firstPublicPdfFileUrl = getUrlForFile(this.firstPublicPdfFile);
               if (this.firstPublicPdfFile) {
-                this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId).subscribe(thumbAvailable => {
-                  this.thumbnailUrl = this.ingeUri + this.firstPublicPdfFile?.content.replace('/content', '/thumbnail')
+                this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId!).subscribe(thumbAvailable => {
+                  this.thumbnailUrl = getThumbnailUrlForFile(this.firstPublicPdfFile);
+
                 })
               }
 
@@ -286,7 +288,7 @@ export class ItemViewComponent {
   get isModeratorOrDepositor() {
     return this.item && this.aaService.isLoggedIn &&
     ((this.item?.creator?.objectId === this.aaService.principal.value.user?.objectId)
-      || (this.aaService.principal.value.moderatorContexts.map(c => c.objectId).includes(this.item.context.objectId)));
+      || (this.aaService.principal.value.moderatorContexts.map(c => c.objectId).includes(this.item.context!.objectId)));
   }
 
 
@@ -338,8 +340,7 @@ export class ItemViewComponent {
 
 
   useAsTemplate() {
-    alert('To do')
-
+    this.router.navigate(['/edit'], {queryParams: {'template' : itemToVersionId(this.item!)}});
   }
 
   protected readonly timer = timer;

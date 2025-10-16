@@ -74,19 +74,21 @@
           </button>
         }
 
-      <div  class="vr"></div>
+        <div  class="vr"></div>
 
-      @if (aaService.principal.value.isDepositor) {
-        <button  class="nav-link" (click)="useAsTemplate()" ngbTooltip="{{'common.useAsTemplate' | translate}}"
+        @if (aaService.principal.value.isDepositor) {
+          <button  class="nav-link" (click)="useAsTemplate()" ngbTooltip="{{'common.useAsTemplate' | translate}}"
+                  placement="bottom-left">
+            <span class="material-symbols-outlined">copy_all</span>
+          </button>
+        }
+
+        <div  class="vr"></div>
+
+        <button  class="nav-link" (click)="openExportModal()" ngbTooltip="{{'common.export' | translate}}"
                 placement="bottom-left">
-          <span class="material-symbols-outlined">copy_all</span>
+          <span class="material-symbols-outlined">upload</span>
         </button>
-      }
-
-      <button  class="nav-link" (click)="openExportModal()" ngbTooltip="{{'common.export' | translate}}"
-              placement="bottom-left">
-        <span class="material-symbols-outlined">upload</span>
-      </button>
 
         <div  class="vr"></div>
 
@@ -125,7 +127,7 @@
         <div class="col-2  text-center mb-3">
 
           @if (thumbnailUrl) {
-            <a href="{{ingeUri + firstPublicPdfFile?.content}}" target="_blank">
+            <a href="{{firstPublicPdfFileUrl}}" target="_blank">
               <img id="thumbnail" src="{{thumbnailUrl}}" class="img-thumbnail">
             </a>
           } @else {
@@ -314,7 +316,7 @@
           <pure-item-view-metadata-element [sub]="true" [hl]="true">
             <span label>{{ 'MetadataFields.context' | translate }}</span>
             <span content>
-            {{ item.context.name }}
+            {{ item.context?.name }}
               @if (authorizationInfo && authorizationInfo.actions['EDIT']) {
               <button class="btn btn-sm btn-outline-secondary" (click)="openChangeContextModal()">
                 {{'common.changeContext' | translate}}

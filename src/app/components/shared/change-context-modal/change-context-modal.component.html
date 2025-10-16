@@ -20,7 +20,7 @@
       <div class="form-check">
         <input class="form-check-input" type="radio" [value]="context.context.objectId" [(ngModel)]="selectedContextId" id="contextOption{{index}}" name="contextOption{{index}}" [disabled]="context.invalid">
         <label class="form-check-label" for="contextOption{{index}}">
-          <span [class.fw-bold]="context.context.objectId === item.context.objectId">{{ context.context.name }} ({{context.context.workflow}})</span>
+          <span [class.fw-bold]="context.context.objectId === item.context?.objectId">{{ context.context.name }} ({{context.context.workflow}})</span>
         </label>
       </div>
     }

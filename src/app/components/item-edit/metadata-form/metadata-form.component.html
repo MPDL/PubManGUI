@@ -51,7 +51,13 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                 <div class="col-sm">
-                                    <input type="text" class="form-control" formControlName="degree" data-test="degree">
+                                  <select id="degree" class="form-select" formControlName="degree"
+                                           data-test="degree">
+                                    <option [ngValue]="null" selected disabled>-</option>
+                                     @for(deg of degree_types; track deg) {
+                                       <option [ngValue]="deg">{{'DegreeType.' + deg | translate}}</option>
+                                     }
+                                  </select>
                                 </div>
                                 <div class="col-sm-1">
                                     <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->

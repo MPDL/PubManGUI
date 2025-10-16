@@ -44,6 +44,7 @@ import { Utf8Validator } from 'src/app/directives/validation/utf8-validation.dir
 import { fileDataValidator } from 'src/app/directives/validation/file-data-validation';
 import { alternativeTitleValidator } from "../directives/validation/alternative-title.validation.directive";
 import { requiredNoWhitespace } from "../directives/validation/required-no-whitespace-validation.directive";
+import { DegreeRequiredValidator } from "../directives/validation/degree-required-validation.directive";
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 
@@ -210,7 +211,7 @@ export class FormBuilderService {
       datePublishedInPrint: this.fb.nonNullable.control(metadata?.datePublishedInPrint ? metadata.datePublishedInPrint : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
       datePublishedOnline: this.fb.nonNullable.control(metadata?.datePublishedOnline ? metadata.datePublishedOnline : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
       dateSubmitted: this.fb.nonNullable.control(metadata?.dateSubmitted ? metadata.dateSubmitted : undefined, { validators: [Validators.pattern(DATE_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
-      degree: this.fb.nonNullable.control(metadata?.degree ? metadata.degree : undefined),
+      degree: this.fb.nonNullable.control(metadata?.degree ? metadata.degree : undefined, { validators: [DegreeRequiredValidator], updateOn: VALIDATION_UPDATE_ON }),
       event: metadata?.event ? this.event_FG(metadata.event) : this.event_FG(null),
       legalCase: metadata?.legalCase ? this.legal_case_FG(metadata.legalCase) : this.legal_case_FG(null),
       genre: this.fb.nonNullable.control(metadata?.genre ? metadata.genre : MdsPublicationGenre.ARTICLE),
