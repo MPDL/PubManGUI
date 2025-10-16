@@ -97,7 +97,7 @@
     <pure-imports-nav></pure-imports-nav>
   }
 
-  @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
+  @if (aaService.principal.getValue().isModerator) {
     <pure-batch-nav></pure-batch-nav>
   }
 

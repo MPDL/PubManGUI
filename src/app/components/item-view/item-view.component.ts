@@ -68,8 +68,7 @@ import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
     DatePipe,
     CopyButtonDirective
   ],
-  templateUrl: './item-view.component.html',
-  styleUrl: './item-view.component.scss'
+  templateUrl: './item-view.component.html'
 })
 export class ItemViewComponent {
   loading=false;
