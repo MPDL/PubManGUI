@@ -1,6 +1,7 @@
 import { CreatorVO, FileDbVO, ItemVersionVO, OrganizationVO, PersonVO, Visibility } from "../model/inge";
 import { Principal } from "../services/aa.service";
 import { isFormValueEmpty } from "./utils";
+import { environment } from "../../environments/environment";
 
 export const checkFileAccess = (file: FileDbVO, item: ItemVersionVO, principal: Principal): boolean => {
   //console.log(file.visibility === Visibility.PUBLIC)
@@ -39,5 +40,18 @@ const isEmptyPerson = (person: PersonVO | undefined) => {
 
 const isEmptyOrg = (org: OrganizationVO | undefined) => {
   return isFormValueEmpty(org?.name) && isFormValueEmpty(org?.address) && isFormValueEmpty(org?.identifier);
-
 }
+
+export const getUrlForFile = (file: FileDbVO | undefined)=> {
+  if(file && file.content)
+  {
+    return environment.inge_uri + file.content
+  }
+  return undefined;
+}
+
+export const getThumbnailUrlForFile = (file: FileDbVO | undefined)=> {
+  return getUrlForFile(file)?.replace('/content', '/thumbnail')
+}
+
+

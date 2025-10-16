@@ -154,7 +154,7 @@ export class AaService {
   }
 
   logout(): void {
-    this.http.request('GET', this.logoutUrl, {observe: "response", responseType: "text"}).pipe(
+    this.http.request('GET', this.logoutUrl, {withCredentials: true, observe: "response", responseType: "text"}).pipe(
       tap(res => {
       if(res.status === 200) {
         console.log("Successfully logged out from backend");
