@@ -22,12 +22,26 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { AaComponent } from 'src/app/components/aa/aa.component';
 import { SearchComponent } from 'src/app/components/shared/search/search.component';
 import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
-
+import { ToolsnavComponent } from 'src/app/components/shared/toolsnav/toolsnav.component';
+import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
-  imports: [RouterLink, MatBadgeModule, CommonModule, BatchNavComponent, ImportsNavComponent, TranslatePipe, AaComponent, SearchComponent, LangSwitchComponent],
+  imports: [
+    RouterLink, 
+    MatBadgeModule, 
+    CommonModule, 
+    BatchNavComponent, 
+    ImportsNavComponent, 
+    TranslatePipe, 
+    AaComponent, 
+    SearchComponent, 
+    LangSwitchComponent, 
+    ToolsnavComponent,
+    NgbPopover,
+    NgbTooltip,
+  ],
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {
