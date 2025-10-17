@@ -27,7 +27,21 @@ export class ItemBadgesComponent {
   @Input() showPublicStatusIcon: boolean = false;
   @Input() showMetadata: boolean = true;
 
+  isModeratorOrDepositor: boolean = false;
+
   constructor(protected aaService: AaService) {
+
+  }
+
+  ngOnInit() {
+    this.isModeratorOrDepositor = this.isModeratorOrDepositorCheck() || false;
+  }
+
+  private isModeratorOrDepositorCheck() {
+    return this.item && this.aaService.isLoggedIn &&
+      ((this.item?.creator?.objectId === this.aaService.principal.value.user?.objectId)
+        || (this.aaService.principal.value.moderatorContexts.map(c => c.objectId).includes(this.item.context!.objectId)))
+       || this.aaService.principal.value.isAdmin;
   }
 
   get doi() {

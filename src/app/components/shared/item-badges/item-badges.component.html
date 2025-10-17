@@ -30,7 +30,7 @@
 
         <span class="badge {{state==='WITHDRAWN' ? 'bg-danger' : 'bg-dark' }} me-2">{{'ItemState.' + state | translate}}{{showVersion ? ' (v' + item?.versionNumber + ')' : ''}}</span>
 
-        @if(showPublicStatusIcon && state !== 'WITHDRAWN') {
+        @if(showPublicStatusIcon && state !== 'WITHDRAWN' && isModeratorOrDepositor) {
 
           @let isLatestVersion = item?.versionNumber === item?.latestVersion?.versionNumber ? 'border-bottom border-2 border-dark' : '';
           @let isLatestRelease = item?.versionNumber === item?.latestRelease?.versionNumber ? 'border-bottom border-2 border-dark' : '';
