@@ -12,7 +12,7 @@ import {
 } from "../../model/inge";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { TopnavComponent } from "../shared/topnav/topnav.component";
-import { AsyncPipe, DatePipe, ViewportScroller } from "@angular/common";
+import { AsyncPipe, DatePipe, NgOptimizedImage, ViewportScroller } from "@angular/common";
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
@@ -66,7 +66,8 @@ import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
     LoadingComponent,
     TranslatePipe,
     DatePipe,
-    CopyButtonDirective
+    CopyButtonDirective,
+    NgOptimizedImage
   ],
   templateUrl: './item-view.component.html'
 })
