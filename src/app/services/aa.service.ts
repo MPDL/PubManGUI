@@ -185,7 +185,7 @@ export class AaService {
     this.who(false).pipe(
       tap(user => {
         if(this.principal?.value?.user?.loginname != user?.loginname) {
-          this.message.warning("Your former login is not valid anymore and was changed (Did you login in another window/tab?)");
+          this.message.warning("Your former login is not valid anymore and was changed (Did you login in another window/tab?)", true);
           this.checkLogin().subscribe();
           this.router.navigate(['/'])
         }
