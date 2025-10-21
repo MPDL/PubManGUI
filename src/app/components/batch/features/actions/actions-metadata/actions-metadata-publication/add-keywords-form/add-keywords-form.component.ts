@@ -69,5 +69,4 @@ export class AddKeywordsFormComponent {
       this.addKeywordsForm.reset();
     }
   }
-  // TO-DO? No duplicated keywords validation.
 }

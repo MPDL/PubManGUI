@@ -14,8 +14,10 @@
         <ng-container formArrayName="allowedAudienceIds">
           @for (audience of allowedAudienceIds.controls; track audience; let audienceIdx = $index) {
           <ng-container [formGroupName]="audienceIdx">
-            <pure-audience-form [audienceId]="audience" [index]="audienceIdx"
-              [index_length]="allowedAudienceIds.controls.length" [ous]="ous"
+            <pure-audience-form [audience]="audience" 
+              [index]="audienceIdx"
+              [index_length]="allowedAudienceIds.controls.length" 
+              [ous]="ous"
               (notice)="handleAudienceNotification($event)">
             </pure-audience-form>
           </ng-container>
@@ -26,17 +28,8 @@
 
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-
-        @if (replaceFileAudienceForm.pending) {
-        <span class="form-text text-danger small">
-          At least one IP range required
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
         <pure-validation-error [control]="replaceFileAudienceForm"/>  
       </div> 
-      <span>&nbsp;</span>
     </div>
 
     <div class="row">

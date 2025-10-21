@@ -37,7 +37,7 @@ export class ChangeSourceIdentifierFormComponent {
   sourceIdTypes = Object.keys(SourceIdType);
 
   public changeSourceIdentifierForm: FormGroup = this.fb.group({
-    sourceNumber: ['1', [Validators.required]],
+    sourceNumber: ['1', Validators.required],
     sourceIdentifierType: [null, Validators.required],
     sourceIdentifierFrom: ['', [Validators.required, Validators.minLength(1)]],
     sourceIdentifierTo: [''],
@@ -59,6 +59,7 @@ export class ChangeSourceIdentifierFormComponent {
 
   ngOnInit(): void {
     this.changeSourceIdentifierForm.reset();
+    this.changeSourceIdentifierForm.controls['sourceNumber'].setValue('1');
   }
 
   onSubmit(): void {

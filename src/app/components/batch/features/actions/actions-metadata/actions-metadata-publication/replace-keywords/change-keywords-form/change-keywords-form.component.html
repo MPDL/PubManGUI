@@ -6,7 +6,8 @@
       </label>
     </div>
     <div class="col-sm-9">
-      <input class="form-control" formControlName="keywordsFrom" [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsFrom')?.pending}">
+      <input class="form-control" formControlName="keywordsFrom" 
+        [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsFrom')?.pending || changeKeywordsForm.get('keywordsFrom')?.invalid && (changeKeywordsForm.get('keywordsFrom')?.touched || changeKeywordsForm.get('keywordsFrom')?.dirty)}">
     </div>
   </div>
   <div class="mb-2 row validation-error">
@@ -31,7 +32,8 @@
       </label>
     </div>
     <div class="col-sm-9">
-      <input class="form-control" formControlName="keywordsTo" [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsTo')?.pending}">
+      <input class="form-control" formControlName="keywordsTo" 
+        [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsTo')?.pending || changeKeywordsForm.get('keywordsTo')?.invalid && (changeKeywordsForm.get('keywordsTo')?.touched || changeKeywordsForm.get('keywordsTo')?.dirty)}">
     </div>
   </div>
   <div class="mb-2 row validation-error">

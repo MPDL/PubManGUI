@@ -43,7 +43,7 @@ export class ChangeContextModalComponent {
   }
 
   ngOnInit() {
-    this.selectedContextId = this.item.context.objectId;
+    this.selectedContextId = this.item.context!.objectId!;
     let allContextsWithoutDuplicates = this.aaService.principal.value.depositorContexts.concat(this.aaService.principal.value.moderatorContexts);
     allContextsWithoutDuplicates = removeDuplicates(allContextsWithoutDuplicates, 'objectId');
     this.contextList =
@@ -63,9 +63,9 @@ export class ChangeContextModalComponent {
 
   private isInvalid(context: ContextDbVO) {
     return context.state === ContextState.CLOSED
-    || context.objectId === this.item.context.objectId
+    || context.objectId === this.item.context!.objectId
     || this.item.latestVersion!.versionState === ItemVersionState.IN_REVISION
-    || (this.item.latestVersion!.versionState === ItemVersionState.PENDING && !this.aaService.principal.value.isDepositorForContext(context.objectId))
+    || (this.item.latestVersion!.versionState === ItemVersionState.PENDING && !this.aaService.principal.value.isDepositorForContext(context.objectId!))
     || this.item.publicState === ItemVersionState.WITHDRAWN
     || (this.item.publicState === ItemVersionState.SUBMITTED && context.workflow === Workflow.SIMPLE)
     || !context.allowedGenres

@@ -85,12 +85,12 @@
   "chips.localTags.placeholder": "Lokalen Tag hinzufügen",
   "validation": {
     "required": "Wert ist erforderlich",
-    "minlength": "mindestens {{minLength}} Zeichen erforderlich",
+    "minlength": "Mindestens {{minLength}} Zeichen erforderlich",
     "singleWord": "kann nicht mehrere Wörter enthalten",
     "notSameValues": "Bisheriger und neuer wert müssen sich unterscheiden",
     "equals": "stimmen nicht überein",
-    "notDuplicates": "dupliziert",
-    "allRequired": "nicht alle erforderlichen Werte",
+    "noDuplicates": "Wiederholter Wert",
+    "allRequired": "Nicht alle erforderlichen Werte",
     "invalidCharacters": "Der Text enthält ungültige Zeichen",
     "invalidDateFormat": "Falsches Datumsformat (JJJJ-MM-DD)",
     "minOneDate": "Mindestens eine Datumsangabe ist erforderlich",
@@ -280,11 +280,11 @@
     "list.items.empty": "Für diesen Import sind keine Datensätze verfügbar!",
     "list.items.for": "Import",
     "list.remove": "Aus dem Protokoll entfernen",
-    "list.remove.confirmation": "Möchten Sie das Importprotokol \"{{name}}\" wirklich entfernen?",
+    "list.remove.confirmation": "Möchten Sie das Importprotokoll \"{{name}}\" wirklich entfernen?",
     "list.started.on": "gestartet am",
-    "release.confirmation": "Möchten Sie das Import \"{{name}}\" wirklich freigeben?",
-    "remove.confirmation": "Möchten Sie das Import \"{{name}}\" wirklich löschen?",
-    "submit.confirmation": "Möchten Sie das Import \"{{name}}\" wirklich einstellen?"
+    "release.confirmation": "Möchten Sie den Import \"{{name}}\" wirklich freigeben?",
+    "remove.confirmation": "Möchten Sie den Import \"{{name}}\" wirklich löschen?",
+    "submit.confirmation": "Möchten Sie den Import \"{{name}}\" wirklich einstellen?"
   },
   "BatchProcessLogDetailState": {
     "ERROR": "Fehlgeschlagen",

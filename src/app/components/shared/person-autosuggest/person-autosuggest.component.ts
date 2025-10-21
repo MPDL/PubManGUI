@@ -33,8 +33,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     TranslatePipe,
     BootstrapValidationDirective, ValidationErrorMessageDirective
   ],
-  templateUrl: './person-autosuggest.component.html',
-  styleUrl: './person-autosuggest.component.scss'
+  templateUrl: './person-autosuggest.component.html'
 })
 export class PersonAutosuggestComponent {
 

@@ -57,9 +57,9 @@
         @for(item of items.slice(0,5); track item) {
           <div class="col">
             <div class="card h-100">
-              @let file = getFirstPublicThumbnail(item);
-              @if(file) {
-                <img src="{{file.content.replace('/content', '/thumbnail')}}" alt="Thumbnail" class="card-img-top">
+              @let thumbUrl = getFirstPublicThumbnailUrl(item);
+              @if(thumbUrl) {
+                <img src="{{thumbUrl}}" alt="Thumbnail" class="card-img-top">
               }
 
               <div class="card-body">

@@ -13,6 +13,7 @@ import { LoadingComponent } from "../shared/loading/loading.component";
 //My Imports
 import { Chart, Tooltip } from 'chart.js/auto';
 import { CountUp } from 'countup.js';
+import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 @Component({
@@ -86,8 +87,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getFirstPublicThumbnail(item: ItemVersionVO) {
-    return item.files?.find(f => f.visibility === 'PUBLIC' && f.mimeType === 'application/pdf');
+  getFirstPublicThumbnailUrl(item: ItemVersionVO) {
+    const file = item.files?.find(f => f.visibility === 'PUBLIC' && f.mimeType === 'application/pdf');
+    return getThumbnailUrlForFile(file);
   }
 
   loadNewsItems() {

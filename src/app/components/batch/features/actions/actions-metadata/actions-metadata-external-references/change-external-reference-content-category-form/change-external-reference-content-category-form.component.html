@@ -14,7 +14,7 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryFrom"
-                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.pending}">
+                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.pending || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.invalid && (changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.dirty)}">
                     <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
                         translate }}
                     </option>
@@ -46,7 +46,7 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryTo"
-                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.pending}">
+                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.pending || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.invalid && (changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.dirty)}">
                     <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
                         translate }}
                     </option>

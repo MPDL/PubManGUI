@@ -75,7 +75,7 @@
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.degree | empty)">
       <span label>{{'MetadataFields.degree' | translate}}</span>
         <span content>
-          {{ item.metadata?.degree }}
+          {{ 'DegreeType.' + item.metadata?.degree | translate}}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]=" (item.metadata?.languages | empty)">

@@ -1,18 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { PersonAutosuggestComponent } from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
-
 import { BatchService } from 'src/app/components/batch/services/batch.service';
-
 import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/batch-params';
 
 import { TranslatePipe } from "@ngx-translate/core";
 
+import { PersonAutosuggestComponent } from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
 import { ControlType } from 'src/app/services/form-builder.service';
+import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-replace-orcid-form',
@@ -21,7 +20,8 @@ import { ControlType } from 'src/app/services/form-builder.service';
     CommonModule,
     ReactiveFormsModule,
     PersonAutosuggestComponent,
-    TranslatePipe
+    TranslatePipe,
+    ValidationErrorComponent
   ],
   templateUrl: './replace-orcid-form.component.html',
 })
@@ -30,8 +30,10 @@ export class ReplaceOrcidFormComponent {
   fb = inject(FormBuilder);
   batchSvc = inject(BatchService);
 
+  validationError: boolean = false;
+
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
-    completeName: this.fb.nonNullable.control(''),
+    completeName: this.fb.nonNullable.control(''), 
     givenName: this.fb.nonNullable.control(''),
     familyName: this.fb.nonNullable.control(''),
     alternativeNames: this.fb.array<AbstractControl<string, string>>([]),
@@ -44,9 +46,8 @@ export class ReplaceOrcidFormComponent {
         type: this.fb.nonNullable.control(IdType.CONE),
       }
     ),
-    orcid: this.fb.nonNullable.control(''),
-
-  });
+    orcid: this.fb.nonNullable.control('')
+  }, {validators: Validators.required});
 
   get changeOrcidParams(): ReplaceOrcidParams {
     const actionParams: ReplaceOrcidParams = {
@@ -55,6 +56,20 @@ export class ReplaceOrcidFormComponent {
       itemIds: []
     }
     return actionParams;
+  }
+
+  ngOnInit() {
+    this.changeOrcidForm.valueChanges.subscribe(value => {    
+      if (!this.changeOrcidForm.get('familyName')?.value) {
+        this.changeOrcidForm.setErrors({ 'required': true });
+      } 
+    });
+  }
+
+  checkIfAllRequired() {
+    if (!this.changeOrcidForm.get('familyName')?.value) {
+      this.changeOrcidForm.markAsPending();
+    } 
   }
 
   onSubmit(): void {
@@ -68,4 +83,5 @@ export class ReplaceOrcidFormComponent {
       this.router.navigate(['/batch/logs']);
     });
   }
+
 }

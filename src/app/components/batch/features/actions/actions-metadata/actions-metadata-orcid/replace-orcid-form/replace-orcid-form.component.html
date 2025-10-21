@@ -21,7 +21,7 @@
           [formForPersonsIdValue]="$any(changeOrcidForm.get('identifier.id'))"
           [formForPersonsIdType]="$any(changeOrcidForm.get('identifier.type'))"
           [formForPersonsOrcid]="$any(changeOrcidForm.get('orcid'))"
-          [validationError]=false
+          [validationError]="validationError"
           data-test="changeOrcidForm-autosuggest">
         </pure-person-autosuggest>
 
@@ -42,9 +42,15 @@
       </div>
     </div>
 
+    <div class="mb-2 row validation-error">
+      <div class="offset-sm-3 col-sm-6">
+        <pure-validation-error [control]="changeOrcidForm"/>
+      </div>
+    </div>
+
     <div class="row">
-      <div class="offset-sm-11 col-sm-1">
-        <button type="submit" [disabled]="changeOrcidForm.invalid || changeOrcidForm.pristine"
+      <div class="offset-sm-11 col-sm-1" (click)="checkIfAllRequired()">
+        <button type="submit" [disabled]="changeOrcidForm.invalid || changeOrcidForm.pristine || !changeOrcidForm.get('identifier.id')?.value || !changeOrcidForm.get('orcid')?.value"
           class="btn btn-outline-primary float-end">
           GO
         </button>

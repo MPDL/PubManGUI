@@ -19,7 +19,9 @@
         <label class="col-form-label">{{ 'batch.actions.genre.change.from' | translate }}</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="genreFrom" [ngClass]="{'border border-danger': changeGenreForm.get('genreFrom')?.pending}" data-test="genre-to-be-replaced">
+        <select class="form-select" formControlName="genreFrom" 
+          [ngClass]="{'border border-danger': changeGenreForm.get('genreFrom')?.pending || changeGenreForm.get('genreFrom')?.invalid && (changeGenreForm.get('genreFrom')?.touched || changeGenreForm.get('genreFrom')?.dirty)}"
+          data-test="genre-to-be-replaced">
           <option [value]="null" selected disable hidden>Genre</option>
           @for (genre of genres; track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
@@ -38,7 +40,9 @@
         <label class="col-form-label">{{ 'batch.actions.genre.change.to' | translate }}</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="genreTo" [ngClass]="{'border border-danger': changeGenreForm.get('genreTo')?.pending}" data-test="replacing-genre">
+        <select class="form-select" formControlName="genreTo" 
+          [ngClass]="{'border border-danger': changeGenreForm.get('genreTo')?.pending || changeGenreForm.get('genreTo')?.invalid && (changeGenreForm.get('genreTo')?.touched || changeGenreForm.get('genreTo')?.dirty)}"
+          data-test="replacing-genre">
           <option [value]="null" selected disable hidden>Genre</option>
           @for (genre of genres; track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>

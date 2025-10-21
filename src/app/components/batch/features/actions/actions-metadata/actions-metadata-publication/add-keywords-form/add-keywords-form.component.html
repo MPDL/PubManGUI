@@ -12,20 +12,11 @@
         {{ 'batch.actions.metadata.publication.keywordsAdd.to' | translate }}</label>
       <div class="col-sm-9">
         <textarea class="form-control" formControlName="keywords"
-        [ngClass]="{'border border-danger': addKeywordsForm.get('keywords')?.pending}"></textarea>
+          [ngClass]="{'border border-danger': addKeywordsForm.get('keywords')?.pending || addKeywordsForm.get('keywords')?.invalid && (addKeywordsForm.get('keywords')?.touched || addKeywordsForm.get('keywords')?.dirty)}"></textarea>
       </div>
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-3 col-sm-6">
-        <!--
-        @if(valSvc.notValidField(addKeywordsForm.controls['keywords'])) {
-        <span class="form-text text-danger small">
-          {{ valSvc.getErrorMsg(addKeywordsForm.controls['keywords']) }}
-        </span>
-        } @else {
-        <span>&nbsp;</span>
-        }
-        -->
         <pure-validation-error [control]="addKeywordsForm.get('keywords')"/>
       </div>
     </div>

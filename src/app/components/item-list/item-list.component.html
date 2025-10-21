@@ -23,8 +23,11 @@
           }
         <div start class="vr"></div>
         <pure-topnav-cart start></pure-topnav-cart>
-        <div start class="vr"></div>
-        <pure-topnav-batch start/>
+
+        @if (aa.principal.value.isModerator) {
+          <div start class="vr"></div>
+          <pure-topnav-batch start/>
+        }
 
         <div start class="vr"></div>
         <ng-content select="[furtherTopNavElements]"/>

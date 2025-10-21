@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormGroup, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Errors } from "src/app/model/errors";
 
 import { _, TranslateService } from '@ngx-translate/core'
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,10 +54,25 @@ export class BatchValidatorsService {
           if (field1Value !== null && field2Value !== null) {
             if (field2Value.length > 0 && (field1Value === field2Value)) {
               return { [error_types.OLD_AND_NEW_ARE_SAME]: {value: control.value} };
-              //return { notEquals: true }
             }
           }
         }
+      }
+      return null;
+    }
+  }
+
+  noDuplicatesInArray(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const error_types = Errors;
+      if (control instanceof FormGroup) {
+          const formArray = control.value.allowedAudienceIds;
+          if (formArray && formArray.length > 1) {
+            const duplicates = formArray.filter((item: any, index: number) => formArray.indexOf(item) !== index);
+            if (duplicates.length > 0) {
+              return { [error_types.DUPLICATED_VALUES]: {value: control.value} };
+            }
+          }
       }
       return null;
     }

@@ -34,36 +34,45 @@
         <pure-aa class="d-flex justify-content-end mb-2 d-sm-none"></pure-aa>
 
         <div class="row d-flex justify-content-sm-between">
-          <div class="col-12 col-sm-8 d-sm-flex align-items-sm-center">
+          <div class="col-12 col-sm-7 d-sm-flex align-items-sm-center">
             <pure-search></pure-search>
           </div>
 
-          <pure-aa class="col-sm-3 d-none d-sm-flex"></pure-aa>
+          <pure-toolsnav class="col-sm-2 d-sm-flex mt-1"></pure-toolsnav>
+
+          <pure-aa class="col-sm-3 d-none d-sm-flex mt-1"></pure-aa>
         </div>
 
-        <div  class="my-3 border-top border-bottom border-light-subtle">
+        <div class="my-3 border-top border-bottom border-light-subtle">
           <ng-container *ngTemplateOutlet="options"></ng-container>
         </div>
 
-        <pure-lang-switch class="d-flex justify-content-center"></pure-lang-switch>
+        <div class="d-flex justify-content-evenly mb-3">
+          <a ngbTooltip="{{ 'common.help' | translate }}" placement="bottom-left" [routerLink]="['/help']"
+            class="nav-link" (click)="collapse()">
+            <span class="material-symbols-outlined">help</span>
+          </a>
 
-        <!--
-            <pure-switch-bs-theme class="me-4"></pure-switch-bs-theme>
+          <div>
+            <a role="button" [ngbPopover]="ipInfo" class="nav-link"
+              [ngbTooltip]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
+              <span class="material-symbols-outlined">{{aaService.principal.value.matchedIpName ? 'location_on' :
+                'location_off'
+                }}</span>
+            </a>
+            <ng-template #ipInfo>
+              @if(aaService.principal.value.matchedIpName) {
+              <span class="fw-bold text-success">{{aaService.principal.value.matchedIpName}}</span>
+              }
+              @else {
+              <span class="text-warning">IP is not affiliated to MPG</span>
+              }
+              <p class="small">IP: {{aaService.principal.value.ipAddress}}</p>
+            </ng-template>
+          </div>
 
-            <div class="me-4">
-              <a ngbTooltip="{{ 'common.help' | translate }}" placement="bottom-left" [routerLink]="['/help']"
-                class="nav-link">
-                <span class="material-symbols-outlined">help</span>
-              </a>
-            </div>
-
-            <div class="me-4">
-              <a [routerLink]="[]" class="nav-link" (click)="tools()">
-                <span class="material-symbols-outlined">apps</span>
-              </a>
-            </div>
-          -->
-
+          <pure-lang-switch class="d-flex justify-content-center"></pure-lang-switch>
+        </div>
       </div>
     </div>
 
@@ -80,7 +89,8 @@
     <span class="nav-label ms-3">{{'common.addItem'| translate }}</span>
   </a>
 
-  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['my']" (click)="collapse()" data-test="sidenav-my-datasets">
+  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['my']" (click)="collapse()"
+    data-test="sidenav-my-datasets">
     <span class="material-symbols-outlined">folder_shared</span>
     <span class="nav-label ms-3">{{'common.my'| translate }}</span>
   </a>
@@ -94,14 +104,15 @@
   }
 
   @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
-    <pure-imports-nav></pure-imports-nav>
+  <pure-imports-nav></pure-imports-nav>
   }
 
-  @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
-    <pure-batch-nav></pure-batch-nav>
+  @if (aaService.principal.getValue().isModerator) {
+  <pure-batch-nav></pure-batch-nav>
   }
 
-  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['cart']" (click)="collapse()" data-test="sidenav-basket">
+  <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['cart']" (click)="collapse()"
+    data-test="sidenav-basket">
     <svg fill="currentColor" height="24px" width="24px">
       <use href="assets/icons/icons.svg#cart"></use>
     </svg>

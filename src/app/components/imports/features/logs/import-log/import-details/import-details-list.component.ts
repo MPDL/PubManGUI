@@ -3,7 +3,7 @@ import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportErrorLevel, ImportLogDbVO, ImportLogItemDbVO } from 'src/app/model/inge';
+import { ImportErrorLevel, ImportLogDbVO, ImportLogItemDbVO, ImportStatus } from 'src/app/model/inge';
 
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
@@ -79,81 +79,92 @@ export default class ImportDetailsListComponent implements OnInit {
 
   isScrolled = false;
 
+  updateDelay = 1; // INGUI-113 After deletion user should stay on "details" page
+
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(value => {
       this.import = value['import'];
     });
 
     if (this.import.id) {
-      this.importsSvc.getImportLogItems(Number(this.import.id))
-        .subscribe(importsResponse => {
-          if (importsResponse.length === 0) return this.router.navigate(['/imports/myimports']);
+      this.getLogs();
 
-          importsResponse.sort((a, b) => a.id - b.id)
-            .forEach(element => {
-              switch (element.errorLevel) {
-                case ImportErrorLevel.FINE:
-                  this.fine++;
-                  break;
-                case ImportErrorLevel.WARNING:
-                  this.warning++;
-                  break;
-                case ImportErrorLevel.PROBLEM:
-                  this.problem++;
-                  break;
-                case ImportErrorLevel.ERROR:
-                  this.error++;
-                  break;
-                case ImportErrorLevel.FATAL:
-                  this.fatal++;
-                  break;
-              }
-            });
-
-          this.filteredLogs = this.unfilteredLogs = importsResponse;
-          this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
-
-          if (this.importsSvc.getLogFilters().length > 0) {
-            if (this.activeFilters.length === this.importsSvc.getLogFilters().length
-              && (this.activeFilters.every((element_1) =>
-                this.importsSvc.getLogFilters().some((element_2) =>
-                  Object.keys(element_1).every((key: any) => element_1[key] === element_2[key])
-                )))) {
-            } else {
-              this.activeFilters = this.importsSvc.getLogFilters();
-              this.filterForm.patchValue({
-                fine: this.activeFilters.includes(ImportErrorLevel.FINE),
-                warning: this.activeFilters.includes(ImportErrorLevel.WARNING),
-                problem: this.activeFilters.includes(ImportErrorLevel.PROBLEM),
-                error: this.activeFilters.includes(ImportErrorLevel.ERROR),
-                fatal: this.activeFilters.includes(ImportErrorLevel.FATAL),
-              });
-              this.updateFilteredLogs();
-            }
-          }
-          this.refreshLogs();
-          return;
-        });
       if (this.import.contextId) {
-        this.importsSvc.getContexts(this.import.contextId)
-          .subscribe(ctxRespoonse => {
-            if (ctxRespoonse.workflow === "STANDARD") {
-              this.isStandardWorkflow = true;
-            } else {
-              this.isStandardWorkflow = false;
-              if (ctxRespoonse.workflow === "SIMPLE") {
-                this.isSimpleWorkflow = true;
-              } else {
-                this.isSimpleWorkflow = false;
-              }
-            }
-          })
+        this.getContexts();
       }
     }
+  }
+
+  getLogs(): void {
+    this.importsSvc.getImportLogItems(Number(this.import.id))
+      .subscribe(importsResponse => {
+        if (importsResponse.length === 0) return this.router.navigate(['/imports/myimports']);
+
+        importsResponse.sort((a, b) => a.id - b.id)
+          .forEach(element => {
+            switch (element.errorLevel) {
+              case ImportErrorLevel.FINE:
+                this.fine++;
+                break;
+              case ImportErrorLevel.WARNING:
+                this.warning++;
+                break;
+              case ImportErrorLevel.PROBLEM:
+                this.problem++;
+                break;
+              case ImportErrorLevel.ERROR:
+                this.error++;
+                break;
+              case ImportErrorLevel.FATAL:
+                this.fatal++;
+                break;
+            }
+          });
+
+        this.filteredLogs = this.unfilteredLogs = importsResponse;
+        this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
+
+        if (this.importsSvc.getLogFilters().length > 0) {
+          if (this.activeFilters.length === this.importsSvc.getLogFilters().length
+            && (this.activeFilters.every((element_1) =>
+              this.importsSvc.getLogFilters().some((element_2) =>
+                Object.keys(element_1).every((key: any) => element_1[key] === element_2[key])
+              )))) {
+          } else {
+            this.activeFilters = this.importsSvc.getLogFilters();
+            this.filterForm.patchValue({
+              fine: this.activeFilters.includes(ImportErrorLevel.FINE),
+              warning: this.activeFilters.includes(ImportErrorLevel.WARNING),
+              problem: this.activeFilters.includes(ImportErrorLevel.PROBLEM),
+              error: this.activeFilters.includes(ImportErrorLevel.ERROR),
+              fatal: this.activeFilters.includes(ImportErrorLevel.FATAL),
+            });
+            this.updateFilteredLogs();
+          }
+        }
+        this.refreshLogsView();
+        return;
+      });
 
   }
 
-  refreshLogs() {
+  getContexts(): void {
+    this.importsSvc.getContexts(this.import.contextId)
+      .subscribe(ctxRespoonse => {
+        if (ctxRespoonse.workflow === "STANDARD") {
+          this.isStandardWorkflow = true;
+        } else {
+          this.isStandardWorkflow = false;
+          if (ctxRespoonse.workflow === "SIMPLE") {
+            this.isSimpleWorkflow = true;
+          } else {
+            this.isSimpleWorkflow = false;
+          }
+        }
+      })
+  }
+
+  refreshLogsView() {
     this.currentPage = Math.ceil((this.currentPage * this.pageSize) / this.getPreferredPageSize());
     this.pageSize = this.getPreferredPageSize();
     this.inPage = this.filteredLogs.map((log, i) => ({ _id: i + 1, ...log })).slice(
@@ -200,7 +211,7 @@ export default class ImportDetailsListComponent implements OnInit {
 
         this.updateFilteredLogs();
         this.currentPage = 1;
-        this.refreshLogs();
+        this.refreshLogsView();
 
         this.executeOnceTimeout = false;
       }, 100);
@@ -209,7 +220,7 @@ export default class ImportDetailsListComponent implements OnInit {
 
   updateFilteredLogs(): void {
     //this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel) || !item.itemId);
-    this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel));    
+    this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.errorLevel));
     this.filteredSize = this.filteredLogs.length;
   }
 
@@ -221,11 +232,37 @@ export default class ImportDetailsListComponent implements OnInit {
           const msg = this.translateSvc.instant(_('imports.list.details.delete'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
           this.msgSvc.success(msg);
           setTimeout(() => {
-            this.router.navigate(['/imports/myimports']);
+            //this.router.navigate(['/imports/myimports']);
+            // INGUI-113 After deletion user should stay on "details" page
+            this.updateDelay = 1;
+            this.updateForRunningDelete();
           }, 1000);
         })
       }
     });
+  }
+
+  updateForRunningDelete() {
+    this.importsSvc.getImportLog(this.import.id)
+      .subscribe(importLog => {
+        if (this.isFinished(importLog.status)) {
+          this.updateDelay = 1;
+        } else {
+          setTimeout(() => {
+            this.getLogs();
+            this.refreshLogsView();
+            this.updateForRunningDelete();
+          }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60));
+        }
+      })
+
+  }
+
+  isFinished(status: ImportStatus): boolean {
+    if (status === ImportStatus.FINISHED) {
+      return true;
+    }
+    return false;
   }
 
   caseSubmit(): boolean {
@@ -247,7 +284,11 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doSubmit(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.submit.confirmation'), { name: this.import.name }), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
+    let ref = this.msgSvc.displayConfirmation({ 
+      text: this.translateSvc.instant(_('imports.submit.confirmation'), { name: this.import.name }), 
+      confirm: this.translateSvc.instant(_('common.confirm')), 
+      cancel: this.translateSvc.instant(_('common.cancel')) 
+    });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         let submitModus = 'SUBMIT';
@@ -257,15 +298,27 @@ export default class ImportDetailsListComponent implements OnInit {
 
           let element = document.getElementById('submit') as HTMLButtonElement;
           element.ariaDisabled = 'true';
-          element.tabIndex=-1;
+          element.tabIndex = -1;
           element.classList.add('disabled');
+
+          // INGUI-112 No page reload after Import was released
+          for (let i of [10, 50, 500]) {
+            setTimeout(() => {
+              this.getLogs();
+              this.refreshLogsView();
+            }, i * 100);
+          }
         })
       }
     });
   }
 
   doRelease(): void {
-    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant(_('imports.release.confirmation'), { name: this.import.name }), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
+    let ref = this.msgSvc.displayConfirmation({ 
+      text: this.translateSvc.instant(_('imports.release.confirmation'), { name: this.import.name }), 
+      confirm: this.translateSvc.instant(_('common.confirm')), 
+      cancel: this.translateSvc.instant(_('common.cancel')) 
+    });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         let submitModus = this.caseSubmitAndRelease() ? 'SUBMIT_AND_RELEASE' : 'RELEASE';
@@ -275,10 +328,16 @@ export default class ImportDetailsListComponent implements OnInit {
 
           let element = document.getElementById('release') as HTMLButtonElement;
           element.ariaDisabled = 'true';
-          element.tabIndex=-1;
+          element.tabIndex = -1;
           element.classList.add('disabled');
 
-          console.log(`${submitModus} done`);
+          // INGUI-112 No page reload after Import was released
+          for (let i of [10, 50, 500]) {
+            setTimeout(() => {
+              this.getLogs();
+              this.refreshLogsView();
+            }, i * 100);
+          }
         })
       }
     });

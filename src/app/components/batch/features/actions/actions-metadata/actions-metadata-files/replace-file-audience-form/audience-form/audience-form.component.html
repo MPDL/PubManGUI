@@ -1,13 +1,27 @@
 <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1}">
   <div class="col-sm">
-    <select class="form-select" [formControl]="audienceId">
-      <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.ipRanges.singular' | translate }}</option>
+    <select class="form-select" [formControl]="audience" 
+      [ngClass]="{'border border-danger': audience.parent?.pending || audience.parent?.invalid && (audience.parent?.touched || audience.parent?.dirty)}">
+      <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.ipRanges.singular' | translate }}
+      </option>
       @for (ou of ous; track ou) {
-      <option [ngValue]="ou.name"> {{ou.name}}</option>
+      <option [value]="ou.name"> {{ ou.name }}</option>
       }
     </select>
   </div>
+
   <div class="col-sm-1">
-    <pure-add-remove-buttons [index]="index" [del_val]="index === 0 ? 'hidden' : ''" (notice)="add_remove_audience($event)"></pure-add-remove-buttons>
+    <pure-add-remove-buttons [index]="index" [del_val]="(index === 0) ? 'hidden' : ''"
+      [disableAdd]="!audience.valid" (notice)="add_remove_audience($event)">
+    </pure-add-remove-buttons>
+  </div>
+
+</div>
+
+@if (index === index_length -1) {
+<div class="mb-2 row validation-error">
+  <div class="col-sm-6">
+    <pure-validation-error [control]="audience" />
   </div>
 </div>
+}

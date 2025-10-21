@@ -79,6 +79,7 @@ export class ValidationErrorComponent {
       case Errors.SUBJECT_VALUE_NOT_PROVIDED.toString() :
       case Errors.ALT_TITLE_VALUE_NOT_PROVIDED.toString() :
       case Errors.ALT_TITLE_TYPE_NOT_PROVIDED.toString() :
+      case Errors.DEGREE_NOT_PROVIDED.toString() :
       {
 
         return this.translateService.instant('validation.required');
@@ -132,6 +133,8 @@ export class ValidationErrorComponent {
         return this.translateService.instant('validation.forbiddenUrl');
       case Errors.OLD_AND_NEW_ARE_SAME.toString() :
         return this.translateService.instant('validation.notSameValues');
+      case Errors.DUPLICATED_VALUES.toString() :
+        return this.translateService.instant('validation.noDuplicates');      
       default : {
         const errorNumber = parseInt(key);
         if(!isNaN(errorNumber)) {

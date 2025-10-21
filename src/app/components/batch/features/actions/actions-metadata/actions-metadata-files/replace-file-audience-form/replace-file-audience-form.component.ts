@@ -50,12 +50,12 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
   public replaceFileAudienceForm: FormGroup = this.fb.group({
     allowedAudienceIds: this.fb.array([{
-      name: null,
-      id: null,
+      name: [null],
+      id: [null],
       ipRanges: []
-    }], [Validators.required, Validators.minLength(1)])
-  });
-
+    }]
+    )
+  }, { validators: [this.valSvc.noDuplicatesInArray()] });
 
   get allowedAudienceIds() {
     return this.replaceFileAudienceForm.get('allowedAudienceIds') as FormArray<FormControl>;
@@ -79,7 +79,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   addAudience(index: number) {
-    this.allowedAudienceIds.insert(index + 1, this.fb.control('Range'));
+    this.allowedAudienceIds.insert(index + 1, this.fb.control(null));
   }
 
   removeAudience(index: number) {
@@ -108,15 +108,18 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
   }
 
   checkIfAllRequired() {
-    // TODO: check if this is really needed
-    if (this.replaceFileAudienceForm.get('allowedAudienceIds')?.pristine) {
-      this.replaceFileAudienceForm.markAsPending();
+    this.replaceFileAudienceForm.updateValueAndValidity();
+    
+    if (this.replaceFileAudienceForm.get('allowedAudienceIds')?.value.length === 1 && this.replaceFileAudienceForm.get('allowedAudienceIds')?.invalid) {
+      this.replaceFileAudienceForm.get('allowedAudienceIds')?.markAsPending();
     }
   }
 
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
+      this.allowedAudienceIds.clear();
+      this.allowedAudienceIds.push(this.fb.control('null'));
       this.replaceFileAudienceForm.reset();
     }
   }

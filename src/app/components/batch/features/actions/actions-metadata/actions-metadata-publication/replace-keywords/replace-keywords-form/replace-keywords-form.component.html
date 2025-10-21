@@ -5,7 +5,7 @@
     </label>
     <div class="col-sm-9">
       <input class="form-control" formControlName="keywords"
-        [ngClass]="{'border border-danger': replaceKeywordsForm.get('keywords')?.pending}">
+        [ngClass]="{'border border-danger': replaceKeywordsForm.get('keywords')?.pending || replaceKeywordsForm.get('keywords')?.invalid && (replaceKeywordsForm.get('keywords')?.touched || replaceKeywordsForm.get('keywords')?.dirty)}">
     </div>
   </div>
   <div class="mb-2 row validation-error">
