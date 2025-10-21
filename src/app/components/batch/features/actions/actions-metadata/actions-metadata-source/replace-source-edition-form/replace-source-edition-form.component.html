@@ -26,7 +26,8 @@
         {{ 'batch.actions.metadata.source.adjustEdition.to' | translate }}
       </label>
       <div class="col-sm-9">
-        <input class="form-control" formControlName="sourceEdition" [ngClass]="{'border border-danger': replaceSourceEditionForm.get('sourceEdition')?.pending}">
+        <input class="form-control" formControlName="sourceEdition" 
+          [ngClass]="{'border border-danger': replaceSourceEditionForm.get('sourceEdition')?.pending || replaceSourceEditionForm.get('sourceEdition')?.invalid && (replaceSourceEditionForm.get('sourceEdition')?.touched || replaceSourceEditionForm.get('sourceEdition')?.dirty)}">
       </div>
     </div>
     <div class="mb-2 row validation-error">

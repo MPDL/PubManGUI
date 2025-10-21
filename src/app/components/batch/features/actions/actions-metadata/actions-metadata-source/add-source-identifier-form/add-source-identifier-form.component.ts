@@ -35,7 +35,7 @@ export class AddSourceIdentifierFormComponent {
   sourceIdTypes = Object.keys(SourceIdType);
 
   public addSourceIdentifierForm: FormGroup = this.fb.group({
-    sourceNumber: ["1", Validators.required],
+    sourceNumber: ['1', Validators.required],
     sourceIdentifierType: [null, Validators.required],
     sourceIdentifier: [null, [Validators.required, Validators.minLength(1)]]
   });

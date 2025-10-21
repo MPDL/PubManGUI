@@ -10,12 +10,12 @@
   <input class="form-control" type="text" [formControl]="formForPersonsCompleteName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" [placeholder]="'common.autosuggestPlaceholder' | translate" container="body"
-    [ngClass]="{'border border-danger': formForPersonsCompleteName.parent?.pending}"/>
+    [ngClass]="{'border border-danger': formForPersonsCompleteName.parent?.pending || formForPersonsCompleteName.parent?.invalid && (formForPersonsCompleteName.parent?.touched || formForPersonsCompleteName.parent?.dirty)}"/>
   } @else if (formForPersonsGivenName && formForPersonsFamilyName) {
     <input class="form-control {{formForPersonsFamilyName.value ? 'fw-bold' : ''}}" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" [placeholder]="'common.autosuggestPlaceholder' | translate" container="body"
-    [ngClass]="{'border border-danger': formForPersonsFamilyName.parent?.pending}"/>
+    [ngClass]="{'border border-danger': formForPersonsFamilyName.parent?.pending || formForPersonsFamilyName.parent?.invalid && (formForPersonsFamilyName.parent?.touched || formForPersonsFamilyName.parent?.dirty)}"/>
   }
 
   <!--

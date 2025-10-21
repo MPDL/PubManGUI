@@ -13,7 +13,7 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileContentCategoryFrom"
-          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryFrom')?.pending}">
+          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryFrom')?.pending || changeFileContentCategoryForm.get('fileContentCategoryFrom')?.invalid && (changeFileContentCategoryForm.get('fileContentCategoryFrom')?.touched || changeFileContentCategoryForm.get('fileContentCategoryFrom')?.dirty)}">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
             }}</option>
           @for (category of contentCategories; track category) {
@@ -34,7 +34,7 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileContentCategoryTo"
-          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryTo')?.pending}">
+          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryTo')?.pending || changeFileContentCategoryForm.get('fileContentCategoryTo')?.invalid && (changeFileContentCategoryForm.get('fileContentCategoryTo')?.touched || changeFileContentCategoryForm.get('fileContentCategoryTo')?.dirty)}">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
             }}</option>
           @for (category of contentCategories; track category) {
