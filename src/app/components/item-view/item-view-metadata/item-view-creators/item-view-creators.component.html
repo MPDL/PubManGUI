@@ -69,8 +69,9 @@
                 (mouseenter)="highlightAffiliations([i+1])"
                 (mouseleave)="unhighlightAffiliations()">
              <div class="row">
-               <div class="col-1">{{i+1}}</div>
+
                <div class="col">
+                 {{i+1}}
                  {{aff.name}}
                  @if(aff.identifier | empty) {
                    ({{aff.identifier}})
