@@ -4,9 +4,9 @@
       <!-- Wrap welcome + search -->
       <div class="welcome-search-wrapper d-flex flex-column gap-3">
         <div class="infobox bg-light opacity-75 rounded-4 text-secondary-emphasis p-4">
-          <h1 class="mb-1 fw-bold">Welcome to MPG.PuRe</h1>
-          <p class="fs-5">The publication repository of the Max Planck Society</p>
-          <p class="fs-5"><span id="pubCounter" class="fw-bold">0</span> publications available</p>
+          <h1 class="mb-1 fw-bold">{{'Home.welcomeMessage'|translate}}</h1>
+          <p class="fs-5">{{'Home.P'|translate}}</p>
+          <p class="fs-5"><span id="pubCounter" class="fw-bold">{{totalPublications}}</span> {{'Home.p2'|translate}}</p>
         </div>
         <div class="search-wrapper">
           <form>
@@ -25,7 +25,7 @@
 <div class="bg-mpg-blue text-white rounded-4 p-5 mb-4">
   <!-- News Section -->
   <div id="news-section" class="mb-5">
-    <h4>MPG.PuRe News</h4>
+    <h4>MPG.PuRe {{'Home.News'| translate}}</h4>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
       @if(newsItems | async; as blogEntries) {
         @for(blogEntry of blogEntries.slice(0,3); track blogEntry) {
@@ -49,9 +49,9 @@
     </div>
   </div>
 
-  <!-- Latest Releases Section -->
+  <!-- Latest Featured Releases Section -->
   <div id="releases-section">
-    <h4>Latest Featured Releases</h4>
+    <h4>{{'common.latestRelease'| translate}}</h4>
     <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 g-4">
       @if(latestReleasedItems | async; as items) {
         @for(item of items.slice(0,5); track item) {
@@ -81,11 +81,9 @@
 <!-- Document Types Distribution Section -->
 <div class="bg-mpg-blue text-white rounded-4 p-5 mb-4">
 
-
-
   <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col mx-auto text-center">
-              <h4>Document Types Distribution</h4>
+              <h4>{{'Home.chartTitle'|translate}}</h4>
               <canvas id="documentChart"></canvas>
         </div>
   </div>

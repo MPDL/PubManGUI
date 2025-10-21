@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
 import { catchError, map, Observable, of } from "rxjs";
-import { ItemVersionVO } from "../../model/inge";
+import { ItemVersionVO, MdsPublicationGenre } from "../../model/inge";
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AsyncPipe, DatePipe, SlicePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
@@ -11,8 +11,9 @@ import { environment } from "../../../environments/environment";
 import { LoadingComponent } from "../shared/loading/loading.component";
 
 //My Imports
-import { Chart } from 'chart.js/auto';
+import { Chart, Tooltip } from 'chart.js/auto';
 import { CountUp } from 'countup.js';
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-home',
@@ -25,57 +26,30 @@ import { CountUp } from 'countup.js';
     SanitizeHtmlPipe,
     SlicePipe,
     DatePipe,
-    LoadingComponent
+    LoadingComponent,
+    TranslatePipe
   ],
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
   latestReleasedItems: Observable<ItemVersionVO[]> = of([]);
   newsItems: Observable<PuReBlogEntry[]> = of([]);
   newsItemError: boolean = false;
 
-  publications: number = 0;   //Soll diese Hardcode immernoch hier bleiben - nach fetch? (Nein)
-  targetNumber: number = 500000;
-
   formattedPublications: string = '';
 
   documentTypes: { [key: string]: number } = {};
-
+  totalPublications:number =0;
   chart: Chart | undefined;
 
-  constructor(private itemsService: ItemsService, private httpClient: HttpClient) {
+  constructor(private itemsService: ItemsService, private httpClient: HttpClient, private translateService:TranslateService) {
     this.fetchLatestReleasedItems();
     this.loadNewsItems();
   }
 
-ngOnInit(): void {
+  ngOnInit(): void {
   this.loadGenreAggs(); // new method to fetch real chart data
-}
-
-
-  ngAfterViewInit(): void {
-    this.animateCounter();
   }
 
-  animateCounter() {
-    const counter = new CountUp('pubCounter', this.targetNumber, {
-      duration: 2.5,
-      separator: ','
-    });
-
-    if (!counter.error) {
-      counter.start(() => {
-        this.publications = this.targetNumber;
-        this.updateFormattedPublications();
-      });
-    } else {
-      console.error('CountUp error:', counter.error);
-    }
-  }
-
-  updateFormattedPublications() {
-    const numberFormat = new Intl.NumberFormat('en-US');
-    this.formattedPublications = numberFormat.format(this.publications);
-  }
 
   fetchLatestReleasedItems(): void {
     const query = {
@@ -127,6 +101,9 @@ ngOnInit(): void {
 
   loadGenreAggs(): void {
   const agg = {
+    //includes total count in the response
+    track_total_hits: true,
+
     aggs: {
       publications_by_genre: {
         terms: {
@@ -139,6 +116,8 @@ ngOnInit(): void {
   };
 
   this.itemsService.elasticSearch(agg).subscribe(result => {
+
+    this.totalPublications = result.hits.total.value;
     const buckets = result.aggregations['sterms#publications_by_genre'].buckets;
     this.documentTypes = {};
 
@@ -146,12 +125,60 @@ ngOnInit(): void {
       this.documentTypes[bucket.key] = bucket.doc_count;
     });
 
-    // Now draw the chart with real data
+    
     setTimeout(() => this.createChart(), 0);
   });
-}
+  }
 
-  createChart(): void {
+ 
+  createChart(): void{
+  const canvas = document.getElementById('documentChart') as HTMLCanvasElement;
+  let ctx;
+  if (canvas !== null && canvas !== undefined){
+    ctx = canvas.getContext('2d')
+  }if (!ctx){
+    return;
+  }
+
+  const labels = Object.keys(this.documentTypes);
+  const data= Object.values(this.documentTypes);
+
+  this.chart= new Chart(ctx, {
+    type: 'doughnut',
+    data:{ labels: labels.map(label => this.translateService.instant("MdsPublicationGenre." + label).toUpperCase()) , 
+        datasets:[{data,
+        backgroundColor: ['#00C2FF', '#FAD02E', '#7FFFD4', '#FF6B6B', '#A26EFF', '#1F75FE', '#FFA07A'],
+        hoverBackgroundColor: ['#00A0D6', '#E5BA1E ', '#5FEFD0', '#E14C4C', '#8C57E0', '#165EBE', '#FF8C65']
+      }]      
+    },
+
+    options:{
+      plugins:{
+        legend:{
+          labels:{
+            color: "#FFF",  
+          }
+        },
+        tooltip:{
+             // titleColor: 'red',  
+          callbacks:{
+            label:(tooltipItem) =>{
+              const total = data.reduce((sum, val) => sum +val, 0);
+              const value = data[tooltipItem.dataIndex];
+              const percent = ((value / total) *100).toFixed(2);
+              
+              return `${percent}%`;
+            },
+          }
+        }
+      }
+    },
+
+
+  })
+  }
+
+ /* createChart(): void {
     const canvas = document.getElementById('documentChart') as HTMLCanvasElement;
     const ctx = canvas?.getContext('2d');
     if (!ctx) return;
@@ -161,9 +188,7 @@ ngOnInit(): void {
 
     this.chart = new Chart(ctx, {
       type: 'doughnut',
-      data: {
-        labels,
-        datasets: [{
+      data: { labels, datasets: [{
           data,
             backgroundColor: ['#00C2FF', '#FAD02E', '#7FFFD4', '#FF6B6B', '#A26EFF', '#1F75FE', '#FFA07A'],
             hoverBackgroundColor: ['#00A0D6', '#E5BA1E ', '#5FEFD0', '#E14C4C', '#8C57E0', '#165EBE', '#FF8C65']
@@ -175,7 +200,6 @@ ngOnInit(): void {
           legend: {
             labels: {
               color: '#FFF',
-            //  font: { family: 'Poppins', size: 14 }
             }
           },
           tooltip: {
@@ -191,6 +215,8 @@ ngOnInit(): void {
       }
     });
   }
+*/
+
 }
 
 export interface PuReBlogEntry {

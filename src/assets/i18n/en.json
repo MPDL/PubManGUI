@@ -945,5 +945,15 @@
 
     "OPTIMISTIC_LOCKING_ERROR": "The dataset was changed in the meantime",
     "GENERIC_NOT_FOUND": "The object was not found"
+  },
+
+  "Home":{
+    "welcomeMessage": "Welcome to MPG.PuRe",
+    "P":"The publication repository of the Max Planck Society",
+    "p2":"publications available",
+    "News": "News",
+    "Search": "Search",
+    "chartTitle": "Document Types Distribution"
+    
   }
 }

@@ -945,5 +945,14 @@
 
     "OPTIMISTIC_LOCKING_ERROR": "Der Datensatz wurde in der Zwischenzeit geändert",
     "GENERIC_NOT_FOUND": "Das Objekt wurde nicht gefunden"
+  },
+
+  "Home":{
+    "welcomeMessage":"Willkommen auf MPG.PuRe",
+    "P":"Das Publikationsrepositorium der Max-Planck-Gesellschaft",
+    "p2":"Publikationen verfügbar",
+    "News":"Nachrichten",
+    "Search": "Suche",
+    "chartTitle":"Verteilung der Dokumenttypen"
   }
 }
