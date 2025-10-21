@@ -5,13 +5,21 @@
     <div class="row top_nav_pos navbar bg-body" [ngClass]="{ 'scrolled': isScrolled }">
 
       <div class="col-12 d-inline-flex" [ngClass]="this.import.anzImportedItems ? 'justify-content-between': 'justify-content-end' ">
-        @if(this.import.anzImportedItems) {
+        @if(this.import.anzImportedItems && this.filteredSize > 0) {
         <div class="d-inline-flex justify-content-start align-items-center">
+          @if(!this.released) {
           <a id="delete" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.delete' | translate }}" placement="bottom-left" (click)='doDelete();'>
             <span class="material-symbols-outlined">
               delete_forever
             </span>
           </a>
+          } @else {
+            <a class="btn border-0" style="pointer-events: none">
+              <span class="material-symbols-outlined" [ngClass]="{'text-secondary': true}">
+                delete_forever
+              </span>
+            </a>
+          }
           @if(caseSubmit()) {
           <a id="submit" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.submit' | translate }}" placement="bottom-left" (click)='doSubmit();'>
             <span class="material-symbols-outlined">
