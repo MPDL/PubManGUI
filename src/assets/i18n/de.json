@@ -261,6 +261,7 @@
     "fileImport": "Datei Import",
     "fileImport.running": "Bitte warten, es läuft ein Import!",
     "fileImport.upload": "Datei hochladen",
+    "CoNE.note": "Hinweis: Abgleich mit allen CoNE-Einträgen der MPG. Kann sehr wahrscheinlich zu Fehlern führen.",
     "list.details": "Log",
     "list.details.count": "Datensätze importiert",
     "list.details.delete": "Löschen",

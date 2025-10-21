@@ -14,7 +14,7 @@ import { AaService } from 'src/app/services/aa.service';
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
-
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-imports-new-import',
@@ -25,7 +25,8 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     ReactiveFormsModule,
     SeparateFilterPipe,
     TranslatePipe,
-    ValidationErrorComponent
+    ValidationErrorComponent,
+    NgbTooltip
   ],
   templateUrl: './import.component.html',
   styles: [".dropzone { width: 100%; padding: 0.5rem 1.5rem 0.5rem 1.5rem; text-align: center; border: dashed 2px; }"], // TO-DO move to scss

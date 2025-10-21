@@ -261,6 +261,7 @@
     "fileImport": "File Import",
     "fileImport.running": "Please wait, an import is running!",
     "fileImport.upload": "File upload",
+    "CoNE.note": "Note: Matches against all MPG CoNE entries. High risk of errors.",
     "list.details": "Log",
     "list.details.count": "items imported",
     "list.details.delete": "Delete",
