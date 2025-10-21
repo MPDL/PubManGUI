@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AaService } from "../../services/aa.service";
 import {
-  AccountUserDbVO,
+  AccountUserDbVO, AlternativeTitleType,
   AuditDbVO,
   FileDbVO,
   ItemVersionState,
@@ -66,8 +66,7 @@ import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
     LoadingComponent,
     TranslatePipe,
     DatePipe,
-    CopyButtonDirective,
-    NgOptimizedImage
+    CopyButtonDirective
   ],
   templateUrl: './item-view.component.html'
 })
@@ -283,6 +282,12 @@ export class ItemViewComponent {
 
   get externalReferences() {
     return this.item?.files?.filter(f => f.storage === Storage.EXTERNAL_URL);
+  }
+
+  get firstSubtitle() {
+    return this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.SUBTITLE) ||
+    this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.OTHER) ||
+      this.item?.metadata?.alternativeTitles?.at(0);
   }
 
   get isModeratorOrDepositor() {
