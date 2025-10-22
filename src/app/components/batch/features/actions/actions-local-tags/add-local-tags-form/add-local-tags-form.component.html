@@ -13,18 +13,18 @@
         <label class="col-form-label">{{ 'batch.actions.localTags.replace.to' | translate }}</label>
       </div>
       <div class="col-sm-10">
-        <pure-chips [form]="addLocalTagsForm" [chips]="tagsToAdd.value" [control_name]="'localTags'"/>
+        <pure-chips [form]="addLocalTagsForm" [chips]="addLocalTagsForm.get('localTags')?.value" [control_name]="'localTags'"/>
       </div>
     </div>
     <div class="mb-2 row validation-error">
       <div class="offset-sm-2 col-sm-6">
-        <pure-validation-error [control]="addLocalTagsForm"/>
+        <pure-validation-error [control]="addLocalTagsForm.get('localTags')"/>
       </div>
     </div>
 
     <div class="row">
       <div class="offset-sm-11 col-sm-1">
-        <button type="submit" [disabled]="tagsToAdd.value === null || tagsToAdd.value.length === 0 || !addLocalTagsForm.valid" 
+        <button type="submit" [disabled]="!localTags.value || localTags.value.length === 0" 
           class="btn btn-outline-primary float-end">
           GO
         </button>

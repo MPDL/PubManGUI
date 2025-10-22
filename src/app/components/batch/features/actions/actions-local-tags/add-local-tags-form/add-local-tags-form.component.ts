@@ -39,13 +39,13 @@ export class AddLocalTagsFormComponent {
     localTags: this.fb.array([], Validators.required)
   });
 
-  get tagsToAdd() {
+  get localTags() {
     return this.addLocalTagsForm.get('localTags') as FormArray<FormControl<ControlType<string>>>
   }
 
   get addLocalTagsParams(): AddLocalTagsParams {
     const actionParams: AddLocalTagsParams = {
-      localTags: this.addLocalTagsForm.controls['localTags'].value,
+      localTags: this.localTags.value,
       itemIds: []
     }
     return actionParams;
@@ -56,24 +56,12 @@ export class AddLocalTagsFormComponent {
   }
 
   onSubmit(): void {
-    if (this.addLocalTagsForm.valid) {
+    if (this.localTags.value !== null && this.localTags.value.length > 0) {
+      console.log("Submitting form with params:", this.addLocalTagsParams);
       this.batchSvc.addLocalTags(this.addLocalTagsParams).subscribe(actionResponse => {
         this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
         this.router.navigate(['/batch/logs']);
       });
-    }
-  }
-
-  get localTags() {
-    return this.addLocalTagsForm.get('localTags') as FormArray<FormControl<ControlType<string>>>
-  }
-
-  add_remove_local_tag(event: any) {
-    console.log("onEvent");
-    if (event.action === 'add') {
-      this.localTags.insert(event.index + 1, new FormControl());
-    } else if (event.action === 'remove') {
-      this.localTags.removeAt(event.index);
     }
   }
 
