@@ -5,20 +5,11 @@
     </label>
     <div class="col-sm-9">
       <input class="form-control" formControlName="keywords"
-        [ngClass]="{'border border-danger': replaceKeywordsForm.get('keywords')?.pending || replaceKeywordsForm.get('keywords')?.invalid && (replaceKeywordsForm.get('keywords')?.touched || replaceKeywordsForm.get('keywords')?.dirty)}">
+        [class.is-invalid]="replaceKeywordsForm.get('keywords')?.invalid && replaceKeywordsForm.get('keywords')?.touched || replaceKeywordsForm.get('keywords')?.pending">
     </div>
   </div>
   <div class="mb-2 row validation-error">
     <div class="offset-sm-3 col-sm-6">
-      <!--
-      @if(valSvc.notValidField(replaceKeywordsForm.controls['keywords'])) {
-      <span class="form-text text-danger small">
-        {{ valSvc.getErrorMsg(replaceKeywordsForm.controls['keywords']) }}
-      </span>
-      } @else {
-      <span>&nbsp;</span>
-      }
-      -->
       <pure-validation-error [control]="replaceKeywordsForm.get('keywords')"/>
     </div>
   </div>

@@ -9,9 +9,11 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeFileContentCategoryParams } from 'src/app/components/batch/interfaces/batch-params';
 import { ContentCategories } from 'src/app/model/inge';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { _, TranslatePipe } from "@ngx-translate/core";
+import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 
 @Component({
   selector: 'pure-change-file-content-category-form',
@@ -20,6 +22,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
+    SortByLabelPipe,
     ValidationErrorComponent
   ],
   templateUrl: './change-file-content-category-form.component.html',
@@ -29,10 +32,9 @@ export class ChangeFileContentCategoryFormComponent {
   router = inject(Router);
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
-  translateSvc = inject(TranslateService);
   elRef: ElementRef = inject(ElementRef);
 
-  contentCategories = Object.keys(ContentCategories).sort();
+  contentCategories = Object.keys(ContentCategories);
 
   public changeFileContentCategoryForm: FormGroup = this.fb.group({
     fileContentCategoryFrom: [null, [Validators.required]],

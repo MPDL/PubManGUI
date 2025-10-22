@@ -20,10 +20,10 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="genreFrom" 
-          [ngClass]="{'border border-danger': changeGenreForm.get('genreFrom')?.pending || changeGenreForm.get('genreFrom')?.invalid && (changeGenreForm.get('genreFrom')?.touched || changeGenreForm.get('genreFrom')?.dirty)}"
+          [class.is-invalid]="changeGenreForm.get('genreFrom')?.invalid && changeGenreForm.get('genreFrom')?.touched || changeGenreForm.get('genreFrom')?.pending"
           data-test="genre-to-be-replaced">
           <option [value]="null" selected disable hidden>Genre</option>
-          @for (genre of genres; track genre) {
+          @for (genre of (genres | sortByLabel : 'MdsPublicationGenre.'); track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
           }
         </select>
@@ -41,10 +41,10 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="genreTo" 
-          [ngClass]="{'border border-danger': changeGenreForm.get('genreTo')?.pending || changeGenreForm.get('genreTo')?.invalid && (changeGenreForm.get('genreTo')?.touched || changeGenreForm.get('genreTo')?.dirty)}"
+          [class.is-invalid]="changeGenreForm.get('genreTo')?.invalid && changeGenreForm.get('genreTo')?.touched || changeGenreForm.get('genreTo')?.pending"
           data-test="replacing-genre">
           <option [value]="null" selected disable hidden>Genre</option>
-          @for (genre of genres; track genre) {
+          @for (genre of (genres | sortByLabel : 'MdsPublicationGenre.'); track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
           }
         </select>
@@ -64,7 +64,9 @@
         {{ 'batch.actions.genre.change.type' | translate }}
       </label>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="degreeType" [ngClass]="{'text-secondary': changeGenreForm.controls['genreTo'].value !== 'THESIS', 'border border-danger': changeGenreForm.controls['genreTo'].value === 'THESIS' && !changeGenreForm.get('degreeType')?.valid}">
+        <select class="form-select" formControlName="degreeType"
+          [class.is-invalid]="changeGenreForm.controls['genreTo'].value === 'THESIS' && (changeGenreForm.get('degreeType')?.invalid && changeGenreForm.get('degreeType')?.touched || changeGenreForm.get('degreeType')?.pending)" 
+          [ngClass]="{'text-secondary': changeGenreForm.controls['genreTo'].value !== 'THESIS'}">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.genre.change.type' | translate }}</option>
           @for (degreeType of degreeTypes; track degreeType) {
           <option [value]="degreeType">{{ 'DegreeType.' + degreeType | translate }}</option>

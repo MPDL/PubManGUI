@@ -12,7 +12,7 @@
         }}</label>
       <div class="col-sm-9">
         <select id="contextFrom" class="form-select" formControlName="contextFrom"
-          [ngClass]="{'border border-danger': changeContextForm.get('contextFrom')?.pending || changeContextForm.get('contextFrom')?.invalid && (changeContextForm.get('contextFrom')?.touched || changeContextForm.get('contextFrom')?.dirty)}">
+          [class.is-invalid]="changeContextForm.get('contextFrom')?.invalid && changeContextForm.get('contextFrom')?.touched || changeContextForm.get('contextFrom')?.pending">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
@@ -30,7 +30,7 @@
       <label for="contextTo" class="col-sm-3 col-form-label">{{ 'batch.actions.context.change.to' | translate }}</label>
       <div class="col-sm-9">
         <select id="contextTo" class="form-select" formControlName="contextTo"
-          [ngClass]="{'border border-danger': changeContextForm.get('contextTo')?.pending || changeContextForm.get('contextTo')?.invalid && (changeContextForm.get('contextTo')?.touched || changeContextForm.get('contextTo')?.dirty)}">
+          [class.is-invalid]="changeContextForm.get('contextTo')?.invalid && changeContextForm.get('contextTo')?.touched || changeContextForm.get('contextTo')?.pending">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>

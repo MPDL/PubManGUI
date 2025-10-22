@@ -30,12 +30,12 @@
         </label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="sourceIdentifierType" 
-          [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierType')?.pending || changeSourceIdentifierForm.get('sourceIdentifierType')?.invalid && (changeSourceIdentifierForm.get('sourceIdentifierType')?.touched || changeSourceIdentifierForm.get('sourceIdentifierType')?.dirty)}">
+        <select class="form-select" formControlName="sourceIdentifierType"
+          [class.is-invalid]="changeSourceIdentifierForm.get('sourceIdentifierType')?.invalid && changeSourceIdentifierForm.get('sourceIdentifierType')?.touched || changeSourceIdentifierForm.get('sourceIdentifierType')?.pending">
           <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.source.replaceId.default' | translate }}
           </option>
-          @for (type of sourceIdTypes; track type) {
+          @for (type of (sourceIdTypes | sortByLabel : 'SourceIdType.'); track type) {
             <option [value]="type">{{ 'SourceIdType.' + type | translate }}</option>
           }
         </select>
@@ -55,7 +55,7 @@
       </div>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceIdentifierFrom" 
-          [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierFrom')?.pending || changeSourceIdentifierForm.get('sourceIdentifierFrom')?.invalid && (changeSourceIdentifierForm.get('sourceIdentifierFrom')?.touched || changeSourceIdentifierForm.get('sourceIdentifierFrom')?.dirty)}">
+          [class.is-invalid]="changeSourceIdentifierForm.get('sourceIdentifierFrom')?.invalid && changeSourceIdentifierForm.get('sourceIdentifierFrom')?.touched || changeSourceIdentifierForm.get('sourceIdentifierFrom')?.pending">
       </div>
     </div>
     <div class="mb-2 row validation-error">
@@ -72,7 +72,7 @@
       </div>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceIdentifierTo" 
-          [ngClass]="{'border border-danger': changeSourceIdentifierForm.get('sourceIdentifierTo')?.pending || changeSourceIdentifierForm.get('sourceIdentifierTo')?.invalid && (changeSourceIdentifierForm.get('sourceIdentifierTo')?.touched || changeSourceIdentifierForm.get('sourceIdentifierTo')?.dirty)}">
+          [class.is-invalid]="changeSourceIdentifierForm.get('sourceIdentifierTo')?.invalid && changeSourceIdentifierForm.get('sourceIdentifierTo')?.touched || changeSourceIdentifierForm.get('sourceIdentifierTo')?.pending">
       </div>
     </div>
     <div class="mb-2 row validation-error">

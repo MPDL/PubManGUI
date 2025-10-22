@@ -9,6 +9,7 @@ import type { ChangeSourceGenreParams } from 'src/app/components/batch/interface
 import { SourceGenre } from 'src/app/model/inge';
 
 import { TranslatePipe } from "@ngx-translate/core";
+import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 
@@ -20,6 +21,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
+    SortByLabelPipe,
     ValidationErrorComponent
   ],
   templateUrl: './change-source-genre-form.component.html',
@@ -31,7 +33,7 @@ export class ChangeSourceGenreFormComponent {
   batchSvc = inject(BatchService);
   elRef: ElementRef = inject(ElementRef);
 
-  sourceGenres = Object.keys(SourceGenre).sort();
+  sourceGenres = Object.keys(SourceGenre);
 
   public changeSourceGenreForm: FormGroup = this.fb.group({
     sourceGenreFrom: ['Genre', [Validators.required]],

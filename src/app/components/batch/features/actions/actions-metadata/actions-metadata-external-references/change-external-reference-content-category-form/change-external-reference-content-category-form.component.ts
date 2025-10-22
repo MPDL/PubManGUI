@@ -9,7 +9,8 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeExternalReferenceContentCategoryParams } from 'src/app/components/batch/interfaces/batch-params';
 import { ContentCategories } from 'src/app/model/inge';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { _, TranslatePipe } from "@ngx-translate/core";
+import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 
@@ -21,6 +22,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
+    SortByLabelPipe,
     ValidationErrorComponent
   ],
   templateUrl: './change-external-reference-content-category-form.component.html',
@@ -30,9 +32,8 @@ export class ChangeExternalReferenceContentCategoryFormComponent {
   router = inject(Router);
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
-  translateSvc = inject(TranslateService);
 
-  contentCategories = Object.keys(ContentCategories).sort();
+  contentCategories = Object.keys(ContentCategories);
 
   public changeExternalReferenceContentCategoryForm: FormGroup = this.fb.group({
     externalReferenceContentCategoryFrom: [null, [ Validators.required ]],

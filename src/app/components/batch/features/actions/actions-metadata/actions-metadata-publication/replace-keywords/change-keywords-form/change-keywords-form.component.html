@@ -6,21 +6,12 @@
       </label>
     </div>
     <div class="col-sm-9">
-      <input class="form-control" formControlName="keywordsFrom" 
-        [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsFrom')?.pending || changeKeywordsForm.get('keywordsFrom')?.invalid && (changeKeywordsForm.get('keywordsFrom')?.touched || changeKeywordsForm.get('keywordsFrom')?.dirty)}">
+      <input class="form-control" formControlName="keywordsFrom"
+        [class.is-invalid]="changeKeywordsForm.get('keywordsFrom')?.invalid && changeKeywordsForm.get('keywordsFrom')?.touched || changeKeywordsForm.get('keywordsFrom')?.pending"> 
     </div>
   </div>
   <div class="mb-2 row validation-error">
     <div class="offset-sm-3 col-sm-6">
-      <!--
-      @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsFrom'])) {
-      <span class="form-text text-danger small">
-        {{ valSvc.getErrorMsg(changeKeywordsForm.controls['keywordsFrom']) }}
-      </span>
-      } @else {
-      <span>&nbsp;</span>
-      }
-      -->
       <pure-validation-error [control]="changeKeywordsForm.get('keywordsFrom')"/>
     </div>
   </div>
@@ -33,23 +24,11 @@
     </div>
     <div class="col-sm-9">
       <input class="form-control" formControlName="keywordsTo" 
-        [ngClass]="{'border border-danger': changeKeywordsForm.get('keywordsTo')?.pending || changeKeywordsForm.get('keywordsTo')?.invalid && (changeKeywordsForm.get('keywordsTo')?.touched || changeKeywordsForm.get('keywordsTo')?.dirty)}">
+        [class.is-invalid]="changeKeywordsForm.get('keywordsTo')?.invalid && changeKeywordsForm.get('keywordsTo')?.touched || changeKeywordsForm.get('keywordsTo')?.pending"> 
     </div>
   </div>
   <div class="mb-2 row validation-error">
     <div class="offset-sm-3 col-sm-6">
-      <!--
-      @if(valSvc.notValidField(changeKeywordsForm.controls['keywordsTo'])) {
-      <span class="form-text text-danger small">
-        {{ valSvc.getErrorMsg(changeKeywordsForm.controls['keywordsTo']) }}
-      </span>
-      } @else if(changeKeywordsForm.hasError('notEquals')) {
-        <span class="form-text text-danger small">
-          {{ 'batch.actions.metadata.publication.keywordsReplace.invalid' | translate }} {{ valSvc.getErrorMsg(changeKeywordsForm) }}
-        </span>
-      } @else {
-      <span>&nbsp;</span>
-      }-->
       <pure-validation-error [control]="changeKeywordsForm.get('keywordsTo')"/>
       <pure-validation-error [control]="changeKeywordsForm"/>
     </div>

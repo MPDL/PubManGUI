@@ -13,10 +13,10 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileContentCategoryFrom"
-          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryFrom')?.pending || changeFileContentCategoryForm.get('fileContentCategoryFrom')?.invalid && (changeFileContentCategoryForm.get('fileContentCategoryFrom')?.touched || changeFileContentCategoryForm.get('fileContentCategoryFrom')?.dirty)}">
+          [class.is-invalid]="changeFileContentCategoryForm.get('fileContentCategoryFrom')?.invalid && changeFileContentCategoryForm.get('fileContentCategoryFrom')?.touched || changeFileContentCategoryForm.get('fileContentCategoryFrom')?.pending">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
             }}</option>
-          @for (category of contentCategories; track category) {
+          @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
           <option [value]="category"> {{ 'ContentCategories.' + category | translate}}</option>
           }
         </select>
@@ -34,10 +34,10 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileContentCategoryTo"
-          [ngClass]="{'border border-danger': changeFileContentCategoryForm.get('fileContentCategoryTo')?.pending || changeFileContentCategoryForm.get('fileContentCategoryTo')?.invalid && (changeFileContentCategoryForm.get('fileContentCategoryTo')?.touched || changeFileContentCategoryForm.get('fileContentCategoryTo')?.dirty)}">
+          [class.is-invalid]="changeFileContentCategoryForm.get('fileContentCategoryTo')?.invalid && changeFileContentCategoryForm.get('fileContentCategoryTo')?.touched || changeFileContentCategoryForm.get('fileContentCategoryTo')?.pending">
           <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
             }}</option>
-          @for (category of contentCategories; track category) {
+          @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
           <option [value]="category"> {{ 'ContentCategories.' + category | translate}}</option>
           }
         </select>

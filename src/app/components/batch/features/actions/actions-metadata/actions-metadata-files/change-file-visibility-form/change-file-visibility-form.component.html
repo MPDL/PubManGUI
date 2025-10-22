@@ -12,8 +12,8 @@
         <label class="col-form-label">{{ 'batch.actions.metadata.files.visibility.from' | translate }}</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="fileVisibilityFrom" 
-          [ngClass]="{'border border-danger': changeFileVisibilityForm.get('fileVisibilityFrom')?.pending || changeFileVisibilityForm.get('fileVisibilityFrom')?.invalid && (changeFileVisibilityForm.get('fileVisibilityFrom')?.touched || changeFileVisibilityForm.get('fileVisibilityFrom')?.dirty)}">
+        <select class="form-select" formControlName="fileVisibilityFrom"
+          [class.is-invalid]="changeFileVisibilityForm.get('fileVisibilityFrom')?.invalid && changeFileVisibilityForm.get('fileVisibilityFrom')?.touched || changeFileVisibilityForm.get('fileVisibilityFrom')?.pending">
           <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
           @for (fileVisibility of visibility; track fileVisibility) {
           <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>
@@ -32,8 +32,8 @@
         <label class="col-form-label">{{ 'batch.actions.metadata.files.visibility.to' | translate }}</label>
       </div>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="fileVisibilityTo" 
-          [ngClass]="{'border border-danger': changeFileVisibilityForm.get('fileVisibilityTo')?.pending || changeFileVisibilityForm.get('fileVisibilityTo')?.invalid && (changeFileVisibilityForm.get('fileVisibilityTo')?.touched || changeFileVisibilityForm.get('fileVisibilityTo')?.dirty)}">
+        <select class="form-select" formControlName="fileVisibilityTo"
+          [class.is-invalid]="changeFileVisibilityForm.get('fileVisibilityTo')?.invalid && changeFileVisibilityForm.get('fileVisibilityTo')?.touched || changeFileVisibilityForm.get('fileVisibilityTo')?.pending">
           <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.files.visibility' | translate }}</option>
           @for (fileVisibility of visibility; track fileVisibility) {
           <option [value]="fileVisibility"> {{ 'Visibility.' + fileVisibility | translate }}</option>

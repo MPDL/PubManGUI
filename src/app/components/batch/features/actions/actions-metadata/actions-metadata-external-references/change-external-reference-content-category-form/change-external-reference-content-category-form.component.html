@@ -14,11 +14,11 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryFrom"
-                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.pending || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.invalid && (changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.dirty)}">
+                    [class.is-invalid]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.invalid && changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.pending">
                     <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
                         translate }}
                     </option>
-                    @for (category of contentCategories; track category) {
+                    @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
                     <option [value]="category"> {{ 'ContentCategories.' + category | translate }}</option>
                     }
                 </select>
@@ -26,15 +26,6 @@
         </div>
         <div class="mb-3 row validation-error">
             <div class="offset-sm-3 col-sm-6">
-                <!--
-                @if(valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryFrom'])) {
-                <span class="form-text text-danger small">
-                    {{ valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryFrom']) }}
-                </span>
-                } @else {
-                <span>&nbsp;</span>
-                }
-                -->
                 <pure-validation-error [control]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')"/>
             </div>
         </div>
@@ -46,11 +37,11 @@
             </div>
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryTo"
-                    [ngClass]="{'border border-danger': changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.pending || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.invalid && (changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.dirty)}">
+                    [class.is-invalid]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.invalid && changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.pending">
                     <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
                         translate }}
                     </option>
-                    @for (category of contentCategories; track category) {
+                    @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
                     <option [value]="category"> {{ 'ContentCategories.' + category | translate }}</option>
                     }
                 </select>
@@ -58,24 +49,6 @@
         </div>
         <div class="mb-3 row validation-error">
             <div class="offset-sm-3 col-sm-6">
-                <!--
-                @if
-                (valSvc.notValidField(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo']))
-                {
-                <span class="form-text text-danger small">
-                    {{
-                    valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm.controls['externalReferenceContentCategoryTo'])
-                    }}
-                </span>
-                } @else if(changeExternalReferenceContentCategoryForm.hasError('notEquals')) {
-                <span class="form-text text-danger small">
-                    {{ 'batch.actions.metadata.extRef.contentCategory.invalid' | translate }} {{
-                    valSvc.getErrorMsg(changeExternalReferenceContentCategoryForm) }}
-                </span>
-                } @else {
-                <span>&nbsp;</span>
-                }
-                -->
                 <pure-validation-error [control]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')"/>
                 <pure-validation-error [control]="changeExternalReferenceContentCategoryForm"/>
             </div>

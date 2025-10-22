@@ -11,7 +11,7 @@ import type { PostImportParams } from 'src/app/components/imports/interfaces/imp
 import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 
 import { AaService } from 'src/app/services/aa.service';
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { _, TranslatePipe } from "@ngx-translate/core";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
@@ -37,7 +37,6 @@ export default class ImportComponent implements OnInit {
   router = inject(Router);
   fb = inject(FormBuilder);
   aaSvc = inject(AaService);
-  translateService = inject(TranslateService);
   elRef: ElementRef = inject(ElementRef);
 
   formatObject: any = null;

@@ -12,7 +12,7 @@
         {{ 'batch.actions.metadata.publication.keywordsAdd.to' | translate }}</label>
       <div class="col-sm-9">
         <textarea class="form-control" formControlName="keywords"
-          [ngClass]="{'border border-danger': addKeywordsForm.get('keywords')?.pending || addKeywordsForm.get('keywords')?.invalid && (addKeywordsForm.get('keywords')?.touched || addKeywordsForm.get('keywords')?.dirty)}"></textarea>
+          [class.is-invalid]="addKeywordsForm.get('keywords')?.invalid && addKeywordsForm.get('keywords')?.touched || addKeywordsForm.get('keywords')?.pending"></textarea>
       </div>
     </div>
     <div class="mb-2 row validation-error">

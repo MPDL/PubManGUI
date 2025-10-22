@@ -10,8 +10,10 @@ import type { ChangeGenreParams } from 'src/app/components/batch/interfaces/batc
 import { DegreeType, MdsPublicationGenre } from 'src/app/model/inge';
 
 import { TranslatePipe } from "@ngx-translate/core";
+import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+
 
 @Component({
   selector: 'pure-batch-change-genre',
@@ -20,6 +22,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
+    SortByLabelPipe,
     ValidationErrorComponent
   ],
   templateUrl: './change-genre.component.html',
@@ -30,7 +33,7 @@ export class ActionsGenreComponent {
   batchSvc = inject(BatchService);
   valSvc = inject(BatchValidatorsService);
 
-  genres = Object.keys(MdsPublicationGenre).sort();
+  genres = Object.keys(MdsPublicationGenre);
   degreeTypes = Object.keys(DegreeType);
 
   public changeGenreForm: FormGroup = this.fb.group({

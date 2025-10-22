@@ -11,10 +11,10 @@ import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeContextParams } from 'src/app/components/batch/interfaces/batch-params';
 import { AaService } from 'src/app/services/aa.service';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { _, TranslatePipe } from "@ngx-translate/core";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
-import { BootstrapValidationDirective } from 'src/app/directives/bootstrap-validation.directive';
+
 
 @Component({
   selector: 'pure-batch-change-context',
@@ -34,7 +34,6 @@ export class ActionsContextComponent implements OnInit {
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
   aaSvc = inject(AaService);
-  translateSvc = inject(TranslateService);
 
   user_contexts?: ContextDbRO[] = [];
 

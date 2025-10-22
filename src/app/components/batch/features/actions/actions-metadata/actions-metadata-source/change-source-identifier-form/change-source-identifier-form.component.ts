@@ -10,7 +10,8 @@ import { BatchValidatorsService } from 'src/app/components/batch/services/batch-
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import type { ChangeSourceIdentifierParams } from 'src/app/components/batch/interfaces/batch-params';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { _, TranslatePipe } from "@ngx-translate/core";
+import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
 
 import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
 
@@ -22,6 +23,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
+    SortByLabelPipe,    
     ValidationErrorComponent
   ],
   templateUrl: './change-source-identifier-form.component.html',
@@ -31,7 +33,6 @@ export class ChangeSourceIdentifierFormComponent {
   fb = inject(FormBuilder);
   valSvc = inject(BatchValidatorsService);
   batchSvc = inject(BatchService);
-  translateSvc = inject(TranslateService);
   elRef: ElementRef = inject(ElementRef);
 
   sourceIdTypes = Object.keys(SourceIdType);

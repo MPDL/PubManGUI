@@ -17,9 +17,9 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceGenreFrom" 
-          [ngClass]="{'border border-danger': changeSourceGenreForm.get('sourceGenreFrom')?.pending || changeSourceGenreForm.get('sourceGenreFrom')?.invalid && (changeSourceGenreForm.get('sourceGenreFrom')?.touched || changeSourceGenreForm.get('sourceGenreFrom')?.dirty)}">
+          [class.is-invalid]="changeSourceGenreForm.get('sourceGenreFrom')?.invalid && changeSourceGenreForm.get('sourceGenreFrom')?.touched || changeSourceGenreForm.get('sourceGenreFrom')?.pending">
           <option [value]="null" selected disabled hidden>Genre</option>
-          @for (genre of sourceGenres; track genre) {
+          @for (genre of (sourceGenres | sortByLabel : 'SourceGenre.'); track genre) {
             <option [value]="genre">{{ 'SourceGenre.' + genre | translate }}</option>
           }
         </select>
@@ -39,9 +39,9 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="sourceGenreTo" 
-          [ngClass]="{'border border-danger': changeSourceGenreForm.get('sourceGenreTo')?.pending || changeSourceGenreForm.get('sourceGenreTo')?.invalid && (changeSourceGenreForm.get('sourceGenreTo')?.touched || changeSourceGenreForm.get('sourceGenreTo')?.dirty)}">
+          [class.is-invalid]="changeSourceGenreForm.get('sourceGenreTo')?.invalid && changeSourceGenreForm.get('sourceGenreTo')?.touched || changeSourceGenreForm.get('sourceGenreTo')?.pending">
           <option [value]="null" selected disabled hidden>Genre</option>
-          @for (genre of sourceGenres; track genre) {
+          @for (genre of (sourceGenres | sortByLabel : 'SourceGenre.'); track genre) {
             <option [value]="genre"> {{ 'SourceGenre.' + genre | translate }}</option>
           }
         </select>

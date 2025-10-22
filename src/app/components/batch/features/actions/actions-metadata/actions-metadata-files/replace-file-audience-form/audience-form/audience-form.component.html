@@ -1,7 +1,7 @@
 <div class="d-sm-flex flex-sm-row gap-1 align-items-center" [ngClass]="{'mb-1': index !== index_length -1}">
   <div class="col-sm">
     <select class="form-select" [formControl]="audience" 
-      [ngClass]="{'border border-danger': audience.parent?.pending || audience.parent?.invalid && (audience.parent?.touched || audience.parent?.dirty)}">
+      [class.is-invalid]="audience.parent?.invalid && audience.parent?.touched || audience.parent?.pending">
       <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.ipRanges.singular' | translate }}
       </option>
       @for (ou of ous; track ou) {

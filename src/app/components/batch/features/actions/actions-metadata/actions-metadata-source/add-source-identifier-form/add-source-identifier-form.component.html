@@ -20,10 +20,10 @@
     <div class="row">
       <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.source.addId.type' | translate }}</label>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="sourceIdentifierType" 
-          [ngClass]="{'border border-danger': addSourceIdentifierForm.get('sourceIdentifierType')?.pending || addSourceIdentifierForm.get('sourceIdentifierType')?.invalid && (addSourceIdentifierForm.get('sourceIdentifierType')?.touched || addSourceIdentifierForm.get('sourceIdentifierType')?.dirty)}">
+        <select class="form-select" formControlName="sourceIdentifierType"
+          [class.is-invalid]="addSourceIdentifierForm.get('sourceIdentifierType')?.invalid && addSourceIdentifierForm.get('sourceIdentifierType')?.touched || addSourceIdentifierForm.get('sourceIdentifierType')?.pending">
           <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.source.addId.default' | translate }}</option>
-          @for (type of sourceIdTypes; track type) {
+          @for (type of (sourceIdTypes | sortByLabel : 'SourceIdType.'); track type) {
             <option [value]="type">{{ 'SourceIdType.' + type | translate }}</option>
           }
         </select>
@@ -39,7 +39,7 @@
       <label class="col-sm-3 col-form-label">{{ 'batch.actions.metadata.source.addId.to' | translate }}</label>
       <div class="col-sm-9">
         <input class="form-control" formControlName="sourceIdentifier" 
-          [ngClass]="{'border border-danger': addSourceIdentifierForm.get('sourceIdentifier')?.pending || addSourceIdentifierForm.get('sourceIdentifier')?.invalid && (addSourceIdentifierForm.get('sourceIdentifier')?.touched || addSourceIdentifierForm.get('sourceIdentifier')?.dirty)}">
+          [class.is-invalid]="addSourceIdentifierForm.get('sourceIdentifier')?.invalid && addSourceIdentifierForm.get('sourceIdentifier')?.touched || addSourceIdentifierForm.get('sourceIdentifier')?.pending">
       </div>
     </div>
     <div class="mb-2 row validation-error">

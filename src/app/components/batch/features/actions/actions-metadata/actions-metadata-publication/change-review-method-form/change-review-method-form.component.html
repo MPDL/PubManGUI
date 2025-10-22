@@ -17,7 +17,7 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="reviewMethodFrom"
-          [ngClass]="{'border border-danger': changeReviewMethodForm.get('reviewMethodFrom')?.pending || changeReviewMethodForm.get('reviewMethodFrom')?.invalid && (changeReviewMethodForm.get('reviewMethodFrom')?.touched || changeReviewMethodForm.get('reviewMethodFrom')?.dirty)}">
+          [class.is-invalid]="changeReviewMethodForm.get('reviewMethodFrom')?.invalid && changeReviewMethodForm.get('reviewMethodFrom')?.touched || changeReviewMethodForm.get('reviewMethodFrom')?.pending">
           <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
@@ -42,7 +42,7 @@
       </div>
       <div class="col-sm-9">
         <select class="form-select" formControlName="reviewMethodTo"
-          [ngClass]="{'border border-danger': changeReviewMethodForm.get('reviewMethodTo')?.pending || changeReviewMethodForm.get('reviewMethodTo')?.invalid && (changeReviewMethodForm.get('reviewMethodTo')?.touched || changeReviewMethodForm.get('reviewMethodTo')?.dirty)}">
+          [class.is-invalid]="changeReviewMethodForm.get('reviewMethodTo')?.invalid && changeReviewMethodForm.get('reviewMethodTo')?.touched || changeReviewMethodForm.get('reviewMethodTo')?.pending">
           <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
