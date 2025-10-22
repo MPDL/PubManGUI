@@ -150,6 +150,7 @@
 <pure-item-view-metadata-element [condition]="
  (item.metadata?.languages?.length | empty) ||
  (item.metadata?.totalNumberOfPages | empty) ||
+ (item.metadata?.duration | empty) ||
  (item.metadata?.publishingInfo | empty) ||
  (item.metadata?.reviewMethod | empty) ||
  (item.metadata?.identifiers?.length | empty)
@@ -168,6 +169,12 @@
       <span label>{{ 'MetadataFields.numberOfPages' | translate }}</span>
         <span content>
           {{ item.metadata?.totalNumberOfPages }}
+        </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.duration | empty)">
+      <span label>{{ 'MetadataFields.duration' | translate }}</span>
+        <span content>
+          {{ item.metadata?.duration }}
         </span>
     </pure-item-view-metadata-element>
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.reviewMethod | empty)">

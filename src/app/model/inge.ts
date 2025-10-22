@@ -193,6 +193,7 @@ export interface MdsPublicationVO extends MetadataSetVO, Cloneable {
     subjects?: SubjectVO[];
     tableOfContents?: string;
     totalNumberOfPages?: string;
+    duration?: string;
     abstracts?: AbstractVO[];
     projectInfo?: ProjectInfoVO[];
 }
