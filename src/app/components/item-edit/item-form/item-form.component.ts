@@ -477,15 +477,6 @@ export class ItemFormComponent implements OnInit {
       alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
       return;
     }
-    //To test error handling
-    //this.form_2_submit.metadata.title = null;
-
-
-    if(saveType !== "save" && !this.anyDirty) {
-      //skip save as nothing was edited
-      this.openActionsModal(saveType, this.form_2_submit)
-      return;
-    }
 
     // submit form
     this.saveInProgress = true;
