@@ -59,7 +59,7 @@ export default class ImportDetailsListComponent implements OnInit {
   problem: number = 0;
   warning: number = 0;
 
-  released: boolean = false;
+  released: boolean = false; // INGUI-127: Flag to indicate if import has been released
 
   public filterForm: FormGroup = this.fb.group({
     fine: [true, Validators.requiredTrue],
@@ -121,15 +121,18 @@ export default class ImportDetailsListComponent implements OnInit {
                 this.fatal++;
                 break;
             }
+            /* Check if import has been released. See INGUI-127 */
+            /*
             if (this.released === false && 
               ( element.message === "import_process_release_successful" || 
                 element.message === "import_process_submit_release_successful" ||
-                element.message === "import_process_release_finished" ||  // INGUI-127 ?
-                element.message === "import_process_submit_release_finished" // INGUI-127 ?
+                element.message === "import_process_release_finished" ||  //  ?
+                element.message === "import_process_submit_release_finished" // ?
               )) {
               console.log("Import released detected in log items.");
               this.released = true;
             }
+            */
           });
 
         this.filteredLogs = this.unfilteredLogs = importsResponse;
