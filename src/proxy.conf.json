@@ -5,7 +5,7 @@
     "logLevel": "debug"
   },
   "/rest": {
-    "target": "http://localhost:8080",
+    "target": "https://gui.inge.mpdl.mpg.de",
     "secure": false,
     "logLevel": "debug"
   },
