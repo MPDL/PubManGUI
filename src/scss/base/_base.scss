@@ -72,3 +72,8 @@ ngb-typeahead-window {
     //text-overflow: ellipsis;
   }
 }
+.accordion {
+  .accordion-button {
+    box-shadow: none !important;
+  }
+}

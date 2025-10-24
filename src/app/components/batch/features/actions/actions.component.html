@@ -1,14 +1,14 @@
 <div class="batch col-lg-12 col-sm-12">
   @if (isReady) {
-  <div class="actions mt-5">
+  <div class="actions mt-4">
     <span>
       {{ 'batch.actions.info' | translate }}
     </span>
 
     <div class="mt-5">
       <div class="accordion accordion-flush" id="accordionActions">
-        <div class="accordion-item">
-          <h3 class="accordion-header border-0" id="headingItemState">
+        <div class="accordion-item border-0">
+          <h3 class="accordion-header" id="headingItemState">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapseItemState" aria-expanded="true" aria-controls="collapseItemState">
               <span class="float-start ps-2">{{ 'batch.actions.item.state' | translate }}</span>
@@ -23,8 +23,8 @@
         </div>
 
 
-        <div class="accordion-item">
-          <h3 class="accordion-header border-0" id="headingContext">
+        <div class="accordion-item border-0">
+          <h3 class="accordion-header mt-1" id="headingContext">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapseContext" aria-expanded="false" aria-controls="collapseContext">
               <span class="float-start ps-2">{{ 'batch.actions.context' | translate }}</span>
@@ -41,8 +41,8 @@
         </div>
 
 
-        <div class="accordion-item">
-          <h3 class="accordion-header border-0" id="headingTags">
+        <div class="accordion-item border-0">
+          <h3 class="accordion-header mt-1" id="headingTags">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
               <span class="float-start ps-2">{{ 'batch.actions.localTags' | translate }}</span>
@@ -59,8 +59,8 @@
         </div>
 
 
-        <div class="accordion-item">
-          <h3 class="accordion-header border-0" id="headingGenre">
+        <div class="accordion-item border-0">
+          <h3 class="accordion-header mt-1" id="headingGenre">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapseGenre" aria-expanded="false" aria-controls="collapseGenre">
               <span class="float-start ps-2">{{ 'batch.actions.genre' | translate }}</span>
@@ -77,8 +77,8 @@
         </div>
 
 
-        <div class="accordion-item">
-          <h3 class="accordion-header border-0" id="headingMetadata">
+        <div class="accordion-item border-0">
+          <h3 class="accordion-header mt-1" id="headingMetadata">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapseMetadata" aria-expanded="false" aria-controls="collapseMetadata">
               <span class="float-start ps-2">{{ 'batch.actions.metadata' | translate }}</span>
@@ -86,7 +86,7 @@
           </h3>
           <div id="collapseMetadata" class="accordion-collapse collapse" aria-labelledby="headingMetadata"
             data-bs-parent="#accordionActions">
-            <div class="accordion-body bg-body p-0 my-3">
+            <div class="accordion-body bg-body p-0 my-2">
               @defer {
               <pure-batch-actions-metadata />
               }
