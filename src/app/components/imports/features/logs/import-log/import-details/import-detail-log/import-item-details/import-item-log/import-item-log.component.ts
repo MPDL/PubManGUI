@@ -11,6 +11,7 @@ import xmlFormat from 'xml-formatter';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
 
 
 @Component({
@@ -20,7 +21,8 @@ import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
     CommonModule,
     SeparateFilterPipe,
     NgbCollapseModule,
-    TranslatePipe
+    TranslatePipe,
+    LocalizeDatePipe
   ],
   templateUrl: './import-item-log.component.html'
 })
