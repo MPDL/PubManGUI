@@ -106,12 +106,8 @@ export class MetadataFormComponent implements OnInit {
 
   allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
-<<<<<<< HEAD
   degree_types = Object.keys(DegreeType);
   subject_classification_types :string[] = [];
-=======
-  subject_classification_types: string[] = [];
->>>>>>> item-edit
   error_types = Errors;
 
   multipleCreators = new FormControl<string>('');
