@@ -542,7 +542,8 @@
                     data-bs-target="#accordionBodySourcesGroup"
                     [attr.aria-expanded]="!genreSpecificResource.value().properties.sources.optional"
                     aria-controls="accordionBodySourcesGroup"
-                    [ngClass]="{'collapsed' : genreSpecificResource.value().properties.sources.optional}">
+                    [ngClass]="{'collapsed' : genreSpecificResource.value().properties.sources.optional}"
+                    (click)="addSourceOnExpand($event)">
                   {{ 'MetadataFields.source' | translate }}
                 </button>
             </h2>
