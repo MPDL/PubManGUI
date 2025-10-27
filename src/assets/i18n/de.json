@@ -843,7 +843,8 @@
   "Edit": {
     "addMultipleCreators": "Mehrere Autoren hinzufügen (Copy-Paste)",
     "validationErrorsExist": "Validierungsfehler! Bitte beheben Sie alle Fehler vor dem Einstellen oder Freigeben.",
-    "validForSave": "Sie können den Datensatz speichern."
+    "validForSave": "Sie können den Datensatz speichern.",
+    "doiConformationMessage": "Mit dem nächsten Schritt ermächtigen Sie die Max Planck Digital Library, einen DataCite DOI (Digital Object Identifier) für diese in MPG.PuRe verzeichnete Publikation zu registrieren.<br/><br/>Die DOI-Registrierung kann nicht rückgängig gemacht werden. Deshalb bitten wir Sie, diese Funktion mit Bedacht und nur dann zu verwenden, wenn Sie sich der daraus entstehenden Konsequenzen bewusst sind.<br/><br/>Im Besonderen bestätigen Sie mit dieser DOI-Registrierung die wissenschaftliche Qualität des Inhalts, sowie die Tatsache, dass dieser Publikation bisher weder von Seiten der MPG, noch von einer anderen Stelle ein DOI zugewiesen worden ist. Nähere Informationen zu diesen Anforderungen finden Sie <a href=\"https://doi.mpdl.mpg.de/faq/#req\" target=\"_blank\">hier</a>.<br/><br/>Darüber hinaus stimmen Sie zu, dass die URL des MPG.PuRe-Datensatzes sowie die bibliografischen Metadaten zum Zwecke der DOI-Registrierung an die Technische Informationsbibliothek (TIB) Hannover übermittelt werden dürfen."
   },
   "backendValidation": {
     "AlternativeTitleNotProvided": "Fehlende Nachricht (keine entsprechende deutsche Übersetzung gefunden)",

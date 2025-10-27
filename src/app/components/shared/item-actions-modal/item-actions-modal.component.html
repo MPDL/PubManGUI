@@ -26,6 +26,10 @@
     <p class="small" [innerHTML]="'common.releaseExportControl' | translate"></p>
   }
 
+  @if (action==='addDoi') {
+    <p class="small" [innerHTML]="'Edit.doiConformationMessage' | translate"></p>
+  }
+
   @if(action !== 'delete' && action !== 'addDoi' && action !== 'rollback') {
 
       <div class="form-group mb-2">
@@ -43,6 +47,8 @@
         <pure-validation-error [control]="inputCommentControl.control"/>
       </div>
   }
+
+
 
   @if(colorClass === 'danger') {
     <p class="text-danger">{{'common.actionWarning' | translate}}</p>
