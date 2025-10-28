@@ -665,7 +665,7 @@ export class ItemSearchAdvancedComponent {
 
     this.scListToElasticSearchQuery(this.prepareQuery())
       .subscribe(query => {
-        this.matomoTracker.trackSiteSearch("", "advanced")
+        this.matomoTracker.trackSiteSearch("ADVANCED_SEARCH", "advanced")
         this.searchStateService.type="advanced";
         this.searchStateService.$currentQuery.next(query);
         this.router.navigateByUrl('/search')

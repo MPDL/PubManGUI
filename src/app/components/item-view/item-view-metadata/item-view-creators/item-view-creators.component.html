@@ -42,7 +42,7 @@
                 <span class="small"> ({{'CreatorRoles.' + author.role | translate}})</span>
               }
               @else {
-                {{ author?.organization?.name }}
+                {{ author?.organization?.name }}{{ author?.organization?.address ? ', ' + author.organization?.address : '' }}
               }
             </div>
           }
@@ -72,9 +72,9 @@
 
                <div class="col">
                  {{i+1}}
-                 {{aff.name}}
+                 {{aff.name}}{{aff.address ? ', ' + aff.address : ''}}
                  @if(aff.identifier | empty) {
-                   ({{aff.identifier}})
+
                    <span class="me-2">
                       <button class="btn btn-link p-0"
                               (click)="toggleAffPopover(aff)">
