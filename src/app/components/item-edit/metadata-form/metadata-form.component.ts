@@ -1,6 +1,6 @@
-import { Component, effect, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import {
   AbstractVO,
@@ -18,6 +18,7 @@ import {
   PublishingInfoVO,
   ReviewMethod,
   SourceVO,
+  SubjectClassification,
   SubjectVO
 } from 'src/app/model/inge';
 import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
@@ -108,7 +109,7 @@ export class MetadataFormComponent implements OnInit {
   allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
   degree_types = Object.keys(DegreeType);
-  subject_classification_types: string[] = [];
+  subject_classification_types = signal<string[]>(Object.keys(SubjectClassification));
   error_types = Errors;
 
   multipleCreators = new FormControl<string>('');
@@ -245,8 +246,11 @@ export class MetadataFormComponent implements OnInit {
           });
         }
         if (resultContext.allowedSubjectClassifications) {
-          this.subject_classification_types = resultContext.allowedSubjectClassifications.sort();
-          console.log('Updated subject_classification_types', this.subject_classification_types)
+          this.subject_classification_types.set(resultContext.allowedSubjectClassifications.sort());
+          console.log('Updated subject_classification_types', this.subject_classification_types())
+        } else {
+          this.subject_classification_types.set([]);
+          console.log('Updated subject_classification_types', this.subject_classification_types())
         }
       });
     }
@@ -444,13 +448,13 @@ export class MetadataFormComponent implements OnInit {
 
   removeEmptySources() {
     for (let i = this.sources.length - 1; i >= 0; i--) {
-        const sourceFormGroup = this.sources.at(i) as FormGroup;
-        console.log(sourceFormGroup.value);
-        console.log("sourceFormGroup EMPTY Check", isControlValueEmpty(sourceFormGroup))
-        if (sourceFormGroup.pristine && isControlValueEmpty(sourceFormGroup)) {
-          this.sources.removeAt(i);
-        }
+      const sourceFormGroup = this.sources.at(i) as FormGroup;
+      console.log(sourceFormGroup.value);
+      console.log("sourceFormGroup EMPTY Check", isControlValueEmpty(sourceFormGroup))
+      if (sourceFormGroup.pristine && isControlValueEmpty(sourceFormGroup)) {
+        this.sources.removeAt(i);
       }
+    }
   }
 
   dropCreator(event: CdkDragDrop<string[]>) {

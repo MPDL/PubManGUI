@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
 import { Errors } from 'src/app/model/errors';
@@ -28,7 +28,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
 })
 export class SubjectFormComponent {
   @Input() subject_form!: FormGroup;
-  @Input() subject_classification_types!: string[];
+  @Input() subject_classification_types!: Signal<string[]>;
   @Input() index!: number;
   @Input() index_length!: number;
   @Input() multi !: boolean;
@@ -39,13 +39,14 @@ export class SubjectFormComponent {
   miscellaneousService = inject(MiscellaneousService);
 
 
-  ngOnInit() {
-
+  constructor() {
     //set type value to null if type does not exist, e.g. because the context was changed before
-    const type = this.subject_form.get('type')?.value;
-    if(type && !this.subject_classification_types.includes(type)) {
-      this.subject_form.get("type")?.setValue(null);
-    }
+    effect(() => {
+      const type = this.subject_form.get('type')?.value;
+      if (type && !this.subject_classification_types().includes(type)) {
+        this.subject_form.get("type")?.setValue(null);
+      }
+    });
   }
 
   add_remove_subject(event: any) {
