@@ -11,9 +11,10 @@
                 </button>
             </h2>
             <div id="accordionBodyStandardGroup" class="accordion-collapse collapse show">
-                <div class="accordion-body mt-3 mb-3">
+                <div class="accordion-body my-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                        <label for="genre" class="col-sm-2 col-form-label">{{ 'MetadataFields.genre' | translate }}</label>
+                        <label for="genre" class="col-sm-2 col-form-label">{{ 'MetadataFields.genre' | translate
+                            }}</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
@@ -33,7 +34,7 @@
                                             }}
                                         </optgroup>
                                     </select>
-                                  <!--
+                                    <!--
                                     @if (meta_form.get('genre')?.hasError('required')) {
                                     <div class="pure-invalid">{{ 'validation.required' | translate}}</div>
                                     }
@@ -51,13 +52,12 @@
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                 <div class="col-sm">
-                                  <select id="degree" class="form-select" formControlName="degree"
-                                           data-test="degree">
-                                    <option [ngValue]="null" selected disabled>-</option>
-                                     @for(deg of degree_types; track deg) {
-                                       <option [ngValue]="deg">{{'DegreeType.' + deg | translate}}</option>
-                                     }
-                                  </select>
+                                    <select id="degree" class="form-select" formControlName="degree" data-test="degree">
+                                        <option [ngValue]="null" selected disabled>-</option>
+                                        @for(deg of degree_types; track deg) {
+                                        <option [ngValue]="deg">{{'DegreeType.' + deg | translate}}</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="col-sm-1">
                                     <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
@@ -67,7 +67,8 @@
                     </div>
                     <div
                         [ngClass]="genreSpecificResource.value().properties.item_basic_item_title.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
-                        <label for="title" class="col-sm-2 col-form-label">{{ 'MetadataFields.title' | translate }}</label>
+                        <label for="title" class="col-sm-2 col-form-label">{{ 'MetadataFields.title' | translate
+                            }}</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
@@ -83,7 +84,8 @@
                     </div>
                     <div
                         [ngClass]="genreSpecificResource.value().properties.item_basic_item_title_alternative.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                        <label for="alt_titles" class="col-sm-2 col-form-label">{{ 'MetadataFields.alternativeTitle' | translate }}</label>
+                        <label for="alt_titles" class="col-sm-2 col-form-label">{{ 'MetadataFields.alternativeTitle' |
+                            translate }}</label>
                         <div class="col-sm">
                             <ng-container formArrayName="alternativeTitles">
                                 @for (alt of alternativeTitles.controls; track alt; let ati = $index) {
@@ -93,7 +95,8 @@
                                         (notice)="handleAltTitleNotification($event)"></pure-alt-title-form>
                                 </ng-container>
                                 } @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
+                                    [add_val]="'common.add' | translate" [addIconAndText]="true"
                                     (notice)="handleAltTitleNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -105,27 +108,28 @@
 
 
         <!--GROUP Creator-->
-      @if(genreSpecificResource.value().properties.creator_person_organization.display)
-      {
-        <div  id="creators-metadata" class="accordion-item border-0">
+        @if(genreSpecificResource.value().properties.creator_person_organization.display)
+        {
+        <div id="creators-metadata" class="accordion-item border-0">
             <h2 class="accordion-header mt-2">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyCreatorGroup" aria-expanded="true"
                     aria-controls="accordionBodyCreatorGroup">
-                  {{ 'MetadataFields.personsOrganizations' | translate }}
+                    {{ 'MetadataFields.personsOrganizations' | translate }}
                 </button>
             </h2>
             <div id="accordionBodyCreatorGroup" class="accordion-collapse collapse show">
-                <div class="accordion-body mt-3 mb-3">
+                <div class="accordion-body my-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                        <label for="creatures" class="col-sm-2 col-form-label">{{ 'MetadataFields.creators' | translate }}</label>
+                        <label for="creatures" class="col-sm-2 col-form-label">{{ 'MetadataFields.creators' | translate
+                            }}</label>
                         <div class="col-sm">
                             <!-- TODO Add many -->
                             <div class="d-sm-flex flex-sm-row gap-1 pt-1 mb-3">
                                 <button class="ms-sm-1 btn btn-sm btn-link" type="button"
                                     (click)="openAddMultipleCreatorsModal()" [ngClass]="{'disabled ': loading}">{{
                                     'Edit.addMultipleCreators' | translate
-                                  }}
+                                    }}
                                     @if(loading)
                                     {
                                     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -134,7 +138,7 @@
                                 </button>
                             </div>
                             <hr />
-                          <!--
+                            <!--
                             @if(meta_form.errors?.[error_types.ORGANIZATIONAL_METADATA_NOT_PROVIDED]) {
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                                 <div class="pure-invalid">{{ 'validation.minOneAffForCreator' | translate }}</div>
@@ -154,7 +158,8 @@
                                     } @empty {
                                     <div class="col-sm">
                                         <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                                            [add_val]="'common.add' | translate" (notice)="handleCreatorNotification($event)" [addIconAndText]="true"
+                                            [add_val]="'common.add' | translate"
+                                            (notice)="handleCreatorNotification($event)" [addIconAndText]="true"
                                             data-test="add-remove-creators"></pure-add-remove-buttons>
                                     </div>
                                     }
@@ -165,7 +170,7 @@
                 </div>
             </div>
         </div>
-      }
+        }
 
         <!--GROUP Dates-->
         <div id="dates-metadata" class="accordion-item border-0"
@@ -174,18 +179,18 @@
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyDatesGroup" aria-expanded="true"
                     aria-controls="accordionBodyDatesGroup">
-                  {{ 'MetadataFields.date' | translate }}
+                    {{ 'MetadataFields.date' | translate }}
                 </button>
             </h2>
             <div id="accordionBodyDatesGroup" class="accordion-collapse collapse show">
-                <div class="accordion-body mt-3 mb-3">
+                <div class="accordion-body my-3">
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                         <label class="col-sm-2 col-form-label">{{ 'MetadataFields.date' | translate }}</label>
                         <div class="col-sm">
 
                             @if(meta_form.hasError(error_types.DATE_NOT_PROVIDED.toString())) {
-                              <pure-validation-error [validationError]="{'13' : true}" [onlyForTouched]="false"/>
-                              <!--
+                            <pure-validation-error [validationError]="{'13' : true}" [onlyForTouched]="false" />
+                            <!--
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-end">
                                 <div class="pure-invalid" role="alert">{{ 'validation.minOneDate' | translate }}</div>
                             </div>
@@ -194,8 +199,9 @@
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_issued.display}">
-                                    <label class="col-form-label">{{ 'MetadataFields.datePublishedInPrint' | translate }}</label>
-                                  <!--
+                                    <label class="col-form-label">{{ 'MetadataFields.datePublishedInPrint' | translate
+                                        }}</label>
+                                    <!--
                                   @if(meta_form.get('datePublishedInPrint')?.hasError('pattern')) {
                                     <div class="pure-invalid">{{ 'validation.invalidDateFormat' | translate }}</div>
                                     }
@@ -205,58 +211,62 @@
                                 </div>
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_published_online.display}">
-                                    <label class="col-form-label">{{ 'MetadataFields.datePublishedOnline' | translate }}</label>
-                                  <!--
+                                    <label class="col-form-label">{{ 'MetadataFields.datePublishedOnline' | translate
+                                        }}</label>
+                                    <!--
                                   @if(meta_form.get('datePublishedOnline')?.hasError('pattern')) {
                                     <div class="pure-invalid">{{ 'validation.invalidDateFormat' | translate }}</div>
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="datePublishedOnline"
-                                           [placeholder]="'common.dateFormat' | translate">
+                                        [placeholder]="'common.dateFormat' | translate">
                                 </div>
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_accepted.display}">
-                                    <label class="col-form-label">{{ 'MetadataFields.dateAccepted' | translate }}</label>
-                                  <!--
+                                    <label class="col-form-label">{{ 'MetadataFields.dateAccepted' | translate
+                                        }}</label>
+                                    <!--
                                   @if(meta_form.get('dateAccepted')?.hasError('pattern')) {
                                     <div class="pure-invalid">{{ 'validation.invalidDateFormat' | translate }}</div>
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateAccepted"
-                                           [placeholder]="'common.dateFormat' | translate">
+                                        [placeholder]="'common.dateFormat' | translate">
                                 </div>
                                 <div class="col-sm-2"
                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_submitted.display}">
-                                    <label class="col-form-label">{{ 'MetadataFields.dateSubmitted' | translate }}</label>
-                                  <!--
+                                    <label class="col-form-label">{{ 'MetadataFields.dateSubmitted' | translate
+                                        }}</label>
+                                    <!--
                                   @if(meta_form.get('dateSubmitted')?.hasError('pattern')) {
                                     <div class="pure-invalid">{{ 'validation.invalidDateFormat' | translate }}</div>
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateSubmitted"
-                                           [placeholder]="'common.dateFormat' | translate" >
+                                        [placeholder]="'common.dateFormat' | translate">
                                 </div>
                             </div>
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
                                 <div class="col-sm-2">
                                     <label class="col-form-label">{{ 'MetadataFields.dateCreated' | translate }}</label>
-                                  <!--
+                                    <!--
                                   @if(meta_form.get('dateCreated')?.hasError('pattern')) {
                                     <div class="pure-invalid">{{ 'validation.invalidDateFormat' | translate }}</div>
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateCreated"
-                                           [placeholder]="'common.dateFormat' | translate" data-test="date-created" >
+                                        [placeholder]="'common.dateFormat' | translate" data-test="date-created">
                                 </div>
                                 <div class="col-sm-2">
-                                    <label class="col-form-label">{{ 'MetadataFields.dateModified' | translate }}</label>
-                                  <!--
+                                    <label class="col-form-label">{{ 'MetadataFields.dateModified' | translate
+                                        }}</label>
+                                    <!--
                                   @if(meta_form.get('dateModified')?.hasError('pattern')) {
                                     <div class="pure-invalid">{{ 'validation.invalidDateFormat' | translate }}</div>
                                     }
                                     -->
                                     <input type="text" class="form-control" formControlName="dateModified"
-                                           [placeholder]="'common.dateFormat' | translate" >
+                                        [placeholder]="'common.dateFormat' | translate">
                                 </div>
                             </div>
                             <div class="col-sm-1">
@@ -275,14 +285,15 @@
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyDetailsGroup" aria-expanded="true"
                     aria-controls="accordionBodyDetailsGroup">
-                  {{ 'MetadataFields.details' | translate }}
+                    {{ 'MetadataFields.details' | translate }}
                 </button>
             </h2>
             <div id="accordionBodyDetailsGroup" class="accordion-collapse collapse">
-                <div class="accordion-body mt-3 mb-3">
+                <div class="accordion-body my-3">
                     <div
                         [ngClass]="genreSpecificResource.value().properties.details_item_language.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
-                        <label for="languages" class="col-sm-2 col-form-label">{{ 'MetadataFields.languages' | translate }}</label>
+                        <label for="languages" class="col-sm-2 col-form-label">{{ 'MetadataFields.languages' | translate
+                            }}</label>
                         <div class="col-sm" id="languages">
                             <ng-container formArrayName="languages">
                                 @for (language of languages.controls; track languageIndex; let languageIndex = $index) {
@@ -293,7 +304,8 @@
                                 </ng-container>
                                 }
                                 @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
+                                    [add_val]="'common.add' | translate" [addIconAndText]="true"
                                     (notice)="handleLanguageNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -301,7 +313,8 @@
                     </div>
                     <div
                         [ngClass]="genreSpecificResource.value().properties.details_total_number_of_pages.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                        <label class="col-sm-2 col-form-label">{{ 'MetadataFields.totalNumberOfPages' | translate }}</label>
+                        <label class="col-sm-2 col-form-label">{{ 'MetadataFields.totalNumberOfPages' | translate
+                            }}</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
@@ -315,14 +328,16 @@
                     </div>
                     <div
                         [ngClass]="genreSpecificResource.value().properties.details_review_method.display ? 'd-sm-flex flex-sm-row gap-1 mb-1 align-items-center' : 'd-none'">
-                        <label for="reviewMethod" class="col-sm-2 col-form-label">{{ 'MetadataFields.reviewMethod' | translate }}</label>
+                        <label for="reviewMethod" class="col-sm-2 col-form-label">{{ 'MetadataFields.reviewMethod' |
+                            translate }}</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
                                     <select id="reviewMethod" class="form-select" formControlName="reviewMethod">
                                         <option [ngValue]="null">-</option>
                                         @for (review_method of review_method_types; track review_method) {
-                                        <option [value]="review_method">{{'ReviewMethod.' + review_method | translate}}</option>
+                                        <option [value]="review_method">{{'ReviewMethod.' + review_method | translate}}
+                                        </option>
                                         }
                                     </select>
                                 </div>
@@ -334,7 +349,8 @@
                     </div>
                     <div
                         [ngClass]="genreSpecificResource.value().properties.details_publishing_info.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                        <label for="reviewMethod" class="col-sm-2 col-form-label">{{ 'MetadataFields.publishingInfo' | translate }}</label>
+                        <label for="reviewMethod" class="col-sm-2 col-form-label">{{ 'MetadataFields.publishingInfo' |
+                            translate }}</label>
                         <div class="col-sm">
                             <pure-publishing-info-form
                                 [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
@@ -370,7 +386,8 @@
                                 </ng-container>
                                 }
                                 @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
+                                    [add_val]="'common.add' | translate" [addIconAndText]="true"
                                     (notice)="handleIdentifierNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -388,7 +405,7 @@
                         <div
                             [ngClass]="genreSpecificResource.value().properties.content_item_abstract.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
                             <label for="abstracts" class="col-sm-2 col-form-label">{{abstractIndex + 1}}.
-                              {{ 'MetadataFields.abstract' | translate }}</label>
+                                {{ 'MetadataFields.abstract' | translate }}</label>
                             <div class="col-sm" id="abstract">
                                 <ng-container [formGroupName]="abstractIndex">
                                     <pure-abstract-form [abstract_form]="abstract" [index]="abstractIndex"
@@ -401,12 +418,14 @@
                         </div>
                         }
                         @empty {
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
+                            [addIconAndText]="true"
                             (notice)="handleAbstractNotification($event)"></pure-add-remove-buttons>
                         }
                     </ng-container>
                     <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                        <label for="freeKeywords" class="col-sm-2 col-form-label">{{ 'MetadataFields.keywords' | translate }}</label>
+                        <label for="freeKeywords" class="col-sm-2 col-form-label">{{ 'MetadataFields.keywords' |
+                            translate }}</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
@@ -421,7 +440,8 @@
                     </div>
                     <div
                         [ngClass]="genreSpecificResource.value().properties.content_item_subject.display && (subject_classification_types.length > 0 || subjects.controls.length > 0) ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                      <label for="subjects" class="col-sm-2 col-form-label">{{ 'MetadataFields.subjects' | translate }}</label>
+                        <label for="subjects" class="col-sm-2 col-form-label">{{ 'MetadataFields.subjects' | translate
+                            }}</label>
                         <div class="col-sm" id="subjects">
                             <ng-container formArrayName="subjects">
                                 @for (subject of subjects.controls; track subjectIndex; let subjectIndex = $index) {
@@ -433,7 +453,8 @@
                                 </ng-container>
                                 }
                                 @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
+                                    [add_val]="'common.add' | translate" [addIconAndText]="true"
                                     (notice)="handleSubjectNotification($event)"></pure-add-remove-buttons>
                                 }
                             </ng-container>
@@ -441,7 +462,8 @@
                     </div>
                     <div
                         [ngClass]="genreSpecificResource.value().properties.details_item_toc.display ? 'd-sm-flex flex-sm-row gap-1 mb-1' : 'd-none'">
-                        <label for="tableOfContents" class="col-sm-2 col-form-label">{{ 'MetadataFields.tableOfContents' | translate }}</label>
+                        <label for="tableOfContents" class="col-sm-2 col-form-label">{{ 'MetadataFields.tableOfContents'
+                            | translate }}</label>
                         <div class="col-sm">
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
                                 <div class="col-sm">
@@ -465,11 +487,11 @@
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyEventGroup" aria-expanded="true"
                     aria-controls="accordionBodyEventGroup">
-                  {{ 'MetadataFields.event' | translate }}
+                    {{ 'MetadataFields.event' | translate }}
                 </button>
             </h2>
             <div id="accordionBodyEventGroup" class="accordion-collapse">
-                <div class="accordion-body mt-3 mb-3">
+                <div class="accordion-body my-3">
                     <pure-event-form [event_form]="event"></pure-event-form>
                 </div>
             </div>
@@ -478,11 +500,11 @@
         <!--GROUP Project Info-->
         <div id="project-metadata" class="accordion-item border-0"
             [ngClass]="{'d-none' : !genreSpecificResource.value().properties.project_info.display}">
-            <h2 class="accordion-header mt-2">
+            <h2 class="accordion-header my-2">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyProjectInfoGroup" aria-expanded="true"
                     aria-controls="accordionBodyProjectInfoGroup">
-                  {{ 'MetadataFields.projectInfo' | translate }}
+                    {{ 'MetadataFields.projectInfo' | translate }}
                 </button>
             </h2>
             <div id="accordionBodyProjectInfoGroup" class="accordion-collapse collapse">
@@ -491,10 +513,10 @@
                     @for (projectInfoElement of projectInfo.controls; track projectInfoElement; let
                     projectInfoIndex =
                     $index) {
-                    <div class="accordion-body mt-3 mb-3">
+                    <div class="accordion-body my-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label for="projectInfos" class="col-sm-2 col-form-label">{{projectInfoIndex + 1}}.
-                              {{ 'MetadataFields.projectInfo' | translate }}</label>
+                                {{ 'MetadataFields.projectInfo' | translate }}</label>
                             <div class="col-sm" id="projectInfo">
                                 <ng-container [formGroupName]="projectInfoIndex">
                                     <pure-project-info-form [project_info_form]="projectInfoElement"
@@ -507,8 +529,9 @@
                     </div>
                     }
                     @empty {
-                    <div class="accordion-body mt-3 mb-3">
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                    <div class="accordion-body my-3">
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
+                            [addIconAndText]="true"
                             (notice)="handleProjectInfoNotification($event)"></pure-add-remove-buttons>
                     </div>
                     }
@@ -524,11 +547,11 @@
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#accordionBodyLegalCaseGroup" aria-expanded="true"
                     aria-controls="accordionBodyLegalCaseGroup">
-                  {{ 'MetadataFields.legalCase' | translate }}
+                    {{ 'MetadataFields.legalCase' | translate }}
                 </button>
             </h2>
             <div id="accordionBodyLegalCaseGroup" class="accordion-collapse collapse">
-                <div class="accordion-body mt-3 mb-3">
+                <div class="accordion-body my-3">
                     <pure-legal-case-form [legal_case_form]="legalCase"></pure-legal-case-form>
                 </div>
             </div>
@@ -544,7 +567,7 @@
                     aria-controls="accordionBodySourcesGroup"
                     [ngClass]="{'collapsed' : genreSpecificResource.value().properties.sources.optional}"
                     (click)="addSourceOnExpand($event)">
-                  {{ 'MetadataFields.source' | translate }}
+                    {{ 'MetadataFields.source' | translate }}
                 </button>
             </h2>
             <div id="accordionBodySourcesGroup" class="accordion-collapse collapse"
@@ -552,19 +575,19 @@
                 @if(meta_form.hasError(error_types.SOURCE_NOT_PROVIDED.toString())) {
                 <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                     <div class="col-auto">
-                      <pure-validation-error [validationError]="{'21' : true}" [onlyForTouched]="false"/>
+                        <pure-validation-error [validationError]="{'21' : true}" [onlyForTouched]="false" />
                     </div>
                 </div>
                 }
                 <ng-container formArrayName="sources">
                     @for (source of sources.controls; track source; let sourcesIndex = $index) {
-                     @if(sourcesIndex > 0) {
-                       <hr/>
-                     }
-                    <div class="accordion-body mt-3 mb-3">
+                    @if(sourcesIndex > 0) {
+                    <hr />
+                    }
+                    <div class="accordion-body my-3">
                         <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                             <label for="sources" class="col-sm-2 col-form-label">{{sourcesIndex + 1}}.
-                              {{ 'MetadataFields.source' | translate }}</label>
+                                {{ 'MetadataFields.source' | translate }}</label>
                             <div class="col-sm">
                                 <pure-source-form [source_form]="source" [index]="sourcesIndex"
                                     [index_length]="sources.controls.length"
@@ -573,8 +596,9 @@
                         </div>
                     </div>
                     } @empty {
-                    <div class="accordion-body mt-3 mb-3">
-                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                    <div class="accordion-body my-3">
+                        <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
+                            [addIconAndText]="true"
                             (notice)="handleSourceNotification($event)"></pure-add-remove-buttons>
                     </div>
                     }
