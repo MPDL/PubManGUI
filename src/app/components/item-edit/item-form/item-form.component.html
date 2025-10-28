@@ -1,226 +1,244 @@
 @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator)
 {
-  <pure-item-badges [item]="item" [showVersion]="true" [showMetadata]="false"></pure-item-badges>
+<pure-item-badges [item]="item" [showVersion]="true" [showMetadata]="false"></pure-item-badges>
 <div class="container-fluid">
-    <form [formGroup]="form" >
-      <!-- context selection only for new items -->
-        <div class="d-sm-flex flex-sm-row gap-1 mb-3 mt-2 px-3 align-items-center" formGroupName="context">
-           @if(isNewItem) {
-          <label for="context" class="col-sm-2 col-form-label">{{ 'MetadataFields.context' | translate }}</label>
-            <div class="col-sm">
-                <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                    <div class="col-sm">
-                        <select id="contextFromSelect" class="form-select" formControlName="objectId"
-                            data-test="context" (change)="context_change(contextFromSelect.value)" #contextFromSelect>
-                            <option [ngValue]="null" selected disabled>Context</option>
-                            @for (contextObject of user_contexts; track contextObject) {
-                            <option [value]="contextObject.objectId">{{contextObject.name}}</option>
-                            }
-                        </select>
+  <form [formGroup]="form">
+    <!-- context selection only for new items -->
+    <div class="d-sm-flex flex-sm-row gap-1 mb-3 mt-2 px-3 align-items-center" formGroupName="context">
+      @if(isNewItem) {
+      <label for="context" class="col-sm-2 col-form-label">{{ 'MetadataFields.context' | translate }}</label>
+      <div class="col-sm">
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+          <div class="col-sm">
+            <select id="contextFromSelect" class="form-select" formControlName="objectId" data-test="context"
+              (change)="context_change(contextFromSelect.value)" #contextFromSelect>
+              <option [ngValue]="null" selected disabled>Context</option>
+              @for (contextObject of user_contexts; track contextObject) {
+              <option [value]="contextObject.objectId">{{contextObject.name}}</option>
+              }
+            </select>
 
-                    </div>
+          </div>
 
-                    <div class="col-sm-1">
+          <div class="col-sm-1">
 
-                        <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
-                    </div>
-                </div>
-            </div>
-           }
-          @else {
-            <div>
-              <h5 class="d-inline align-middle me-2">{{context.get('name')?.value}}</h5>
-              <!--
+            <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+          </div>
+        </div>
+      </div>
+      }
+      @else {
+      <div>
+        <h5 class="d-inline align-middle me-2">{{context.get('name')?.value}}</h5>
+        <!--
               <button class="btn btn-sm btn-outline-secondary" (click)="openChangeContextModal()">
                 {{'common.changeContext' | translate}}
               </button>
               -->
-            </div>
-          }
-
-
-        </div>
-        <!--<div class="row g-1 mb-1">-->
-        <pure-metadata-form [meta_form]="metadata_form" [context]="context" (notice)="handleNotification($event)">
-        </pure-metadata-form>
-        <!--</div>-->
-
-      @if(genreSpecificResource.value()) {
-        <div class="accordion" id="accordionPanelsMetadata" [class.d-none] = "!genreSpecificResource?.value()?.properties?.files?.display">
-            <!--GROUP Files-->
-            <div class="accordion-item border-0">
-                <h2 class="accordion-header">
-                    <button class="accordion-button rounded-0 collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#accordionBodyFilesGroup" aria-expanded="true"
-                        aria-controls="accordionBodyFilesGroup">
-                      {{ 'MetadataFields.filesLocators' | translate }}
-                    </button>
-                </h2>
-                <div id="accordionBodyFilesGroup" class="accordion-collapse collapse show">
-
-                  @let filesAvailable = internalFiles && internalFiles.controls.length > 0;
-
-                    <div class="accordion-body mt-3 mb-3">
-                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-
-                          <div class="col-sm-2">
-                            <label class="col-form-label small">{{ 'common.files' | translate }}</label>
-                            @if (filesAvailable) {
-                            <div class="form-check form-switch small py-1">
-                              <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
-                                     [checked]="switchFileSortingMode" (change)="changeSortingMode()">
-                              <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
-                            </div>
-                            }
-                          </div>
-
-                        <div class="col-sm">
-                          @if(filesAvailable) {
-                            <div cdkDropList class="col-sm drag-list" (cdkDropListDropped)="dropInternalFiles($event)">
-                                @for (file of internalFiles.controls; track file; let
-                                fileIndex = $index) {
-                                <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                                    <div cdkDrag class="col-sm drag-list-box"> <!-- (cdkDragMoved)="onDragMove($event)" -->
-                                        <pure-file-form [file_form]="file" [index]="fileIndex"
-                                            [index_length]="internalFiles.controls.length"
-                                            (notice)="handleInternalFileNotification($event)"></pure-file-form>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <pure-add-remove-buttons [index]="fileIndex" [hiddenAddButton]="true"
-                                            (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
-                                    </div>
-                                </div>
-                                  <hr/>
-                                }
-                                @empty {
-                                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
-                                    (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
-                                }
-                            </div>
-                          }
-
-
-                          <div class="col-sm-10">
-                            <pure-file-upload
-                                              (fileUploadNotice)="handleFileUploadNotification($event)"></pure-file-upload>
-                          </div>
-
-                        </div>
-                        </div>
-                    </div>
-
-
-                  <hr/>
-
-                  @let locatorsAvailable = externalReferences && externalReferences.controls.length > 0;
-                    <div class="accordion-body mt-3 mb-3">
-                        <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                          <div class="col-sm-2">
-                            <label class="col-form-label">{{ 'common.links' | translate }}</label>
-                            @if(locatorsAvailable) {
-                              <div class="form-check form-switch small">
-                                <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
-                                       [checked]="switchFileSortingMode" (change)="changeSortingMode()">
-                                <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
-                              </div>
-                            }
-                          </div>
-
-
-                        <div class="col-sm">
-                          @if (locatorsAvailable) {
-                            <div cdkDropList class="col-sm drag-list"
-                                (cdkDropListDropped)="dropExternalReferences($event)">
-                                @for (externalUrl of externalReferences.controls; track externalUrl; let
-                                externalUrlIndex = $index) {
-                                <div class="d-sm-flex flex-sm-row gap-1 mb-1">
-                                    <div class="col-sm drag-list-box" cdkDrag>
-                                        <pure-file-form [file_form]="externalUrl" [index]="externalUrlIndex"
-                                            [index_length]="externalReferences.controls.length"
-                                            (notice)="handleExternalReferenceNotification($event)"></pure-file-form>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <pure-add-remove-buttons [index]="externalUrlIndex"
-                                            (notice)="handleExternalReferenceNotification($event)"></pure-add-remove-buttons>
-                                    </div>
-                                </div>
-                                  <hr/>
-                                }
-                            </div>
-                          }
-                          @else {
-                            <pure-add-remove-buttons [index]="0" [del_val]="'hidden'"
-                                                     [add_val]="'common.add' | translate" [addIconAndText]="true"
-                                                     (notice)="handleNoExternalReferences()"></pure-add-remove-buttons>
-                          }
-                        </div>
-                    </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-      } @else {
-        <pure-loading></pure-loading>
+      </div>
       }
 
-        <div class="d-sm-flex flex-sm-row gap-1 mb-3 px-3">
-            <label for="title" class="col-sm-2 col-form-label">{{ 'MetadataFields.localTags' | translate }}</label>
-            <div class="col-sm">
-                <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-                    <div class="col-sm">
-                        <pure-chips [form]="form" [chips]="localTags.value" [control_name]="'localTags'"></pure-chips>
+
+    </div>
+    <!--<div class="row g-1 mb-1">-->
+    <pure-metadata-form [meta_form]="metadata_form" [context]="context" (notice)="handleNotification($event)">
+    </pure-metadata-form>
+    <!--</div>-->
+
+    @if(genreSpecificResource.value()) {
+    <div class="accordion" id="accordionPanelsMetadata"
+      [class.d-none]="!genreSpecificResource?.value()?.properties?.files?.display">
+      <!--GROUP Files-->
+      <div class="accordion-item border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button rounded-0 collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#accordionBodyFilesGroup" aria-expanded="true" aria-controls="accordionBodyFilesGroup">
+            {{ 'MetadataFields.filesLocators' | translate }}
+          </button>
+        </h2>
+        <div id="accordionBodyFilesGroup" class="accordion-collapse collapse show">
+
+          @let filesAvailable = internalFiles && internalFiles.controls.length > 0;
+
+          <div class="accordion-body mt-3 mb-3">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+
+              <div class="col-sm-2">
+                <label class="col-form-label small">{{ 'common.files' | translate }}</label>
+                @if (filesAvailable) {
+                <div class="form-check form-switch small py-1">
+                  <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
+                    [checked]="switchFileSortingMode" (change)="changeSortingMode()">
+                  <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
+                </div>
+                }
+              </div>
+
+              <div class="col-sm">
+                @if(filesAvailable) {
+                <div cdkDropList class="col-sm drag-list" (cdkDropListDropped)="dropInternalFiles($event)">
+                  @for (file of internalFiles.controls; track file; let
+                  fileIndex = $index) {
+                  <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                    <div cdkDrag class="col-sm drag-list-box"> <!-- (cdkDragMoved)="onDragMove($event)" -->
+                      <pure-file-form [file_form]="file" [index]="fileIndex"
+                        [index_length]="internalFiles.controls.length"
+                        (notice)="handleInternalFileNotification($event)"></pure-file-form>
                     </div>
                     <div class="col-sm-1">
-                        <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+                      <pure-add-remove-buttons [index]="fileIndex" [hiddenAddButton]="true"
+                        (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
                     </div>
-                </div>
-            </div>
-        </div>
-        <hr />
-       @if(!allValid ){
-         <div class="alert" [class.alert-danger]="!allValid && !validForSave" [class.alert-warning]="!allValid && validForSave" >
-           {{ 'Edit.validationErrorsExist' | translate }}
-           @if(validForSave) {
-             <br/>{{ 'Edit.validForSave' | translate }}
-           }
-         </div>
-       }
-        <div class="d-sm-flex flex-sm-row mb-3 px-3 justify-content-end">
-            <div class="col-auto">
-                <button class="btn btn-primary me-3" id="save" type="button" value="save" data-test="save" (click)="submit('save')" [disabled]="!validForSave || saveInProgress">
-                  @if(saveInProgress) {
-                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                    <span class="visually-hidden" role="status">Loading...</span>
+                  </div>
+                  <hr />
                   }
-                  {{'common.save' | translate}}</button>
-                @if (authorizationInfo && authorizationInfo.actions['SUBMIT']) {
-                <button class="btn btn-primary me-3" id="submit" type="button" value="submit" (click)="submit('submit')" [disabled]="!allValid || saveInProgress">
-                  {{'common.submit' | translate}}
-                </button>
+                  @empty {
+                  <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
+                    [addIconAndText]="true" (notice)="handleInternalFileNotification($event)"></pure-add-remove-buttons>
+                  }
+                </div>
                 }
-                @if (authorizationInfo && authorizationInfo.actions['RELEASE']) {
-                <button class="btn btn-primary" id="release" type="button" value="release" (click)="submit('release')" [disabled]="!allValid || saveInProgress">
-                  {{'common.release' | translate}}
-                </button>
-                }
+
+
+                <div class="col-sm-10">
+                  <pure-file-upload (fileUploadNotice)="handleFileUploadNotification($event)"></pure-file-upload>
+                </div>
+
+              </div>
             </div>
+          </div>
+
+
+          <hr />
+
+          @let locatorsAvailable = externalReferences && externalReferences.controls.length > 0;
+          <div class="accordion-body mt-3 mb-3">
+            <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+              <div class="col-sm-2">
+                <label class="col-form-label">{{ 'common.links' | translate }}</label>
+                @if(locatorsAvailable) {
+                <div class="form-check form-switch small">
+                  <input class="form-check-input" type="checkbox" role="switch" id="switchSortFiles"
+                    [checked]="switchFileSortingMode" (change)="changeSortingMode()">
+                  <label class="form-check-label" for="switchSortFiles">Sort Mode</label>
+                </div>
+                }
+              </div>
+
+
+              <div class="col-sm">
+                @if (locatorsAvailable) {
+                <div cdkDropList class="col-sm drag-list" (cdkDropListDropped)="dropExternalReferences($event)">
+                  @for (externalUrl of externalReferences.controls; track externalUrl; let
+                  externalUrlIndex = $index) {
+                  <div class="d-sm-flex flex-sm-row gap-1 mb-1">
+                    <div class="col-sm drag-list-box" cdkDrag>
+                      <pure-file-form [file_form]="externalUrl" [index]="externalUrlIndex"
+                        [index_length]="externalReferences.controls.length"
+                        (notice)="handleExternalReferenceNotification($event)"></pure-file-form>
+                    </div>
+                    <div class="col-sm-1">
+                      <pure-add-remove-buttons [index]="externalUrlIndex"
+                        (notice)="handleExternalReferenceNotification($event)"></pure-add-remove-buttons>
+                    </div>
+                  </div>
+                  <hr />
+                  }
+                </div>
+                }
+                @else {
+                <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
+                  [addIconAndText]="true" (notice)="handleNoExternalReferences()"></pure-add-remove-buttons>
+                }
+              </div>
+            </div>
+          </div>
+
+
         </div>
-    </form>
+      </div>
+    </div>
+    } @else {
+    <pure-loading></pure-loading>
+    }
+
+    <div class="d-sm-flex flex-sm-row gap-1 mb-3 px-3">
+      <label for="title" class="col-sm-2 col-form-label">{{ 'MetadataFields.localTags' | translate }}</label>
+      <div class="col-sm">
+        <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
+          <div class="col-sm">
+            <pure-chips [form]="form" [chips]="localTags.value" [control_name]="'localTags'"></pure-chips>
+          </div>
+          <div class="col-sm-1">
+            <!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    @if(!allValid ){
+    <div class="alert" [class.alert-danger]="!allValid && !validForSave"
+      [class.alert-warning]="!allValid && validForSave">
+      {{ 'Edit.validationErrorsExist' | translate }}
+      @if(validForSave) {
+      <br />{{ 'Edit.validForSave' | translate }}
+      }
+    </div>
+    }
+    <div class="d-sm-flex flex-sm-row mb-3 px-3 justify-content-end">
+      <div class="col-auto">
+        <div class="btn-group me-3">
+          <button type="button" id="save" class="btn btn-primary" value="save" data-test="save" (click)="submit('save')"
+            [disabled]="!validForSave || saveInProgress">
+            @if(saveInProgress) {
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span class="visually-hidden" role="status">Loading...</span>
+            }
+            {{'common.save' | translate}}</button>
+          <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+            aria-expanded="false" [disabled]="!validForSave || saveInProgress">
+            <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" value="save" (click)="submit('save')">{{'common.save' | translate}}</a></li>
+            <li><a class="dropdown-item" value="save_to_view" (click)="submit('save_to_view')">{{'common.saveToView' |
+                translate}}</a></li>
+          </ul>
+        </div>
+
+
+        @if (authorizationInfo && authorizationInfo.actions['SUBMIT']) {
+        <button class="btn btn-primary me-3" id="submit" type="button" value="submit" (click)="submit('submit')"
+          [disabled]="!allValid || saveInProgress">
+          {{'common.submit' | translate}}
+        </button>
+        }
+        @if (authorizationInfo && authorizationInfo.actions['RELEASE']) {
+        <button class="btn btn-primary" id="release" type="button" value="release" (click)="submit('release')"
+          [disabled]="!allValid || saveInProgress">
+          {{'common.release' | translate}}
+        </button>
+        }
+      </div>
+    </div>
+  </form>
 </div>
 
 
 
 
-  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
-          [attr.data-bs-target]="'#collapseJSON'" aria-expanded="true" aria-controls="collapseOne">Show JSON</button>
+<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
+  [attr.data-bs-target]="'#collapseJSON'" aria-expanded="true" aria-controls="collapseOne">Show JSON</button>
 
 <div class="container-fluid d-sm-flex flex-sm-row mb-1" id="collapseJSON" class="collapse">
   <pre>valid? {{allValid}}</pre>
   <div class="row">
-    <div class="col-sm"><pre>{{form.value | json}}</pre></div>
-    <div class="col-sm"><pre>{{form_2_submit | json}}</pre></div>
+    <div class="col-sm">
+      <pre>{{form.value | json}}</pre>
+    </div>
+    <div class="col-sm">
+      <pre>{{form_2_submit | json}}</pre>
+    </div>
   </div>
 
 </div>

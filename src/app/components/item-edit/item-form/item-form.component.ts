@@ -438,7 +438,7 @@ export class ItemFormComponent implements OnInit {
       (this.externalReferences && this.externalReferences.dirty)
   }
 
-  submit(saveType: 'save'|'submit'|'release') {
+  submit(saveType: 'save'|'save_to_view'|'submit'|'release') {
     console.log('submitterId', typeof saveType);
     console.log('submitterId', saveType);
 
@@ -472,7 +472,7 @@ export class ItemFormComponent implements OnInit {
     */
     // this.printValidationErrors(this.form); // call for debug function
 
-    let valid = saveType === "save" ? this.validForSave : this.allValid;
+    let valid = saveType === "save" || saveType == "save_to_view" ? this.validForSave : this.allValid;
     if(!valid) {
       alert('Validation Error when creating new Publication ' + JSON.stringify(this.form.errors) + JSON.stringify(this.form.valid));
       return;
@@ -498,7 +498,7 @@ export class ItemFormComponent implements OnInit {
     }
   }
 
-  savePipe(saveType: 'save' | 'submit' | 'release') {
+  savePipe(saveType: 'save' | 'save_to_view' | 'submit' | 'release') {
     return pipe(
       tap((result: ItemVersionVO) => {
         //console.log("TAP" + result);
@@ -507,8 +507,10 @@ export class ItemFormComponent implements OnInit {
         this.messageService.success('Item saved successfully!');
         console.log('Saved Item', JSON.stringify(result));
 
-        if(saveType !== "save") {
+        if(saveType !== "save" && saveType !=="save_to_view") {
           this.openActionsModal(saveType, result)
+        } else if(saveType === "save_to_view") {
+          this.router.navigate(['/view/' + itemToVersionId(result! as ItemVersionRO)])
         }
       }),
       catchError((err) => {

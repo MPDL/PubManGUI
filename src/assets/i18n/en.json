@@ -53,6 +53,7 @@
     "delete": "Delete",
     "revise": "Send back",
     "save": "Save",
+    "saveToView": "Save and back to view",
     "useAsTemplate": "Use as template",
     "addDoi": "Add DOI",
     "rollback": "Revert",
