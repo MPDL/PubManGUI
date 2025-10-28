@@ -1,3 +1,5 @@
+import { AbstractControl, FormArray, FormControl, FormGroup } from "@angular/forms";
+
 const cloneObject = (obj: any): any =>
     (Array.isArray(obj) ? Object.values : (obj: any) => obj)(Object.entries(obj).reduce((acc: any, [key, val]) =>
     ({
@@ -117,6 +119,25 @@ const remove_objects = (o: any) => {
     }
     return o;
 }
+
+export function isControlValueEmpty(control: AbstractControl): boolean {
+    if (control instanceof FormControl) {
+      const value = control.value;
+      return value === null || value === undefined || (typeof value === 'string' && value.trim() === '');
+    } else if (control instanceof FormGroup) {
+      return Object.keys(control.controls).every(key => isControlValueEmpty(control.controls[key]));
+    } else if (control instanceof FormArray) {
+      return control.controls.every(ctrl => isControlValueEmpty(ctrl));
+    } else if (typeof control === 'object' && control !== null) {
+      // Ensure the object is a FormGroup before accessing controls by key
+      if (control instanceof FormGroup) {
+        return Object.keys(control.controls).every(key => isControlValueEmpty(control.controls[key]));
+      }
+      // Handle other object types if necessary
+      return Object.keys(control).every(key => isControlValueEmpty((control as any)[key]));
+    }
+    return true;
+  }
 
 
 

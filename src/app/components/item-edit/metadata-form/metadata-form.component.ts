@@ -1,6 +1,6 @@
 import { Component, effect, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import {
   AbstractVO,
@@ -46,11 +46,12 @@ import {
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
-import { remove_null_empty, remove_objects } from "../../../utils/utils_final";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
 import { catchError, finalize, Subject, takeUntil, tap, throwError } from "rxjs";
 import { isEmptyCreator } from "../../../utils/item-utils";
 import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import { isControlValueEmpty } from 'src/app/utils/utils_final';
+
 
 @Component({
   selector: 'pure-metadata-form',
@@ -107,7 +108,7 @@ export class MetadataFormComponent implements OnInit {
   allowed_genre_types = Object.keys(MdsPublicationGenre);
   review_method_types = Object.keys(ReviewMethod);
   degree_types = Object.keys(DegreeType);
-  subject_classification_types :string[] = [];
+  subject_classification_types: string[] = [];
   error_types = Errors;
 
   multipleCreators = new FormControl<string>('');
@@ -148,8 +149,8 @@ export class MetadataFormComponent implements OnInit {
       else {
         if (this.genreSpecificResource.value()?.properties.sources.optional === false && this.sources.value.length === 0) {
           this.sources.push(this.fbs.source_FG(null));
-        } else if (this.genreSpecificResource.value()?.properties.sources.optional === true && this.sources.value.length >= 0) {
-          this.sources.clear();
+        } else if (this.genreSpecificResource.value()?.properties.sources.optional === true && this.sources.value.length > 0) {
+          this.removeEmptySources();
         }
       }
     });
@@ -433,16 +434,23 @@ export class MetadataFormComponent implements OnInit {
 
   addSourceOnExpand(event: Event) {
     const element: HTMLElement = event.currentTarget as HTMLElement;
-    if(this.sources.length === 0 && element.getAttribute("aria-expanded") === "true") {
+    if (this.sources.length === 0 && element.getAttribute("aria-expanded") === "true") {
       this.sources.push(this.fbs.source_FG(null));
     } else if (this.sources.length > 0 && element.getAttribute("aria-expanded") === "false") {
-      for (let i = this.sources.length - 1; i >= 0; i--) {
-      const source = this.sources.at(i).value;
-      if (remove_null_empty(source)) {
-        this.sources.removeAt(i);
+      // Check if sources have no values and remove them
+      this.removeEmptySources();
+    }
+  }
+
+  removeEmptySources() {
+    for (let i = this.sources.length - 1; i >= 0; i--) {
+        const sourceFormGroup = this.sources.at(i) as FormGroup;
+        console.log(sourceFormGroup.value);
+        console.log("sourceFormGroup EMPTY Check", isControlValueEmpty(sourceFormGroup))
+        if (sourceFormGroup.pristine && isControlValueEmpty(sourceFormGroup)) {
+          this.sources.removeAt(i);
+        }
       }
-    }
-    }
   }
 
   dropCreator(event: CdkDragDrop<string[]>) {

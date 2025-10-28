@@ -50,6 +50,8 @@ export class ProjectInfoFormComponent {
     this.fundingProgramIdentifierSubscription = this.fundingProgramIdentifier?.get('id')?.valueChanges.subscribe(
       idValue => idValue ? this.fundingProgramIdentifier?.get('type')?.patchValue(IdType.OPEN_AIRE) : this.fundingProgramIdentifier?.get('type')?.patchValue(undefined)
     );
+    this.fundingOrganizationIdentifier.disable();
+    this.fundingProgramIdentifier.disable();
   }
 
 
