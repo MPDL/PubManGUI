@@ -44,7 +44,7 @@ export class SearchResultListComponent {
    //@ViewChild('child') child: ItemListComponent;
   searchQuery: Observable<any>;
 
-  constructor(private aaService: AaService, private router: Router, private location: Location, private route:ActivatedRoute, private searchStateService: SearchStateService) {
+  constructor(private aaService: AaService, private router: Router, private location: Location, private route:ActivatedRoute, protected searchStateService: SearchStateService) {
     //Update search query whenever the router sends a new one. As the state in the router is  available in getCurrentNavigation only once during the first constructor call, it has
     //to be drawn from window.history
     this.searchQuery = searchStateService.$currentQuery.asObservable();

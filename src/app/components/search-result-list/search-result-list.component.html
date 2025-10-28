@@ -1,5 +1,5 @@
 <pure-item-list [searchQuery]="searchQuery" [searchResultType]="true" #itemList>
-  <pure-sort-selector [itemList]="itemList"/>
+  <pure-sort-selector [itemList]="itemList" [defaultSort]="searchStateService.type==='simple' ? 'relevance' : 'modificationDate'"/>
 
   <!--<pure-item-aggregation-filter [itemList]="itemList" [label]="'Dates'" pureItemDateAggregation/>-->
   <!--<pure-item-aggregation-filter [itemList]="itemList" [label]="'State'" pureItemStatusAggregation/>-->
