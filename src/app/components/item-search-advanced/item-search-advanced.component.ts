@@ -34,6 +34,7 @@ import { ContextsService } from "../../services/pubman-rest-client/contexts.serv
 import { OrganizationsService } from "../../services/pubman-rest-client/organizations.service";
 import { BootstrapValidationDirective } from "../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../shared/validation-error/validation-error.component";
+import { MatomoTracker } from "ngx-matomo-client";
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -86,6 +87,7 @@ export class ItemSearchAdvancedComponent {
     private modalService: NgbModal,
     private contextsService: ContextsService,
     private ouService: OrganizationsService,
+    private matomoTracker: MatomoTracker,
 ) {
     this.servicesForCriterions = {
       contextsService: this.contextsService,
@@ -663,6 +665,7 @@ export class ItemSearchAdvancedComponent {
 
     this.scListToElasticSearchQuery(this.prepareQuery())
       .subscribe(query => {
+        this.matomoTracker.trackSiteSearch("", "advanced")
         this.searchStateService.type="advanced";
         this.searchStateService.$currentQuery.next(query);
         this.router.navigateByUrl('/search')
@@ -671,7 +674,26 @@ export class ItemSearchAdvancedComponent {
   }
 
   show_form() {
-    this.result = this.searchForm.value;
+    //this.result = this.searchForm.value;
+
+    this.result = this.getCleanSearchForm().value;
+    console.log(this.result)
+    console.log("length of form", JSON.stringify(this.result).length);
+  }
+
+  private getCleanSearchForm(): FormGroup<any> {
+    const cleanedFlexibleFields = this.removeEmptyFields(this.flexibleFields.controls.map(fc => fc as SearchCriterion));
+    const searchFormCleaned = this.fb.group({
+      ...(cleanedFlexibleFields.length > 0 && {flexibleFields: this.fb.array(cleanedFlexibleFields)}),
+      ...(!this.contextListSearchCriterion.isEmpty() && {contexts: this.contextListSearchCriterion.getCleanedForm()}),
+      ...(!this.itemStateListSearchCriterion.isEmpty() && {itemStates: this.itemStateListSearchCriterion.getCleanedForm()}),
+      ...(!this.genreListSearchCriterion.isEmpty() && {genres: this.genreListSearchCriterion.getCleanedForm()}),
+      ...(!this.publicationStateSearchCriterion.isEmpty() && {publicationState: this.publicationStateSearchCriterion.getCleanedForm()}),
+      ...(!this.fileSectionSearchCriterion.isEmpty() && {files: this.fileSectionSearchCriterion.getCleanedForm()}),
+      ...(!this.locatorSectionSearchCriterion.isEmpty() && {locators:this.locatorSectionSearchCriterion.getCleanedForm()}),
+
+    });
+    return searchFormCleaned;
   }
 
   show_query() {
@@ -681,7 +703,7 @@ export class ItemSearchAdvancedComponent {
 
   openSavedSearchModal() {
     const comp: SavedSearchesModalComponent = this.modalService.open(SavedSearchesModalComponent, {scrollable: true, size: "lg"}).componentInstance;
-    comp.searchFormJson = this.searchForm.value;
+    comp.searchFormJson = this.getCleanSearchForm().value;
 
     comp.applySearchForm.subscribe(data => {
       this.parseFormJson(data);
@@ -705,7 +727,6 @@ export class ItemSearchAdvancedComponent {
     else {
 
       Object.keys(this.contextListSearchCriterion.contextListFormGroup.controls).forEach(key => {
-        console.log(key)
         this.contextListSearchCriterion.contextListFormGroup.get(key)?.setValue(false);
       })
 

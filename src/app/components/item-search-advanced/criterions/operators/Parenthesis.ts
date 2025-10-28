@@ -16,9 +16,13 @@ export class Parenthesis extends SearchCriterion{
 
   constructor(type: string, opts?:any) {
     super(type, opts);
+    this.removeControl("content");
+    /*
     this.content.addControl(
       "parenthesis" , new FormControl(type)
     );
+
+     */
   }
 
   getElasticSearchNestedPath(): string | undefined {

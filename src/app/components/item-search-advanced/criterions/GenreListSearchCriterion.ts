@@ -39,6 +39,11 @@ export class GenreListSearchCriterion extends SearchCriterion {
     });
   }
 
+
+  override getCleanUpSubFormGroups(): string[] {
+    return ['genres', 'degrees'];
+  }
+
   override isEmpty(): boolean {
     return !Object.keys(this.genreFormGroup.controls).some(genre => this.genreFormGroup.get(genre)?.value);
   }

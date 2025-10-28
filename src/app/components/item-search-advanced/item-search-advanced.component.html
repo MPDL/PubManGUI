@@ -83,8 +83,8 @@
                 @if (i != 0) {
 
                   <!--Operator -->
-                  <div class="col-auto" formGroupName="content">
-                    <select class="form-select" formControlName="operator"
+                  <div class="col-auto">
+                    <select class="form-select" formControlName="type"
                             (change)="changeOperator(i, t.value)" #t>
                       <option value="and">{{'Search.AND' | translate}}</option>
                       <option value="or">{{'Search.OR' | translate}}</option>

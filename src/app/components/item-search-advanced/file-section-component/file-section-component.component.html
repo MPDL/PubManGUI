@@ -15,7 +15,7 @@
           <div class="container mb-4">
             <h5>{{(fileSectionSearchCriterion.type === 'INTERNAL_MANAGED' ? 'common.files' : 'common.links') | translate}}</h5>
             <select class="form-select"
-                    [formControl]="$any(fileSectionSearchCriterion.content).get('component_available')">
+                    [formControl]="$any(fileSectionSearchCriterion.content).get('componentAvailable')">
               @for (val of fileSectionSearchCriterion.availabilityOptions; track val) {
                 <option [value]="val">
                   {{ 'Search.' + val | translate}}

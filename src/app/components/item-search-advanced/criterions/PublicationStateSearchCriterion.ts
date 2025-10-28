@@ -15,6 +15,9 @@ export class PublicationStateSearchCriterion extends SearchCriterion {
 
   }
 
+  override getCleanUpSubFormGroups(): string[] {
+    return ['publicationStates'];
+  }
   override isEmpty(): boolean {
     const isEmpty = !Object.keys(this.publicationStatesFormGroup.controls).some(pubState => this.publicationStatesFormGroup.get(pubState)?.value);
     return isEmpty;

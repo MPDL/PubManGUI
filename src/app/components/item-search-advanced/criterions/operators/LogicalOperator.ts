@@ -7,9 +7,13 @@ export class LogicalOperator extends SearchCriterion {
 
   constructor(type: string, opts?:any) {
     super(type, opts);
+    this.removeControl("content");
+    /*
     this.content.addControl(
       "operator" , new FormControl(type)
     );
+
+     */
   }
 
   getElasticSearchNestedPath(): string | undefined {

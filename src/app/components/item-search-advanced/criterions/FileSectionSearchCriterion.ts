@@ -1,9 +1,9 @@
 import { SearchCriterion } from "./SearchCriterion";
 import { defaultIfEmpty, forkJoin, map, Observable, of } from "rxjs";
-import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { ContentCategories, OA_STATUS, Visibility } from "../../../model/inge";
 import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
 import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./DateSearchCriterion";
+import { FormControl, FormGroup } from "@angular/forms";
 
 
 export enum COMPONENT_SEARCH_TYPES {
@@ -23,19 +23,28 @@ export class FileSectionSearchCriterion extends SearchCriterion {
 
   constructor(fileType: COMPONENT_SEARCH_TYPES, opts?:any) {
     super(fileType, opts);
-    this.content.addControl("component_available", new FormControl("WHATEVER"));
+    this.content.addControl("componentAvailable", new FormControl("WHATEVER"));
+    this.content.addControl("contentCategory", this.componentContentCategorySearchCriterion);
+    this.content.addControl("visibility", this.componentVisibilitySearchCriterion);
+    this.content.addControl("embargoDate", this.embargoDateSearchCriterion);
+    this.content.addControl("oaStatus", this.oaStatusSearchCriterion);
+
+
+    /*
     this.content.addControl("fields", new FormArray([
       this.componentVisibilitySearchCriterion,
       this.embargoDateSearchCriterion,
       this.componentContentCategorySearchCriterion,
       this.oaStatusSearchCriterion
     ]));
+
+     */
     this.componentContentCategorySearchCriterion.content.disable();
     this.componentVisibilitySearchCriterion.content.disable();
     this.embargoDateSearchCriterion.content.disable();
     this.oaStatusSearchCriterion.content.disable();
 
-    this.content.get("component_available")?.valueChanges.subscribe(v => {
+    this.content.get("componentAvailable")?.valueChanges.subscribe(v => {
       if (v === 'YES') {
         this.componentContentCategorySearchCriterion.content.enable();
         this.componentVisibilitySearchCriterion.content.enable();
@@ -51,9 +60,11 @@ export class FileSectionSearchCriterion extends SearchCriterion {
 
   }
 
+
   override isEmpty(): boolean {
-    return this.content.get("component_available")?.value === 'WHATEVER';
+    return this.content.get("componentAvailable")?.value === 'WHATEVER';
   }
+
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
 
@@ -70,7 +81,7 @@ export class FileSectionSearchCriterion extends SearchCriterion {
         map(queries => {
 
             let boolQuery: { [k: string]: any } = {};
-            switch (this.content.get("component_available")?.value) {
+            switch (this.content.get("componentAvailable")?.value) {
               case "YES" : {
                 boolQuery['must'] = [baseElasticSearchQueryBuilder("files.storage", this.type), ...queries];
                 break;
@@ -185,6 +196,10 @@ export class ComponentContentCategorySearchCriterion extends SearchCriterion {
     this.contentCategoryOptions.forEach(cc => this.contentCategoryFormGroup.addControl(cc, new FormControl(false)));
   }
 
+  override getCleanUpSubFormGroups(): string[] {
+    return ['contentCategories'];
+  }
+
   override isEmpty(): boolean {
     return !Object.keys(this.contentCategoryFormGroup.controls).some(genre => this.contentCategoryFormGroup.get(genre)?.value);
   }
@@ -221,6 +236,10 @@ export class ComponentVisibilitySearchCriterion extends SearchCriterion {
     this.visibilityOptions.forEach(cc => this.componentVisibilityFormGroup.addControl(cc, new FormControl(false)));
   }
 
+  override getCleanUpSubFormGroups(): string[] {
+    return ['componentVisibility'];
+  }
+
   override isEmpty(): boolean {
     return !Object.keys(this.componentVisibilityFormGroup.controls).some(genre => this.componentVisibilityFormGroup.get(genre)?.value);
   }
@@ -254,6 +273,10 @@ export class ComponentOaStatusSearchCriterion extends SearchCriterion {
     super("oaStatus", opts);
     this.content.addControl("oaStatus", new FormGroup({}));
     this.oaStatusOptions.forEach(cc => this.oaStatusFormGroup.addControl(cc, new FormControl(false)));
+  }
+
+  override getCleanUpSubFormGroups(): string[] {
+    return ['oaStatus'];
   }
 
   override isEmpty(): boolean {
