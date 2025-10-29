@@ -11,9 +11,9 @@
       <div class="col-sm-3">
         <label class="col-form-label" for="changeOrcidForm">CoNE</label>
       </div>
-      <div class="col-sm-8">
+      <div class="col-sm-9">
 
-        <pure-person-autosuggest id="changeOrcidForm" 
+        <pure-person-autosuggest id="changeOrcidForm"
           [formForPersonsCompleteName]="$any(changeOrcidForm.get('completeName'))"
           [formForPersonsGivenName]="$any(changeOrcidForm.get('givenName'))"
           [formForPersonsFamilyName]="$any(changeOrcidForm.get('familyName'))"
@@ -21,25 +21,13 @@
           [formForPersonsIdValue]="$any(changeOrcidForm.get('identifier.id'))"
           [formForPersonsIdType]="$any(changeOrcidForm.get('identifier.type'))"
           [formForPersonsOrcid]="$any(changeOrcidForm.get('orcid'))"
+          [showConeAndOrcid]="true"
           [validationError]="validationError"
           data-test="changeOrcidForm-autosuggest">
         </pure-person-autosuggest>
 
       </div>
 
-      <div class="col-sm-1">
-        @if(changeOrcidForm.get('identifier.type')?.value == 'CONE' && changeOrcidForm.get('identifier.id')?.value) {
-          <a target="_blank" [href]="'/cone'+changeOrcidForm.get('identifier.id')?.value">
-            <img alt="CoNE logo" src="assets/icons/CoNE_icon.svg" width="24" height="24">
-          </a>
-          &nbsp;
-        }
-        @if(changeOrcidForm.get('orcid')?.value) {
-          <a target="_blank" [href]="changeOrcidForm.get('orcid')?.value">
-            <img class="" height="24px" width="auto" src="assets/images/orcid.svg" />
-          </a>
-        }
-      </div>
     </div>
 
     <div class="mb-2 row validation-error">
