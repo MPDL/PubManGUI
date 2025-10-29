@@ -4,13 +4,6 @@ import { Errors } from "src/app/model/errors";
 import { isFormValueEmpty } from "../../utils/utils";
 
 export const datesValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
-  const error_types = Errors;
-  const dateAccepted = control.get('dateAccepted')
-  const dateCreated = control.get('dateCreated');
-  const dateModified = control.get('dateModified');
-  const datePublishedInPrint = control.get('datePublishedInPrint');
-  const datePublishedOnline = control.get('datePublishedOnline');
-  const dateSubmitted = control.get('dateSubmitted');
   const event = control.get('event');
   const genre = control.get('genre');
   genre?.markAsTouched();
@@ -20,33 +13,43 @@ export const datesValidator: ValidatorFn = (control: AbstractControl,): Validati
     || MdsPublicationGenre.OTHER == genre?.value) {
     return null;
   }
+  else if (MdsPublicationGenre.COURSEWARE_LECTURE == genre?.value
+    || MdsPublicationGenre.TALK_AT_EVENT == genre?.value
+    || MdsPublicationGenre.POSTER == genre?.value) {
 
-  if (isFormValueEmpty(dateAccepted?.value)
-    && isFormValueEmpty(dateCreated?.value)
-    && isFormValueEmpty(dateModified?.value)
-    && isFormValueEmpty(datePublishedInPrint?.value)
-    && isFormValueEmpty(datePublishedOnline?.value)
-    && isFormValueEmpty(dateSubmitted?.value)) {
-
-    if ((MdsPublicationGenre.COURSEWARE_LECTURE == genre?.value
-      || MdsPublicationGenre.TALK_AT_EVENT == genre?.value
-      || MdsPublicationGenre.POSTER == genre?.value))
-    {
-      if (event && isFormValueEmpty(event.get('startDate')?.value)) {
-          event.setErrors({[error_types.DATE_OR_EVENT_DATE_NOT_PROVIDED]: true});
-          return { [error_types.DATE_OR_EVENT_DATE_NOT_PROVIDED]: true };
-      }
-      else {
-        event?.setErrors(null);
-        return null;
-      }
-
+    if (datesEmpty(control) && event && isFormValueEmpty(event.get('startDate')?.value)) {
+      event.setErrors({[Errors.DATE_OR_EVENT_DATE_NOT_PROVIDED]: true});
+      return { [Errors.DATE_OR_EVENT_DATE_NOT_PROVIDED]: true };
     }
-    //control.setErrors({[error_types.DATE_NOT_PROVIDED] : true})
-    return { [error_types.DATE_NOT_PROVIDED]: true };
+    else {
+      event?.setErrors(null);
+      return null;
+    }
+
+  }
+  //All othrer genres
+  else {
+    if(datesEmpty(control)) {
+      return {[Errors.DATE_NOT_PROVIDED]: true};
+    }
   }
 
   return null;
+}
+  const datesEmpty = (control: AbstractControl) : boolean => {
+    const dateAccepted = control.get('dateAccepted')
+    const dateCreated = control.get('dateCreated');
+    const dateModified = control.get('dateModified');
+    const datePublishedInPrint = control.get('datePublishedInPrint');
+    const datePublishedOnline = control.get('datePublishedOnline');
+    const dateSubmitted = control.get('dateSubmitted');
+    return isFormValueEmpty(dateAccepted?.value)
+      && isFormValueEmpty(dateCreated?.value)
+      && isFormValueEmpty(dateModified?.value)
+      && isFormValueEmpty(datePublishedInPrint?.value)
+      && isFormValueEmpty(datePublishedOnline?.value)
+      && isFormValueEmpty(dateSubmitted?.value);
+
 
 }
 
