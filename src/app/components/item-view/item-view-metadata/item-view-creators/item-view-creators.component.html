@@ -13,7 +13,7 @@
                  (mouseleave)="unhighlightAffiliations()">
 
               @if(author.person) {
-                {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
+                {{ author?.person?.familyName || 'n/a' }} {{author?.person?.givenName ? ', ' + author?.person?.givenName : '' }}
                 <span class="me-2"><sup>{{creatorMap.get(author)}}</sup></span>
 
                 <pure-cone-icon [orcid]="author?.person?.orcid" [coneId]="author?.person?.identifier?.id"/>
@@ -27,8 +27,8 @@
           }
           @if(creatorMap.size > maxDisplay) {
           <div class="container float-start">
-            <button type="button" class="btn btn-sm btn-link p-0 me-3" (click)="showMore(20)">show more...</button>
-            <button type="button" class="btn btn-sm btn-link p-0 me-3" (click)="showMore(creatorMap.size)">show all {{creatorMap.size}}...</button>
+            <button type="button" class="btn btn-sm btn-link p-0 me-3" (click)="showMore(20)">{{ 'common.showMore' | translate }}...</button>
+            <button type="button" class="btn btn-sm btn-link p-0 me-3" (click)="showMore(creatorMap.size)">{{ 'common.showAll' | translate }} ({{creatorMap.size}})...</button>
           </div>
           } @else if (creatorMap.size === maxDisplay) {
             <div class="container float-start">

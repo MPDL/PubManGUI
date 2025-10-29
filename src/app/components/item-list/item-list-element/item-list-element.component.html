@@ -39,12 +39,14 @@
       <div class="d-inline-flex">
         @for (author of first_three_authors; track author; let i = $index) {
           <div class="me-3">
-
-            {{ (author?.person?.familyName || no_name) + ', ' + (author?.person?.givenName || no_name) }}
-
-            <sup>
-              <pure-cone-icon [orcid]="author?.person?.orcid"/>
-            </sup>
+            @if(author.person) {
+              {{ author?.person?.familyName || 'n/a' }} {{author?.person?.givenName ? ', ' + author?.person?.givenName : '' }}
+              <sup>
+                <pure-cone-icon [orcid]="author?.person?.orcid" [coneId]="author?.person?.identifier?.id"/>
+              </sup>
+            } @else if (author.organization) {
+              {{ (author?.organization?.name || 'n/a') }}
+            }
           </div>
         }
         @if (creators_length && creators_length > 3) {
