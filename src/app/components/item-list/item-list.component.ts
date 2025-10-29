@@ -218,7 +218,6 @@ export class ItemListComponent implements AfterViewInit{
         }
 
         this.highlight_list = result.hits.hits.map((record:any) => record.inner_hits?.file?.hits);
-        console.log(this.highlight_list);
 
       }),
       map(result => result.hits.hits.map((record:any) => record._source as ItemVersionVO)),

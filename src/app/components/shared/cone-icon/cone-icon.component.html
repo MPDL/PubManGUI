@@ -1,0 +1,12 @@
+@if(orcid) {
+  <a [ngClass]="{'stretched-link' : button, 'me-1' : !button}" [href]="orcid" target="_blank">
+    <img alt="ORCID logo" src="assets/images/ORCID-iD_icon_vector.svg" width="16" height="16"/>
+  </a>
+}
+
+@if(coneId)
+{
+  <a [ngClass]="{'stretched-link' : button, 'me-1' : !button}" [href]="coneLink" target="_blank">
+    <img alt="CoNE logo" src="assets/icons/CoNE_icon.svg" width="16" height="16"/>
+  </a>
+}

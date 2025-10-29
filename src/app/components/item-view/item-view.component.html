@@ -148,25 +148,9 @@
           @for (author of firstAuthors; track author; let i = $index) {
           <div class="me-5 mb-1">
             {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
-            @if (author?.person?.orcid) {
-            <span class="me-2">
-              <sup>
-                <a [href]="author?.person?.orcid" target="_blank">
-                  <img alt="ORCID logo" src="assets/images/ORCID-iD_icon_vector.svg" width="16" height="16" />
-                </a>
-              </sup>
-            </span>
-            }
-            @if (author?.person?.identifier?.id) {
-            <span class="me-2">
-              <sup>
-                <a [href]="'/cone'+author?.person?.identifier?.id" target="_blank">
-                  <img alt="CoNE logo" src="assets/icons/CoNE_icon.svg" width="16" height="16" />
-                </a>
-              </sup>
-            </span>
-
-            }
+            <sup>
+              <pure-cone-icon [orcid]="author?.person?.orcid" [coneId]="author?.person?.identifier?.id"/>
+            </sup>
           </div>
           }
           @if (item.metadata.creators && item.metadata.creators.length > 10) {

@@ -37,6 +37,15 @@
 
     @if(showConeAndOrcid) {
 
+      <span class="btn btn-outline-dark btn-sm">
+        <pure-cone-icon [coneId]="formForPersonsIdValue.value"/>
+      </span>
+
+      <span class="btn btn-outline-dark btn-sm">
+        <pure-cone-icon [orcid]="formForPersonsOrcid?.value"/>
+      </span>
+
+      <!--
       <a class="btn btn-outline-dark btn-sm" href="/cone{{formForPersonsIdValue.value}}" target="_blank">
       <img alt="CoNE logo" src="assets/icons/CoNE_icon.svg" width="16" height="16"/>
       </a>
@@ -49,6 +58,7 @@
 
 
       }
+      -->
 
     }
   <button class="btn btn-outline-dark btn-sm" type="button" (click)="deleteFields()">

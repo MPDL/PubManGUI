@@ -8,6 +8,7 @@ import { EmptyPipe } from "../../../../pipes/empty.pipe";
 import { TranslatePipe } from "@ngx-translate/core";
 import { LoadingComponent } from "../../../shared/loading/loading.component";
 import { OuModalComponent } from "../../../shared/ou-modal/ou-modal.component";
+import { ConeIconComponent } from "../../../shared/cone-icon/cone-icon.component";
 
 @Component({
   selector: 'pure-item-view-creators',
@@ -16,6 +17,7 @@ import { OuModalComponent } from "../../../shared/ou-modal/ou-modal.component";
     ItemViewMetadataElementComponent,
     EmptyPipe,
     TranslatePipe,
+    ConeIconComponent,
   ],
   templateUrl: './item-view-creators.component.html',
   styleUrl: './item-view-creators.component.scss'

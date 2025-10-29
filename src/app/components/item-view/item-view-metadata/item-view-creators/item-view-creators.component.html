@@ -16,29 +16,8 @@
                 {{ (author?.person?.familyName || 'n/a') + ', ' + (author?.person?.givenName || 'n/a') }}
                 <span class="me-2"><sup>{{creatorMap.get(author)}}</sup></span>
 
-                @if (author?.person?.orcid) {
-                  <span class="me-2" style="vertical-align: center">
-                    <a [href]="author?.person?.orcid" target="_blank">
+                <pure-cone-icon [orcid]="author?.person?.orcid" [coneId]="author?.person?.identifier?.id"/>
 
-                      <img alt="ORCID logo"
-                           src="assets/images/ORCID-iD_icon_vector.svg"
-                           width="16" height="16"/>
-
-                    </a>
-                  </span>
-
-                }
-                @if (author?.person?.identifier?.id) {
-                  <span class="me-2">
-                    <a [href]="'/cone' + author?.person?.identifier?.id" target="_blank">
-                      <img alt="CoNE logo"
-                           src="assets/icons/CoNE_icon.svg"
-                           width="16" height="16"/>
-
-                    </a>
-                  </span>
-
-                }
                 <span class="small"> ({{'CreatorRoles.' + author.role | translate}})</span>
               }
               @else {

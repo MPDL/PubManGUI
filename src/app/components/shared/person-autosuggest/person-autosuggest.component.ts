@@ -21,6 +21,7 @@ import { IdType, OrganizationVO } from 'src/app/model/inge';
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import { ConeIconComponent } from "../cone-icon/cone-icon.component";
 
 @Component({
   selector: 'pure-person-autosuggest',
@@ -31,7 +32,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     NgbHighlight,
     CommonModule,
     TranslatePipe,
-    BootstrapValidationDirective, ValidationErrorMessageDirective
+    BootstrapValidationDirective, ValidationErrorMessageDirective, ConeIconComponent
   ],
   templateUrl: './person-autosuggest.component.html'
 })

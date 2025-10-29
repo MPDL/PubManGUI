@@ -45,6 +45,7 @@ import { ChangeContextModalComponent } from "../shared/change-context-modal/chan
 import { UpdateLocaltagsModalComponent } from "../shared/update-localtags-modal/update-localtags-modal.component";
 import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 import { MatomoTracker } from "ngx-matomo-client";
+import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
 
 @Component({
   selector: 'pure-item-view',
@@ -67,7 +68,8 @@ import { MatomoTracker } from "ngx-matomo-client";
     LoadingComponent,
     TranslatePipe,
     DatePipe,
-    CopyButtonDirective
+    CopyButtonDirective,
+    ConeIconComponent
   ],
   templateUrl: './item-view.component.html'
 })

@@ -42,15 +42,9 @@
 
             {{ (author?.person?.familyName || no_name) + ', ' + (author?.person?.givenName || no_name) }}
 
-            @if (author?.person?.orcid) {
-              <sup>
-                <a [href]="author?.person?.orcid" target="_blank">
-                  <img alt="ORCID logo"
-                       src="assets/images/ORCID-iD_icon_vector.svg"
-                       width="16" height="16"/>
-                </a>
-              </sup>
-            }
+            <sup>
+              <pure-cone-icon [orcid]="author?.person?.orcid"/>
+            </sup>
           </div>
         }
         @if (creators_length && creators_length > 3) {

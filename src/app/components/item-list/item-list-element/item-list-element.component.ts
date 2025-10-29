@@ -11,11 +11,12 @@ import { ItemSelectionService } from "../../../services/item-selection.service";
 import { environment } from 'src/environments/environment';
 import { TranslatePipe } from "@ngx-translate/core";
 import { itemToVersionId } from "../../../utils/utils";
+import { ConeIconComponent } from "../../shared/cone-icon/cone-icon.component";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover, ConeIconComponent],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })
