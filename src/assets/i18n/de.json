@@ -95,6 +95,7 @@
     "invalidCharacters": "Der Text enthält ungültige Zeichen",
     "invalidDateFormat": "Falsches Datumsformat (JJJJ-MM-DD)",
     "minOneDate": "Mindestens eine Datumsangabe ist erforderlich",
+    "minOneDateWithEvent" : "Mindestens eine Datumsangabe ist erforderlich (Veranstaltungsbeginn oder beliebiges Datum)",
     "invalidUrlFormat": "Ungültige URL",
     "minOneAffForCreator": "Mindestens ein Urheber erfordert eine Affiliation",
     "invalidOrcid": "Die Orcid ist ungültig. Bitte in CoNE ändern",

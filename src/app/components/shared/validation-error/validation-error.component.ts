@@ -117,6 +117,8 @@ export class ValidationErrorComponent {
         return this.translateService.instant('validation.invalidOrcid');
       case Errors.DATE_NOT_PROVIDED.toString() :
         return this.translateService.instant('validation.minOneDate');
+      case Errors.DATE_OR_EVENT_DATE_NOT_PROVIDED.toString() :
+        return this.translateService.instant('validation.minOneDateWithEvent');
       case Errors.INCORRECT_ID_DOI_FORMAT.toString() :
         return this.translateService.instant('validation.invalidDoi');
       case Errors.LOCATOR_IS_NO_URI.toString() :
@@ -134,7 +136,7 @@ export class ValidationErrorComponent {
       case Errors.OLD_AND_NEW_ARE_SAME.toString() :
         return this.translateService.instant('validation.notSameValues');
       case Errors.DUPLICATED_VALUES.toString() :
-        return this.translateService.instant('validation.noDuplicates');      
+        return this.translateService.instant('validation.noDuplicates');
       default : {
         const errorNumber = parseInt(key);
         if(!isNaN(errorNumber)) {

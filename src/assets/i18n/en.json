@@ -95,6 +95,7 @@
     "invalidCharacters": "The text contains invalid characters",
     "invalidDateFormat": "Invalid date format (YYYY-MM-DD)",
     "minOneDate": "At least one date is required",
+    "minOneDateWithEvent" : "At least one date is required (Event start date or any date)",
     "invalidUrlFormat": "Invalid URL",
     "minOneAffForCreator": "At least one creator requires an affiliation",
     "invalidOrcid": "Invalid Orcid. Please change in CoNE",
@@ -958,6 +959,6 @@
     "News": "News",
     "Search": "Search",
     "chartTitle": "Document Types Distribution"
-    
+
   }
 }
