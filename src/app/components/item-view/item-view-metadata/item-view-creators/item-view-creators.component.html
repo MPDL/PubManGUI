@@ -3,7 +3,7 @@
       <span label></span>
       <span content>
         <div class="list-group" id="collapseExample">
-          @for (author of creatorMap.keys(); track author; let i = $index) {
+          @for (author of creatorMap.keys(); track $index; let i = $index) {
 
             <div class="list-group-item list-group-item-action p-0 pb-1
             {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'active' : ''}}
@@ -63,7 +63,7 @@
       <span label>{{ 'MetadataFields.affiliations' | translate }}</span>
       <span content>
         <div class="list-group">
-         @for (aff of affiliations; track aff; let i = $index) {
+         @for (aff of affiliations; track $index; let i = $index) {
            <div class="list-group-item list-group-item-action p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'active' : ''}}"
                 data-affiliation-id="i+1"
                 (mouseenter)="highlightAffiliations([i+1])"

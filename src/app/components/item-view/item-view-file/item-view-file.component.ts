@@ -21,8 +21,7 @@ import { MatomoTracker, MatomoTrackerDirective } from "ngx-matomo-client";
     NgbPopover,
     TranslatePipe,
     CopyButtonDirective,
-    FileSizePipe,
-    MatomoTrackerDirective
+    FileSizePipe
   ],
   templateUrl: './item-view-file.component.html',
   styleUrl: './item-view-file.component.scss'

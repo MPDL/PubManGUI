@@ -9,7 +9,7 @@
             </span>
     </pure-item-view-metadata-element>
 
-      @for (sub of item.metadata?.alternativeTitles; track sub; let i = $index) {
+      @for (sub of item.metadata?.alternativeTitles; track $index; let i = $index) {
         <pure-item-view-metadata-element [sub]="true">
           <span label> {{ sub.type ? ('AlternativeTitleType.' + sub.type | translate) : ('MetadataFields.alternativeTitle' | translate) }}</span>
           <span content>{{ sub.value }}</span>
@@ -22,14 +22,7 @@
 
 
 <!--Authors-->
-<pure-item-view-metadata-element [condition]="
- (item.metadata?.dateCreated | empty) ||
- (item.metadata?.dateModified | empty) ||
- (item.metadata?.dateSubmitted | empty) ||
- (item.metadata?.dateAccepted | empty) ||
- (item.metadata?.datePublishedOnline | empty) ||
- (item.metadata?.datePublishedInPrint | empty) ||
- (publicationState | empty)">
+<pure-item-view-metadata-element [condition]="(item.metadata?.creators | empty)">
   <span label id="creators">{{ 'MetadataFields.creators' | translate }}</span>
   <span content>
   @if (item) {
@@ -39,7 +32,14 @@
 </pure-item-view-metadata-element>
 
 <!--Dates-->
-<pure-item-view-metadata-element>
+<pure-item-view-metadata-element [condition]="
+ (item.metadata?.dateCreated | empty) ||
+ (item.metadata?.dateModified | empty) ||
+ (item.metadata?.dateSubmitted | empty) ||
+ (item.metadata?.dateAccepted | empty) ||
+ (item.metadata?.datePublishedOnline | empty) ||
+ (item.metadata?.datePublishedInPrint | empty) ||
+ (publicationState | empty)">
   <span label>{{ 'MetadataFields.date' | translate }}</span>
   <span content>
     @if (item.metadata?.dateCreated) {
@@ -109,7 +109,7 @@
   (item.metadata?.abstracts?.length  | empty) ||(item.metadata?.tableOfContents | empty)">
   <span label>{{ 'MetadataFields.content' | translate }}</span>
   <span content>
-    @for (abs of item.metadata?.abstracts; track abs; ) {
+    @for (abs of item.metadata?.abstracts; track $index; ) {
       <pure-item-view-metadata-element [sub]="true">
         <span
           label>{{ 'MetadataFields.abstract' | translate }} {{ abs.language ? '(' + abs.language + ')' : '' }}</span>
@@ -124,7 +124,7 @@
           <p style="white-space: pre-wrap;" [innerHTML]="(item.metadata.tableOfContents | sanitizeHtml)"></p>
         </span>
     </pure-item-view-metadata-element>
-    @for (sub of item.metadata?.subjects; track sub; let i = $index) {
+    @for (sub of item.metadata?.subjects; track $index; let i = $index) {
       <pure-item-view-metadata-element [sub]="true" [condition]="item.metadata?.subjects?.length | empty">
           <span label>{{ sub.type }}</span>
           <span content>
@@ -155,7 +155,7 @@
     <pure-item-view-metadata-element [sub]="true" [condition]=" (item.metadata?.languages | empty)">
       <span label>{{ 'MetadataFields.languages' | translate }}</span>
         <span content>
-          @for (lang of item.metadata?.languages; track lang) {
+          @for (lang of item.metadata?.languages; track $index) {
             <div>{{ lang }}</div>
           }
         </span>
@@ -187,7 +187,7 @@
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.identifiers | empty)">
       <span label>{{ 'MetadataFields.identifiers' | translate }}</span>
         <span content>
-          @for (id of item.metadata?.identifiers; track id) {
+          @for (id of item.metadata?.identifiers; track $index) {
             <div class="row mb-1">
               <div class="col">
                 <span class="fw-bold">{{ 'SourceIdType.' + id.type | translate }}: </span>
@@ -275,7 +275,7 @@
 <pure-item-view-metadata-element [condition]="(item.metadata.projectInfo | empty)">
   <span label>{{ 'MetadataFields.projectInfo' | translate }}</span>
   <span content>
-        @for (pi of item.metadata?.projectInfo; track pi) {
+        @for (pi of item.metadata?.projectInfo; track $index) {
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.title | empty)">
                 <span label>{{ 'MetadataFields.projectInfoName' | translate }}</span>
                 <span content>
@@ -307,7 +307,7 @@
 </pure-item-view-metadata-element>
 
 <!--Sources -->
-@for (source of item.metadata?.sources; track source; let i = $index) {
+@for (source of item.metadata?.sources; track $index; let i = $index) {
   <pure-item-view-metadata-element>
     <span label>{{ 'MetadataFields.source' | translate }} {{ i + 1 }}</span>
     <span content>
@@ -318,7 +318,7 @@
       </span>
     </pure-item-view-metadata-element>
 
-      @for (altTitle of source.alternativeTitles; track altTitle) {
+      @for (altTitle of source.alternativeTitles; track $index) {
         <pure-item-view-metadata-element [sub]="true">
               <span label>{{ altTitle.type ? ('AlternativeTitleType.' + altTitle.type | translate) : ('MetadataFields.alternativeTitle' | translate) }}</span>
               <span content>
@@ -370,7 +370,7 @@
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.identifiers | empty)">
       <span label>{{ 'MetadataFields.identifiers' | translate }}</span>
         <span content>
-          @for (id of source.identifiers; track id) {
+          @for (id of source.identifiers; track $index) {
 
             <div class="row mb-1">
               <div class="col">

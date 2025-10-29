@@ -15,7 +15,7 @@ import { itemToVersionId } from "../../../utils/utils";
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover, KeyValuePipe],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })

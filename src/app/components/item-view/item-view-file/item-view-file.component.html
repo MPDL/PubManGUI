@@ -1,7 +1,7 @@
 
 
  @if (files && files.length && item.publicState !== 'WITHDRAWN') {
-    @for (file of files; track file; let i = $index) {
+    @for (file of files; track $index; let i = $index) {
       <div class="accordion mt-3" >
         <div class="accordion-item border-0 bg-transparent">
         <div class="row">
@@ -69,7 +69,7 @@
                 </div>
                 -->
                 <div>
-                @for(ouName of ipOrganizations(file); track ouName) {
+                @for(ouName of ipOrganizations(file); track $index) {
                   {{ouName}}
                 }
                 </div>
