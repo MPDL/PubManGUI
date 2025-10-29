@@ -58,6 +58,7 @@ export const routes: Routes = [
       saveComponent: true,
       breadcrumb: {
         labelKey: 'common.searchResult',
+        keepIfLast: ['header.advancedSearch'],
       }
     },
   },
@@ -94,6 +95,7 @@ export const routes: Routes = [
     data: {
       breadcrumb: {
         labelKey: 'common.edit',
+        keepIfLast: [],
       }
     },
   },
@@ -103,6 +105,7 @@ export const routes: Routes = [
     data: {
       breadcrumb: {
         labelKey: 'common.view',
+        keepIfLast: [],
       }
     },
   },
@@ -110,7 +113,7 @@ export const routes: Routes = [
     path: 'edit', component: ItemFormComponent, resolve: { templateItem: itemResolver },
     data: {
       breadcrumb: {
-        labelKey: 'common.edit',
+        labelKey: 'common.edit'
       }
     },
   },

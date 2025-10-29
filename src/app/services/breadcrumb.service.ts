@@ -47,13 +47,13 @@ export class BreadcrumbService {
     if(children.length > 0) {
       const currentRoute = children[0];
       const currentRouteLabelKey = currentRoute.data['breadcrumb'].labelKey;
-      if (currentRouteLabelKey === 'common.view' || currentRouteLabelKey === 'common.edit') {
+      const keepIfLast: string[]|undefined = currentRoute.data['breadcrumb'].keepIfLast;
+
+      if (keepIfLast!==undefined && (keepIfLast.length===0 || keepIfLast.includes(this.breadcrumbs$.getValue()[0]?.labelKey))) {
+        //Keep all breadcrumbs until the last occurence of the same page
         const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabelKey, this.breadcrumbs$.getValue());
         this.breadcrumbs$.next(smallerCrumbs);
 
-      } else if (currentRouteLabelKey === 'header.search' && (this.breadcrumbs$.getValue()[0]?.labelKey) ==="header.advancedSearch") {
-        const smallerCrumbs = this.removeUntilLastOccurence(currentRouteLabelKey, this.breadcrumbs$.getValue());
-        this.breadcrumbs$.next(smallerCrumbs);
       }
       else {
         this.breadcrumbs$.next([]);
