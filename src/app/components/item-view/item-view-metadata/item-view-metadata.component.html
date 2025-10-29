@@ -275,7 +275,7 @@
 <pure-item-view-metadata-element [condition]="(item.metadata.projectInfo | empty)">
   <span label>{{ 'MetadataFields.projectInfo' | translate }}</span>
   <span content>
-        @for (pi of item.metadata?.projectInfo; track $index) {
+        @for (pi of item.metadata?.projectInfo; track $index; let last = $last) {
           <pure-item-view-metadata-element [sub]="true" [condition]="(pi.title | empty)">
                 <span label>{{ 'MetadataFields.projectInfoName' | translate }}</span>
                 <span content>
@@ -300,7 +300,9 @@
                     {{ pi.fundingInfo?.fundingOrganization?.title }} {{ pi.fundingInfo?.fundingOrganization?.identifiers ? '(' + pi.fundingInfo?.fundingOrganization?.identifiers![0].id + ')' : '' }}
                 </span>
             </pure-item-view-metadata-element>
-          <hr/>
+          @if(!last) {
+            <hr/>
+          }
         }
 
     </span>
