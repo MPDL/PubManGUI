@@ -6,7 +6,7 @@
           @for (author of creatorMap.keys(); track $index; let i = $index) {
 
             <div class="list-group-item list-group-item-action p-0 pb-1
-            {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'active' : ''}}
+            {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'bg-primary-subtle' : ''}}
             {{i >= maxDisplay ? 'd-none' : ''}}"
 
                  (mouseenter)="highlightAffiliations(creatorMap.get(author))"
@@ -38,34 +38,28 @@
         </div>
       </span>
     </pure-item-view-metadata-element>
+    <hr/>
     <pure-item-view-metadata-element [sub]="true" [condition]="affiliations.length > 0">
       <span label>{{ 'MetadataFields.affiliations' | translate }}</span>
       <span content>
         <div class="list-group">
          @for (aff of affiliations; track $index; let i = $index) {
-           <div class="list-group-item list-group-item-action p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'active' : ''}}"
+           <div class="list-group-item list-group-item-action p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'bg-primary-subtle' : ''}}"
                 data-affiliation-id="i+1"
                 (mouseenter)="highlightAffiliations([i+1])"
                 (mouseleave)="unhighlightAffiliations()">
-             <div class="row">
 
-               <div class="col">
-                 {{i+1}}
+             <div class="d-flex">
+               <span class="me-2">{{i+1}}</span>
+               <span>
                  {{aff.name}}{{aff.address ? ', ' + aff.address : ''}}
                  @if(aff.identifier | empty) {
-
-                   <span class="me-2">
-                      <button class="btn btn-link p-0"
-                              (click)="toggleAffPopover(aff)">
-
-                        <span class="material-symbols-outlined">info</span>
-
-                      </button>
-                 </span>
+                   <button class="me-2 btn btn-sm p-0" (click)="toggleAffPopover(aff)">
+                     <span class="material-symbols-outlined">info</span>
+                   </button>
                  }
-
-               </div>
-               </div>
+               </span>
+             </div>
            </div>
 
          }

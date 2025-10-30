@@ -385,12 +385,11 @@
       @if (item.publicState !== 'WITHDRAWN') {
 
       @if ((item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber) {
-      <div class="mt-3">
-        <h6 class="">{{ 'common.latestRelease' | translate }}</h6>
+      <div class="mb-3">
+        <b class="">{{ 'common.latestRelease' | translate }}</b>
         <div>
-          <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}">
-            <i class="bi-link"></i>
-            <span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
+          <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}">
+            <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
           </a>
         </div>
 
@@ -400,12 +399,11 @@
       @if ((item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
       latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
       !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber)) {
-      <div class="mt-3">
-        <h6>{{ 'common.latestVersion' | translate }}</h6>
+      <div class="mb-3">
+        <b>{{ 'common.latestVersion' | translate }}</b>
         <div>
           <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}">
-            <i class="bi-link"></i>
-            <span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
+            <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
           </a>
         </div>
 
@@ -413,14 +411,13 @@
       }
 
       @if (item.objectPid | empty) {
-      <div class="mt-3">
-        <h6>{{ 'common.item' | translate }} {{ 'common.handle' | translate }}</h6>
+      <div class="mb-3">
+        <b>{{ 'common.item' | translate }} {{ 'common.handle' | translate }}</b>
         <div class="row">
 
-          <div class="col-11 text-truncate">
+          <div class="col text-truncate">
             <a href="https://hdl.handle.net/{{item.objectPid?.substring(4)}}">
-              <i class="bi-link"></i>
-              {{ item.objectPid }}
+              <i class="bi-link me-1"></i>{{ item.objectPid }}
             </a>
           </div>
           <div class="col-1 p-0">
@@ -432,14 +429,13 @@
       }
 
       @if (item.versionPid | empty) {
-      <div class="mt-3">
+      <div class="mb-3">
 
-        <h6>{{ 'common.version' | translate }} {{ item.versionNumber }} {{ 'common.handle' | translate }}</h6>
+        <b>{{ 'common.version' | translate }} {{ item.versionNumber }} {{ 'common.handle' | translate }}</b>
         <div class="row">
           <div class="col text-truncate">
             <a href="https://hdl.handle.net/{{item.versionPid?.substring(4)}}">
-              <i class="bi-link"></i>
-              {{ item.versionPid }}
+              <i class="bi-link me-1"></i>{{ item.versionPid }}
             </a>
           </div>
           <div class="col-1 p-0">

@@ -78,7 +78,7 @@ $link-hover-color-dark:         $mpg-secondary-gray;
 
 
 //Use this setting to define the ratio between button backgrounds and text color
-$min-contrast-ratio:3;
+//$min-contrast-ratio:3;
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -102,7 +102,8 @@ $custom-colors: (
   "mpg-bg-gray": $mpg-bg-gray,
   "mpg-secondary-gray": $mpg-secondary-gray,
   "mpg-light-gray": $mpg-light-gray,
-  "mpg-blue": $mpg-blue
+  "mpg-blue": $mpg-blue,
+  "mpdl-purple": $mpdl-purple,
 
 );
 

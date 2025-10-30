@@ -2,14 +2,42 @@
 
  @if (files && files.length && item.publicState !== 'WITHDRAWN') {
     @for (file of files; track $index; let i = $index) {
-      <div class="accordion mt-3" >
+
+      <div class="accordion mb-3" >
         <div class="accordion-item border-0 bg-transparent">
+
         <div class="row">
           <div class="col-9 text-truncate pe-0">
 
+            <div>
+
+              <span class="me-2 fw-bold">{{ 'ContentCategories.' + file.metadata.contentCategory | translate }}</span>
+              @let oaStatusIconUrl = oaStatusIcon(file);
+              @if(oaStatusIconUrl) {
+                <img alt="OA logo" class="me-1"
+                     src="assets/images/{{oaStatusIconUrl}}" style="height: 1.2em;"
+                     [ngbTooltip]="tipContent"/>
+              }
+
+
+
+              <ng-template #tipContent>
+                @if(oaStatusIconUrl) {
+                  <div>
+                    <img alt="OA logo"
+                         src="assets/images/{{oaStatusIconUrl}}" style="height: 3em;"
+                         [ngbTooltip]="tipContent"/>
+                  </div>
+                }
+                {{ 'Open Access: ' + ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')| translate) }}
+              </ng-template>
+
+            </div>
+
             @if(file.storage==='EXTERNAL_URL' || fileAccessGranted(file)) {
             @let link = (file.storage==='EXTERNAL_URL' ? '' : ingeUri) + file.content;
-            <a class="matomo_download" href="{{link}}" target="_blank" [ngbTooltip]="file.name">
+
+              <a class="matomo_download" href="{{link}}" target="_blank" [ngbTooltip]="file.name">
               <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}} me-1"></i>{{ file.metadata.title }}
             </a>
             }
@@ -17,29 +45,21 @@
               <span [ngbTooltip]="file.metadata.title">
                 <i class="bi-eye-slash-fill"></i> {{ file.metadata.title }}
               </span>
+
             }
-            <div>
 
-              @let oaStatusIconUrl = oaStatusIcon(file);
-              @if(oaStatusIconUrl) {
-              <img alt="OA logo"
-                   src="assets/images/{{oaStatusIconUrl}}" style="height: 1.2em;"
-                    [ngbTooltip]="tipContent"/>
+            @if(file.storage==='INTERNAL_MANAGED') {
+              <div class="small text-start text-secondary">
+                ({{ file.mimeType | translate }})
+              </div>
               }
-              ({{ 'ContentCategories.' + file.metadata.contentCategory | translate }})
 
-              <ng-template #tipContent>
-                @if(oaStatusIconUrl) {
-                <div>
-                <img alt="OA logo"
-                     src="assets/images/{{oaStatusIconUrl}}" style="height: 3em;"
-                     [ngbTooltip]="tipContent"/>
-                </div>
-                }
-                {{ 'Open Access: ' + ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')| translate) }}
-              </ng-template>
 
-            </div>
+
+
+
+
+
 
 
           </div>
@@ -68,11 +88,12 @@
                 </div>
                 -->
                 <div>
-                @for(ouName of ipOrganizations(file); track $index) {
-                  {{ouName}}
-                }
+                  @for(ouName of ipOrganizations(file); track $index) {
+                    {{ouName}}
+                  }
                 </div>
-              }
+                }
+
               @if(file.metadata.embargoUntil | empty) {
                 <div class="mt-1">
                   <strong>{{ 'FileMetadataFields.embargoDate' | translate }}</strong>
@@ -98,6 +119,7 @@
             </ng-template>
 
             }
+
             @if(file.metadata.description | empty) {
             <div class="mt-1">
               <strong>{{ 'FileMetadataFields.description' | translate }}</strong>
@@ -158,6 +180,15 @@
                   <button class="btn btn-sm border-0 p-0" pureCopyButton [textToCopy]="'https://hdl.handle.net/' + file.pid?.substring(4)"></button>
                 </div>
 
+              </div>
+            }
+            @if(file.storage==='EXTERNAL_URL') {
+              <!-- External Reference -->
+              <div class="mt-1">
+                <strong>URL</strong>
+              </div>
+              <div class="text-break">
+                {{ file.content }}
               </div>
             }
             </small>
