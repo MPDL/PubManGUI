@@ -10,8 +10,7 @@
             @if(file.storage==='EXTERNAL_URL' || fileAccessGranted(file)) {
             @let link = (file.storage==='EXTERNAL_URL' ? '' : ingeUri) + file.content;
             <a class="matomo_download" href="{{link}}" target="_blank" [ngbTooltip]="file.name">
-              <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}}"></i>
-              {{ file.metadata.title }}
+              <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}} me-1"></i>{{ file.metadata.title }}
             </a>
             }
             @else {

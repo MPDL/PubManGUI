@@ -4,9 +4,9 @@ export const environment = {
   inge_rest_uri: "http://localhost:4200/rest",
   inge_uri: "http://localhost:4200",
   pure_blog_feed_url: "http://localhost:4200/pureblogfeed",
-  matomo_enabled: true,
-  matomo_site_url: "https://analytics.mpdl.mpg.de",
-  matomo_site_id: "91"
+  matomo_enabled: false,
+  matomo_site_url: "",
+  matomo_site_id: ""
 };
 
 
