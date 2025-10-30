@@ -6,7 +6,7 @@
           @for (author of creatorMap.keys(); track $index; let i = $index) {
 
             <div class="list-group-item list-group-item-action p-0 pb-1
-            {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'bg-primary-subtle' : ''}}
+            {{isIncludedInCurrrentHighlights(creatorMap.get(author)) ? 'active' : ''}}
             {{i >= maxDisplay ? 'd-none' : ''}}"
 
                  (mouseenter)="highlightAffiliations(creatorMap.get(author))"
@@ -48,7 +48,7 @@
       <span content>
         <div class="list-group">
          @for (aff of affiliations; track $index; let i = $index) {
-           <div class="list-group-item list-group-item-action p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'bg-primary-subtle' : ''}}"
+           <div class="list-group-item list-group-item-action p-0 pb-1 {{currentAffiliationHighlights.indexOf(i+1)!=-1 ? 'active' : ''}}"
                 data-affiliation-id="i+1"
                 (mouseenter)="highlightAffiliations([i+1])"
                 (mouseleave)="unhighlightAffiliations()">

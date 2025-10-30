@@ -91,7 +91,7 @@
 
       @if(currentCitation) {
         <h6>Citation Example</h6>
-        <p [innerHTML]="currentCitation"></p>
+        <p [innerHTML]="currentCitation | sanitizeHtmlCitation"></p>
       } @else if(loading) {
         <pure-loading></pure-loading>
       }

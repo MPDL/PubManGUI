@@ -17,7 +17,7 @@ import { Message, MessageService } from "../../../services/message.service";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../validation-error/validation-error.component";
 import { MatomoTracker } from "ngx-matomo-client";
-import { HttpParams } from "@angular/common/http";
+import { SanitizeHtmlCitationPipe } from "../../../pipes/sanitize-html-citation.pipe";
 
 
 @Component({
@@ -32,7 +32,8 @@ import { HttpParams } from "@angular/common/http";
     ReactiveFormsModule,
     NotificationComponent,
     BootstrapValidationDirective,
-    ValidationErrorComponent
+    ValidationErrorComponent,
+    SanitizeHtmlCitationPipe
   ],
   templateUrl: './export-items.component.html',
   styleUrl: './export-items.component.scss'
@@ -288,7 +289,7 @@ export class ExportItemsComponent {
       if(this.selectedCitationType.value) url.searchParams.append('citation', this.selectedCitationType.value);
       if(this.selectedCitationType.value === citationTypes.CSL && this.selectedCslId.value) url.searchParams.append('cslConeId', this.selectedCslId.value);
     }
-    console.log(url.toString());
+
     const curl =
 `curl '${url}' \\
 -X POST \\
