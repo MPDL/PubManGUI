@@ -1,5 +1,5 @@
-<div class="row">
-<div class="col-8">
+<div class="d-flex flex-row flex-wrap align-items-center row-gap-1">
+
 
   @if(showMetadata) {
 
@@ -11,16 +11,17 @@
       <a class="badge bg-mpdl-purple me-2" href="https://doi.org/{{doi}}" target="_blank">DOI: {{doi}}</a>
     }
   }
-</div>
-<div class="col-4">
 
-  <div class="float-end">
 
     <!--
     @if(showVersion) {
     <span class="badge bg-dark me-2">v{{item?.versionNumber}}</span>
     }
     -->
+
+  <!--fill to right-align following badges-->
+  <span class="ms-sm-auto"></span>
+
     @if(!item?.objectId) {
       <span class="badge bg-dark">NEW</span>
     }
@@ -35,37 +36,22 @@
           @let isLatestVersion = item?.versionNumber === item?.latestVersion?.versionNumber ? 'border-bottom border-2 border-dark' : '';
           @let isLatestRelease = item?.versionNumber === item?.latestRelease?.versionNumber ? 'border-bottom border-2 border-dark' : '';
 
-          @if(item?.latestRelease) {
+          <span>
+            @if(item?.latestRelease) {
 
-            <a class="" routerLink="/view/{{item?.objectId + '_' + item?.latestRelease?.versionNumber}}" [ngbTooltip]="('ItemState.' + item?.latestRelease?.versionState | translate) + ': Version ' + item?.latestRelease?.versionNumber ">
-              <span class="material-symbols-outlined text-dark me-2 {{isLatestRelease}}">public</span>
-            </a>
-          }
+              <a class="" routerLink="/view/{{item?.objectId + '_' + item?.latestRelease?.versionNumber}}" [ngbTooltip]="('ItemState.' + item?.latestRelease?.versionState | translate) + ': Version ' + item?.latestRelease?.versionNumber ">
+                <span class="material-symbols-outlined text-dark me-2 {{isLatestRelease}}">public</span>
+              </a>
+            }
 
-          @if(item?.latestVersion?.versionState !== 'RELEASED'){
+            @if(item?.latestVersion?.versionState !== 'RELEASED'){
 
-            <a routerLink="/view/{{item?.objectId + '_' + item?.latestVersion?.versionNumber}}"  [ngbTooltip]="('ItemState.' + item?.latestVersion?.versionState | translate) + ': Version ' + item?.latestVersion?.versionNumber ">
-              <span class="material-symbols-outlined text-dark me-2 {{isLatestVersion}}">overview</span>
-            </a>
-          }
+              <a class="" routerLink="/view/{{item?.objectId + '_' + item?.latestVersion?.versionNumber}}"  [ngbTooltip]="('ItemState.' + item?.latestVersion?.versionState | translate) + ': Version ' + item?.latestVersion?.versionNumber ">
+                <span class="material-symbols-outlined text-dark me-2 {{isLatestVersion}}">overview</span>
+              </a>
+            }
+          </span>
         }
-
-        <!--
-        @if(showPublicStatusIcon && state !== 'WITHDRAWN') {
-          @if(item?.latestRelease && item?.latestRelease?.versionNumber === item?.latestVersion?.versionNumber) {
-
-            <span class="material-symbols-outlined text-success me-2">public</span>
-          }
-          @else if(item?.latestRelease) {
-            <span class="material-symbols-outlined text-warning me-2">public</span>
-          }
-          @else {
-
-            <span class="material-symbols-outlined text-danger me-2">draft</span>
-          }
-        }
-      -->
-
       }
 
 
@@ -75,8 +61,8 @@
 
 
     }
-</div>
+
 
 </div>
-</div>
+
 
