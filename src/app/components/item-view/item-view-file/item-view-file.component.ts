@@ -8,9 +8,11 @@ import { checkFileAccess, getFullItemId, isUrl } from "../../../utils/item-utils
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
 import { TranslatePipe } from "@ngx-translate/core";
 import { CopyButtonDirective } from "../../../directives/copy-button.directive";
-import { humanFileSize } from "../../../utils/utils";
 import { FileSizePipe } from "../../../pipes/file-size.pipe";
-import { MatomoTracker, MatomoTrackerDirective } from "ngx-matomo-client";
+import { MatomoTracker } from "ngx-matomo-client";
+import { EMPTY } from "rxjs";
+import { extension } from "mime-types";
+import { UpperCasePipe } from "@angular/common";
 
 @Component({
   selector: 'pure-item-view-file',
@@ -21,7 +23,8 @@ import { MatomoTracker, MatomoTrackerDirective } from "ngx-matomo-client";
     NgbPopover,
     TranslatePipe,
     CopyButtonDirective,
-    FileSizePipe
+    FileSizePipe,
+    UpperCasePipe
   ],
   templateUrl: './item-view-file.component.html',
   styleUrl: './item-view-file.component.scss'
@@ -29,33 +32,43 @@ import { MatomoTracker, MatomoTrackerDirective } from "ngx-matomo-client";
 export class ItemViewFileComponent {
 
   protected ingeUri = environment.inge_uri;
-  @Input({required: true}) files: FileDbVO[] | undefined = [];
+  @Input({required: true}) file!: FileDbVO;
   @Input({required: true}) item!: ItemVersionVO;
 
-  audienceInfos: Map<string, any> = new Map;
+  audienceInfos: any;
+  fileAccessGranted = false;
+  oaStatusIcon?: string;
+
+  fileType?:string | boolean;
 
   constructor(private aaService: AaService, private itemsService: ItemsService, private matomoTracker: MatomoTracker) {
-
   }
 
   ngOnInit() {
 
-    // Get authorization info for each AUDIENCE file
-    this.files?.filter(f => f.visibility=== Visibility.AUDIENCE).forEach(f => {
-      this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), f.objectId!).subscribe(authInfo => {
-        this.audienceInfos.set(f.objectId!, authInfo);
-        //console.log(this.audienceInfos)
-      })
-    })
+    if(this.file?.storage === Storage.INTERNAL_MANAGED) {
+      this.getAudienceInfos(this.file).subscribe(infos => {
+        this.audienceInfos = infos;
+      });
+
+      this.fileAccessGranted = this.getFileAccessGranted(this.file);
+
+
+      this.fileType = extension(this.file.mimeType);
+
+    }
+    this.oaStatusIcon = this.getOaStatusIcon(this.file!);
+
   }
 
-  ipOrganizations(file: FileDbVO) {
-    //console.log(JSON.stringify(this.audienceInfos))
-    return Object.values(this.audienceInfos?.get(file.objectId!)?.ipInfo || {});
+  getAudienceInfos(file: FileDbVO) {
+    if(file?.visibility=== Visibility.AUDIENCE) {
+      return this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), file!.objectId!);
+    }
+    return EMPTY;
   }
 
-  fileAccessGranted(file: FileDbVO) {
-
+  getFileAccessGranted(file: FileDbVO) {
     const genericFileAccess = checkFileAccess(file, this.item, this.aaService.principal.value);
     if(file.visibility=== Visibility.AUDIENCE) {
       const audienceAccess:boolean = this.audienceInfos?.get(file.objectId!)?.actions?.READ_FILE || false;
@@ -64,7 +77,14 @@ export class ItemViewFileComponent {
     return genericFileAccess;
   }
 
-  oaStatusIcon(file: FileDbVO): string | undefined {
+
+  getIpOrganizations(file: FileDbVO) {
+    //console.log(JSON.stringify(this.audienceInfos))
+    return Object.values(this.audienceInfos?.ipInfo || {});
+  }
+
+
+  getOaStatusIcon(file: FileDbVO): string | undefined {
     if (file) {
       switch (file.metadata?.oaStatus) {
         //case OA_STATUS.CLOSED_ACCESS: return 'open_access_gold_64.png';

@@ -371,12 +371,27 @@
 
     <div class="container mt-2">
       <h5>{{ 'common.files' | translate }}</h5>
-      <pure-item-view-file [files]="storedFiles" [item]="item" />
+      @if (storedFiles && storedFiles.length && item.publicState !== 'WITHDRAWN') {
+        @for (file of storedFiles; track $index; let i = $index) {
+          <pure-item-view-file [file]="file" [item]="item" />
+        }
+      }
+      @else {
+        -
+      }
+
     </div>
 
     <div class="container mt-5">
       <h5>Links</h5>
-      <pure-item-view-file [files]="externalReferences" [item]="item" />
+      @if (externalReferences && externalReferences.length && item.publicState !== 'WITHDRAWN') {
+        @for (file of externalReferences; track $index; let i = $index) {
+          <pure-item-view-file [file]="file" [item]="item" />
+        }
+      }
+      @else {
+        -
+      }
     </div>
 
 

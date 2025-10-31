@@ -6,7 +6,7 @@ import { humanFileSize } from "../utils/utils";
 })
 export class FileSizePipe implements PipeTransform {
 
-  transform(sizeInBytes: number, ...args: unknown[]): string | undefined {
+  transform(sizeInBytes: number): string | undefined {
     if(Number.isInteger(sizeInBytes)) {
       return humanFileSize(sizeInBytes);
     }

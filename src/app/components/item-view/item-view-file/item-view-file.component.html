@@ -1,25 +1,20 @@
 
 
- @if (files && files.length && item.publicState !== 'WITHDRAWN') {
-    @for (file of files; track $index; let i = $index) {
+
 
       <div class="accordion mb-3" >
         <div class="accordion-item border-0 bg-transparent">
 
         <div class="row">
-          <div class="col-9 text-truncate pe-0">
-
+          <div class="col-9 text-truncate pe-0 ">
             <div>
-
               <span class="me-2 fw-bold">{{ 'ContentCategories.' + file.metadata.contentCategory | translate }}</span>
-              @let oaStatusIconUrl = oaStatusIcon(file);
+              @let oaStatusIconUrl = oaStatusIcon;
               @if(oaStatusIconUrl) {
                 <img alt="OA logo" class="me-1"
                      src="assets/images/{{oaStatusIconUrl}}" style="height: 1.2em;"
                      [ngbTooltip]="tipContent"/>
               }
-
-
 
               <ng-template #tipContent>
                 @if(oaStatusIconUrl) {
@@ -34,15 +29,15 @@
 
             </div>
 
-            @if(file.storage==='EXTERNAL_URL' || fileAccessGranted(file)) {
+            @if(file.storage==='EXTERNAL_URL' || fileAccessGranted) {
             @let link = (file.storage==='EXTERNAL_URL' ? '' : ingeUri) + file.content;
 
-              <a class="matomo_download" href="{{link}}" target="_blank" [ngbTooltip]="file.name">
-              <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}} me-1"></i>{{ file.metadata.title }}
-            </a>
+              <a class="matomo_download w-100" href="{{link}}" target="_blank" [ngbTooltip]="file.name">
+                <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}} me-1"></i>{{ file.metadata.title }}
+              </a>
             }
             @else {
-              <span [ngbTooltip]="file.metadata.title">
+              <span [ngbTooltip]="file.name">
                 <i class="bi-eye-slash-fill"></i> {{ file.metadata.title }}
               </span>
 
@@ -50,7 +45,7 @@
 
             @if(file.storage==='INTERNAL_MANAGED') {
               <div class="small text-start text-secondary">
-                ({{ file.mimeType | translate }})
+                ({{ fileType ? (fileType.toString() | uppercase) + '-' +('common.file' | translate) + ', ' : '' }}{{file.size | fileSize }})
               </div>
               }
 
@@ -88,7 +83,7 @@
                 </div>
                 -->
                 <div>
-                  @for(ouName of ipOrganizations(file); track $index) {
+                  @for(ouName of getIpOrganizations(file); track $index) {
                     {{ouName}}
                   }
                 </div>
@@ -128,14 +123,14 @@
               {{ file.metadata.description }}
             </div>
             }
-              @if(oaStatusIcon(file)) {
+              @if(oaStatusIcon) {
               <div class="mt-1">
                 <strong>{{ 'FileMetadataFields.oaStatus' | translate }}</strong>
               </div>
               <div>
 
                   <img alt="OA logo"
-                       src="assets/images/{{oaStatusIcon(file)}}"
+                       src="assets/images/{{oaStatusIcon}}"
                        style="height: 1.2em;" [ngbTooltip]="tipContent"/>
 
                 {{ ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')) | translate }}
@@ -197,10 +192,5 @@
         </div>
   </div>
       </div>
-    }
-  }
- @else {
-   -
- }
 
 

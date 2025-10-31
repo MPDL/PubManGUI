@@ -62,7 +62,12 @@ export class SearchComponent implements OnInit{
       const filterOutQuery = this.aaService.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
       const query = {
         bool: {
-          must: [{ query_string: { query: search_term } }],
+          must: [{ simple_query_string: {
+              query: search_term,
+              fields: ['metadata.title^5', 'metadata.creators.person.familyName^4', 'metadata.creators.person.givenName^2', 'sources.title^3','*'],
+              default_operator : 'AND'
+            }
+          }],
           must_not: [
             baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
             ...(filterOutQuery ? [filterOutQuery] : [])
