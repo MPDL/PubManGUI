@@ -59,7 +59,7 @@ export default class ImportDetailsListComponent implements OnInit {
   problem: number = 0;
   warning: number = 0;
 
-  released: boolean = false; // INGUI-127: Flag to indicate if import has been released
+  released: boolean = false; 
 
   public filterForm: FormGroup = this.fb.group({
     fine: [true, Validators.requiredTrue],
@@ -81,7 +81,7 @@ export default class ImportDetailsListComponent implements OnInit {
 
   isScrolled = false;
 
-  updateDelay = 1; // INGUI-113 After deletion user should stay on "details" page
+  updateDelay = 1;
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(value => {
@@ -121,18 +121,6 @@ export default class ImportDetailsListComponent implements OnInit {
                 this.fatal++;
                 break;
             }
-            /* Check if import has been released. See INGUI-127 */
-            /*
-            if (this.released === false && 
-              ( element.message === "import_process_release_successful" || 
-                element.message === "import_process_submit_release_successful" ||
-                element.message === "import_process_release_finished" ||  //  ?
-                element.message === "import_process_submit_release_finished" // ?
-              )) {
-              console.log("Import released detected in log items.");
-              this.released = true;
-            }
-            */
           });
 
         this.filteredLogs = this.unfilteredLogs = importsResponse;
@@ -243,33 +231,29 @@ export default class ImportDetailsListComponent implements OnInit {
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.importsSvc.deleteImportedItems(this.import.id).subscribe(importsResponse => {
-          const msg = this.translateSvc.instant(_('imports.list.details.delete'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
-          this.msgSvc.success(msg);
           setTimeout(() => {
-            //this.router.navigate(['/imports/myimports']);
-            // INGUI-113 After deletion user should stay on "details" page
-            this.updateDelay = 1;
-            this.updateForRunningDelete();
+            const msg = this.translateSvc.instant(_('imports.list.details.delete'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
+            this.runningProcess(msg);
           }, 1000);
         })
       }
     });
   }
 
-  updateForRunningDelete() {
+  runningProcess(msg: string) {
     this.importsSvc.getImportLog(this.import.id)
       .subscribe(importLog => {
-        if (this.isFinished(importLog.status)) {
-          this.updateDelay = 1;
-        } else {
+        if(!this.isFinished(importLog.status)) {
           setTimeout(() => {
-            this.getLogs();
-            this.refreshLogsView();
-            this.updateForRunningDelete();
+            this.runningProcess(msg);
           }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60));
-        }
+        } else {
+          this.msgSvc.success(msg);             
+          this.getLogs();
+          this.refreshLogsView();
+          this.updateDelay = 1;
+        };
       })
-
   }
 
   isFinished(status: ImportStatus): boolean {
@@ -307,21 +291,16 @@ export default class ImportDetailsListComponent implements OnInit {
       if (confirmed) {
         let submitModus = 'SUBMIT';
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
-          const msg = this.translateSvc.instant(_('imports.list.details.submit'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
-          this.msgSvc.success(msg);
 
           let element = document.getElementById('submit') as HTMLButtonElement;
           element.ariaDisabled = 'true';
           element.tabIndex = -1;
           element.classList.add('disabled');
 
-          // INGUI-112 No page reload after Import was released
-          for (let i of [10, 50, 500]) {
-            setTimeout(() => {
-              this.getLogs();
-              this.refreshLogsView();
-            }, i * 100);
-          }
+          setTimeout(() => {
+            const msg = this.translateSvc.instant(_('imports.list.details.submit'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
+            this.runningProcess(msg);
+          }, 1000);
         })
       }
     });
@@ -337,21 +316,16 @@ export default class ImportDetailsListComponent implements OnInit {
       if (confirmed) {
         let submitModus = this.caseSubmitAndRelease() ? 'SUBMIT_AND_RELEASE' : 'RELEASE';
         this.importsSvc.submitImportedItems(this.import.id, submitModus).subscribe(importsResponse => {
-          const msg = this.translateSvc.instant(_('imports.list.details.release'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
-          this.msgSvc.success(msg);
 
           let element = document.getElementById('release') as HTMLButtonElement;
           element.ariaDisabled = 'true';
           element.tabIndex = -1;
           element.classList.add('disabled');
 
-          // INGUI-112 No page reload after Import was released
-          for (let i of [10, 50, 500]) {
-            setTimeout(() => {
-              this.getLogs();
-              this.refreshLogsView();
-            }, i * 100);
-          }
+          setTimeout(() => {
+            const msg = this.translateSvc.instant(_('imports.list.details.release'), { name: this.import.name }) + ' ' + this.translateSvc.instant(_('common.completed')) + '!\n';
+            this.runningProcess(msg);
+          }, 1000);
         })
       }
     });

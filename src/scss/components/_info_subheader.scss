@@ -1,15 +1,17 @@
 pure-info-subheader {
+
   .row {
     position: fixed;
     top: 100px;
     z-index: 1010;
     height: 50px;
     padding-top: 15px;
+    background-color: var(--bs-body-bg) !important;
 
     &.scrolled {
       top: 50px;
       transition: all 0.1s ease;
-      background-color: var(--bs-body-bg) !important;
+      
     }
   }
 
