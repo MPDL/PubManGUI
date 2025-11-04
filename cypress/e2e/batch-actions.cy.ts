@@ -21,8 +21,7 @@ describe('Execute Batch Actions', () => {
 
   it('Add ORCID', () => {
     //Given
-    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
-
+    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.visit('/batch/actions')
 
     //When
@@ -39,7 +38,7 @@ describe('Execute Batch Actions', () => {
   it('Change Genre', () => {
     //Given
     let newItemGenre: string = 'ARTICLE';
-    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
+    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/changeGenre?*').as('changeGenre')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
@@ -58,7 +57,7 @@ describe('Execute Batch Actions', () => {
       expect(interception.response.statusCode).to.equal(200)
 
       //TODO: Check the exact confirmation/empty-batch message is displayed
-      cy.get('pure-messaging').should('exist')
+      cy.get('pure-notification').should('exist')
     })
 
     cy.repeatedWait('@batchProcess', 'state', ['FINISHED', 'FINISHED_WITH_ERROR'], 10000, 5).then((response) => {
@@ -67,8 +66,8 @@ describe('Execute Batch Actions', () => {
       // @ts-ignore
       expect(response.body['state']).to.equal('FINISHED')
 
-      //TODO: Add the message check, as soon a message is displayed again
-      //cy.get('pure-messaging').contains('Action finished!')
+      //TODO: Check the exact confirmation/empty-batch message is displayed
+      cy.get('pure-notification').should('exist')
 
       cy.getItemViaAPI(itemId).then((response) => {
         expect(response.body.metadata.genre).to.equal(newItemGenre)
@@ -79,7 +78,7 @@ describe('Execute Batch Actions', () => {
   it('Add Local Tags', () => {
     //Given
     let newTag: string = 'NewTag';
-    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
+    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/addLocalTags').as('addLocalTags')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 

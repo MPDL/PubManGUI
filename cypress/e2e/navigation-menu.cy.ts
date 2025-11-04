@@ -43,6 +43,7 @@ describe('Navigation Menu', () => {
     //Given
     cy.visit('/')
     //When
+    cy.get('[data-test="sidenav-import"]').filter(':visible').click()
     cy.get('pure-imports-nav').filter(':visible').find('[data-test="sidenav-import-new"]').click({force: true})
     //Then
     cy.url().should('eq', baseUrl + '/imports/new')
@@ -52,6 +53,7 @@ describe('Navigation Menu', () => {
     //Given
     cy.visit('/')
     //When
+    cy.get('[data-test="sidenav-import"]').filter(':visible').click()
     cy.get('pure-imports-nav').filter(':visible').find('[data-test="sidenav-import-myimports"]').click({force: true})
     //Then
     cy.url().should('eq', baseUrl + '/imports/myimports')
@@ -59,9 +61,10 @@ describe('Navigation Menu', () => {
 
   it('Batch - Datasets', () => {
     //Given
+    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array("itemId")))
     cy.visit('/')
-    window.localStorage.setItem('dataset-list', JSON.stringify(new Array("itemId")))
     //When
+    cy.get('[data-test="sidenav-batch"]').filter(':visible').click()
     cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-datasets"]').click({force: true})
     //Then
     cy.url().should('eq', baseUrl + '/batch/datasets')
@@ -69,9 +72,10 @@ describe('Navigation Menu', () => {
 
   it('Batch - Actions', () => {
     //Given
+    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array("itemId")))
     cy.visit('/')
-    window.localStorage.setItem('dataset-list', JSON.stringify(new Array("itemId")))
     //When
+    cy.get('[data-test="sidenav-batch"]').filter(':visible').click()
     cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-actions"]').click({force: true})
     //Then
     cy.url().should('eq', baseUrl + '/batch/actions')
@@ -81,6 +85,7 @@ describe('Navigation Menu', () => {
     //Given
     cy.visit('/')
     //When
+    cy.get('[data-test="sidenav-batch"]').filter(':visible').click()
     cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-logs"]').click({force: true})
     //Then
     cy.url().should('eq', baseUrl + '/batch/logs')

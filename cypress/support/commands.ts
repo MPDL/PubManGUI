@@ -42,8 +42,8 @@ Cypress.Commands.add('logoutViaAPI', () => {
   })
 })
 
-Cypress.Commands.add('logoutByClearingLocalStorage', () => {
-  window.localStorage.clear()
+Cypress.Commands.add('logoutByClearingCookies', () => {
+  cy.clearCookies()
 })
 
 Cypress.Commands.add('deleteItemViaAPI', (itemId) => {

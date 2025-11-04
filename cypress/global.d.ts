@@ -16,9 +16,9 @@ declare namespace Cypress {
     logoutViaAPI(): void
 
     /**
-     * Logout by clearing the Local Storage
+     * Logout by clearing all Cookies
      */
-    logoutByClearingLocalStorage(): void
+    logoutByClearingCookies(): void
 
     /**
      * Delete Item using the REST API
