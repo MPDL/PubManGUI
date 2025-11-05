@@ -23,7 +23,6 @@ describe('Check Batch Logs', () => {
   it('Read Batch Log (Add Local Tags)', () => {
     //Given
     let newTag: string = 'NewCypressTag';
-    window.localStorage.setItem('dataset-list', JSON.stringify(new Array(itemId)))
     cy.fixture('localTags').then((localTags) => {
       localTags.itemIds = new Array(itemId)
       localTags.localTags = new Array(newTag)

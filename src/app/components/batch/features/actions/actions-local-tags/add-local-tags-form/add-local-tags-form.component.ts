@@ -72,4 +72,11 @@ export class AddLocalTagsFormComponent {
     }
   }
 
+  @HostListener('document:keydown.enter', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  }
+
 }

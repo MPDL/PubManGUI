@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ElementRef } from '@angular/core';
+import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -29,11 +29,12 @@ export class ReplaceOrcidFormComponent {
   router = inject(Router);
   fb = inject(FormBuilder);
   batchSvc = inject(BatchService);
+  elRef: ElementRef = inject(ElementRef);
 
   validationError: boolean = false;
 
   public changeOrcidForm: FormGroup = this.fb.group<ControlType<PersonVO>>({
-    completeName: this.fb.nonNullable.control(''), 
+    completeName: this.fb.nonNullable.control(''),
     givenName: this.fb.nonNullable.control(''),
     familyName: this.fb.nonNullable.control(''),
     alternativeNames: this.fb.array<AbstractControl<string, string>>([]),
@@ -47,7 +48,7 @@ export class ReplaceOrcidFormComponent {
       }
     ),
     orcid: this.fb.nonNullable.control('')
-  }, {validators: Validators.required});
+  }, { validators: Validators.required });
 
   get changeOrcidParams(): ReplaceOrcidParams {
     const actionParams: ReplaceOrcidParams = {
@@ -59,17 +60,17 @@ export class ReplaceOrcidFormComponent {
   }
 
   ngOnInit() {
-    this.changeOrcidForm.valueChanges.subscribe(value => {    
+    this.changeOrcidForm.valueChanges.subscribe(value => {
       if (!this.changeOrcidForm.get('familyName')?.value) {
         this.changeOrcidForm.setErrors({ 'required': true });
-      } 
+      }
     });
   }
 
   checkIfAllRequired() {
     if (!this.changeOrcidForm.get('familyName')?.value) {
       this.changeOrcidForm.markAsPending();
-    } 
+    }
   }
 
   onSubmit(): void {
@@ -78,10 +79,16 @@ export class ReplaceOrcidFormComponent {
       return;
     }
 
-    this.batchSvc.replaceOrcid(this.changeOrcidParams).subscribe( actionResponse => {
+    this.batchSvc.replaceOrcid(this.changeOrcidParams).subscribe(actionResponse => {
       this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
       this.router.navigate(['/batch/logs']);
     });
   }
 
+  @HostListener('document:keydown.enter', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  }
 }

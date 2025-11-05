@@ -1,7 +1,7 @@
 describe('Login', () => {
 
   afterEach(() => {
-    cy.logoutByClearingLocalStorage()
+    cy.logoutByClearingCookies()
   })
 
   it('Login', () => {
