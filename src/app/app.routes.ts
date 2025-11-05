@@ -1,19 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { HelpComponent } from './pages/help/help.component';
-import { DisclaimerComponent } from './pages/disclaimer/disclaimer.component';
-import { PrivacyComponent } from './pages/privacy-policy/privacy.component';
-import { OuTreeComponent } from './components/ou-tree/ou-tree.component';
-import { ItemFormComponent } from './components/item-edit/item-form/item-form.component';
-import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
-import { ItemSearchAdvancedComponent } from "./components/item-search-advanced/item-search-advanced.component";
 import { itemResolver } from "./services/pubman-rest-client/item-resolver";
-import { MyItemsComponent } from "./components/my-items/my-items.component";
-import { QaWorkspaceComponent } from "./components/qa-workspace/qa-workspace.component";
-import { SearchResultListComponent } from "./components/search-result-list/search-result-list.component";
-import { fetchItemResolver } from "./components/imports/services/fetch-item-resolver";
-import { ItemViewComponent } from "./components/item-view/item-view.component";
-import { CartListComponent } from "./components/cart-list/cart-list.component";
+import { ItemFormComponent } from "./components/item-edit/item-form/item-form.component";
+import { ItemSearchAdvancedComponent } from "./components/item-search-advanced/item-search-advanced.component";
+
+
+
 
 
 export const routes: Routes = [
@@ -24,7 +15,8 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent,
+    //component: HomeComponent,
+    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
     data: {
       breadcrumb: {
         labelKey: 'common.home',
@@ -33,7 +25,7 @@ export const routes: Routes = [
   },
   {
     path: 'my',
-    component: MyItemsComponent,
+    loadComponent: () => import('./components/my-items/my-items.component').then(m => m.MyItemsComponent),
     data: {
       saveComponent: true,
       breadcrumb: {
@@ -43,7 +35,7 @@ export const routes: Routes = [
   },
   {
     path: 'qa',
-    component: QaWorkspaceComponent,
+    loadComponent: () => import('./components/qa-workspace/qa-workspace.component').then(m => m.QaWorkspaceComponent),
     data: {
       saveComponent: true,
       breadcrumb: {
@@ -53,7 +45,8 @@ export const routes: Routes = [
   },
   {
     path: 'search',
-    component: SearchResultListComponent,
+    //component: SearchResultListComponent,
+    loadComponent: () => import('./components/search-result-list/search-result-list.component').then(m => m.SearchResultListComponent),
     data: {
       saveComponent: true,
       breadcrumb: {
@@ -64,7 +57,7 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
-    component: CartListComponent,
+    loadComponent: () => import('./components/cart-list/cart-list.component').then(m => m.CartListComponent),
     data: {
       saveComponent: true,
       breadcrumb: {
@@ -73,8 +66,9 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'ou_tree',
-    component: OuTreeComponent,
+    path: 'ou-tree',
+    //component: OuTreeComponent,
+    loadComponent: () => import('./components/ou-tree/ou-tree.component').then(m => m.OuTreeComponent),
     data: {
       breadcrumb: {
         labelKey: 'common.ouTree',
@@ -83,7 +77,11 @@ export const routes: Routes = [
   },
 
   {
-    path: 'advanced-search', component: ItemSearchAdvancedComponent, data: {
+    path: 'advanced-search',
+    component: ItemSearchAdvancedComponent,
+    //loadComponent: () => import('./components/item-search-advanced/item-search-advanced.component').then(m => m.ItemSearchAdvancedComponent),
+    //loadComponent: () => import('./components/test/test.component').then(m => m.TestComponent),
+    data: {
       saveComponent: true,
       breadcrumb: {
         labelKey: 'header.advancedSearch',
@@ -91,7 +89,10 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'edit/:id', component: ItemFormComponent, resolve: { item: itemResolver },
+    path: 'edit/:id',
+    component: ItemFormComponent,
+    //loadComponent: () => import('./components/item-edit/item-form/item-form.component').then(m => m.ItemFormComponent),
+    resolve: { item: itemResolver },
     data: {
       breadcrumb: {
         labelKey: 'common.edit',
@@ -100,7 +101,10 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'view/:id', component: ItemViewComponent,
+    path: 'view/:id',
+
+    loadComponent: () => import('./components/item-view/item-view.component').then(m => m.ItemViewComponent),
+    //loadComponent: () => import('./components/item-view/item-view.component').then(m => m.ItemViewComponent),
 
     data: {
       breadcrumb: {
@@ -110,7 +114,11 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'edit', component: ItemFormComponent, resolve: { templateItem: itemResolver },
+    path: 'edit',
+    component: ItemFormComponent,
+    //loadComponent: () => import('./components/item-edit/item-form/item-form.component').then(m => m.ItemFormComponent),
+
+    resolve: { templateItem: itemResolver },
     data: {
       breadcrumb: {
         labelKey: 'common.edit'
@@ -118,7 +126,9 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'edit_import', component: ItemFormComponent, resolve: { item: fetchItemResolver },
+    path: 'edit_import',
+    component: ItemFormComponent,
+    //loadComponent: () => import('./components/item-edit/item-form/item-form.component').then(m => m.ItemFormComponent), resolve: { item: fetchItemResolver },
     data: {
       breadcrumb: {
         labelKey: 'imports.edit',
@@ -146,7 +156,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'help', component: HelpComponent,
+    path: 'help', loadComponent: () => import('./pages/help/help.component').then(m => m.HelpComponent),
     data: {
       breadcrumb: {
         labelKey: 'common.help',
@@ -154,7 +164,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'disclaimer', component: DisclaimerComponent,
+    path: 'disclaimer', loadComponent: () => import('./pages/disclaimer/disclaimer.component').then(m => m.DisclaimerComponent),
     data: {
       breadcrumb: {
         labelKey: 'footer.disclaimer',
@@ -162,7 +172,7 @@ export const routes: Routes = [
     }
   },
     {
-    path: 'privacy-policy', component: PrivacyComponent,
+    path: 'privacy-policy', loadComponent: () => import('./pages/privacy-policy/privacy.component').then(m => m.PrivacyComponent),
     data: {
       breadcrumb: {
         labelKey: 'footer.privacy',
@@ -171,6 +181,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    component: PageNotFoundComponent
+    loadComponent: () => import('./components/shared/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent)
   }
 ];

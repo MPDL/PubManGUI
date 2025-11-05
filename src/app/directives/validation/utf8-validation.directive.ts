@@ -1,10 +1,11 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { Errors } from "src/app/model/errors";
+import {isFormValueEmpty} from "../../utils/utils";
 
 export const Utf8Validator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;
   const text: string = control.value;
-  if (text !== null && text !== '') {
+  if (!isFormValueEmpty(text)) {
       for (let i = 0; i < text.length; i++) {
       const chr = text.charCodeAt(i);
       if (chr < 0x20 && chr !== 0x9 && chr !== 0xA && chr !== 0xD
