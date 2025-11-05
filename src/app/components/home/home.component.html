@@ -9,10 +9,10 @@
           <p class="fs-5"><span id="pubCounter" class="fw-bold">{{totalPublications}}</span> {{'Home.p2'|translate}}</p>
         </div>
         <div class="search-wrapper">
-          <form>
+          <form (ngSubmit)="onSearch()">
             <div class="search d-flex align-items-center bg-light opacity-75 rounded-5 p-3">
               <span class="material-symbols-outlined">search</span>
-              <input type="search" class="form-control ms-3 border-0 bg-transparent w-100" placeholder="Search" />
+              <input type="search" class="form-control ms-3 border-0 bg-transparent w-100" [placeholder]="'Home.Search'| translate" [(ngModel)]="searchTerm" name="homeSearch"/>
             </div>
           </form>
         </div>

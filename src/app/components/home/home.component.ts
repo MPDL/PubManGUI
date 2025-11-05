@@ -15,6 +15,8 @@ import { Chart, Tooltip } from 'chart.js/auto';
 import { CountUp } from 'countup.js';
 import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { FormsModule, NgModel } from "@angular/forms";
+import { SimplesearchService } from "src/app/services/simplesearch.service";
 
 @Component({
   selector: 'pure-home',
@@ -28,7 +30,8 @@ import { TranslatePipe, TranslateService } from "@ngx-translate/core";
     SlicePipe,
     DatePipe,
     LoadingComponent,
-    TranslatePipe
+    TranslatePipe,
+    FormsModule
   ],
 })
 export class HomeComponent implements OnInit {
@@ -42,7 +45,9 @@ export class HomeComponent implements OnInit {
   totalPublications:number =0;
   chart: Chart | undefined;
 
-  constructor(private itemsService: ItemsService, private httpClient: HttpClient, private translateService:TranslateService) {
+  searchTerm:string = "";
+
+  constructor(private itemsService: ItemsService, private httpClient: HttpClient, private translateService:TranslateService, private simpleSearch: SimplesearchService) {
     this.fetchLatestReleasedItems();
     this.loadNewsItems();
   }
@@ -51,6 +56,10 @@ export class HomeComponent implements OnInit {
   this.loadGenreAggs(); // new method to fetch real chart data
   }
 
+  onSearch(): void{
+    this.simpleSearch.search(this.searchTerm);
+    this.searchTerm = ''; // optional: clear the input afterward
+  }
 
   fetchLatestReleasedItems(): void {
     const query = {
