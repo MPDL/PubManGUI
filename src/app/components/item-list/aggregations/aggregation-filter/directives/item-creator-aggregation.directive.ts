@@ -34,6 +34,9 @@ export class ItemCreatorAggregationDirective extends ItemAggregationBaseDirectiv
                     },
                     size: 1
                   }
+                },
+                top_reverse_nested: {
+                  reverse_nested: {}
                 }
               }
 
@@ -55,7 +58,7 @@ export class ItemCreatorAggregationDirective extends ItemAggregationBaseDirectiv
       const aggResult: AggregationResultView = {
         displayValue: displayValCreator.person.familyName + ", " + displayValCreator.person.givenName,//b['top_hits#otherFields'].hits.hits[0]._source.context.name,
         selectionValue: b.key,
-        docCount: b.doc_count
+        docCount: b['reverse_nested#top_reverse_nested'].doc_count
       }
       resultViews.push(aggResult);
     })
