@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { itemResolver } from "./services/pubman-rest-client/item-resolver";
 import { ItemFormComponent } from "./components/item-edit/item-form/item-form.component";
 import { ItemSearchAdvancedComponent } from "./components/item-search-advanced/item-search-advanced.component";
+import { fetchItemResolver } from './components/imports/services/fetch-item-resolver';
 
 
 
@@ -129,6 +130,7 @@ export const routes: Routes = [
     path: 'edit_import',
     component: ItemFormComponent,
     //loadComponent: () => import('./components/item-edit/item-form/item-form.component').then(m => m.ItemFormComponent), resolve: { item: fetchItemResolver },
+    resolve: { item: fetchItemResolver },
     data: {
       breadcrumb: {
         labelKey: 'imports.edit',

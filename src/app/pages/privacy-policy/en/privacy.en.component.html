@@ -1,4 +1,4 @@
-<div id="privacy" class="mt-5 mb-5">
+<div id="privacy" class="mt-5 mb-5" style="text-align: justify; hyphens: auto;">
 
     <h2>Data protection information</h2>
     <hr>
@@ -25,8 +25,9 @@
     </p>
     <p>
         Max Planck Digital Library (MPDL)<br />
-        Landsberger Straße 346<br />
-        80687 München
+        Landsberger Strasse 346<br />
+        80687 Munich<br />
+        Germany
     </p>
     <p>
         Tel.: +49 89 909 311-0<br />
@@ -36,18 +37,18 @@
         as an organizational unit of the
     </p>
     <p>
-        Max-Planck-Gesellschaft zur Förderung der Wissenschaften e.V.<br />
-        Hofgartenstraße 8<br />
+        Max Planck Society for the Advancement of Science e.V.<br />
+        Hofgartenstrasse 8<br />
         80539 Munich<br />
         Germany<br />
         Commercial Register No. VR 13378 B<br />
-        AG Berlin-Charlottenburg
+        District court Berlin-Charlottenburg
     </p>
 
     <h4 class="mt-4">Data Protection Officer</h4>
     <p>
         The Data Protection Officer of the Max Planck Society for the Advancement of Science can be contacted by email
-        at <a href="mailto:datenschutz&#64;mpg.de" class="link-info">datenschutz&#64;mpg.de</a> oder telefonisch unter +49 89 2108-1554 erreicht werden.
+        at <a href="mailto:datenschutz&#64;mpg.de" class="link-info">datenschutz&#64;mpg.de</a> or by telephone at +49 89 2108-1554.
     </p>
 
     <h3 class="mt-4">Description and scope of data processing</h3>
@@ -224,6 +225,7 @@
             &#x2022; Name, version and language setting of the browser
         </li>
     </ul>
+    <br />
     <p>
         Additionally, if JavaScript is activated:
     </p>
@@ -240,10 +242,8 @@
         <li>
             &#x2022; screen resolution and color depth
         </li>
-        <li>
-            &#x2022; Vom Browser unterstützte Techniken und Formate (z. B. Cookies, Java, Flash, PDF)
-        </li>
     </ul>
+    <br />
     <p>
         The data is stored and analyzed exclusively on a central server operated by the Max Planck Society.
     </p>
@@ -274,7 +274,7 @@
         independent options to prevent data collection by the central server:
     </p>
     <ul>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             Activate the “Do-Not-Track” or “Do Not Follow” setting in your browser. As long as this setting is active,
             our central Matomo server will not store any of your data. Important: The Do-Not-Track instruction usually
             only applies to the one device and the one browser in which you activate the setting. If you use multiple
@@ -288,7 +288,7 @@
         </li>
     </ul>
 
-    <div class="form-check">
+    <div class="form-check mt-1 ms-1">
         <input class="form-check-input" type="checkbox" name="trackVisits" id="trackVisits"
                pureMatomoOptOut
                #matomoDirective=pureMatomoOptOutDirective
@@ -296,19 +296,20 @@
                (ngModelChange)="matomoDirective.matomoOptInChange($event)"/>
         <label class="form-check-label" for="trackVisits">
             <strong>
-              @if(matomoDirective.matomoOptInSelected) {
+                @if(matomoDirective.matomoOptInSelected) {
                 <span id="labelOptOut">
                     Your visit to this website is currently being tracked by Matomo web analytics. Uncheck this box to opt out.
                 </span>
-              } @else {
+                } @else {
                 <span id="labelOptIn">
-                   Your visit to this website is currently not being tracked by Matomo web analytics. Please check this box to opt in.
+                    Your visit to this website is currently not being tracked by Matomo web analytics. Please check this box to 
+                    opt in.
                 </span>
-              }
+                }
             </strong>
         </label>
     </div>
-
+    <br />
     <p>
         The storage and analysis of data is always done anonymously. Session cookies are deleted at the latest when you
         close your browser. Personal user profiles are not created.
@@ -320,38 +321,38 @@
         According to the General Data Protection Regulation (GDPR), you have the right:
     </p>
     <ul>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             to request information about your personal data processed by us in accordance with Art. 15 GDPR. This
             includes the purposes of processing, the categories of personal data, the categories of recipients of the
             data, the planned storage period, the origin of your data, and the existence of automated decision-making
             including profiling;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 16 GDPR, to request the correction of incorrect or incomplete personal data stored
             by us;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 17 GDPR, to request the deletion of your personal data stored by us, unless the
             processing is necessary to exercise the right to freedom of expression and information, to fulfill a legal
             obligation, for reasons of public interest or to assert, exercise or defend legal claims;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 18 GDPR, to demand the restriction of the processing of your personal data if you
             dispute the accuracy of the data, if the processing is unlawful and you refuse the deletion of your data,
             and in cases where we no longer need your data but you need it to enforce legal claims. A restriction of
             processing will also be carried out if you have objected to the processing but it is not yet certain whether
             our legitimate interests outweigh yours;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 20 GDPR, to receive the personal data concerning you, which you have provided to us,
             in a structured, commonly used and machine-readable format and have the right to transmit those data to
             another controller;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 7 (3) GDPR, to withdraw consent at any time. The data processed before we receive
             your request may still be legally processed;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             PURSUANT TO ART. 21 GDPR, YOU HAVE THE RIGHT TO OBJECT TO THE PROCESSING OF YOUR PERSONAL DATA. IF THE
             PROCESSING OF YOUR DATA IS BASED ON THE LEGITIMATE INTEREST OF THE MPDL OR THIRD PARTIES AND YOUR OBJECTION
             IS BASED ON YOUR PARTICULAR SITUATION, WE WILL COME ACCORDINGLY COMPLY WITH THAT REQUEST, UNLESS THERE ARE

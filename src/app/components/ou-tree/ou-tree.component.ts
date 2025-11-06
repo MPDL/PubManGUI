@@ -21,18 +21,29 @@ export class OUsDatabase extends Database<any> {
 
   getRootLevelItems(): Observable<any[]> {
     return this.http.get<any[]>(`${this.inge_uri}/ous/toplevel`).pipe(
-      map(nodes => nodes)
-    );
+      map(nodes => nodes));
   }
 
   getChildren(item: any): Observable<any[]> {
     return this.http.get<any[]>(`${this.inge_uri}/ous/${item.objectId}/children`).pipe(
-      map(ous => ous)
+      map(ous => ous.sort(this.sortByStatus()))
     );
   }
 
   hasChildren(item: any): boolean {
     return item.hasChildren;
+  }
+
+  sortByStatus() {
+    return function(a: any, b: any) {
+        if (a['publicStatus'] > b['publicStatus']) return -1;
+        if (a['publicStatus'] < b['publicStatus']) return 1;
+
+        if (a['name'] < b['name']) return -1;
+        if (a['name'] > b['name']) return 1;
+
+        return 0;
+    }
   }
 }
 
@@ -64,4 +75,5 @@ export class OuTreeComponent {
     componentInstance.ouId = node.item.objectId;
     console.log(JSON.stringify(node)); 
   }
+
 }

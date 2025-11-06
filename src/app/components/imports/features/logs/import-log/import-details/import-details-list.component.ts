@@ -243,6 +243,7 @@ export default class ImportDetailsListComponent implements OnInit {
   runningProcess(msg: string) {
     this.importsSvc.getImportLog(this.import.id)
       .subscribe(importLog => {
+        this.import = importLog;
         if(!this.isFinished(importLog.status)) {
           setTimeout(() => {
             this.runningProcess(msg);
