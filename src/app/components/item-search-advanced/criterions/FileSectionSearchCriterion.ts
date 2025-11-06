@@ -83,30 +83,30 @@ export class FileSectionSearchCriterion extends SearchCriterion {
             let boolQuery: { [k: string]: any } = {};
             switch (this.content.get("componentAvailable")?.value) {
               case "YES" : {
-                boolQuery['must'] = [baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.type), ...queries];
-                break;
-              }
-              case "NO" : {
-                boolQuery['must_not'] = [baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.type)];
-                break;
-              }
-              case "WHATEVER" : {
-                return of(undefined);
-              }
-            }
-
-            const query =
-              {
-                nested: {
-                  path: "files",
-                  query: {
-                    bool: boolQuery
+                return {
+                  nested: {
+                    path: "files",
+                      query: {
+                      bool: {
+                        must : [baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.type), ...queries]
+                      }
+                    }
                   }
                 }
               }
-            console.log("Returning query" + JSON.stringify(query));
-            return query;
+              case "NO" : {
+                return {
+                  bool: {
+                    must_not: [baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.type)]
+                  }
+                }
+              }
+              case "WHATEVER" : {
+                return undefined;
+              }
+            }
 
+          return undefined;
           }
         ))
   }
