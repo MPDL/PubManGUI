@@ -225,6 +225,7 @@
             &#x2022; Name, version and language setting of the browser
         </li>
     </ul>
+    <br />
     <p>
         Additionally, if JavaScript is activated:
     </p>
@@ -242,6 +243,7 @@
             &#x2022; screen resolution and color depth
         </li>
     </ul>
+    <br />
     <p>
         The data is stored and analyzed exclusively on a central server operated by the Max Planck Society.
     </p>
@@ -272,7 +274,7 @@
         independent options to prevent data collection by the central server:
     </p>
     <ul>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             Activate the “Do-Not-Track” or “Do Not Follow” setting in your browser. As long as this setting is active,
             our central Matomo server will not store any of your data. Important: The Do-Not-Track instruction usually
             only applies to the one device and the one browser in which you activate the setting. If you use multiple
@@ -286,7 +288,7 @@
         </li>
     </ul>
 
-    <div class="form-check">
+    <div class="form-check mt-1 ms-1">
         <input class="form-check-input" type="checkbox" name="trackVisits" id="trackVisits"
                pureMatomoOptOut
                #matomoDirective=pureMatomoOptOutDirective
@@ -294,19 +296,20 @@
                (ngModelChange)="matomoDirective.matomoOptInChange($event)"/>
         <label class="form-check-label" for="trackVisits">
             <strong>
-              @if(matomoDirective.matomoOptInSelected) {
+                @if(matomoDirective.matomoOptInSelected) {
                 <span id="labelOptOut">
                     Your visit to this website is currently being tracked by Matomo web analytics. Uncheck this box to opt out.
                 </span>
-              } @else {
+                } @else {
                 <span id="labelOptIn">
-                   Your visit to this website is currently not being tracked by Matomo web analytics. Please check this box to opt in.
+                    Your visit to this website is currently not being tracked by Matomo web analytics. Please check this box to 
+                    opt in.
                 </span>
-              }
+                }
             </strong>
         </label>
     </div>
-
+    <br />
     <p>
         The storage and analysis of data is always done anonymously. Session cookies are deleted at the latest when you
         close your browser. Personal user profiles are not created.
@@ -318,38 +321,38 @@
         According to the General Data Protection Regulation (GDPR), you have the right:
     </p>
     <ul>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             to request information about your personal data processed by us in accordance with Art. 15 GDPR. This
             includes the purposes of processing, the categories of personal data, the categories of recipients of the
             data, the planned storage period, the origin of your data, and the existence of automated decision-making
             including profiling;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 16 GDPR, to request the correction of incorrect or incomplete personal data stored
             by us;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 17 GDPR, to request the deletion of your personal data stored by us, unless the
             processing is necessary to exercise the right to freedom of expression and information, to fulfill a legal
             obligation, for reasons of public interest or to assert, exercise or defend legal claims;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 18 GDPR, to demand the restriction of the processing of your personal data if you
             dispute the accuracy of the data, if the processing is unlawful and you refuse the deletion of your data,
             and in cases where we no longer need your data but you need it to enforce legal claims. A restriction of
             processing will also be carried out if you have objected to the processing but it is not yet certain whether
             our legitimate interests outweigh yours;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 20 GDPR, to receive the personal data concerning you, which you have provided to us,
             in a structured, commonly used and machine-readable format and have the right to transmit those data to
             another controller;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             in accordance with Art. 7 (3) GDPR, to withdraw consent at any time. The data processed before we receive
             your request may still be legally processed;
         </li>
-        <li>&#x2022;
+        <li class="mb-1">&#x2022;
             PURSUANT TO ART. 21 GDPR, YOU HAVE THE RIGHT TO OBJECT TO THE PROCESSING OF YOUR PERSONAL DATA. IF THE
             PROCESSING OF YOUR DATA IS BASED ON THE LEGITIMATE INTEREST OF THE MPDL OR THIRD PARTIES AND YOUR OBJECTION
             IS BASED ON YOUR PARTICULAR SITUATION, WE WILL COME ACCORDINGLY COMPLY WITH THAT REQUEST, UNLESS THERE ARE
