@@ -54,6 +54,17 @@
           <span>{{ 'imports.list.items.for' | translate }}</span>: <strong class="fw-bolder">{{ import.name }}
           </strong><span class="fw-light">(  {{ 'ImportFormat.' + import.format | translate }} )</span>
         </div>
+
+        @if( !isFinished(import.status) ) {
+        <div class="col-4 px-1 d-flex justify-content-between">
+          <span>{{ 'ImportStatus.' + import.status | translate }}</span>
+          <div class="my-0 pe-1">
+            {{ import.percentage }} &percnt; <span class="mx-1 spinner-border spinner-border-sm text-secondary"
+              aria-hidden="true"></span>
+          </div>
+        </div>
+        }
+
         <div class="fw-light text-nowrap text-truncate">
           <span>{{'imports.list.started.on' | translate }}</span>&nbsp;
           <span>{{ import.startDate | localizeDate }}</span>&nbsp;

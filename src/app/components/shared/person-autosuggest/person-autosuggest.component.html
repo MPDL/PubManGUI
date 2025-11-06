@@ -37,13 +37,17 @@
 
     @if(showConeAndOrcid) {
 
-      <span class="btn btn-outline-dark btn-sm">
+      @if(formForPersonsIdValue?.value) {
+        <span class="btn btn-outline-dark btn-sm">
         <pure-cone-icon [coneId]="formForPersonsIdValue.value" [button]="true"/>
       </span>
+      }
 
-      <span class="btn btn-outline-dark btn-sm">
-        <pure-cone-icon [orcid]="formForPersonsOrcid?.value" [button]="true"/>
-      </span>
+      @if(formForPersonsOrcid?.value) {
+        <span class="btn btn-outline-dark btn-sm">
+          <pure-cone-icon [orcid]="formForPersonsOrcid?.value" [button]="true"/>
+        </span>
+      }
 
       <!--
       <a class="btn btn-outline-dark btn-sm" href="/cone{{formForPersonsIdValue.value}}" target="_blank">

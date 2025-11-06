@@ -54,7 +54,6 @@ export class ValidationErrorMessageDirective {
 
   @Input() validationMessagePosition : 'top' | 'bottom' | 'ignore' = 'bottom'
 
-  private headingElement: Element | null;
   private control : AbstractControl | null = null;
   private controlName
 
@@ -63,8 +62,6 @@ export class ValidationErrorMessageDirective {
     //this.control = cont?.control || cd?.control;
 
     this.controlName = cont?.name?.toString() || cd?.name?.toString() || '';
-    this.headingElement = this.findAccordionHeader(this.elementRef.nativeElement);
-
 
   }
 
@@ -72,11 +69,7 @@ export class ValidationErrorMessageDirective {
 
     this.control = this.cont?.control || this.cd?.control;
 
-
-
     if(this.validationMessagePosition !== 'ignore'){
-
-
 
       //Default for bottom:
       let parentElement = this.elementRef.nativeElement.parentElement;
@@ -127,49 +120,8 @@ export class ValidationErrorMessageDirective {
 
       this.renderer.insertBefore(parentElement, errorElement, referenceElement, true);
 
-
     }
 
-
-
-  }
-
-
-  private addRemoveValidationInfoToHeader() {
-    const validationSymbol = this.headingElement?.querySelector('.head-validation-symbol');
-    const isValid = this.headingElement?.querySelector('.ng-invalid') === null
-    if(this.controlName === 'title') {
-      const invalidElement = this.headingElement?.querySelector('.ng-invalid');
-      console.log("update " + this.controlName, this.headingElement, validationSymbol, isValid, invalidElement);
-    }
-    //console.log("symbol", this.controlName, validationSymbol, isValid);
-    if (!isValid) {
-      if (!validationSymbol) {
-        //console.log("append", this.headingElement)
-        this.headingElement?.querySelector('h2 button')?.insertAdjacentHTML('beforeend', '<span class="head-validation-symbol">FOUND</span>');
-      }
-    }
-    else {
-      //console.log("remove")
-      validationSymbol?.remove();
-    }
-  }
-
-  private findAccordionHeader(htmlElement: HTMLElement | null | undefined): Element | null {
-    if (htmlElement) {
-
-      if (htmlElement?.classList?.contains('accordion-item')) {
-        const headingButton = htmlElement.querySelector('h2 button');
-        //console.log("Heading found", heading);
-        //console.log(heading);
-        if(headingButton) {
-          return htmlElement;
-        }
-      } else {
-        return this.findAccordionHeader(htmlElement?.parentElement);
-      }
-    }
-    return null;
   }
 
 }

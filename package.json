@@ -9,7 +9,8 @@
     "test": "ng test",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "analyze-bundle": "ng build --configuration=analyze-bundle && source-map-explorer dist/**/*.js --no-border-checks"
   },
   "private": true,
   "dependencies": {
@@ -51,6 +52,7 @@
     "@types/jasmine": "~5.1.0",
     "cypress": "^15.2.0",
     "jasmine-core": "~5.8.0",
+    "source-map-explorer": "^2.5.3",
     "typescript": "~5.8.3"
   }
 }

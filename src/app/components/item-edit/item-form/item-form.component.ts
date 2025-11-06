@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import {
@@ -44,10 +44,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
 import { LoadingComponent } from "../../shared/loading/loading.component";
 import { MiscellaneousService } from "../../../services/pubman-rest-client/miscellaneous.service";
 import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
-import { ChangeContextModalComponent } from "../../shared/change-context-modal/change-context-modal.component";
-import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
-import { HttpErrorResponse } from "@angular/common/http";
-import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
+
 import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
 
 @Component({
@@ -82,6 +79,7 @@ export class ItemFormComponent implements OnInit {
   modalService = inject(NgbModal);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  changeDetectorRef = inject(ChangeDetectorRef);
 
   externalReferences!: FormArray<FormGroup<ControlType<FileDbVO>>>;
   form!: FormGroup;
@@ -372,15 +370,16 @@ export class ItemFormComponent implements OnInit {
 
   private itemUpdated(item: ItemVersionVO, initial:boolean=false) {
     this.item = item;
-    this.form = this.fbs.item_FG(item);
 
     if(initial) {
+      this.form = this.fbs.item_FG(item);
       if (this.user_contexts.length > 0 && this.isNewItem) {
         // no contextService call needed, because we just need a contextDbRO
         this.form.get('context')?.patchValue({ objectId: this.user_contexts[0].objectId, name: this.user_contexts[0].name });
       }
     }
     else {
+      this.fbs.updateItem_FG(this.form, this.item)
       if (!this.isNewItem) {
         this.listStateService.itemUpdated.next(this.objectId);
       }

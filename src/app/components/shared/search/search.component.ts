@@ -16,6 +16,7 @@ import { filter } from "rxjs/operators";
 import { AaService } from "../../../services/aa.service";
 import { ItemVersionState } from "../../../model/inge";
 import { MatomoTracker } from "ngx-matomo-client";
+import { SimplesearchService } from 'src/app/services/simplesearch.service';
 
 @Component({
   selector: 'pure-search',
@@ -41,7 +42,8 @@ export class SearchComponent implements OnInit{
     private searchState: SearchStateService,
     private itemsService: ItemsService,
     private aaService: AaService,
-    private matomoTracker: MatomoTracker
+    private matomoTracker: MatomoTracker,
+    private simpleSearch: SimplesearchService
   ) {
   }
 
@@ -57,29 +59,10 @@ export class SearchComponent implements OnInit{
 
 
   search(): void {
+  
     const search_term = this.search_form.get('text')?.value;
-    if (search_term) {
-      const filterOutQuery = this.aaService.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
-      const query = {
-        bool: {
-          must: [{ simple_query_string: {
-              query: search_term,
-              fields: ['metadata.title^5', 'metadata.creators.person.familyName^4', 'metadata.creators.person.givenName^2', 'sources.title^3','*'],
-              default_operator : 'AND'
-            }
-          }],
-          must_not: [
-            baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
-            ...(filterOutQuery ? [filterOutQuery] : [])
-          ]
-        }
-      };
-      this.matomoTracker.trackSiteSearch(search_term, "simple");
+    this.simpleSearch.search(search_term)
 
-      this.searchState.$currentQuery.next(query);
-      //sessionStorage.setItem('currentQuery', JSON.stringify(query));
-      this.router.navigateByUrl('/search');
-    }
     this.search_form.controls['text'].patchValue('');
   }
 
