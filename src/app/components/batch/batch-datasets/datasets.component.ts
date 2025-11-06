@@ -37,7 +37,7 @@ export default class DatasetsComponent {
         return {
           bool: {
             must: [
-              baseElasticSearchQueryBuilder("objectId", batchSvc.items),
+              baseElasticSearchQueryBuilder({index: "objectId", type: "keyword"}, batchSvc.items),
               {
                 script: {
                   script: "doc['latestVersion.versionNumber']==doc['versionNumber']"

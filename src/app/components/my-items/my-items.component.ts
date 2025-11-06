@@ -37,7 +37,7 @@ export class MyItemsComponent {
         return {
           bool: {
             must: [
-              baseElasticSearchQueryBuilder("creator.objectId", userObjectId ? userObjectId : ""),
+              baseElasticSearchQueryBuilder({index:"creator.objectId", type: "keyword"}, userObjectId ? userObjectId : ""),
               /*
               {
                 script: {

@@ -44,7 +44,7 @@ export class ItemSourceTitleAggregationDirective extends ItemAggregationBaseDire
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
-    return baseElasticSearchQueryBuilder('metadata.sources.title.keyword_default', selectedValues.map(arv => arv.selectionValue));
+    return baseElasticSearchQueryBuilder({index: 'metadata.sources.title.keyword_default',type: "keyword"}, selectedValues.map(arv => arv.selectionValue));
 
   }
 

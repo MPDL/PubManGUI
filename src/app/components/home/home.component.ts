@@ -72,16 +72,16 @@ export class HomeComponent implements OnInit {
                 query: {
                   bool: {
                     must: [
-                      baseElasticSearchQueryBuilder("files.storage", "INTERNAL_MANAGED"),
-                      baseElasticSearchQueryBuilder("files.visibility", "PUBLIC"),
-                      baseElasticSearchQueryBuilder("files.mimeType", "application/pdf"),
+                      baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, "INTERNAL_MANAGED"),
+                      baseElasticSearchQueryBuilder({index: "files.visibility", type: "keyword"}, "PUBLIC"),
+                      baseElasticSearchQueryBuilder({index: "files.mimeType.keyword", type: "keyword"}, "application/pdf"),
                     ]
                   }
                 }
               }
             },
-            baseElasticSearchQueryBuilder("versionState", "RELEASED"),
-            baseElasticSearchQueryBuilder("publicState", "RELEASED"),
+            baseElasticSearchQueryBuilder({index: "versionState", type: "keyword"}, "RELEASED"),
+            baseElasticSearchQueryBuilder({index: "publicState", type: "keyword"}, "RELEASED"),
           ]
         }
       },
@@ -136,12 +136,12 @@ export class HomeComponent implements OnInit {
       this.documentTypes[bucket.key] = bucket.doc_count;
     });
 
-    
+
     setTimeout(() => this.createChart(), 0);
   });
   }
 
- 
+
   createChart(): void{
   const canvas = document.getElementById('documentChart') as HTMLCanvasElement;
   let ctx;
@@ -156,28 +156,28 @@ export class HomeComponent implements OnInit {
 
   this.chart= new Chart(ctx, {
     type: 'doughnut',
-    data:{ labels: labels.map(label => this.translateService.instant("MdsPublicationGenre." + label).toUpperCase()) , 
+    data:{ labels: labels.map(label => this.translateService.instant("MdsPublicationGenre." + label).toUpperCase()) ,
         datasets:[{data,
         backgroundColor: ['#00C2FF', '#FAD02E', '#7FFFD4', '#FF6B6B', '#A26EFF', '#1F75FE', '#FFA07A'],
         hoverBackgroundColor: ['#00A0D6', '#E5BA1E ', '#5FEFD0', '#E14C4C', '#8C57E0', '#165EBE', '#FF8C65']
-      }]      
+      }]
     },
 
     options:{
       plugins:{
         legend:{
           labels:{
-            color: "#FFF",  
+            color: "#FFF",
           }
         },
         tooltip:{
-             // titleColor: 'red',  
+             // titleColor: 'red',
           callbacks:{
             label:(tooltipItem) =>{
               const total = data.reduce((sum, val) => sum +val, 0);
               const value = data[tooltipItem.dataIndex];
               const percent = ((value / total) *100).toFixed(2);
-              
+
               return `${percent}%`;
             },
           }

@@ -54,7 +54,7 @@ export class ItemContextAggregationDirective extends ItemAggregationBaseDirectiv
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
-    return baseElasticSearchQueryBuilder('context.objectId', selectedValues.map(arv => arv.selectionValue));
+    return baseElasticSearchQueryBuilder({index : 'context.objectId', type: 'keyword'}, selectedValues.map(arv => arv.selectionValue));
 
   }
 

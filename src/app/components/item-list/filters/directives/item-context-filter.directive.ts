@@ -46,7 +46,7 @@ export class ItemContextFilterDirective extends ItemFilterDirective {
     let query = undefined;
 
     if(selectedValue)
-      query = baseElasticSearchQueryBuilder('context.objectId', selectedValue);
+      query = baseElasticSearchQueryBuilder({index: 'context.objectId', type: "keyword"}, selectedValue);
     else
       query= undefined;
     const fe: FilterEvent = {

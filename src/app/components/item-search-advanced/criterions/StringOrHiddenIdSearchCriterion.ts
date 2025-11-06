@@ -1,6 +1,6 @@
 import { SearchCriterion } from "./SearchCriterion";
 import { FormControl } from "@angular/forms";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
+import {baseElasticSearchQueryBuilder, IndexField} from "../../../utils/search-utils";
 import { forkJoin, map, Observable, of } from "rxjs";
 import { OrganizationsService } from "../../../services/pubman-rest-client/organizations.service";
 
@@ -38,9 +38,9 @@ export abstract class StringOrHiddenIdSearchCriterion extends SearchCriterion {
   }
 
 
-  protected abstract getElasticSearchFieldForHiddenId(): string[];
+  protected abstract getElasticSearchFieldForHiddenId(): IndexField[];
 
-  protected abstract getElasticSearchFieldForSearchString(): string[];
+  protected abstract getElasticSearchFieldForSearchString(): IndexField[];
 }
 
 export class PersonSearchCriterion extends StringOrHiddenIdSearchCriterion {
@@ -50,12 +50,13 @@ export class PersonSearchCriterion extends StringOrHiddenIdSearchCriterion {
     this.content.addControl("role", new FormControl(""));
   }
 
-  protected getElasticSearchFieldForHiddenId(): string[] {
-    return ["metadata.creators.person.identifier.id"];
+  protected getElasticSearchFieldForHiddenId(): IndexField[] {
+
+    return [{index: "metadata.creators.person.identifier.id", type: "keyword"}];
   }
 
-  protected getElasticSearchFieldForSearchString(): string[] {
-    return ["metadata.creators.person.familyName", "metadata.creators.person.givenName"];
+  protected getElasticSearchFieldForSearchString(): IndexField[] {
+    return [{index: "metadata.creators.person.familyName", type: "text"}, {index: "metadata.creators.person.givenName", type: "text"}];
   }
 
   override getElasticSearchNestedPath(): string | undefined {
@@ -95,7 +96,7 @@ export class PersonSearchCriterion extends StringOrHiddenIdSearchCriterion {
           query: {
             bool: {
               must: [
-                baseElasticSearchQueryBuilder("metadata.creators.role", role),
+                baseElasticSearchQueryBuilder({index: "metadata.creators.role", type: "keyword"}, role),
                 (hidden && hidden.trim()) ? baseElasticSearchQueryBuilder(this.getElasticSearchFieldForHiddenId(), hidden) : multiMatchForSearchString,
 
               ]
@@ -119,14 +120,19 @@ export class OrganizationSearchCriterion extends StringOrHiddenIdSearchCriterion
     this.content.addControl("includePredecessorsAndSuccessors", new FormControl(false));
   }
 
-  protected getElasticSearchFieldForHiddenId(): string[] {
-    return ["metadata.creators.person.organizations.identifierPath", "metadata.creators.organization.identifierPath",
-      ...(this.includeSource) ? ["metadata.sources.creators.person.organizations.identifierPath"] : [],
+  protected getElasticSearchFieldForHiddenId(): IndexField[] {
+
+    const fields: IndexField[] = [
+      {index: "metadata.creators.person.organizations.identifierPath", type: "keyword"},
+      {index: "metadata.creators.organization.identifierPath", type: "keyword"},
     ];
+    if(this.includeSource)
+      fields.push({index: "metadata.sources.creators.person.organizations.identifierPath", type: "keyword"});
+    return fields;
   }
 
-  protected getElasticSearchFieldForSearchString(): string[] {
-    return ["metadata.creators.person.organizations.name", "metadata.creators.organization.name",];
+  protected getElasticSearchFieldForSearchString(): IndexField[] {
+    return [{index: "metadata.creators.person.organizations.name", type: "text"}, {index: "metadata.creators.organization.name", type: "text"}];
   }
 
   override getElasticSearchNestedPath(): string | undefined {
@@ -172,12 +178,12 @@ export class CreatedBySearchCriterion extends StringOrHiddenIdSearchCriterion {
     super("createdBy", opts);
   }
 
-  protected getElasticSearchFieldForHiddenId(): string[] {
-    return ["createdByRO.objectId"];
+  protected getElasticSearchFieldForHiddenId(): IndexField[] {
+    return [{index: "createdByRO.objectId", type: "keyword"}];
   }
 
-  protected getElasticSearchFieldForSearchString(): string[] {
-    return ["createdByRO.title"];
+  protected getElasticSearchFieldForSearchString(): IndexField[] {
+    return [{index: "createdByRO.title", type: "text"}];
   }
 
 }
@@ -187,12 +193,12 @@ export class ModifiedBySearchCriterion extends StringOrHiddenIdSearchCriterion {
     super("modifiedBy", opts);
   }
 
-  protected getElasticSearchFieldForHiddenId(): string[] {
-    return ["version.modifiedByRO.objectId"];
+  protected getElasticSearchFieldForHiddenId(): IndexField[] {
+    return [{index: "modifiedByRO.objectId", type: "keyword"}];
   }
 
-  protected getElasticSearchFieldForSearchString(): string[] {
-    return ["version.modifiedByRO.title"];
+  protected getElasticSearchFieldForSearchString(): IndexField[] {
+    return [{index: "modifiedByRO.title", type: "text"}];
   }
 
 }

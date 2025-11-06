@@ -66,7 +66,7 @@ export class ItemCreatorAggregationDirective extends ItemAggregationBaseDirectiv
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
-    return baseElasticSearchQueryBuilder('metadata.creators.person.identifier.id', selectedValues.map(arv => arv.selectionValue));
+    return baseElasticSearchQueryBuilder({index : 'metadata.creators.person.identifier.id', type: 'keyword'}, selectedValues.map(arv => arv.selectionValue));
   }
 
 

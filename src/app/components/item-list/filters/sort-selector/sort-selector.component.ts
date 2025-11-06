@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ItemListComponent } from "../../item-list.component";
-import { baseElasticSearchSortBuilder } from "../../../../utils/search-utils";
+import {baseElasticSearchSortBuilder, IndexField} from "../../../../utils/search-utils";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
@@ -41,7 +41,7 @@ export class SortSelectorComponent {
   getCurrentSortQuery(){
     return this.sortEntries.map(entry => {
       //console.log("Building query for " + JSON.stringify(entry))
-      return baseElasticSearchSortBuilder(sortOptions[entry.sort].index[0], entry.sortOrder)
+      return baseElasticSearchSortBuilder(sortOptions[entry.sort].index[0], entry.sortOrder, sortOptions[entry.sort].nestedPaths)
     })
     //return baseElasticSearchSortBuilder(sortOptions[this.selectedSort].index[0], this.selectedSortOrder);
 
@@ -85,146 +85,150 @@ export class SortSelectorComponent {
 }
 export interface SortOptionsType {
   [key:string] : {
-    index: string[],
+    index: IndexField[],
     order:string,
     loggedIn: boolean,
-    label: string
+    label: string,
+    nestedPaths?: string[]
 
 }
 }
 export const sortOptions: SortOptionsType = {
 
   "relevance" : {
-    index: ['_score'],
+    index: [{index:'_score', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'Relevance'
   },
 
   "modificationDate" : {
-    index: ['lastModificationDate'],
+    index: [{index: 'lastModificationDate', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.dateModified'
   },
   "creationDate" : {
-    index: ['creationDate'],
+    index: [{index: 'creationDate', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.dateCreated'
   },
   "title" : {
-    index: ['metadata.title.keyword'],
+    index: [{index: 'metadata.title.keyword', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.title'
   },
   "genre" : {
-    index: ['metadata.genre'],
+    index: [{index: 'metadata.genre', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.genre'
   },
   "date" : {
-    index: ['sort-metadata-dates-by-category'],
+    index: [{index: 'sort-metadata-dates-by-category', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.date'
   },
   "dateYearOnly" : {
-    index: ['sort-metadata-dates-by-category-year'],
+    index: [{index: 'sort-metadata-dates-by-category-year', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.dateYearOnly'
   },
   "datePublishedInPrint" : {
-    index: ['metadata.datePublishedInPrint'],
+    index: [{index: 'metadata.datePublishedInPrint', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.datePublishedInPrint'
   },
   "dateAccepted" : {
-    index: ['metadata.dateAccepted'],
+    index: [{index: 'metadata.dateAccepted', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.dateAccepted'
   },
   "datePublishedOnline" : {
-    index: ['metadata.datePublishedOnline'],
+    index: [{index: 'metadata.datePublishedOnline', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.datePublishedOnline'
   },
   "creators" : {
-    index: ['sort-metadata-creators-compound'],
+    index: [{index: 'sort-metadata-creators-compound', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.creators'
   },
   "creatorsFirst" : {
-    index: ['sort-metadata-creators-first'],
+    index: [{index: 'sort-metadata-creators-first', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.creatorsFirst'
   },
   "publishingInfo" : {
-    index: ['metadata.publishingInfo.publisher', 'metadata.publishingInfo.place', 'metadata.publishingInfo.edition'],
+    index: [{index: 'metadata.publishingInfo.publisher', type: 'text'}, {index: 'metadata.publishingInfo.place', type: 'text'}, {index: 'metadata.publishingInfo.edition', type: 'text'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.publishingInfo'
   },
   "eventTitle" : {
-    index: ['metadata.event.title.keyword'],
+    index: [{index: 'metadata.event.title.keyword', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.eventTitle'
   },
   "eventStartDate" : {
-    index: ['metadata.event.startDate'],
+    index: [{index: 'metadata.event.startDate', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
     label: 'MetadataFields.eventStartDate'
   },
   "sourceTitle" : {
-    index: ['metadata.sources.title.keyword'],
+    index: [{index: 'metadata.sources.title.keyword', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
-    label: 'MetadataFields.sourceTitle'
+    label: 'MetadataFields.sourceTitle',
+    nestedPaths: ['metadata.sources']
   },
   "reviewMethod" : {
-    index: ['metadata.reviewMethod'],
+    index: [{index: 'metadata.reviewMethod', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.reviewMethod'
   },
 
   "degree" : {
-    index: ['metadata.degree'],
+    index: [{index: 'metadata.degree', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.degree'
   },
 
   "freeKeywords" : {
-    index: ['metadata.freeKeywords.keyword'],
+    index: [{index: 'metadata.freeKeywords.keyword', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.keywords'
   },
   "subjectType" : {
-    index: ['metadata.subjects.type'],
+    index: [{index: 'metadata.subjects.type', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
-    label: 'MetadataFields.subjectType'
+    label: 'MetadataFields.subjectType',
+    nestedPaths: ['metadata.subjects']
   },
   "subjectValue" : {
-    index: ['metadata.subjects.value.keyword'],
+    index: [{index: 'metadata.subjects.value.keyword', type: 'keyword'}],
     order: 'asc',
     loggedIn: false,
-    label: 'MetadataFields.subjectValue'
+    label: 'MetadataFields.subjectValue',
+    nestedPaths: ['metadata.subjects']
   },
   "localTags" : {
-    index: ['localTags.keyword'],
+    index: [{index: 'localTags.keyword', type: "keyword"}],
     order: 'asc',
     loggedIn: false,
     label: 'MetadataFields.localTags'

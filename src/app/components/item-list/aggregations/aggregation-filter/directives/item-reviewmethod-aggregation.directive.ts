@@ -55,7 +55,7 @@ export class ItemReviewMethodDirective extends ItemAggregationBaseDirective{
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
-    return baseElasticSearchQueryBuilder('metadata.reviewMethod', selectedValues.map(arv => arv.selectionValue));
+    return baseElasticSearchQueryBuilder({index : 'metadata.reviewMethod', type:"keyword"}, selectedValues.map(arv => arv.selectionValue));
 
   }
 

@@ -44,7 +44,7 @@ export class ItemLocalTagAggregationDirective extends ItemAggregationBaseDirecti
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
-    return baseElasticSearchQueryBuilder('localTags.keyword', selectedValues.map(arv => arv.selectionValue));
+    return baseElasticSearchQueryBuilder({index : 'localTags.keyword', type: 'keyword'}, selectedValues.map(arv => arv.selectionValue));
 
   }
 

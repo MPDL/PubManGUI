@@ -17,24 +17,24 @@ export class SimplesearchService {
 
 
     public search(searchString:string|undefined|null): void {
-      
+
       if (searchString) {
         const filterOutQuery = this.aaService.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
         const query = {
           bool: {
             must: [{ query_string: { query: searchString } }],
             must_not: [
-              baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
+              baseElasticSearchQueryBuilder({index: "publicState", type: "keyword"}, "WITHDRAWN"),
               ...(filterOutQuery ? [filterOutQuery] : [])
             ]
           }
         };
         this.matomoTracker.trackSiteSearch(searchString, "simple");
-  
+
         this.searchState.$currentQuery.next(query);
         //sessionStorage.setItem('currentQuery', JSON.stringify(query));
         this.router.navigateByUrl('/search');
       }
-      
+
     }
 }

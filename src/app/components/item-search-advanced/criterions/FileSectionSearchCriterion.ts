@@ -83,11 +83,11 @@ export class FileSectionSearchCriterion extends SearchCriterion {
             let boolQuery: { [k: string]: any } = {};
             switch (this.content.get("componentAvailable")?.value) {
               case "YES" : {
-                boolQuery['must'] = [baseElasticSearchQueryBuilder("files.storage", this.type), ...queries];
+                boolQuery['must'] = [baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.type), ...queries];
                 break;
               }
               case "NO" : {
-                boolQuery['must_not'] = [baseElasticSearchQueryBuilder("files.storage", this.type)];
+                boolQuery['must_not'] = [baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.type)];
                 break;
               }
               case "WHATEVER" : {
@@ -137,12 +137,12 @@ export abstract class ComponentAvailabiltySearchCriterion extends SearchCriterio
 
     switch (this.content.get("available")?.value) {
       case "YES" : {
-        return of(baseElasticSearchQueryBuilder("files.storage", this.getStorageType()));
+        return of(baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.getStorageType()));
       }
       case "NO" : {
         return of({
             bool: {
-              mustNot: baseElasticSearchQueryBuilder("files.storage", this.getStorageType())
+              mustNot: baseElasticSearchQueryBuilder({index: "files.storage", type: "keyword"}, this.getStorageType())
             }
           }
         );
@@ -210,7 +210,7 @@ export class ComponentContentCategorySearchCriterion extends SearchCriterion {
       .filter(genre => this.contentCategoryFormGroup.get(genre)?.value);
 
 
-    return of(baseElasticSearchQueryBuilder("files.metadata.contentCategory.keyword", ccs));
+    return of(baseElasticSearchQueryBuilder({index: "files.metadata.contentCategory.keyword", type: "keyword"}, ccs));
   }
 
   getElasticSearchNestedPath(): string | undefined {
@@ -250,7 +250,7 @@ export class ComponentVisibilitySearchCriterion extends SearchCriterion {
       .filter(genre => this.componentVisibilityFormGroup.get(genre)?.value);
 
 
-    return of(baseElasticSearchQueryBuilder("files.visibility", visibilities));
+    return of(baseElasticSearchQueryBuilder({index: "files.visibility",type: "keyword"}, visibilities));
   }
 
   getElasticSearchNestedPath(): string | undefined {
@@ -300,14 +300,14 @@ export class ComponentOaStatusSearchCriterion extends SearchCriterion {
               }
             }
           },
-            baseElasticSearchQueryBuilder("files.metadata.oaStatus.keyword", oastates)
+            baseElasticSearchQueryBuilder({index: "files.metadata.oaStatus.keyword", type: "keyword"}, oastates)
           ]
 
         }
 
       })
     } else
-      return of(baseElasticSearchQueryBuilder("files.metadata.oaStatus.keyword", oastates));
+      return of(baseElasticSearchQueryBuilder({index: "files.metadata.oaStatus.keyword", type : "keyword"}, oastates));
   }
 
   getElasticSearchNestedPath(): string | undefined {

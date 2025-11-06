@@ -26,7 +26,7 @@ export default class DatasetsComponent {
     private router: Router,
   ) {
     const ids = router.currentNavigation()?.extras?.state?.['itemList'] || [];
-    this.searchQuery = of(baseElasticSearchQueryBuilder("objectId", ids));
+    this.searchQuery = of(baseElasticSearchQueryBuilder({index : "objectId", type: "keyword"}, ids));
   }
 
 }
