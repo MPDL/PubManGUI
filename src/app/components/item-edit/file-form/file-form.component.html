@@ -1,5 +1,6 @@
 @if (genreSpecificResource.hasValue()) {
-<div [formGroup]="file_form" [ngClass]="{'d-none' : !genreSpecificResource.value().properties.files.display}" validationMessagePosition="top">
+<div [formGroup]="file_form" [ngClass]="{'d-none' : !genreSpecificResource.value().properties.files.display}"
+    validationMessagePosition="top">
 
     <div class="custom-drag-placeholder" *cdkDragPlaceholder></div>
     <div class="d-sm-flex flex-sm-row gap-1 mb-1" cdkDragHandle>
@@ -15,7 +16,7 @@
         <label for="file" class="col-sm col-form-label fw-semibold">{{index + 1}}. {{ 'common.link' | translate }}
             {{file_form.get('metadata')?.get('title')?.value}}</label>
         }
-      <!-- MAYBE
+        <!-- MAYBE
         @if(file_form.errors?.[error_types.COMPONENT_CONTENT_NOT_PROVIDED]) {
         <div class="pure-invalid">Content is required</div>
         }
@@ -26,15 +27,17 @@
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm">
 
-                    <label for="contentCategory" class="col-form-label">{{ 'FileMetadataFields.contentCategory' | translate }}</label>
+                    <label for="contentCategory" class="col-form-label">{{ 'FileMetadataFields.contentCategory' |
+                        translate }}</label>
                     <select id="contentCategory" class="form-select" formControlName="contentCategory">
                         (change)="contentCategory_change($event)">
                         <option [ngValue]="null" selected>-</option>
                         @for (contentCategoryType of contentCategory_types; track contentCategoryType) {
-                        <option [value]="contentCategoryType">{{'ContentCategories.' + contentCategoryType | translate}}</option>
+                        <option [value]="contentCategoryType">{{'ContentCategories.' + contentCategoryType | translate}}
+                        </option>
                         }
                     </select>
-                  <!--
+                    <!--
                     @if(file_form.errors?.[error_types.COMPONENT_CONTENT_CATEGORY_NOT_PROVIDED]) {
                     <div class="pure-invalid">{{ 'validation.required' | translate}}</div>
                     }
@@ -66,7 +69,7 @@
             <div class="col-sm">
                 <label for="file_content" class="col-form-label">{{ 'FileMetadataFields.url' | translate }}</label>
                 <input type="text" class="form-control" id="file_content" name="content" formControlName="content">
-              <!--
+                <!--
               @if (file_form.errors?.[error_types.COMPONENT_CONTENT_NOT_PROVIDED]) {
                 <div class="pure-invalid">{{ 'validation.required' | translate}}</div>
                 }
@@ -90,7 +93,7 @@
                     <option [value]="visibility">{{'Visibility.' + visibility | translate}}</option>
                     }
                 </select>
-              <!--
+                <!--
                 @if (file_form.errors?.[error_types.COMPONENT_VISIBILITY_NOT_PROVIDED]) {
                 <div class="pure-invalid">{{ 'validation.required' | translate}}</div>
                 }
@@ -103,7 +106,7 @@
         @if (file_form.get('visibility')?.value == 'AUDIENCE') {
 
         <ng-container formArrayName="allowedAudienceIds">
-          <!--MAYBE
+            <!--MAYBE
           @if (file_form.errors?.[error_types.COMPONENT_IP_RANGE_NOT_PROVIDED]) {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="pure-invalid">IP-Range is required</div>
@@ -142,20 +145,23 @@
             @empty {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm">
-                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate" [addIconAndText]="true"
+                    <pure-add-remove-buttons [index]="0" [del_val]="'hidden'" [add_val]="'common.add' | translate"
+                        [addIconAndText]="true"
                         (notice)="handleAllowedAudienceIdsNotification($event)"></pure-add-remove-buttons>
                 </div>
             </div>
             }
         </ng-container>
         }}
-      <!-- Embargo Date -->
+        <!-- Embargo Date -->
         <ng-container formGroupName="metadata">
-            @if ((file_form.get('visibility')?.value == 'PRIVATE' || file_form.get('visibility')?.value == 'AUDIENCE') && file_form.get('storage')?.value ==
+            @if ((file_form.get('visibility')?.value == 'PRIVATE' || file_form.get('visibility')?.value == 'AUDIENCE')
+            && file_form.get('storage')?.value ==
             'INTERNAL_MANAGED') {
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm-2">
-                    <label for="file_embargoUntil" class="col-form-label">{{ 'FileMetadataFields.embargoDate' | translate }}</label>
+                    <label for="file_embargoUntil" class="col-form-label">{{ 'FileMetadataFields.embargoDate' |
+                        translate }}</label>
                 </div>
                 <div class="col-sm">
                     <input type="text" class="form-control" id="file_embargoUntil" name="embargoUntil"
@@ -172,13 +178,13 @@
                 </div>
                 <div class="col-sm">
                     <select id="oaStatus" class="form-select" formControlName="oaStatus">
-                        <option [ngValue]="null" selected>-</option>
+                        <option [ngValue]="null" selected disabled>-</option>
                         @for (oaStatusType of oaStatus_types; track oaStatusType) {
-                            @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED' && oaStatusType !== 'CLOSED_ACCESS') {
-                            <option [value]="oaStatusType">{{'OAStatus.' + oaStatusType | translate}}</option>
-                            } @else if(file_form.get('storage')?.value == 'EXTERNAL_URL'){
-                                <option [value]="oaStatusType">{{'OAStatus.' + oaStatusType | translate}}</option>
-                            }
+                        @if(file_form.get('storage')?.value == 'INTERNAL_MANAGED' && oaStatusType !== 'CLOSED_ACCESS') {
+                        <option [value]="oaStatusType">{{'OAStatus.' + oaStatusType | translate}}</option>
+                        } @else if(file_form.get('storage')?.value == 'EXTERNAL_URL'){
+                        <option [value]="oaStatusType">{{'OAStatus.' + oaStatusType | translate}}</option>
+                        }
                         }
                     </select>
                 </div>
@@ -188,9 +194,10 @@
             }
             <div class="d-sm-flex flex-sm-row gap-1 mb-1">
                 <div class="col-sm">
-                    <label for="file_description" class="col-form-label">{{ 'FileMetadataFields.description' | translate }}</label>
+                    <label for="file_description" class="col-form-label">{{ 'FileMetadataFields.description' | translate
+                        }}</label>
                     <textarea type="text" class="form-control" id="file_description" name="description"
-                              formControlName="description"></textarea>
+                        formControlName="description"></textarea>
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
@@ -201,8 +208,10 @@
                 <div class="col-sm-2"><!--NEEDED to keep the layout (first column for label)-->
                 </div>
                 <div class="col-sm">
-                  <label for="file_license" class="col-form-label">{{ 'FileMetadataFields.licenseUrl' | translate }}</label>
-                  <pure-cone-autosuggest coneType="licenses" [form]="$any(file_form.get('metadata.license'))" [lockIfFilled]="false" (valueSelected)="licenseSelected($event)"/>
+                    <label for="file_license" class="col-form-label">{{ 'FileMetadataFields.licenseUrl' | translate
+                        }}</label>
+                    <pure-cone-autosuggest coneType="licenses" [form]="$any(file_form.get('metadata.license'))"
+                        [lockIfFilled]="false" (valueSelected)="licenseSelected($event)" />
                 </div>
                 <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
                 </div>
@@ -212,11 +221,13 @@
                     <label class="col-form-label">{{ 'FileMetadataFields.copyright' | translate }}</label>
                 </div>
                 <div class="col-sm">
-                    <label for="file_rights" class="col-form-label">{{ 'FileMetadataFields.copyright' | translate }}</label>
+                    <label for="file_rights" class="col-form-label">{{ 'FileMetadataFields.copyright' | translate
+                        }}</label>
                     <input type="text" class="form-control" id="file_rights" name="rights" formControlName="rights">
                 </div>
                 <div class="col-sm">
-                    <label for="file_copyrightDate" class="col-form-label">{{ 'FileMetadataFields.copyrightDate' | translate }}</label>
+                    <label for="file_copyrightDate" class="col-form-label">{{ 'FileMetadataFields.copyrightDate' |
+                        translate }}</label>
                     <input type="text" class="form-control" id="file_copyrightDate" name="copyrightDate"
                         formControlName="copyrightDate" placeholder="YYYY-MM-DD">
                     <!--
