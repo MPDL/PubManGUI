@@ -146,7 +146,7 @@
           @for (author of firstAuthors; track author; let i = $index) {
           <div class="me-5 mb-1">
             @if(author.person) {
-              {{ author?.person?.familyName || 'n/a' }} {{author?.person?.givenName ? ', ' + author?.person?.givenName : '' }}
+              {{ author?.person?.familyName || 'n/a' }}{{author?.person?.givenName ? ', ' + author?.person?.givenName : '' }}
               <sup>
                 <pure-cone-icon [orcid]="author?.person?.orcid" [coneId]="author?.person?.identifier?.id"/>
               </sup>

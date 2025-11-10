@@ -1,5 +1,3 @@
-import { elasticSearchFields, ElasticSearchIndexField } from "./mapping-utils";
-
 
 export const escapeForQueryString = (escapeMe: string) : string  => {
   let result = escapeMe.replace("\\", "\\\\");
@@ -20,7 +18,7 @@ export const unescapeForQueryString = (escapeMe: string): string => {
   result = result.replace("\\\\", "\\");
   return result;
 }
-export const baseElasticSearchQueryBuilder = (indexFields : string | string[], searchValue: string | string[]) :Object => {
+export const baseElasticSearchQueryBuilder = (indexFields : IndexField | IndexField[], searchValue: string | string[]) :Object => {
 
   const searchValueArray: string[] = Array.isArray(searchValue) ? searchValue : [searchValue];
 
@@ -43,15 +41,18 @@ export const baseElasticSearchQueryBuilder = (indexFields : string | string[], s
 }
 
 
-const baseElasticSearchQueryBuilderInt = (indexField : string, searchValue: string[]) : Object  => {
+const baseElasticSearchQueryBuilderInt = (indexField : IndexField, searchValue: string[]) : Object  => {
 
+  /*
   const ef: ElasticSearchIndexField = elasticSearchFields[indexField];
 
   if(!ef) {
     throw new Error("No index field " + indexField + " found in elasticsearch mapping")
   }
 
-  switch(ef.type) {
+   */
+
+  switch(indexField.type) {
     case "text" : {
       if(searchValue.length == 1) {
         return checkMatchOrPhraseOrWildcardMatch(indexField, searchValue[0]);
@@ -64,43 +65,40 @@ const baseElasticSearchQueryBuilderInt = (indexField : string, searchValue: stri
     }
     default : {
       if(searchValue.length == 1) {
-        return {term: {[indexField] : searchValue[0]}};
+        return {term: {[indexField.index] : searchValue[0]}};
       }
       else {
-        return {terms:{[indexField]: searchValue}};
+        return {terms:{[indexField.index]: searchValue}};
       }
     }
   }
 
 }
 
-const checkMatchOrPhraseOrWildcardMatch = (indexField:string, searchString: string):  Object =>  {
+const checkMatchOrPhraseOrWildcardMatch = (indexField:IndexField, searchString: string):  Object =>  {
   if (searchString && searchString.trim().startsWith("\"") && searchString.trim().endsWith("\"")) {
-    return {match_phrase : {[indexField] : searchString.trim().substring(1, searchString.length - 1)}};
+    return {match_phrase : {[indexField.index] : searchString.trim().substring(1, searchString.length - 1)}};
     //return MatchPhraseQuery.of(mp => mp.field(index).query(searchString.trim().substring(1, searchString.length() - 1)))._toQuery();
   } else if (searchString !== null && searchString.includes("*")) {
-    return {wildcard : {[indexField.concat(".keyword")] : {value : searchString}}};
+    return {wildcard : {[indexField.index.concat(".keyword")] : {value : searchString}}};
     //return WildcardQuery.of(wq => wq.field(index + ".keyword").value(searchString))._toQuery();
   } else {
-    return {match : {[indexField] : {query : searchString, operator: "AND"}}}
+    return {match : {[indexField.index] : {query : searchString, operator: "AND"}}}
     //return MatchQuery.of(i => i.field(index).query(searchString).operator(Operator.And))._toQuery();
   }
 }
 
-export const baseElasticSearchSortBuilder = (indexField: string, order: string):  Object => {
+export const baseElasticSearchSortBuilder = (indexField: IndexField, order: string, nestedPaths?: string[]):  Object => {
 
-  const ef: ElasticSearchIndexField = elasticSearchFields[indexField];
-  let finalIndexField = indexField;
 
-  if (indexField==='_score' || indexField==='_doc') {
+  let finalIndexField = indexField.index;
+
+  if (indexField.index==='_score' || indexField.index==='_doc') {
     return {[finalIndexField] : {order: order}};
   }
 
-  if (!ef) {
-    throw new Error("No index field " + indexField + " found in elasticsearch mapping")
-  }
 
-  switch (ef.type) {
+  switch (indexField.type) {
     case "text": {
       finalIndexField += ".keyword";
       break;
@@ -109,7 +107,7 @@ export const baseElasticSearchSortBuilder = (indexField: string, order: string):
     default:
   }
 
-  let  nestedPaths: string[] | undefined = ef.nestedPaths;
+  //let  nestedPaths: string[] | undefined = ef.nestedPaths;
 
   if (!nestedPaths) {
     return {[finalIndexField] : {order: order}};
@@ -150,6 +148,11 @@ const roundDateString = (toQuery: string) => {
   return toQuery;
 
 
+}
+
+export interface IndexField {
+  index: string;
+  type: 'text' | 'keyword' | 'number';
 }
 
 

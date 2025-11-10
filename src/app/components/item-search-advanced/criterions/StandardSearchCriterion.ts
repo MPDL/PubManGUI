@@ -1,6 +1,6 @@
 import { SearchCriterion } from "./SearchCriterion";
 import { FormControl } from "@angular/forms";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
+import {baseElasticSearchQueryBuilder, IndexField} from "../../../utils/search-utils";
 import { Observable, of } from "rxjs";
 import { ContextDbVO, SubjectClassification } from "../../../model/inge";
 import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
@@ -13,7 +13,7 @@ export abstract class StandardSearchCriterion extends SearchCriterion {
     this.content.addControl("text", new FormControl(''));
   }
 
-  getElasticIndexes(): string[] {
+  getElasticIndexes(): IndexField[] {
     return [];
   }
 
@@ -41,8 +41,8 @@ export class TitleSearchCriterion extends StandardSearchCriterion {
     super("title", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.title", "metadata.alternativeTitles.value"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.title", type:"text"}, {index: "metadata.alternativeTitles.value", type:"text"}];
   }
 
 }
@@ -53,8 +53,8 @@ export class KeywordSearchCriterion extends StandardSearchCriterion {
     super("keyword", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.freeKeywords"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.freeKeywords", type: "text"}];
   }
 
 }
@@ -66,8 +66,8 @@ export class ClassificationSearchCriterion extends StandardSearchCriterion {
     this.content.addControl("classificationType", new FormControl(SubjectClassification.DDC.valueOf()));
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.subjects.value"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.subjects.value", type: "text"}];
   }
 
   override getElasticSearchNestedPath(): string | undefined {
@@ -81,7 +81,7 @@ export class ClassificationSearchCriterion extends StandardSearchCriterion {
         query: {
           bool: {
             must: [
-              baseElasticSearchQueryBuilder("metadata.subjects.type", this.content.get('classificationType')?.value),
+              baseElasticSearchQueryBuilder({index: "metadata.subjects.type", type:"keyword"}, this.content.get('classificationType')?.value),
               baseElasticSearchQueryBuilder(this.getElasticIndexes(), this.content.get('text')?.value)
             ]
           }
@@ -103,8 +103,8 @@ export class IdentifierSearchCriterion extends StandardSearchCriterion {
     this.content.addControl("identifierType", new FormControl(''));
   }
 
-  override getElasticIndexes(): string[] {
-    return ["objectId","objectPid","versionPid","metadata.identifiers.id","metadata.sources.identifiers.id"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "objectId", type: "keyword"},{index: "objectPid.keyword", type: "keyword"},{index: "versionPid.keyword", type: "keyword"},{index: "metadata.identifiers.id", type: "text"},{index: "metadata.sources.identifiers.id", type: "text"}];
   }
 
 
@@ -123,8 +123,8 @@ export class IdentifierSearchCriterion extends StandardSearchCriterion {
               query: {
                 bool: {
                   must: [
-                    baseElasticSearchQueryBuilder("metadata.identifiers.type", this.content.get('identifierType')?.value),
-                    baseElasticSearchQueryBuilder("metadata.identifiers.id", this.getFormContent())
+                    baseElasticSearchQueryBuilder({index: "metadata.identifiers.type", type: "keyword"}, this.content.get('identifierType')?.value),
+                    baseElasticSearchQueryBuilder({index: "metadata.identifiers.id", type: "text"}, this.getFormContent())
                   ]
                 }
               }
@@ -136,8 +136,8 @@ export class IdentifierSearchCriterion extends StandardSearchCriterion {
                 query: {
                   bool: {
                     must: [
-                      baseElasticSearchQueryBuilder("metadata.sources.identifiers.type", this.content.get('identifierType')?.value),
-                      baseElasticSearchQueryBuilder("metadata.sources.identifiers.id", this.getFormContent())
+                      baseElasticSearchQueryBuilder({index: "metadata.sources.identifiers.type", type: "keyword"}, this.content.get('identifierType')?.value),
+                      baseElasticSearchQueryBuilder({index: "metadata.sources.identifiers.id", type: "text"}, this.getFormContent())
                     ]
                   }
                 }
@@ -172,8 +172,8 @@ export class CollectionSearchCriterion extends StandardSearchCriterion {
       );
   }
 
-  override getElasticIndexes(): string[] {
-    return ["context.objectId"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "context.objectId", type: "keyword"}];
   }
 
 }
@@ -184,8 +184,8 @@ export class AnyFieldSearchCriterion extends StandardSearchCriterion {
     super("anyField", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["_all"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "_all", type: "text"}];
   }
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
@@ -205,7 +205,7 @@ export class FulltextSearchCriterion extends StandardSearchCriterion {
     return of({
       has_child : {
         type : "file",
-        query: baseElasticSearchQueryBuilder("fileData.attachment.content", this.getFormContent()),
+        query: baseElasticSearchQueryBuilder({index: "fileData.attachment.content", type:"text"}, this.getFormContent()),
         score_mode: "avg",
         inner_hits: {
           highlight: {
@@ -253,8 +253,9 @@ export class ComponentContentCategorySearchCriterion extends StandardSearchCrite
     super("componentContentCategory", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.files.contentCategory"];
+  override getElasticIndexes(): IndexField[] {
+
+    return [{index: "metadata.files.contentCategory.keyword", type: "keyword"}];
   }
 
   override getElasticSearchNestedPath(): string | undefined {
@@ -271,8 +272,8 @@ export class ComponentVisibilitySearchCriterion extends StandardSearchCriterion 
     super("componentVisibility",opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.files.visibility"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.files.visibility", type:"keyword"}];
   }
 
   override getElasticSearchNestedPath(): string | undefined {
@@ -286,8 +287,8 @@ export class DegreeSearchCriterion extends StandardSearchCriterion {
     super("degree", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.degree"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.degree", type:"keyword"}];
   }
 }
 
@@ -297,8 +298,8 @@ export class EventTitleSearchCriterion extends StandardSearchCriterion {
     super("eventTitle", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.event.title"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.event.title", type:"text"}];
   }
 }
 
@@ -308,8 +309,8 @@ export class JournalSearchCriterion extends StandardSearchCriterion {
     super("journal", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.sources.title", "metadata.sources.alternativeTitles.value"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.sources.title", type:"text"}, {index: "metadata.sources.alternativeTitles.value", type:"text"}];
   }
 
   override getElasticSearchNestedPath(): string | undefined {
@@ -323,8 +324,8 @@ export class LanguageSearchCriterion extends StandardSearchCriterion {
     super("language", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.languages"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.languages", type:"keyword"}];
   }
 }
 
@@ -334,8 +335,8 @@ export class LocalTagSearchCriterion extends StandardSearchCriterion {
     super("localTag", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["localTags"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "localTags", type:"text"}];
   }
 }
 
@@ -345,8 +346,9 @@ export class OrcidSearchCriterion extends StandardSearchCriterion {
     super("orcid", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.creators.person.orcid", "metadata.sources.creators.person.orcid"];
+  override getElasticIndexes(): IndexField[] {
+
+    return [{index: "metadata.creators.person.orcid", type: "text"}, {index: "metadata.sources.creators.person.orcid", type: "text"}];
   }
 }
 
@@ -356,8 +358,11 @@ export class ProjectInfoSearchCriterion extends StandardSearchCriterion {
     super("projectInfo", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.projectInfo.title", "metadata.projectInfo.grantIdentifier.id", "metadata.projectInfo.fundingInfo.fundingProgram.title", "metadata.projectInfo.fundingInfo.fundingProgram.identifiers.id", "metadata.projectInfo.fundingInfo.fundingOrganization.title", "metadata.projectInfo.fundingInfo.fundingOrganization.identifiers.id"];
+  override getElasticIndexes(): IndexField[] {
+
+    return [{index: "metadata.projectInfo.title", type:"text"}, {index: "metadata.projectInfo.grantIdentifier.id", type:"keyword"},
+      {index: "metadata.projectInfo.fundingInfo.fundingProgram.title", type:"text"}, {index: "metadata.projectInfo.fundingInfo.fundingProgram.identifiers.id", type:"keyword"},
+      {index: "metadata.projectInfo.fundingInfo.fundingOrganization.title", type:"text"}, {index: "metadata.projectInfo.fundingInfo.fundingOrganization.identifiers.id", type:"keyword"}];
   }
 }
 
@@ -367,8 +372,8 @@ export class SourceSearchCriterion extends StandardSearchCriterion {
     super("source", opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.sources.title", "metadata.sources.alternativeTitles.value"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.sources.title", type:"text"}, {index: "metadata.sources.alternativeTitles.value", type:"text"}];
   }
 
   override getElasticSearchNestedPath(): string | undefined {

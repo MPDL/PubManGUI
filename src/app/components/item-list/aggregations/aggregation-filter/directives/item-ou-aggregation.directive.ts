@@ -1,6 +1,7 @@
 import { Directive } from '@angular/core';
 import { ItemAggregationBaseDirective } from "./item-aggregation-base.directive";
 import { AggregationResultView } from "../item-aggregation-filter.component";
+import {baseElasticSearchQueryBuilder} from "../../../../../utils/search-utils";
 
 @Directive({
   selector: '[pureItemOuAggregation]',
@@ -19,7 +20,8 @@ export class ItemOuAggregationDirective extends ItemAggregationBaseDirective{
   getAggregationQuery(): any {
     const aggQuery= {
       [this.getName()]: {
-        terms: {"field": "metadata.creators.person.organizations.identifier"},
+        terms: {"field": "metadata.creators.anyOrganizationName.keyword_default"},
+        /*
         aggs: {
           otherFields: {
             top_hits: {
@@ -30,6 +32,8 @@ export class ItemOuAggregationDirective extends ItemAggregationBaseDirective{
             }
           }
         }
+
+         */
       }
     }
     return aggQuery;
@@ -42,10 +46,12 @@ export class ItemOuAggregationDirective extends ItemAggregationBaseDirective{
   parseResult(aggResult: any): AggregationResultView[] {
     const resultViews: AggregationResultView[] = [];
     aggResult.buckets.forEach((b: any) => {
+      /*
       const displayVal = b['top_hits#otherFields'].hits.hits[0]._source.metadata.creators.map((creator: any) => creator.person.organizations)
         .flat().find((ou:any) => ou.identifier === b.key).name;
+      */
       const aggResult: AggregationResultView = {
-        displayValue: displayVal,//b['top_hits#otherFields'].hits.hits[0]._source.context.name,
+        displayValue: b.key,//b['top_hits#otherFields'].hits.hits[0]._source.context.name,
         selectionValue: b.key,
         docCount: b.doc_count
       }
@@ -55,6 +61,7 @@ export class ItemOuAggregationDirective extends ItemAggregationBaseDirective{
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
+    return baseElasticSearchQueryBuilder({index : 'metadata.creators.anyOrganizationName.keyword_default', type: 'keyword'}, selectedValues.map(arv => arv.selectionValue));
   }
 
 

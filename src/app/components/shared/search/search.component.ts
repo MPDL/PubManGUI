@@ -59,7 +59,7 @@ export class SearchComponent implements OnInit{
 
 
   search(): void {
-  
+
     const search_term = this.search_form.get('text')?.value;
     this.simpleSearch.search(search_term)
 
@@ -175,7 +175,7 @@ export class SearchComponent implements OnInit{
 
           }
         ],
-        must_not: [baseElasticSearchQueryBuilder("publicState", "WITHDRAWN")],
+        must_not: [baseElasticSearchQueryBuilder({index: "publicState", type:"keyword"}, "WITHDRAWN")],
         //TODO filter out duplicates
       }
     };

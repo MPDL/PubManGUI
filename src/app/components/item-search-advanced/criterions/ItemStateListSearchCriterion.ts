@@ -59,7 +59,7 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
         {
         bool: {
           must_not: [
-            baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
+            baseElasticSearchQueryBuilder({index: "publicState", type: "keyword"}, "WITHDRAWN"),
             ...(filterOutQuery ? [filterOutQuery] : [])
           ]
 
@@ -73,8 +73,8 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
         case "RELEASED" : {
           shouldClauses.push({
             bool: {
-              must: [baseElasticSearchQueryBuilder("versionState", pubState)],
-              must_not:[baseElasticSearchQueryBuilder("publicState", "WITHDRAWN")],
+              must: [baseElasticSearchQueryBuilder({index: "versionState", type: "keyword"}, pubState)],
+              must_not:[baseElasticSearchQueryBuilder({index: "publicState", type: "keyword"}, "WITHDRAWN")],
             }
           });
 
@@ -85,9 +85,9 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
         case "IN_REVISION" : {
           shouldClauses.push({
             bool: {
-              must: [baseElasticSearchQueryBuilder("versionState", pubState)],
+              must: [baseElasticSearchQueryBuilder({index: "versionState", type: "keyword"}, pubState)],
               must_not:[
-                baseElasticSearchQueryBuilder("publicState", "WITHDRAWN"),
+                baseElasticSearchQueryBuilder({index: "publicState", type: "keyword"}, "WITHDRAWN"),
                 this.aaService.filterOutQuery([pubState])
               ],
             }
@@ -97,7 +97,7 @@ export class ItemStateListSearchCriterion extends SearchCriterion {
         case "WITHDRAWN" : {
           shouldClauses.push({
             bool: {
-              must:[baseElasticSearchQueryBuilder("publicState", pubState)],
+              must:[baseElasticSearchQueryBuilder({index: "publicState", type: "keyword"}, pubState)],
             }
           });
           break;

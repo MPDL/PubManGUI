@@ -60,17 +60,17 @@ export class GenreListSearchCriterion extends SearchCriterion {
         {
           bool: {
             must: [
-              baseElasticSearchQueryBuilder("metadata.genre", genres),
-              baseElasticSearchQueryBuilder("metadata.degree", degrees)
+              baseElasticSearchQueryBuilder({index: "metadata.genre", type: "keyword"}, genres),
+              baseElasticSearchQueryBuilder({index: "metadata.degree", type: "keyword"}, degrees)
             ]
           }
         });
     }
     else if (genres.length > 0) {
-      return  of(baseElasticSearchQueryBuilder("metadata.genre", genres));
+      return  of(baseElasticSearchQueryBuilder({index: "metadata.genre", type: "keyword"}, genres));
     }
     else if (degrees.length > 0) {
-      return  of(baseElasticSearchQueryBuilder("metadata.degree", degrees));
+      return  of(baseElasticSearchQueryBuilder({index: "metadata.degree", type: "keyword"}, degrees));
     }
 
     return of(undefined);

@@ -48,7 +48,7 @@ export class ItemImportFilterDirective extends ItemFilterDirective {
     let query = undefined;
 
     if(selectedValue)
-      query = baseElasticSearchQueryBuilder('localTags', '"'+selectedValue+'"');
+      query = baseElasticSearchQueryBuilder({index: 'localTags', type: "text"}, '"'+selectedValue+'"');
     else
       query= undefined;
 

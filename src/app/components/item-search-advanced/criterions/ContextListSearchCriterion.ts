@@ -54,7 +54,7 @@ export class ContextListSearchCriterion extends SearchCriterion {
       .filter(context => this.contextListFormGroup.get(context)?.value);
 
     if (contexts.length > 0) {
-      return of(baseElasticSearchQueryBuilder("context.objectId", contexts));
+      return of(baseElasticSearchQueryBuilder({index :"context.objectId", type: "keyword"}, contexts));
     }
     return of(undefined)
 

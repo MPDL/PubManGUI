@@ -1,5 +1,6 @@
 import { StandardSearchCriterion } from "./StandardSearchCriterion";
 import { ItemVersionState, MdsPublicationGenre, ReviewMethod } from "../../../model/inge";
+import {IndexField} from "../../../utils/search-utils";
 
 export abstract class EnumSearchCriterion extends StandardSearchCriterion {
 
@@ -23,8 +24,8 @@ export class GenreSearchCriterion extends EnumSearchCriterion {
     super("genre", Object.keys(MdsPublicationGenre), opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.genre"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.genre", type: "keyword"}];
   }
 
 }
@@ -36,8 +37,8 @@ export class ReviewMethodSearchCriterion extends EnumSearchCriterion {
     super("reviewMethod", Object.keys(ReviewMethod), opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["metadata.reviewMethod"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.reviewMethod", type: "keyword"}];
   }
 }
 
@@ -47,7 +48,7 @@ export class StateSearchCriterion extends EnumSearchCriterion {
     super("state", Object.keys(ItemVersionState), opts);
   }
 
-  override getElasticIndexes(): string[] {
-    return ["publicState"];
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "publicState", type: "keyword"}];
   }
 }

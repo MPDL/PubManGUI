@@ -45,7 +45,7 @@ export class ItemGenreAggregationDirective extends ItemAggregationBaseDirective{
   }
 
   getFilterQuery(selectedValues: AggregationResultView[]): any {
-    return baseElasticSearchQueryBuilder('metadata.genre', selectedValues.map(arv => arv.selectionValue));
+    return baseElasticSearchQueryBuilder({index : 'metadata.genre', type: 'keyword'}, selectedValues.map(arv => arv.selectionValue));
 
   }
 
