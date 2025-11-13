@@ -106,7 +106,7 @@ describe('Navigation Menu', () => {
     //When
     cy.get('[data-test="sidenav-organizational-units"]').filter(':visible').click()
     //Then
-    cy.url().should('eq', baseUrl + '/ou_tree')
+    cy.url().should('eq', baseUrl + '/ou-tree')
   })
 
   /**
