@@ -12,82 +12,92 @@
   @if (item.publicState !== 'WITHDRAWN') {
   <div class="navbar-nav" start>
     @if (authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
-    <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2" ngbTooltip="{{'common.edit' | translate}}"
-      placement="bottom-left">
-      <span class="material-symbols-outlined">edit</span>
-    </a>
+    <span class="d-inline-block" ngbTooltip="{{'common.edit' | translate}}" >
+      <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
+        <span class="material-symbols-outlined">edit</span>
+      </a>
+    </span>
     }
 
     @if (authorizationInfo && authorizationInfo.actions['RELEASE'] && isLatestVersion) {
-    <button class="nav-link" (click)="openActionsModal('release')" ngbTooltip="{{'common.release' | translate}}"
-      placement="bottom-left">
-      <span class="material-symbols-outlined">public</span>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.release' | translate}}" >
+      <button class="nav-link" (click)="openActionsModal('release')">
+        <span class="material-symbols-outlined">public</span>
+      </button>
+    </span>
     }
 
     @if (authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
-    <button class="nav-link" (click)="openActionsModal('submit')" ngbTooltip="{{'common.submit' | translate}}"
-      placement="bottom-left">
-      <span class="material-symbols-outlined">workspace_premium</span>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.submit' | translate}}" >
+      <button class="nav-link" (click)="openActionsModal('submit')">
+        <span class="material-symbols-outlined">workspace_premium</span>
+      </button>
+    </span>
     }
 
     @if (authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
-    <button class="nav-link" (click)="openActionsModal('revise')" ngbTooltip="{{'common.revise' | translate}}"
-      placement="bottom-left">
-      <svg fill="currentColor" height="24px" width="24px">
-        <use href="assets/icons/icons.svg#revise"></use>
-      </svg>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.revise' | translate}}" >
+      <button class="nav-link" (click)="openActionsModal('revise')">
+        <svg fill="currentColor" height="24px" width="24px">
+          <use href="assets/icons/icons.svg#revise"></use>
+        </svg>
+      </button>
+    </span>
     }
 
     @if (authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
-    <button class="nav-link" (click)="openActionsModal('withdraw')" ngbTooltip="{{'common.withdraw' | translate}}"
-      placement="bottom-left">
-      <span class="material-symbols-outlined">public_off</span>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.withdraw' | translate}}" >
+      <button class="nav-link" (click)="openActionsModal('withdraw')">
+        <span class="material-symbols-outlined">public_off</span>
+      </button>
+    </span>
     }
 
     @if (authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
-    <button class="nav-link" (click)="openActionsModal('delete')" ngbTooltip="{{'common.delete' | translate}}"
-      placement="bottom-left">
-      <span class="material-symbols-outlined">delete_forever</span>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.delete' | translate}}" >
+      <button class="nav-link" (click)="openActionsModal('delete')">
+        <span class="material-symbols-outlined">delete_forever</span>
+      </button>
+    </span>
     }
 
     @if (authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI'] && isLatestVersion) {
-    <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')" ngbTooltip="{{'common.addDoi' | translate}}"
-      placement="bottom-left">
-      <svg fill="currentColor" height="24px" width="24px">
-        <use href="assets/icons/icons.svg#doi"></use>
-      </svg>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.addDoi' | translate}}" >
+      <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')">
+        <svg fill="currentColor" height="24px" width="24px">
+          <use href="assets/icons/icons.svg#doi"></use>
+        </svg>
+      </button>
+    </span>
     }
 
     @if(authorizationInfo && authorizationInfo.actions['EDIT'] && item.latestVersion?.versionNumber !==
     item.versionNumber) {
 
-    <button class="nav-link" (click)="openActionsModal('rollback', item?.versionNumber)"
-      ngbTooltip="{{'common.rollback' | translate}} (Version {{item?.versionNumber}})" placement="bottom-left">
-      <span class="material-symbols-outlined">history</span>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.rollback' | translate}} (Version {{item?.versionNumber}})" >
+      <button class="nav-link" (click)="openActionsModal('rollback', item?.versionNumber)">
+        <span class="material-symbols-outlined">history</span>
+      </button>
+    </span>
     }
 
     <div class="vr"></div>
 
     @if (aaService.principal.value.isDepositor) {
-    <button class="nav-link" (click)="useAsTemplate()" ngbTooltip="{{'common.useAsTemplate' | translate}}"
-      placement="bottom-left">
-      <span class="material-symbols-outlined">copy_all</span>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.useAsTemplate' | translate}}" >
+      <button class="nav-link" (click)="useAsTemplate()">
+        <span class="material-symbols-outlined">copy_all</span>
+      </button>
+    </span>
     }
 
     <div class="vr"></div>
 
-    <button class="nav-link" (click)="openExportModal()" ngbTooltip="{{'common.export' | translate}}"
-      placement="bottom-left">
-      <span class="material-symbols-outlined">upload</span>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{'common.export' | translate}}" >
+      <button class="nav-link" (click)="openExportModal()">
+        <span class="material-symbols-outlined">upload</span>
+      </button>
+    </span>
 
     <div class="vr"></div>
 
@@ -395,9 +405,15 @@
 
     <div class="mt-5">
       <h5>{{ 'common.item' | translate }} Information</h5>
-      @if (item.publicState !== 'WITHDRAWN') {
 
-      @if ((item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber) {
+      @let showLatestRelease =  (item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber;
+      @let showLatestVersion = (item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
+        latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
+        !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber);
+
+      @if (item.publicState !== 'WITHDRAWN' && (showLatestRelease || showLatestVersion || (item.objectPid | empty) || (item.versionPid | empty))) {
+
+      @if (showLatestRelease) {
       <div class="mb-3">
         <b class="">{{ 'common.latestRelease' | translate }}</b>
         <div>
@@ -409,9 +425,7 @@
       </div>
       }
 
-      @if ((item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
-      latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
-      !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber)) {
+      @if (showLatestVersion) {
       <div class="mb-3">
         <b>{{ 'common.latestVersion' | translate }}</b>
         <div>
@@ -460,6 +474,9 @@
       </div>
       }
 
+
+      } @else {
+        -
       }
     </div>
 

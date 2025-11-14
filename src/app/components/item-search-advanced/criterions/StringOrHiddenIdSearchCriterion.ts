@@ -72,7 +72,7 @@ export class PersonSearchCriterion extends StringOrHiddenIdSearchCriterion {
     const multiMatchForSearchString = {
       multi_match: {
         query: text,
-        fields: this.getElasticSearchFieldForSearchString(),
+        fields: this.getElasticSearchFieldForSearchString().map(f => f.index),
         operator: "and",
         type: "cross_fields"
 

@@ -1,14 +1,18 @@
 @if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator) {
-    <button class="btn btn-link nav-link px-2" (click)="addToBatchDatasets()" [disabled]="!isAdd"
-        data-test="add-to-batch" ngbTooltip="{{ 'batch.datasets.add' | translate }}" placement="bottom-left">
-        <svg fill="currentColor" height="24px" width="24px">
-            <use href="assets/icons/icons.svg#batch-add"></use>
-        </svg>
-    </button>
-    <button class="btn btn-link nav-link px-2" (click)="removeFromBatchDatasets()" [disabled]="!isRemove"
-        data-test="remove-from-batch" ngbTooltip="{{ 'batch.datasets.remove' | translate }}" placement="bottom-left">
-        <svg fill="currentColor" height="24px" width="24px">
-            <use href="assets/icons/icons.svg#batch-remove"></use>
-        </svg>
-    </button>
+    <span class="d-inline-block" ngbTooltip="{{ 'batch.datasets.add' | translate }}" [attr.tabindex]="(!isAdd) ? 0 : null">
+      <button class="btn btn-link nav-link px-2" (click)="addToBatchDatasets()" [disabled]="!isAdd"
+          data-test="add-to-batch">
+          <svg fill="currentColor" height="24px" width="24px">
+              <use href="assets/icons/icons.svg#batch-add"></use>
+          </svg>
+      </button>
+    </span>
+    <span class="d-inline-block" ngbTooltip="{{ 'batch.datasets.remove' | translate }}" [attr.tabindex]="(!isRemove) ? 0 : null">
+      <button class="btn btn-link nav-link px-2" (click)="removeFromBatchDatasets()" [disabled]="!isRemove"
+          data-test="remove-from-batch">
+          <svg fill="currentColor" height="24px" width="24px">
+              <use href="assets/icons/icons.svg#batch-remove"></use>
+          </svg>
+      </button>
+    </span>
 }

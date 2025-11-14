@@ -245,7 +245,7 @@ export class ExportItemsComponent {
       searchQuery.from = this.selectedFrom;
     }
 
-    this.exportSubscription = this.itemService.searchAndExport(searchQuery, this.selectedExportType.value, this.selectedCitationType.value, this.selectedCitationType.value === citationTypes.CSL ? this.selectedCslId.value : undefined, {globalErrorDisplay: false})
+    this.exportSubscription = this.itemService.searchAndExport(searchQuery, this.selectedExportType.value, (!this.isFormat) ? this.selectedCitationType.value : undefined, (!this.isFormat && this.selectedCitationType.value === citationTypes.CSL) ? this.selectedCslId.value : undefined, {globalErrorDisplay: false})
       .pipe(
         tap(result => {
           if (result.body) {

@@ -11,10 +11,10 @@
       <div [attr.id]="'aggregationBody-' + inputId" class="accordion-collapse collapse show">
         <div class="accordion-body p-0">
           <div class="list-group small">
-            @for (val of resultView.values(); track val.selectionValue ) {
+            @for (val of resultView.values(); track val.selectionValue; let last = $last ) {
 
 
-              <button class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}" (click)="selectValue(val)">
+              <button class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}  pt-1 pb-1" (click)="selectValue(val)">
                 <div class="row">
                   <div class="col-9 text-break">
                     @if(val.translateDisplayValue) {

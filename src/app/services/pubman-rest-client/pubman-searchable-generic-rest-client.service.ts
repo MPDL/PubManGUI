@@ -32,8 +32,8 @@ export abstract class PubmanSearchableGenericRestClientService<modelType> extend
 
   searchAndExport(elasticBody: any, format?:string, citation?:string, cslConeId?: string, opts?:HttpOptions): Observable<HttpResponse<Blob>> {
     let params: HttpParams = new HttpParams()
-      .set('format', format ? format : 'json_citation')
-      .set('citation', citation ? citation : 'APA6');
+      .set('format', format ? format : 'json_citation');
+    if(citation) params=params.set('citation', citation);
     if(cslConeId) params=params.set('cslConeId', cslConeId);
 
     const mergedOpts = this.createOrMergeHttpOptions(opts, {params: params, responseType: "blob", observe: "response"});
