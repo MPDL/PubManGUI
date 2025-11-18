@@ -17,9 +17,10 @@ import { MessageService } from 'src/app/services/message.service';
 import { environment } from 'src/environments/environment';
 import { AccountUserDbVO, ContextDbVO, ItemVersionState } from "../model/inge";
 import { ContextsService } from "./pubman-rest-client/contexts.service";
-import { Router } from "@angular/router";
+import {Router, RouteReuseStrategy} from "@angular/router";
 import { DISPLAY_ERROR, PubManHttpErrorResponse, SILENT_LOGOUT } from "./interceptors/http-error.interceptor";
 import { TranslateService } from "@ngx-translate/core";
+import {PureRrs} from "./pure-rrs";
 
 
 export class Principal{
@@ -64,6 +65,7 @@ export class AaService {
     private message: MessageService,
     private router: Router,
     private translate: TranslateService,
+    private rrs: RouteReuseStrategy
   ) {
     const principal: Principal = new Principal();
     this.principal = new BehaviorSubject<Principal>(principal);
@@ -141,8 +143,6 @@ export class AaService {
       context: context
     }).pipe(
       switchMap((response) => {
-        const token = response.headers.get('Token');
-
         if (response.status === 200) {
           return this.checkLogin();
         } else {
@@ -169,7 +169,12 @@ export class AaService {
          */
         this.checkLogin().subscribe(res => {
           this.message.info("Logout " +this.translate.instant('common.succeeded'), true);
-          this.router.navigate(['/'])
+          this.router.navigate(['/']).then(() => {
+            //Clear all handles in the router, so that the user can't access a page that is not allowed anymore.
+              (this.rrs as PureRrs).clearAllHandles();
+          }
+
+          );
         })
 
     }),
