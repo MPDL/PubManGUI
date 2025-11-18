@@ -1,3 +1,5 @@
+import {endWith} from "rxjs";
+
 describe('Navigation Menu', () => {
 
   const loginName = Cypress.env('testUser').loginName
@@ -54,9 +56,9 @@ describe('Navigation Menu', () => {
     cy.visit('/')
     //When
     cy.get('[data-test="sidenav-import"]').filter(':visible').click()
-    cy.get('pure-imports-nav').filter(':visible').find('[data-test="sidenav-import-myimports"]').click({force: true})
+    cy.get('pure-imports-nav').filter(':visible').find('[data-test="sidenav-import-myimports"]').as('myImportsLink')
     //Then
-    cy.url().should('eq', baseUrl + '/imports/myimports')
+    cy.get('@myImportsLink').should('have.attr', 'href').and('contain', '/imports/myimports')
   })
 
   it('Batch - Datasets', () => {
@@ -86,9 +88,9 @@ describe('Navigation Menu', () => {
     cy.visit('/')
     //When
     cy.get('[data-test="sidenav-batch"]').filter(':visible').click()
-    cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-logs"]').click({force: true})
+    cy.get('pure-batch-nav').filter(':visible').find('[data-test="sidenav-batch-logs"]').as('batchLogsLink')
     //Then
-    cy.url().should('eq', baseUrl + '/batch/logs')
+    cy.get('@batchLogsLink').should('have.attr', 'href').and('contain', '/batch/logs')
   })
 
   it('Basket', () => {
