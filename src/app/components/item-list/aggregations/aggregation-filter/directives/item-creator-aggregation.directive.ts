@@ -20,6 +20,22 @@ export class ItemCreatorAggregationDirective extends ItemAggregationBaseDirectiv
   getAggregationQuery(): any {
     const aggQuery= {
       [this.getName()]: {
+        terms: {"field": "metadata.creators.person.identifier.id"},
+        aggs: {
+          creator_info: {
+            top_hits: {
+              _source: {
+                includes: ["metadata.creators.person.givenName", "metadata.creators.person.familyName", "metadata.creators.person.identifier.id"]
+              },
+              size: 1
+            }
+          }
+        }
+      }
+    }
+   /*
+    const aggQuery= {
+      [this.getName()]: {
         nested: {
           path: "metadata.creators"
         },
@@ -41,6 +57,7 @@ export class ItemCreatorAggregationDirective extends ItemAggregationBaseDirectiv
         }
       }
     }
+    */
     return aggQuery;
   }
 
@@ -50,8 +67,8 @@ export class ItemCreatorAggregationDirective extends ItemAggregationBaseDirectiv
 
   parseResult(aggResult: any): AggregationResultView[] {
     const resultViews: AggregationResultView[] = [];
-    aggResult['sterms#by_cone_id'].buckets.forEach((b: any) => {
-      const displayValCreator = b['top_hits#creator_info'].hits.hits[0]._source;
+    aggResult.buckets.forEach((b: any) => {
+      const displayValCreator = b['top_hits#creator_info'].hits.hits[0]._source.metadata.creators.find((creator: any) => creator.person?.identifier?.id === b.key);
       const aggResult: AggregationResultView = {
         displayValue: displayValCreator.person.familyName + ", " + displayValCreator.person.givenName,//b['top_hits#otherFields'].hits.hits[0]._source.context.name,
         selectionValue: b.key,

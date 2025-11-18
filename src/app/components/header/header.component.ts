@@ -12,6 +12,7 @@ import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 import { SearchComponent } from 'src/app/components/shared/search/search.component';
 import { ToolsnavComponent } from 'src/app/components/shared/toolsnav/toolsnav.component';
+import {environment} from "../../../environments/environment";
 
 
 @Component({
@@ -69,4 +70,6 @@ export class HeaderComponent {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 20 ? true : false;
   }
+
+  protected readonly environment = environment;
 }

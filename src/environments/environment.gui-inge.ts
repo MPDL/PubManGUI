@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  label: "production",
+  production: false,
+  label: "dev",
   cone_instance_uri: "https://gui.inge.mpdl.mpg.de/cone",
   inge_rest_uri: "https://gui.inge.mpdl.mpg.de/rest",
   inge_uri: "https://gui.inge.mpdl.mpg.de",

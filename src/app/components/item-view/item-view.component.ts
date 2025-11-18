@@ -191,7 +191,7 @@ export class ItemViewComponent {
               this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType === 'application/pdf'));
               this.firstPublicPdfFileUrl = getUrlForFile(this.firstPublicPdfFile);
               if (this.firstPublicPdfFile) {
-                this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId!).subscribe(thumbAvailable => {
+                this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId!, {globalErrorDisplay: false}).subscribe(thumbAvailable => {
                   this.thumbnailUrl = getThumbnailUrlForFile(this.firstPublicPdfFile);
 
                 })
