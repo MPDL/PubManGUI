@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  label: "local",
   cone_instance_uri: "http://localhost:4200/cone",
   inge_rest_uri: "http://localhost:4200/rest",
   inge_uri: "http://localhost:4200",
