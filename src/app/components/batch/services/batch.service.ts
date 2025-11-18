@@ -1,12 +1,12 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpContext, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import type * as params from '../interfaces/batch-params';
 import * as resp from '../interfaces/batch-responses';
 
-import { ignoredStatuses } from 'src/app/services/interceptors/http-error.interceptor';
+import {DISPLAY_ERROR, ignoredStatuses} from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 import { ItemVersionVO } from 'src/app/model/inge';
@@ -210,7 +210,7 @@ export class BatchService {
   getAllBatchProcessLogHeaders(): Observable<resp.BatchProcessLogHeaderDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/getAllBatchProcessLogHeaders`;
 
-    return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { withCredentials: true });
+    return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { withCredentials: true, context: ignoredStatuses([404])});
   }
 
   getBatchProcessLogHeaderId(batchLogHeaderId: number): Observable<resp.BatchProcessLogHeaderDbVO> {
