@@ -77,7 +77,7 @@ export class TopnavCartComponent {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if(selected.length > 0)
     {
-      return selected.some(id => !this.cartService.objectIds.includes(id))
+      return selected.some(id => !this.cartService.objectIds$.value.includes(id))
     }
     return false;
     //console.log("isAdd: " + isAdd)
@@ -86,7 +86,7 @@ export class TopnavCartComponent {
   get isRemove() {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if(selected.length > 0) {
-      return selected.some(id => this.cartService.objectIds.includes(id))
+      return selected.some(id => this.cartService.objectIds$.value.includes(id))
     }
     return false;
   }

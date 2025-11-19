@@ -57,6 +57,7 @@ export class AaService {
   private logoutUrl = environment.inge_rest_uri.concat('/logout');
 
   principal: BehaviorSubject<Principal>;
+  logout$ = new BehaviorSubject(false);
 
 
   constructor(
@@ -72,9 +73,6 @@ export class AaService {
     //this.checkLogin();
   }
 
-  get isLoggedInObservable(): Observable<boolean> {
-    return this.principal.asObservable().pipe(map(p => p.loggedIn));
-  }
   get isLoggedIn(): boolean {
     return this.principal.getValue().loggedIn;
   }
@@ -99,7 +97,7 @@ export class AaService {
         principal.isAdmin = !!user.grantList?.find((grant: any) => grant.role === 'SYSADMIN');
         principal.isLocalAdmin = !!user.grantList?.find((grant: any) => grant.role === 'LOCAL_ADMIN');
         principal.isReporter = !!user.grantList?.find((grant: any) => grant.role === 'REPORTER');
-        console.log(principal.isAdmin)
+        this.logout$.next(false);
 
         return forkJoin([
           this.contextService.getContextsForCurrentUser("DEPOSITOR", user),
@@ -180,6 +178,7 @@ export class AaService {
     }),
       finalize(() => {
         this.principal.next(new Principal());
+        this.logout$.next(true);
         sessionStorage.clear();
       })
     ).subscribe()

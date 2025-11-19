@@ -117,8 +117,8 @@
       <use href="assets/icons/icons.svg#cart"></use>
     </svg>
     <span class="nav-label ms-3 text-nowrap">{{'common.basket'| translate }}</span>
-    @if(cartService.objectIds.length > 0) {
-    <div class="matBadge" matBadge='{{ cartService.objectIds.length }}'></div>
+    @if(cartService.objectIds$.value.length > 0) {
+    <div class="matBadge" matBadge='{{ cartService.objectIds$.value.length }}'></div>
     }
   </a>
 
