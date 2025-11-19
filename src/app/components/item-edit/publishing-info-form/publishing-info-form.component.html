@@ -1,17 +1,21 @@
+@if (genreSpecificResource.hasValue()) {
 <div [formGroup]="publishing_info_form" class="d-sm-flex flex-sm-row gap-1 mb-1">
     <div class="col-sm">
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-            <div class="col-sm">
+            <div
+                [ngClass]="genreSpecificResource.value().properties.sources_source_publishing_info_publishing_info_publisher.display && isSource || genreSpecificResource.value().properties.details_publishing_info_publishing_info_publisher.display && !isSource ? 'col-sm-4' : 'd-none'">
                 <label class="col-form-label">{{ 'MetadataFields.publisher' | translate }}</label>
                 <input type="text" class="form-control" formControlName="publisher">
             </div>
         </div>
         <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-center">
-            <div class="col-sm-4">
+            <div
+                [ngClass]="genreSpecificResource.value().properties.sources_source_publishing_info_publishing_info_place.display && isSource || genreSpecificResource.value().properties.details_publishing_info_publishing_info_place.display && !isSource ? 'col-sm-4' : 'd-none'">
                 <label class="col-form-label">{{ 'MetadataFields.publisherPlace' | translate }}</label>
                 <input type="text" class="form-control" formControlName="place">
             </div>
-            <div class="col-sm-4">
+            <div
+                [ngClass]="genreSpecificResource.value().properties.sources_source_publishing_info_publishing_info_edition.display && isSource || genreSpecificResource.value().properties.details_publishing_info_publishing_info_edition.display && !isSource ? 'col-sm-4' : 'd-none'">
                 <label class="col-form-label">{{ 'MetadataFields.edition' | translate }}</label>
                 <input type="text" class="form-control" formControlName="edition">
             </div>
@@ -20,3 +24,4 @@
     <div class="col-sm-1"><!--NEEDED to keep the layout including one last collumn for add-remove buttons-->
     </div>
 </div>
+}

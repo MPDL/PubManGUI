@@ -12,7 +12,6 @@ import {
   IdType,
   PublishingInfoVO,
   SourceGenre,
-  SourceVO
 } from 'src/app/model/inge';
 import { CreatorFormComponent } from '../creator-form/creator-form.component';
 import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
@@ -69,7 +68,7 @@ export class SourceFormComponent {
     this.sortGenres();
     this.translateService.onLangChange
       .pipe(takeUntil(this.destroy$))
-      .subscribe(lang => {this.sortGenres()})
+      .subscribe(lang => { this.sortGenres() })
   }
 
 
@@ -215,16 +214,16 @@ export class SourceFormComponent {
     if (abbrevs) {
       Array.isArray(abbrevs) ?
         abbrevs.forEach(t => {
-          altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.ABBREVIATION, value: t}));
+          altTitleFormArray.push(this.fbs.alt_title_FG({ type: AlternativeTitleType.ABBREVIATION, value: t }));
         }) :
-        altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.ABBREVIATION, value: abbrevs}));
+        altTitleFormArray.push(this.fbs.alt_title_FG({ type: AlternativeTitleType.ABBREVIATION, value: abbrevs }));
     }
     if (altTitles) {
       Array.isArray(altTitles) ?
         altTitles.forEach(t => {
-          altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.OTHER, value: t}));
+          altTitleFormArray.push(this.fbs.alt_title_FG({ type: AlternativeTitleType.OTHER, value: t }));
         }) :
-        altTitleFormArray.push(this.fbs.alt_title_FG({type: AlternativeTitleType.OTHER, value: altTitles}));
+        altTitleFormArray.push(this.fbs.alt_title_FG({ type: AlternativeTitleType.OTHER, value: altTitles }));
     }
 
     //identifiers
