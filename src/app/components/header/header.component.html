@@ -18,7 +18,7 @@
           </div>
           <div>
             <a id="brand_name" [routerLink]="['/']">
-              <span class="ms-3 mt-3">{{'header.brand.name'| translate}}</span>
+              <span class="ms-xl-3 mt-3">{{'header.brand.name'| translate}}</span>
               @if(!environment.production){
                 <span class="text-danger">.{{ environment.label }}</span>
               }
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div class="d-none justify-content-center d-xl-flex col-xl-4">
+        <div class="d-none justify-content-center d-lg-flex col-xl-4">
           <pure-search class="col-9 col-xxl-10"></pure-search>
         </div>
 

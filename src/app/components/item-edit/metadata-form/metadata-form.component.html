@@ -189,10 +189,10 @@
                         <div class="col-sm">
 
                             @if(meta_form.hasError(error_types.DATE_NOT_PROVIDED.toString())) {
-                              <pure-validation-error [validationError]="{'13' : true}" [onlyForTouched]="false" />
+                            <pure-validation-error [validationError]="{'13' : true}" [onlyForTouched]="false" />
                             }
                             @else if(meta_form.hasError(error_types.DATE_OR_EVENT_DATE_NOT_PROVIDED.toString())) {
-                              <pure-validation-error [validationError]="{'30' : true}" [onlyForTouched]="false" />
+                            <pure-validation-error [validationError]="{'30' : true}" [onlyForTouched]="false" />
                             }
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
                                 <div class="col-sm-2"
@@ -246,7 +246,7 @@
                             </div>
                             <div class="d-sm-flex flex-sm-row gap-1 mb-1 align-items-start">
                                 <div class="col-sm-2"
-                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_created.display}">
+                                    [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_created.display}">
                                     <label class="col-form-label">{{ 'MetadataFields.dateCreated' | translate }}</label>
                                     <!--
                                   @if(meta_form.get('dateCreated')?.hasError('pattern')) {
@@ -257,7 +257,7 @@
                                         [placeholder]="'common.dateFormat' | translate" data-test="date-created">
                                 </div>
                                 <div class="col-sm-2"
-                                     [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_modified.display}">
+                                    [ngClass]="{'d-none' : !genreSpecificResource.value().properties.details_item_details_dates_item_date_modified.display}">
                                     <label class="col-form-label">{{ 'MetadataFields.dateModified' | translate
                                         }}</label>
                                     <!--
@@ -320,7 +320,7 @@
                                 <div class="col-sm">
                                     <input type="text" class="form-control" formControlName="totalNumberOfPages">
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -365,8 +365,8 @@
                         <label for="reviewMethod" class="col-sm-2 col-form-label">{{ 'MetadataFields.publishingInfo' |
                             translate }}</label>
                         <div class="col-sm">
-                            <pure-publishing-info-form
-                                [publishing_info_form]="publishingInfo"></pure-publishing-info-form>
+                            <pure-publishing-info-form [publishing_info_form]="publishingInfo"
+                                [isSource]="false"></pure-publishing-info-form>
                         </div>
                     </div>
                     <!--
@@ -504,7 +504,7 @@
                 </button>
             </h2>
             <div id="accordionBodyEventGroup" class="accordion-collapse collapse"
-            [ngClass]="{'show' : !genreSpecificResource.value().properties.events.optional}">
+                [ngClass]="{'show' : !genreSpecificResource.value().properties.events.optional}">
                 <div class="accordion-body my-3">
                     <pure-event-form [event_form]="event"></pure-event-form>
                 </div>
