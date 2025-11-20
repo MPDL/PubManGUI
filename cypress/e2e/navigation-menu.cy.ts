@@ -63,7 +63,7 @@ describe('Navigation Menu', () => {
 
   it('Batch - Datasets', () => {
     //Given
-    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array("itemId")))
+    window.localStorage.setItem('batch-items', JSON.stringify(new Array("itemId")))
     cy.visit('/')
     //When
     cy.get('[data-test="sidenav-batch"]').filter(':visible').click()
@@ -74,7 +74,7 @@ describe('Navigation Menu', () => {
 
   it('Batch - Actions', () => {
     //Given
-    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array("itemId")))
+    window.localStorage.setItem('batch-items', JSON.stringify(new Array("itemId")))
     cy.visit('/')
     //When
     cy.get('[data-test="sidenav-batch"]').filter(':visible').click()
