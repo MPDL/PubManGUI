@@ -1,11 +1,19 @@
-describe('Create Item', () => {
+describe('Edit Item', () => {
   const loginName = Cypress.env('testUser').loginName
   const password = Cypress.env('testUser').password
-  const context = Cypress.env('testContext').name
   let itemId: string;
+  let itemData: any;
 
   beforeEach(() => {
     cy.loginViaAPI(loginName, password)
+    cy.fixture('itemMetadataArticleRequiredFields').then((data) => {
+      cy.createItemViaAPI(data).then((response) => {
+        itemId = response.body['objectId']
+      })
+    })
+    cy.fixture('itemMetadataArticleEdited').then((data) => {
+      itemData = data
+    })
   })
 
   afterEach(() => {
@@ -13,44 +21,39 @@ describe('Create Item', () => {
     cy.logoutViaAPI()
   })
 
-  //TODO: Adapt the test & Remove skip() as soon as the edit item view is finished
-  it.skip('Create Item', () => {
+  it('Edit an existing Item (Edit Title + Add Alternative Title)', () => {
     //Given
-    cy.visit('/edit')
-    cy.intercept('POST', '/rest/items').as('createItem')
-    const title = "Cypress Test Create-Item"
+    cy.visit('/edit/' + itemId)
+    cy.intercept('PUT', '/rest/items/*').as('editItem')
+
+    const title = itemData.metadata.title
+    const alternativeTitleType = itemData.metadata.alternativeTitles[0].type
+    const alternativeTitleValue = itemData.metadata.alternativeTitles[0].value
 
     //When
-    cy.get('select[data-test="context"]').select(context)
-    cy.get('select[data-test="genre"]').select('ARTICLE')
-    //cy.get('input[data-test="degree"]').type("The Degree")
-    cy.get('input[data-test="title"]').type(title)
+    cy.get('textarea[data-test="title"]').clear()
+    cy.get('textarea[data-test="title"]').type(title)
 
-    cy.get('[data-test="add-remove-creators"]').find('button[name="add"]').click()
-    cy.get('select[data-test="creator"]').select('AUTHOR')
-    //TODO: Improve Selecting the Elements & Add test case without autocomplete
-    //cy.get('[data-test="familyname-autosuggest"]').find('input').type("Family name")
-    //cy.get('[data-test="givenname"]').type("Given name")
-    //cy.get('[data-test="add-remove-organizations"]').find('button[name="add"]').click()
-    cy.get('[data-test="familyname-autosuggest"]').find('input').type("Test")
-    cy.get('[data-test="familyname-autosuggest"]').find('button').first().find('ngb-highlight').click()
-
-    cy.get('input[data-test="date-created"]').type("2024-09-26")
+    cy.get('[data-test="alternativeTitles-add-remove-buttons"]').find('button[name="add"]').click({force: true})
+    cy.get('select[id="alt_title_type"]').select('5: ' + alternativeTitleType)
+    cy.get('input[id="alt_title_value"]').type(alternativeTitleValue)
 
     cy.get('button[data-test="save"]').click()
 
     //Then
-    cy.wait('@createItem').then((interception) => {
+    cy.wait('@editItem').then((interception) => {
       // @ts-ignore
-      expect(interception.response.statusCode).to.equal(201)
+      expect(interception.response.statusCode).to.equal(200)
       // @ts-ignore
       itemId = interception.response.body['objectId']
-      //TODO: Check creation message in the GUI
+
+      // Verify the item was created with correct metadata
       cy.getItemViaAPI(itemId).then((response) => {
-        //TODO: Check more item metadata
-        expect(response.body.metadata.title).to.equal(title)
+        expect(response.body.metadata).to.deep.equal(itemData.metadata)
       })
 
+      //TODO: Getting the pure-notification fails from time to time: Check when exactly the notification is displayed
+      //cy.get('pure-notification', {timeout: 10000}).should('exist')
     })
   })
 

@@ -22,7 +22,24 @@ export class SimplesearchService {
         const filterOutQuery = this.aaService.filterOutQuery([ItemVersionState.PENDING, ItemVersionState.SUBMITTED, ItemVersionState.IN_REVISION]);
         const query = {
           bool: {
-            must: [{ query_string: { query: searchString } }],
+            must: [{
+              simple_query_string: {
+                query: searchString,
+                fields: [
+                  "metadata.title^5",
+                  "metadata.alternativeTitles.value^4",
+                  "metadata.creators.person.familyName^5",
+                  "metadata.creators.person.givenName^3",
+                  "metadata.creators.person.organizations.name^3",
+                  "metadata.creators.organization.name^4",
+                  "metadata.sources.title^3",
+                  "metadata.freeKeywords^3",
+                  "metadata.subjects.value^3",
+                  "metadata.*^2",
+                  "*"
+                ]
+              }
+            }],
             must_not: [
               baseElasticSearchQueryBuilder({index: "publicState", type: "keyword"}, "WITHDRAWN"),
               ...(filterOutQuery ? [filterOutQuery] : [])

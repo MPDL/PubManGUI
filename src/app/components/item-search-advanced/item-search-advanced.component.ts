@@ -35,6 +35,7 @@ import { OrganizationsService } from "../../services/pubman-rest-client/organiza
 import { BootstrapValidationDirective } from "../../directives/bootstrap-validation.directive";
 import { ValidationErrorComponent } from "../shared/validation-error/validation-error.component";
 import { MatomoTracker } from "ngx-matomo-client";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -66,7 +67,7 @@ export class ItemSearchAdvancedComponent {
   fileSectionSearchCriterion!: FileSectionSearchCriterion;
   locatorSectionSearchCriterion!: FileSectionSearchCriterion;
 
-  private principalSubscription?: Subscription;
+  private logoutSubscription?: Subscription;
 
   anzGenreCols: number = 0;
   anzGenreRows: number = 0;
@@ -96,6 +97,11 @@ export class ItemSearchAdvancedComponent {
     }
     this.initCriterions();
     this.initializeGenres();
+
+    this.logoutSubscription = aaService.logout$.pipe(
+      filter(val => val===true),
+      tap(val => this.reset())
+    ).subscribe()
   }
 
   ngOnInit() {
@@ -111,7 +117,7 @@ export class ItemSearchAdvancedComponent {
 
   ngOnDestroy() {
     console.log("Destroying advanced search");
-    this.principalSubscription?.unsubscribe();
+    this.logoutSubscription?.unsubscribe();
   }
 
   initCriterions() {
@@ -172,6 +178,7 @@ export class ItemSearchAdvancedComponent {
   parseFormJson(formJson: any) {
     //Reset all
     this.reset();
+    this.switchToAdmin(false);
 
     for (let [key, value] of Object.entries(formJson)) {
 
