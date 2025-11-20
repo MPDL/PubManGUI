@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import {computed, Injectable, OnDestroy, signal} from '@angular/core';
 import {HttpClient, HttpContext, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,18 +13,14 @@ import { ItemVersionVO } from 'src/app/model/inge';
 import { MessageService } from 'src/app/services/message.service';
 
 import { _, TranslateService } from '@ngx-translate/core';
+import {AddRemoveFromListGenericService} from "../../../services/add-remove-from-list-generic.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class BatchService {
+export class BatchService extends AddRemoveFromListGenericService implements OnDestroy{
 
   readonly #baseUrl: string = environment.inge_rest_uri;
-
-  objectIds$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-
-  datasetList = "batch-items";
-  savedSelection = "datasets-checked";
 
   updateDelay = 1;
 
@@ -34,8 +30,12 @@ export class BatchService {
     private itemSvc: ItemsService,
     private msgSvc: MessageService,
     private translateSvc: TranslateService) {
-      this.objectIds$.next(this.objectIds);
+      super("batch-items", aaSvc);
     }
+
+  ngOnDestroy(): void {
+    super.destroy();
+  }
 
   get user(): string {
     return this.aaSvc.principal.getValue().user?.objectId || '';
@@ -53,71 +53,20 @@ export class BatchService {
       this.#logFilters.set(filters);
   }
 
-  addToBatchDatasets(selection: string[]): number {
-    let datasets: string[] = this.items;
-    const prev = datasets.length;
-    if (selection) {
-      this.items = datasets.concat(selection.filter((element: string) => !datasets.includes(element)));
-      this.objectIds$.next(this.items);
-      return Math.abs(this.items.length - prev); // added
-    }
-    return 0;
+
+
+  public getItemsCount() {
+    return this.objectIds$.value.length;
   }
 
-  removeFromBatchDatasets(selection: string[]): number {
-    let datasets: string[] = this.items;
-    const prev = datasets.length;
-    if (selection && prev > 0) {
-      this.items = datasets.filter((element: string) => !selection.includes(element));
-      this.objectIds$.next(this.items);
-      return Math.abs(prev - this.items.length); // removed
-    }
-    return 0;
-  }
-
-  #itemsCount = signal(0);
-  public getItemsCount = computed( () => this.#itemsCount() );
-
-  get objectIds(): string[] {
-    const itemList = sessionStorage.getItem(this.datasetList);
-    if (itemList) {
-      const items = JSON.parse(itemList);
-      if (items.length > 0) {
-        return items;
-      }
-    }
-    return [];
-  }
 
   get items(): string[] {
-    const itemList = sessionStorage.getItem(this.datasetList);
-    if (itemList) {
-      const items = JSON.parse(itemList);
-      if (items.length > 0) {
-        this.#itemsSelected.set(true);
-        this.#itemsCount.set(items.length);
-        return items;
-      }
-    }
-    this.#itemsSelected.set(false);
-    this.#itemsCount.set(0);
-    return [] as string[];
+    return this.objectIds$.value
   }
 
-  set items(items: string[]) {
-    if (items.length > 0) {
-      this.#itemsSelected.set(true);
-      this.#itemsCount.set(items.length);
-    } else {
-      this.#itemsSelected.set(false);
-      this.#itemsCount.set(0);
-    }
-
-    sessionStorage.setItem(this.datasetList, JSON.stringify(items));
+  public areItemsSelected() {
+    return this.objectIds$.value.length > 0;
   }
-
-  #itemsSelected = signal(false);
-  public areItemsSelected = computed( () => this.#itemsSelected() );
 
   startProcess(id: number) {
     this.batchProcessLogHeaderId = id;
@@ -585,8 +534,11 @@ export class BatchService {
     return actionResponse;
   }
 
+  /*
   removeAll() {
     this.items = [];
     this.objectIds$.next([]);
   }
+
+   */
 }

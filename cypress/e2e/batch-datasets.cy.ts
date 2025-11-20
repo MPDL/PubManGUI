@@ -40,7 +40,7 @@ describe('Add and Remove Item to/from Batch', () => {
 
   it('Remove Item from Batch', () => {
     //Given
-    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.visit('/batch/datasets')
 
     //When

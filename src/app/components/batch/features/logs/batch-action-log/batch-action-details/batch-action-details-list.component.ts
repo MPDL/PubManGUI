@@ -134,7 +134,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
   fillWithAll() {
     const toFill: string[] = [];
     this.unfilteredLogs.forEach(item => { if (item.itemObjectId) toFill.push(item.itemObjectId) });
-    this.batchSvc.items = toFill;
+    this.batchSvc.setItems(toFill);
     const msg = `${toFill.length} ` + this.translateSvc.instant(_('batch.datasets.filled')) + '\n';
     this.msgSvc.info(msg);
   }
@@ -142,7 +142,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
   fillWithFailed() {
     const toFill: string[] = [];
     this.unfilteredLogs.forEach(item => { if (item.itemObjectId && item.state === resp.BatchProcessLogDetailState.ERROR) toFill.push(item.itemObjectId) });
-    this.batchSvc.items = toFill;
+    this.batchSvc.setItems(toFill);
     const msg = `${toFill.length} ` + this.translateSvc.instant(_('batch.datasets.filled')) + '\n';
     this.msgSvc.info(msg);
   }

@@ -16,12 +16,13 @@ describe('Execute Batch Actions', () => {
 
   afterEach(() => {
     cy.deleteItemViaAPI(itemId)
+    //TODO: Delete Batch logs
     cy.logoutViaAPI()
   })
 
   it('Add ORCID', () => {
     //Given
-    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.visit('/batch/actions')
 
     //When
@@ -38,7 +39,7 @@ describe('Execute Batch Actions', () => {
   it('Change Genre', () => {
     //Given
     let newItemGenre: string = 'ARTICLE';
-    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/changeGenre?*').as('changeGenre')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
@@ -78,7 +79,7 @@ describe('Execute Batch Actions', () => {
   it('Add Local Tags', () => {
     //Given
     let newTag: string = 'NewTag';
-    window.sessionStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
+    window.localStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/addLocalTags').as('addLocalTags')
     cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 

@@ -28,7 +28,7 @@ export class CartListComponent {
 
     //baseElasticSearchQueryBuilder("objectId", cartService.objectIds);
 
-    this.searchQuery = cartService.versionIds$.pipe(
+    this.searchQuery = cartService.objectIds$.pipe(
       map(ids => {
       return {terms : {"_id" : ids}}
 
