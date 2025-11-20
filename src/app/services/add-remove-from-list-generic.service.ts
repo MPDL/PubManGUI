@@ -18,7 +18,6 @@ export abstract class AddRemoveFromListGenericService {
     this.localStorageKey = localStorageKey;
 
     const obs = fromEvent(window, 'storage').pipe(
-      tap(evt => console.log('storage event: ' + evt)),
       filter((evt: Event) => evt instanceof StorageEvent && evt.key === this.localStorageKey),
       map((evt: Event) => {
         return evt as StorageEvent;
