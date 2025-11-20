@@ -35,7 +35,7 @@ describe('Check Batch Logs', () => {
     cy.get('@addLocalTags').then(response => {
       // @ts-ignore
       let batchLogUrl = "/batch/logs/" + response.body.batchLogHeaderId
-      cy.get('a[href="' + batchLogUrl + '"]').as('logDetails').closest('tr').as('logRow')
+      cy.get('a[href$="' + batchLogUrl + '"]').as('logDetails').closest('tr').as('logRow')
     })
     cy.get('@logRow').children().first().should('contain.text', 'Finished')
     cy.get('@logDetails').click()
