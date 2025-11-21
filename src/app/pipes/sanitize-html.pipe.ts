@@ -10,7 +10,8 @@ export class SanitizeHtmlPipe implements PipeTransform {
   transform(value: string | undefined, allowedTags?: string[]): unknown {
     if(value) {
       return sanitizeHtml(value, {
-        allowedTags: allowedTags ? allowedTags : ['sub', 'sup','b','i']
+        allowedTags: allowedTags ? allowedTags : ['sub', 'sup','b','i'],
+        disallowedTagsMode: 'escape'
       });
     }
     return value;
