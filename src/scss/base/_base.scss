@@ -78,3 +78,15 @@ ngb-typeahead-window {
     box-shadow: none !important;
   }
 }
+
+/*Thumbnails in item list view */
+.item-list-element .img-thumbnail {
+  filter: grayscale(50%) opacity(50%);
+  object-fit: contain;
+  min-height: 120px;
+
+}
+
+.item-list-element:hover .img-thumbnail {
+  filter: grayscale(0%) opacity(100%);
+}

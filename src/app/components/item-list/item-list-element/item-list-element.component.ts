@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { FileDbVO, ItemVersionVO, Storage, Visibility } from 'src/app/model/inge';
-import { KeyValuePipe, NgClass } from '@angular/common';
+import {KeyValuePipe, NgClass, NgOptimizedImage} from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -12,11 +12,12 @@ import { environment } from 'src/environments/environment';
 import { TranslatePipe } from "@ngx-translate/core";
 import { itemToVersionId } from "../../../utils/utils";
 import { ConeIconComponent } from "../../shared/cone-icon/cone-icon.component";
+import {getThumbnailUrlForFile, getUrlForFile} from "../../../utils/item-utils";
 
 @Component({
   selector: 'pure-item-list-element',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover, ConeIconComponent],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover, ConeIconComponent, NgOptimizedImage],
   templateUrl: './item-list-element.component.html',
   styleUrl: './item-list-element.component.scss'
 })
@@ -40,11 +41,13 @@ export class ItemListElementComponent {
   files: FileDbVO[] = [];
   publicFiles: FileDbVO[] = [];
   locators: FileDbVO[] = [];
+  thumbnailUrl?: string;
 
 
   highlightHits: {file: FileDbVO, highlights: string[]}[] = [];
 
   protected ingeUri = environment.inge_uri;
+
 
 
   constructor(private itemSelectionService: ItemSelectionService) {
@@ -72,6 +75,10 @@ export class ItemListElementComponent {
       this.files = this.item.files?.filter(f => f.storage === Storage.INTERNAL_MANAGED) || [];
       this.publicFiles = this.files.filter(f => f.visibility === Visibility.PUBLIC);
       this.locators = this.item.files?.filter(f => f.storage === Storage.EXTERNAL_URL) || [];
+      const firstPublicPdfFile = this.item?.files?.find((f: FileDbVO) => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType === 'application/pdf'));
+      if(firstPublicPdfFile) {
+        this.thumbnailUrl = getThumbnailUrlForFile(firstPublicPdfFile);
+      }
 
       if(this.highlight && this.highlight.hits) {
         this.highlight.hits.forEach((hit: any) => {

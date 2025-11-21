@@ -1,4 +1,4 @@
-<div class="d-flex flex-column px-0 py-2" style="min-height: 200px;"
+<div class="item-list-element d-flex flex-column px-0 py-2" style="min-height: 200px;"
      [ngClass]="{'border-bottom': !last_item}">
   <!-- Badges -->
   <div class="mt-1 mb-2">
@@ -9,15 +9,26 @@
       <pure-item-badges [item] = "item" [showVersion]="true" [showPublicStatusIcon]="true"/>
   </div>
 
+  <div class="row">
+
+    <div class="col-auto d-none d-sm-block">
+        <a [routerLink]="'/view/' + item?.objectId + '_' + item?.versionNumber">
+          <img id="thumbnail" [ngSrc]="thumbnailUrl ? thumbnailUrl : 'assets/images/DefaultMPGv2.png'" width="100" height="150" class="img-thumbnail" onerror="this.src='assets/images/DefaultMPGv2.png'">
+        </a>
+
+    </div>
+    <div class="col">
+
   <!-- Title -->
   <div>
       <a class="nav-link" routerLink="/view/{{item?.objectId + '_' + item?.versionNumber}}">
-        <h3 class="" style="font-weight: normal; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml" data-test="item-title"
+        <h3 class="" style="font-weight: normal; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml:['sub', 'sup', 'b', 'i']" data-test="item-title"
         ></h3>
       </a>
   </div>
 
   <div class="row flex-grow-1">
+
     <div class="col-sm-9 flex-grow-1">
       <div class="d-flex flex-column h-100">
         <div class="d-inline-flex">
@@ -97,6 +108,7 @@
         </div>
       }
 
+    </div>
   </div>
 
     <!-- Preparation for highlighting fulltexts
@@ -114,6 +126,6 @@
       </div>
     }
     -->
-
+    </div>
 </div>
 </div>
