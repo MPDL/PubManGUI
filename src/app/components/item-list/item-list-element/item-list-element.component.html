@@ -12,7 +12,7 @@
   <!-- Title -->
   <div>
       <a class="nav-link" routerLink="/view/{{item?.objectId + '_' + item?.versionNumber}}">
-        <h3 class="" style="font-weight: normal; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml" data-test="item-title"
+        <h3 class="" style="font-weight: normal; font-size: 1.4rem;" [innerHTML]="item?.metadata?.title | sanitizeHtml:['sub', 'sup', 'b', 'i']" data-test="item-title"
         ></h3>
       </a>
   </div>
