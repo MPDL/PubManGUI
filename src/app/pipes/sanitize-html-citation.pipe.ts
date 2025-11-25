@@ -11,7 +11,8 @@ export class SanitizeHtmlCitationPipe implements PipeTransform {
     if(value) {
       return sanitizeHtml(value, {
         allowedTags: ['sub', 'sup', 'span', 'b', 'i'],
-        allowedClasses: {'span': ['Italic', 'DisplayDateStatus']}
+        allowedClasses: {'span': ['Italic', 'DisplayDateStatus']},
+        disallowedTagsMode: 'escape'
       });
     }
     return value;

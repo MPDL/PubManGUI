@@ -12,7 +12,7 @@
       @for (sub of item.metadata?.alternativeTitles; track $index; let i = $index) {
         <pure-item-view-metadata-element [sub]="true">
           <span label> {{ sub.type ? ('AlternativeTitleType.' + sub.type | translate) : ('MetadataFields.alternativeTitle' | translate) }}</span>
-          <span content>{{ sub.value }}</span>
+          <span content [innerHTML]="sub.value | sanitizeHtml"></span>
         </pure-item-view-metadata-element>
       }
   </span>
@@ -114,14 +114,14 @@
         <span
           label>{{ 'MetadataFields.abstract' | translate }} {{ abs.language ? '(' + abs.language + ')' : '' }}</span>
         <span content>
-          <p [innerHTML]="(abs.value | sanitizeHtml)"></p>
+          <p [innerHTML]="(abs.value | sanitizeHtml:['sub', 'sup', 'b', 'i','br'])"></p>
         </span>
       </pure-item-view-metadata-element>
     }
     <pure-item-view-metadata-element [sub]="true" [condition]="(item.metadata.tableOfContents | empty)">
       <span label>{{ 'MetadataFields.tableOfContents' | translate }}</span>
         <span content>
-          <p style="white-space: pre-wrap;" [innerHTML]="(item.metadata.tableOfContents | sanitizeHtml)"></p>
+          <p style="white-space: pre-wrap;" [innerHTML]="(item.metadata.tableOfContents | sanitizeHtml:['sub', 'sup', 'b', 'i','br'])"></p>
         </span>
     </pure-item-view-metadata-element>
     @for (sub of item.metadata?.subjects; track $index; let i = $index) {
