@@ -879,6 +879,7 @@
     "DateAcceptedNotProvided": "Date accepted must be provided",
     "DateFormatIncorrect": "An entered date is not in one of the following formats: YYYY or YYYY-MM or YYYY-MM-DD.",
     "DateNotProvided": "If genre is not equal to \"Series\" or \"Journal\" or \"Other\" or \"Manuscript\" at least one date has to be provided.",
+    "DegreeNotProvided": "A degree is required.",
     "EmptyChildsOfMpg": "MPG organisation structure is not available.",
     "EndDateWithoutStartDate": "If an event end-date is given, a start-date must also be provided.",
     "EventEndDateRequired": "The end of the event can be provided",
