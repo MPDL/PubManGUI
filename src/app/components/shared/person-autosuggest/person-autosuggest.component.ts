@@ -120,12 +120,6 @@ export class PersonAutosuggestComponent {
     const selected_ou = ouName.substring(ouName.indexOf('(') + 1, ouName.lastIndexOf(','));
     this.coneService.getPersonResource(coneId).subscribe(
       (person: PersonResource) => {
-        if (this.formForPersonsGivenName) {
-          this.formForPersonsGivenName.setValue(person.http_xmlns_com_foaf_0_1_givenname);
-        }
-        if (this.formForPersonsFamilyName) {
-          this.formForPersonsFamilyName.setValue(person.http_xmlns_com_foaf_0_1_family_name);
-        }
         if (Array.isArray(person.http_purl_org_dc_elements_1_1_identifier)) {
           let orcid = person.http_purl_org_dc_elements_1_1_identifier.filter(identifier => identifier.http_www_w3_org_2001_XMLSchema_instance_type.includes('ORCID'));
           if (this.formForPersonsOrcid) {
@@ -146,7 +140,7 @@ export class PersonAutosuggestComponent {
 
         let ou_id = '', ou_name = '';
         if (Array.isArray(person.http_purl_org_escidoc_metadata_terms_0_1_position)) {
-          const ou_2_display = person.http_purl_org_escidoc_metadata_terms_0_1_position.filter(ou => ou.http_purl_org_eprint_terms_affiliatedInstitution.includes(selected_ou));
+          const ou_2_display = person.http_purl_org_escidoc_metadata_terms_0_1_position.filter(ou => ou.http_purl_org_eprint_terms_affiliatedInstitution.startsWith(selected_ou));
           if (ou_2_display && ou_2_display.length === 1) {
             ou_id = ou_2_display[0].http_purl_org_dc_elements_1_1_identifier;
             ou_name = ou_2_display[0].http_purl_org_eprint_terms_affiliatedInstitution;
