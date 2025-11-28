@@ -83,7 +83,8 @@
     "datasets.removed": "Datensatz/Datensätze wird/wurden entfernt",
     "clearAll": "Leeren",
     "showMore" : "Mehr zeigen",
-    "showAll" : "Alle anzeigen"
+    "showAll" : "Alle anzeigen",
+    "address" : "Adresse"
   },
   "chips.localTags.placeholder": "Lokalen Tag hinzufügen",
   "validation": {
@@ -777,6 +778,16 @@
     "copyrightDate": "Copyright Datum",
     "url": "URL",
     "size": "Größe"
+  },
+  "OrganizationFields" : {
+    "name": "Name",
+    "alternativeNames": "Alternative Namen",
+    "identifiers": "Identifikatoren",
+    "description": "Beschreibung",
+    "predecessors" : "Vorgänger",
+    "successors" : "Nachfolger",
+    "status.OPENED" : "Geöffnet",
+    "status.CLOSED" : "Geschlossen"
   },
   "CreatorRoles": {
     "ARTIST": "Künstler",

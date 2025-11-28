@@ -83,7 +83,8 @@
     "datasets.removed": "item/items removed",
     "clearAll": "Clear",
     "showMore" : "Show more",
-    "showAll" : "Show all"
+    "showAll" : "Show all",
+    "address" : "Address"
   },
   "chips.localTags.placeholder": "Add local tag",
   "validation": {
@@ -777,6 +778,16 @@
     "copyrightDate": "Copyright Date",
     "url": "URL",
     "size": "Size"
+  },
+  "OrganizationFields" : {
+    "name": "Name",
+    "alternativeNames": "Alternative Names",
+    "identifiers": "Identifiers",
+    "description": "Description",
+    "predecessors" : "Predecessors",
+    "successors" : "Successors",
+    "status.OPENED" : "Opened",
+    "status.CLOSED" : "Closed"
   },
   "CreatorRoles": {
     "ARTIST": "Artist",
