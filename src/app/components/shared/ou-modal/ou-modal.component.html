@@ -1,49 +1,112 @@
 
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">{{ ou?.name }}</h4>
+  <div>
+
+  @for(parentOu of parentOUs; track $index; let i = $index; let last = $last) {
+    <div>
+    @if(!last) {
+      <button class="btn btn-link p-0" (click)="changeOu(parentOu.objectId)">{{parentOu?.name}}</button>
+
+    } @else {
+      <h4 class="modal-title">{{parentOu?.name}}
+      </h4>
+    }
+    </div>
+  }
+    <div>
+      <span class="badge" [ngClass]="{'bg-success' : ou?.publicStatus === 'OPENED', 'bg-danger' : ou?.publicStatus === 'CLOSED'}">{{'OrganizationFields.status.' + ou?.publicStatus | translate}}</span>
+    </div>
+
+  </div>
+
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <div class="modal-body">
 
   @if(ou) {
-    <pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [condition]="ou?.metadata?.alternativeNames | empty">
           <span label>
-            Name
+            {{ 'OrganizationFields.alternativeNames' | translate }}
           </span>
       <span content>
-            {{ou?.name}}
-          </span>
+        @for(altTitle of ou?.metadata?.alternativeNames; track $index) {
+          <div>{{altTitle}}</div>
+        }
+
+      </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [condition]="ou?.metadata?.identifiers | empty">
           <span label>
-            Id
+            {{ 'OrganizationFields.identifiers' | translate }}
           </span>
       <span content>
-            {{ou?.objectId}}
+             @for(id of ou?.metadata?.identifiers; track $index) {
+               <div>
+                 {{id.type ? id.type+':' : ''}}
+                 @if (id.id && isUrl(id.id)) {
+                   <a href="{{id.id}}" target="_blank">{{id.id}}</a>
+                 } @else {
+                   {{id.id}}
+                 }
+               </div>
+             }
           </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [condition]="(ou?.metadata?.city | empty) || (ou?.metadata?.countryCode | empty)">
           <span label>
-            Alternative Names
-          </span>
-      <span content>
-            {{ou?.metadata?.alternativeNames}}
-          </span>
-    </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element>
-          <span label>
-            Descriptions
-          </span>
-      <span content>
-            {{ou?.metadata?.descriptions}}
-          </span>
-    </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element>
-          <span label>
-            Location
+            {{ 'common.address' | translate }}
           </span>
       <span content>
              {{ou?.metadata?.city}} {{ou?.metadata?.countryCode}}
+          </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [condition]="ou?.metadata?.descriptions | empty">
+          <span label>
+            {{ 'OrganizationFields.description' | translate}}
+          </span>
+      <span content>
+        @for(desc of ou?.metadata?.descriptions; track $index) {
+          <p>
+            {{desc}}
+          </p>
+        }
+
+      </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [condition]="ou?.predecessorAffiliations | empty">
+          <span label>
+            {{ 'OrganizationFields.predecessors' | translate}}
+          </span>
+      <span content>
+        @for(pre of ou?.predecessorAffiliations; track $index) {
+          <p>
+            <button class="btn btn-link p-0" (click)="changeOu(pre.objectId)">{{pre?.name}}</button>
+          </p>
+        }
+
+      </span>
+    </pure-item-view-metadata-element>
+    <pure-item-view-metadata-element [condition]="successorOUs | empty">
+          <span label>
+            {{ 'OrganizationFields.successors' | translate}}
+          </span>
+      <span content>
+        @for(pre of successorOUs; track $index) {
+          <p>
+            <button class="btn btn-link p-0" (click)="changeOu(pre.objectId)">{{pre?.name}}</button>
+          </p>
+        }
+
+      </span>
+    </pure-item-view-metadata-element>
+
+
+    <pure-item-view-metadata-element>
+          <span label>
+            PubMan ID
+          </span>
+      <span content>
+            {{ou?.objectId}}
           </span>
     </pure-item-view-metadata-element>
   } @else {

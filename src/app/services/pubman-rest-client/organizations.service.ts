@@ -50,6 +50,12 @@ export class OrganizationsService extends PubmanSearchableGenericRestClientServi
     return this.httpGet(path, opts);
   }
 
+  getParents(id: string, opts?: HttpOptions): Observable<AffiliationDbVO[]> {
+    const path = this.subPath + '/' + id + '/parents';
+
+    return this.httpGet(path, opts);
+  }
+
   openOu(ou: AffiliationDbVO, opts?: HttpOptions): Observable<AffiliationDbVO> {
     const path = this.subPath + '/' + ou.objectId + '/open';
     const body = ou.lastModificationDate;
