@@ -139,7 +139,7 @@ export default class ImportLogsListComponent implements OnInit {
     this.refreshLogs();
   }
 
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onWindowScroll() {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 20 ? true : false;
