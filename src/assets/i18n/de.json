@@ -83,7 +83,8 @@
     "datasets.removed": "Datensatz/Datensätze wird/wurden entfernt",
     "clearAll": "Leeren",
     "showMore" : "Mehr zeigen",
-    "showAll" : "Alle anzeigen"
+    "showAll" : "Alle anzeigen",
+    "address" : "Adresse"
   },
   "chips.localTags.placeholder": "Lokalen Tag hinzufügen",
   "validation": {
@@ -778,6 +779,16 @@
     "url": "URL",
     "size": "Größe"
   },
+  "OrganizationFields" : {
+    "name": "Name",
+    "alternativeNames": "Alternative Namen",
+    "identifiers": "Identifikatoren",
+    "description": "Beschreibung",
+    "predecessors" : "Vorgänger",
+    "successors" : "Nachfolger",
+    "status.OPENED" : "Geöffnet",
+    "status.CLOSED" : "Geschlossen"
+  },
   "CreatorRoles": {
     "ARTIST": "Künstler",
     "AUTHOR": "Autor",
@@ -878,6 +889,7 @@
     "DateAcceptedNotProvided": "Es muss ein Annahmedatum angegeben werden",
     "DateFormatIncorrect": "Alle Datumsangaben müssen einem der folgenden Formate entsprechen: JJJJ oder JJJJ-MM oder JJJJ-MM-TT.",
     "DateNotProvided": "Falls das Genre nicht \"Reihe\", \"Zeitschrift\", \"Manuskript\" oder \"Sonstige\" ist, muss mindestens ein Datum eingegeben werden.",
+    "DegreeNotProvided": "Es muss ein akademischer Grad angegeben werden.",
     "EmptyChildsOfMpg": "MPG Organisationsstruktur ist nicht verfügbar.",
     "EndDateWithoutStartDate": "Wenn ein Enddatum einer Veranstaltung eingegeben wurde, muss ebenfalls ein Startdatum angegeben werden.",
     "EventEndDateRequired": "Das Ende der Veranstaltung kann angegeben werden.",

@@ -22,7 +22,7 @@
 
 
 <!--Authors-->
-<pure-item-view-metadata-element [condition]="(item.metadata?.creators | empty)">
+<pure-item-view-metadata-element [condition]="(item.metadata?.creators | empty)" data-test="metadata-creators">
   <span label id="creators">{{ 'MetadataFields.creators' | translate }}</span>
   <span content>
   @if (item) {
@@ -43,7 +43,7 @@
   <span label>{{ 'MetadataFields.date' | translate }}</span>
   <span content>
     @if (item.metadata?.dateCreated) {
-      <pure-item-view-metadata-element [sub]="true">
+      <pure-item-view-metadata-element [sub]="true" data-test="metadata-dateCreated">
       <span label>{{ 'MetadataFields.dateCreated' | translate }}</span>
      <span content>
       {{ item.metadata?.dateCreated }}
@@ -310,7 +310,7 @@
 
 <!--Sources -->
 @for (source of item.metadata?.sources; track $index; let i = $index) {
-  <pure-item-view-metadata-element>
+  <pure-item-view-metadata-element data-test="metadata-sources">
     <span label>{{ 'MetadataFields.source' | translate }} {{ i + 1 }}</span>
     <span content>
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.title | empty)">
