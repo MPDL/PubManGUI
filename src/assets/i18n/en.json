@@ -688,8 +688,7 @@
     "files": "file(s)",
     "links": "link(s)",
     "moreCreators": "more creators",
-    "publishedIn": "Published in",
-    "showAll": "show all"
+    "publishedIn": "Published in"
   },
   "ItemState": {
     "IN_REVISION": "In Rework",
