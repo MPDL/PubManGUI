@@ -58,7 +58,7 @@ export default class FetchComponent implements OnInit {
   }
 
   public fetchForm: FormGroup = this.fb.group({
-    contextId: [null, Validators.required],
+    contextId: ['ctx_persistent3', Validators.required],
     source: ['crossref'],
     identifier: ['', [Validators.required, this.valSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']

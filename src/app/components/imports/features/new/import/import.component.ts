@@ -53,7 +53,7 @@ export default class ImportComponent implements OnInit {
   user_contexts?: ContextDbRO[] = [];
 
   public importForm: FormGroup = this.fb.group({
-    contextId: [null, [Validators.required]],
+    contextId: ['ctx_persistent3', [Validators.required]],
     importName: [null, [Validators.required]],
     format: [null, [Validators.required]],
     formatConfig: [''],
