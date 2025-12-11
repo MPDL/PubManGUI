@@ -75,8 +75,8 @@ export class ItemListComponent implements AfterViewInit{
   currentCompleteQuery: any;
 
   queryParamSubscription!: Subscription;
-
   itemUpdatedSubscription!: Subscription;
+  selectionServiceSubscription!: Subscription;
 
 
   constructor(
@@ -107,6 +107,15 @@ export class ItemListComponent implements AfterViewInit{
          */
     })
 
+    this.selectionServiceSubscription = this.selectionService.selectedIds$.subscribe(ids => {
+      if(ids.length > 0) {
+        this.select_all.setValue(true);
+      }
+      else {
+        this.select_all.setValue(false);
+      }
+    })
+
   }
 
 
@@ -114,6 +123,7 @@ export class ItemListComponent implements AfterViewInit{
     this.searchQuerySubscription.unsubscribe();
     this.queryParamSubscription.unsubscribe()
     this.itemUpdatedSubscription.unsubscribe();
+    this.selectionServiceSubscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -151,6 +161,7 @@ export class ItemListComponent implements AfterViewInit{
 
 
   updateList() {
+    this.selectionService.resetList();
     let query = this.currentQuery;
 
     const filterQueries = this.filterComponents
@@ -294,6 +305,9 @@ export class ItemListComponent implements AfterViewInit{
     const comp: ExportItemsComponent = this.modalService.open(ExportItemsComponent, {size: "lg"}).componentInstance;
     comp.type = 'exportSelected';
     comp.sortQuery = this.currentSortQuery;
+    const queryWithoutAggs = this.currentCompleteQuery;
+    delete queryWithoutAggs.aggs;
+    comp.completeQuery = queryWithoutAggs;
   }
 
   openExportAllModal() {
