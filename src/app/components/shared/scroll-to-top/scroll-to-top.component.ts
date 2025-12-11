@@ -5,8 +5,7 @@ import { Component, DOCUMENT, HostListener, Inject } from '@angular/core';
   selector: 'pure-scroll-to-top',
   standalone: true,
   imports: [NgClass],
-  templateUrl: './scroll-to-top.component.html',
-  styleUrl: './scroll-to-top.component.scss'
+  templateUrl: './scroll-to-top.component.html'
 })
 export class ScrollToTopComponent {
 
