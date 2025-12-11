@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, inject, computed } from '@angular/core';
+import { Observable, of, map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ItemListComponent } from "../../item-list/item-list.component";
 import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
@@ -15,18 +16,19 @@ import { SortSelectorComponent } from "../../item-list/filters/sort-selector/sor
     CommonModule,
     ItemListComponent,
     SortSelectorComponent
-],
+  ],
   templateUrl: './datasets.component.html'
 })
 export default class DatasetsComponent {
+  private route = inject(ActivatedRoute);
 
-  searchQuery: Observable<any>;
+  searchQuery: Observable<any> = of({});
 
-  constructor(
-    private router: Router,
-  ) {
-    const ids = router.currentNavigation()?.extras?.state?.['itemList'] || [];
-    this.searchQuery = of(baseElasticSearchQueryBuilder({index : "objectId", type: "keyword"}, ids));
-  }
-
+  ngOnInit(): void {
+    let ids: string[] = [];
+    this.route.data.subscribe(value => {
+      ids = value['itemList'];
+      this.searchQuery = of(baseElasticSearchQueryBuilder({ index: "objectId", type: "keyword" }, ids));
+    });
+  };
 }
