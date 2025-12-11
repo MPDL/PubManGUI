@@ -44,7 +44,7 @@ export default class FetchComponent implements OnInit {
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
       p => {
-        this.user_contexts = p.depositorContexts;
+        this.user_contexts = p.depositorContexts.sort((b, a) => { return a.name! < b.name! ? -1 : 1; });
       }
     );
 
@@ -58,7 +58,7 @@ export default class FetchComponent implements OnInit {
   }
 
   public fetchForm: FormGroup = this.fb.group({
-    contextId: [null, Validators.required],
+    contextId: ['ctx_persistent3', Validators.required],
     source: ['crossref'],
     identifier: ['', [Validators.required, this.valSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']
@@ -155,7 +155,7 @@ export default class FetchComponent implements OnInit {
   clickOutside(event: Event) {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.fetchForm.reset();
-
+      this.fetchForm.controls['contextId'].setValue('ctx_persistent3');
       this.fetchForm.controls['source'].setValue('crossref');
       this.fetchForm.controls['fullText'].setValue('FULLTEXT_DEFAULT'); ""
     }

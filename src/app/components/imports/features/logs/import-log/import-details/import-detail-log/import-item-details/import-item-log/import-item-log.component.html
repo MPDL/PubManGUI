@@ -18,7 +18,7 @@
   </td>
 
   <td class="col-8 align-text-top">
-    @if(hasTranslation(detail.message.substr(0,50))) {
+    @if(hasTranslation(detail.message.substring(0, 50))) {
       <span>{{ 'ImportMessage.' + detail.message | translate }}</span>
 
     } @else {

@@ -53,7 +53,7 @@ export default class ImportComponent implements OnInit {
   user_contexts?: ContextDbRO[] = [];
 
   public importForm: FormGroup = this.fb.group({
-    contextId: [null, [Validators.required]],
+    contextId: ['ctx_persistent3', [Validators.required]],
     importName: [null, [Validators.required]],
     format: [null, [Validators.required]],
     formatConfig: [''],
@@ -64,7 +64,7 @@ export default class ImportComponent implements OnInit {
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
       p => {
-        this.user_contexts = p.depositorContexts;
+        this.user_contexts = p.depositorContexts.sort((b, a) => { return a.name! < b.name! ? -1 : 1; });
       }
     );
 
@@ -218,6 +218,7 @@ export default class ImportComponent implements OnInit {
   clickOutside(event: Event) {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.importForm.reset();
+      this.importForm.controls['contextId'].setValue('ctx_persistent3');
       this.formatObject = null;
       this.data = null;
     }
