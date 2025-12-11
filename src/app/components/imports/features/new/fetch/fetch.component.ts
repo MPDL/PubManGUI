@@ -44,7 +44,7 @@ export default class FetchComponent implements OnInit {
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
       p => {
-        this.user_contexts = p.depositorContexts;
+        this.user_contexts = p.depositorContexts.sort((b, a) => { return a.name! < b.name! ? -1 : 1; });
       }
     );
 
