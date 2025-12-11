@@ -391,7 +391,7 @@
     </div>
 
     <div class="mt-5">
-      <h5>Links</h5>
+      <h5>{{ 'common.links' | translate }}</h5>
       @if (externalReferences && externalReferences.length && item.publicState !== 'WITHDRAWN') {
         @for (file of externalReferences; track $index; let i = $index) {
           <pure-item-view-file [file]="file" [item]="item" />
