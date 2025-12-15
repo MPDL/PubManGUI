@@ -147,8 +147,15 @@ export class ItemListElementComponent {
   }
 
   get sourceCitation() {
+
     if(this.item?.metadata?.sources && this.item.metadata.sources.length > 0) {
-      return this.item.metadata.sources[0].title;
+      const source= this.item.metadata.sources[0];
+      let cit = source.title;
+      if(source.volume) cit += (' ' + source.volume);
+      if(source.issue) cit += (' (' + source.issue + ')');
+      return cit;
+
+
     }
     else return undefined;
   }
