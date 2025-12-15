@@ -377,7 +377,8 @@
     "versions": "Versions",
     "view": "View",
     "withdraw": "Discard",
-    "year": "Year"
+    "year": "Year",
+    "showLess": "Show less"
   },
   "ContentCategories": {
     "abstract": "Abstract",

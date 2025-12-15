@@ -22,6 +22,11 @@
               }
               @else {
                 {{ author?.organization?.name }}{{ author?.organization?.address ? ', ' + author.organization?.address : '' }}
+                @if(author?.organization?.identifier | empty) {
+                  <button class="me-2 btn btn-sm p-0" (click)="toggleAffPopover(author?.organization!)">
+                     <span class="material-symbols-outlined">info</span>
+                   </button>
+                }
               }
             </div>
           }
@@ -32,7 +37,7 @@
           </div>
           } @else if (creatorMap.size === maxDisplay) {
             <div class="container float-start">
-          <button type="button" class="btn btn-sm btn-link p-0" (click)="showLess()">show less...</button>
+          <button type="button" class="btn btn-sm btn-link p-0" (click)="showLess()">{{ 'common.showLess' | translate }}...</button>
           </div>
           }
         </div>
