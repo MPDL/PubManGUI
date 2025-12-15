@@ -27,7 +27,7 @@ export class ItemStateFilterDirective extends ItemFilterDirective {
     if(!this.includePending) {
       this.states.splice(this.states.indexOf(ItemVersionState.PENDING.valueOf()), 1);
     }
-    this.options =  Object.assign({'': 'common.all'}, ...this.states.map(x => ({ [x]: 'ItemState.' + [x] })));
+    this.options =  Object.assign({'': translateService.instant('ItemState.ALL_BUT_WITHDRAWN')}, ...this.states.map(x => ({ [x]: 'ItemState.' + [x] })));
 
   }
 

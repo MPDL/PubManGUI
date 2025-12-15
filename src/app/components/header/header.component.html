@@ -58,7 +58,7 @@
               <span class="fw-bold text-success">{{aa.principal.value.matchedIpName}}</span>
               }
               @else {
-              <span class="text-warning">IP is not affiliated to MPG</span>
+              <span class="text-warning">{{ 'header.ipOffCampus' | translate }}</span>
               }
               <p class="small">IP: {{aa.principal.value.ipAddress}}</p>
             </ng-template>

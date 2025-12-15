@@ -9,20 +9,20 @@
 
 
   <div class="row">
-    <div class="col-3">Login Name</div>
+    <div class="col-3">{{ 'header.username' | translate }}</div>
     <div class="col-9">{{principal.user?.loginname}}</div>
   </div>
   <div class="row">
-    <div class="col-3">Email</div>
+    <div class="col-3">{{ 'common.eMail' | translate }}</div>
     <div class="col-9">{{principal.user?.email}}</div>
   </div>
   <div class="row">
-    <div class="col-3">Affiliation</div>
+    <div class="col-3">{{ 'MetadataFields.organization' | translate }}</div>
     <div class="col-9">{{principal.user?.affiliation?.name}}</div>
   </div>
 
   <hr/>
-  <h5>Moderator & Depositor Roles</h5>
+  <h5>{{ 'common.moderatorDepositorRoles' | translate }}</h5>
   <div class="row">
     <div class="col-3">Depositor</div>
     <div class="col-9">
@@ -46,7 +46,7 @@
   </div>
 
   <hr/>
-  <h5>Other Roles</h5>
+  <h5>{{ 'common.otherRoles' | translate }}</h5>
   @for(grant of principal.user?.grantList; track grant) {
     @if(grant.role !== 'MODERATOR' && grant.role !== 'DEPOSITOR') {
       <div class="row">
@@ -56,7 +56,7 @@
 
   }
   <hr/>
-  <h5>Change password</h5>
+  <h5>{{ 'common.changePassword' | translate}}</h5>
  <pure-change-password [principal]="principal"/>
 
 </div>

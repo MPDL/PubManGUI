@@ -18,7 +18,8 @@ import { ChangePasswordComponent } from "../shared/change-password/change-passwo
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    TranslatePipe
   ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'

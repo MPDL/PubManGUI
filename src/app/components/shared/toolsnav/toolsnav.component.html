@@ -1,6 +1,6 @@
 <div class="nav-item dropdown-center">
 
-  <a class="nav-link dropdown-toggle" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" ngbTooltip="Tools">
+  <a class="nav-link dropdown-toggle" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" [ngbTooltip]="'header.tools.name' | translate">
     <span class="material-symbols-outlined">apps</span>
   </a>
 
@@ -8,14 +8,14 @@
     @if (aaService.principal.getValue().isLocalAdmin || aaService.principal.getValue().isAdmin) {
     <li><a class="dropdown-item" href='https://gui.inge.mpdl.mpg.de/admintool/' target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined">
           settings
-        </span> Admintool</a>
+        </span> {{ 'header.tools.admintool' | translate }}</a>
     </li>
       <hr class="m-1"/>
     }
     <li><a class="dropdown-item" href='https://gui.inge.mpdl.mpg.de/cone/' target="_blank" rel="noopener noreferrer">
         <svg height="24px" width="24px">
           <use href="assets/icons/icons.svg#cone-bw"></use>
-        </svg> CoNE</a>
+        </svg> {{ 'header.tools.cone' | translate}}</a>
     </li>
     <hr class="m-1"/>
 
@@ -54,7 +54,7 @@
       <li class="dropdown-item">
         <button class="btn nav-link" (click)="modalService.open(JusReportComponent)">
           <span class="material-symbols-outlined">analytics</span>
-          JUS Report
+          {{ 'header.tools.jusReport' | translate }}
         </button>
       </li>
     }

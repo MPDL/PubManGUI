@@ -6,12 +6,13 @@ import { LoginComponent } from './login/login.component';
 import { NgIf } from '@angular/common';
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { UserProfileComponent } from "../user-profile/user-profile.component";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
     standalone: true,
-  imports: [NgIf, RouterLink, NgbTooltip]
+  imports: [NgIf, RouterLink, NgbTooltip, TranslatePipe]
 })
 export class AaComponent {
 

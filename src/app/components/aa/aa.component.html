@@ -1,6 +1,7 @@
 <div *ngIf="!aa.isLoggedIn" class="nav-item">
   <!-- empty array as routerLink value enables hand pointer -->
-  <a [routerLink]="[]" class="nav-link" (click)="modalService.open(LoginComponent)" data-test="user-login" ngbTooltip="Login"><span class="material-symbols-outlined">login</span></a>
+  <a [routerLink]="[]" class="nav-link" (click)="modalService.open(LoginComponent)" data-test="user-login" [ngbTooltip]="'header.signIn' | translate">
+    <span class="material-symbols-outlined">login</span></a>
   <!--<button type="button" class="btn btn-outline-primary" (click)="modalService.open(LoginComponent)">Login</button>-->
 </div>
 <div *ngIf="aa.isLoggedIn" class="nav-item dropdown-center">
@@ -13,8 +14,8 @@
       <span class="d-inline d-xxl-none">{{aa.principal.getValue().user?.name!.split(" ")[0]}}</span>
   </a>
   <ul class="dropdown-menu m-0" aria-labelledby="navbarDropdown">
-    <li><a class="dropdown-item" role="button" (click)="modalService.open(UserProfileComponent, {size: 'lg'})">Profile</a></li>
-    <li><a class="dropdown-item" role="button" (click)="sign_out()" data-test="sign-out">Logout</a></li>
+    <li><a class="dropdown-item" role="button" (click)="modalService.open(UserProfileComponent, {size: 'lg'})">{{ 'header.profile' | translate }}</a></li>
+    <li><a class="dropdown-item" role="button" (click)="sign_out()" data-test="sign-out">{{ 'header.signOut' | translate}}</a></li>
   </ul>
 </div>
 
