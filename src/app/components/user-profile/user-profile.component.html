@@ -22,7 +22,7 @@
   </div>
 
   <hr/>
-  <h5>{{ 'common.moderatorDepositorRoles' | translate }}</h5>
+  <h5>{{ 'header.moderatorDepositorRoles' | translate }}</h5>
   <div class="row">
     <div class="col-3">Depositor</div>
     <div class="col-9">
@@ -46,7 +46,7 @@
   </div>
 
   <hr/>
-  <h5>{{ 'common.otherRoles' | translate }}</h5>
+  <h5>{{ 'header.otherRoles' | translate }}</h5>
   @for(grant of principal.user?.grantList; track grant) {
     @if(grant.role !== 'MODERATOR' && grant.role !== 'DEPOSITOR') {
       <div class="row">
@@ -56,7 +56,7 @@
 
   }
   <hr/>
-  <h5>{{ 'common.changePassword' | translate}}</h5>
+  <h5>{{ 'header.changePassword' | translate}}</h5>
  <pure-change-password [principal]="principal"/>
 
 </div>
