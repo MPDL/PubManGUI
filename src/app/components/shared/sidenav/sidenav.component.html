@@ -65,7 +65,7 @@
               <span class="fw-bold text-success">{{aaService.principal.value.matchedIpName}}</span>
               }
               @else {
-              <span class="text-warning">IP is not affiliated to MPG</span>
+              <span class="text-warning">{{ 'header.warning.sessionExpired' | translate }}</span>
               }
               <p class="small">IP: {{aaService.principal.value.ipAddress}}</p>
             </ng-template>
