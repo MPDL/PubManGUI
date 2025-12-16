@@ -985,7 +985,7 @@
     "validationError": "Validation error"
   },
   "Visibility": {
-    "AUDIENCE": "Audience",
+    "AUDIENCE": "Restricted",
     "PRIVATE": "Private",
     "PUBLIC": "Public"
   }
