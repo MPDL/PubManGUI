@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { AaService } from 'src/app/services/aa.service';
 import { LoginComponent } from './login/login.component';
-import { NgIf } from '@angular/common';
+
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { UserProfileComponent } from "../user-profile/user-profile.component";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -12,7 +12,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
     standalone: true,
-  imports: [NgIf, RouterLink, NgbTooltip, TranslatePipe]
+  imports: [RouterLink, NgbTooltip, TranslatePipe]
 })
 export class AaComponent {
 

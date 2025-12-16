@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -19,12 +19,11 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-change-external-reference-content-category-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     SortByLabelPipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './change-external-reference-content-category-form.component.html',
 })
 export class ChangeExternalReferenceContentCategoryFormComponent {

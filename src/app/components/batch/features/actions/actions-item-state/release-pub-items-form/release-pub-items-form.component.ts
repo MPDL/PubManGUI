@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,9 +12,8 @@ import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
   selector: 'pure-release-pub-items-form',
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe
-  ],
+],
   templateUrl: './release-pub-items-form.component.html',
 })
 export class ReleasePubItemsFormComponent {

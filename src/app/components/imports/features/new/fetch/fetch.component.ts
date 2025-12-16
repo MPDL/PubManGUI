@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,12 +20,11 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-imports-new-fetch',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './fetch.component.html',
 })
 export default class FetchComponent implements OnInit {

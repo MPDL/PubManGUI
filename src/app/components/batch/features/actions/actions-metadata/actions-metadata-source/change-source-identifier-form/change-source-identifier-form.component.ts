@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -20,12 +20,11 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-change-source-identifier-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
-    SortByLabelPipe,    
+    SortByLabelPipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './change-source-identifier-form.component.html',
 })
 export class ChangeSourceIdentifierFormComponent {

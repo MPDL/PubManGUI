@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -19,12 +19,11 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-replace-file-audience-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     AudienceFormComponent,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './replace-file-audience-form.component.html',
 })
 export class ReplaceFileAudienceFormComponent implements OnInit {

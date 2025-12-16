@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,9 +11,8 @@ import { TranslatePipe } from "@ngx-translate/core";
   selector: 'pure-revise-pub-items-form',
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe
-  ],
+],
   templateUrl: './revise-pub-items-form.component.html',
 })
 export class RevisePubItemsFormComponent {

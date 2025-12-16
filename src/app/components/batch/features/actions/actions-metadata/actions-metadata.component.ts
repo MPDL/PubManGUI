@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 
 import { ActionsMetadataFilesComponent } from './actions-metadata-files/actions-metadata-files.component';
@@ -17,14 +17,13 @@ import { TranslatePipe } from "@ngx-translate/core";
   selector: 'pure-batch-actions-metadata',
   standalone: true,
   imports: [
-    CommonModule,
     ActionsMetadataFilesComponent,
     ActionsMetadataExternalReferencesComponent,
     ActionsMetadataOrcidComponent,
     ActionsMetadataPublicationComponent,
     ActionsMetadataSourceComponent,
     TranslatePipe
-  ],
+],
   templateUrl: './actions-metadata.component.html',
 })
 export class ActionsMetadataComponent { }
