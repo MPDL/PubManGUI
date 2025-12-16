@@ -294,7 +294,6 @@
     "actions": "Actions",
     "actionWarning": "This action is irreversible. Are you sure?",
     "add": "Add",
-    "addDoi": "Add DOI",
     "addItem": "New Item",
     "address": "Address",
     "addToCart": "Add to basket",
@@ -318,7 +317,6 @@
     "datasets.missing": "was/were ignored",
     "datasets.removed": "item/items removed",
     "dateFormat": "YYYY-MM-DD",
-    "delete": "Delete",
     "deselectAll": "deselect all",
     "dragAndDrop": "Drag and drop file here",
     "edit": "Edit",
@@ -349,13 +347,10 @@
     "pagination.of": "of",
     "pagination.page": "Page",
     "qa": "QA Area",
-    "release": "Release",
     "releaseExportControl": "Export Control: If you are sharing publicly available documents, then please make sure you have checked the <a href='https://www.bafa.de/SharedDocs/Downloads/EN/Foreign_Trade/ec_awareness_academia.pdf' target='_blank'>legal specifications</a> regarding export control for academic publications by the German Federal Office for Economic Affairs and Export Control in advance.",
     "remove": "Remove",
     "removeFromCart": "Remove from basket",
-    "revise": "Send back",
     "role": "Role",
-    "rollback": "Revert",
     "save": "Save",
     "saveToView": "Save and back to view",
     "searchResult": "Search Result",
@@ -365,7 +360,6 @@
     "showLess": "Show less",
     "showMore": "Show more",
     "sort": "Sort",
-    "submit": "Submit",
     "succeeded": "succeeded",
     "to": "to",
     "tools": "Tools",
@@ -377,7 +371,6 @@
     "version": "Version",
     "versions": "Versions",
     "view": "View",
-    "withdraw": "Discard",
     "year": "Year"
   },
   "ContentCategories": {
@@ -988,5 +981,14 @@
     "AUDIENCE": "Restricted",
     "PRIVATE": "Private",
     "PUBLIC": "Public"
+  },
+  "ItemActions": {
+    "addDoi": "Add DOI",
+    "delete": "Delete",
+    "release": "Release",
+    "revise": "Send back",
+    "rollback": "Revert",
+    "submit": "Submit",
+    "withdraw": "Discard"
   }
 }

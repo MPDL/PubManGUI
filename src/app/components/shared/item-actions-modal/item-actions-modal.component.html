@@ -3,7 +3,7 @@
 
 <div class="modal-header">
   <h4 class="modal-title" [class.text-danger]="action === 'withdraw'|| action === 'delete'" id="modal-basic-title">
-    {{ 'common.' + action | translate }}
+    {{ 'ItemActions.' + action | translate }}
     @if(action === 'rollback') {
      Version {{rollbackVersion}}
     }
@@ -64,7 +64,7 @@
 
 
   </button>
-  <button type="submit" class="btn btn-{{colorClass}} btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'common.' + action | translate }}
+  <button type="submit" class="btn btn-{{colorClass}} btn-sm border-2" (click)="go()" [disabled]="loading || commentForm.invalid">{{ 'ItemActions.' + action | translate }}
     @if(loading)
     {
       <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>

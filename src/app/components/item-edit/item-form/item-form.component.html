@@ -210,13 +210,13 @@
         @if (authorizationInfo && authorizationInfo.actions['SUBMIT']) {
         <button class="btn btn-primary me-3" id="submit" type="button" value="submit" (click)="submit('submit')"
           [disabled]="!allValid || saveInProgress">
-          {{'common.submit' | translate}}
+          {{'ItemActions.submit' | translate}}
         </button>
         }
         @if (authorizationInfo && authorizationInfo.actions['RELEASE']) {
         <button class="btn btn-primary" id="release" type="button" value="release" (click)="submit('release')"
           [disabled]="!allValid || saveInProgress">
-          {{'common.release' | translate}}
+          {{'ItemActions.release' | translate}}
         </button>
         }
       </div>

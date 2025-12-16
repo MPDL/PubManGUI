@@ -294,7 +294,6 @@
     "actions": "Aktionen",
     "actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?",
     "add": "Hinzufügen",
-    "addDoi": "DOI hinzufügen",
     "addItem": "Neuer Datensatz",
     "address": "Adresse",
     "addToCart": "Zur Ablage hinzufügen",
@@ -318,7 +317,6 @@
     "datasets.missing": "wird/wurden ignoriert",
     "datasets.removed": "Datensatz/Datensätze wird/wurden entfernt",
     "dateFormat": "JJJJ-MM-TT",
-    "delete": "Löschen",
     "deselectAll": "Alles abwählen",
     "dragAndDrop": "Datei hierher ziehen und ablegen",
     "edit": "Bearbeiten",
@@ -349,13 +347,10 @@
     "pagination.of": "von",
     "pagination.page": "Seite",
     "qa": "QA-Bereich",
-    "release": "Freigeben",
     "releaseExportControl": "Exportkontrolle: Wenn Sie Dokumente öffentlich zugänglich machen, dann stellen Sie bitte sicher, dass Sie die <a href='https://www.bafa.de/SharedDocs/Downloads/DE/Aussenwirtschaft/afk_aca_broschuere_awareness.html' target='_blank'>rechtlichen Vorgaben</a> für die Exportkontrolle von wissenschaftlichen Publikationen durch das Bundesamt für Wirtschaft und Ausfuhrkontrolle vorab geprüft haben.",
     "remove": "Entfernen",
     "removeFromCart": "Aus Ablage entfernen",
-    "revise": "Zurücksenden",
     "role": "Rolle",
-    "rollback": "Wiederherstellen",
     "save": "Speichern",
     "saveToView": "Speichern und zurück zur Ansicht",
     "searchResult": "Suchergebnis",
@@ -365,7 +360,6 @@
     "showLess": "Weniger anzeigen",
     "showMore": "Mehr zeigen",
     "sort": "Sortierung",
-    "submit": "Einstellen",
     "succeeded": "erfolgreich",
     "to": "bis",
     "tools": "Werkzeuge",
@@ -377,7 +371,6 @@
     "version": "Version",
     "versions": "Versionen",
     "view": "Ansicht",
-    "withdraw": "Verwerfen",
     "year": "Jahr"
   },
   "ContentCategories": {
@@ -988,5 +981,14 @@
     "AUDIENCE": "Eingeschränkt",
     "PRIVATE": "Privat",
     "PUBLIC": "Öffentlich"
+  },
+  "ItemActions": {
+    "addDoi": "DOI hinzufügen",
+    "delete": "Löschen",
+    "release": "Freigeben",
+    "revise": "Zurücksenden",
+    "rollback": "Wiederherstellen",
+    "submit": "Einstellen",
+    "withdraw": "Verwerfen"
   }
 }
