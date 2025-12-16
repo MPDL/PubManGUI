@@ -29,7 +29,7 @@
   },
   "backendValidation": {
     "AlternativeTitleNotProvided": "Fehlende Nachricht (keine entsprechende deutsche Übersetzung gefunden)",
-    "ComponentContentCategoryNotProvided": "Bei einer angehängten Datei fehlt die Spezifizierung des Inhalts (z.B. Zusammenfassung, Preprint, usw.).",
+    "ComponentContentCategoryNotProvided": "Bei einer angehängten Datei fehlt die Spezifizierung des Inhalts (z.B. Abstract, Preprint, usw.).",
     "ComponentContentNotProvided": "Sie haben Informationen zu einer Datei oder einem externen Link angegeben, aber die Datei selbst oder der Link wurde nicht angegeben.",
     "ComponentFileNameNotProvided": "Bei einer angehängten Datei fehlt der Name der Datei.",
     "ComponentIpRangeNotProvided": "Bei einer angehängten Datei fehlt der IP Range.",
@@ -79,7 +79,7 @@
     "LocatorIsNoUri": "Der externe Link ist keine gültige URL.",
     "NoMaxPlanckAffiliation": "Mindestens ein Urheber muss einer Max Planck Einrichtung zugeordnet sein.",
     "NoSequenceInformationGiven": "Die Artikelnummer oder Start- und Endseite können angegeben werden.",
-    "NoUtf8CharInAbstract": "In der Zusammenfassung wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
+    "NoUtf8CharInAbstract": "Im Abstract wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
     "NoUtf8CharInAlternativeTitle": "Im alternativen Titel wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
     "NoUtf8CharInTitle": "Im Titel wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
     "OrganizationalMetadataNotProvided": "Mindestens ein Urheber muss einer Organisation zugewiesen werden.",
@@ -362,6 +362,7 @@
     "selectAll": "Alles auswählen",
     "selection": "Auswahl",
     "showAll": "Alle anzeigen",
+    "showLess": "Weniger anzeigen",
     "showMore": "Mehr zeigen",
     "sort": "Sortierung",
     "submit": "Einstellen",
@@ -377,11 +378,10 @@
     "versions": "Versionen",
     "view": "Ansicht",
     "withdraw": "Verwerfen",
-    "year": "Jahr",
-    "showLess": "Weniger anzeigen"
+    "year": "Jahr"
   },
   "ContentCategories": {
-    "abstract": "Zusammenfassung",
+    "abstract": "Abstract",
     "any-fulltext": "Volltext",
     "code": "Code",
     "copyright-transfer-agreement": "Verlagsvertrag",
@@ -518,7 +518,7 @@
   },
   "ImportMessage": {
     "AlternativeTitleNotProvided": "Ein alternativer Titel fehlt.",
-    "ComponentContentCategoryNotProvided": "Bei einer angehängten Datei fehlt die Spezifizierung des Inhalts (z.B. Zusammenfassung, Preprint, usw.).",
+    "ComponentContentCategoryNotProvided": "Bei einer angehängten Datei fehlt die Spezifizierung des Inhalts (z.B. Abstract, Preprint, usw.).",
     "ComponentContentNotProvided": "Sie haben Informationen zu einer Datei oder einem externen Link angegeben, aber die Datei selbst oder der Link wurde nicht angegeben.",
     "ComponentFileNameNotProvided": "Bei einer angehängten Datei fehlt der Name der Datei.",
     "ComponentIpRangeNotProvided": "Bei einer angehängten Datei fehlt der IP Range.",
@@ -631,7 +631,7 @@
     "LocatorIsNoUri": "Der externe Link ist keine gültige URL.",
     "NoMaxPlanckAffiliation": "Mindestens ein Urheber muss einer Max Planck Einrichtung zugeordnet sein.",
     "NoSequenceInformationGiven": "Die Artikelnummer oder Start- und Endseite können angegeben werden.",
-    "NoUtf8CharInAbstract": "In der Zusammenfassung wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
+    "NoUtf8CharInAbstract": "Im Abstract wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
     "NoUtf8CharInAlternativeTitle": "Im alternativen Titel wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
     "NoUtf8CharInTitle": "Im Titel wurde das nicht UTF-8 konforme Zeichen entfernt: $1",
     "OrganizationalMetadataNotProvided": "Mindestens ein Urheber muss einer Organisation zugewiesen werden.",
@@ -768,7 +768,7 @@
     "THESIS": "Hochschulschrift"
   },
   "MetadataFields": {
-    "abstract": "Zusammenfassung",
+    "abstract": "Abstract",
     "affiliations": "Affiliationen",
     "alternativeTitle": "Alternativer Titel",
     "basicData": "Basisdaten",
