@@ -362,6 +362,7 @@
     "selectAll": "select all",
     "selection": "Selection",
     "showAll": "Show all",
+    "showLess": "Show less",
     "showMore": "Show more",
     "sort": "Sort",
     "submit": "Submit",
@@ -377,8 +378,7 @@
     "versions": "Versions",
     "view": "View",
     "withdraw": "Discard",
-    "year": "Year",
-    "showLess": "Show less"
+    "year": "Year"
   },
   "ContentCategories": {
     "abstract": "Abstract",
