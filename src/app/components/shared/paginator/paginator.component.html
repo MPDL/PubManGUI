@@ -15,10 +15,10 @@
                     navigate_before
                 </span>
     </button>
-    <span i18n="@@pagination.page">Page</span>
+    <span i18n="@@pagination.page">{{ 'common.pagination.page' | translate }}</span>
     <input type="text" class="form-control mx-2" [formControl]="pageNumberField"
            (keyup.enter)="jumpToPage()">
-    <span i18n="@@pagination.of">of</span><span> {{totalNumberOfPages}}</span>
+    <span i18n="@@pagination.of">{{ 'common.pagination.of' | translate }}</span><span> {{totalNumberOfPages}}</span>
     <button type="button" class="btn btn-sm border border-0" (click)="next()"
             [disabled]="isLast || loadingSignal()">
                 <span class="material-symbols-outlined">
