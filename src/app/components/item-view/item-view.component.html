@@ -408,12 +408,12 @@
     <div>
       <h5>{{ 'common.item' | translate }} Information</h5>
 
-      @let showLatestRelease =  (item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber;
-      @let showLatestVersion = (item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
+      @let showLatestRelease =  (item.latestRelease | notEmpty) && item.versionNumber !== item.latestRelease?.versionNumber;
+      @let showLatestVersion = (item.latestVersion | notEmpty) && item.versionNumber !== item.latestVersion?.versionNumber &&
         latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
-        !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber);
+        !((item.latestRelease | notEmpty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber);
 
-      @if (item.publicState !== 'WITHDRAWN' && (showLatestRelease || showLatestVersion || (item.objectPid | empty) || (item.versionPid | empty))) {
+      @if (item.publicState !== 'WITHDRAWN' && (showLatestRelease || showLatestVersion || (item.objectPid | notEmpty) || (item.versionPid | notEmpty))) {
 
       @if (showLatestRelease) {
       <div class="mb-3">
@@ -439,7 +439,7 @@
       </div>
       }
 
-      @if (item.objectPid | empty) {
+      @if (item.objectPid | notEmpty) {
       <div class="mb-3">
         <b>{{ 'common.item' | translate }} {{ 'common.handle' | translate }}</b>
         <div class="row">
@@ -457,7 +457,7 @@
       </div>
       }
 
-      @if (item.versionPid | empty) {
+      @if (item.versionPid | notEmpty) {
       <div class="mb-3">
 
         <b>{{ 'common.version' | translate }} {{ item.versionNumber }} {{ 'common.handle' | translate }}</b>

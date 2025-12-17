@@ -23,7 +23,7 @@ import {
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
 import { SanitizeHtmlPipe } from "../../pipes/sanitize-html.pipe";
 import { ItemViewFileComponent } from "./item-view-file/item-view-file.component";
-import { EmptyPipe } from "../../pipes/empty.pipe";
+import { NotEmptyPipe } from "../../pipes/notEmpty.pipe";
 import { MessageService } from "../../services/message.service";
 import { ExportItemsComponent } from "../shared/export-items/export-items.component";
 import { PaginatorComponent } from "../shared/paginator/paginator.component";
@@ -59,7 +59,7 @@ import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
     AsyncPipe,
     SanitizeHtmlPipe,
     ItemViewFileComponent,
-    EmptyPipe,
+    NotEmptyPipe,
     PaginatorComponent,
     TopnavCartComponent,
     TopnavBatchComponent,
