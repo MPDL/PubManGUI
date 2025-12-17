@@ -132,8 +132,8 @@
     "actions.item.state.release": "Release",
     "actions.item.state.release.confirmation": "Do you really want to release this items?",
     "actions.item.state.release.info": "The items will be released if their current state and the selected workflow allow it.",
-    "actions.item.state.revise": "Send back to rework",
-    "actions.item.state.revise.info": "The items will be sent back to rework if their current state and the selected workflow allow it.",
+    "actions.item.state.revise": "Send back for revision",
+    "actions.item.state.revise.info": "The items will be sent back for revision if their current state and the selected workflow allow it.",
     "actions.item.state.submit": "Submit",
     "actions.item.state.submit.info": "The items will be submitted if their current state and the selected workflow allow it.",
     "actions.item.state.withdraw": "Discard",
@@ -285,7 +285,7 @@
     "REPLACE_KEYWORDS": "Replace keywords",
     "REPLACE_ORCID": "Replace ORCID",
     "REPLACE_SOURCE_EDITION": "Replace source edition",
-    "REVISE_PUBITEMS": "Send items back to rework",
+    "REVISE_PUBITEMS": "Send items back for revision",
     "SUBMIT_PUBITEMS": "Submit items",
     "WITHDRAW_PUBITEMS": "Discard items"
   },
@@ -712,7 +712,7 @@
   },
   "ItemState": {
     "ALL_BUT_WITHDRAWN": "All (except discarded)",
-    "IN_REVISION": "In Rework",
+    "IN_REVISION": "Under Revision",
     "PENDING": "Draft",
     "RELEASED": "Released",
     "SUBMITTED": "Submitted",
@@ -901,8 +901,9 @@
     "searchMode": "Search mode",
     "searchTerms": "Search terms",
     "WHATEVER": "-",
-    "YES": "Yes",
-    "adminMode": "Admin",
+    "YES": "Yes"
+  },
+  "search": {
     "startSearch": "Start Search"
   },
   "SourceGenre": {
