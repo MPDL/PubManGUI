@@ -190,7 +190,7 @@ Cypress.Commands.add('readLabelsFile', () => {
   let labelsFileName: string
   if (locale === 'de') {
     labelsFileName = 'de.json'
-  }else {
+  } else {
     labelsFileName = 'en.json'
   }
 

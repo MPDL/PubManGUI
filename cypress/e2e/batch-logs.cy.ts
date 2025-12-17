@@ -13,6 +13,8 @@ describe('Check Batch Logs', () => {
         itemTitle = response.body.metadata.title
       })
     })
+
+    cy.setLanguage('de')
     cy.readLabelsFile().then(i18nFile => {
       labels = i18nFile
     })
