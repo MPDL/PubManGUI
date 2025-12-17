@@ -901,9 +901,8 @@
     "searchMode": "Suchmodus",
     "searchTerms": "Suchbegriffe",
     "WHATEVER": "-",
-    "YES": "Ja"
-  },
-  "search": {
+    "YES": "Ja",
+    "adminMode": "Admin",
     "startSearch": "Suche starten"
   },
   "SourceGenre": {

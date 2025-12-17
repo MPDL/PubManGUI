@@ -14,7 +14,7 @@
           <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
             data-bs-target="#accordionBodyContextsGroup" aria-expanded="true"
             aria-controls="accordionBodyContextsGroup">
-            Admin
+            {{ 'Search.searchMode' | translate}}
           </button>
         </h2>
         <div id="accordionBodyContextsGroup" class="accordion-collapse collapse show">
@@ -22,8 +22,9 @@
           <div class="accordion-body mt-3 mb-3">
 
             <div class="btn-group mb-2" role="group" aria-label="publicAdminSwitch">
-              <button type="button" class="btn btn-outline-primary {{isPublic ? 'active' : ''}}" (click)="switchToAdmin(false)">Public</button>
-              <button type="button" class="btn btn-outline-primary {{isAdmin ? 'active' : ''}}" (click)="switchToAdmin(true)">Admin</button>
+              <button type="button" class="btn btn-outline-primary {{isPublic ? 'active' : ''}}" (click)="switchToAdmin(false)">
+                {{'Search.publicMode' | translate}}</button>
+              <button type="button" class="btn btn-outline-primary {{isAdmin ? 'active' : ''}}" (click)="switchToAdmin(true)">{{'Search.adminMode' | translate}}</button>
 
             </div>
 
@@ -443,14 +444,14 @@
   <div class="m-2">
     <button type="submit" class="btn btn btn-primary me-2"
       [disabled]="!isValid" (click)="search()">
-      {{ 'Search.searchButton' | translate }}
+      {{ 'Search.startSearch' | translate }}
     </button>
     <button type="button" class="btn btn btn-outline-primary me-2" (click)="reset()">
-      Reset
+      {{ 'Search.reset' | translate }}
     </button>
 
     @if(aaService.isLoggedIn) {
-      <button type="button" class="btn btn btn-outline-primary me-2" (click)="openSavedSearchModal()">{{ 'Search.saveSearchButton' | translate }}</button>
+      <button type="button" class="btn btn btn-outline-primary me-2" (click)="openSavedSearchModal()">{{ 'SavedSearches.title' | translate }}</button>
 
 
     }
