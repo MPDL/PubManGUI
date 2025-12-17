@@ -990,5 +990,11 @@
     "rollback": "Revert",
     "submit": "Submit",
     "withdraw": "Discard"
+  },
+  "SavedSearches": {
+    "title": "Saved searches",
+    "saveCurrent": "Save current search mask",
+    "savedMasks": "Saved search maskes",
+    "delete": "Delete"
   }
 }
