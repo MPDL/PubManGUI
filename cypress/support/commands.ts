@@ -185,3 +185,18 @@ Cypress.Commands.add('createImportViaAPI', (importName: string, contextId: strin
   })
 })
 
+Cypress.Commands.add('readLabelsFile', () => {
+  const locale = window.localStorage.getItem('locale')
+  let labelsFileName: string
+  if (locale === 'de') {
+    labelsFileName = 'de.json'
+  }else {
+    labelsFileName = 'en.json'
+  }
+
+  return cy.readFile('src/assets/i18n/' + labelsFileName).then((i18nFile: any) => {
+    return i18nFile
+  })
+})
+
+
