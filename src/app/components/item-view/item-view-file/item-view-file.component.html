@@ -37,9 +37,26 @@
               </a>
             }
             @else {
-              <span [ngbTooltip]="file.name">
+              <span [ngbTooltip]="fileToolTipContent">
                 <i class="bi-eye-slash-fill"></i> {{ file.metadata.title }}
               </span>
+              <ng-template #fileToolTipContent>
+
+                <div class="text-warning">
+                  {{'FileMetadataFields.visibility' | translate}}: {{'Visibility.' + file.visibility | translate}}
+                </div>
+                @if(file.allowedAudienceIds | empty) {
+                  <div class="text-warning">
+                    @for(ouName of getIpOrganizations(file); track $index) {
+                      {{ouName}}
+                    }
+                  </div>
+                }
+                <div>
+                  {{file.name}}
+                </div>
+
+              </ng-template>
 
             }
 
