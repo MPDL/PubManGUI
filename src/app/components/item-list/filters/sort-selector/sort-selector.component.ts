@@ -99,7 +99,7 @@ export const sortOptions: SortOptionsType = {
     index: [{index:'_score', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
-    label: 'Relevance'
+    label: 'Search.relevance'
   },
 
   "modificationDate" : {
