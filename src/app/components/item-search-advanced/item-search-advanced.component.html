@@ -29,7 +29,7 @@
             </div>
 
             <hr/>
-            <h5>Contexts</h5>
+            <h5>{{ 'MetadataFields.context' | translate }}</h5>
             <div class="row mb-3">
               @for (context of contextListSearchCriterion.contextOptions | keyvalue; track context; let i = $index; ) {
                 <div class="col-md-6 col-xxl-4">
@@ -43,7 +43,7 @@
             </div>
 
             <hr/>
-            <h5>Item Status</h5>
+            <h5>{{ 'common.item' | translate }} {{ 'MetadataFields.state' | translate}}</h5>
             <div class="row mb-3">
               @for (pubState of itemStateListSearchCriterion.itemStateOptions; track pubState; let i = $index; ) {
                 <div class="col-md-6 col-xxl-4">
