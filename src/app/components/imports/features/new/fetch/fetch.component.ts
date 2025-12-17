@@ -38,27 +38,12 @@ export default class FetchComponent implements OnInit {
   elRef: ElementRef = inject(ElementRef);
 
   user_contexts?: ContextDbRO[] = [];
+  default_context?: ContextDbRO;
 
   dinamicPlaceholder = "10.1000/1000xyz";
 
-  ngOnInit(): void {
-    this.aaSvc.principal.subscribe(
-      p => {
-        this.user_contexts = p.depositorContexts.sort((b, a) => { return a.name! < b.name! ? -1 : 1; });
-      }
-    );
-
-    this.fetchForm.controls['source'].valueChanges.subscribe(source => {
-      if (source === 'arxiv') {
-        this.dinamicPlaceholder = 'arXiv:yymm.nnnnn';
-      } else {
-        this.dinamicPlaceholder = '10.1000/1000xyz';
-      }
-    });
-  }
-
-  public fetchForm: FormGroup = this.fb.group({
-    contextId: ['ctx_persistent3', Validators.required],
+    public fetchForm: FormGroup = this.fb.group({
+    contextId: ['', Validators.required],
     source: ['crossref'],
     identifier: ['', [Validators.required, this.valSvc.forbiddenURLValidator(/http/i)]],
     fullText: ['FULLTEXT_DEFAULT']
@@ -80,6 +65,23 @@ export default class FetchComponent implements OnInit {
       fullText: this.fetchForm.controls['fullText'].value
     }
     return importParams;
+  }
+
+  ngOnInit(): void {
+    this.aaSvc.principal.subscribe(
+      p => {
+        this.user_contexts = p.depositorContexts.sort((a, b) => (a.name || '').localeCompare(b.name || '')).reverse();
+      }
+    );
+    this.fetchForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
+
+    this.fetchForm.controls['source'].valueChanges.subscribe(source => {
+      if (source === 'arxiv') {
+        this.dinamicPlaceholder = 'arXiv:yymm.nnnnn';
+      } else {
+        this.dinamicPlaceholder = '10.1000/1000xyz';
+      }
+    });
   }
 
   onSubmit(): void {
@@ -155,7 +157,7 @@ export default class FetchComponent implements OnInit {
   clickOutside(event: Event) {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.fetchForm.reset();
-      this.fetchForm.controls['contextId'].setValue('ctx_persistent3');
+      this.fetchForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
       this.fetchForm.controls['source'].setValue('crossref');
       this.fetchForm.controls['fullText'].setValue('FULLTEXT_DEFAULT'); ""
     }
