@@ -2,7 +2,7 @@
   <div class="col-sm">
     <select class="form-select" [formControl]="audience" 
       [class.is-invalid]="audience.parent?.invalid && audience.parent?.touched || audience.parent?.pending">
-      <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.ipRanges.singular' | translate }}
+      <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.files.ipRanges.singular' | translate }}
       </option>
       @for (ou of ous; track ou) {
       <option [value]="ou.name"> {{ ou.name }}</option>

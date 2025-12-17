@@ -22,7 +22,7 @@
         <select class="form-select" formControlName="genreFrom" 
           [class.is-invalid]="changeGenreForm.get('genreFrom')?.invalid && changeGenreForm.get('genreFrom')?.touched || changeGenreForm.get('genreFrom')?.pending"
           data-test="genre-to-be-replaced">
-          <option [value]="null" selected disable hidden>Genre</option>
+          <option [value]="null" selected disabled hidden>Genre</option>
           @for (genre of (genres | sortByLabel : 'MdsPublicationGenre.'); track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
           }
@@ -43,7 +43,7 @@
         <select class="form-select" formControlName="genreTo" 
           [class.is-invalid]="changeGenreForm.get('genreTo')?.invalid && changeGenreForm.get('genreTo')?.touched || changeGenreForm.get('genreTo')?.pending"
           data-test="replacing-genre">
-          <option [value]="null" selected disable hidden>Genre</option>
+          <option [value]="null" selected disabled hidden>Genre</option>
           @for (genre of (genres | sortByLabel : 'MdsPublicationGenre.'); track genre) {
           <option [value]="genre">{{ 'MdsPublicationGenre.' + genre | translate }}</option>
           }
@@ -67,7 +67,7 @@
         <select class="form-select" formControlName="degreeType"
           [class.is-invalid]="changeGenreForm.controls['genreTo'].value === 'THESIS' && (changeGenreForm.get('degreeType')?.invalid && changeGenreForm.get('degreeType')?.touched || changeGenreForm.get('degreeType')?.pending)" 
           [ngClass]="{'text-secondary': changeGenreForm.controls['genreTo'].value !== 'THESIS'}">
-          <option [value]="null" selected disable hidden>{{ 'batch.actions.genre.change.type' | translate }}</option>
+          <option [value]="null" selected disabled hidden>{{ 'batch.actions.genre.change.type' | translate }}</option>
           @for (degreeType of degreeTypes; track degreeType) {
           <option [value]="degreeType">{{ 'DegreeType.' + degreeType | translate }}</option>
           }
