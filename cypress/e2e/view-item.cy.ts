@@ -3,10 +3,9 @@ describe('View Item', () => {
   const password = Cypress.env('testUser').password
   let itemId: string
   let itemData: any
-  let translations: any
+  let labels: any
 
   beforeEach(() => {
-    cy.setLanguage('en')
     cy.loginViaAPI(loginName, password)
     cy.fixture('itemMetadataArticleRequiredFields').then((data) => {
       itemData = data
@@ -14,8 +13,8 @@ describe('View Item', () => {
         itemId = response.body['objectId']
       })
     })
-    cy.readFile('src/assets/i18n/en.json').then((i18n: any) => {
-      translations = i18n
+    cy.readLabelsFile().then(i18nFile => {
+      labels = i18nFile
     })
   })
 
@@ -28,9 +27,9 @@ describe('View Item', () => {
 
   it('Read an item via the view page with genre Article and only required fields', () => {
     //Given
-    const genreLabel = translations.MdsPublicationGenre[itemData.metadata.genre]
-    const publicStateLabel = translations.ItemState[itemData.publicState]
-    const sourceGenreLabel = translations.SourceGenre[itemData.metadata.sources[0].genre]
+    const genreLabel = labels.MdsPublicationGenre[itemData.metadata.genre]
+    const publicStateLabel = labels.ItemState[itemData.publicState]
+    const sourceGenreLabel = labels.SourceGenre[itemData.metadata.sources[0].genre]
     const title = itemData.metadata.title
     const familyName = itemData.metadata.creators[0].person.familyName
     const affiliation = itemData.metadata.creators[0].person.organizations[0].name
