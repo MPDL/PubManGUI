@@ -13,6 +13,8 @@ describe('View Item', () => {
         itemId = response.body['objectId']
       })
     })
+
+    cy.setLanguage('de')
     cy.readLabelsFile().then(i18nFile => {
       labels = i18nFile
     })
