@@ -882,6 +882,7 @@
     "title": "Saved Searches"
   },
   "Search": {
+    "adminMode": "Admin",
     "AND": "AND",
     "anyField": "Any field",
     "asc": "ascending",

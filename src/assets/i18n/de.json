@@ -882,6 +882,7 @@
     "title": "Gespeicherte Suchen"
   },
   "Search": {
+    "adminMode": "Admin",
     "AND": "UND",
     "anyField": "Alle Felder",
     "asc": "aufsteigend",
