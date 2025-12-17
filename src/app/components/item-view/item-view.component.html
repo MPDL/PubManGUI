@@ -20,7 +20,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['RELEASE'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.release' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.release' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('release')">
         <span class="material-symbols-outlined">public</span>
       </button>
@@ -28,7 +28,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.submit' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.submit' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('submit')">
         <span class="material-symbols-outlined">workspace_premium</span>
       </button>
@@ -36,7 +36,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.revise' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.revise' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('revise')">
         <svg fill="currentColor" height="24px" width="24px">
           <use href="assets/icons/icons.svg#revise"></use>
@@ -46,7 +46,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.withdraw' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.withdraw' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('withdraw')">
         <span class="material-symbols-outlined">public_off</span>
       </button>
@@ -54,7 +54,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.delete' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.delete' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('delete')">
         <span class="material-symbols-outlined">delete_forever</span>
       </button>
@@ -62,7 +62,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.addDoi' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.addDoi' | translate}}" >
       <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')">
         <svg fill="currentColor" height="24px" width="24px">
           <use href="assets/icons/icons.svg#doi"></use>
@@ -74,7 +74,7 @@
     @if(authorizationInfo && authorizationInfo.actions['EDIT'] && item.latestVersion?.versionNumber !==
     item.versionNumber) {
 
-    <span class="d-inline-block" ngbTooltip="{{'common.rollback' | translate}} (Version {{item?.versionNumber}})" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.rollback' | translate}} (Version {{item?.versionNumber}})" >
       <button class="nav-link" (click)="openActionsModal('rollback', item?.versionNumber)">
         <span class="material-symbols-outlined">history</span>
       </button>
@@ -263,7 +263,7 @@
           @if(authorizationInfo && authorizationInfo.actions['EDIT'] && item.latestVersion?.versionNumber !== vm[0]) {
           <div class="mt-2">
             <button type="button" class="btn btn-secondary btn-sm" (click)="openActionsModal('rollback', vm[0])"><i
-                class="material-symbols-outlined">history</i> {{'common.rollback'| translate}}</button>
+                class="material-symbols-outlined">history</i> {{'ItemActions.rollback'| translate}}</button>
           </div>
           }
 

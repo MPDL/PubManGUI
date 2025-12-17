@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, computed } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -13,10 +13,9 @@ import { SortSelectorComponent } from "../../item-list/filters/sort-selector/sor
   selector: 'pure-import-datasets',
   standalone: true,
   imports: [
-    CommonModule,
     ItemListComponent,
     SortSelectorComponent
-  ],
+],
   templateUrl: './datasets.component.html'
 })
 export default class DatasetsComponent {

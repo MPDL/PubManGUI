@@ -8,7 +8,7 @@ import { PubManHttpErrorResponse } from "../../../services/interceptors/http-err
 import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
 import { ChangePasswordComponent } from "../../shared/change-password/change-password.component";
 import { Message, MessageService } from "../../../services/message.service";
-import { TranslateService } from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
 import { NotificationComponent } from "../../shared/notification/notification.component";
 import { MatomoTracker } from "ngx-matomo-client";
@@ -18,7 +18,7 @@ import { MatomoTracker } from "ngx-matomo-client";
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent, BootstrapValidationDirective, NotificationComponent]
+  imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent, BootstrapValidationDirective, NotificationComponent, TranslatePipe]
 })
 export class LoginComponent implements OnInit {
 

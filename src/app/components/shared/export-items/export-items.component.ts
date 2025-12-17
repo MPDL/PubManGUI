@@ -234,10 +234,11 @@ export class ExportItemsComponent {
       searchQuery = {
         query: {
           bool: {
-            must: [this.completeQuery.query],
+
             filter: {
               terms: {"_id": this.itemIds}
-            }
+            },
+            ...this.completeQuery && {must: [this.completeQuery.query]}
           }
 
         },

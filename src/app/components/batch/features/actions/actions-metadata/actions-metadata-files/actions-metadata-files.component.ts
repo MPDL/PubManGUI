@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 
 import { ChangeFileVisibilityFormComponent } from './change-file-visibility-form/change-file-visibility-form.component';
@@ -11,11 +11,10 @@ import { ReplaceFileAudienceFormComponent } from './replace-file-audience-form/r
   selector: 'pure-batch-actions-metadata-files',
   standalone: true,
   imports: [
-    CommonModule,
     ChangeFileVisibilityFormComponent,
     ChangeFileContentCategoryFormComponent,
     ReplaceFileAudienceFormComponent
-  ],
+],
   templateUrl: './actions-metadata-files.component.html',
 })
 export class ActionsMetadataFilesComponent { }

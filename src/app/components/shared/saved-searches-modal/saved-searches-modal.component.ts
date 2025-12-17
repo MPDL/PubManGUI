@@ -10,6 +10,7 @@ import { Clipboard } from "@angular/cdk/clipboard";
 import { DatePipe } from "@angular/common";
 import { LoadingComponent } from "../loading/loading.component";
 import { CopyButtonDirective } from "../../../directives/copy-button.directive";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-saved-searches-modal',
@@ -19,7 +20,8 @@ import { CopyButtonDirective } from "../../../directives/copy-button.directive";
     ReactiveFormsModule,
     NgbTooltip,
     LoadingComponent,
-    CopyButtonDirective
+    CopyButtonDirective,
+    TranslatePipe
   ],
   templateUrl: './saved-searches-modal.component.html',
   styleUrl: './saved-searches-modal.component.scss'

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,13 +20,15 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-add-local-tags-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     ChipsComponent,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './add-local-tags-form.component.html',
+  host: {
+    '(keydown.enter)' : 'onKeydownEnterHandler($event)'
+  }
 })
 export class AddLocalTagsFormComponent {
   fb = inject(FormBuilder);
@@ -72,11 +74,9 @@ export class AddLocalTagsFormComponent {
     }
   }
 
-  @HostListener('document:keydown.enter', ['$event'])
-  onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-    }
+ //@HostListener('document:keydown.enter', ['$event'])
+  onKeydownEnterHandler(event: Event) {
+    event.preventDefault();
   }
 
 }

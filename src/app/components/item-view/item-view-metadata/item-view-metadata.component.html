@@ -336,7 +336,9 @@
       </span>
     </pure-item-view-metadata-element>
 
-      <pure-item-view-creators [creators]="source.creators"/>
+
+
+    <pure-item-view-creators [creators]="source.creators" [showCreatorsLabel]="true"/>
 
 
     <pure-item-view-metadata-element [sub]="true" [condition]="(source.publishingInfo | empty)">

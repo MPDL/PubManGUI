@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -16,11 +16,10 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-change-local-tags-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './change-local-tags-form.component.html',
 })
 export class ChangeLocalTagsFormComponent {

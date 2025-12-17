@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
@@ -9,10 +9,9 @@ import { BatchService } from './services/batch.service';
   selector: 'pure-batch',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     BatchNavComponent
-  ],
+],
   templateUrl: './batch.component.html',
 })
 export default class BatchComponent implements OnInit {
