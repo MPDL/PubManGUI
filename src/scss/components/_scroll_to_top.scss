@@ -7,11 +7,15 @@
     transition: all .2s ease-in-out;
 }
 
-.scroll-to-top .bi {
+.scroll-to-top .bi .bi-arrow-up-circle {
     font-size: 2.5rem;
 }
 
 .show-scrollTop {
     opacity: 1;
     transition: all .2s ease-in-out;
+}
+
+.scroll-to-top svg {
+  filter: drop-shadow(1px 1px 5px rgb(255 255 255));
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { importLogResolver } from "./services/import-log.resolver";
+import { importDatasetsResolver } from "./services/import-datasets.resolver";
 
 const routes: Routes = [
   {
@@ -57,7 +58,7 @@ const routes: Routes = [
           },
           {
             path: 'datasets',
-            loadComponent: () => import('./imports-datasets/datasets.component'),
+            loadComponent: () => import('./imports-datasets/datasets.component'), resolve: { itemList: importDatasetsResolver },
             data: {
               breadcrumb: {
                 labelKey: 'common.datasets',

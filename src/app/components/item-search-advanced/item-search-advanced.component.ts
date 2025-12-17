@@ -1,6 +1,6 @@
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { JsonPipe, KeyValuePipe, NgFor, NgTemplateOutlet } from "@angular/common";
+import { JsonPipe, KeyValuePipe, NgTemplateOutlet } from "@angular/common";
 import { SearchCriterion } from "./criterions/SearchCriterion";
 import { LogicalOperator } from "./criterions/operators/LogicalOperator";
 import { DisplayType, searchTypes, searchTypesI } from "./criterions/search_config";
@@ -41,8 +41,21 @@ import {filter} from "rxjs/operators";
   selector: 'pure-item-search-advanced',
   standalone: true,
   imports: [
-    FormsModule, ReactiveFormsModule, NgFor, JsonPipe, OuAutosuggestComponent, PersonAutosuggestComponent, FileSectionComponent, KeyValuePipe, TranslatePipe, SortByLabelPipe, NgTemplateOutlet, AddRemoveButtonsComponent, ConeAutosuggestComponent, BootstrapValidationDirective, ValidationErrorComponent
-  ],
+    FormsModule,
+    ReactiveFormsModule,
+    JsonPipe,
+    OuAutosuggestComponent,
+    PersonAutosuggestComponent,
+    FileSectionComponent,
+    KeyValuePipe,
+    TranslatePipe,
+    SortByLabelPipe,
+    NgTemplateOutlet,
+    AddRemoveButtonsComponent,
+    ConeAutosuggestComponent,
+    BootstrapValidationDirective,
+    ValidationErrorComponent
+],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
   encapsulation: ViewEncapsulation.None

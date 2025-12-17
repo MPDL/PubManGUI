@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventVO, InvitationStatus } from 'src/app/model/inge';
 import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
@@ -21,7 +21,7 @@ export enum ValidationErrorsEnum {
 @Component({
   selector: 'pure-event-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
+  imports: [FormsModule, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.scss'
 })

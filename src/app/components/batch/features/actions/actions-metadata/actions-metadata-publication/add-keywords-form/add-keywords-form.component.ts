@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,11 +15,10 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-add-keywords-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './add-keywords-form.component.html',
 })
 export class AddKeywordsFormComponent {

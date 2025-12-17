@@ -60,7 +60,7 @@
         <select id="context" class="form-select" formControlName="contextId"
           [class.is-invalid]="importForm.get('contextId')?.invalid && importForm.get('contextId')?.touched || importForm.get('contextId')?.pending"
           data-test="import-context">
-          <option [value]="null" selected disable hidden>{{ 'imports.context' | translate }}</option>
+          <option [ngValue]="null" selected disabled hidden>{{ 'imports.context' | translate }}</option>
           @for (contextObject of user_contexts; track contextObject) {
           <option [value]="contextObject.objectId">{{contextObject.name}}</option>
           }

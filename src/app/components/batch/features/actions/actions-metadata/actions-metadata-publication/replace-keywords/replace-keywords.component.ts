@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,12 +12,11 @@ import { TranslatePipe } from "@ngx-translate/core";
   selector: 'pure-replace-keywords',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     ChangeKeywordsFormComponent,
     ReplaceKeywordsFormComponent,
     TranslatePipe
-  ],
+],
   templateUrl: './replace-keywords.component.html',
 })
 export class ReplaceKeywordsComponent {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
@@ -9,10 +9,9 @@ import { ImportsService } from './services/imports.service';
   selector: 'pure-imports',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     ImportsNavComponent
-  ],
+],
   templateUrl: './imports.component.html',
 })
 export default class ImportsComponent implements OnInit {

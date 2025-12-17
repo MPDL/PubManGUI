@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -17,13 +17,15 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-replace-orcid-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     PersonAutosuggestComponent,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './replace-orcid-form.component.html',
+  host: {
+    '(keydown.enter)' : 'onKeydownEnterHandler($event)'
+  }
 })
 export class ReplaceOrcidFormComponent {
   router = inject(Router);
@@ -85,10 +87,7 @@ export class ReplaceOrcidFormComponent {
     });
   }
 
-  @HostListener('document:keydown.enter', ['$event'])
-  onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
+  onKeydownEnterHandler(event: Event) {
       event.preventDefault();
-    }
   }
 }

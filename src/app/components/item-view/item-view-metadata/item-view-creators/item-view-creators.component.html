@@ -1,6 +1,6 @@
 
     <pure-item-view-metadata-element [sub]="true" [condition]="creatorMap.size > 0">
-      <span label></span>
+      <span label>{{showCreatorsLabel ? ('MetadataFields.creators' | translate) : ''}}</span>
       <span content>
         <div class="list-group" id="collapseExample">
           @for (author of creatorMap.keys(); track $index; let i = $index) {
@@ -22,6 +22,11 @@
               }
               @else {
                 {{ author?.organization?.name }}{{ author?.organization?.address ? ', ' + author.organization?.address : '' }}
+                @if(author?.organization?.identifier | empty) {
+                  <button class="me-2 btn btn-sm p-0" (click)="toggleAffPopover(author?.organization!)">
+                     <span class="material-symbols-outlined">info</span>
+                   </button>
+                }
               }
             </div>
           }
@@ -32,7 +37,7 @@
           </div>
           } @else if (creatorMap.size === maxDisplay) {
             <div class="container float-start">
-          <button type="button" class="btn btn-sm btn-link p-0" (click)="showLess()">show less...</button>
+          <button type="button" class="btn btn-sm btn-link p-0" (click)="showLess()">{{ 'common.showLess' | translate }}...</button>
           </div>
           }
         </div>
@@ -40,7 +45,7 @@
     </pure-item-view-metadata-element>
 
     @if(creatorMap.size > 0 && affiliations.length > 0) {
-      <hr/>
+
     }
 
     <pure-item-view-metadata-element [sub]="true" [condition]="affiliations.length > 0">

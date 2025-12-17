@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -17,11 +17,10 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-change-keywords-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './change-keywords-form.component.html',
 })
 export class ChangeKeywordsFormComponent {

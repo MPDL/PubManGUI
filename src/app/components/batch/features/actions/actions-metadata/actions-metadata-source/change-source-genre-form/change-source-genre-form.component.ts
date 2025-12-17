@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,12 +18,11 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-change-source-genre-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
     SortByLabelPipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './change-source-genre-form.component.html',
 })
 export class ChangeSourceGenreFormComponent {

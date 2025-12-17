@@ -24,6 +24,7 @@ import { ConeIconComponent } from "../../../shared/cone-icon/cone-icon.component
 })
 export class ItemViewCreatorsComponent {
   @Input() creators: CreatorVO[] | undefined = [];
+  @Input() showCreatorsLabel = false;
 
   affiliations: OrganizationVO[] = [];
   affiliationMap: Map<string, OrganizationVO> = new Map();

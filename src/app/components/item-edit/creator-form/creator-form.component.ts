@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import { CreatorRole, CreatorType, IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
@@ -21,7 +21,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
 @Component({
   selector: 'pure-creator-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
+  imports: [FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './creator-form.component.html',
   styleUrls: ['./creator-form.component.scss']
 })

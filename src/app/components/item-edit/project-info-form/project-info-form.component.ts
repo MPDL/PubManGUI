@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FundingInfoVO, FundingProgramVO, IdentifierVO, IdType } from 'src/app/model/inge';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
@@ -14,7 +14,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
 @Component({
   selector: 'pure-project-info-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, TranslatePipe, BootstrapValidationDirective, ConeAutosuggestComponent, ValidationErrorMessageDirective],
+  imports: [FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, TranslatePipe, BootstrapValidationDirective, ConeAutosuggestComponent, ValidationErrorMessageDirective],
   templateUrl: './project-info-form.component.html',
   styleUrl: './project-info-form.component.scss'
 })

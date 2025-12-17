@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,12 +20,11 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
   selector: 'pure-batch-change-context',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     TranslatePipe,
     ValidationErrorComponent
-  ],
+],
   templateUrl: './change-context.component.html',
 })
 export class ActionsContextComponent implements OnInit {
@@ -56,7 +55,7 @@ export class ActionsContextComponent implements OnInit {
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
       p => {
-        this.user_contexts = p.depositorContexts;
+        this.user_contexts = p.depositorContexts.sort((a, b) => (a.name || '').localeCompare(b.name || '')).reverse();
       }
     );
     this.changeContextForm.reset();
