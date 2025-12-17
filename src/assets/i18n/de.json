@@ -695,6 +695,15 @@
     "PENDING": "Ausstehend",
     "SUSPENDED": "Ausgesetzt"
   },
+  "ItemActions": {
+    "addDoi": "DOI hinzufügen",
+    "delete": "Löschen",
+    "release": "Freigeben",
+    "revise": "Zurücksenden",
+    "rollback": "Wiederherstellen",
+    "submit": "Einstellen",
+    "withdraw": "Verwerfen"
+  },
   "ItemList": {
     "files": "Datei(en)",
     "links": "Externe(r) Link(s)",
@@ -866,6 +875,12 @@
     "NO_REVIEW": "Keine Begutachtung",
     "PEER": "Expertenbegutachtung"
   },
+  "SavedSearches": {
+    "delete": "Löschen",
+    "saveCurrent": "Aktuelle Suchmaske speichern",
+    "savedMasks": "Meine Suchmasken",
+    "title": "Gespeicherte Suchen"
+  },
   "Search": {
     "AND": "UND",
     "anyField": "Alle Felder",
@@ -878,11 +893,18 @@
     "NO": "Nein",
     "NOT": "NICHT",
     "OR": "ODER",
+    "publicMode": "Allgemein",
+    "relevance": "Relevanz",
+    "reset": "Zurücksetzen",
     "saveSearchButton": "Suche öffnen/speichern",
     "searchButton": "Suche",
+    "searchMode": "Suchmodus",
     "searchTerms": "Suchbegriffe",
     "WHATEVER": "-",
     "YES": "Ja"
+  },
+  "search": {
+    "startSearch": "Suche starten"
   },
   "SourceGenre": {
     "BLOG": "Blog",
@@ -981,20 +1003,5 @@
     "AUDIENCE": "Eingeschränkt",
     "PRIVATE": "Privat",
     "PUBLIC": "Öffentlich"
-  },
-  "ItemActions": {
-    "addDoi": "DOI hinzufügen",
-    "delete": "Löschen",
-    "release": "Freigeben",
-    "revise": "Zurücksenden",
-    "rollback": "Wiederherstellen",
-    "submit": "Einstellen",
-    "withdraw": "Verwerfen"
-  },
-  "SavedSearches": {
-    "title": "Gespeicherte Suchen",
-    "saveCurrent": "Aktuelle Suchmaske speichern",
-    "savedMasks": "Gespeicherte Suchmasken",
-    "delete": "Löschen"
   }
 }

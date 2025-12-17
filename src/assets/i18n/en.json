@@ -695,6 +695,15 @@
     "PENDING": "Pending",
     "SUSPENDED": "Suspended"
   },
+  "ItemActions": {
+    "addDoi": "Add DOI",
+    "delete": "Delete",
+    "release": "Release",
+    "revise": "Send back",
+    "rollback": "Revert",
+    "submit": "Submit",
+    "withdraw": "Discard"
+  },
   "ItemList": {
     "files": "file(s)",
     "links": "external link(s)",
@@ -866,6 +875,12 @@
     "NO_REVIEW": "No review",
     "PEER": "Peer"
   },
+  "SavedSearches": {
+    "delete": "Delete",
+    "saveCurrent": "Save current search mask",
+    "savedMasks": "My search masks",
+    "title": "Saved Searches"
+  },
   "Search": {
     "AND": "AND",
     "anyField": "Any field",
@@ -878,11 +893,18 @@
     "NO": "No",
     "NOT": "NOT",
     "OR": "OR",
+    "publicMode": "Public",
+    "relevance": "Relevance",
+    "reset": "Reset",
     "saveSearchButton": "Open/Save Search",
     "searchButton": "Search",
+    "searchMode": "Search Mode",
     "searchTerms": "Search terms",
     "WHATEVER": "-",
     "YES": "Yes"
+  },
+  "search": {
+    "startSearch": "Start Search"
   },
   "SourceGenre": {
     "BLOG": "Blog",
@@ -981,20 +1003,5 @@
     "AUDIENCE": "Restricted",
     "PRIVATE": "Private",
     "PUBLIC": "Public"
-  },
-  "ItemActions": {
-    "addDoi": "Add DOI",
-    "delete": "Delete",
-    "release": "Release",
-    "revise": "Send back",
-    "rollback": "Revert",
-    "submit": "Submit",
-    "withdraw": "Discard"
-  },
-  "SavedSearches": {
-    "title": "Saved searches",
-    "saveCurrent": "Save current search mask",
-    "savedMasks": "Saved search maskes",
-    "delete": "Delete"
   }
 }
