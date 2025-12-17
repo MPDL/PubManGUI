@@ -990,5 +990,11 @@
     "rollback": "Wiederherstellen",
     "submit": "Einstellen",
     "withdraw": "Verwerfen"
+  },
+  "SavedSearches": {
+    "title": "Gespeicherte Suchen",
+    "saveCurrent": "Aktuelle Suchmaske speichern",
+    "savedMasks": "Gespeicherte Suchmasken",
+    "delete": "Löschen"
   }
 }
