@@ -22,7 +22,7 @@
               }
               @else {
                 {{ author?.organization?.name }}{{ author?.organization?.address ? ', ' + author.organization?.address : '' }}
-                @if(author?.organization?.identifier | empty) {
+                @if(author?.organization?.identifier | notEmpty) {
                   <button class="me-2 btn btn-sm p-0" (click)="toggleAffPopover(author?.organization!)">
                      <span class="material-symbols-outlined">info</span>
                    </button>
@@ -62,7 +62,7 @@
                <span class="me-2">{{i+1}}</span>
                <span>
                  {{aff.name}}{{aff.address ? ', ' + aff.address : ''}}
-                 @if(aff.identifier | empty) {
+                 @if(aff.identifier | notEmpty) {
                    <button class="me-2 btn btn-sm p-0" (click)="toggleAffPopover(aff)">
                      <span class="material-symbols-outlined">info</span>
                    </button>

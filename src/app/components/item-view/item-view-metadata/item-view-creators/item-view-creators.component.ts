@@ -4,7 +4,7 @@ import { AffiliationDbVO, CreatorVO, OrganizationVO } from "../../../../model/in
 import { environment } from 'src/environments/environment';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { OrganizationsService } from "../../../../services/pubman-rest-client/organizations.service";
-import { EmptyPipe } from "../../../../pipes/empty.pipe";
+import { NotEmptyPipe } from "../../../../pipes/notEmpty.pipe";
 import { TranslatePipe } from "@ngx-translate/core";
 import { LoadingComponent } from "../../../shared/loading/loading.component";
 import { OuModalComponent } from "../../../shared/ou-modal/ou-modal.component";
@@ -15,7 +15,7 @@ import { ConeIconComponent } from "../../../shared/cone-icon/cone-icon.component
   standalone: true,
   imports: [
     ItemViewMetadataElementComponent,
-    EmptyPipe,
+    NotEmptyPipe,
     TranslatePipe,
     ConeIconComponent,
   ],

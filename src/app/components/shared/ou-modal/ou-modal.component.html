@@ -24,7 +24,7 @@
 <div class="modal-body">
 
   @if(ou) {
-    <pure-item-view-metadata-element [condition]="ou?.metadata?.alternativeNames | empty">
+    <pure-item-view-metadata-element [condition]="ou?.metadata?.alternativeNames | notEmpty">
           <span label>
             {{ 'OrganizationFields.alternativeNames' | translate }}
           </span>
@@ -35,7 +35,7 @@
 
       </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [condition]="ou?.metadata?.identifiers | empty">
+    <pure-item-view-metadata-element [condition]="ou?.metadata?.identifiers | notEmpty">
           <span label>
             {{ 'OrganizationFields.identifiers' | translate }}
           </span>
@@ -52,7 +52,7 @@
              }
           </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [condition]="(ou?.metadata?.city | empty) || (ou?.metadata?.countryCode | empty)">
+    <pure-item-view-metadata-element [condition]="(ou?.metadata?.city | notEmpty) || (ou?.metadata?.countryCode | notEmpty)">
           <span label>
             {{ 'common.address' | translate }}
           </span>
@@ -60,7 +60,7 @@
              {{ou?.metadata?.city}} {{ou?.metadata?.countryCode}}
           </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [condition]="ou?.metadata?.descriptions | empty">
+    <pure-item-view-metadata-element [condition]="ou?.metadata?.descriptions | notEmpty">
           <span label>
             {{ 'OrganizationFields.description' | translate}}
           </span>
@@ -73,7 +73,7 @@
 
       </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [condition]="ou?.predecessorAffiliations | empty">
+    <pure-item-view-metadata-element [condition]="ou?.predecessorAffiliations | notEmpty">
           <span label>
             {{ 'OrganizationFields.predecessors' | translate}}
           </span>
@@ -86,7 +86,7 @@
 
       </span>
     </pure-item-view-metadata-element>
-    <pure-item-view-metadata-element [condition]="successorOUs | empty">
+    <pure-item-view-metadata-element [condition]="successorOUs | notEmpty">
           <span label>
             {{ 'OrganizationFields.successors' | translate}}
           </span>
