@@ -427,6 +427,16 @@
     "validationErrorsExist": "Validation errors! Please fix all errors before submitting or releasing.",
     "validForSave": "You can save the dataset."
   },
+  "export": {
+    "citation": "Citation style",
+    "citationExample": "Citation example",
+    "citationGroup": "Citation formats",
+    "downloadBtn": "Download",
+    "format": "Format",
+    "formatGroup": "Data formats",
+    "showCurlBtn": "Show cURL",
+    "showQueryBtn": "Show query"
+  },
   "FileMetadataFields": {
     "checksum": "Checksum",
     "contentCategory": "Content Category",
@@ -719,6 +729,7 @@
     "WITHDRAWN": "Discarded"
   },
   "MdsPublicationGenre": {
+    "alphabetically": "Alphabetically",
     "ARTICLE": "Journal Article",
     "BLOG_POST": "Blog post",
     "BOOK": "Book",
@@ -767,7 +778,8 @@
     "SERIES": "Series",
     "SOFTWARE": "Software",
     "TALK_AT_EVENT": "Talk at event",
-    "THESIS": "Thesis"
+    "THESIS": "Thesis",
+    "top5": "Top 5"
   },
   "MetadataFields": {
     "abstract": "Abstract",
@@ -902,7 +914,9 @@
     "searchMode": "Search mode",
     "searchTerms": "Search terms",
     "WHATEVER": "-",
-    "YES": "Yes",
+    "YES": "Yes"
+  },
+  "search": {
     "startSearch": "Start Search"
   },
   "SourceGenre": {

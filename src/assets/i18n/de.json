@@ -427,6 +427,16 @@
     "validationErrorsExist": "Validierungsfehler! Bitte beheben Sie alle Fehler vor dem Einstellen oder Freigeben.",
     "validForSave": "Sie können den Datensatz speichern."
   },
+  "export": {
+    "citation": "Zitierstil",
+    "citationExample": "Beispiel-Zitation",
+    "citationGroup": "Zitierstil-Formate",
+    "downloadBtn": "Herunterladen",
+    "format": "Format",
+    "formatGroup": "Daten-Formate",
+    "showCurlBtn": "cURL anzeigen",
+    "showQueryBtn": "Suchabfrage anzeigen"
+  },
   "FileMetadataFields": {
     "checksum": "Prüfsumme",
     "contentCategory": "Inhaltskategorie",
@@ -719,6 +729,7 @@
     "WITHDRAWN": "Verworfen"
   },
   "MdsPublicationGenre": {
+    "alphabetically": "Alphabetisch",
     "ARTICLE": "Zeitschriftenartikel",
     "BLOG_POST": "Blogbeitrag",
     "BOOK": "Buch",
@@ -767,7 +778,8 @@
     "SERIES": "Reihe",
     "SOFTWARE": "Software",
     "TALK_AT_EVENT": "Vortrag",
-    "THESIS": "Hochschulschrift"
+    "THESIS": "Hochschulschrift",
+    "top5": "Top 5"
   },
   "MetadataFields": {
     "abstract": "Abstract",
@@ -902,7 +914,9 @@
     "searchMode": "Suchmodus",
     "searchTerms": "Suchbegriffe",
     "WHATEVER": "-",
-    "YES": "Ja",
+    "YES": "Ja"
+  },
+  "search": {
     "startSearch": "Suche starten"
   },
   "SourceGenre": {
