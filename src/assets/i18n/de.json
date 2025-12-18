@@ -902,9 +902,7 @@
     "searchMode": "Suchmodus",
     "searchTerms": "Suchbegriffe",
     "WHATEVER": "-",
-    "YES": "Ja"
-  },
-  "search": {
+    "YES": "Ja",
     "startSearch": "Suche starten"
   },
   "SourceGenre": {

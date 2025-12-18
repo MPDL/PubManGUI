@@ -902,9 +902,7 @@
     "searchMode": "Search mode",
     "searchTerms": "Search terms",
     "WHATEVER": "-",
-    "YES": "Yes"
-  },
-  "search": {
+    "YES": "Yes",
     "startSearch": "Start Search"
   },
   "SourceGenre": {
