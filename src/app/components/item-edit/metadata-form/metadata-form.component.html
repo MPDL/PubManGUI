@@ -21,13 +21,13 @@
                                     <select id="genre" class="form-select" formControlName="genre"
                                         (change)="changeGenre($event)" data-test="genre">
                                         <option [ngValue]="null" selected disabled>genre</option>
-                                        <optgroup label="Top 5">
+                                        <optgroup [label]="'Edit.genreTop5' | translate">
                                             @for (g of allowed_genre_types; track g) {
                                             @if (genrePriorityList.includes(g)) {
                                             <option [value]="g">{{'MdsPublicationGenre.' + g | translate}}</option>
                                             }}
                                         </optgroup>
-                                        <optgroup label="Alphabetically Sorted">
+                                        <optgroup [label]="'Edit.genreAlphabetically' | translate">
                                             @for (g of allowed_genre_types; track g) {
                                             @if (!genrePriorityList.includes(g)) {
                                             <option [value]="g">{{'MdsPublicationGenre.' + g | translate}}</option>
