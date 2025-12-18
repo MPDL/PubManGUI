@@ -1,0 +1,36 @@
+{
+  "context": {
+    "objectId": "ctx_persistent3",
+    "name": "PubMan Test Collection"
+  },
+  "metadata": {
+    "title": "Cypress Test Edit-Item Conference paper",
+    "creators": [
+      {
+        "person": {
+          "familyName": "TestFamily",
+          "organizations": [
+            {
+              "identifier": "ou_persistent22",
+              "name": "TestAffiliation",
+              "identifierPath": [
+                "ou_persistent22"
+              ]
+            }
+          ]
+        },
+        "role": "AUTHOR",
+        "type": "PERSON"
+      }
+    ],
+    "dateCreated": "2025-11-13",
+    "genre": "CONFERENCE_PAPER",
+    "sources": [
+      {
+        "title": "Source Title",
+        "genre": "BLOG"
+      }
+    ]
+  },
+  "publicState": "PENDING"
+}
