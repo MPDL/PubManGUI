@@ -422,10 +422,10 @@
   "Edit": {
     "addMultipleCreators": "Mehrere Urheber hinzufügen (Copy-Paste)",
     "doiConformationMessage": "Mit dem nächsten Schritt ermächtigen Sie die Max Planck Digital Library, einen DataCite DOI (Digital Object Identifier) für diese in MPG.PuRe verzeichnete Publikation zu registrieren.<br/><br/>Die DOI-Registrierung kann nicht rückgängig gemacht werden. Deshalb bitten wir Sie, diese Funktion mit Bedacht und nur dann zu verwenden, wenn Sie sich der daraus entstehenden Konsequenzen bewusst sind.<br/><br/>Im Besonderen bestätigen Sie mit dieser DOI-Registrierung die wissenschaftliche Qualität des Inhalts, sowie die Tatsache, dass dieser Publikation bisher weder von Seiten der MPG, noch von einer anderen Stelle ein DOI zugewiesen worden ist. Nähere Informationen zu diesen Anforderungen finden Sie <a href=\"https://doi.mpdl.mpg.de/faq/#req\" target=\"_blank\">hier</a>.<br/><br/>Darüber hinaus stimmen Sie zu, dass die URL des MPG.PuRe-Datensatzes sowie die bibliografischen Metadaten zum Zwecke der DOI-Registrierung an die Technische Informationsbibliothek (TIB) Hannover übermittelt werden dürfen.",
-    "validationErrorsExist": "Validierungsfehler! Bitte beheben Sie alle Fehler vor dem Einstellen oder Freigeben.",
-    "validForSave": "Sie können den Datensatz speichern.",
+    "genreAlphabetically": "Alphabetisch",
     "genreTop5": "Top 5",
-    "genreAlphabetically": "Alphabetisch"
+    "validationErrorsExist": "Validierungsfehler! Bitte beheben Sie alle Fehler vor dem Einstellen oder Freigeben.",
+    "validForSave": "Sie können den Datensatz speichern."
   },
   "export": {
     "citation": "Zitierstil",
@@ -493,13 +493,13 @@
     }
   },
   "Home": {
-    "chartTitle": "Verteilung der Dokumenttypen",
+    "chartTitle": "Häufigste Genre-Typen",
+    "latestReleases": "Neueste Volltexte",
     "News": "Nachrichten",
     "P": "dem Publikationsrepositorium der Max-Planck-Gesellschaft",
     "p2": "Publikationen verfügbar",
     "Search": "Suche",
-    "welcomeMessage": "Willkommen auf MPG.PuRe",
-    "latestReleases": "Neueste Freigaben"
+    "welcomeMessage": "Willkommen auf MPG.PuRe"
   },
   "ImportErrorLevel": {
     "ERROR": "Fehler",
@@ -728,6 +728,12 @@
     "RELEASED": "Freigegeben",
     "SUBMITTED": "Eingestellt",
     "WITHDRAWN": "Verworfen"
+  },
+  "ItemView": {
+    "latestRelease": "Neueste Freigabe",
+    "latestVersion": "Neueste Version",
+    "newVersions": "Neuere Versionen",
+    "pids": "Persistente Links"
   },
   "MdsPublicationGenre": {
     "ARTICLE": "Zeitschriftenartikel",
@@ -1015,11 +1021,5 @@
     "AUDIENCE": "Eingeschränkt",
     "PRIVATE": "Privat",
     "PUBLIC": "Öffentlich"
-  },
-  "ItemView": {
-    "pids": "Persistente Links",
-    "newVersions": "Neuere Versionen",
-    "latestRelease": "Neueste Freigabe",
-    "latestVersion": "Neueste Version"
   }
 }
