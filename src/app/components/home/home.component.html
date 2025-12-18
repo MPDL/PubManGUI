@@ -51,7 +51,7 @@
 
   <!-- Latest Featured Releases Section -->
   <div id="releases-section">
-    <h4>{{'common.latestRelease'| translate}}</h4>
+    <h4>{{'Home.latestReleases'| translate}}</h4>
     <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 g-4">
       @if(latestReleasedItems | async; as items) {
         @for(item of items.slice(0,5); track item) {

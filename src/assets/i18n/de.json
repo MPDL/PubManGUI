@@ -498,7 +498,8 @@
     "P": "dem Publikationsrepositorium der Max-Planck-Gesellschaft",
     "p2": "Publikationen verfügbar",
     "Search": "Suche",
-    "welcomeMessage": "Willkommen auf MPG.PuRe"
+    "welcomeMessage": "Willkommen auf MPG.PuRe",
+    "latestReleases": "Neueste Freigaben"
   },
   "ImportErrorLevel": {
     "ERROR": "Fehler",

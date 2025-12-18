@@ -498,7 +498,8 @@
     "P": "the publication repository of the Max Planck Society",
     "p2": "publications available",
     "Search": "Search",
-    "welcomeMessage": "Welcome to MPG.PuRe"
+    "welcomeMessage": "Welcome to MPG.PuRe",
+    "latestReleases": "Recently Released"
   },
   "ImportErrorLevel": {
     "ERROR": "Error",
