@@ -9,7 +9,7 @@
   <form [formGroup]="reportForm">
 
     <div class="mb-3">
-      <label for="formatSelect">Format</label>
+      <label for="formatSelect">{{ 'export.format' | translate }}</label>
       <select class="form-select" formControlName="exportFormat" id="formatSelect" name="selectFormat">
 
         <option [ngValue]="exportTypes.JUS_HTML_XML">
@@ -44,7 +44,7 @@
 
 <div class="modal-footer">
 
-    <button type="button" class="btn btn-primary" (click)="download()" [disabled]="loading || !reportForm.valid">Download
+    <button type="button" class="btn btn-primary" (click)="download()" [disabled]="loading || !reportForm.valid">{{ 'export.downloadBtn' | translate }}
       @if(loading)
       {
         <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
