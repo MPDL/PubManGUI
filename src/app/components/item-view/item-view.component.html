@@ -402,42 +402,12 @@
         -
       }
     </div>
+
     <hr class="mt-4 mb-4"/>
-
-
     <div>
-      <h5>{{ 'common.item' | translate }} Information</h5>
+      <h5>{{ 'ItemView.pids' | translate}}</h5>
 
-      @let showLatestRelease =  (item.latestRelease | notEmpty) && item.versionNumber !== item.latestRelease?.versionNumber;
-      @let showLatestVersion = (item.latestVersion | notEmpty) && item.versionNumber !== item.latestVersion?.versionNumber &&
-        latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
-        !((item.latestRelease | notEmpty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber);
-
-      @if (item.publicState !== 'WITHDRAWN' && (showLatestRelease || showLatestVersion || (item.objectPid | notEmpty) || (item.versionPid | notEmpty))) {
-
-      @if (showLatestRelease) {
-      <div class="mb-3">
-        <b class="">{{ 'common.latestRelease' | translate }}</b>
-        <div>
-          <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}">
-            <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
-          </a>
-        </div>
-
-      </div>
-      }
-
-      @if (showLatestVersion) {
-      <div class="mb-3">
-        <b>{{ 'common.latestVersion' | translate }}</b>
-        <div>
-          <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}">
-            <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
-          </a>
-        </div>
-
-      </div>
-      }
+      @if ((item.objectPid | notEmpty) || (item.versionPid | notEmpty)) {
 
       @if (item.objectPid | notEmpty) {
       <div class="mb-3">
@@ -482,7 +452,51 @@
       }
     </div>
 
+
+
+
+    @let showLatestRelease =  (item.latestRelease | notEmpty) && item.versionNumber !== item.latestRelease?.versionNumber;
+    @let showLatestVersion = (item.latestVersion | notEmpty) && item.versionNumber !== item.latestVersion?.versionNumber &&
+      latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
+      !((item.latestRelease | notEmpty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber);
+
+    @if (item.publicState !== 'WITHDRAWN' && (showLatestRelease || showLatestVersion)) {
+      <hr class="mt-4 mb-4"/>
+    <div>
+      <h5>{{ 'ItemView.newVersions' | translate}}</h5>
+
+
+
+        @if (showLatestRelease) {
+          <div class="mb-3">
+            <b class="">{{ 'ItemView.latestRelease' | translate }}</b>
+            <div>
+              <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}">
+                <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
+              </a>
+            </div>
+
+          </div>
+        }
+
+        @if (showLatestVersion) {
+          <div class="mb-3">
+            <b>{{ 'ItemView.latestVersion' | translate }}</b>
+            <div>
+              <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}">
+                <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
+              </a>
+            </div>
+
+          </div>
+
+        }
+    </div>
+
+      }
   </div>
+
+
 </div>
 
 }

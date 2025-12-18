@@ -333,8 +333,6 @@
     "home": "Home",
     "item": "Dataset",
     "items": "Datasets",
-    "latestRelease": "Latest release",
-    "latestVersion": "Latest version",
     "link": "External link",
     "links": "External links",
     "logs": "Logs",
@@ -425,7 +423,19 @@
     "addMultipleCreators": "Add multiple creators (Copy-Paste)",
     "doiConformationMessage": "By continuing with the next step you authorize the Max Planck Digital Library to register a DataCite DOI (Digital Object Identifier) for this MPG.PuRe record. The DOI registration cannot be undone, therefore please use this function with care and only if you are aware of the consequences.<br/><br/>In particular you confirm with a DOI registration the scientific quality of the content and the fact that there has not been assigned any DOI to the publication before by the MPG or any other institution. Further details on this requirements can be found <a href=\"https://doi.mpdl.mpg.de/faq/#req\" target=\"_blank\">here</a>.<br/><br/>You also agree that the MPG.PuRe URL and bibliographic metadata will be transferred to the German National Library of Science and Technology (TIB) in order to register the DOI name.",
     "validationErrorsExist": "Validation errors! Please fix all errors before submitting or releasing.",
-    "validForSave": "You can save the dataset."
+    "validForSave": "You can save the dataset.",
+    "genreTop5": "Top 5",
+    "genreAlphabetically": "Alphabetically"
+  },
+  "export": {
+    "citation": "Citation style",
+    "citationExample": "Citation example",
+    "citationGroup": "Citation formats",
+    "downloadBtn": "Download",
+    "format": "Format",
+    "formatGroup": "Data formats",
+    "showCurlBtn": "Show cURL",
+    "showQueryBtn": "Show query"
   },
   "FileMetadataFields": {
     "checksum": "Checksum",
@@ -902,7 +912,9 @@
     "searchMode": "Search mode",
     "searchTerms": "Search terms",
     "WHATEVER": "-",
-    "YES": "Yes",
+    "YES": "Yes"
+  },
+  "search": {
     "startSearch": "Start Search"
   },
   "SourceGenre": {
@@ -1002,5 +1014,11 @@
     "AUDIENCE": "Restricted",
     "PRIVATE": "Private",
     "PUBLIC": "Public"
+  },
+  "ItemView": {
+    "pids": "Persistent links",
+    "newVersions": "Latest versions",
+    "latestRelease": "Latest release",
+    "latestVersion": "Latest version"
   }
 }
