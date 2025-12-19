@@ -918,11 +918,9 @@
     "searchButton": "Search",
     "searchMode": "Search mode",
     "searchTerms": "Search terms",
+    "startSearch": "Start Search",
     "WHATEVER": "-",
     "YES": "Yes"
-  },
-  "search": {
-    "startSearch": "Start Search"
   },
   "SourceGenre": {
     "BLOG": "Blog",
