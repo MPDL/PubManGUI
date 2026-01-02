@@ -10,7 +10,7 @@ import {AsyncPipe, NgClass} from "@angular/common";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 import {isUrl} from "../../../utils/item-utils";
-import {EmptyPipe} from "../../../pipes/empty.pipe";
+import {NotEmptyPipe} from "../../../pipes/notEmpty.pipe";
 
 
 @Component({
@@ -20,7 +20,7 @@ import {EmptyPipe} from "../../../pipes/empty.pipe";
     LoadingComponent,
     TranslatePipe,
     NgClass,
-    EmptyPipe
+    NotEmptyPipe
   ],
   templateUrl: './ou-modal.component.html',
   styleUrl: './ou-modal.component.scss'

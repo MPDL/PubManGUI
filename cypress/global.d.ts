@@ -83,5 +83,10 @@ declare namespace Cypress {
      * Start an import via API
      */
     createImportViaAPI(importName: string, contextId: string, format: string, importFileContent: string): Chainable<Cypress.Response<any>>
+
+    /**
+     * Returns the labels/i18n file depending on the locale (default is "en")
+     */
+    readLabelsFile(): Chainable<any>
   }
 }

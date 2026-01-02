@@ -32,14 +32,30 @@
             @if(file.storage==='EXTERNAL_URL' || fileAccessGranted) {
             @let link = (file.storage==='EXTERNAL_URL' ? '' : ingeUri) + file.content;
 
-              <a class="matomo_download w-100" href="{{link}}" target="_blank" [ngbTooltip]="file.name">
+              <a class="matomo_download w-100" href="{{link}}" target="_blank" [ngbTooltip]="file.name" placement="top-start">
                 <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}} me-1"></i>{{ file.metadata.title }}
               </a>
             }
             @else {
-              <span [ngbTooltip]="file.name">
+              <span [ngbTooltip]="fileToolTipContent" placement="top-start">
                 <i class="bi-eye-slash-fill"></i> {{ file.metadata.title }}
               </span>
+
+              <ng-template #fileToolTipContent>
+                <div class="text-warning">
+                  {{'FileMetadataFields.visibility' | translate}}: {{'Visibility.' + file.visibility | translate}}
+                </div>
+                @if(file.allowedAudienceIds | notEmpty) {
+                  <div class="text-warning">
+                    @for(ouName of getIpOrganizations(file); track $index) {
+                      {{ouName}}
+                    }
+                  </div>
+                }
+                <div>
+                  {{file.name}}
+                </div>
+              </ng-template>
 
             }
 
@@ -76,7 +92,7 @@
               <div>
                 {{ 'Visibility.' + file.visibility | translate}}
               </div>
-              @if(file.allowedAudienceIds | empty) {
+              @if(file.allowedAudienceIds | notEmpty) {
                 <!--
                 <div>
                   {{ file.allowedAudienceIds }}
@@ -89,7 +105,7 @@
                 </div>
                 }
 
-              @if(file.metadata.embargoUntil | empty) {
+              @if(file.metadata.embargoUntil | notEmpty) {
                 <div class="mt-1">
                   <strong>{{ 'FileMetadataFields.embargoDate' | translate }}</strong>
                 </div>
@@ -115,7 +131,7 @@
 
             }
 
-            @if(file.metadata.description | empty) {
+            @if(file.metadata.description | notEmpty) {
             <div class="mt-1">
               <strong>{{ 'FileMetadataFields.description' | translate }}</strong>
             </div>
@@ -136,7 +152,7 @@
                 {{ ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')) | translate }}
               </div>
               }
-              @if(file.metadata.license | empty) {
+              @if(file.metadata.license | notEmpty) {
               <div class="mt-1">
                 <strong>{{ 'FileMetadataFields.license' | translate }}</strong>
               </div>
@@ -151,7 +167,7 @@
               </div>
               }
 
-              @if(file.metadata.rights | empty) {
+              @if(file.metadata.rights | notEmpty) {
               <div class="mt-1">
                 <strong>{{ 'FileMetadataFields.copyright' | translate }}</strong>
               </div>
@@ -159,7 +175,7 @@
                 {{ file.metadata.rights }} ({{ file.metadata.copyrightDate }} )
               </div>
               }
-            @if(file.pid | empty) {
+            @if(file.pid | notEmpty) {
               <div class="mt-1">
                 <strong>{{ 'common.handle' | translate }}</strong>
               </div>

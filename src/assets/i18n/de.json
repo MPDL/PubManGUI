@@ -133,7 +133,7 @@
     "actions.item.state.release.confirmation": "Möchten Sie diese Datensätze wirklich freigeben?",
     "actions.item.state.release.info": "Die Datensätze werden freigegeben, sofern ihr Status und der eingestellte Workflow dies zulassen.",
     "actions.item.state.revise": "Zum Überarbeiten zurücksenden",
-    "actions.item.state.revise.info": "Die Datensätze werden zum Bearbeiten geschickt, sofern ihr Status und der eingestellte Workflow dies zulassen.",
+    "actions.item.state.revise.info": "Die Datensätze werden zum Überarbeiten zurückgesendet, sofern ihr Status und der eingestellte Workflow dies zulassen.",
     "actions.item.state.submit": "Einstellen",
     "actions.item.state.submit.info": "Die Datensätze werden eingestellt, sofern ihr Status und der eingestellte Workflow dies zulassen.",
     "actions.item.state.withdraw": "Verwerfen",
@@ -285,7 +285,7 @@
     "REPLACE_KEYWORDS": "Schlagwörter ersetzen",
     "REPLACE_ORCID": "ORCID hinzufügen",
     "REPLACE_SOURCE_EDITION": "Ausgabe anpassen",
-    "REVISE_PUBITEMS": "Datensatz zum Bearbeiten schicken",
+    "REVISE_PUBITEMS": "Datensatz zum Überarbeiten zurücksenden",
     "SUBMIT_PUBITEMS": "Datensatz einstellen",
     "WITHDRAW_PUBITEMS": "Datensatz verwerfen"
   },
@@ -333,8 +333,6 @@
     "home": "Home",
     "item": "Datensatz",
     "items": "Datensätze",
-    "latestRelease": "Neueste Freigabe",
-    "latestVersion": "Neueste Version",
     "link": "Externer Link",
     "links": "Externe Links",
     "logs": "Protokolle",
@@ -424,8 +422,20 @@
   "Edit": {
     "addMultipleCreators": "Mehrere Urheber hinzufügen (Copy-Paste)",
     "doiConformationMessage": "Mit dem nächsten Schritt ermächtigen Sie die Max Planck Digital Library, einen DataCite DOI (Digital Object Identifier) für diese in MPG.PuRe verzeichnete Publikation zu registrieren.<br/><br/>Die DOI-Registrierung kann nicht rückgängig gemacht werden. Deshalb bitten wir Sie, diese Funktion mit Bedacht und nur dann zu verwenden, wenn Sie sich der daraus entstehenden Konsequenzen bewusst sind.<br/><br/>Im Besonderen bestätigen Sie mit dieser DOI-Registrierung die wissenschaftliche Qualität des Inhalts, sowie die Tatsache, dass dieser Publikation bisher weder von Seiten der MPG, noch von einer anderen Stelle ein DOI zugewiesen worden ist. Nähere Informationen zu diesen Anforderungen finden Sie <a href=\"https://doi.mpdl.mpg.de/faq/#req\" target=\"_blank\">hier</a>.<br/><br/>Darüber hinaus stimmen Sie zu, dass die URL des MPG.PuRe-Datensatzes sowie die bibliografischen Metadaten zum Zwecke der DOI-Registrierung an die Technische Informationsbibliothek (TIB) Hannover übermittelt werden dürfen.",
+    "genreAlphabetically": "Alphabetisch",
+    "genreTop5": "Top 5",
     "validationErrorsExist": "Validierungsfehler! Bitte beheben Sie alle Fehler vor dem Einstellen oder Freigeben.",
     "validForSave": "Sie können den Datensatz speichern."
+  },
+  "export": {
+    "citation": "Zitierstil",
+    "citationExample": "Beispiel-Zitation",
+    "citationGroup": "Zitierstil-Formate",
+    "downloadBtn": "Herunterladen",
+    "format": "Format",
+    "formatGroup": "Daten-Formate",
+    "showCurlBtn": "cURL anzeigen",
+    "showQueryBtn": "Suchabfrage anzeigen"
   },
   "FileMetadataFields": {
     "checksum": "Prüfsumme",
@@ -483,7 +493,8 @@
     }
   },
   "Home": {
-    "chartTitle": "Verteilung der Dokumenttypen",
+    "chartTitle": "Häufigste Genre-Typen",
+    "latestReleases": "Neueste Volltexte",
     "News": "Nachrichten",
     "P": "dem Publikationsrepositorium der Max-Planck-Gesellschaft",
     "p2": "Publikationen verfügbar",
@@ -695,6 +706,15 @@
     "PENDING": "Ausstehend",
     "SUSPENDED": "Ausgesetzt"
   },
+  "ItemActions": {
+    "addDoi": "DOI hinzufügen",
+    "delete": "Löschen",
+    "release": "Freigeben",
+    "revise": "Zurücksenden",
+    "rollback": "Wiederherstellen",
+    "submit": "Einstellen",
+    "withdraw": "Verwerfen"
+  },
   "ItemList": {
     "files": "Datei(en)",
     "links": "Externe(r) Link(s)",
@@ -708,6 +728,12 @@
     "RELEASED": "Freigegeben",
     "SUBMITTED": "Eingestellt",
     "WITHDRAWN": "Verworfen"
+  },
+  "ItemView": {
+    "latestRelease": "Neueste Freigabe",
+    "latestVersion": "Neueste Version",
+    "newVersions": "Neuere Versionen",
+    "pids": "Persistente Links"
   },
   "MdsPublicationGenre": {
     "ARTICLE": "Zeitschriftenartikel",
@@ -866,7 +892,14 @@
     "NO_REVIEW": "Keine Begutachtung",
     "PEER": "Expertenbegutachtung"
   },
+  "SavedSearches": {
+    "delete": "Löschen",
+    "saveCurrent": "Aktuelle Suchmaske speichern",
+    "savedMasks": "Meine Suchmasken",
+    "title": "Gespeicherte Suchen"
+  },
   "Search": {
+    "adminMode": "Admin",
     "AND": "UND",
     "anyField": "Alle Felder",
     "asc": "aufsteigend",
@@ -878,11 +911,18 @@
     "NO": "Nein",
     "NOT": "NICHT",
     "OR": "ODER",
+    "publicMode": "Allgemein",
+    "relevance": "Relevanz",
+    "reset": "Zurücksetzen",
     "saveSearchButton": "Suche öffnen/speichern",
     "searchButton": "Suche",
+    "searchMode": "Suchmodus",
     "searchTerms": "Suchbegriffe",
     "WHATEVER": "-",
     "YES": "Ja"
+  },
+  "search": {
+    "startSearch": "Suche starten"
   },
   "SourceGenre": {
     "BLOG": "Blog",
@@ -981,20 +1021,5 @@
     "AUDIENCE": "Eingeschränkt",
     "PRIVATE": "Privat",
     "PUBLIC": "Öffentlich"
-  },
-  "ItemActions": {
-    "addDoi": "DOI hinzufügen",
-    "delete": "Löschen",
-    "release": "Freigeben",
-    "revise": "Zurücksenden",
-    "rollback": "Wiederherstellen",
-    "submit": "Einstellen",
-    "withdraw": "Verwerfen"
-  },
-  "SavedSearches": {
-    "title": "Gespeicherte Suchen",
-    "saveCurrent": "Aktuelle Suchmaske speichern",
-    "savedMasks": "Gespeicherte Suchmasken",
-    "delete": "Löschen"
   }
 }

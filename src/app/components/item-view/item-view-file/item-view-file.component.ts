@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FileDbVO, ItemVersionVO, OA_STATUS, Storage, Visibility } from "../../../model/inge";
 import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { environment } from 'src/environments/environment';
-import { EmptyPipe } from "../../../pipes/empty.pipe";
+import { NotEmptyPipe } from "../../../pipes/notEmpty.pipe";
 import { AaService } from "../../../services/aa.service";
 import { checkFileAccess, getFullItemId, isUrl } from "../../../utils/item-utils";
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
@@ -19,7 +19,7 @@ import mime from "mime";
   standalone: true,
   imports: [
     NgbTooltip,
-    EmptyPipe,
+    NotEmptyPipe,
     NgbPopover,
     TranslatePipe,
     CopyButtonDirective,

@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-paginator',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss'

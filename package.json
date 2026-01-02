@@ -1,6 +1,6 @@
 {
   "name": "pure",
-  "version": "1.0.1-beta",
+  "version": "1.0.2-beta",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -36,7 +36,6 @@
     "countup.js": "^2.9.0",
     "material-symbols": "^0.32.0",
     "mime": "^4.1.0",
-    "ngx-countup": "^13.2.0",
     "ngx-matomo-client": "^9.0.1",
     "rxjs": "~7.8.2",
     "sanitize-html": "^2.16.0",
