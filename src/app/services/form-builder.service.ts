@@ -154,7 +154,7 @@ export class FormBuilderService {
   file_FG(file: FileDbVO | null) {
     const file_form = this.fb.group<ControlType<FileDbVO>>({
         objectId: this.fb.nonNullable.control(file?.objectId ? file.objectId : undefined),
-        name: this.fb.nonNullable.control(file?.name ? file.name : undefined, { validators: [Validators.pattern(FILE_TITLE_AND_NAME_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
+        name: this.fb.nonNullable.control(file?.name ? file.name : undefined),
         visibility: this.fb.nonNullable.control(file?.visibility ? file.visibility : Visibility.PUBLIC),
         pid: this.fb.nonNullable.control(file?.pid ? file.pid : undefined),
         content: this.fb.nonNullable.control(file?.content ? file.content : undefined),
@@ -173,7 +173,9 @@ export class FormBuilderService {
 
   mds_file_FG(fileMetadata: MdsFileVO | null) {
     const mdsFile_form = this.fb.group<ControlType<MdsFileVO>>({
-      title: this.fb.nonNullable.control(fileMetadata?.title ? fileMetadata.title : undefined, {validators: [requiredNoWhitespace, Validators.pattern(FILE_TITLE_AND_NAME_PATTERN)], updateOn: VALIDATION_UPDATE_ON }),
+      //title validations are handled by file-data-validation.ts
+      title: this.fb.nonNullable.control(fileMetadata?.title ? fileMetadata.title : undefined),
+      //contentCategory validations are handled by file-data-validation.ts
       contentCategory: this.fb.nonNullable.control(fileMetadata?.contentCategory ? fileMetadata.contentCategory : undefined),
       description: this.fb.nonNullable.control(fileMetadata?.description ? fileMetadata.description : undefined),
       identifiers: this.fb.array(fileMetadata?.identifiers ? fileMetadata.identifiers.map(id => this.identifier_FG(id) as AbstractControl) : []),
