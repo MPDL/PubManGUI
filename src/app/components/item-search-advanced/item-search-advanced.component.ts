@@ -632,7 +632,7 @@ export class ItemSearchAdvancedComponent {
           bool: {
             ...should.length > 0 && {should: should},
             ...must.length > 0 && {must: must},
-            ...mustNot.length > 0 && {mustNot: mustNot},
+            ...mustNot.length > 0 && {must_not: mustNot},
           }
         }
     }
