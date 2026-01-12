@@ -12,9 +12,9 @@
 
         <h2 class="accordion-header">
           <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#accordionBodyContextsGroup" aria-expanded="true"
-                  aria-controls="accordionBodyContextsGroup">
-            Admin
+            data-bs-target="#accordionBodyContextsGroup" aria-expanded="true"
+            aria-controls="accordionBodyContextsGroup">
+            {{ 'Search.searchMode' | translate}}
           </button>
         </h2>
         <div id="accordionBodyContextsGroup" class="accordion-collapse collapse show">
@@ -22,19 +22,20 @@
           <div class="accordion-body mt-3 mb-3">
 
             <div class="btn-group mb-2" role="group" aria-label="publicAdminSwitch">
-              <button type="button" class="btn btn-outline-primary {{isPublic ? 'active' : ''}}" (click)="switchToAdmin(false)">Public</button>
-              <button type="button" class="btn btn-outline-primary {{isAdmin ? 'active' : ''}}" (click)="switchToAdmin(true)">Admin</button>
+              <button type="button" class="btn btn-outline-primary {{isPublic ? 'active' : ''}}" (click)="switchToAdmin(false)">
+                {{'Search.publicMode' | translate}}</button>
+              <button type="button" class="btn btn-outline-primary {{isAdmin ? 'active' : ''}}" (click)="switchToAdmin(true)">{{'Search.adminMode' | translate}}</button>
 
             </div>
 
             <hr/>
-            <h5>Contexts</h5>
+            <h5>{{ 'MetadataFields.context' | translate }}</h5>
             <div class="row mb-3">
               @for (context of contextListSearchCriterion.contextOptions | keyvalue; track context; let i = $index; ) {
                 <div class="col-md-6 col-xxl-4">
                   <div class="form-check">
                     <input id="context{{i}}" class="form-check-input" type="checkbox"
-                           [formControl]="$any(contextListSearchCriterion.contextListFormGroup).get(context.key)"/>
+                      [formControl]="$any(contextListSearchCriterion.contextListFormGroup).get(context.key)"/>
                     <label class="form-check-label" for="context{{i}}">{{ context.value.name }} ({{ context.value.objectId }})</label>
                   </div>
                 </div>
@@ -42,13 +43,13 @@
             </div>
 
             <hr/>
-            <h5>Item Status</h5>
+            <h5>{{ 'common.item' | translate }} {{ 'MetadataFields.state' | translate}}</h5>
             <div class="row mb-3">
               @for (pubState of itemStateListSearchCriterion.itemStateOptions; track pubState; let i = $index; ) {
                 <div class="col-md-6 col-xxl-4">
                   <div class="form-check">
                     <input id="itemStateName{{i}}" class="form-check-input" type="checkbox"
-                           [formControl]="$any(itemStateListSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
+                      [formControl]="$any(itemStateListSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
                     <label class="form-check-label" for="itemStateName{{i}}">{{ 'ItemState.' + pubState | translate }}</label>
                   </div>
                 </div>
@@ -66,8 +67,8 @@
 
       <h2 class="accordion-header">
         <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#accordionBodyStandardGroup" aria-expanded="true"
-                aria-controls="accordionBodyStandardGroup">
+          data-bs-target="#accordionBodyStandardGroup" aria-expanded="true"
+          aria-controls="accordionBodyStandardGroup">
           {{'Search.searchTerms' | translate}}
         </button>
       </h2>
@@ -77,7 +78,7 @@
           @for (currentFormGroup of flexibleFields.controls; track currentFormGroup; let i = $index; ) {
 
             <div [formGroupName]="i" class="d-sm-flex flex-sm-row gap-1 mb-3 align-items-center"
-                 style="margin-left: {{$any(currentFormGroup).level * 15}}px">
+              style="margin-left: {{$any(currentFormGroup).level * 15}}px">
 
               @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.OPERATOR) {
                 @if (i != 0) {
@@ -85,7 +86,7 @@
                   <!--Operator -->
                   <div class="col-auto">
                     <select class="form-select" formControlName="type"
-                            (change)="changeOperator(i, t.value)" #t>
+                      (change)="changeOperator(i, t.value)" #t>
                       <option value="and">{{'Search.AND' | translate}}</option>
                       <option value="or">{{'Search.OR' | translate}}</option>
                       <option value="not">{{'Search.NOT' | translate}}</option>
@@ -107,8 +108,8 @@
                   <!-- Add parenthesis button -->
                   @if (currentlyOpenedParenthesis === undefined) {
                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                            [disabled]="currentlyOpenedParenthesis!==undefined"
-                            (click)="addOpeningParenthesis(i)">
+                      [disabled]="currentlyOpenedParenthesis!==undefined"
+                      (click)="addOpeningParenthesis(i)">
                       (
                     </button>
                   }
@@ -152,7 +153,7 @@
                   <!--Type -->
                   <!--
                   <select class="form-select" formControlName="type" (change)="changeType(i, t.value)"
-                          #t>
+                    #t>
                     @for (searchType of searchTypeKeys; track searchType) {
                       <option value="{{searchType}}">
                         {{ searchType }}
@@ -183,13 +184,13 @@
                   </div>
                   <div class="col mb-auto">
                     <pure-person-autosuggest [formForPersonsCompleteName]="$any(currentFormGroup).content.get('text')"
-                                             [formForPersonsIdValue]="$any(currentFormGroup).content.get('hidden')" [showConeAndOrcid]="true"/>
+                      [formForPersonsIdValue]="$any(currentFormGroup).content.get('hidden')" [showConeAndOrcid]="true"/>
                   </div>
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ORGANIZATION) {
 
                   <div class="col mb-auto" formGroupName="content">
                     <pure-ou-autosuggest [formForOuName]="$any(currentFormGroup).content.get('text')"
-                                         [formForOuId]="$any(currentFormGroup).content.get('hidden')"/>
+                      [formForOuId]="$any(currentFormGroup).content.get('hidden')"/>
                   </div>
 
                   <!--
@@ -199,7 +200,7 @@
                   -->
                   <div class="col-sm-2 form-check form-switch mb-auto" formGroupName="content">
                     <input id="predecessorsAndSuccessors" class="form-check-input" type="checkbox"
-                           formControlName="includePredecessorsAndSuccessors"/>
+                      formControlName="includePredecessorsAndSuccessors"/>
                     <label class="form-check-label" style="font-size:12px;" for="predecessorsAndSuccessors">
                       {{'Search.includePresAndSuccs' | translate}}
                     </label>
@@ -267,7 +268,7 @@
                     <pure-cone-autosuggest [form]="$any(currentFormGroup).content.get('text')" coneType="iso639-3" (valueSelected)="$any(currentFormGroup).content.get('text').setValue($event?.value?.substring(0,3))"/>
                   </div>
 
-              } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
+                } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
 
                   <div class="col mb-auto" formGroupName="content">
                     <select class="form-select" formControlName="text">
@@ -318,8 +319,8 @@
 
       <h2 class="accordion-header">
         <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#accordionBodyGenreGroup" aria-expanded="true"
-                aria-controls="accordionBodyGenreGroup">
+          data-bs-target="#accordionBodyGenreGroup" aria-expanded="true"
+          aria-controls="accordionBodyGenreGroup">
           {{ 'MetadataFields.genre' | translate }}
         </button>
       </h2>
@@ -330,7 +331,7 @@
             <div class="col-md-6 col-xxl-4">
               <div class="form-check">
                 <input id="checkAllGenres" class="form-check-input" type="checkbox"
-                       (change)="genreListSearchCriterion.selectAll($event)"/>
+                  (change)="genreListSearchCriterion.selectAll($event)"/>
                 <label class="form-check-label" for="checkAllGenres">{{ 'common.selectAll' | translate }}</label>
               </div>
             </div>
@@ -339,27 +340,31 @@
           <!--All genres except THESIS -->
           @let sortedGenres = genreListSearchCriterion.genreOptions_ | sortByLabel : 'MdsPublicationGenre.';
 
-          <div class="row" *ngFor="let row of genreRows; let i = index">
-              <div class="col-md-6 col-xxl-4" *ngFor="let col of genreCols; let j = index">
-                @if (sortedGenres[(i + j * anzGenreRows)] != 'THESIS'){
+          @for (row of genreRows; track row; let i = $index) {
+            <div class="row">
+              @for (col of genreCols; track col; let j = $index) {
+                <div class="col-md-6 col-xxl-4">
+                  @if (sortedGenres[(i + j * anzGenreRows)] != 'THESIS'){
                     <div class="form-check">
-                        <input id="genreName{{(i + j * anzGenreRows)}}" class="form-check-input" type="checkbox"
-                               [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(sortedGenres[(i + j * anzGenreRows)])"/>
-                        <label class="form-check-label" for="genreName{{(i + j * anzGenreRows)}}">{{ 'MdsPublicationGenre.' + sortedGenres[(i + j * anzGenreRows)] | translate}}</label>
+                      <input id="genreName{{(i + j * anzGenreRows)}}" class="form-check-input" type="checkbox"
+                        [formControl]="$any(genreListSearchCriterion.genreFormGroup).get(sortedGenres[(i + j * anzGenreRows)])"/>
+                      <label class="form-check-label" for="genreName{{(i + j * anzGenreRows)}}">{{ 'MdsPublicationGenre.' + sortedGenres[(i + j * anzGenreRows)] | translate}}</label>
                     </div>
-                }
-              </div>
-          </div>
+                  }
+                </div>
+              }
+            </div>
+          }
 
           <!--THESIS genre-->
           <div class="row mt-2">
-              <div class="col-md-6 col-xxl-4">
-                <div class="form-check">
-                  <input id="genreDegreeName" class="form-check-input" type="checkbox"
-                         [formControl]="$any(genreListSearchCriterion.genreFormGroup).get('THESIS')"/>
-                  <label class="form-check-label" for="genreDegreeName">{{ 'MdsPublicationGenre.THESIS' | translate }}</label>
-                </div>
+            <div class="col-md-6 col-xxl-4">
+              <div class="form-check">
+                <input id="genreDegreeName" class="form-check-input" type="checkbox"
+                  [formControl]="$any(genreListSearchCriterion.genreFormGroup).get('THESIS')"/>
+                <label class="form-check-label" for="genreDegreeName">{{ 'MdsPublicationGenre.THESIS' | translate }}</label>
               </div>
+            </div>
           </div>
           <!--Degrees -->
           <div class="row">
@@ -367,7 +372,7 @@
               <div class="col-md-4 col-xxl-2">
                 <div class="form-check">
                   <input id="degreeName{{i}}" class="form-check-input" type="checkbox"
-                         [formControl]="$any(genreListSearchCriterion.degreeFormGroup).get(currentDegree)"/>
+                    [formControl]="$any(genreListSearchCriterion.degreeFormGroup).get(currentDegree)"/>
                   <label class="form-check-label" for="degreeName{{i}}">{{ 'Thesis.' + currentDegree | translate}}</label>
                 </div>
               </div>
@@ -382,8 +387,8 @@
 
       <h2 class="accordion-header">
         <button class="accordion-button rounded-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#accordionBodyPubStatusGroup" aria-expanded="true"
-                aria-controls="accordionBodyPubStatusGroup">
+          data-bs-target="#accordionBodyPubStatusGroup" aria-expanded="true"
+          aria-controls="accordionBodyPubStatusGroup">
           {{ 'MetadataFields.publicationState' | translate }}
         </button>
       </h2>
@@ -393,13 +398,13 @@
 
           <div class="row mb-3">
             @for (pubState of publicationStateSearchCriterion.pubStateOptions; track pubState; let i = $index; ) {
-                <div class="col-md-6 col-xxl-4">
-                  <div class="form-check">
-                    <input id="pubStateName{{i}}" class="form-check-input" type="checkbox"
-                           [formControl]="$any(publicationStateSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
-                    <label class="form-check-label" for="pubStateName{{i}}">{{ 'PublicationState.' + pubState | translate }}</label>
-                  </div>
+              <div class="col-md-6 col-xxl-4">
+                <div class="form-check">
+                  <input id="pubStateName{{i}}" class="form-check-input" type="checkbox"
+                    [formControl]="$any(publicationStateSearchCriterion.publicationStatesFormGroup).get(pubState)"/>
+                  <label class="form-check-label" for="pubStateName{{i}}">{{ 'PublicationState.' + pubState | translate }}</label>
                 </div>
+              </div>
             }
           </div>
         </div>
@@ -416,11 +421,11 @@
     <ng-template [ngTemplateOutlet]="searchButtons"/>
 
     <button type="button" class="btn btn-sm btn-outline-info"
-            [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
+      [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_form()">
       show form
     </button>
     <button type="button" class="btn btn-sm btn-outline-dark"
-            [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
+      [disabled]="searchForm.invalid || flexibleFields.controls.length === 0" (click)="show_query()">
       show query
     </button>
 
@@ -437,19 +442,19 @@
 <ng-template #searchButtons>
 
   <div class="m-2">
-  <button type="submit" class="btn btn btn-primary me-2"
-          [disabled]="!isValid" (click)="search()">
-    {{ 'Search.searchButton' | translate }}
-  </button>
-  <button type="button" class="btn btn btn-outline-primary me-2" (click)="reset()">
-    Reset
-  </button>
+    <button type="submit" class="btn btn btn-primary me-2"
+      [disabled]="!isValid" (click)="search()">
+      {{ 'Search.startSearch' | translate }}
+    </button>
+    <button type="button" class="btn btn btn-outline-primary me-2" (click)="reset()">
+      {{ 'Search.reset' | translate }}
+    </button>
 
-  @if(aaService.isLoggedIn) {
-    <button type="button" class="btn btn btn-outline-primary me-2" (click)="openSavedSearchModal()">{{ 'Search.saveSearchButton' | translate }}</button>
+    @if(aaService.isLoggedIn) {
+      <button type="button" class="btn btn btn-outline-primary me-2" (click)="openSavedSearchModal()">{{ 'SavedSearches.title' | translate }}</button>
 
 
-  }
+    }
 
   </div>
 

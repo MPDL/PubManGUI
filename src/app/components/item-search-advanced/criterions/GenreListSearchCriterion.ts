@@ -55,13 +55,23 @@ export class GenreListSearchCriterion extends SearchCriterion {
     const degrees: string[] = Object.keys(this.degreeFormGroup.controls)
       .filter(degree => this.degreeFormGroup.get(degree)?.value);
 
+
     if(degrees.length > 0 && genres.length > 0) {
+      const genresWithoutThesis = genres.filter(genre => genre !== MdsPublicationGenre.THESIS.valueOf());
       return of(
         {
           bool: {
-            must: [
-              baseElasticSearchQueryBuilder({index: "metadata.genre", type: "keyword"}, genres),
-              baseElasticSearchQueryBuilder({index: "metadata.degree", type: "keyword"}, degrees)
+            should: [
+              {
+                bool: {
+                  must: [
+                    baseElasticSearchQueryBuilder({index: "metadata.genre", type: "keyword"}, MdsPublicationGenre.THESIS),
+                    baseElasticSearchQueryBuilder({index: "metadata.degree", type: "keyword"}, degrees)
+                  ]
+                }
+              },
+              baseElasticSearchQueryBuilder({index: "metadata.genre", type: "keyword"}, genresWithoutThesis),
+
             ]
           }
         });

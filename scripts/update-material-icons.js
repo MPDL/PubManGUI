@@ -1,4 +1,5 @@
 const fs = require('node:fs');
+const path = require('node:path');
 const icons = [
   "account_tree",
   "add_circle",
@@ -100,10 +101,15 @@ function downloadAndSave(url) {
       fontBlob => fontBlob.arrayBuffer()
   ).then(
       fontArrayBuffer => {
+
         const fontBuffer = Buffer.from(fontArrayBuffer);
-        const fileName = "src/assets/fonts/material-icons/material_icons_subset.woff";
-        console.log("Writing icon font to file " + fileName);
-        fs.writeFile(fileName, fontBuffer, (err) => {if (err) console.error(err)});
+        const scriptDir = __dirname; // folder where this script file resides
+        const root = path.resolve(scriptDir, '..'); // adjust as needed to reach repo root
+        const srcDir = path.join(root, 'src');
+        const iconDir = path.join(srcDir, 'assets/fonts/material-icons/', 'material_icons_subset.woff');
+
+        console.log("Writing icon font to file " + iconDir);
+        fs.writeFile(iconDir, fontBuffer, (err) => {if (err) console.error(err)});
         console.log("Done!");
       }
   )

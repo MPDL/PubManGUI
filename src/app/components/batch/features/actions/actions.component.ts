@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -15,7 +15,6 @@ import { TranslatePipe } from "@ngx-translate/core";
   selector: 'pure-batch-actions',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     ActionsItemStateComponent,
     ActionsContextComponent,
@@ -23,7 +22,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ActionsGenreComponent,
     ActionsMetadataComponent,
     TranslatePipe
-  ],
+],
   templateUrl: './actions.component.html'
 })
 export default class ActionsComponent implements OnInit {

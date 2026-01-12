@@ -88,7 +88,7 @@ export class SidenavComponent implements AfterViewInit {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onWindowResize() {
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 992 ? true : false;

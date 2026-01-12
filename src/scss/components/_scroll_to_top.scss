@@ -1,17 +1,21 @@
 .scroll-to-top {
     position: fixed;
     bottom: 5%;
-    right: 15%;
+    right: 12%;
     opacity: 0;
     z-index: 8;
     transition: all .2s ease-in-out;
 }
 
-.scroll-to-top .bi {
+.scroll-to-top .bi .bi-arrow-up-circle {
     font-size: 2.5rem;
 }
 
 .show-scrollTop {
     opacity: 1;
     transition: all .2s ease-in-out;
+}
+
+.scroll-to-top svg {
+  filter: drop-shadow(2px 2px 8px var(--bs-body-bg));
 }

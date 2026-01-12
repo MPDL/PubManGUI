@@ -245,7 +245,8 @@ export class ItemFormComponent implements OnInit {
       for(const file of uploadedFiles) {
         const internalFile = this.fbs.file_FG(null);
         internalFile.get("storage")?.setValue(Storage.INTERNAL_MANAGED);
-        internalFile.get("name")?.setValue(file.name);
+        //real file name is set to original filename in backend
+        //internalFile.get("name")?.setValue(file.name);
         internalFile.get("content")?.setValue(file.stagingId);
         internalFile.get("metadata")?.get("title")?.setValue(file.name);
 

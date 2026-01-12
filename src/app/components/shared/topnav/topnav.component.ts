@@ -28,15 +28,10 @@ export class TopnavComponent {
     alert('navigating 2 ' + target);
   }
 
-
-
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onWindowScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 20 ? true : false;
   }
-
-
-
 
 }

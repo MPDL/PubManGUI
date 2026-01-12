@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 
 import { ChangeSourceGenreFormComponent } from './change-source-genre-form/change-source-genre-form.component';
@@ -12,12 +12,11 @@ import {
   selector: 'pure-batch-actions-metadata-source',
   standalone: true,
   imports: [
-    CommonModule,
     ChangeSourceGenreFormComponent,
     ReplaceSourceEditionFormComponent,
     AddSourceIdentifierFormComponent,
     ChangeSourceIdentifierFormComponent
-  ],
+],
   templateUrl: './actions-metadata-source.component.html',
 })
 export class ActionsMetadataSourceComponent { }

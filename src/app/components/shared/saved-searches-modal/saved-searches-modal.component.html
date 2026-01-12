@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Saved searches</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{'SavedSearches.title' | translate  }}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 
@@ -14,7 +14,7 @@
   }
   -->
 <form >
-  <h5>Save current search</h5>
+  <h5>{{ 'SavedSearches.saveCurrent' | translate }}</h5>
   @if(errorMessage) {
     <div class="alert alert-danger" role="alert">
       {{ errorMessage }}
@@ -25,13 +25,14 @@
       <input type=text class="form-control" id="searchName" [formControl]="savedSearchNameForm" placeholder="Name">
     </div>
     <div class="col-3">
-      <button type="button" class="btn btn-primary btn-sm" [disabled]="savedSearchNameForm.invalid" (click)="saveCurrentSearchForm()">Save current</button>
+      <button type="button" class="btn btn-primary btn-sm" [disabled]="savedSearchNameForm.invalid" (click)="saveCurrentSearchForm()">
+        {{'common.save' | translate}}</button>
     </div>
   </div>
 </form>
   <hr/>
 <div>
-  <h5>Saved search forms</h5>
+  <h5>{{ 'SavedSearches.savedMasks' | translate }}</h5>
   @if(!savedSearchesLoading) {
   @for (savedSearch of savedSearches; track savedSearch; let i = $index;) {
     <div class="row mb-2">
@@ -43,7 +44,7 @@
       </div>
       <div class="col-3">
         <button class="btn btn-sm btn-primary me-2" pureCopyButton [textToCopy]="getSavedSearchLink(savedSearch.objectId!)"></button>
-        <button class="btn btn-sm btn-danger" (click)="deleteSavedSearch(i)" ngbTooltip="Delete"><i class="bi bi-trash"></i></button>
+        <button class="btn btn-sm btn-danger" (click)="deleteSavedSearch(i)" [ngbTooltip]="'SavedSearches.delete' | translate"><i class="bi bi-trash"></i></button>
       </div>
     </div>
 

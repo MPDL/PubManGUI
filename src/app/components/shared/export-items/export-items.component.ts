@@ -233,10 +233,17 @@ export class ExportItemsComponent {
     if(this.type === 'exportSelected') {
       searchQuery = {
         query: {
-          terms: {"_id": this.itemIds}
+          bool: {
+
+            filter: {
+              terms: {"_id": this.itemIds}
+            },
+            ...this.completeQuery && {must: [this.completeQuery.query]}
+          }
+
         },
         size: this.itemIds.length,
-        ...this.sortQuery && {sort: [this.sortQuery]},
+        ...this.sortQuery && {sort: this.sortQuery},
       }
     }
     else {

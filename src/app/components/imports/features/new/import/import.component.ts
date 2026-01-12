@@ -53,7 +53,7 @@ export default class ImportComponent implements OnInit {
   user_contexts?: ContextDbRO[] = [];
 
   public importForm: FormGroup = this.fb.group({
-    contextId: [null, [Validators.required]],
+    contextId: ['', [Validators.required]],
     importName: [null, [Validators.required]],
     format: [null, [Validators.required]],
     formatConfig: [''],
@@ -64,9 +64,10 @@ export default class ImportComponent implements OnInit {
   ngOnInit(): void {
     this.aaSvc.principal.subscribe(
       p => {
-        this.user_contexts = p.depositorContexts;
+        this.user_contexts = p.depositorContexts.sort((a, b) => (a.name || '').localeCompare(b.name || '')).reverse();
       }
     );
+    this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
 
     //this.coneSwitch = this.elRef.nativeElement.querySelector('#cone');
     //this.importForm.controls['format'].valueChanges.subscribe(format => {
@@ -218,6 +219,7 @@ export default class ImportComponent implements OnInit {
   clickOutside(event: Event) {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.importForm.reset();
+      this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
       this.formatObject = null;
       this.data = null;
     }

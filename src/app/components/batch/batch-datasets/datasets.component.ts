@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { map, Observable } from "rxjs";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,13 +15,12 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
   selector: 'pure-batch-datasets',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ItemListComponent,
     TranslatePipe,
     NgbTooltip
-  ],
+],
   templateUrl: './datasets.component.html'
 })
 export default class DatasetsComponent {

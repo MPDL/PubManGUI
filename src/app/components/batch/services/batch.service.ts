@@ -1,12 +1,12 @@
-import {computed, Injectable, OnDestroy, signal} from '@angular/core';
-import {HttpClient, HttpContext, HttpHeaders} from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { computed, Injectable, OnDestroy, signal} from '@angular/core';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import type * as params from '../interfaces/batch-params';
 import * as resp from '../interfaces/batch-responses';
 
-import {DISPLAY_ERROR, ignoredStatuses} from 'src/app/services/interceptors/http-error.interceptor';
+import { ignoredStatuses} from 'src/app/services/interceptors/http-error.interceptor';
 import { AaService } from 'src/app/services/aa.service';
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
 import { ItemVersionVO } from 'src/app/model/inge';
@@ -35,10 +35,6 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
 
   ngOnDestroy(): void {
     super.destroy();
-  }
-
-  get user(): string {
-    return this.aaSvc.principal.getValue().user?.objectId || '';
   }
 
   lastPageNumFrom = signal({logs: 1, details: 1});
@@ -141,7 +137,7 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
   }
 
   deleteBatchProcessUserLock(): Observable<any> {
-    const url = `${this.#baseUrl}/batchProcess/deleteBatchProcessUserLock/${ this.user }`;
+    const url = `${this.#baseUrl}/batchProcess/deleteBatchProcessUserLock/${ this.aaSvc.principal.value.user?.objectId || '' }`;
 
     return this.http.delete<any>(url, { withCredentials: true });
   }
@@ -152,14 +148,14 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
     this.getAllBatchProcessLogHeaders()
       .subscribe(response => {
         this.#hasLogs.set(response.length > 0 ? true : false);
-      }
-      );
+      });
   }
 
   getAllBatchProcessLogHeaders(): Observable<resp.BatchProcessLogHeaderDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/getAllBatchProcessLogHeaders`;
 
-    return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { withCredentials: true, context: ignoredStatuses([404])});
+    //return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { withCredentials: true, context: ignoredStatuses([404])});
+    return this.http.get<resp.BatchProcessLogHeaderDbVO[]>(url, { withCredentials: true });
   }
 
   getBatchProcessLogHeaderId(batchLogHeaderId: number): Observable<resp.BatchProcessLogHeaderDbVO> {
@@ -170,7 +166,7 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
 
   getBatchProcessLogDetails(batchProcessLogDetailId: number): Observable<resp.BatchProcessLogDetailDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/batchProcessLogDetails/${batchProcessLogDetailId}`;
-
+    
     return this.http.get<resp.BatchProcessLogDetailDbVO[]>(url, { withCredentials: true });
   }
 
@@ -294,6 +290,7 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
 
     const url = `${this.#baseUrl}/batchProcess/changeLocalTag`;
     const query = `?localTagFrom=${actionParams.localTagFrom}&localTagTo=${actionParams.localTagTo}`;
+    console.log(url + query);
     const body = { itemIds: actionParams.itemIds };
 
     const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })

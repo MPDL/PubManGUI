@@ -3,15 +3,20 @@ describe('Check Batch Logs', () => {
   const password = Cypress.env('testUser').password
   let itemId: string;
   let itemTitle: string;
+  let labels: any;
 
   beforeEach(() => {
-    cy.setLanguage('en')
     cy.loginViaAPI(loginName, password)
     cy.fixture('itemMetadataMinimal').then((itemMetadata) => {
       cy.createItemViaAPI(itemMetadata).then((response) => {
         itemId = response.body['objectId']
         itemTitle = response.body.metadata.title
       })
+    })
+
+    cy.setLanguage('de')
+    cy.readLabelsFile().then(i18nFile => {
+      labels = i18nFile
     })
   })
 
@@ -22,6 +27,9 @@ describe('Check Batch Logs', () => {
 
   it('Read Batch Log (Add Local Tags)', () => {
     //Given
+    const finishedLabel = labels.BatchProcessLogHeaderState.FINISHED
+    const successLabel = labels.BatchProcessLogDetailState.SUCCESS
+
     let newTag: string = 'NewCypressTag';
     cy.fixture('localTags').then((localTags) => {
       localTags.itemIds = new Array(itemId)
@@ -37,12 +45,12 @@ describe('Check Batch Logs', () => {
       let batchLogUrl = "/batch/logs/" + response.body.batchLogHeaderId
       cy.get('a[href$="' + batchLogUrl + '"]').as('logDetails').closest('tr').as('logRow')
     })
-    cy.get('@logRow').children().first().should('contain.text', 'Finished')
+    cy.get('@logRow').children().first().should('contain.text', finishedLabel)
     cy.get('@logDetails').click()
 
     //Then
     cy.get('pure-batch-action-dataset-log').should('have.length', 1)
-      .should('contain.text', 'Success').should('contain.text', itemTitle)
+      .should('contain.text', successLabel).should('contain.text', itemTitle)
     //TODO: Check 'Message' Column
   })
 

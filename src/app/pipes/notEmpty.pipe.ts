@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'empty',
+  name: 'notEmpty',
   standalone: true
 })
-export class EmptyPipe implements PipeTransform {
+export class NotEmptyPipe implements PipeTransform {
 
   transform<T>(value: T | undefined | null): boolean {
     if (value === undefined || value === null || value === '') {

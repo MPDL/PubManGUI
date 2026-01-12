@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FileUploadDirective } from 'src/app/directives/file-upload.directive';
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
 import { catchError, finalize, forkJoin, Observable, of, tap } from "rxjs";
@@ -9,7 +9,7 @@ import { filter, map } from "rxjs/operators";
 @Component({
   selector: 'pure-file-upload',
   standalone: true,
-  imports: [CommonModule, FileUploadDirective],
+  imports: [FileUploadDirective],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.scss'
 })

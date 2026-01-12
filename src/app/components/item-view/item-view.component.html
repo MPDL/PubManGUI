@@ -20,7 +20,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['RELEASE'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.release' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.release' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('release')">
         <span class="material-symbols-outlined">public</span>
       </button>
@@ -28,7 +28,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['SUBMIT'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.submit' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.submit' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('submit')">
         <span class="material-symbols-outlined">workspace_premium</span>
       </button>
@@ -36,7 +36,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['REVISE'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.revise' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.revise' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('revise')">
         <svg fill="currentColor" height="24px" width="24px">
           <use href="assets/icons/icons.svg#revise"></use>
@@ -46,7 +46,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['WITHDRAW'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.withdraw' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.withdraw' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('withdraw')">
         <span class="material-symbols-outlined">public_off</span>
       </button>
@@ -54,7 +54,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['DELETE'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.delete' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.delete' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('delete')">
         <span class="material-symbols-outlined">delete_forever</span>
       </button>
@@ -62,7 +62,7 @@
     }
 
     @if (authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI'] && isLatestVersion) {
-    <span class="d-inline-block" ngbTooltip="{{'common.addDoi' | translate}}" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.addDoi' | translate}}" >
       <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')">
         <svg fill="currentColor" height="24px" width="24px">
           <use href="assets/icons/icons.svg#doi"></use>
@@ -74,7 +74,7 @@
     @if(authorizationInfo && authorizationInfo.actions['EDIT'] && item.latestVersion?.versionNumber !==
     item.versionNumber) {
 
-    <span class="d-inline-block" ngbTooltip="{{'common.rollback' | translate}} (Version {{item?.versionNumber}})" >
+    <span class="d-inline-block" ngbTooltip="{{'ItemActions.rollback' | translate}} (Version {{item?.versionNumber}})" >
       <button class="nav-link" (click)="openActionsModal('rollback', item?.versionNumber)">
         <span class="material-symbols-outlined">history</span>
       </button>
@@ -146,7 +146,7 @@
       <div class="col">
         <pure-item-badges [item]="item" [showVersion]="true" [showPublicStatusIcon]="true" />
         <!-- title -->
-        <h3 class="mt-3" [innerHTML]="item.metadata.title | sanitizeHtml"></h3>
+        <h3 class="mt-3" data-test="item-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h3>
         <!-- alternative titles -->
         @if (firstSubtitle) {
         <h5 [innerHTML]="firstSubtitle.value | sanitizeHtml"></h5>
@@ -195,7 +195,7 @@
             </button>
           </li>
           <li class="nav-item">
-            <button type="button" class="nav-link {{currentSubMenuSelection === 'metadata' ? 'active' : ''}}"
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'metadata' ? 'active' : ''}}" data-test="view-metadata-tab"
               (click)="changeSubMenu('metadata')">{{ 'common.metadata' | translate }}
             </button>
           </li>
@@ -263,7 +263,7 @@
           @if(authorizationInfo && authorizationInfo.actions['EDIT'] && item.latestVersion?.versionNumber !== vm[0]) {
           <div class="mt-2">
             <button type="button" class="btn btn-secondary btn-sm" (click)="openActionsModal('rollback', vm[0])"><i
-                class="material-symbols-outlined">history</i> {{'common.rollback'| translate}}</button>
+                class="material-symbols-outlined">history</i> {{'ItemActions.rollback'| translate}}</button>
           </div>
           }
 
@@ -389,9 +389,10 @@
       }
 
     </div>
+    <hr class="mt-4 mb-4"/>
 
-    <div class="mt-5">
-      <h5>Links</h5>
+    <div >
+      <h5>{{ 'common.links' | translate }}</h5>
       @if (externalReferences && externalReferences.length && item.publicState !== 'WITHDRAWN') {
         @for (file of externalReferences; track $index; let i = $index) {
           <pure-item-view-file [file]="file" [item]="item" />
@@ -402,42 +403,13 @@
       }
     </div>
 
+    <hr class="mt-4 mb-4"/>
+    <div>
+      <h5>{{ 'ItemView.pids' | translate}}</h5>
 
-    <div class="mt-5">
-      <h5>{{ 'common.item' | translate }} Information</h5>
+      @if ((item.objectPid | notEmpty) || (item.versionPid | notEmpty)) {
 
-      @let showLatestRelease =  (item.latestRelease | empty) && item.versionNumber !== item.latestRelease?.versionNumber;
-      @let showLatestVersion = (item.latestVersion | empty) && item.versionNumber !== item.latestVersion?.versionNumber &&
-        latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
-        !((item.latestRelease | empty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber);
-
-      @if (item.publicState !== 'WITHDRAWN' && (showLatestRelease || showLatestVersion || (item.objectPid | empty) || (item.versionPid | empty))) {
-
-      @if (showLatestRelease) {
-      <div class="mb-3">
-        <b class="">{{ 'common.latestRelease' | translate }}</b>
-        <div>
-          <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}">
-            <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
-          </a>
-        </div>
-
-      </div>
-      }
-
-      @if (showLatestVersion) {
-      <div class="mb-3">
-        <b>{{ 'common.latestVersion' | translate }}</b>
-        <div>
-          <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}">
-            <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
-          </a>
-        </div>
-
-      </div>
-      }
-
-      @if (item.objectPid | empty) {
+      @if (item.objectPid | notEmpty) {
       <div class="mb-3">
         <b>{{ 'common.item' | translate }} {{ 'common.handle' | translate }}</b>
         <div class="row">
@@ -455,7 +427,7 @@
       </div>
       }
 
-      @if (item.versionPid | empty) {
+      @if (item.versionPid | notEmpty) {
       <div class="mb-3">
 
         <b>{{ 'common.version' | translate }} {{ item.versionNumber }} {{ 'common.handle' | translate }}</b>
@@ -480,7 +452,51 @@
       }
     </div>
 
+
+
+
+    @let showLatestRelease =  (item.latestRelease | notEmpty) && item.versionNumber !== item.latestRelease?.versionNumber;
+    @let showLatestVersion = (item.latestVersion | notEmpty) && item.versionNumber !== item.latestVersion?.versionNumber &&
+      latestVersionAuthorizationInfo && latestVersionAuthorizationInfo.actions['GET'] &&
+      !((item.latestRelease | notEmpty) && item.latestVersion?.versionNumber === item.latestRelease?.versionNumber);
+
+    @if (item.publicState !== 'WITHDRAWN' && (showLatestRelease || showLatestVersion)) {
+      <hr class="mt-4 mb-4"/>
+    <div>
+      <h5>{{ 'ItemView.newVersions' | translate}}</h5>
+
+
+
+        @if (showLatestRelease) {
+          <div class="mb-3">
+            <b class="">{{ 'ItemView.latestRelease' | translate }}</b>
+            <div>
+              <a class="icon-link" routerLink="/view/{{item.objectId +'_' + item.latestRelease?.versionNumber}}">
+                <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestRelease?.versionNumber }}</span>
+              </a>
+            </div>
+
+          </div>
+        }
+
+        @if (showLatestVersion) {
+          <div class="mb-3">
+            <b>{{ 'ItemView.latestVersion' | translate }}</b>
+            <div>
+              <a class="icon-link fw-bold" routerLink="/view/{{item.objectId +'_' + item.latestVersion?.versionNumber}}">
+                <i class="bi-link me-1"></i><span class="text-truncate">Version {{ item.latestVersion?.versionNumber }}</span>
+              </a>
+            </div>
+
+          </div>
+
+        }
+    </div>
+
+      }
   </div>
+
+
 </div>
 
 }

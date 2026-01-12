@@ -89,7 +89,7 @@ export class BatchNavComponent implements OnInit {
     return this.isMoreShown;
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onWindowResize() {
     const viewWidth = document.documentElement.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;

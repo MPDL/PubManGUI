@@ -99,20 +99,20 @@ export const sortOptions: SortOptionsType = {
     index: [{index:'_score', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
-    label: 'Relevance'
+    label: 'Search.relevance'
   },
 
   "modificationDate" : {
     index: [{index: 'lastModificationDate', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
-    label: 'MetadataFields.dateModified'
+    label: 'Search.dateModifiedInternal'
   },
   "creationDate" : {
     index: [{index: 'creationDate', type: 'keyword'}],
     order: 'desc',
     loggedIn: false,
-    label: 'MetadataFields.dateCreated'
+    label: 'Search.dateCreatedInternal'
   },
   "title" : {
     index: [{index: 'metadata.title.keyword', type: 'keyword'}],

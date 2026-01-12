@@ -177,7 +177,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
     this.filteredSize = this.filteredLogs.length;
   }
 
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onWindowScroll() {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 20 ? true : false;

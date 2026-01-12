@@ -14,7 +14,7 @@
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileContentCategoryFrom"
           [class.is-invalid]="changeFileContentCategoryForm.get('fileContentCategoryFrom')?.invalid && changeFileContentCategoryForm.get('fileContentCategoryFrom')?.touched || changeFileContentCategoryForm.get('fileContentCategoryFrom')?.pending">
-          <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
+          <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
             }}</option>
           @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
           <option [value]="category"> {{ 'ContentCategories.' + category | translate}}</option>
@@ -35,7 +35,7 @@
       <div class="col-sm-9">
         <select class="form-select" formControlName="fileContentCategoryTo"
           [class.is-invalid]="changeFileContentCategoryForm.get('fileContentCategoryTo')?.invalid && changeFileContentCategoryForm.get('fileContentCategoryTo')?.touched || changeFileContentCategoryForm.get('fileContentCategoryTo')?.pending">
-          <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
+          <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.files.contentCategory' | translate
             }}</option>
           @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
           <option [value]="category"> {{ 'ContentCategories.' + category | translate}}</option>

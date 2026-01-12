@@ -1,20 +1,23 @@
-<div *ngIf="!aa.isLoggedIn" class="nav-item">
-  <!-- empty array as routerLink value enables hand pointer -->
-  <a [routerLink]="[]" class="nav-link" (click)="modalService.open(LoginComponent)" data-test="user-login" ngbTooltip="Login"><span class="material-symbols-outlined">login</span></a>
-  <!--<button type="button" class="btn btn-outline-primary" (click)="modalService.open(LoginComponent)">Login</button>-->
-</div>
-<div *ngIf="aa.isLoggedIn" class="nav-item dropdown-center">
-
-
-  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-    data-bs-toggle="dropdown" aria-expanded="false" data-test="user">
-      <i class="bi bi-person"></i>
-      <span class="d-none d-xxl-inline" data-test="username">{{aa.principal.getValue().user?.name}}</span>
-      <span class="d-inline d-xxl-none">{{aa.principal.getValue().user?.name!.split(" ")[0]}}</span>
-  </a>
-  <ul class="dropdown-menu m-0" aria-labelledby="navbarDropdown">
-    <li><a class="dropdown-item" role="button" (click)="modalService.open(UserProfileComponent, {size: 'lg'})">Profile</a></li>
-    <li><a class="dropdown-item" role="button" (click)="sign_out()" data-test="sign-out">Logout</a></li>
-  </ul>
-</div>
+@if (!aa.isLoggedIn) {
+  <div class="nav-item">
+    <!-- empty array as routerLink value enables hand pointer -->
+    <a [routerLink]="[]" class="nav-link" (click)="modalService.open(LoginComponent)" data-test="user-login" [ngbTooltip]="'header.signIn' | translate">
+      <span class="material-symbols-outlined">login</span></a>
+      <!--<button type="button" class="btn btn-outline-primary" (click)="modalService.open(LoginComponent)">Login</button>-->
+    </div>
+  }
+  @if (aa.isLoggedIn) {
+    <div class="nav-item dropdown-center">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+        data-bs-toggle="dropdown" aria-expanded="false" data-test="user">
+        <i class="bi bi-person"></i>
+        <span class="d-none d-xxl-inline" data-test="username">{{aa.principal.getValue().user?.name}}</span>
+        <span class="d-inline d-xxl-none">{{aa.principal.getValue().user?.name!.split(" ")[0]}}</span>
+      </a>
+      <ul class="dropdown-menu m-0" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" role="button" (click)="modalService.open(UserProfileComponent, {size: 'lg'})">{{ 'header.profile' | translate }}</a></li>
+        <li><a class="dropdown-item" role="button" (click)="sign_out()" data-test="sign-out">{{ 'header.signOut' | translate}}</a></li>
+      </ul>
+    </div>
+  }
 

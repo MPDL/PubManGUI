@@ -141,7 +141,7 @@ export default class ImportItemDetailsListComponent implements OnInit {
     } else return this.pageSize;
   }
 
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onWindowScroll() {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isScrolled = scrollPosition > 20 ? true : false;

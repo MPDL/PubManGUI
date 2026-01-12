@@ -60,28 +60,12 @@ export class ImportLogComponent {
     return false;
   }
 
-  toDatasets(id: any): void {
-    let items: string[] = [];
-    this.importsSvc.getImportLogItems(id).subscribe(importsResponse => {
-      if (importsResponse.length === 0) return;
-
-      importsResponse.sort((a, b) => a.id - b.id)
-        .forEach(element => {
-          if (element.itemId) {
-            items.push(element.itemId);
-          }
-        });
-      if (items.length === 0) {
-        const msg = this.translateSvc.instant(_('imports.list.items.empty')) + '\n';
-        this.msgSvc.info(msg);
-        return;
-      }
-      this.router.navigate(['/imports/myimports/' + id + '/datasets'], { state: { itemList: items } });
-    })
-  }
-
   deleteImportLog(log: any): void {
-    let ref = this.msgSvc.displayConfirmation({ text: this.translateSvc.instant('imports.list.remove.confirmation', { name: log.name }), confirm: this.translateSvc.instant(_('common.confirm')), cancel: this.translateSvc.instant(_('common.cancel')) });
+    let ref = this.msgSvc.displayConfirmation({
+      text: this.translateSvc.instant('imports.list.remove.confirmation', { name: log.name }),
+      confirm: this.translateSvc.instant(_('common.confirm')),
+      cancel: this.translateSvc.instant(_('common.cancel'))
+    });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
         this.deleteImportLogEvent.emit(log);

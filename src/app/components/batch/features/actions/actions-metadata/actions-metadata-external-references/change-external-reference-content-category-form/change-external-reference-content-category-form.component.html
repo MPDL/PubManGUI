@@ -15,7 +15,7 @@
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryFrom"
                     [class.is-invalid]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.invalid && changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryFrom')?.pending">
-                    <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
+                    <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
                         translate }}
                     </option>
                     @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
@@ -38,7 +38,7 @@
             <div class="col-sm-9">
                 <select class="form-select" formControlName="externalReferenceContentCategoryTo"
                     [class.is-invalid]="changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.invalid && changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.touched || changeExternalReferenceContentCategoryForm.get('externalReferenceContentCategoryTo')?.pending">
-                    <option [value]="null" selected disable hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
+                    <option [value]="null" selected disabled hidden>{{ 'batch.actions.metadata.extRef.contentCategory' |
                         translate }}
                     </option>
                     @for (category of (contentCategories | sortByLabel : 'ContentCategories.'); track category) {
