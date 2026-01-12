@@ -31,6 +31,7 @@ import { AaService } from "./services/aa.service";
 import { provideMatomo, withRouter } from 'ngx-matomo-client';
 import { environment } from "../environments/environment";
 import { ContextsService } from "./services/pubman-rest-client/contexts.service";
+import { MessageService } from './services/message.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -105,9 +106,13 @@ export const appConfig: ApplicationConfig = {
 
 
     provideAppInitializer(async () => {
-      const contextService = inject(ContextsService);
       const aaService = inject(AaService);
-      await lastValueFrom(aaService.checkLogin())
+      const messageService = inject(MessageService)
+      await lastValueFrom(aaService.checkLogin()).catch(
+        err => {
+          messageService.error("Error checking login status on app initialization: " + err);
+        }
+      )
     }),
 
     provideMatomo(
