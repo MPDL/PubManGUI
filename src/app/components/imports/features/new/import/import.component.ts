@@ -68,6 +68,7 @@ export default class ImportComponent implements OnInit {
       }
     );
     this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
+    this.importForm.controls['contextId'].markAsTouched();
 
     //this.coneSwitch = this.elRef.nativeElement.querySelector('#cone');
     //this.importForm.controls['format'].valueChanges.subscribe(format => {
@@ -220,6 +221,7 @@ export default class ImportComponent implements OnInit {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.importForm.reset();
       this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
+      this.importForm.controls['contextId'].markAsTouched();
       this.formatObject = null;
       this.data = null;
     }
