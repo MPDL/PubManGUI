@@ -5,10 +5,14 @@ import {IndexField} from "../../../utils/search-utils";
 export abstract class EnumSearchCriterion extends StandardSearchCriterion {
 
   keys : string[] = []
-  protected constructor(type: string, keys:string[], opts?:any) {
+
+  translatePrefix?:string;
+
+  protected constructor(type: string, keys:string[], opts?:any, translatePrefix?:string) {
     super(type, opts);
     this.keys=keys;
     this.content.get("text")?.setValue(keys[0]);
+    this.translatePrefix=translatePrefix;
   }
 
   protected getValues() : string[] {
@@ -21,7 +25,7 @@ export class GenreSearchCriterion extends EnumSearchCriterion {
 
 
   constructor(opts?:any) {
-    super("genre", Object.keys(MdsPublicationGenre), opts);
+    super("genre", Object.keys(MdsPublicationGenre), opts, "MdsPublicationGenre.");
   }
 
   override getElasticIndexes(): IndexField[] {
@@ -34,7 +38,7 @@ export class ReviewMethodSearchCriterion extends EnumSearchCriterion {
 
 
   constructor(opts?:any) {
-    super("reviewMethod", Object.keys(ReviewMethod), opts);
+    super("reviewMethod", Object.keys(ReviewMethod), opts, "ReviewMethod.");
   }
 
   override getElasticIndexes(): IndexField[] {

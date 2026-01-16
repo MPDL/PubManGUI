@@ -73,6 +73,8 @@ export default class FetchComponent implements OnInit {
       }
     );
     this.fetchForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
+    this.fetchForm.controls['contextId'].markAsTouched();
+
 
     this.fetchForm.controls['source'].valueChanges.subscribe(source => {
       if (source === 'arxiv') {
@@ -157,6 +159,7 @@ export default class FetchComponent implements OnInit {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.fetchForm.reset();
       this.fetchForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
+      this.fetchForm.controls['contextId'].markAsTouched();
       this.fetchForm.controls['source'].setValue('crossref');
       this.fetchForm.controls['fullText'].setValue('FULLTEXT_DEFAULT'); ""
     }
