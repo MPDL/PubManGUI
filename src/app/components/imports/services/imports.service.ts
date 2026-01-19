@@ -133,7 +133,7 @@ export class ImportsService {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/octet-stream')
       .set('Content-Disposition', 'attachment');
-    const query = `?contextId=${importParams.contextId}&importName=${importParams.importName}&format=${importParams.format}`;
+    const query = `?contextId=${importParams.contextId}&importName=${importParams.importName}&format=${importParams.format}` + `${importParams.formatConfig ? '&formatConfiguration='+importParams.formatConfig : ''}`;
 
     return this.http.post<any>(url + query, data, { headers, withCredentials: true });
   }

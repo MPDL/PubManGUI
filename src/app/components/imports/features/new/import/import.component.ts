@@ -57,7 +57,7 @@ export default class ImportComponent implements OnInit {
     importName: [null, [Validators.required]],
     format: [null, [Validators.required]],
     formatConfig: [''],
-    cone: [''],
+    cone: [],
     fileName: [null, [Validators.required]]
   });
 
@@ -68,6 +68,7 @@ export default class ImportComponent implements OnInit {
       }
     );
     this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
+    this.importForm.controls['contextId'].markAsTouched();
 
     //this.coneSwitch = this.elRef.nativeElement.querySelector('#cone');
     //this.importForm.controls['format'].valueChanges.subscribe(format => {
@@ -190,7 +191,7 @@ export default class ImportComponent implements OnInit {
       contextId: this.importForm.controls['contextId'].value,
       importName: this.importForm.controls['importName'].value,
       format: this.importForm.controls['format'].value,
-      formatConfig: this.importForm.controls['formatConfig'].value,
+      formatConfig: 'CoNE=' + (this.importForm.controls['cone'].value) + (this.hasSelect() ? ',' + this.getSelectName() + '=' + this.importForm.controls['formatConfig'].value : '')
     }
     return importParams;
   }
@@ -220,6 +221,7 @@ export default class ImportComponent implements OnInit {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.importForm.reset();
       this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
+      this.importForm.controls['contextId'].markAsTouched();
       this.formatObject = null;
       this.data = null;
     }
