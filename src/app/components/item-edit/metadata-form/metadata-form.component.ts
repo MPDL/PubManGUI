@@ -270,10 +270,7 @@ export class MetadataFormComponent implements OnInit {
       this.miscellaneousService.getDecodedMultiplePersons(creatorsString).pipe(
         tap((decodedCreators) => {
           if (decodedCreators?.length > 0 && this.creators.length > 0) {
-            const firstCreator = this.creators.at(0).value as CreatorVO;
-            if (isEmptyCreator(firstCreator)) {
-              this.creators.removeAt(0);
-            }
+            this.creators.clear();
           }
           for (let creator of decodedCreators) {
             let personVO: PersonVO = { completeName: undefined, familyName: creator.family, givenName: creator.given, alternativeNames: undefined, titles: undefined, pseudonyms: undefined, organizations: undefined, identifier: undefined, orcid: undefined };
