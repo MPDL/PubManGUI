@@ -119,6 +119,10 @@
             "development": {
               "buildTarget": "PubManGUI:build:development",
               "proxyConfig": "src/proxy.conf.json"
+            },
+            "development-local-inge": {
+              "buildTarget": "PubManGUI:build:development",
+              "proxyConfig": "src/proxy-local-inge.conf.json"
             }
           },
           "defaultConfiguration": "development"

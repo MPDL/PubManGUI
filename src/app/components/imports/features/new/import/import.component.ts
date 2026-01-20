@@ -37,7 +37,6 @@ export default class ImportComponent implements OnInit {
   router = inject(Router);
   fb = inject(FormBuilder);
   aaSvc = inject(AaService);
-  //translateService = inject(TranslateService);
   elRef: ElementRef = inject(ElementRef);
 
   formatObject: any = null;
@@ -57,7 +56,7 @@ export default class ImportComponent implements OnInit {
     importName: [null, [Validators.required]],
     format: [null, [Validators.required]],
     formatConfig: [''],
-    cone: [''],
+    cone: [],
     fileName: [null, [Validators.required]]
   });
 
@@ -68,12 +67,7 @@ export default class ImportComponent implements OnInit {
       }
     );
     this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
-
-    //this.coneSwitch = this.elRef.nativeElement.querySelector('#cone');
-    //this.importForm.controls['format'].valueChanges.subscribe(format => {
-      //if (format && format !== this.translateService.instant(_('imports.format'))) this.getFormatConfiguration(format);
-      //if (format) this.getFormatConfiguration(format);
-    //});
+    this.importForm.controls['contextId'].markAsTouched();
   }
 
   onFormatChange($event: any): void {
@@ -87,21 +81,29 @@ export default class ImportComponent implements OnInit {
       this.changeDetector.detectChanges();
       if (format !== this.lastFormat) {
         this.setSelectDefaultOption();
-        this.isCoNE();
+        this.setCoNE();
         this.lastFormat = format;
       };
     });
+  }
+
+  resetFormatConfiguration() {
+    this.formatObject = null;
+    this.lastFormat = '';
+    this.importForm.get('formatConfig')?.setValue('');
+
+
   }
 
   hasConfig(): boolean {
     return (this.formatObject !== null && Object.keys(this.formatObject).length > 0);
   }
 
-  isCoNE(): void {
+  setCoNE(): void {
     const defaultArray = this.formatObject["_default"];
     const coNEEntry = defaultArray.find((entry: string) => entry.startsWith("CoNE="));
     if (coNEEntry) {
-      this.coneSwitch = document.getElementById("cone") as HTMLInputElement;
+      this.coneSwitch = document.getElementById("coneSwitch") as HTMLInputElement;
       this.coneSwitch.checked = (coNEEntry.split("=")[1] === "true");
     }
   }
@@ -158,7 +160,6 @@ export default class ImportComponent implements OnInit {
   }
 
   onFileRemove():void {
-// TODO clear the file input value
     this.importForm.controls['fileName'].setValue(null);
     this.importForm.controls['fileName'].markAsUntouched();
     this.importForm.get('fileName')?.clearAsyncValidators();
@@ -190,7 +191,7 @@ export default class ImportComponent implements OnInit {
       contextId: this.importForm.controls['contextId'].value,
       importName: this.importForm.controls['importName'].value,
       format: this.importForm.controls['format'].value,
-      formatConfig: this.importForm.controls['formatConfig'].value,
+      formatConfig: 'CoNE=' + (this.importForm.controls['cone'].value ? 'true' : 'false') + (this.hasSelect() ? ',' + this.getSelectName() + '=' + this.importForm.controls['formatConfig'].value : '')
     }
     return importParams;
   }
@@ -220,7 +221,8 @@ export default class ImportComponent implements OnInit {
     if (this.elRef.nativeElement.parentElement.contains(event.target) && !this.elRef.nativeElement.contains(event.target)) {
       this.importForm.reset();
       this.importForm.controls['contextId'].setValue(this.user_contexts![0].objectId);
-      this.formatObject = null;
+      this.importForm.controls['contextId'].markAsTouched();
+      this.resetFormatConfiguration();
       this.data = null;
     }
   }

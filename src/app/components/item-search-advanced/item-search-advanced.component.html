@@ -270,11 +270,12 @@
 
                 } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.ENUM) {
 
+                  @let enumCriterion = $any(currentFormGroup);
                   <div class="col mb-auto" formGroupName="content">
                     <select class="form-select" formControlName="text">
-                      @for (val of $any(currentFormGroup).getValues(); track val) {
+                      @for (val of enumCriterion.getValues(); track val) {
                         <option [value]="val">
-                          {{ val }}
+                          {{ enumCriterion.translatePrefix ? ((enumCriterion.translatePrefix + val) | translate) : val }}
                         </option>
                       }
                     </select>
