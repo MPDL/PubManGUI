@@ -16,6 +16,7 @@ import { MetadataFormComponent } from '../metadata-form/metadata-form.component'
 import {
   ContextDbRO,
   ContextDbVO,
+  ContextState,
   FileDbVO,
   ItemVersionRO,
   ItemVersionState,
@@ -103,7 +104,7 @@ export class ItemFormComponent implements OnInit {
   protected saveInProgress: boolean = false;
 
   ngOnInit(): void {
-    this.user_contexts = this.aaService.principal.value.depositorContexts
+    this.user_contexts = this.aaService.principal.value.depositorContexts.filter(ctx => ctx.state === ContextState.OPENED)
       .sort((c1, c2) => (c1.name || '').localeCompare(c2.name || '')).reverse();
     this.route.data.pipe(
       /*
