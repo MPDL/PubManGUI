@@ -145,7 +145,7 @@
     "actions.localTags.replace": "Replace",
     "actions.localTags.replace.from": "Tag to replace",
     "actions.localTags.replace.info": "Certain tags will be replaced within the items.",
-    "actions.localTags.replace.to": "Replacing tag",
+    "actions.localTags.replace.to": "New tag",
     "actions.metadata": "Metadata",
     "actions.metadata.extRef": "External links",
     "actions.metadata.extRef.contentCategory": "Content Category",
