@@ -1,10 +1,9 @@
-import { SearchCriterion } from "./SearchCriterion";
-import { Observable, of } from "rxjs";
-import { FormControl, FormGroup } from "@angular/forms";
-import { ContextDbVO } from "../../../model/inge";
-import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
-import { AaService } from "../../../services/aa.service";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
+import {SearchCriterion} from "./SearchCriterion";
+import {Observable, of} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
+import {ContextDbVO, ContextState} from "../../../model/inge";
+import {AaService} from "../../../services/aa.service";
+import {baseElasticSearchQueryBuilder} from "../../../utils/search-utils";
 
 export class ContextListSearchCriterion extends SearchCriterion {
 
@@ -24,6 +23,9 @@ export class ContextListSearchCriterion extends SearchCriterion {
       const depositorContexts  = p.depositorContexts ? p.depositorContexts : [];
       //Merge both arrays and de-duplicate
       moderatorContexts.concat(depositorContexts)
+        //filter closed contexts
+        .filter(c => c.state === ContextState.OPENED)
+        //filter duplicates
         .filter((val, pos, arr) => arr.indexOf(val)===pos)
         .forEach(c => {
           this.contextOptions[c.objectId!] = c;

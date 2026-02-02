@@ -88,7 +88,7 @@
                   "with": "src/environments/environment.gui-inge-external.ts"
                 }
               ],
-              "baseHref": "/pubman-gui-external/"
+              "baseHref": "/"
             },
             "development": {
               "outputHashing": "none",

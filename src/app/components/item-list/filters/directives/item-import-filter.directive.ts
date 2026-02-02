@@ -5,6 +5,7 @@ import { FilterEvent } from "../../item-list.component";
 import { baseElasticSearchQueryBuilder } from "../../../../utils/search-utils";
 import { ImportService } from "../../../../services/pubman-rest-client/import.service";
 import { DatePipe } from "@angular/common";
+import {map, tap} from "rxjs";
 
 
 @Directive({
@@ -34,10 +35,23 @@ export class ItemImportFilterDirective extends ItemFilterDirective {
     else {
       importLogs$ = this.importService.getImportLogs();
     }
-    importLogs$.subscribe(importLogs => {
+    importLogs$.pipe(
+      //sort by date descending
+      map(importLogs => {
+        return importLogs.sort((a,b) => {
+          console.log(typeof b.startDate);
+          if(a.startDate===undefined || b.startDate===undefined)
+            return 0;
+          else
+            return (new Date(b.startDate)).valueOf() - (new Date(a.startDate)).valueOf()
+        })
+      }),
+      tap(importLogs => {
+        this.options =  Object.assign({'': 'common.all'}, ...importLogs.map(importLog => ({ [importLog.name]: importLog.name +' (' + datePipe.transform(importLog.startDate, 'short') + ')' })));
+      })
+    )
 
-      this.options =  Object.assign({'': 'common.all'}, ...importLogs.map(importLog => ({ [importLog.name]: importLog.name +' (' + datePipe.transform(importLog.startDate, 'short') + ')' })));
-    });
+      .subscribe();
   }
 
   getOptions():{[key:string]: string } {
