@@ -196,7 +196,7 @@
     "actions.metadata.source.adjust": "Source to be adjusted",
     "actions.metadata.source.adjustEdition": "Adjust Edition",
     "actions.metadata.source.adjustEdition.info": "Adjusts the 'Edition' field in all existing sources. Existing values will be overwritten.",
-    "actions.metadata.source.adjustEdition.to": "Add value",
+    "actions.metadata.source.adjustEdition.to": "New value",
     "actions.metadata.source.changeGenre": "Change Genre",
     "actions.metadata.source.changeGenre.from": "Genre to be replaced",
     "actions.metadata.source.changeGenre.info": "The genre of existing sources will be changed within the items.",
