@@ -335,6 +335,7 @@
     "items": "Datensätze",
     "link": "Externer Link",
     "links": "Externe Links",
+    "loginChanged": "Ihr Login hat sich geändert. Möglicherweise haben Sie sich in einem anderen Fenster/Tab ein- oder ausgeloggt.",
     "logs": "Protokolle",
     "metadata": "Metadaten",
     "my": "Meine Datensätze",

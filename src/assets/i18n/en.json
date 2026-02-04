@@ -335,6 +335,7 @@
     "items": "Datasets",
     "link": "External link",
     "links": "External links",
+    "loginChanged": "Your login has changed. You may have logged in or out in another window/tab.",
     "logs": "Logs",
     "metadata": "Metadata",
     "my": "My Datasets",
