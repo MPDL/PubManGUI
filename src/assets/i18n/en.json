@@ -1009,7 +1009,7 @@
     "minOneDate": "At least one date is required",
     "minOneDateWithEvent": "At least one date is required (Event start date or any date)",
     "noDuplicates": "Repeated value",
-    "notSameValues": "Previous and new values cannot be the same",
+    "notSameValues": "The previous and new values must differ",
     "passwordRule": "Please choose a password with a length between 8 and 32 characters, and at least one uppercase, one lowercase, one digit and one special character (no ':').",
     "required": "Value is required",
     "singleWord": "can't contain multiple words",

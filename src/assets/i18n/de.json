@@ -1009,7 +1009,7 @@
     "minOneDate": "Mindestens eine Datumsangabe ist erforderlich",
     "minOneDateWithEvent": "Mindestens eine Datumsangabe ist erforderlich (Veranstaltungsbeginn oder beliebiges Datum)",
     "noDuplicates": "Wiederholter Wert",
-    "notSameValues": "Bisheriger und neuer wert müssen sich unterscheiden",
+    "notSameValues": "Der bisherige und der neue Wert müssen sich unterscheiden",
     "passwordRule": "Bitte wählen Sie ein Passwort mit einer Länge zwischen 8 und 32 Zeichen, mindestens ein Großbuchstaben, ein Kleinbuchstaben, eine Zahl und ein Sonderzeichen (kein ':').",
     "required": "Wert ist erforderlich",
     "singleWord": "kann nicht mehrere Wörter enthalten",
