@@ -270,7 +270,7 @@
     "ADD_LOCALTAGS": "Add local tags",
     "ADD_SOURCE_IDENTIFIER": "Add source identifier",
     "CHANGE_CONTEXT": "Change context",
-    "CHANGE_EXTERNAL_REFERENCE_CONTENT_CATEGORY": "Change external link's content category",
+    "CHANGE_EXTERNAL_REFERENCE_CONTENT_CATEGORY": "Change content category of external links",
     "CHANGE_FILE_CONTENT_CATEGORY": "Change file content category",
     "CHANGE_FILE_VISIBILITY": "Change file visibility",
     "CHANGE_GENRE": "Change genre",
