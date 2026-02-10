@@ -77,6 +77,8 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
     this.batchProcessLogHeaderId = -1;
     this.#processRunning.set(false);
 
+    const removed = this.removeItems(this.items);
+
     this.msgSvc.success(this.translateSvc.instant(_('batch.actions.stop')) + '\n');
     this.checkLogs();
   }
