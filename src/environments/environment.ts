@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
   label: "production",
-  cone_instance_uri: "https://gui.inge.mpdl.mpg.de/cone",
-  inge_rest_uri: "https://gui.inge.mpdl.mpg.de/rest",
-  inge_uri: "https://gui.inge.mpdl.mpg.de",
+  cone_instance_uri: "/cone",
+  inge_rest_uri: "/rest",
+  inge_uri: "",
   pure_blog_feed_url: "https://blog.pure.mpg.de/json1",
   matomo_enabled: false,
   matomo_site_url: "",
