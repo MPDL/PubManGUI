@@ -30,7 +30,7 @@ export class TopnavBatchComponent {
   translateSvc = inject(TranslateService);
 
   addToBatchDatasets() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));;
     if (selected.length) {
       const added = this.batchSvc.addItems(selected);
       if (this.resetSelectionAfterAction)
@@ -47,7 +47,7 @@ export class TopnavBatchComponent {
   }
 
   removeFromBatchDatasets() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value;
+    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));;
     if (selected.length) {
       const removed = this.batchSvc.removeItems(selected);
       if (this.resetSelectionAfterAction)
@@ -66,7 +66,7 @@ export class TopnavBatchComponent {
   get isAdd() {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected.length > 0) {
-      return selected.some(id => !this.batchSvc.items.includes(id))
+      return selected.some(id => !this.batchSvc.items.includes(versionIdToObjectId(id)))
     }
     return false;
   }
@@ -74,7 +74,7 @@ export class TopnavBatchComponent {
   get isRemove() {
     const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected.length > 0) {
-      return selected.some(id => this.batchSvc.items.includes(id))
+      return selected.some(id => this.batchSvc.items.includes(versionIdToObjectId(id)))
     }
     return false;
   }
