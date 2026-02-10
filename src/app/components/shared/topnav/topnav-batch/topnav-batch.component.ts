@@ -64,7 +64,7 @@ export class TopnavBatchComponent {
   }
 
   get isAdd() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));
+    const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected.length > 0) {
       return selected.some(id => !this.batchSvc.items.includes(id))
     }
@@ -72,7 +72,7 @@ export class TopnavBatchComponent {
   }
 
   get isRemove() {
-    const selected: string[] = this.itemSelectionService.selectedIds$.value.map(id => versionIdToObjectId(id));
+    const selected: string[] = this.itemSelectionService.selectedIds$.value;
     if (selected.length > 0) {
       return selected.some(id => this.batchSvc.items.includes(id))
     }
