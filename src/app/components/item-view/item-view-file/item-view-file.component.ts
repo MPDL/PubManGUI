@@ -10,7 +10,7 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { CopyButtonDirective } from "../../../directives/copy-button.directive";
 import { FileSizePipe } from "../../../pipes/file-size.pipe";
 import { MatomoTracker } from "ngx-matomo-client";
-import { EMPTY } from "rxjs";
+import {EMPTY, of} from "rxjs";
 import { UpperCasePipe } from "@angular/common";
 import mime from "mime";
 
@@ -36,7 +36,7 @@ export class ItemViewFileComponent {
   @Input({required: true}) item!: ItemVersionVO;
 
   audienceInfos: any;
-  fileAccessGranted = false;
+  fileAccessGranted = true;
   oaStatusIcon?: string;
 
   fileType?:string | null;
@@ -63,7 +63,7 @@ export class ItemViewFileComponent {
     if(file?.visibility=== Visibility.AUDIENCE) {
       return this.itemsService.retrieveFileAuthorizationInfo(getFullItemId(this.item), file!.objectId!);
     }
-    return EMPTY;
+    return of(undefined);
   }
 
   getFileAccessGranted(file: FileDbVO) {
