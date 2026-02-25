@@ -253,7 +253,7 @@
             } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.JOURNAL) {
             <div class="col mb-auto" formGroupName="content">
               <pure-cone-autosuggest coneType="journals" [form]="$any(currentFormGroup).content.get('text')"
-                [addQuotesForSearch]="true"></pure-cone-autosuggest>
+                [addQuotesForSearch]="true" (valueSelected)="$any(currentFormGroup).handleJournalSuggest($event)"></pure-cone-autosuggest>
             </div>
 
             } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.CONTEXT) {
