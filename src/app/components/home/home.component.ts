@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
         }
       },
       sort: {
-        "creationDate": "desc"
+        "latestRelease.modificationDate": "desc"
       },
       size: 8
     };
