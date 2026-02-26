@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit {
     size: 0
   };
 
-  this.itemsService.elasticSearch(agg).subscribe(result => {
+  this.itemsService.elasticSearch(agg,{withCredentials: false}).subscribe(result => {
 
     this.totalPublications = result.hits.total.value;
     const buckets = result.aggregations['sterms#publications_by_genre'].buckets;
