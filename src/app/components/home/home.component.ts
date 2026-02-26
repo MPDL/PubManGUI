@@ -86,12 +86,12 @@ export class HomeComponent implements OnInit {
         }
       },
       sort: {
-        "latestRelease.modificationDate": "desc"
+        "creationDate": "desc"
       },
       size: 8
     };
 
-    this.latestReleasedItems = this.itemsService.elasticSearch(query).pipe(
+    this.latestReleasedItems = this.itemsService.elasticSearch(query, {withCredentials: false}).pipe(
       map(result => result.hits.hits.map((record: any) => record._source as ItemVersionVO)),
     );
   }
