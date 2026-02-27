@@ -271,7 +271,7 @@ export class AaService {
       }
     }
 
-    console.log("Moderator query: " + JSON.stringify(moderatorQuery))
+    //console.log("Moderator query: " + JSON.stringify(moderatorQuery))
 
     if(moderatorQuery === undefined && depositorQuery === undefined) {
       return undefined;

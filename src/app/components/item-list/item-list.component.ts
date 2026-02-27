@@ -119,7 +119,7 @@ export class ItemListComponent implements AfterViewInit{
     ).subscribe((event: any) => {
 
       if(!this.skipNextRefreshViaRouting) {
-        console.log("REFRESH LIST!!!", this.listUrl);
+        //console.log("REFRESH LIST!!!", this.listUrl);
         this.updateList();
       }
       this.skipNextRefreshViaRouting = false;
@@ -137,9 +137,6 @@ export class ItemListComponent implements AfterViewInit{
     this.routerEventsSubscription.unsubscribe();
   }
 
-  ngOnInit() {
-    console.log("ngOnInit")
-  }
   ngAfterViewInit(): void {
     this.searchQuerySubscription = this.searchQuery.subscribe(q => {
       if (q) {
@@ -149,7 +146,7 @@ export class ItemListComponent implements AfterViewInit{
           this.skipNextRefreshViaRouting=true;
         }
         this.currentQuery = q;
-        console.log("New Query - REFRESH");
+        //console.log("New Query - REFRESH");
         this.updateList();
 
       }
@@ -226,7 +223,7 @@ export class ItemListComponent implements AfterViewInit{
       ...runtimeMappings && {runtime_mappings: runtimeMappings},
       ...aggQueries && {aggs: aggQueries}
     }
-    console.log(JSON.stringify(completeQuery))
+    console.log("List query", completeQuery)
 
     this.currentCompleteQuery = completeQuery;
     this.search(completeQuery);
