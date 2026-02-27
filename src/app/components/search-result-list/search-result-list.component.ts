@@ -22,6 +22,8 @@ import {
   ItemSourceTitleAggregationDirective
 } from "../item-list/aggregations/aggregation-filter/directives/item-sourcetitle-aggregation.directive";
 import { TranslatePipe } from "@ngx-translate/core";
+import {SavedSearchService} from "../../services/pubman-rest-client/saved-search.service";
+import {ItemSearchAdvancedService} from "../item-search-advanced/item-search-advanced.service";
 
 @Component({
   selector: 'pure-search-result-list',
@@ -42,12 +44,39 @@ import { TranslatePipe } from "@ngx-translate/core";
 export class SearchResultListComponent {
 
    //@ViewChild('child') child: ItemListComponent;
-  searchQuery: Observable<any>;
+  searchQuery!: Observable<any>;
 
-  constructor(private aaService: AaService, private router: Router, private location: Location, private route:ActivatedRoute, protected searchStateService: SearchStateService) {
+  constructor(private route:ActivatedRoute, protected searchStateService: SearchStateService, private savedSearchService: SavedSearchService, private advancedSearchService: ItemSearchAdvancedService) {
     //Update search query whenever the router sends a new one. As the state in the router is  available in getCurrentNavigation only once during the first constructor call, it has
     //to be drawn from window.history
-    this.searchQuery = searchStateService.$currentQuery.asObservable();
+
+
+    this.searchQuery = this.searchStateService.$currentQuery;
+
+    const searchId = this.route.snapshot.queryParamMap.get("searchId");
+    if (searchId) {
+      this.savedSearchService.retrieve(searchId).subscribe(savedSearch => {
+        advancedSearchService.getElasticsearchQueryFromFormJson(savedSearch.searchForm).subscribe(query => {
+          this.searchStateService.$currentQuery.next(query);
+        });
+      })
+    }
+    else {
+
+    }
+
+    /*
+    this.route.queryParamMap.subscribe(params => {
+      if(params.get("searchId")) {
+        const searchId = params.get("searchId");
+        console.log("SearchId: " + searchId);
+
+      }
+    })
+
+     */
+
+
     /*
     const query = sessionStorage.getItem("currentQuery");
     if(query)
