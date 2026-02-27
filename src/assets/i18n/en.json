@@ -522,6 +522,11 @@
     "RIS_STRING": "RIS",
     "WOS_STRING": "WoS"
   },
+  "ImportFormatConfiguration": {
+    "Flavor": "Import scheme",
+    "import-name": "Import scheme",
+    "Files_to_Import": "Files to import"
+  },
   "ImportMessage": {
     "AlternativeTitleNotProvided": "An alternative title is missing.",
     "ComponentContentCategoryNotProvided": "An attached file is missing a content type (e.g. Abstract, Preprint, etc.).",
