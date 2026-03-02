@@ -15,7 +15,8 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class CopyButtonDirective {
 
-  @Input({required: true}) textToCopy: string = '';
+  @Input() textToCopy?: string;
+  @Input() textToCopyCallback?: Function;
   copiedSuccessful: boolean = false;
 
   private copyIcon;
@@ -31,7 +32,13 @@ export class CopyButtonDirective {
 
   onCopy() {
     console.log('copied');
-    this.clipboard.copy(this.textToCopy);
+    if(this.textToCopy) {
+      this.clipboard.copy(this.textToCopy);
+    }
+    else if(this.textToCopyCallback) {
+      this.clipboard.copy(this.textToCopyCallback());
+    }
+
     this.copiedSuccessful = true;
     this.setSuccessIcon()
     timer(1000).subscribe(() => {

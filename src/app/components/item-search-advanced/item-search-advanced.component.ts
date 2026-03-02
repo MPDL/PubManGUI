@@ -37,6 +37,8 @@ import { ValidationErrorComponent } from "../shared/validation-error/validation-
 import { MatomoTracker } from "ngx-matomo-client";
 import {filter} from "rxjs/operators";
 import {ItemSearchAdvancedService} from "./item-search-advanced.service";
+import {CopyButtonDirective} from "../../directives/copy-button.directive";
+import {MessageService} from "../../services/message.service";
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -55,8 +57,9 @@ import {ItemSearchAdvancedService} from "./item-search-advanced.service";
     AddRemoveButtonsComponent,
     ConeAutosuggestComponent,
     BootstrapValidationDirective,
-    ValidationErrorComponent
-],
+    ValidationErrorComponent,
+    CopyButtonDirective
+  ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
   encapsulation: ViewEncapsulation.None
@@ -101,7 +104,8 @@ export class ItemSearchAdvancedComponent {
     private contextsService: ContextsService,
     private ouService: OrganizationsService,
     private matomoTracker: MatomoTracker,
-    private advancedSearchService: ItemSearchAdvancedService
+    private advancedSearchService: ItemSearchAdvancedService,
+    private msgService: MessageService,
 ) {
 
     this.logoutSubscription = aaService.logout$.pipe(
@@ -112,11 +116,15 @@ export class ItemSearchAdvancedComponent {
 
   ngOnInit() {
     this.reset();
-    const searchId = this.route.snapshot.queryParamMap.get("searchId");
-    if (searchId) {
-      this.savedSearchService.retrieve(searchId).subscribe(savedSearch => {
+    const searchIdParam = this.route.snapshot.queryParamMap.get("searchId");
+    const searchFormParam = this.route.snapshot.queryParamMap.get("searchForm");
+    if (searchIdParam) {
+      this.savedSearchService.retrieve(searchIdParam).subscribe(savedSearch => {
         this.parseFormJson(savedSearch.searchForm);
       })
+    }
+    else if (searchFormParam) {
+      this.parseFormJson(JSON.parse(searchFormParam));
     }
 
   }
@@ -360,6 +368,15 @@ export class ItemSearchAdvancedComponent {
     console.log("length of form", JSON.stringify(this.result).length);
   }
 
+  getSearchFormJsonLinkCallback = ()=> {
+    //const urlString = window.location.toString();
+    const url = new URL(window.location.pathname, window.location.origin);
+    const jsonString = JSON.stringify(this.getCleanSearchForm().value);
+    url.searchParams.set('searchForm', jsonString);
+    console.log("length of form", jsonString.length);
+    return url.toString();
+  }
+
   private getCleanSearchForm(): FormGroup<any> {
     const cleanedFlexibleFields = this.advancedSearchService.removeEmptyFields(this.flexibleFields.controls.map(fc => fc as SearchCriterion));
     const searchFormCleaned = this.fb.group({
@@ -450,6 +467,21 @@ export class ItemSearchAdvancedComponent {
 
   get isValid() {
     return this.searchForm.valid && this.currentlyOpenedParenthesis === undefined && this.flexibleFields.controls.length > 0;
+  }
+
+
+  /**
+   * Copies a JSON-based form link to the clipboard when triggered by a specific keyboard shortcut.
+   * @param {Event} e - The keyboard event that invokes the method.
+   * @return {void} Does not return a value; performs an action of copying the link to the clipboard and displays a success message.
+   */
+  @HostListener('document:keydown.control.shift.c', ['$event'])
+  copyFormJsonLink(e: Event) {
+    e.preventDefault();
+    this.clipboard.copy(this.getSearchFormJsonLinkCallback());
+    this.msgService.success("Secret link copied successfully to clipboard.")
+
+
   }
 
   protected readonly SubjectClassification = SubjectClassification;

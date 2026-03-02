@@ -74,8 +74,8 @@ export class SavedSearchesModalComponent {
   }
 
   getSavedSearchLink(savedSearchId: string) {
-    const urlString = window.location.toString();
-    const url = new URL(urlString);
+    //const urlString = window.location.toString();
+    const url = new URL(window.location.pathname, window.location.origin);
     url.searchParams.set('searchId', savedSearchId);
     //this.clipboard.copy(url.toString());
     return url.toString();

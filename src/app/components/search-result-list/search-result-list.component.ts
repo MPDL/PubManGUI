@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemListComponent } from "../item-list/item-list.component";
-import { Observable } from "rxjs";
+import {Observable, of} from "rxjs";
 import { AaService } from "../../services/aa.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
@@ -47,56 +47,12 @@ export class SearchResultListComponent {
   searchQuery!: Observable<any>;
 
   constructor(private route:ActivatedRoute, protected searchStateService: SearchStateService, private savedSearchService: SavedSearchService, private advancedSearchService: ItemSearchAdvancedService) {
-    //Update search query whenever the router sends a new one. As the state in the router is  available in getCurrentNavigation only once during the first constructor call, it has
-    //to be drawn from window.history
-
-
     this.searchQuery = this.searchStateService.$currentQuery;
-
     const searchId = this.route.snapshot.queryParamMap.get("searchId");
-    if (searchId) {
-      this.savedSearchService.retrieve(searchId).subscribe(savedSearch => {
-        advancedSearchService.getElasticsearchQueryFromFormJson(savedSearch.searchForm).subscribe(query => {
-          this.searchStateService.$currentQuery.next(query);
-        });
-      })
-    }
-    else {
-
-    }
-
-    /*
-    this.route.queryParamMap.subscribe(params => {
-      if(params.get("searchId")) {
-        const searchId = params.get("searchId");
-        console.log("SearchId: " + searchId);
-
-      }
-    })
-
-     */
-
-
-    /*
-    const query = sessionStorage.getItem("currentQuery");
-    if(query)
-      this.searchQuery = of(JSON.parse(query));
-    else
-      this.searchQuery = of();
-
-    const q = this.router.getCurrentNavigation()?.extras?.state?.['query'];
-    console.log('Router query: ' + q)
-    this.searchQuery = this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      // required to work immediately.
-      startWith(this.router),
-      map(r => {
-        return history.state.query;
-      })
-    )
-
-     */
+    const searchForm = this.route.snapshot.queryParamMap.get("searchForm");
+    this.searchStateService.initSearchQuery(searchId, searchForm);
   }
+
 
 
 }
