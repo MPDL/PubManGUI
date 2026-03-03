@@ -1,7 +1,8 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpContext } from '@angular/common/http';
 import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DISPLAY_ERROR } from "src/app/services/interceptors/http-error.interceptor";
 
 import type * as params from '../interfaces/imports-params';
 
@@ -56,6 +57,10 @@ export class ImportsService {
 
   public getLogFilters = computed(() => this.#logFilters());
 
+
+  context:HttpContext = new HttpContext().set(DISPLAY_ERROR, false);
+
+
   checkImports() {
     this.getImportLogs()
       .subscribe(response => {
@@ -79,7 +84,8 @@ export class ImportsService {
   }
 
   getDataFetch(url: string, query: string): Observable<ItemVersionVO> {
-    const importResponse: Observable<ItemVersionVO> = this.http.get<ItemVersionVO>(url + query, { withCredentials: true })
+    //const importResponse: Observable<ItemVersionVO> = this.http.get<ItemVersionVO>(url + query, { withCredentials: true, context: context })
+    const importResponse: Observable<ItemVersionVO> = this.http.request<ItemVersionVO>('GET', url + query, { withCredentials: true, context: this.context })
       .pipe(
         tap((value: ItemVersionVO) => {
           this.#lastFetch.set(of(value));
@@ -93,31 +99,31 @@ export class ImportsService {
   getImportLog(id: number): Observable<ImportLogDbVO> {
     const url = `${this.#baseUrl}/import/importLog/${id}`;
 
-    return this.http.get<ImportLogDbVO>(url, { withCredentials: true });
+    return this.http.request<ImportLogDbVO>('GET', url, { withCredentials: true, context: this.context });
   }
 
   getImportLogs(): Observable<ImportLogDbVO[]> {
     const url = `${this.#baseUrl}/import/getImportLogs`;
 
-    return this.http.get<ImportLogDbVO[]>(url, { withCredentials: true });
+    return this.http.request<ImportLogDbVO[]>('GET', url, { withCredentials: true, context: this.context });
   }
 
   getImportLogItems(id: number): Observable<ImportLogItemDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItems/${id}`;
 
-    return this.http.get<ImportLogItemDbVO[]>(url, { withCredentials: true });
+    return this.http.request<ImportLogItemDbVO[]>('GET', url, { withCredentials: true, context: this.context });
   }
 
   getImportLogItemDetails(id: number): Observable<ImportLogItemDetailDbVO[]> {
     const url = `${this.#baseUrl}/import/importLogItemDetails/${id}`;
 
-    return this.http.get<ImportLogItemDetailDbVO[]>(url, { withCredentials: true });
+    return this.http.request<ImportLogItemDetailDbVO[]>('GET', url, { withCredentials: true, context: this.context });
   }
 
   deleteImportLog(id: number): Observable<any> {
     const url = `${this.#baseUrl}/import/importLog/${id}`;
 
-    return this.http.delete<any>(url, { withCredentials: true });
+    return this.http.request<any>('DELETE', url, { withCredentials: true });
   }
 
   getFormatConfiguration(format: string): Observable<any> {
@@ -125,7 +131,7 @@ export class ImportsService {
 
     const query = `?format=${format}`;
 
-    return this.http.get<any>(url + query, { withCredentials: true });
+    return this.http.request<any>('GET',url + query, { withCredentials: true, context: this.context });
   }
 
   postImport(importParams: params.PostImportParams, data: any): Observable<any> {
@@ -135,20 +141,20 @@ export class ImportsService {
       .set('Content-Disposition', 'attachment');
     const query = `?contextId=${importParams.contextId}&importName=${importParams.importName}&format=${importParams.format}` + `${importParams.formatConfig ? '&formatConfiguration='+importParams.formatConfig : ''}`;
 
-    return this.http.post<any>(url + query, data, { headers, withCredentials: true });
+    return this.http.request<any>('POST', url + query, {  body: data, headers, withCredentials: true });
   }
 
   getContexts(ctxId: string): Observable<any> {
     const url = `${this.#baseUrl}/contexts/${ctxId}`;
 
-    return this.http.get<any>(url, { withCredentials: true });
+    return this.http.request<any>('GET',url, { withCredentials: true, context: this.context });
   }
 
   deleteImportedItems(importLogId: number): Observable<any> {
     const url = `${this.#baseUrl}/import/deleteImportedItems`;
     const query = `?importLogId=${importLogId}`;
 
-    const response: Observable<any> = this.http.put<any>(url + query,'', { withCredentials: true  })
+    const response: Observable<any> = this.http.request<any>('PUT', url + query, { withCredentials: true  })
       .pipe(
         tap((value: any) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
@@ -161,7 +167,7 @@ export class ImportsService {
     const url = `${this.#baseUrl}/import/submitImportedItems`;
     const query = `?importLogId=${importLogId}&submitModus=${submitModus}`;
 
-    const response: Observable<any> = this.http.put<any>(url + query,'', { withCredentials: true })
+    const response: Observable<any> = this.http.request<any>('PUT', url + query, { withCredentials: true })
       .pipe(
         tap((value: any) => console.log('Success: \n' + JSON.stringify(value))),
         catchError(err => throwError(() => err)),
