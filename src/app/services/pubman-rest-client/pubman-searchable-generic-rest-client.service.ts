@@ -4,8 +4,8 @@ import { HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 
 export abstract class PubmanSearchableGenericRestClientService<modelType> extends PubmanGenericRestClientService<modelType> {
 
-  protected constructor(subPath: string) {
-    super(subPath)
+  protected constructor(subPath: string, httpClient?: import("@angular/common/http").HttpClient) {
+    super(subPath, httpClient)
   }
 
 

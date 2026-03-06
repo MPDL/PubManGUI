@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { AccountUserDbVO, ContextDbVO } from "../../model/inge";
 import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
@@ -9,8 +10,8 @@ import { HttpOptions } from "./pubman-generic-rest-client.service";
 })
 export class ContextsService extends PubmanSearchableGenericRestClientService<ContextDbVO>{
 
-  constructor() {
-    super('/contexts');
+  constructor(httpClient: HttpClient) {
+    super('/contexts', httpClient);
   }
 
 

@@ -1,5 +1,4 @@
 import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
-import { inject } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DISPLAY_ERROR } from "../interceptors/http-error.interceptor";
@@ -34,11 +33,12 @@ export abstract class PubmanGenericRestClientService<modelType> {
   // restUri = 'https://gui.inge.mpdl.mpg.de/rest';
   // restUri = 'https://qa.pure.mpdl.mpg.de/rest';
   protected restUri = environment.inge_rest_uri;
-  protected httpClient: HttpClient = inject(HttpClient);
+  protected httpClient: HttpClient | undefined;
   protected subPath:string;
 
-  protected constructor(subPath: string) {
+  protected constructor(subPath: string, httpClient?: HttpClient) {
     this.subPath = subPath;
+    this.httpClient = httpClient;
   }
 
   create(obj: modelType, opts?: HttpOptions) : Observable<modelType> {
@@ -47,6 +47,7 @@ export abstract class PubmanGenericRestClientService<modelType> {
   }
 
   retrieve(id: string, opts?: HttpOptions): Observable<modelType> {
+    console.log('Retrieving:', id, this.subPath);
     return this.httpGet(this.subPath + '/' + id, opts);
   }
 
@@ -97,15 +98,22 @@ export abstract class PubmanGenericRestClientService<modelType> {
 
   }
 
+  protected getHttpClient(): HttpClient {
+    if (!this.httpClient) {
+      throw new Error('HttpClient not provided to PubmanGenericRestClientService. Make sure derived services pass HttpClient to super().');
+    }
+    return this.httpClient;
+  }
+
   protected httpRequest(method: string, path: string, body?: any, opts?: HttpOptions): Observable<any> {
     const requestUrl = this.restUri + path;
-    return this.httpClient.request(method, requestUrl, this.getHttpClientOptions(body, opts));
+    return this.getHttpClient().request(method, requestUrl, this.getHttpClientOptions(body, opts));
   }
 
   private getHttpStatus(method: string, path: string, body: Date | undefined, opts?: HttpOptions): Observable<number> {
     const requestUrl = this.restUri + path;
     const mergedHttpOptions = this.createOrMergeHttpOptions(opts, {observe: "response", responseType: "text"})
-    return this.httpClient.request(method, requestUrl, this.getHttpClientOptions(body, mergedHttpOptions)).pipe(
+    return this.getHttpClient().request(method, requestUrl, this.getHttpClientOptions(body, mergedHttpOptions)).pipe(
       map((response) => {
         const status = response.status;
         return status;

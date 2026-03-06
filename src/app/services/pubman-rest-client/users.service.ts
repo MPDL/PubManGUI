@@ -1,8 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
 import { OrganizationsService } from './organizations.service';
+import { HttpClient } from '@angular/common/http';
 import { AccountUserDbVO, GrantVO } from "../../model/inge";
 import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
 import { HttpOptions } from "./pubman-generic-rest-client.service";
@@ -12,11 +13,8 @@ import {HttpParams} from "@angular/common/http";
   providedIn: 'root'
 })
 export class UsersService extends PubmanSearchableGenericRestClientService<AccountUserDbVO>{
-  organizationService: OrganizationsService = inject(OrganizationsService)
-
-
-  constructor() {
-    super('/users');
+  constructor(httpClient: HttpClient, public organizationService: OrganizationsService) {
+    super('/users', httpClient);
   }
 
   activate(user: AccountUserDbVO, opts?: HttpOptions): Observable<AccountUserDbVO> {

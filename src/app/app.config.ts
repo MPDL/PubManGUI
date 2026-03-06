@@ -3,6 +3,7 @@ import {
   importProvidersFrom,
   inject,
   LOCALE_ID,
+  PLATFORM_ID,
   provideAppInitializer,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -25,13 +26,14 @@ import { httpBlobErrorInterceptor, httpErrorInterceptor } from "./services/inter
 
 import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { registerLocaleData } from "@angular/common";
+import { isPlatformBrowser, registerLocaleData } from "@angular/common";
 import { lastValueFrom } from "rxjs";
 import { AaService } from "./services/aa.service";
 import { provideMatomo, withRouter } from 'ngx-matomo-client';
 import { environment } from "../environments/environment";
 import { ContextsService } from "./services/pubman-rest-client/contexts.service";
 import { MessageService } from './services/message.service';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -39,12 +41,17 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }), withComponentInputBinding()),
+    provideRouter(routes,
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+      withComponentInputBinding(),
+    ),
+
 
     {
       provide: RouteReuseStrategy,
       useClass: PureRrs
     },
+    provideClientHydration(withEventReplay()),
 
     importProvidersFrom(DialogModule),
 
@@ -75,6 +82,7 @@ export const appConfig: ApplicationConfig = {
 
     provideAppInitializer(async () => {
       const translateSvc = inject(TranslateService);
+      const platformId = inject(PLATFORM_ID);
 
       //Register german and english date formats for pipes etc.
       registerLocaleData(en)
@@ -84,13 +92,18 @@ export const appConfig: ApplicationConfig = {
       translateSvc.addLangs(['de', 'en']);
       translateSvc.setDefaultLang('en');
 
-      //Store selected language in local storage
-      translateSvc.onLangChange.subscribe(ev => {
-        localStorage.setItem('locale', ev.lang);
-      })
+      if (isPlatformBrowser(platformId)) {
+        //Store selected language in local storage
+        translateSvc.onLangChange.subscribe(ev => {
+          localStorage.setItem('locale', ev.lang);
+        })
+      }
 
       //Set language at beginning. Use from local storage or browser
-      const userLocale = localStorage.getItem('locale');
+      let userLocale: string | null = null;
+      if (isPlatformBrowser(platformId)) {
+        userLocale = localStorage.getItem('locale');
+      }
       const browserLocale = translateSvc.getBrowserLang() || 'en';
 
       let finalLocale = translateSvc.getDefaultLang();
@@ -108,11 +121,14 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(async () => {
       const aaService = inject(AaService);
       const messageService = inject(MessageService)
-      await lastValueFrom(aaService.checkLogin()).catch(
-        err => {
-          messageService.error("Error checking login status on app initialization: " + err);
-        }
-      )
+      const platformId = inject(PLATFORM_ID);
+      if (isPlatformBrowser(platformId)) {
+        await lastValueFrom(aaService.checkLogin()).catch(
+          err => {
+            messageService.error("Error checking login status on app initialization: " + err);
+          }
+        )
+      }
     }),
 
     provideMatomo(
@@ -127,6 +143,7 @@ export const appConfig: ApplicationConfig = {
       },
       withRouter()
     ),
+
   ],
 
 };

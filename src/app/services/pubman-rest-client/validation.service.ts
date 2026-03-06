@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 const validateEvent = 'validateEvent';
 const validateCreator = 'validateCreator';
@@ -10,8 +11,8 @@ const validateCreator = 'validateCreator';
 })
 export class ValidationService extends PubmanGenericRestClientService<any> {
 
-  constructor() {
-    super('/validation');
+  constructor(httpClient: HttpClient) {
+    super('/validation', httpClient);
   }
 
   validateEvent(eventJson: any): Observable<any> {

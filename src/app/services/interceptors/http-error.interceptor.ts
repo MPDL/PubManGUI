@@ -7,7 +7,8 @@ import {
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from "@angular/common";
 import { async, finalize, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MessageService } from 'src/app/services/message.service';
@@ -32,9 +33,10 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
         const silentLogout = request.context.get(SILENT_LOGOUT);
         const displayError = request.context.get(DISPLAY_ERROR);
         const message = inject(MessageService);
-        const aaService = inject(AaService)
+        const injector = inject(Injector);
         const modalService = inject(NgbModal);
         const windowFocusCheckLoginService = inject(WindowFocusCheckLoginService);
+        const platformId = inject(PLATFORM_ID);
         return next(request)
             .pipe(
                 catchError((err: HttpErrorResponse) => {
@@ -50,7 +52,7 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
                       return next(request);
                     }
                     //Otherwise, the app is already loaded and some user is working here. Open a dialog to login again
-                    else {
+                    else if (isPlatformBrowser(platformId)) {
                       //Pause change login check
                       windowFocusCheckLoginService.enabled = false;
                       const loginCompRef: NgbModalRef = modalService.open(LoginComponent, {backdrop: 'static'});
@@ -62,7 +64,7 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
                           if(val==="login_success") {
                           }
                           else {
-
+                            const aaService = injector.get(AaService);
                             aaService.logout();
                           }
                           return next(request);
@@ -72,6 +74,10 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
                         })
                       )
 
+                    }
+                    else {
+                      //On server, we can't open a login dialog
+                      return throwError(() => err);
                     }
 
                   }
@@ -93,9 +99,10 @@ export function httpErrorInterceptor(request: HttpRequest<any>, next: HttpHandle
 // https://github.com/angular/angular/issues/19888
 // When request of type Blob, the error is also in Blob instead of object of the json data
 export function httpBlobErrorInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
+  const platformId = inject(PLATFORM_ID);
   return next(req).pipe(
     catchError(err => {
-      if (err instanceof HttpErrorResponse && err.error instanceof Blob && err.error.type === "application/json") {
+      if (err instanceof HttpErrorResponse && err.error instanceof Blob && err.error.type === "application/json" && isPlatformBrowser(platformId)) {
 
         return new Promise<any>((resolve, reject) => {
           let reader = new FileReader();

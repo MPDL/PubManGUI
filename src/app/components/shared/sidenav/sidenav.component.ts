@@ -29,15 +29,15 @@ import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
   selector: 'pure-sidenav',
   standalone: true,
   imports: [
-    RouterLink, 
-    MatBadgeModule, 
-    CommonModule, 
-    BatchNavComponent, 
-    ImportsNavComponent, 
-    TranslatePipe, 
-    AaComponent, 
-    SearchComponent, 
-    LangSwitchComponent, 
+    RouterLink,
+    MatBadgeModule,
+    CommonModule,
+    BatchNavComponent,
+    ImportsNavComponent,
+    TranslatePipe,
+    AaComponent,
+    SearchComponent,
+    LangSwitchComponent,
     ToolsnavComponent,
     NgbPopover,
     NgbTooltip,
@@ -57,7 +57,7 @@ export class SidenavComponent implements AfterViewInit {
   mobile_options: HTMLElement | null = null;
 
   ngOnInit() {
-    const viewWidth = document.documentElement.offsetWidth || 0;
+    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
     this.mobile = viewWidth < 1200 ? true : false;
   }
 
@@ -90,11 +90,11 @@ export class SidenavComponent implements AfterViewInit {
 
   @HostListener('window:resize')
   onWindowResize() {
-    const viewWidth = document.documentElement.offsetWidth || 0;
+    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
     this.mobile = viewWidth < 992 ? true : false;
     if (!this.mobile) {
       this.collapse();
-    } 
+    }
   }
 
 }

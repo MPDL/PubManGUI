@@ -2,32 +2,40 @@
 import {BehaviorSubject, fromEvent, Subscription, tap} from "rxjs";
 import {AaService} from "./aa.service";
 import {filter, map} from "rxjs/operators";
-import {Injectable, OnDestroy, OnInit} from "@angular/core";
+import {inject, Injectable, OnDestroy, OnInit, PLATFORM_ID} from "@angular/core";
+import {isPlatformBrowser} from "@angular/common";
 
 @Injectable()
 export abstract class AddRemoveFromListGenericService {
 
   private localStorageKey: string;
 
-  private storageSubscription: Subscription;
+  private storageSubscription?: Subscription;
   private logoutSubscription: Subscription;
 
   public objectIds$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
   constructor(localStorageKey: string, aaService: AaService) {
+    const platformId = inject(PLATFORM_ID)
     this.localStorageKey = localStorageKey;
+    if(isPlatformBrowser(platformId)) {
 
-    const obs = fromEvent(window, 'storage').pipe(
-      filter((evt: Event) => evt instanceof StorageEvent && evt.key === this.localStorageKey),
-      map((evt: Event) => {
-        return evt as StorageEvent;
-      }),
-      map(evt => {
-        const cartItems = JSON.parse(evt.newValue || '[]');
-        return cartItems;
-      })
-    )
-    this.storageSubscription = obs.subscribe(this.objectIds$);
+
+      const obs = fromEvent(window, 'storage').pipe(
+        filter((evt: Event) => evt instanceof StorageEvent && evt.key === this.localStorageKey),
+        map((evt: Event) => {
+          return evt as StorageEvent;
+        }),
+        map(evt => {
+          const cartItems = JSON.parse(evt.newValue || '[]');
+          return cartItems;
+        })
+      )
+      this.storageSubscription = obs.subscribe(this.objectIds$);
+      this.setLocalStorage(this.getLocalStorage());
+    }
+
+
 
     this.logoutSubscription = aaService.logout$.pipe(
       filter(val => val===true),
@@ -35,7 +43,7 @@ export abstract class AddRemoveFromListGenericService {
     ).subscribe()
 
     //Set once to trigger initial value
-    this.setLocalStorage(this.getLocalStorage());
+
 
 
   }
@@ -43,7 +51,7 @@ export abstract class AddRemoveFromListGenericService {
 
 
   destroy() {
-    this.storageSubscription.unsubscribe();
+    this.storageSubscription?.unsubscribe();
     this.logoutSubscription.unsubscribe();
   }
 

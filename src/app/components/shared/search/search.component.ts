@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit{
   mobile_options: HTMLElement | null = null;
 
   ngOnInit(): void {
-    const viewWidth = document.documentElement.offsetWidth || 0;
+    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;
   }
 
@@ -196,7 +196,7 @@ export class SearchComponent implements OnInit{
 
   @HostListener('window:resize')
   onWindowResize() {
-    const viewWidth = document.documentElement.offsetWidth || 0;
+    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
     this.mobile = viewWidth < 1400 ? true : false;
   }
 

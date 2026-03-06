@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AaService } from "../../services/aa.service";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../../model/inge";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { TopnavComponent } from "../shared/topnav/topnav.component";
-import { AsyncPipe, DatePipe, NgOptimizedImage, ViewportScroller } from "@angular/common";
+import { AsyncPipe, DatePipe, isPlatformBrowser, isPlatformServer, NgOptimizedImage, ViewportScroller } from "@angular/common";
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
@@ -97,14 +97,15 @@ export class ItemViewComponent {
   itemModifier$!: Observable<AccountUserDbVO>;
   itemCreator$!: Observable<AccountUserDbVO>;
 
-  metaTagElements: Element[] = [];
+  // track meta selectors added via Meta service for removal
+  metaTagSelectors: string[] = [];
   copiedSuccessful: boolean = false;
 
   errorMessages: string[] = [];
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
-              private title: Title, private matomoTracker: MatomoTracker) {
+  private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any) {
 
   }
 
@@ -119,9 +120,11 @@ export class ItemViewComponent {
       }
     })
 
-    const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
-    if(subMenu) {
-      this.currentSubMenuSelection = subMenu;
+    if (isPlatformBrowser(this.platformId)) {
+      const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
+      if(subMenu) {
+        this.currentSubMenuSelection = subMenu;
+      }
     }
 
 
@@ -240,39 +243,86 @@ export class ItemViewComponent {
   }
 
   removeMetaTags() {
-    this.metaTagElements.forEach(element => {
-      document.head.removeChild(element);
+    // Remove tags added via Angular Meta service
+    this.metaTagSelectors.forEach(selector => {
+      try {
+        this.meta.removeTag(selector);
+      } catch (e) {
+        // ignore
+      }
     });
-    this.metaTagElements = [];
+    this.metaTagSelectors = [];
   }
 
 
   addMetaTags(i: ItemVersionVO) {
 
-    if(i.versionState== ItemVersionState.RELEASED && i.publicState== ItemVersionState.RELEASED) {
-      //Add DC and highwire Press citation meta tags
+
+    if (i.versionState == ItemVersionState.RELEASED && i.publicState == ItemVersionState.RELEASED) {
       forkJoin({
-        dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Dc_Xml", undefined, undefined, {responseType: "text"}),
-        highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Highwirepress_Cit_Xml", undefined, undefined, {responseType: "text"})
-      })
-        .subscribe(
-          res => {
-            const div = document.createElement('div');
-            div.innerHTML = res.dc + res.highwire;
-            Array.from(div.children).forEach(child => {
-              this.metaTagElements.push(child);
-              document.head.append(child)
-            })
-          }
-        );
+        dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), 'Html_Metatags_Dc_Xml', undefined, undefined, { responseType: 'text' }),
+        highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), 'Html_Metatags_Highwirepress_Cit_Xml', undefined, undefined, { responseType: 'text' })
+      }).subscribe(res => {
+        const html = (res.dc || '') + (res.highwire || '');
+        this._parseAndAddMetaHtml(html);
+      });
+    } else if (i.publicState == ItemVersionState.WITHDRAWN) {
+      try {
+        this.meta.addTag({ name: 'robots', content: 'noindex' }, false);
+        this.metaTagSelectors.push('name="robots"');
+      } catch (e) {
+        // ignore
+      }
     }
-    else if (i.publicState== ItemVersionState.WITHDRAWN) {
-      //Add no-index meta tag
-      const meta = document.createElement('meta');
-      meta.name = 'robots';
-      meta.content = 'noindex';
-      this.metaTagElements.push(meta);
-      document.head.append(meta);
+  }
+
+  private _parseAndAddMetaHtml(html: string) {
+    const metaTagRegex = /<meta\s+([^>]+)>/gi;
+    let match: RegExpExecArray | null;
+    while ((match = metaTagRegex.exec(html)) !== null) {
+      const attrString = match[1];
+      const attrs: Record<string, string> = {};
+      const attrPairs = attrString.match(/(\w[\w-]*\s*=\s*("[^"]*"|'[^']*'))/g) || [];
+      attrPairs.forEach(pair => {
+        const idx = pair.indexOf('=');
+        if (idx > 0) {
+          const name = pair.substring(0, idx).trim();
+          let val = pair.substring(idx + 1).trim();
+          if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+            val = val.substring(1, val.length - 1);
+          }
+          attrs[name.toLowerCase()] = val;
+        }
+      });
+
+      const def: any = {};
+      let selector = '';
+      if (attrs['name']) {
+        def.name = attrs['name'];
+        selector = `name="${attrs['name']}"`;
+      } else if (attrs['property']) {
+        def.property = attrs['property'];
+        selector = `property="${attrs['property']}"`;
+      } else if (attrs['http-equiv']) {
+        def.httpEquiv = attrs['http-equiv'];
+        selector = `http-equiv="${attrs['http-equiv']}"`;
+      } else if (attrs['charset']) {
+        def.charset = attrs['charset'];
+        selector = `charset="${attrs['charset']}"`;
+      }
+
+      if (attrs['content']) {
+        def.content = attrs['content'];
+      }
+
+      try {
+        if (Object.keys(def).length > 0) {
+          this.meta.addTag(def, false);
+          if (selector) this.metaTagSelectors.push(selector);
+        }
+      } catch (e) {
+        // ignore
+      }
     }
   }
 
@@ -306,8 +356,10 @@ export class ItemViewComponent {
 
   changeSubMenu(val: string) {
     this.currentSubMenuSelection = val;
-    if(this.currentSubMenuSelection!='admin') {
-      sessionStorage.setItem('selectedSubMenuItemView', this.currentSubMenuSelection);
+    if (this.currentSubMenuSelection != 'admin') {
+      if (isPlatformBrowser(this.platformId)) {
+        sessionStorage.setItem('selectedSubMenuItemView', this.currentSubMenuSelection);
+      }
     }
   }
 

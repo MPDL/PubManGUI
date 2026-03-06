@@ -11,7 +11,7 @@ export class SavedSearchService extends PubmanGenericRestClientService<SavedSear
 
 
   constructor(httpClient: HttpClient) {
-    super('/savedSearches');
+    super('/savedSearches', httpClient);
   }
 
   getAllSearch(opts?: HttpOptions): Observable<SavedSearchVO[]>{

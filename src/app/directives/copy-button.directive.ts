@@ -1,8 +1,10 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { CdkCopyToClipboard, Clipboard } from "@angular/cdk/clipboard";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { timer } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
+import { DOCUMENT } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
   selector: 'button[pureCopyButton]',
@@ -20,19 +22,26 @@ export class CopyButtonDirective {
   @Input() tooltip?: string;
   copiedSuccessful: boolean = false;
 
-  private copyIcon;
+  private copyIcon: HTMLElement | null = null;
 
-  constructor(private clipboard: Clipboard, private ngbTooltip: NgbTooltip, private elementRef: ElementRef, private translateService: TranslateService) {
-    this.copyIcon = document.createElement('i');
-    this.elementRef.nativeElement.appendChild(this.copyIcon);
-    this.setCopyIcon();
-
-    ngbTooltip.ngbTooltip = translateService.instant('common.copyToClipboard');
-
+  constructor(
+    private clipboard: Clipboard,
+    private ngbTooltip: NgbTooltip,
+    private elementRef: ElementRef,
+    private translateService: TranslateService,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: any,
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.copyIcon = this.document.createElement('i');
+      this.elementRef.nativeElement.appendChild(this.copyIcon);
+      this.setCopyIcon();
+      this.ngbTooltip.ngbTooltip = this.translateService.instant('common.copyToClipboard');
+    }
   }
 
   ngOnInit() {
-    if(this.tooltip) {
+    if (this.tooltip) {
       this.ngbTooltip.ngbTooltip = this.tooltip;
     }
   }
@@ -55,11 +64,15 @@ export class CopyButtonDirective {
   }
 
   private setCopyIcon() {
-    this.copyIcon.className = 'bi bi-copy';
+    if (this.copyIcon) {
+      this.copyIcon.className = 'bi bi-copy';
+    }
   }
 
   private setSuccessIcon() {
-    this.copyIcon.className = 'bi bi-check-lg';
+    if (this.copyIcon) {
+      this.copyIcon.className = 'bi bi-check-lg';
+    }
   }
 
   ngOnDestroy() {

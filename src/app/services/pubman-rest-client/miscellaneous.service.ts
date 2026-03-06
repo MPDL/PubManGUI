@@ -2,6 +2,7 @@ import { Injectable, resource, signal } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { MdsPublicationGenre } from 'src/app/model/inge';
+import { HttpClient } from '@angular/common/http';
 
 const ipListPath = 'getIpList';
 const genrePropertiesPath = 'getGenreProperties';
@@ -28,8 +29,8 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
     },
   });
 
-  constructor() {
-    super('/miscellaneous');
+  constructor(httpClient: HttpClient) {
+    super('/miscellaneous', httpClient);
     for (var i = 0; i < this.genre_types.length; i++) {
       let genre = this.genre_types.at(i);
       if (genre) {

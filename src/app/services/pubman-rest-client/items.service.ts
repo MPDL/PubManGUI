@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { AuditDbVO, exportTypes, ItemVersionVO } from "../../model/inge";
 import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
@@ -10,8 +11,8 @@ import { HttpOptions } from "./pubman-generic-rest-client.service";
 })
 export class ItemsService extends PubmanSearchableGenericRestClientService<ItemVersionVO>{
 
-  constructor() {
-    super('/items');
+  constructor(httpClient: HttpClient) {
+    super('/items', httpClient);
   }
 
   submit(id: string, lastModificationDate: Date, comment:string, opts?: HttpOptions): Observable<ItemVersionVO> {

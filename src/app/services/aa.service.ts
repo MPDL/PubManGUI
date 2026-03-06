@@ -1,5 +1,5 @@
 import { HttpClient, HttpContext, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
@@ -21,6 +21,7 @@ import {Router, RouteReuseStrategy} from "@angular/router";
 import { DISPLAY_ERROR, PubManHttpErrorResponse, SILENT_LOGOUT } from "./interceptors/http-error.interceptor";
 import { TranslateService } from "@ngx-translate/core";
 import {PureRrs} from "./pure-rrs";
+import { isPlatformBrowser } from "@angular/common";
 
 
 export class Principal{
@@ -67,6 +68,8 @@ export class AaService {
     private router: Router,
     private translate: TranslateService,
     private rrs: RouteReuseStrategy
+    ,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     const principal: Principal = new Principal();
     this.principal = new BehaviorSubject<Principal>(principal);
@@ -204,6 +207,9 @@ export class AaService {
 
 
   private who(silentLogout=true): Observable<AccountUserDbVO> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return of({active: false} as AccountUserDbVO);
+    }
     //const headers = new HttpHeaders().set('Authorization', token);
     const whoUrl = this.loginUrl + '/who';
     let user: any;
