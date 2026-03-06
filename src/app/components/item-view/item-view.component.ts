@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AaService } from "../../services/aa.service";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../../model/inge";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { TopnavComponent } from "../shared/topnav/topnav.component";
-import { AsyncPipe, DatePipe, NgOptimizedImage, ViewportScroller } from "@angular/common";
+import { AsyncPipe, DatePipe, isPlatformBrowser, NgOptimizedImage, ViewportScroller } from "@angular/common";
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
@@ -104,7 +104,7 @@ export class ItemViewComponent {
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
-              private title: Title, private matomoTracker: MatomoTracker) {
+              private title: Title, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
 
@@ -119,9 +119,11 @@ export class ItemViewComponent {
       }
     })
 
-    const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
-    if(subMenu) {
-      this.currentSubMenuSelection = subMenu;
+    if (isPlatformBrowser(this.platformId)) {
+      const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
+      if(subMenu) {
+        this.currentSubMenuSelection = subMenu;
+      }
     }
 
 
@@ -307,7 +309,9 @@ export class ItemViewComponent {
   changeSubMenu(val: string) {
     this.currentSubMenuSelection = val;
     if(this.currentSubMenuSelection!='admin') {
-      sessionStorage.setItem('selectedSubMenuItemView', this.currentSubMenuSelection);
+      if (isPlatformBrowser(this.platformId)) {
+        sessionStorage.setItem('selectedSubMenuItemView', this.currentSubMenuSelection);
+      }
     }
   }
 

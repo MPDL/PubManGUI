@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from "@angular/core";
 import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
 import { catchError, map, Observable, of } from "rxjs";
 import { ItemVersionVO, MdsPublicationGenre } from "../../model/inge";
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
-import { AsyncPipe, DatePipe, SlicePipe } from "@angular/common";
+import { AsyncPipe, DatePipe, isPlatformBrowser, SlicePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { SanitizeHtmlPipe } from "../../pipes/sanitize-html.pipe";
 import { HttpClient } from "@angular/common/http";
@@ -46,14 +46,17 @@ export class HomeComponent implements OnInit {
   chart: Chart | undefined;
 
   searchTerm:string = "";
+  private platformId = inject(PLATFORM_ID);
 
   constructor(private itemsService: ItemsService, private httpClient: HttpClient, private translateService:TranslateService, private simpleSearch: SimplesearchService) {
-    this.fetchLatestReleasedItems();
-    this.loadNewsItems();
   }
 
   ngOnInit(): void {
-  this.loadGenreAggs(); // new method to fetch real chart data
+    this.fetchLatestReleasedItems();
+    this.loadNewsItems();
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadGenreAggs(); // new method to fetch real chart data
+    }
   }
 
   onSearch(): void{
@@ -143,6 +146,9 @@ export class HomeComponent implements OnInit {
 
 
   createChart(): void{
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
   const canvas = document.getElementById('documentChart') as HTMLCanvasElement;
   let ctx;
   if (canvas !== null && canvas !== undefined){

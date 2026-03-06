@@ -1,8 +1,8 @@
-import { Component, DOCUMENT, HostListener, inject } from '@angular/core';
+import { Component, DOCUMENT, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AaComponent } from '../aa/aa.component';
-import { NgClass } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 import { AaService } from 'src/app/services/aa.service';
 import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
 import { SidenavComponent } from 'src/app/components/shared/sidenav/sidenav.component';
@@ -37,6 +37,7 @@ import {environment} from "../../../environments/environment";
 export class HeaderComponent {
 
   aa = inject(AaService);
+  private platformId = inject(PLATFORM_ID);
 
   headerHeight: number = 0;
   header!: HTMLElement;
@@ -44,11 +45,13 @@ export class HeaderComponent {
   isScrolled = false;
 
   ngOnInit() {
-    const nav = this.document.getElementById('header');
-    if (nav) {
-      this.header = nav;
+    if (isPlatformBrowser(this.platformId)) {
+      const nav = this.document.getElementById('header');
+      if (nav) {
+        this.header = nav;
+        this.headerHeight = this.header.offsetHeight as number;
+      }
     }
-    this.headerHeight = this.header.offsetHeight as number;
   }
 
   tools() {
@@ -56,19 +59,23 @@ export class HeaderComponent {
   }
 
   switch_lang() {
-    const loc = localStorage.getItem('locale');
-    if (loc?.localeCompare('de') === 0) {
-      localStorage.setItem('locale', 'en');
-    } else {
-      localStorage.setItem('locale', 'de');
+    if (isPlatformBrowser(this.platformId)) {
+      const loc = localStorage.getItem('locale');
+      if (loc?.localeCompare('de') === 0) {
+        localStorage.setItem('locale', 'en');
+      } else {
+        localStorage.setItem('locale', 'de');
+      }
+      location.reload();
     }
-    location.reload();
   }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isScrolled = scrollPosition > 20 ? true : false;
+    if (isPlatformBrowser(this.platformId)) {
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      this.isScrolled = scrollPosition > 20 ? true : false;
+    }
   }
 
   protected readonly environment = environment;

@@ -5,6 +5,7 @@ import {
   LOCALE_ID,
   provideAppInitializer,
   provideZoneChangeDetection,
+  PLATFORM_ID,
 } from '@angular/core';
 import de from '@angular/common/locales/de';
 import en from '@angular/common/locales/en';
@@ -25,13 +26,14 @@ import { httpBlobErrorInterceptor, httpErrorInterceptor } from "./services/inter
 
 import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { registerLocaleData } from "@angular/common";
+import { isPlatformBrowser, registerLocaleData } from "@angular/common";
 import { lastValueFrom } from "rxjs";
 import { AaService } from "./services/aa.service";
 import { provideMatomo, withRouter } from 'ngx-matomo-client';
 import { environment } from "../environments/environment";
 import { ContextsService } from "./services/pubman-rest-client/contexts.service";
 import { MessageService } from './services/message.service';
+import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -50,9 +52,9 @@ export const appConfig: ApplicationConfig = {
 
     provideHttpClient(
       //withInterceptorsFromDi(),
-      withInterceptors([httpErrorInterceptor, httpBlobErrorInterceptor])
+      withInterceptors([httpErrorInterceptor, httpBlobErrorInterceptor]),
       //withFetch() cannot be used right now, as it does not provide Upload progress reporting: https://github.com/angular/angular/issues/53650
-      //withFetch()
+      withFetch()
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
 
@@ -75,6 +77,7 @@ export const appConfig: ApplicationConfig = {
 
     provideAppInitializer(async () => {
       const translateSvc = inject(TranslateService);
+      const platformId = inject(PLATFORM_ID);
 
       //Register german and english date formats for pipes etc.
       registerLocaleData(en)
@@ -84,20 +87,23 @@ export const appConfig: ApplicationConfig = {
       translateSvc.addLangs(['de', 'en']);
       translateSvc.setDefaultLang('en');
 
-      //Store selected language in local storage
-      translateSvc.onLangChange.subscribe(ev => {
-        localStorage.setItem('locale', ev.lang);
-      })
-
-      //Set language at beginning. Use from local storage or browser
-      const userLocale = localStorage.getItem('locale');
-      const browserLocale = translateSvc.getBrowserLang() || 'en';
-
       let finalLocale = translateSvc.getDefaultLang();
-      if (userLocale) {
-        finalLocale = userLocale;
-      } else {
-        finalLocale = browserLocale;
+
+      if (isPlatformBrowser(platformId)) {
+        //Store selected language in local storage
+        translateSvc.onLangChange.subscribe(ev => {
+          localStorage.setItem('locale', ev.lang);
+        })
+
+        //Set language at beginning. Use from local storage or browser
+        const userLocale = localStorage.getItem('locale');
+        const browserLocale = translateSvc.getBrowserLang() || 'en';
+
+        if (userLocale) {
+          finalLocale = userLocale;
+        } else {
+          finalLocale = browserLocale;
+        }
       }
 
       //Wait until lang is loaded, so that translateService.instant() method can be used any time
@@ -107,12 +113,16 @@ export const appConfig: ApplicationConfig = {
 
     provideAppInitializer(async () => {
       const aaService = inject(AaService);
-      const messageService = inject(MessageService)
-      await lastValueFrom(aaService.checkLogin()).catch(
-        err => {
+      const messageService = inject(MessageService);
+      const platformId = inject(PLATFORM_ID);
+
+      if (isPlatformBrowser(platformId)) {
+        try {
+          await lastValueFrom(aaService.checkLogin());
+        } catch (err) {
           messageService.error("Error checking login status on app initialization: " + err);
         }
-      )
+      }
     }),
 
     provideMatomo(
@@ -126,6 +136,12 @@ export const appConfig: ApplicationConfig = {
 
       },
       withRouter()
+    ),
+    provideClientHydration(
+      withEventReplay(),
+      withHttpTransferCacheOptions({
+        includePostRequests: true,
+      })
     ),
   ],
 

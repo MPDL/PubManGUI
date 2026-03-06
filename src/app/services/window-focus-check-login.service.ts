@@ -1,8 +1,9 @@
-import { HostListener, Injectable } from '@angular/core';
+import { HostListener, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from "@angular/router";
 import { AaService } from "./aa.service";
-import { fromEvent, tap } from "rxjs";
+import { fromEvent, Subscription, tap } from "rxjs";
 import { filter } from "rxjs/operators";
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +12,22 @@ export class WindowFocusCheckLoginService {
 
   enabled: boolean = true;
 
-  private subs;
+  private subs: Subscription | undefined;
+  private platformId = inject(PLATFORM_ID);
+
   constructor(private aaService: AaService) {
-    this. subs = fromEvent(window, 'focus').pipe(
-      filter(() => this.enabled),
-      tap(evt => {
-        this.aaService.checkLoginChanged()
-      })
-    ).subscribe()
+    if (isPlatformBrowser(this.platformId)) {
+      this.subs = fromEvent(window, 'focus').pipe(
+        filter(() => this.enabled),
+        tap(evt => {
+          this.aaService.checkLoginChanged()
+        })
+      ).subscribe()
+    }
   }
 
   onDestroy() {
-    this.subs.unsubscribe();
+    this.subs?.unsubscribe();
   }
 
 

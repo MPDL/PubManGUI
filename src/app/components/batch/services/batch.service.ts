@@ -1,4 +1,5 @@
-import { computed, Injectable, OnDestroy, signal} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { computed, inject, Injectable, OnDestroy, PLATFORM_ID, signal} from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -87,8 +88,8 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
   public getProcessLog = computed( () => this.#processLog() );
 
   updateProcessProgress(id: number) {
-    if (this.isProcessRunning()) { 
-      this.getBatchProcessLogHeaderId(id).subscribe(response => { 
+    if (this.isProcessRunning()) {
+      this.getBatchProcessLogHeaderId(id).subscribe(response => {
         this.#processLog.set(response);
         if (response.state === resp.BatchProcessLogHeaderState.RUNNING) {
           setTimeout(() => {
@@ -103,17 +104,19 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
   }
 
   set batchProcessLogHeaderId(id: number) {
-    sessionStorage.setItem('batchProcessLogHeaderId', id.toString());
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('batchProcessLogHeaderId', id.toString());
+    }
   }
 
   get batchProcessLogHeaderId(): number {
-    const batchProcessLogHeaderId = sessionStorage.getItem('batchProcessLogHeaderId');
-    if (batchProcessLogHeaderId) {
-      return JSON.parse(batchProcessLogHeaderId);
-    } else {
-      return -1;
+    if (typeof sessionStorage !== 'undefined') {
+      const id = sessionStorage.getItem('batchProcessLogHeaderId');
+      return id ? parseInt(id) : -1;
     }
+    return -1;
   }
+
 
   getSelectedItems(): ItemVersionVO[] {
     let datasets: ItemVersionVO[] = [];
@@ -165,7 +168,7 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
 
   getBatchProcessLogDetails(batchProcessLogDetailId: number): Observable<resp.BatchProcessLogDetailDbVO[]> {
     const url = `${this.#baseUrl}/batchProcess/batchProcessLogDetails/${batchProcessLogDetailId}`;
-    
+
     return this.http.get<resp.BatchProcessLogDetailDbVO[]>(url, { withCredentials: true });
   }
 
