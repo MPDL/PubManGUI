@@ -46,6 +46,7 @@ import { UpdateLocaltagsModalComponent } from "../shared/update-localtags-modal/
 import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 import { MatomoTracker } from "ngx-matomo-client";
 import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
+import { MetaTagsTransformerService } from 'src/app/services/meta-tags-transformer.service';
 
 @Component({
   selector: 'pure-item-view',
@@ -105,7 +106,7 @@ export class ItemViewComponent {
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
-  private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any) {
+  private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService) {
 
   }
 
@@ -259,6 +260,7 @@ export class ItemViewComponent {
 
 
     if (i.versionState == ItemVersionState.RELEASED && i.publicState == ItemVersionState.RELEASED) {
+      /*
       forkJoin({
         dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), 'Html_Metatags_Dc_Xml', undefined, undefined, { responseType: 'text' }),
         highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), 'Html_Metatags_Highwirepress_Cit_Xml', undefined, undefined, { responseType: 'text' })
@@ -266,6 +268,10 @@ export class ItemViewComponent {
         const html = (res.dc || '') + (res.highwire || '');
         this._parseAndAddMetaHtml(html);
       });
+      
+      */
+     this.metaTagService.transformAndSetMetaTags(i);
+
     } else if (i.publicState == ItemVersionState.WITHDRAWN) {
       try {
         this.meta.addTag({ name: 'robots', content: 'noindex' }, false);
