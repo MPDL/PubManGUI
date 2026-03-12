@@ -24,8 +24,8 @@ import {
 } from '@angular/common/http';
 import { httpBlobErrorInterceptor, httpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
 
-import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateService, TranslateLoader, TranslateService, provideTranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader, provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { isPlatformBrowser, registerLocaleData } from "@angular/common";
 import { lastValueFrom } from "rxjs";
 import { AaService } from "./services/aa.service";
@@ -34,10 +34,6 @@ import { environment } from "../environments/environment";
 import { ContextsService } from "./services/pubman-rest-client/contexts.service";
 import { MessageService } from './services/message.service';
 import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
-
-const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
-  new TranslateHttpLoader(http, 'assets/i18n/', '.json');
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -67,12 +63,11 @@ export const appConfig: ApplicationConfig = {
     },
 
     //provide translation service by ngx-translate
-    provideTranslateService({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpLoaderFactory,
-        deps: [HttpClient],
-      },
+    provideTranslateService(),
+    provideTranslateLoader(TranslateHttpLoader),
+    provideTranslateHttpLoader({
+      prefix: 'assets/i18n/',
+      suffix: '.json',
     }),
 
     provideAppInitializer(async () => {
@@ -107,7 +102,7 @@ export const appConfig: ApplicationConfig = {
       }
 
       //Wait until lang is loaded, so that translateService.instant() method can be used any time
-      await lastValueFrom(translateSvc.use(finalLocale));
+      await lastValueFrom(translateSvc.use(finalLocale as string));
     }),
 
 
