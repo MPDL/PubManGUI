@@ -28,7 +28,7 @@ export class BreadcrumbService {
   }
 
   ngOnDestroy() {
-    this.routerSubscription.unsubscribe();
+    this.routerSubscription?.unsubscribe();
   }
 
   getBreadcrumbs(): Observable<Breadcrumb[]> {

@@ -242,39 +242,43 @@ export class ItemViewComponent {
   }
 
   removeMetaTags() {
-    this.metaTagElements.forEach(element => {
-      document.head.removeChild(element);
-    });
-    this.metaTagElements = [];
+    if (isPlatformBrowser(this.platformId)) {
+      this.metaTagElements.forEach(element => {
+        document.head.removeChild(element);
+      });
+      this.metaTagElements = [];
+    }
   }
 
 
   addMetaTags(i: ItemVersionVO) {
 
-    if(i.versionState== ItemVersionState.RELEASED && i.publicState== ItemVersionState.RELEASED) {
-      //Add DC and highwire Press citation meta tags
-      forkJoin({
-        dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Dc_Xml", undefined, undefined, {responseType: "text"}),
-        highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Highwirepress_Cit_Xml", undefined, undefined, {responseType: "text"})
-      })
-        .subscribe(
-          res => {
-            const div = document.createElement('div');
-            div.innerHTML = res.dc + res.highwire;
-            Array.from(div.children).forEach(child => {
-              this.metaTagElements.push(child);
-              document.head.append(child)
-            })
-          }
-        );
-    }
-    else if (i.publicState== ItemVersionState.WITHDRAWN) {
-      //Add no-index meta tag
-      const meta = document.createElement('meta');
-      meta.name = 'robots';
-      meta.content = 'noindex';
-      this.metaTagElements.push(meta);
-      document.head.append(meta);
+    if (isPlatformBrowser(this.platformId)) {
+      if (i.versionState == ItemVersionState.RELEASED && i.publicState == ItemVersionState.RELEASED) {
+        //Add DC and highwire Press citation meta tags
+        forkJoin({
+          dc: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Dc_Xml", undefined, undefined, { responseType: "text" }),
+          highwire: this.itemsService.retrieveSingleExport(itemToVersionId(i), "Html_Metatags_Highwirepress_Cit_Xml", undefined, undefined, { responseType: "text" })
+        })
+          .subscribe(
+            res => {
+              const div = document.createElement('div');
+              div.innerHTML = res.dc + res.highwire;
+              Array.from(div.children).forEach(child => {
+                this.metaTagElements.push(child);
+                document.head.append(child)
+              })
+            }
+          );
+      }
+      else if (i.publicState == ItemVersionState.WITHDRAWN) {
+        //Add no-index meta tag
+        const meta = document.createElement('meta');
+        meta.name = 'robots';
+        meta.content = 'noindex';
+        this.metaTagElements.push(meta);
+        document.head.append(meta);
+      }
     }
   }
 

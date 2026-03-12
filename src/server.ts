@@ -21,9 +21,26 @@ app.use(
   createProxyMiddleware({
     target: 'https://blog.pure.mpg.de/json1',
     changeOrigin: true,
+    secure: false,
     pathRewrite: {
       '^/pureblogfeed': '',
     },
+    on: {
+      proxyReq: (proxyReq, req, res) => {
+        console.log(`[PROXY BLOG] Request: ${req.method} ${(req as any).originalUrl} -> ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`);
+      },
+      proxyRes: (proxyRes, req, res) => {
+        console.log(`[PROXY BLOG] Response: ${proxyRes.statusCode} for ${(req as any).originalUrl}`);
+      },
+      error: (err, req, res) => {
+        console.error(`[PROXY BLOG] Error: ${err.message} for ${(req as any).originalUrl}`);
+        const response = res as any;
+        if (response && response.headersSent === false && typeof response.writeHead === 'function') {
+          response.writeHead(502, { 'Content-Type': 'application/json' });
+          response.end(JSON.stringify({ error: 'Proxy error', message: 'Target blog.pure.mpg.de is currently unreachable (DNS or Network issue).', details: err.message }));
+        }
+      },
+    }
   })
 );
 
@@ -33,10 +50,12 @@ app.use(
     target: 'https://gui.inge.mpdl.mpg.de',
     changeOrigin: true,
     secure: false,
-    xfwd: true,
+    xfwd: false,
     logger: console,
     on: {
       proxyReq: (proxyReq, req, res) => {
+        // Setze X-Forwarded-For auf die MPDL-Gateway-IP, um Listenbildung zu vermeiden
+        proxyReq.setHeader('X-Forwarded-For', '130.183.252.19');
         console.log(`[PROXY] Request: ${req.method} ${(req as any).originalUrl} -> ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`);
       },
       proxyRes: (proxyRes, req, res) => {

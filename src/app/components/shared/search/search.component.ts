@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, HostListener, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DOCUMENT, HostListener, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -48,13 +49,16 @@ export class SearchComponent implements OnInit{
   }
 
   private document = inject(DOCUMENT);
+  private platformId = inject(PLATFORM_ID);
 
   mobile: boolean | null = null;
   mobile_options: HTMLElement | null = null;
 
   ngOnInit(): void {
-    const viewWidth = document.documentElement.offsetWidth || 0;
-    this.mobile = viewWidth < 1400 ? true : false;
+    if (isPlatformBrowser(this.platformId)) {
+      const viewWidth = window.innerWidth || 0;
+      this.mobile = viewWidth < 1400 ? true : false;
+    }
   }
 
 
@@ -196,8 +200,10 @@ export class SearchComponent implements OnInit{
 
   @HostListener('window:resize')
   onWindowResize() {
-    const viewWidth = document.documentElement.offsetWidth || 0;
-    this.mobile = viewWidth < 1400 ? true : false;
+    if (isPlatformBrowser(this.platformId)) {
+      const viewWidth = window.innerWidth || 0;
+      this.mobile = viewWidth < 1400 ? true : false;
+    }
   }
 
 

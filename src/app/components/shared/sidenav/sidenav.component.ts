@@ -6,9 +6,12 @@ import {
   ElementRef,
   HostListener,
   inject,
+  OnInit,
+  PLATFORM_ID,
   Renderer2,
   ViewChild
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AaService } from "../../../services/aa.service";
 
@@ -29,15 +32,15 @@ import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
   selector: 'pure-sidenav',
   standalone: true,
   imports: [
-    RouterLink, 
-    MatBadgeModule, 
-    CommonModule, 
-    BatchNavComponent, 
-    ImportsNavComponent, 
-    TranslatePipe, 
-    AaComponent, 
-    SearchComponent, 
-    LangSwitchComponent, 
+    RouterLink,
+    MatBadgeModule,
+    CommonModule,
+    BatchNavComponent,
+    ImportsNavComponent,
+    TranslatePipe,
+    AaComponent,
+    SearchComponent,
+    LangSwitchComponent,
     ToolsnavComponent,
     NgbPopover,
     NgbTooltip,
@@ -52,13 +55,16 @@ export class SidenavComponent implements AfterViewInit {
   aaService = inject(AaService);
   cartService = inject(CartService);
   private document = inject(DOCUMENT);
+  private platformId = inject(PLATFORM_ID);
 
   mobile: boolean | null = null;
   mobile_options: HTMLElement | null = null;
 
   ngOnInit() {
-    const viewWidth = document.documentElement.offsetWidth || 0;
-    this.mobile = viewWidth < 1200 ? true : false;
+    if (isPlatformBrowser(this.platformId)) {
+      const viewWidth = window.innerWidth || 0;
+      this.mobile = viewWidth < 1200 ? true : false;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -90,11 +96,13 @@ export class SidenavComponent implements AfterViewInit {
 
   @HostListener('window:resize')
   onWindowResize() {
-    const viewWidth = document.documentElement.offsetWidth || 0;
-    this.mobile = viewWidth < 992 ? true : false;
-    if (!this.mobile) {
-      this.collapse();
-    } 
+    if (isPlatformBrowser(this.platformId)) {
+      const viewWidth = window.innerWidth || 0;
+      this.mobile = viewWidth < 992 ? true : false;
+      if (!this.mobile) {
+        this.collapse();
+      }
+    }
   }
 
 }

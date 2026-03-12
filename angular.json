@@ -77,7 +77,10 @@
             },
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "sanitize-html"
+            ]
           },
           "configurations": {
             "production": {
@@ -136,7 +139,7 @@
             },
             "development": {
               "buildTarget": "PubManGUI:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "src/proxy.conf.js"
             },
             "development-local-inge": {
               "buildTarget": "PubManGUI:build:development",

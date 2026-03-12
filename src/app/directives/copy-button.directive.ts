@@ -1,4 +1,5 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, inject, Input, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CdkCopyToClipboard, Clipboard } from "@angular/cdk/clipboard";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { timer } from "rxjs";
@@ -20,15 +21,18 @@ export class CopyButtonDirective {
   @Input() tooltip?: string;
   copiedSuccessful: boolean = false;
 
-  private copyIcon;
+  private platformId = inject(PLATFORM_ID);
+  private renderer = inject(Renderer2);
+  private copyIcon: HTMLElement | null = null;
 
   constructor(private clipboard: Clipboard, private ngbTooltip: NgbTooltip, private elementRef: ElementRef, private translateService: TranslateService) {
-    this.copyIcon = document.createElement('i');
-    this.elementRef.nativeElement.appendChild(this.copyIcon);
-    this.setCopyIcon();
+    if (isPlatformBrowser(this.platformId)) {
+      this.copyIcon = this.renderer.createElement('i');
+      this.renderer.appendChild(this.elementRef.nativeElement, this.copyIcon);
+      this.setCopyIcon();
+    }
 
     ngbTooltip.ngbTooltip = translateService.instant('common.copyToClipboard');
-
   }
 
   ngOnInit() {
@@ -55,11 +59,15 @@ export class CopyButtonDirective {
   }
 
   private setCopyIcon() {
-    this.copyIcon.className = 'bi bi-copy';
+    if (this.copyIcon) {
+      this.copyIcon.className = 'bi bi-copy';
+    }
   }
 
   private setSuccessIcon() {
-    this.copyIcon.className = 'bi bi-check-lg';
+    if (this.copyIcon) {
+      this.copyIcon.className = 'bi bi-check-lg';
+    }
   }
 
   ngOnDestroy() {

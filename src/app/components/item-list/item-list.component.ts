@@ -128,9 +128,9 @@ export class ItemListComponent implements AfterViewInit{
 
 
   ngOnDestroy() {
-    this.searchQuerySubscription.unsubscribe();
-    this.selectionServiceSubscription.unsubscribe();
-    this.routerEventsSubscription.unsubscribe();
+    this.searchQuerySubscription?.unsubscribe();
+    this.selectionServiceSubscription?.unsubscribe();
+    this.routerEventsSubscription?.unsubscribe();
   }
 
   ngAfterViewInit(): void {
