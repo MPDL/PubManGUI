@@ -23,7 +23,6 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SeparateFilterPipe,
     TranslatePipe,
     ValidationErrorComponent,
     NgbTooltip
@@ -141,8 +140,8 @@ export default class ImportComponent implements OnInit {
       this.importForm.controls['fileName'].setValue($event.dataTransfer.files[0].name);
       this.importForm.controls['fileName'].markAsTouched();
       this.getData($event.dataTransfer.files[0]);
-    } 
- 
+    }
+
     this.importForm.get('fileName')?.clearAsyncValidators();
     this.importForm.get('fileName')?.updateValueAndValidity();
   }
@@ -153,7 +152,7 @@ export default class ImportComponent implements OnInit {
       this.importForm.controls['fileName'].setValue($event.target.files[0].name);
       this.importForm.controls['fileName'].markAsTouched();
       this.getData($event.target.files[0]);
-    } 
+    }
 
     this.importForm.get('fileName')?.clearAsyncValidators();
     this.importForm.get('fileName')?.updateValueAndValidity();
@@ -164,7 +163,7 @@ export default class ImportComponent implements OnInit {
     this.importForm.controls['fileName'].markAsUntouched();
     this.importForm.get('fileName')?.clearAsyncValidators();
     this.importForm.get('fileName')?.updateValueAndValidity();
-    this.data = null; 
+    this.data = null;
     this.elRef.nativeElement.querySelector('#fileChoose').value = null;
   }
 

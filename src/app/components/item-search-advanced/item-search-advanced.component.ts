@@ -57,8 +57,7 @@ import {MessageService} from "../../services/message.service";
     AddRemoveButtonsComponent,
     ConeAutosuggestComponent,
     BootstrapValidationDirective,
-    ValidationErrorComponent,
-    CopyButtonDirective
+    ValidationErrorComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   styleUrl: './item-search-advanced.component.scss',
