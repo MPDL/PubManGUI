@@ -53,7 +53,7 @@ export class FileFormComponent {
   error_types = Errors;
 
   audiencePriorityList = ['mpg'];
-  isContentFormDisabled = false;
+  isReadOnlyContent = false;
 
   constructor(miscellaneousService: MiscellaneousService, private coneService: ConeService) {
     miscellaneousService.retrieveIpList().subscribe(
@@ -66,7 +66,7 @@ export class FileFormComponent {
   ngOnInit(): void {
     if (this.file_form?.get('storage')?.value === 'EXTERNAL_URL' && !isFormValueEmpty(this.file_form.get('content')?.value))
       { 
-        this.file_form.get('content')?.disable(); 
+        this.isReadOnlyContent = true; 
       }    
   }
 
