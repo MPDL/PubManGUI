@@ -94,9 +94,11 @@ export const appConfig: ApplicationConfig = {
         const userLocale = localStorage.getItem('locale');
         const browserLocale = translateSvc.getBrowserLang() || 'en';
 
-        if (userLocale) {
-          finalLocale = userLocale;
-        } else {
+      if (userLocale) {
+        finalLocale = userLocale;
+      } else {
+        if (browserLocale ==='de' || browserLocale==='en')
+        {
           finalLocale = browserLocale;
         }
       }
