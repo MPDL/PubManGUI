@@ -55,8 +55,7 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
   }
 
   get items(): string[] {
-    //return [...new Set(this.objectIds$.value)];
-    return this.objectIds$.value
+    return [...new Set(this.objectIds$.value)];
   }
 
   public areItemsSelected() {
