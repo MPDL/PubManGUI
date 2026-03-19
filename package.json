@@ -11,7 +11,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "analyze-bundle": "ng build --configuration=analyze-bundle && source-map-explorer dist/**/*.js --no-border-checks",
-    "serve:ssr:PubManGUI": "node dist/server/server.mjs"
+    "pm2": "pm2 start dist/server/server.mjs"
   },
   "private": true,
   "dependencies": {
