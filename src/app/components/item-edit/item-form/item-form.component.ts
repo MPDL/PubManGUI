@@ -206,6 +206,7 @@ export class ItemFormComponent implements OnInit {
         }
       }
     }
+    this.files.clear();
     //this.internalFiles?.updateValueAndValidity();
     //this.externalReferences?.updateValueAndValidity();
   }
