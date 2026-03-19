@@ -51,15 +51,16 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
   }
 
   public getItemsCount() {
-    return this.objectIds$.value.length;
+    return this.items.length;
   }
 
   get items(): string[] {
+    //return [...new Set(this.objectIds$.value)];
     return this.objectIds$.value
   }
 
   public areItemsSelected() {
-    return this.objectIds$.value.length > 0;
+    return this.items.length > 0;
   }
 
   startProcess(id: number) {
