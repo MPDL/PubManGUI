@@ -8,7 +8,6 @@ import { ContextDbRO, ImportFormat } from 'src/app/model/inge';
 import { ImportValidatorsService } from 'src/app/components/imports/services/import-validators.service';
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
 import type { PostImportParams } from 'src/app/components/imports/interfaces/imports-params';
-import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
 
 import { AaService } from 'src/app/services/aa.service';
 import { _, TranslatePipe } from "@ngx-translate/core";
@@ -23,7 +22,6 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SeparateFilterPipe,
     TranslatePipe,
     ValidationErrorComponent,
     NgbTooltip
