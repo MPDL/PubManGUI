@@ -105,6 +105,7 @@ export const appConfig: ApplicationConfig = {
 
       //Wait until lang is loaded, so that translateService.instant() method can be used any time
       await lastValueFrom(translateSvc.use(finalLocale as string));
+    }
     }),
 
 
