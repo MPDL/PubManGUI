@@ -3,7 +3,7 @@
   transition: all 0.1s ease;
 
   #brand {
-    height: 100px;
+    height: 60px;
     z-index: 99;
   }
 
@@ -69,6 +69,7 @@
 
     #header_container {
       transform: translateY(-12px);
+      height: 60px !important;
     }
 
     .side_nav_mobile {
