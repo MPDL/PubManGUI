@@ -79,7 +79,7 @@
                   "with": "src/environments/environment.qa-pure-dev.ts"
                 }
               ],
-              "baseHref": "/pubman-gui/"
+              "baseHref": "/pubman-gui-dev/"
             },
             "qa-pure": {
               "fileReplacements": [
