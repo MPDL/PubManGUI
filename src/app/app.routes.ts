@@ -174,6 +174,16 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'pid-not-resolved/:id',
+    loadComponent: () => import('./pages/pid-not-resolved/pid-not-resolved.component').then(m => m.PidNotResolvedComponent),
+    data: {
+      breadcrumb: {
+        labelKey: 'common.pidNotResolved',
+        keepIfLast: [],
+      }
+    },
+  },
+  {
     path: '**',
     loadComponent: () => import('./components/shared/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent)
   }
