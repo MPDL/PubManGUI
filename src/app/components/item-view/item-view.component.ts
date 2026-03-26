@@ -31,7 +31,7 @@ import { TopnavCartComponent } from "../shared/topnav/topnav-cart/topnav-cart.co
 import { ItemListStateService } from "../item-list/item-list-state.service";
 import { SanitizeHtmlCitationPipe } from "../../pipes/sanitize-html-citation.pipe";
 import { ItemSelectionService } from "../../services/item-selection.service";
-import { Title } from "@angular/platform-browser";
+import {Meta, Title} from "@angular/platform-browser";
 import { ItemActionsModalComponent } from "../shared/item-actions-modal/item-actions-modal.component";
 import { LoadingComponent } from "../shared/loading/loading.component";
 import { TranslatePipe } from "@ngx-translate/core";
@@ -268,7 +268,7 @@ export class ItemViewComponent {
         const html = (res.dc || '') + (res.highwire || '');
         this._parseAndAddMetaHtml(html);
       });
-      
+
       */
      this.metaTagService.transformAndSetMetaTags(i);
 
