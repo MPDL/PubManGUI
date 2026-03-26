@@ -1,7 +1,7 @@
 @if(message?.text || message?.title) {
-  @let bg_color_subtle = 'bg-' + main_color +'-subtle';
-  @let bg_color = 'bg-' + main_color;
-  @let text_color_emphasis= 'text-' + main_color +'-emphasis';
+@let bg_color_subtle = 'bg-' + main_color +'-subtle';
+@let bg_color = 'bg-' + main_color;
+@let text_color_emphasis= 'text-' + main_color +'-emphasis';
 
 <div [ngClass]="{'collapsed': !collapsed}" class="mb-1">
   <div class="rounded-1 p1" [ngClass]="[bg_color_subtle, text_color_emphasis]">
@@ -27,7 +27,9 @@
         {{ message?.text }}
       </span>
       }
-      <span class="material-symbols-outlined close" (click)="close()">close</span>
+      <div>
+        <span class="material-symbols-outlined close" (click)="close()">close</span>
+      </div>
     </div>
 
     @if(message?.title && !collapsed) {
@@ -38,8 +40,9 @@
 
     @if(countdownEnabled) {
 
-    <div class="progress rounded-0 rounded-bottom-1" [ngClass]="bg_color_subtle" style="height: 3px;" >
-      <div class="progress-bar" [ngClass]="bg_color" role="progressbar" [style.width.%]="progress" aria-valuemax="100"></div>
+    <div class="progress rounded-0 rounded-bottom-1" [ngClass]="bg_color_subtle" style="height: 3px;">
+      <div class="progress-bar" [ngClass]="bg_color" role="progressbar" [style.width.%]="progress" aria-valuemax="100">
+      </div>
     </div>
     }
   </div>

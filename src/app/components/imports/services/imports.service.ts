@@ -1,8 +1,8 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpContext } from '@angular/common/http';
 import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DISPLAY_ERROR } from "src/app/services/interceptors/http-error.interceptor";
+import { DISPLAY_ERROR } from 'src/app/services/interceptors/http-context-tokens';
 
 import type * as params from '../interfaces/imports-params';
 
@@ -23,12 +23,8 @@ export class ImportsService {
 
   readonly #baseUrl: string = environment.inge_rest_uri;
 
-  constructor(
-    private http: HttpClient,
-    public aaSvc: AaService
-  ) {
-    //this.checkImports();
-  }
+  http = inject(HttpClient);
+  aaSvc = inject(AaService);
 
   get isDepositor(): boolean {
     return this.aaSvc.principal.value.isDepositor;
@@ -71,26 +67,24 @@ export class ImportsService {
 
   getCrossref(importParams: params.GetCrossrefParams): Observable<ItemVersionVO> {
     const url = `${this.#baseUrl}/dataFetch/getCrossref`;
-    const query = `?contextId=${importParams.contextId}&identifier=${importParams.identifier}`;
+    const query = `?identifier=${importParams.identifier}`;
 
     return this.getDataFetch(url, query );
   }
 
   getArxiv(importParams: params.GetArxivParams): Observable<ItemVersionVO> {
     const url = `${this.#baseUrl}/dataFetch/getArxiv`;
-    const query = `?contextId=${importParams.contextId}&identifier=${importParams.identifier}&fullText=${importParams.fullText}`;
+    const query = `?identifier=${importParams.identifier}&fullText=${importParams.fullText}`;
 
     return this.getDataFetch(url, query );
   }
 
   getDataFetch(url: string, query: string): Observable<ItemVersionVO> {
-    //const importResponse: Observable<ItemVersionVO> = this.http.get<ItemVersionVO>(url + query, { withCredentials: true, context: context })
-    const importResponse: Observable<ItemVersionVO> = this.http.request<ItemVersionVO>('GET', url + query, { withCredentials: true, context: this.context })
+   const importResponse: Observable<ItemVersionVO> = this.http.request<ItemVersionVO>('GET', url + query, { withCredentials: true })
       .pipe(
         tap((value: ItemVersionVO) => {
           this.#lastFetch.set(of(value));
-        }),
-        //catchError(err => throwError(() => err)),
+        })
       );
 
     return importResponse;

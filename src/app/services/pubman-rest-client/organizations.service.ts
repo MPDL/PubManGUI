@@ -84,16 +84,17 @@ export class OrganizationsService extends PubmanSearchableGenericRestClientServi
       return this.httpPut(path, body, opts);
     }
 
-    getSuccessors(id: string): Observable<SearchResult<AffiliationDbVO>> {
-      const query = {
-        query: {
-          term: {
-            'predecessorAffiliations.objectId': {
-              value: id,
-            },
-          },
-        },
-      };
+  getSuccessors(id: string): Observable<SearchResult<AffiliationDbVO>> {
+    const query = {
+      "size": 1000,
+      query: {
+        term: {
+          "predecessorAffiliations.objectId": {
+            value: id
+          }
+        }
+      }
+    }
 
       return this.search(query);
 

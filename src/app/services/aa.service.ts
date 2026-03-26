@@ -18,8 +18,8 @@ import { environment } from 'src/environments/environment';
 import { AccountUserDbVO, ContextDbVO, ItemVersionState } from "../model/inge";
 import { ContextsService } from "./pubman-rest-client/contexts.service";
 import {Router, RouteReuseStrategy} from "@angular/router";
-import { DISPLAY_ERROR, PubManHttpErrorResponse, SILENT_LOGOUT } from "./interceptors/http-error.interceptor";
 import { TranslateService } from "@ngx-translate/core";
+import { DISPLAY_ERROR, SILENT_LOGOUT } from "./interceptors/http-error.interceptor";
 import {PureRrs} from "./pure-rrs";
 import { isPlatformBrowser } from "@angular/common";
 

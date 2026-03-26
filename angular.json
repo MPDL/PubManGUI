@@ -80,20 +80,20 @@
           "configurations": {
             "production": {
             },
-            "gui-inge": {
+            "qa-pure-dev": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.gui-inge.ts"
+                  "with": "src/environments/environment.qa-pure-dev.ts"
                 }
               ],
-              "baseHref": "/pubman-gui/"
+              "baseHref": "/pubman-gui-dev/"
             },
-            "gui-inge-external": {
+            "qa-pure": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.gui-inge-external.ts"
+                  "with": "src/environments/environment.qa-pure.ts"
                 }
               ],
               "baseHref": "/"
