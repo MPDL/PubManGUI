@@ -56,7 +56,6 @@ import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
     ItemViewMetadataComponent,
     ItemViewMetadataElementComponent,
     AsyncPipe,
-    NgOptimizedImage,
     SanitizeHtmlPipe,
     ItemViewFileComponent,
     NotEmptyPipe,

@@ -1,6 +1,6 @@
 const PROXY_CONFIG = {
   "/cone": {
-    "target": "https://gui.inge.mpdl.mpg.de",
+    "target": "https://qa.pure.mpdl.mpg.de",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
@@ -11,7 +11,7 @@ const PROXY_CONFIG = {
     }
   },
   "/rest": {
-    "target": "https://gui.inge.mpdl.mpg.de",
+    "target": "https://qa.pure.mpdl.mpg.de",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

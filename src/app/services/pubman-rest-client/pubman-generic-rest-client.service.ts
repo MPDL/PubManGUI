@@ -31,8 +31,6 @@ export interface HttpOptions {
 
 export abstract class PubmanGenericRestClientService<modelType> {
 
-  // restUri = 'https://gui.inge.mpdl.mpg.de/rest';
-  // restUri = 'https://qa.pure.mpdl.mpg.de/rest';
   protected restUri = environment.inge_rest_uri;
   protected httpClient: HttpClient = inject(HttpClient);
   protected subPath:string;

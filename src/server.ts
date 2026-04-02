@@ -47,7 +47,7 @@ app.use(
 app.use(
   createProxyMiddleware({
     pathFilter: ['/cone', '/rest'],
-    target: 'https://gui.inge.mpdl.mpg.de',
+    target: 'https://qa.pure.mpdl.mpg.de',
     changeOrigin: true,
     secure: false,
     xfwd: false,
