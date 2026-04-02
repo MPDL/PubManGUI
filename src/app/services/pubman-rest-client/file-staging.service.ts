@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { FileDbVO } from 'src/app/model/inge';
-import { HttpOptions, PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
-import { Observable, switchMap, tap } from 'rxjs';
-import { HttpEvent, HttpHeaders } from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {FileDbVO} from 'src/app/model/inge';
+import {PubmanGenericRestClientService} from './pubman-generic-rest-client.service';
+import {Observable} from 'rxjs';
+import {HttpEvent, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'

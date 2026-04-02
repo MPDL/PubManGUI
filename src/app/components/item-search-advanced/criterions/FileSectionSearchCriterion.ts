@@ -1,9 +1,9 @@
-import { SearchCriterion } from "./SearchCriterion";
-import { defaultIfEmpty, forkJoin, map, Observable, of } from "rxjs";
-import { ContentCategories, OA_STATUS, Visibility } from "../../../model/inge";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
-import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./DateSearchCriterion";
-import { FormControl, FormGroup } from "@angular/forms";
+import {SearchCriterion} from "./SearchCriterion";
+import {defaultIfEmpty, forkJoin, map, Observable, of} from "rxjs";
+import {ContentCategories, OA_STATUS, Visibility} from "../../../model/inge";
+import {baseElasticSearchQueryBuilder} from "../../../utils/search-utils";
+import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./DateSearchCriterion";
+import {FormControl, FormGroup} from "@angular/forms";
 
 
 export enum COMPONENT_SEARCH_TYPES {

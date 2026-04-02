@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Principal } from "../../../services/aa.service";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { UsersService } from "../../../services/pubman-rest-client/users.service";
-import { catchError, EMPTY, Observable, tap } from "rxjs";
-import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
-import { ValidationErrorComponent } from "../validation-error/validation-error.component";
-import { STRONG_PASSWORD_REGEX_PATTERN } from "../../../services/form-builder.service";
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { NotificationComponent } from "../notification/notification.component";
-import { Message, MessageService } from "../../../services/message.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Principal} from "../../../services/aa.service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {UsersService} from "../../../services/pubman-rest-client/users.service";
+import {catchError, EMPTY, Observable, tap} from "rxjs";
+import {PubManHttpErrorResponse} from "../../../services/interceptors/http-error.interceptor";
+import {ValidationErrorComponent} from "../validation-error/validation-error.component";
+import {STRONG_PASSWORD_REGEX_PATTERN} from "../../../services/form-builder.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {NotificationComponent} from "../notification/notification.component";
+import {Message, MessageService} from "../../../services/message.service";
 
 
 @Component({

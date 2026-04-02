@@ -1,13 +1,14 @@
-import { Component, Input } from '@angular/core';
-import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
-import { TranslateService } from "@ngx-translate/core";
-import { Errors } from "../../../model/errors";
-import { Subscription } from "rxjs";
+import {Component, Input} from '@angular/core';
+import {AbstractControl, ValidationErrors} from "@angular/forms";
+import {TranslateService} from "@ngx-translate/core";
+import {Errors} from "../../../model/errors";
+import {Subscription} from "rxjs";
 import {
   DATE_PATTERN,
   FILE_TITLE_AND_NAME_PATTERN,
   ORCID_PATTERN,
-  STRONG_PASSWORD_REGEX_PATTERN, URL_PATTERN
+  STRONG_PASSWORD_REGEX_PATTERN,
+  URL_PATTERN
 } from "../../../services/form-builder.service";
 
 @Component({

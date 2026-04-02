@@ -1,10 +1,10 @@
-import { inject, Injectable } from '@angular/core';
-import { AaService } from './aa.service';
-import { MatomoTracker } from 'ngx-matomo-client';
-import { Router } from '@angular/router';
-import { SearchStateService } from '../components/search-result-list/search-state.service';
-import { baseElasticSearchQueryBuilder } from '../utils/search-utils';
-import { ItemVersionState } from '../model/inge';
+import {inject, Injectable} from '@angular/core';
+import {AaService} from './aa.service';
+import {MatomoTracker} from 'ngx-matomo-client';
+import {Router} from '@angular/router';
+import {SearchStateService} from '../components/search-result-list/search-state.service';
+import {baseElasticSearchQueryBuilder} from '../utils/search-utils';
+import {ItemVersionState} from '../model/inge';
 
 @Injectable({
   providedIn: 'root'

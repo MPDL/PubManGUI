@@ -1,7 +1,7 @@
-import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Errors } from 'src/app/model/errors';
-import { CreatorType } from 'src/app/model/inge';
-import { isFormValueEmpty } from "../../utils/utils";
+import {AbstractControl, FormArray, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {Errors} from 'src/app/model/errors';
+import {CreatorType} from 'src/app/model/inge';
+import {isFormValueEmpty} from "../../utils/utils";
 
 const ORCID_HTTPS = 'https://orcid.org/';
 const ORCID_REGEX = /^\d{4}-\d{4}-\d{4}-(\d{3}X|\d{4})$/;

@@ -1,19 +1,18 @@
-import { isPlatformBrowser } from '@angular/common';
-import { computed, inject, Injectable, OnDestroy, PLATFORM_ID, signal} from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { catchError, Observable, tap, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {computed, Injectable, OnDestroy, signal} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError, Observable, tap, throwError} from 'rxjs';
+import {environment} from 'src/environments/environment';
 
 import type * as params from '../interfaces/batch-params';
 import * as resp from '../interfaces/batch-responses';
 
-import { ignoredStatuses} from 'src/app/services/interceptors/http-error.interceptor';
-import { AaService } from 'src/app/services/aa.service';
-import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
-import { ItemVersionVO } from 'src/app/model/inge';
-import { MessageService } from 'src/app/services/message.service';
+import {ignoredStatuses} from 'src/app/services/interceptors/http-error.interceptor';
+import {AaService} from 'src/app/services/aa.service';
+import {ItemsService} from "src/app/services/pubman-rest-client/items.service";
+import {ItemVersionVO} from 'src/app/model/inge';
+import {MessageService} from 'src/app/services/message.service';
 
-import { _, TranslateService } from '@ngx-translate/core';
+import {_, TranslateService} from '@ngx-translate/core';
 import {AddRemoveFromListGenericService} from "../../../services/add-remove-from-list-generic.service";
 
 @Injectable({

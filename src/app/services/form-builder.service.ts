@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Injectable} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {
   AbstractVO,
   AlternativeTitleVO,
@@ -14,7 +14,6 @@ import {
   FundingOrganizationVO,
   FundingProgramVO,
   IdentifierVO,
-  InvitationStatus,
   ItemVersionState,
   ItemVersionVO,
   LegalCaseVO,
@@ -26,25 +25,26 @@ import {
   PersonVO,
   ProjectInfoVO,
   PublishingInfoVO,
-  ReviewMethod,
   SourceVO,
   Storage,
   SubjectVO,
   Visibility
 } from 'src/app/model/inge';
-import { creatorValidator } from 'src/app/directives/validation/creator-validation.directive';
-import { CreatorsOrganizationsValidator } from 'src/app/directives/validation/creators-organizations-validation.directive';
-import { datesValidator } from 'src/app/directives/validation/dates-validation.directive';
-import { EventValidator } from 'src/app/directives/validation/event-validation.directive';
-import { IdentifierValidator } from 'src/app/directives/validation/identifier-validation.directive';
-import { SourceRequiredValidator } from 'src/app/directives/validation/source-required-validation.directive';
-import { SourceValidator } from 'src/app/directives/validation/source-validation.directive';
-import { SubjectValidator } from 'src/app/directives/validation/subject-validation.directive';
-import { Utf8Validator } from 'src/app/directives/validation/utf8-validation.directive';
-import { fileDataValidator } from 'src/app/directives/validation/file-data-validation';
-import { alternativeTitleValidator } from "../directives/validation/alternative-title.validation.directive";
-import { requiredNoWhitespace } from "../directives/validation/required-no-whitespace-validation.directive";
-import { DegreeRequiredValidator } from "../directives/validation/degree-required-validation.directive";
+import {creatorValidator} from 'src/app/directives/validation/creator-validation.directive';
+import {
+  CreatorsOrganizationsValidator
+} from 'src/app/directives/validation/creators-organizations-validation.directive';
+import {datesValidator} from 'src/app/directives/validation/dates-validation.directive';
+import {EventValidator} from 'src/app/directives/validation/event-validation.directive';
+import {IdentifierValidator} from 'src/app/directives/validation/identifier-validation.directive';
+import {SourceRequiredValidator} from 'src/app/directives/validation/source-required-validation.directive';
+import {SourceValidator} from 'src/app/directives/validation/source-validation.directive';
+import {SubjectValidator} from 'src/app/directives/validation/subject-validation.directive';
+import {Utf8Validator} from 'src/app/directives/validation/utf8-validation.directive';
+import {fileDataValidator} from 'src/app/directives/validation/file-data-validation';
+import {alternativeTitleValidator} from "../directives/validation/alternative-title.validation.directive";
+import {requiredNoWhitespace} from "../directives/validation/required-no-whitespace-validation.directive";
+import {DegreeRequiredValidator} from "../directives/validation/degree-required-validation.directive";
 
 type Unbox<T> = T extends Array<infer V> ? V : T;
 

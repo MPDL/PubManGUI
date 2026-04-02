@@ -1,17 +1,17 @@
-import { Component, Input } from '@angular/core';
-import { FileDbVO, ItemVersionVO, OA_STATUS, Storage, Visibility } from "../../../model/inge";
-import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { environment } from 'src/environments/environment';
-import { NotEmptyPipe } from "../../../pipes/notEmpty.pipe";
-import { AaService } from "../../../services/aa.service";
-import { checkFileAccess, getFullItemId, isUrl } from "../../../utils/item-utils";
-import { ItemsService } from "../../../services/pubman-rest-client/items.service";
-import { TranslatePipe } from "@ngx-translate/core";
-import { CopyButtonDirective } from "../../../directives/copy-button.directive";
-import { FileSizePipe } from "../../../pipes/file-size.pipe";
-import { MatomoTracker } from "ngx-matomo-client";
-import {EMPTY, of} from "rxjs";
-import { UpperCasePipe } from "@angular/common";
+import {Component, Input} from '@angular/core';
+import {FileDbVO, ItemVersionVO, OA_STATUS, Storage, Visibility} from "../../../model/inge";
+import {NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {environment} from 'src/environments/environment';
+import {NotEmptyPipe} from "../../../pipes/notEmpty.pipe";
+import {AaService} from "../../../services/aa.service";
+import {checkFileAccess, getFullItemId, isUrl} from "../../../utils/item-utils";
+import {ItemsService} from "../../../services/pubman-rest-client/items.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {CopyButtonDirective} from "../../../directives/copy-button.directive";
+import {FileSizePipe} from "../../../pipes/file-size.pipe";
+import {MatomoTracker} from "ngx-matomo-client";
+import {of} from "rxjs";
+import {UpperCasePipe} from "@angular/common";
 import mime from "mime";
 
 @Component({

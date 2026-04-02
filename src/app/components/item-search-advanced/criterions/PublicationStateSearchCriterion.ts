@@ -1,6 +1,6 @@
-import { SearchCriterion } from "./SearchCriterion";
-import { Observable, of } from "rxjs";
-import { FormControl, FormGroup } from "@angular/forms";
+import {SearchCriterion} from "./SearchCriterion";
+import {Observable, of} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
 
 export class PublicationStateSearchCriterion extends SearchCriterion {
 

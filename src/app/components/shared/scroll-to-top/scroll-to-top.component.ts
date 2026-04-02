@@ -1,5 +1,5 @@
-import { NgClass, isPlatformBrowser } from '@angular/common';
-import { Component, DOCUMENT, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import {isPlatformBrowser, NgClass} from '@angular/common';
+import {Component, DOCUMENT, HostListener, Inject, PLATFORM_ID} from '@angular/core';
 
 @Component({
   selector: 'pure-scroll-to-top',

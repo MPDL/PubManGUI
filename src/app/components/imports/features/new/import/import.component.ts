@@ -1,19 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectorRef, Component, ElementRef, HostListener, inject, OnInit} from '@angular/core';
 
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { ContextDbRO, ImportFormat } from 'src/app/model/inge';
-import { ImportValidatorsService } from 'src/app/components/imports/services/import-validators.service';
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import type { PostImportParams } from 'src/app/components/imports/interfaces/imports-params';
+import {ContextDbRO, ImportFormat} from 'src/app/model/inge';
+import {ImportValidatorsService} from 'src/app/components/imports/services/import-validators.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import type {PostImportParams} from 'src/app/components/imports/interfaces/imports-params';
 
-import { AaService } from 'src/app/services/aa.service';
-import { _, TranslatePipe } from "@ngx-translate/core";
+import {AaService} from 'src/app/services/aa.service';
+import {TranslatePipe} from "@ngx-translate/core";
 
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-imports-new-import',

@@ -1,8 +1,8 @@
-import type { CanActivateFn } from '@angular/router';
-import { Router } from '@angular/router';
-import { AaService } from 'src/app/services/aa.service';
-import { inject } from '@angular/core';
-import { MessageService } from 'src/app/services/message.service';
+import type {CanActivateFn} from '@angular/router';
+import {Router} from '@angular/router';
+import {AaService} from 'src/app/services/aa.service';
+import {inject} from '@angular/core';
+import {MessageService} from 'src/app/services/message.service';
 
 
 export const AuthGuard: CanActivateFn = (route, state) => {

@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { NgClass } from '@angular/common';
+import {Component, Inject, OnInit} from '@angular/core';
+import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
+import {NgClass} from '@angular/common';
 
 @Component({
     selector: 'pure-message',

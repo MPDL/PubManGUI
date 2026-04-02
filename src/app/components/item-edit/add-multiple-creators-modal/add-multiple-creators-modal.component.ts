@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { TranslatePipe, TranslateService } from "@ngx-translate/core";
+import {Component, Input} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-add-multiple-creators-modal',

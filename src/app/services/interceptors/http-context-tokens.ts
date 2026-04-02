@@ -1,4 +1,4 @@
-import { HttpContext, HttpContextToken } from '@angular/common/http';
+import {HttpContext, HttpContextToken} from '@angular/common/http';
 
 export const IGNORED_STATUSES = new HttpContextToken<number[]>(() => []);
 export const SILENT_LOGOUT = new HttpContextToken<boolean>(() => false);

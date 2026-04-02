@@ -1,23 +1,23 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { citationTypes, exportTypes } from "../../../model/inge";
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ItemsService } from "../../../services/pubman-rest-client/items.service";
-import { environment } from 'src/environments/environment';
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ItemSelectionService } from "../../../services/item-selection.service";
+import {Component, Input} from '@angular/core';
+import {citationTypes, exportTypes} from "../../../model/inge";
+import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ItemsService} from "../../../services/pubman-rest-client/items.service";
+import {environment} from 'src/environments/environment';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {ItemSelectionService} from "../../../services/item-selection.service";
 import {catchError, EMPTY, Observable, Subscription, tap} from "rxjs";
-import { LoadingComponent } from "../loading/loading.component";
-import { contentDispositionParser } from "../../../utils/utils";
-import { TranslatePipe } from "@ngx-translate/core";
-import { JsonPipe } from "@angular/common";
-import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
-import { ConeAutosuggestComponent } from "../cone-autosuggest/cone-autosuggest.component";
-import { NotificationComponent } from "../notification/notification.component";
-import { Message, MessageService } from "../../../services/message.service";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorComponent } from "../validation-error/validation-error.component";
-import { MatomoTracker } from "ngx-matomo-client";
-import { SanitizeHtmlCitationPipe } from "../../../pipes/sanitize-html-citation.pipe";
+import {LoadingComponent} from "../loading/loading.component";
+import {contentDispositionParser} from "../../../utils/utils";
+import {TranslatePipe} from "@ngx-translate/core";
+import {JsonPipe} from "@angular/common";
+import {PubManHttpErrorResponse} from "../../../services/interceptors/http-error.interceptor";
+import {ConeAutosuggestComponent} from "../cone-autosuggest/cone-autosuggest.component";
+import {NotificationComponent} from "../notification/notification.component";
+import {Message, MessageService} from "../../../services/message.service";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorComponent} from "../validation-error/validation-error.component";
+import {MatomoTracker} from "ngx-matomo-client";
+import {SanitizeHtmlCitationPipe} from "../../../pipes/sanitize-html-citation.pipe";
 
 
 @Component({

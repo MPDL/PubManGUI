@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { Errors } from 'src/app/model/errors';
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {Errors} from 'src/app/model/errors';
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ConeAutosuggestComponent} from "../../shared/cone-autosuggest/cone-autosuggest.component";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-abstract-form',

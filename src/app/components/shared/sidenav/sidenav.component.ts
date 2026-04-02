@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, isPlatformBrowser} from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -6,27 +6,25 @@ import {
   ElementRef,
   HostListener,
   inject,
-  OnInit,
   PLATFORM_ID,
   Renderer2,
   ViewChild
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { AaService } from "../../../services/aa.service";
+import {RouterLink} from '@angular/router';
+import {AaService} from "../../../services/aa.service";
 
-import { MatBadgeModule } from '@angular/material/badge';
-import { BatchNavComponent } from 'src/app/components/batch/batch-nav/batch-nav.component';
-import { ImportsNavComponent } from 'src/app/components/imports/imports-nav/imports-nav.component';
-import { CartService } from "../../../services/cart.service";
+import {MatBadgeModule} from '@angular/material/badge';
+import {BatchNavComponent} from 'src/app/components/batch/batch-nav/batch-nav.component';
+import {ImportsNavComponent} from 'src/app/components/imports/imports-nav/imports-nav.component';
+import {CartService} from "../../../services/cart.service";
 
-import { TranslatePipe } from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 
-import { AaComponent } from 'src/app/components/aa/aa.component';
-import { SearchComponent } from 'src/app/components/shared/search/search.component';
-import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
-import { ToolsnavComponent } from 'src/app/components/shared/toolsnav/toolsnav.component';
-import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {AaComponent} from 'src/app/components/aa/aa.component';
+import {SearchComponent} from 'src/app/components/shared/search/search.component';
+import {LangSwitchComponent} from 'src/app/components/shared/lang-switch/lang-switch.component';
+import {ToolsnavComponent} from 'src/app/components/shared/toolsnav/toolsnav.component';
+import {NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'pure-sidenav',

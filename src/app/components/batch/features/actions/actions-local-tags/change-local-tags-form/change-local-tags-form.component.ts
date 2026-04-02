@@ -1,16 +1,15 @@
+import {Component, ElementRef, HostListener, inject} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {ChangeLocalTagParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { ChangeLocalTagParams } from 'src/app/components/batch/interfaces/batch-params';
+import {TranslatePipe} from "@ngx-translate/core";
 
-import { TranslatePipe } from "@ngx-translate/core";
-
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-change-local-tags-form',
@@ -50,8 +49,8 @@ export class ChangeLocalTagsFormComponent {
 
   ngOnInit(): void {
     this.changeLocalTagsForm.reset();
-  } 
-  
+  }
+
   onSubmit(): void {
     if (this.changeLocalTagsForm.valid) {
       this.batchSvc.changeLocalTags(this.changeLocalTagsParams).subscribe(actionResponse => {

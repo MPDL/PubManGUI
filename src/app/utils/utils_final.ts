@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray, FormControl, FormGroup } from "@angular/forms";
+import {AbstractControl, FormArray, FormControl, FormGroup} from "@angular/forms";
 
 const cloneObject = (obj: any): any =>
     (Array.isArray(obj) ? Object.values : (obj: any) => obj)(Object.entries(obj).reduce((acc: any, [key, val]) =>
@@ -13,7 +13,7 @@ const cloneObject = (obj: any): any =>
     ));
 
 const checkObjectType = (obj: any) =>
-    // Object(obj) === obj && !Array.isArray(obj) 
+    // Object(obj) === obj && !Array.isArray(obj)
     // obj instanceof Object && !(obj instanceof Array) && obj !== null
     typeof obj === 'object' && obj !== null && !Array.isArray(obj);
 

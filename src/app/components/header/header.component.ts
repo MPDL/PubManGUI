@@ -1,17 +1,17 @@
-import { Component, DOCUMENT, HostListener, inject, PLATFORM_ID } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { AaComponent } from '../aa/aa.component';
-import { isPlatformBrowser, NgClass } from '@angular/common';
-import { AaService } from 'src/app/services/aa.service';
-import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
-import { SidenavComponent } from 'src/app/components/shared/sidenav/sidenav.component';
+import {Component, DOCUMENT, HostListener, inject, PLATFORM_ID} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
+import {AaComponent} from '../aa/aa.component';
+import {isPlatformBrowser, NgClass} from '@angular/common';
+import {AaService} from 'src/app/services/aa.service';
+import {LangSwitchComponent} from 'src/app/components/shared/lang-switch/lang-switch.component';
+import {SidenavComponent} from 'src/app/components/shared/sidenav/sidenav.component';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
-import { SearchComponent } from 'src/app/components/shared/search/search.component';
-import { ToolsnavComponent } from 'src/app/components/shared/toolsnav/toolsnav.component';
+import {SearchComponent} from 'src/app/components/shared/search/search.component';
+import {ToolsnavComponent} from 'src/app/components/shared/toolsnav/toolsnav.component';
 import {environment} from "../../../environments/environment";
 
 

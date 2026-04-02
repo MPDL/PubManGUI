@@ -1,26 +1,14 @@
-import { HttpClient, HttpContext, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  catchError,
-  EMPTY,
-  finalize,
-  forkJoin,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-  throwError
-} from 'rxjs';
-import { MessageService } from 'src/app/services/message.service';
-import { environment } from 'src/environments/environment';
-import { AccountUserDbVO, ContextDbVO, ItemVersionState } from "../model/inge";
-import { ContextsService } from "./pubman-rest-client/contexts.service";
-import { Router, RouteReuseStrategy } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { DISPLAY_ERROR, SILENT_LOGOUT } from './interceptors/http-context-tokens';
-import { PureRrs } from './pure-rrs';
+import {HttpClient, HttpContext, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, EMPTY, finalize, forkJoin, map, Observable, of, switchMap, tap} from 'rxjs';
+import {MessageService} from 'src/app/services/message.service';
+import {environment} from 'src/environments/environment';
+import {AccountUserDbVO, ContextDbVO, ItemVersionState} from "../model/inge";
+import {ContextsService} from "./pubman-rest-client/contexts.service";
+import {Router, RouteReuseStrategy} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {DISPLAY_ERROR, SILENT_LOGOUT} from './interceptors/http-context-tokens';
+import {PureRrs} from './pure-rrs';
 
 
 export class Principal{

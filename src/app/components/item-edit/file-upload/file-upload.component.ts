@@ -1,10 +1,10 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
 
-import { FileUploadDirective } from 'src/app/directives/file-upload.directive';
-import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
-import { catchError, finalize, forkJoin, Observable, of, tap } from "rxjs";
-import { HttpEventType } from "@angular/common/http";
-import { filter, map } from "rxjs/operators";
+import {FileUploadDirective} from 'src/app/directives/file-upload.directive';
+import {FileStagingService} from 'src/app/services/pubman-rest-client/file-staging.service';
+import {catchError, finalize, forkJoin, tap} from "rxjs";
+import {HttpEventType} from "@angular/common/http";
+import {filter, map} from "rxjs/operators";
 
 @Component({
   selector: 'pure-file-upload',

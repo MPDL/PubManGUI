@@ -1,9 +1,6 @@
-import { Routes } from '@angular/router';
-import { itemResolver } from "./services/pubman-rest-client/item-resolver";
-import { fetchItemResolver } from './components/imports/services/fetch-item-resolver';
-
-
-
+import {Routes} from '@angular/router';
+import {itemResolver} from "./services/pubman-rest-client/item-resolver";
+import {fetchItemResolver} from './components/imports/services/fetch-item-resolver';
 
 
 export const routes: Routes = [

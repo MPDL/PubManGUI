@@ -1,14 +1,6 @@
-import {
-  ComponentRef,
-  Directive,
-  ElementRef,
-  Input,
-  Optional, Renderer2,
-  Self,
-  ViewContainerRef,
-} from '@angular/core';
-import { AbstractControl, ControlContainer, NgControl } from "@angular/forms";
-import { ValidationErrorComponent } from "../components/shared/validation-error/validation-error.component";
+import {ComponentRef, Directive, ElementRef, Input, Optional, Renderer2, Self, ViewContainerRef,} from '@angular/core';
+import {AbstractControl, ControlContainer, NgControl} from "@angular/forms";
+import {ValidationErrorComponent} from "../components/shared/validation-error/validation-error.component";
 
 /**
  * Directive to automatically handle bootstrap-styled validation for form controls.

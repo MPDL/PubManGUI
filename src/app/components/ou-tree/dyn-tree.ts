@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { CollectionViewer, DataSource, SelectionChange } from '@angular/cdk/collections';
-import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {CollectionViewer, DataSource, SelectionChange} from '@angular/cdk/collections';
+import {BehaviorSubject, merge, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 export class FlatNode<T> {
     constructor(

@@ -1,9 +1,8 @@
-import { HostListener, inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Router } from "@angular/router";
-import { AaService } from "./aa.service";
-import { fromEvent, Subscription, tap } from "rxjs";
-import { filter } from "rxjs/operators";
-import { isPlatformBrowser } from "@angular/common";
+import {inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {AaService} from "./aa.service";
+import {fromEvent, Subscription, tap} from "rxjs";
+import {filter} from "rxjs/operators";
+import {isPlatformBrowser} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'

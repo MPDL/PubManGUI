@@ -1,18 +1,4 @@
-import {
-  afterNextRender,
-  ContentChild, ContentChildren,
-  Directive,
-  ElementRef,
-  HostBinding,
-  Input,
-  Optional, QueryList, Renderer2,
-  Self,
-  ViewChild, ViewChildren,
-  ViewContainerRef,
-  ViewRef
-} from '@angular/core';
-import { AbstractControl, AbstractControlDirective, ControlContainer, NgControl } from "@angular/forms";
-import { ValidationErrorComponent } from "../components/shared/validation-error/validation-error.component";
+import {Directive, ElementRef} from '@angular/core';
 
 
 @Directive({

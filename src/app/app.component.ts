@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
-import { SidenavComponent } from './components/shared/sidenav/sidenav.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { ScrollToTopComponent } from './components/shared/scroll-to-top/scroll-to-top.component';
-import { InfoSubheaderComponent } from "./components/shared/info-subheader/info-subheader.component";
+import {ActivatedRoute, NavigationEnd, Router, RouterOutlet} from '@angular/router';
+import {HeaderComponent} from './components/header/header.component';
+import {SidenavComponent} from './components/shared/sidenav/sidenav.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {ScrollToTopComponent} from './components/shared/scroll-to-top/scroll-to-top.component';
+import {InfoSubheaderComponent} from "./components/shared/info-subheader/info-subheader.component";
 
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
-import { NgbTooltipConfig } from "@ng-bootstrap/ng-bootstrap";
-import { filter } from "rxjs/operators";
-import { Title } from "@angular/platform-browser";
-import { AaService } from "./services/aa.service";
-import { MessageService } from "./services/message.service";
-import { WindowFocusCheckLoginService } from "./services/window-focus-check-login.service";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {NgbTooltipConfig} from "@ng-bootstrap/ng-bootstrap";
+import {filter} from "rxjs/operators";
+import {Title} from "@angular/platform-browser";
+import {AaService} from "./services/aa.service";
+import {MessageService} from "./services/message.service";
+import {WindowFocusCheckLoginService} from "./services/window-focus-check-login.service";
 
 @Component({
   selector: 'app-root',

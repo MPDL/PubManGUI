@@ -1,17 +1,17 @@
-import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import {Component, ElementRef, HostListener, inject, OnInit} from '@angular/core';
 
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { ImportValidatorsService } from 'src/app/components/imports/services/import-validators.service';
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import type { GetArxivParams, GetCrossrefParams } from 'src/app/components/imports/interfaces/imports-params';
-import { AaService } from 'src/app/services/aa.service';
+import {ImportValidatorsService} from 'src/app/components/imports/services/import-validators.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import type {GetArxivParams, GetCrossrefParams} from 'src/app/components/imports/interfaces/imports-params';
+import {AaService} from 'src/app/services/aa.service';
 
-import { _, TranslatePipe } from "@ngx-translate/core";
-import { MessageService } from "src/app/services/message.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {MessageService} from "src/app/services/message.service";
 
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 
 @Component({

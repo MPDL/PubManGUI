@@ -1,9 +1,8 @@
+import {Component, OnInit} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
 
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-
-import { BatchNavComponent } from './batch-nav/batch-nav.component';
-import { BatchService } from './services/batch.service';
+import {BatchNavComponent} from './batch-nav/batch-nav.component';
+import {BatchService} from './services/batch.service';
 
 @Component({
   selector: 'pure-batch',

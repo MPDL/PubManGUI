@@ -1,20 +1,20 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, Inject, inject, LOCALE_ID, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, HostListener, Inject, inject, LOCALE_ID, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportLogItemDbVO, ImportLogItemDetailDbVO } from 'src/app/model/inge';
-import { MessageService } from 'src/app/services/message.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {ImportLogItemDbVO, ImportLogItemDetailDbVO} from 'src/app/model/inge';
+import {MessageService} from 'src/app/services/message.service';
 
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbCollapseModule} from '@ng-bootstrap/ng-bootstrap';
 import xmlFormat from 'xml-formatter';
 
-import { PaginatorComponent } from "src/app/components/shared/paginator/paginator.component";
-import { ImportItemLogComponent } from "./import-item-log/import-item-log.component";
+import {PaginatorComponent} from "src/app/components/shared/paginator/paginator.component";
+import {ImportItemLogComponent} from "./import-item-log/import-item-log.component";
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
-import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
+import {LocalizeDatePipe} from "src/app/pipes/localize-date.pipe";
 
 @Component({
   selector: 'pure-import-item-details-list',

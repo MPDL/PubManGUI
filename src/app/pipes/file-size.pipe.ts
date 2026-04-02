@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { humanFileSize } from "../utils/utils";
+import {Pipe, PipeTransform} from '@angular/core';
+import {humanFileSize} from "../utils/utils";
 
 @Pipe({
   name: 'fileSize'

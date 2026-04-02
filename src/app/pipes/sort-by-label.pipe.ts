@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { TranslateService } from "@ngx-translate/core";
+import {Pipe, PipeTransform} from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
 
 const keepOrder = (a: any, b: any) => a;
 

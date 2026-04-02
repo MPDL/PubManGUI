@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { AuditDbVO, exportTypes, ItemVersionVO } from "../../model/inge";
-import { PubmanSearchableGenericRestClientService } from "./pubman-searchable-generic-rest-client.service";
-import { HttpParams } from "@angular/common/http";
-import { HttpOptions } from "./pubman-generic-rest-client.service";
+import {Injectable} from '@angular/core';
+import {map, Observable} from 'rxjs';
+import {AuditDbVO, exportTypes, ItemVersionVO} from "../../model/inge";
+import {PubmanSearchableGenericRestClientService} from "./pubman-searchable-generic-rest-client.service";
+import {HttpParams} from "@angular/common/http";
+import {HttpOptions} from "./pubman-generic-rest-client.service";
 
 @Injectable({
   providedIn: 'root'

@@ -1,18 +1,17 @@
+import {Component, ElementRef, HostListener, inject} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {SourceIdType} from 'src/app/model/inge';
 
-import { SourceIdType } from 'src/app/model/inge';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import type {AddSourceIdentiferParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import type { AddSourceIdentiferParams } from 'src/app/components/batch/interfaces/batch-params';
+import {TranslatePipe} from "@ngx-translate/core";
+import {SortByLabelPipe} from "src/app/pipes/sort-by-label.pipe";
 
-import { _, TranslatePipe } from "@ngx-translate/core";
-import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
-
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-add-source-identifier-form',

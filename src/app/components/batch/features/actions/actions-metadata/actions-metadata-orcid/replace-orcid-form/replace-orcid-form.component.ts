@@ -1,17 +1,16 @@
+import {Component, ElementRef, inject} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {IdentifierVO, IdType, OrganizationVO, PersonVO} from 'src/app/model/inge';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {ReplaceOrcidParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { ReplaceOrcidParams } from 'src/app/components/batch/interfaces/batch-params';
+import {TranslatePipe} from "@ngx-translate/core";
 
-import { TranslatePipe } from "@ngx-translate/core";
-
-import { PersonAutosuggestComponent } from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
-import { ControlType } from 'src/app/services/form-builder.service';
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {PersonAutosuggestComponent} from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
+import {ControlType} from 'src/app/services/form-builder.service';
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-replace-orcid-form',

@@ -1,5 +1,5 @@
-import { IdType, ItemVersionRO } from "../model/inge";
-import { FormArray, FormGroup, FormControl } from "@angular/forms";
+import {IdType, ItemVersionRO} from "../model/inge";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 
 const reParamSplit = /\s*;\s*/
 const reHeaderSplit = /\s*:\s*/
@@ -21,11 +21,11 @@ const hasFormValues = (form: FormGroup | FormArray | any): boolean => {
   if (form instanceof FormControl) {
     return !isFormValueEmpty(form.value);
   }
-  
+
   if (form instanceof FormArray) {
     return form.length > 0 && form.controls.some((control: any) => hasFormValues(control));
   }
-  
+
   if (form instanceof FormGroup) {
     return Object.keys(form.controls).some((key) => {
       const control = form.get(key);

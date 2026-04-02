@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
+import {CommonModule} from '@angular/common';
+import {ControlType, FormBuilderService} from '../../../services/form-builder.service';
 import {
   FormArray,
   FormBuilder,
@@ -10,9 +10,9 @@ import {
   ReactiveFormsModule,
   ValidationErrors
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, finalize, of, pipe, Subscription, switchMap, tap, throwError } from 'rxjs';
-import { MetadataFormComponent } from '../metadata-form/metadata-form.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {catchError, finalize, pipe, Subscription, tap, throwError} from 'rxjs';
+import {MetadataFormComponent} from '../metadata-form/metadata-form.component';
 import {
   ContextDbRO,
   ContextDbVO,
@@ -24,29 +24,29 @@ import {
   MdsPublicationVO,
   Storage
 } from 'src/app/model/inge';
-import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { remove_null_empty, remove_objects } from 'src/app/utils/utils_final';
-import { ChipsComponent } from 'src/app/components/shared/chips/chips.component';
-import { AaService } from 'src/app/services/aa.service';
-import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
-import { ItemsService } from 'src/app/services/pubman-rest-client/items.service';
-import { ItemListStateService } from 'src/app/components/item-list/item-list-state.service';
-import { FileFormComponent } from '../file-form/file-form.component';
-import { FileUploadComponent, UploadedFile } from '../file-upload/file-upload.component';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
-import { MessageService } from 'src/app/services/message.service';
-import { itemToVersionId } from 'src/app/utils/utils';
-import { ItemActionsModalComponent } from 'src/app/components/shared/item-actions-modal/item-actions-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { LoadingComponent } from "../../shared/loading/loading.component";
-import { MiscellaneousService } from "../../../services/pubman-rest-client/miscellaneous.service";
-import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
-import { hasFormValues } from '../../../utils/utils';
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {remove_null_empty, remove_objects} from 'src/app/utils/utils_final';
+import {ChipsComponent} from 'src/app/components/shared/chips/chips.component';
+import {AaService} from 'src/app/services/aa.service';
+import {ContextsService} from "../../../services/pubman-rest-client/contexts.service";
+import {ItemsService} from 'src/app/services/pubman-rest-client/items.service';
+import {ItemListStateService} from 'src/app/components/item-list/item-list-state.service';
+import {FileFormComponent} from '../file-form/file-form.component';
+import {FileUploadComponent, UploadedFile} from '../file-upload/file-upload.component';
+import {CdkDrag, CdkDragDrop, CdkDropList} from '@angular/cdk/drag-drop';
+import {FileStagingService} from 'src/app/services/pubman-rest-client/file-staging.service';
+import {MessageService} from 'src/app/services/message.service';
+import {itemToVersionId} from 'src/app/utils/utils';
+import {ItemActionsModalComponent} from 'src/app/components/shared/item-actions-modal/item-actions-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ItemBadgesComponent} from "../../shared/item-badges/item-badges.component";
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {LoadingComponent} from "../../shared/loading/loading.component";
+import {MiscellaneousService} from "../../../services/pubman-rest-client/miscellaneous.service";
+import {AccordionGroupValidationDirective} from "../../../directives/accordion-group-validation.directive";
+import {hasFormValues} from '../../../utils/utils';
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-item-form',

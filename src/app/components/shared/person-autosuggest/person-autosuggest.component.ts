@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NgbHighlight, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
-import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from "@angular/forms";
+import {Component, Input} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {NgbHighlight, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {FormArray, FormBuilder, FormControl, ReactiveFormsModule} from "@angular/forms";
 import {
   catchError,
   debounceTime,
@@ -9,19 +9,18 @@ import {
   filter,
   finalize,
   Observable,
-  of,
   OperatorFunction,
   switchMap,
   tap
 } from "rxjs";
-import { ConeService, PersonResource } from "../../../services/cone.service";
-import { HttpParams } from "@angular/common/http";
-import { FormBuilderService } from 'src/app/services/form-builder.service';
-import { IdType, OrganizationVO } from 'src/app/model/inge';
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
-import { ConeIconComponent } from "../cone-icon/cone-icon.component";
+import {ConeService, PersonResource} from "../../../services/cone.service";
+import {HttpParams} from "@angular/common/http";
+import {FormBuilderService} from 'src/app/services/form-builder.service';
+import {IdType, OrganizationVO} from 'src/app/model/inge';
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
+import {ConeIconComponent} from "../cone-icon/cone-icon.component";
 
 @Component({
   selector: 'pure-person-autosuggest',

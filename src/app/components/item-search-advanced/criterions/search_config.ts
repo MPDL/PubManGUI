@@ -1,5 +1,5 @@
-import { Parenthesis } from "./operators/Parenthesis";
-import { LogicalOperator } from "./operators/LogicalOperator";
+import {Parenthesis} from "./operators/Parenthesis";
+import {LogicalOperator} from "./operators/LogicalOperator";
 import {
   AnyFieldSearchCriterion,
   ClassificationSearchCriterion,
@@ -16,14 +16,14 @@ import {
   SourceSearchCriterion,
   TitleSearchCriterion
 } from "./StandardSearchCriterion";
-import { DATE_SEARCH_TYPES, DateSearchCriterion } from "./DateSearchCriterion";
+import {DATE_SEARCH_TYPES, DateSearchCriterion} from "./DateSearchCriterion";
 import {
   CreatedBySearchCriterion,
   ModifiedBySearchCriterion,
   OrganizationSearchCriterion,
   PersonSearchCriterion
 } from "./StringOrHiddenIdSearchCriterion";
-import { GenreSearchCriterion, ReviewMethodSearchCriterion, StateSearchCriterion } from "./EnumSearchCriterion";
+import {GenreSearchCriterion, ReviewMethodSearchCriterion, StateSearchCriterion} from "./EnumSearchCriterion";
 
 
 export enum DisplayType {

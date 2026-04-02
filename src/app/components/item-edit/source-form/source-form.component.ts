@@ -1,9 +1,9 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
-import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormArray, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {AltTitleFormComponent} from '../alt-title-form/alt-title-form.component';
+import {ControlType, FormBuilderService} from '../../../services/form-builder.service';
 import {
   AlternativeTitleType,
   AlternativeTitleVO,
@@ -13,20 +13,20 @@ import {
   PublishingInfoVO,
   SourceGenre,
 } from 'src/app/model/inge';
-import { CreatorFormComponent } from '../creator-form/creator-form.component';
-import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
-import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { Errors } from 'src/app/model/errors';
-import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
-import { TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ConeService } from "../../../services/cone.service";
-import { Subject, takeUntil, tap } from "rxjs";
-import { identifierUriToEnum } from "../../../utils/utils";
-import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {CreatorFormComponent} from '../creator-form/creator-form.component';
+import {PublishingInfoFormComponent} from '../publishing-info-form/publishing-info-form.component';
+import {IdentifierFormComponent} from '../identifier-form/identifier-form.component';
+import {CdkDrag, CdkDragDrop, CdkDropList} from '@angular/cdk/drag-drop';
+import {MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {Errors} from 'src/app/model/errors';
+import {LoadingComponent} from 'src/app/components/shared/loading/loading.component';
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ConeService} from "../../../services/cone.service";
+import {Subject, takeUntil, tap} from "rxjs";
+import {identifierUriToEnum} from "../../../utils/utils";
+import {ConeAutosuggestComponent} from "../../shared/cone-autosuggest/cone-autosuggest.component";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-source-form',

@@ -1,22 +1,21 @@
-import { Component, computed, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgbHighlight, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
-import { TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { ConeService } from "../../../services/cone.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgbHighlight, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {ConeService} from "../../../services/cone.service";
 import {
   catchError,
   debounceTime,
-  distinctUntilChanged, finalize,
-  map,
-  Observable, of,
+  distinctUntilChanged,
+  finalize,
+  Observable,
   OperatorFunction,
   switchMap,
   tap
 } from "rxjs";
-import { HttpParams } from "@angular/common/http";
-import { SubjectClassification } from "../../../model/inge";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {HttpParams} from "@angular/common/http";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-cone-autosuggest',

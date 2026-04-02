@@ -1,14 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IdType } from 'src/app/model/inge';
-import {
-  AddRemoveButtonsComponent
-} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { Errors } from 'src/app/model/errors';
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {IdType} from 'src/app/model/inge';
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {Errors} from 'src/app/model/errors';
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-identifier-form',

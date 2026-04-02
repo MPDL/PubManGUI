@@ -4,7 +4,7 @@
 })
 
  */
-import { FilterEvent } from "../../item-list.component";
+import {FilterEvent} from "../../item-list.component";
 
 export abstract class ItemFilterDirective {
 

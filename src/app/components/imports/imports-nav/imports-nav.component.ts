@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component, DOCUMENT, HostListener, inject, OnInit, signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, DOCUMENT, HostListener, inject, OnInit} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
 
-import { AaService } from 'src/app/services/aa.service';
-import { MessageService } from 'src/app/services/message.service';
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
+import {AaService} from 'src/app/services/aa.service';
+import {MessageService} from 'src/app/services/message.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 
 @Component({

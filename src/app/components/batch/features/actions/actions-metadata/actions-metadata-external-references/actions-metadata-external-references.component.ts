@@ -1,5 +1,4 @@
-
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {
   ChangeExternalReferenceContentCategoryFormComponent
 } from './change-external-reference-content-category-form/change-external-reference-content-category-form.component'

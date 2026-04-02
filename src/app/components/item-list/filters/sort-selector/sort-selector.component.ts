@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ItemListComponent } from "../../item-list.component";
+import {Component, Input} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ItemListComponent} from "../../item-list.component";
 import {baseElasticSearchSortBuilder, IndexField} from "../../../../utils/search-utils";
-import { ActivatedRoute, Router } from "@angular/router";
-import { TranslatePipe } from "@ngx-translate/core";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { AddRemoveButtonsComponent } from "src/app/components/shared/add-remove-buttons/add-remove-buttons.component";
+import {ActivatedRoute, Router} from "@angular/router";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {AddRemoveButtonsComponent} from "src/app/components/shared/add-remove-buttons/add-remove-buttons.component";
 
 @Component({
   selector: 'pure-sort-selector',

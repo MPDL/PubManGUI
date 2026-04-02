@@ -1,17 +1,17 @@
-import { Component, inject, Input } from '@angular/core';
-import { FileDbVO, ItemVersionVO, Storage, Visibility } from 'src/app/model/inge';
-import { KeyValuePipe, NgClass } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
-import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
-import { ItemSelectionService } from "../../../services/item-selection.service";
-import { environment } from 'src/environments/environment';
-import { TranslatePipe } from "@ngx-translate/core";
-import { itemToVersionId } from "../../../utils/utils";
-import { ConeIconComponent } from "../../shared/cone-icon/cone-icon.component";
+import {Component, inject, Input} from '@angular/core';
+import {FileDbVO, ItemVersionVO, Storage, Visibility} from 'src/app/model/inge';
+import {NgClass} from '@angular/common';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {NgbPopover, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {SanitizeHtmlPipe} from "../../../pipes/sanitize-html.pipe";
+import {ItemBadgesComponent} from "../../shared/item-badges/item-badges.component";
+import {ItemSelectionService} from "../../../services/item-selection.service";
+import {environment} from 'src/environments/environment';
+import {TranslatePipe} from "@ngx-translate/core";
+import {itemToVersionId} from "../../../utils/utils";
+import {ConeIconComponent} from "../../shared/cone-icon/cone-icon.component";
 
 @Component({
   selector: 'pure-item-list-element',

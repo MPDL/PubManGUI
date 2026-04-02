@@ -1,9 +1,7 @@
-
 import {BehaviorSubject, fromEvent, Subscription, tap} from "rxjs";
 import {AaService} from "./aa.service";
 import {filter, map} from "rxjs/operators";
-import {inject, Injectable, OnDestroy, OnInit, PLATFORM_ID} from "@angular/core";
-import {isPlatformBrowser} from "@angular/common";
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export abstract class AddRemoveFromListGenericService {

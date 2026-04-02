@@ -1,4 +1,4 @@
-import {inject, Injectable, OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {AaService} from "./aa.service";
 import {AddRemoveFromListGenericService} from "./add-remove-from-list-generic.service";
 

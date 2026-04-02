@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { NgClass } from "@angular/common";
-import { environment } from "../../../../environments/environment";
+import {Component, Input} from '@angular/core';
+import {NgClass} from "@angular/common";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'pure-cone-icon',

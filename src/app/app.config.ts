@@ -3,37 +3,30 @@ import {
   importProvidersFrom,
   inject,
   LOCALE_ID,
+  PLATFORM_ID,
   provideAppInitializer,
   provideZoneChangeDetection,
-  PLATFORM_ID,
 } from '@angular/core';
 import de from '@angular/common/locales/de';
 import en from '@angular/common/locales/en';
 
-import { provideRouter, RouteReuseStrategy, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import {provideRouter, RouteReuseStrategy, withComponentInputBinding, withInMemoryScrolling} from '@angular/router';
 
-import { routes } from './app.routes';
-import { PureRrs } from './services/pure-rrs';
-import { DialogModule } from '@angular/cdk/dialog';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  provideHttpClient,
-  withFetch, withInterceptors,
-  withInterceptorsFromDi
-} from '@angular/common/http';
-import { httpBlobErrorInterceptor, httpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
+import {routes} from './app.routes';
+import {PureRrs} from './services/pure-rrs';
+import {DialogModule} from '@angular/cdk/dialog';
+import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
+import {httpBlobErrorInterceptor, httpErrorInterceptor} from "./services/interceptors/http-error.interceptor";
 
-import { provideTranslateService, TranslateLoader, TranslateService, provideTranslateLoader } from "@ngx-translate/core";
-import { TranslateHttpLoader, provideTranslateHttpLoader } from '@ngx-translate/http-loader';
-import { isPlatformBrowser, registerLocaleData } from "@angular/common";
-import { lastValueFrom } from "rxjs";
-import { AaService } from "./services/aa.service";
-import { provideMatomo, withRouter } from 'ngx-matomo-client';
-import { environment } from "../environments/environment";
-import { ContextsService } from "./services/pubman-rest-client/contexts.service";
-import { MessageService } from './services/message.service';
-import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
+import {provideTranslateLoader, provideTranslateService, TranslateService} from "@ngx-translate/core";
+import {provideTranslateHttpLoader, TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {isPlatformBrowser, registerLocaleData} from "@angular/common";
+import {lastValueFrom} from "rxjs";
+import {AaService} from "./services/aa.service";
+import {provideMatomo, withRouter} from 'ngx-matomo-client';
+import {environment} from "../environments/environment";
+import {MessageService} from './services/message.service';
+import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [

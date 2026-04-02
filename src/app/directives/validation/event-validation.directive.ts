@@ -1,6 +1,6 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Errors } from 'src/app/model/errors';
-import { isFormValueEmpty } from "../../utils/utils";
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {Errors} from 'src/app/model/errors';
+import {isFormValueEmpty} from "../../utils/utils";
 
 export const EventValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const event = control;

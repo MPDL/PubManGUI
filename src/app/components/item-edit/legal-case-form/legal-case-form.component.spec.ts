@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LegalCaseFormComponent } from './legal-case-form.component';
+import {LegalCaseFormComponent} from './legal-case-form.component';
 
 describe('LegalCaseFormComponent', () => {
   let component: LegalCaseFormComponent;

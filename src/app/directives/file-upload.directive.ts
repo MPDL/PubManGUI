@@ -1,6 +1,5 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Output } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { FileDbVO } from 'src/app/model/inge';
+import {Directive, EventEmitter, HostBinding, HostListener, Output} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 
 enum DropColor {
   Default = "none",

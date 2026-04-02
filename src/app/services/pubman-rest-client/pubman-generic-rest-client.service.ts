@@ -1,8 +1,8 @@
-import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { DISPLAY_ERROR } from '../interceptors/http-context-tokens';
+import {HttpClient, HttpContext, HttpHeaders, HttpParams} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {map, Observable} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {DISPLAY_ERROR} from '../interceptors/http-context-tokens';
 
 export interface SearchResult<Type> {
   numberOfRecords: number,

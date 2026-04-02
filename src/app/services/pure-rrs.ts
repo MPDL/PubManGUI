@@ -1,4 +1,4 @@
-import {RouteReuseStrategy, Route, ActivatedRouteSnapshot, DetachedRouteHandle} from '@angular/router';
+import {ActivatedRouteSnapshot, DetachedRouteHandle, Route, RouteReuseStrategy} from '@angular/router';
 import {Injectable} from '@angular/core';
 
 @Injectable()

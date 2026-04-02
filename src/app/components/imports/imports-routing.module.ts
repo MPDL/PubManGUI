@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { importLogResolver } from "./services/import-log.resolver";
-import { importDatasetsResolver } from "./services/import-datasets.resolver";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {importLogResolver} from "./services/import-log.resolver";
+import {importDatasetsResolver} from "./services/import-datasets.resolver";
 
 const routes: Routes = [
   {

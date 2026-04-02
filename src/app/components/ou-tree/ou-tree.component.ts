@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { Database, DynamicDataSource, DynamicFlatTreeControl, FlatNode } from './dyn-tree';
-import { NgClass } from '@angular/common';
-import { CdkTreeModule } from '@angular/cdk/tree';
-import { environment } from 'src/environments/environment';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { OuModalComponent } from 'src/app/components/shared/ou-modal/ou-modal.component';
+import {HttpClient} from '@angular/common/http';
+import {Component, Injectable} from '@angular/core';
+import {map, Observable} from 'rxjs';
+import {Database, DynamicDataSource, DynamicFlatTreeControl, FlatNode} from './dyn-tree';
+import {NgClass} from '@angular/common';
+import {CdkTreeModule} from '@angular/cdk/tree';
+import {environment} from 'src/environments/environment';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {OuModalComponent} from 'src/app/components/shared/ou-modal/ou-modal.component';
 
 @Injectable()
 export class OUsDatabase extends Database<any> {
@@ -73,7 +73,7 @@ export class OuTreeComponent {
   info(node: any) {
     const componentInstance = this.modalService.open(OuModalComponent, { size: 'lg' }).componentInstance;
     componentInstance.ouId = node.item.objectId;
-    console.log(JSON.stringify(node)); 
+    console.log(JSON.stringify(node));
   }
 
 }

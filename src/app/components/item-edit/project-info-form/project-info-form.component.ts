@@ -1,15 +1,15 @@
-import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output, ViewChild} from '@angular/core';
 
-import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FundingInfoVO, FundingProgramVO, IdentifierVO, IdType } from 'src/app/model/inge';
-import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { Subscription, tap } from 'rxjs';
-import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
-import { ConeService } from "../../../services/cone.service";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {FormArray, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FundingInfoVO, FundingProgramVO, IdentifierVO, IdType} from 'src/app/model/inge';
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {Subscription, tap} from 'rxjs';
+import {ControlType, FormBuilderService} from '../../../services/form-builder.service';
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ConeAutosuggestComponent} from "../../shared/cone-autosuggest/cone-autosuggest.component";
+import {ConeService} from "../../../services/cone.service";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-project-info-form',

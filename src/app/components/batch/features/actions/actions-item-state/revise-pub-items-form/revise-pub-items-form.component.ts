@@ -1,11 +1,10 @@
+import {Component, inject} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {RevisePubItemsParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { RevisePubItemsParams } from 'src/app/components/batch/interfaces/batch-params';
-
-import { TranslatePipe } from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-revise-pub-items-form',

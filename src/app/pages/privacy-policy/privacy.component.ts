@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, ViewContainerRef } from '@angular/core';
-import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
-import { MatomoTracker } from "ngx-matomo-client";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatomoOptOutDirective } from "./matomo-opt-out.directive";
+import {ChangeDetectionStrategy, Component, inject, ViewContainerRef} from '@angular/core';
+import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatomoOptOutDirective} from "./matomo-opt-out.directive";
 
 @Component({
   selector: 'en-content',

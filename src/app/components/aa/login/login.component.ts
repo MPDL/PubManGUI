@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgbActiveModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
-import { AaService } from "../../../services/aa.service";
-import { catchError, EMPTY, tap, throwError } from "rxjs";
-import { HttpErrorResponse } from "@angular/common/http";
-import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
-import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
-import { ChangePasswordComponent } from "../../shared/change-password/change-password.component";
-import { Message, MessageService } from "../../../services/message.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {AaService} from "../../../services/aa.service";
+import {catchError, EMPTY, tap} from "rxjs";
+import {PubManHttpErrorResponse} from "../../../services/interceptors/http-error.interceptor";
+import {ValidationErrorComponent} from "../../shared/validation-error/validation-error.component";
+import {ChangePasswordComponent} from "../../shared/change-password/change-password.component";
+import {Message, MessageService} from "../../../services/message.service";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { NotificationComponent } from "../../shared/notification/notification.component";
-import { MatomoTracker } from "ngx-matomo-client";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {NotificationComponent} from "../../shared/notification/notification.component";
+import {MatomoTracker} from "ngx-matomo-client";
 
 @Component({
     selector: 'pure-login',

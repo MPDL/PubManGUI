@@ -1,12 +1,11 @@
+import {Component, inject} from '@angular/core';
 
-import { Component, inject } from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {ChangeKeywordsFormComponent} from './change-keywords-form/change-keywords-form.component';
+import {ReplaceKeywordsFormComponent} from './replace-keywords-form/replace-keywords-form.component';
 
-import { ChangeKeywordsFormComponent } from './change-keywords-form/change-keywords-form.component';
-import { ReplaceKeywordsFormComponent } from './replace-keywords-form/replace-keywords-form.component';
-
-import { TranslatePipe } from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-replace-keywords',

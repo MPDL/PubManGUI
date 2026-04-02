@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, DOCUMENT, HostListener, inject, OnInit, signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, DOCUMENT, HostListener, inject, OnInit} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
 
-import { AaService } from 'src/app/services/aa.service';
-import { MessageService } from 'src/app/services/message.service';
-import { BatchService } from '../services/batch.service';
+import {AaService} from 'src/app/services/aa.service';
+import {MessageService} from 'src/app/services/message.service';
+import {BatchService} from '../services/batch.service';
 
-import { MatBadgeModule } from '@angular/material/badge';
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import {MatBadgeModule} from '@angular/material/badge';
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -81,7 +81,7 @@ export class BatchNavComponent implements OnInit {
     if (this.mobile) {
       if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
       if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
-    } 
+    }
   }
 
   showMore(): boolean {

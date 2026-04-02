@@ -1,14 +1,26 @@
-import { Component, effect, EventEmitter, inject, Input, OnInit, Output, ViewChild, signal, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
+import {
+  ChangeDetectorRef,
+  Component,
+  effect,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+  signal,
+  ViewChild
+} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ControlType, FormBuilderService} from '../../../services/form-builder.service';
 import {
   AbstractVO,
   AlternativeTitleVO,
   ContextDbVO,
   CreatorRole,
   CreatorType,
-  CreatorVO, DegreeType,
+  CreatorVO,
+  DegreeType,
   EventVO,
   IdentifierVO,
   LegalCaseVO,
@@ -21,39 +33,36 @@ import {
   SubjectClassification,
   SubjectVO
 } from 'src/app/model/inge';
-import { AltTitleFormComponent } from '../alt-title-form/alt-title-form.component';
-import { CreatorFormComponent } from '../creator-form/creator-form.component';
-import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { EventFormComponent } from '../event-form/event-form.component';
-import { LanguageFormComponent } from '../language-form/language-form.component';
-import { LegalCaseFormComponent } from '../legal-case-form/legal-case-form.component';
-import { IdentifierFormComponent } from '../identifier-form/identifier-form.component';
-import { PublishingInfoFormComponent } from '../publishing-info-form/publishing-info-form.component';
-import { SourceFormComponent } from '../source-form/source-form.component';
-import { SubjectFormComponent } from '../subject-form/subject-form.component';
-import { AbstractFormComponent } from '../abstract-form/abstract-form.component';
-import { ProjectInfoFormComponent } from '../project-info-form/project-info-form.component';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
-import { ContextsService } from 'src/app/services/pubman-rest-client/contexts.service';
-import { AaService } from 'src/app/services/aa.service';
-import { MessageService } from 'src/app/services/message.service';
-import { Errors } from 'src/app/model/errors';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  AddMultipleCreatorsModalComponent
-} from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
-import { TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
-import { AccordionGroupValidationDirective } from "../../../directives/accordion-group-validation.directive";
-import { catchError, finalize, Subject, takeUntil, tap, throwError } from "rxjs";
-import { isEmptyCreator } from "../../../utils/item-utils";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
-import { isControlValueEmpty } from 'src/app/utils/utils_final';
-import { hasFormValues } from '../../../utils/utils';
+import {AltTitleFormComponent} from '../alt-title-form/alt-title-form.component';
+import {CreatorFormComponent} from '../creator-form/creator-form.component';
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {EventFormComponent} from '../event-form/event-form.component';
+import {LanguageFormComponent} from '../language-form/language-form.component';
+import {LegalCaseFormComponent} from '../legal-case-form/legal-case-form.component';
+import {IdentifierFormComponent} from '../identifier-form/identifier-form.component';
+import {PublishingInfoFormComponent} from '../publishing-info-form/publishing-info-form.component';
+import {SourceFormComponent} from '../source-form/source-form.component';
+import {SubjectFormComponent} from '../subject-form/subject-form.component';
+import {AbstractFormComponent} from '../abstract-form/abstract-form.component';
+import {ProjectInfoFormComponent} from '../project-info-form/project-info-form.component';
+import {CdkDrag, CdkDragDrop, CdkDropList} from '@angular/cdk/drag-drop';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {LoadingComponent} from 'src/app/components/shared/loading/loading.component';
+import {ContextsService} from 'src/app/services/pubman-rest-client/contexts.service';
+import {AaService} from 'src/app/services/aa.service';
+import {MessageService} from 'src/app/services/message.service';
+import {Errors} from 'src/app/model/errors';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AddMultipleCreatorsModalComponent} from '../add-multiple-creators-modal/add-multiple-creators-modal.component';
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorComponent} from "../../shared/validation-error/validation-error.component";
+import {AccordionGroupValidationDirective} from "../../../directives/accordion-group-validation.directive";
+import {catchError, finalize, Subject, takeUntil, tap, throwError} from "rxjs";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
+import {isControlValueEmpty} from 'src/app/utils/utils_final';
+import {hasFormValues} from '../../../utils/utils';
 
 
 @Component({

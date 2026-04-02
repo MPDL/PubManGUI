@@ -1,20 +1,20 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CdkDragHandle, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ContentCategories, MdsFileVO, OA_STATUS, Visibility } from 'src/app/model/inge';
-import { ControlType } from '../../../services/form-builder.service';
-import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
-import { Errors } from 'src/app/model/errors';
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
-import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-autosuggest.component";
-import { tap } from "rxjs";
-import { ConeService } from "../../../services/cone.service";
-import { isFormValueEmpty } from 'src/app/utils/utils';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {CdkDragHandle, CdkDragPlaceholder} from '@angular/cdk/drag-drop';
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ContentCategories, MdsFileVO, OA_STATUS, Visibility} from 'src/app/model/inge';
+import {ControlType} from '../../../services/form-builder.service';
+import {IpEntry, MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {LoadingComponent} from 'src/app/components/shared/loading/loading.component';
+import {Errors} from 'src/app/model/errors';
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
+import {ConeAutosuggestComponent} from "../../shared/cone-autosuggest/cone-autosuggest.component";
+import {tap} from "rxjs";
+import {ConeService} from "../../../services/cone.service";
+import {isFormValueEmpty} from 'src/app/utils/utils';
 
 @Component({
   selector: 'pure-file-form',
@@ -65,9 +65,9 @@ export class FileFormComponent {
 
   ngOnInit(): void {
     if (this.file_form?.get('storage')?.value === 'EXTERNAL_URL' && !isFormValueEmpty(this.file_form.get('content')?.value))
-      { 
-        this.isReadOnlyContent = true; 
-      }    
+      {
+        this.isReadOnlyContent = true;
+      }
   }
 
   get allowedAudienceIds() {

@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ContextDbVO, ContextState, ItemVersionState, ItemVersionVO, Workflow } from "../../../model/inge";
-import { ItemsService } from "../../../services/pubman-rest-client/items.service";
-import { Message, MessageService } from "../../../services/message.service";
-import { catchError, EMPTY, finalize, Subscription, tap } from "rxjs";
-import { TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
-import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
-import { AaService } from "../../../services/aa.service";
-import { removeDuplicates } from "../../../utils/utils";
-import { NotificationComponent } from "../notification/notification.component";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {ContextDbVO, ContextState, ItemVersionState, ItemVersionVO, Workflow} from "../../../model/inge";
+import {ItemsService} from "../../../services/pubman-rest-client/items.service";
+import {Message, MessageService} from "../../../services/message.service";
+import {catchError, EMPTY, finalize, Subscription, tap} from "rxjs";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {SanitizeHtmlPipe} from "../../../pipes/sanitize-html.pipe";
+import {PubManHttpErrorResponse} from "../../../services/interceptors/http-error.interceptor";
+import {AaService} from "../../../services/aa.service";
+import {removeDuplicates} from "../../../utils/utils";
+import {NotificationComponent} from "../notification/notification.component";
 
 @Component({
   selector: 'pure-item-actions-modal',

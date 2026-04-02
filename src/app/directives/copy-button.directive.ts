@@ -1,9 +1,9 @@
-import { Directive, ElementRef, inject, Input, PLATFORM_ID, Renderer2 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { CdkCopyToClipboard, Clipboard } from "@angular/cdk/clipboard";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { timer } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
+import {Directive, ElementRef, inject, Input, PLATFORM_ID, Renderer2} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {CdkCopyToClipboard, Clipboard} from "@angular/cdk/clipboard";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {timer} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 @Directive({
   selector: 'button[pureCopyButton]',

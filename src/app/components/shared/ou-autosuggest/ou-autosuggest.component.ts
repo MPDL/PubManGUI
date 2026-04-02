@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, Input} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {
   catchError,
   debounceTime,
@@ -12,13 +12,12 @@ import {
   switchMap,
   tap
 } from "rxjs";
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { NgbModal, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
-import { OrganizationsService } from "../../../services/pubman-rest-client/organizations.service";
-import { TranslatePipe } from "@ngx-translate/core";
-import { OrganizationVO } from "../../../model/inge";
-import { OuModalComponent } from "../ou-modal/ou-modal.component";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {NgbModal, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {OrganizationsService} from "../../../services/pubman-rest-client/organizations.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {OuModalComponent} from "../ou-modal/ou-modal.component";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
 
 @Component({
   selector: 'pure-ou-autosuggest',

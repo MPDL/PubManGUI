@@ -1,21 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, HostListener, inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportErrorLevel, ImportLogDbVO, ImportLogItemDbVO, ImportStatus } from 'src/app/model/inge';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {ImportErrorLevel, ImportLogDbVO, ImportLogItemDbVO, ImportStatus} from 'src/app/model/inge';
 
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
-import { MessageService } from 'src/app/services/message.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {MessageService} from 'src/app/services/message.service';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { PaginatorComponent } from "src/app/components/shared/paginator/paginator.component";
-import { ImportDetailLogComponent } from "./import-detail-log/import-detail-log.component";
+import {PaginatorComponent} from "src/app/components/shared/paginator/paginator.component";
+import {ImportDetailLogComponent} from "./import-detail-log/import-detail-log.component";
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
-import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
+import {LocalizeDatePipe} from "src/app/pipes/localize-date.pipe";
 
 @Component({
   selector: 'pure-import-details-list',
@@ -59,7 +59,7 @@ export default class ImportDetailsListComponent implements OnInit {
   problem: number = 0;
   warning: number = 0;
 
-  released: boolean = false; 
+  released: boolean = false;
 
   public filterForm: FormGroup = this.fb.group({
     fine: [true, Validators.requiredTrue],
@@ -249,7 +249,7 @@ export default class ImportDetailsListComponent implements OnInit {
             this.runningProcess(msg);
           }, 1000 * (this.updateDelay < 60 ? Math.ceil(this.updateDelay++ / 10) : 60));
         } else {
-          this.msgSvc.success(msg);             
+          this.msgSvc.success(msg);
           this.getLogs();
           this.refreshLogsView();
           this.updateDelay = 1;
@@ -283,10 +283,10 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doSubmit(): void {
-    let ref = this.msgSvc.displayConfirmation({ 
-      text: this.translateSvc.instant(_('imports.submit.confirmation'), { name: this.import.name }), 
-      confirm: this.translateSvc.instant(_('common.confirm')), 
-      cancel: this.translateSvc.instant(_('common.cancel')) 
+    let ref = this.msgSvc.displayConfirmation({
+      text: this.translateSvc.instant(_('imports.submit.confirmation'), { name: this.import.name }),
+      confirm: this.translateSvc.instant(_('common.confirm')),
+      cancel: this.translateSvc.instant(_('common.cancel'))
     });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {
@@ -308,10 +308,10 @@ export default class ImportDetailsListComponent implements OnInit {
   }
 
   doRelease(): void {
-    let ref = this.msgSvc.displayConfirmation({ 
-      text: this.translateSvc.instant(_('imports.release.confirmation'), { name: this.import.name }), 
-      confirm: this.translateSvc.instant(_('common.confirm')), 
-      cancel: this.translateSvc.instant(_('common.cancel')) 
+    let ref = this.msgSvc.displayConfirmation({
+      text: this.translateSvc.instant(_('imports.release.confirmation'), { name: this.import.name }),
+      confirm: this.translateSvc.instant(_('common.confirm')),
+      cancel: this.translateSvc.instant(_('common.cancel'))
     });
     ref.closed.subscribe(confirmed => {
       if (confirmed) {

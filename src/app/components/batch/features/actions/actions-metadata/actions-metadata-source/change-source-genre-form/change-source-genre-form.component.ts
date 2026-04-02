@@ -1,17 +1,16 @@
+import {Component, ElementRef, HostListener, inject} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {ChangeSourceGenreParams} from 'src/app/components/batch/interfaces/batch-params';
+import {SourceGenre} from 'src/app/model/inge';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { ChangeSourceGenreParams } from 'src/app/components/batch/interfaces/batch-params';
-import { SourceGenre } from 'src/app/model/inge';
+import {TranslatePipe} from "@ngx-translate/core";
+import {SortByLabelPipe} from "src/app/pipes/sort-by-label.pipe";
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
-
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 
 @Component({
@@ -53,7 +52,7 @@ export class ChangeSourceGenreFormComponent {
   ngOnInit(): void {
     this.changeSourceGenreForm.reset();
   }
-  
+
   onSubmit(): void {
     if (this.changeSourceGenreForm.valid) {
       this.batchSvc.changeSourceGenre(this.changeSourceGenreParams).subscribe(actionResponse => {

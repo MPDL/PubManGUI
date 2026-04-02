@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LanguageFormComponent } from './language-form.component';
+import {LanguageFormComponent} from './language-form.component';
 
 describe('LanguageFormComponent', () => {
   let component: LanguageFormComponent;

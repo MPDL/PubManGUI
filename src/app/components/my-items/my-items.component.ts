@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { AaService } from "../../services/aa.service";
-import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
-import { ItemListComponent } from "../item-list/item-list.component";
-import { map, Observable } from "rxjs";
-import { SortSelectorComponent } from "../item-list/filters/sort-selector/sort-selector.component";
-import { ItemFilterComponent } from "../item-list/filters/item-filter/item-filter.component";
-import { ItemStateFilterDirective } from "../item-list/filters/directives/item-state-filter.directive";
-import { ItemContextFilterDirective } from "../item-list/filters/directives/item-context-filter.directive";
-import { ItemImportFilterDirective } from "../item-list/filters/directives/item-import-filter.directive";
-import { TranslatePipe } from "@ngx-translate/core";
+import {Component} from '@angular/core';
+import {AaService} from "../../services/aa.service";
+import {baseElasticSearchQueryBuilder} from "../../utils/search-utils";
+import {ItemListComponent} from "../item-list/item-list.component";
+import {map, Observable} from "rxjs";
+import {SortSelectorComponent} from "../item-list/filters/sort-selector/sort-selector.component";
+import {ItemFilterComponent} from "../item-list/filters/item-filter/item-filter.component";
+import {ItemStateFilterDirective} from "../item-list/filters/directives/item-state-filter.directive";
+import {ItemContextFilterDirective} from "../item-list/filters/directives/item-context-filter.directive";
+import {ItemImportFilterDirective} from "../item-list/filters/directives/item-import-filter.directive";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-my-items',

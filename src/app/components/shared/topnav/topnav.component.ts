@@ -1,10 +1,10 @@
-import { Component, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { MessageService } from 'src/app/services/message.service';
-import { CartService } from "../../../services/cart.service";
-import { AaService } from "../../../services/aa.service";
-import { NgClass } from "@angular/common";
+import {Component, HostListener} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import {MessageService} from 'src/app/services/message.service';
+import {CartService} from "../../../services/cart.service";
+import {AaService} from "../../../services/aa.service";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'pure-topnav',

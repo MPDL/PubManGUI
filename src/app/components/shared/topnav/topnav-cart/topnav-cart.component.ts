@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { MessageService } from "../../../../services/message.service";
-import { CartService } from "../../../../services/cart.service";
-import { AaService } from "../../../../services/aa.service";
-import { ItemSelectionService } from "../../../../services/item-selection.service";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
+import {Component, Input} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {MessageService} from "../../../../services/message.service";
+import {CartService} from "../../../../services/cart.service";
+import {AaService} from "../../../../services/aa.service";
+import {ItemSelectionService} from "../../../../services/item-selection.service";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-topnav-cart',

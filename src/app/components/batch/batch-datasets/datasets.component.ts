@@ -1,14 +1,13 @@
+import {Component} from '@angular/core';
+import {map, Observable} from "rxjs";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { Component } from '@angular/core';
-import { map, Observable } from "rxjs";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {BatchService} from '../services/batch.service';
 
-import { BatchService } from '../services/batch.service';
-
-import { ItemListComponent } from "../../item-list/item-list.component";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
-import { TranslatePipe } from "@ngx-translate/core";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {ItemListComponent} from "../../item-list/item-list.component";
+import {baseElasticSearchQueryBuilder} from "../../../utils/search-utils";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({

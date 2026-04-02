@@ -1,11 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, computed, effect, HostListener, inject } from '@angular/core';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-import { NotificationComponent } from '../notification/notification.component';
-import { Message, MessageService } from "../../../services/message.service";
-import { NavigationEnd, Router } from "@angular/router";
-import { filter } from "rxjs/operators";
-import { Subject, takeUntil, tap } from "rxjs";
+import {CommonModule} from '@angular/common';
+import {Component, HostListener, inject} from '@angular/core';
+import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
+import {NotificationComponent} from '../notification/notification.component';
+import {MessageService} from "../../../services/message.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'pure-info-subheader',

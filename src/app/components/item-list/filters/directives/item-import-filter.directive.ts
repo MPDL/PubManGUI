@@ -1,10 +1,10 @@
-import { Directive, Inject, Input, LOCALE_ID } from '@angular/core';
-import { ItemFilterDirective } from "./item-filter.directive";
-import { AaService } from "../../../../services/aa.service";
-import { FilterEvent } from "../../item-list.component";
-import { baseElasticSearchQueryBuilder } from "../../../../utils/search-utils";
-import { ImportService } from "../../../../services/pubman-rest-client/import.service";
-import { DatePipe } from "@angular/common";
+import {Directive, Inject, Input, LOCALE_ID} from '@angular/core';
+import {ItemFilterDirective} from "./item-filter.directive";
+import {AaService} from "../../../../services/aa.service";
+import {FilterEvent} from "../../item-list.component";
+import {baseElasticSearchQueryBuilder} from "../../../../utils/search-utils";
+import {ImportService} from "../../../../services/pubman-rest-client/import.service";
+import {DatePipe} from "@angular/common";
 import {map, tap} from "rxjs";
 
 

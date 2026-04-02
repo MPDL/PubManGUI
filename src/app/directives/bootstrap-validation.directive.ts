@@ -1,10 +1,5 @@
-import {
-  Directive,
-  HostBinding,
-  Optional,
-  Self,
-} from '@angular/core';
-import { AbstractControl, ControlContainer, NgControl } from "@angular/forms";
+import {Directive, HostBinding, Optional, Self,} from '@angular/core';
+import {AbstractControl, ControlContainer, NgControl} from "@angular/forms";
 
 /**
  * Directive to apply Bootstrap validation styling to Angular form elements based on their validation state.

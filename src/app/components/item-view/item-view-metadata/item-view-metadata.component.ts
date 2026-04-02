@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { IdentifierVO, IdType, ItemVersionVO, PublishingInfoVO } from "../../../model/inge";
-import { ItemViewMetadataElementComponent } from "./item-view-metadata-element/item-view-metadata-element.component";
-import { ItemViewCreatorsComponent } from "./item-view-creators/item-view-creators.component";
-import { NotEmptyPipe } from "../../../pipes/notEmpty.pipe";
-import { SanitizeHtmlPipe } from "../../../pipes/sanitize-html.pipe";
-import { isUrl } from "../../../utils/item-utils";
-import { environment } from 'src/environments/environment';
-import { TranslatePipe } from "@ngx-translate/core";
+import {Component, Input} from '@angular/core';
+import {IdentifierVO, IdType, ItemVersionVO, PublishingInfoVO} from "../../../model/inge";
+import {ItemViewMetadataElementComponent} from "./item-view-metadata-element/item-view-metadata-element.component";
+import {ItemViewCreatorsComponent} from "./item-view-creators/item-view-creators.component";
+import {NotEmptyPipe} from "../../../pipes/notEmpty.pipe";
+import {SanitizeHtmlPipe} from "../../../pipes/sanitize-html.pipe";
+import {isUrl} from "../../../utils/item-utils";
+import {environment} from 'src/environments/environment';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-item-view-metadata',

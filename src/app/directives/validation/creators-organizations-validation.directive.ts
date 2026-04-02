@@ -1,7 +1,7 @@
-import { AbstractControl, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { CreatorType } from 'src/app/model/inge';
-import { Errors } from 'src/app/model/errors'
-import { isFormValueEmpty } from "../../utils/utils";
+import {AbstractControl, FormArray, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {CreatorType} from 'src/app/model/inge';
+import {Errors} from 'src/app/model/errors'
+import {isFormValueEmpty} from "../../utils/utils";
 
 export const CreatorsOrganizationsValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;

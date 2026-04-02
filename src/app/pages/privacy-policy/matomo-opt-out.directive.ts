@@ -1,7 +1,6 @@
-import { Directive, inject } from '@angular/core';
-import { LangChangeEvent } from "@ngx-translate/core";
-import { MatomoTracker } from "ngx-matomo-client";
-import { NgControl } from "@angular/forms";
+import {Directive, inject} from '@angular/core';
+import {MatomoTracker} from "ngx-matomo-client";
+import {NgControl} from "@angular/forms";
 
 @Directive({
   selector: '[pureMatomoOptOut]',

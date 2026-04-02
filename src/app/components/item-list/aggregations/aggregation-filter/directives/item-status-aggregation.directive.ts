@@ -1,7 +1,7 @@
-import { Directive } from '@angular/core';
-import { ItemAggregationBaseDirective } from "./item-aggregation-base.directive";
-import { AggregationResultView } from "../item-aggregation-filter.component";
-import { ItemVersionState } from "../../../../../model/inge";
+import {Directive} from '@angular/core';
+import {ItemAggregationBaseDirective} from "./item-aggregation-base.directive";
+import {AggregationResultView} from "../item-aggregation-filter.component";
+import {ItemVersionState} from "../../../../../model/inge";
 
 @Directive({
   selector: '[pureItemStatusAggregation]',

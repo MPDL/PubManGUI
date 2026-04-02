@@ -1,5 +1,4 @@
-
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import FetchComponent from './fetch/fetch.component';
 import ImportComponent from './import/import.component';
 

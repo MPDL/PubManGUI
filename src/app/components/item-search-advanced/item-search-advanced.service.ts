@@ -1,11 +1,9 @@
-import {inject, Inject, Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {SearchCriterion} from "./criterions/SearchCriterion";
 import {Parenthesis, PARENTHESIS_TYPE} from "./criterions/operators/Parenthesis";
 import {forkJoin, map, tap} from "rxjs";
 import {LogicalOperator} from "./criterions/operators/LogicalOperator";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
-import {SavedSearchesModalComponent} from "../shared/saved-searches-modal/saved-searches-modal.component";
-import {ItemVersionState} from "../../model/inge";
 import {DisplayType, searchTypes} from "./criterions/search_config";
 import {TitleSearchCriterion} from "./criterions/StandardSearchCriterion";
 import {OrganizationSearchCriterion, PersonSearchCriterion} from "./criterions/StringOrHiddenIdSearchCriterion";

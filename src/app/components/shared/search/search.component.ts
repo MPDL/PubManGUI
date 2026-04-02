@@ -1,23 +1,22 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, HostListener, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import {ChangeDetectionStrategy, Component, DOCUMENT, HostListener, inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 
-import { SearchStateService } from "src/app/components/search-result-list/search-state.service";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
+import {SearchStateService} from "src/app/components/search-result-list/search-state.service";
+import {baseElasticSearchQueryBuilder} from "../../../utils/search-utils";
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
-import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, OperatorFunction, switchMap } from "rxjs";
-import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
+import {catchError, debounceTime, distinctUntilChanged, map, Observable, of, OperatorFunction, switchMap} from "rxjs";
+import {ItemsService} from "src/app/services/pubman-rest-client/items.service";
 import sanitizeHtml from "sanitize-html";
-import { filter } from "rxjs/operators";
+import {filter} from "rxjs/operators";
 
-import { AaService } from "../../../services/aa.service";
-import { ItemVersionState } from "../../../model/inge";
-import { MatomoTracker } from "ngx-matomo-client";
-import { SimplesearchService } from 'src/app/services/simplesearch.service';
+import {AaService} from "../../../services/aa.service";
+import {MatomoTracker} from "ngx-matomo-client";
+import {SimplesearchService} from 'src/app/services/simplesearch.service';
 
 @Component({
   selector: 'pure-search',

@@ -1,5 +1,5 @@
-import { StandardSearchCriterion } from "./StandardSearchCriterion";
-import { ItemVersionState, MdsPublicationGenre, ReviewMethod } from "../../../model/inge";
+import {StandardSearchCriterion} from "./StandardSearchCriterion";
+import {ItemVersionState, MdsPublicationGenre, ReviewMethod} from "../../../model/inge";
 import {IndexField} from "../../../utils/search-utils";
 
 export abstract class EnumSearchCriterion extends StandardSearchCriterion {

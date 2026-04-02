@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, tap} from "rxjs";
+import {BehaviorSubject, tap} from "rxjs";
 import {ItemSearchAdvancedService} from "../item-search-advanced/item-search-advanced.service";
 import {SavedSearchService} from "../../services/pubman-rest-client/saved-search.service";
 import {ActivatedRoute} from "@angular/router";

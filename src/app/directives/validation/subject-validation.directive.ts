@@ -1,7 +1,7 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { Errors } from "src/app/model/errors";
-import { IdType } from "src/app/model/inge";
-import { isFormValueEmpty } from "../../utils/utils";
+import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {Errors} from "src/app/model/errors";
+import {IdType} from "src/app/model/inge";
+import {isFormValueEmpty} from "../../utils/utils";
 
 export const SubjectValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const error_types = Errors;

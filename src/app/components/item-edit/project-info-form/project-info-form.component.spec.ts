@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ProjectInfoFormComponent } from './project-info-form.component';
+import {ProjectInfoFormComponent} from './project-info-form.component';
 
 describe('ProjectInfoFormComponent', () => {
   let component: ProjectInfoFormComponent;

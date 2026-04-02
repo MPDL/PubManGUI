@@ -1,18 +1,17 @@
-import { Component } from '@angular/core';
-import { exportTypes } from "../../../model/inge";
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { ItemsService } from "../../../services/pubman-rest-client/items.service";
-import { environment } from 'src/environments/environment';
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ItemSelectionService } from "../../../services/item-selection.service";
-import { catchError, EMPTY, Subscription, tap } from "rxjs";
-import { contentDispositionParser } from "../../../utils/utils";
-import { TranslatePipe } from "@ngx-translate/core";
-import { PubManHttpErrorResponse } from "../../../services/interceptors/http-error.interceptor";
-import { OuAutosuggestComponent } from "../ou-autosuggest/ou-autosuggest.component";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { NotificationComponent } from "../notification/notification.component";
-import { MessageService } from "../../../services/message.service";
+import {Component} from '@angular/core';
+import {exportTypes} from "../../../model/inge";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ItemsService} from "../../../services/pubman-rest-client/items.service";
+import {environment} from 'src/environments/environment';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {catchError, EMPTY, Subscription, tap} from "rxjs";
+import {contentDispositionParser} from "../../../utils/utils";
+import {TranslatePipe} from "@ngx-translate/core";
+import {PubManHttpErrorResponse} from "../../../services/interceptors/http-error.interceptor";
+import {OuAutosuggestComponent} from "../ou-autosuggest/ou-autosuggest.component";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {NotificationComponent} from "../notification/notification.component";
+import {MessageService} from "../../../services/message.service";
 
 
 @Component({

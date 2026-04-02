@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { Message, MessageService } from "src/app/services/message.service";
-import { finalize, Observable, repeat, Subject, switchMap, takeUntil, takeWhile, tap, timer } from "rxjs";
+import {CommonModule} from '@angular/common';
+import {Component, Input} from '@angular/core';
+import {Message, MessageService} from "src/app/services/message.service";
+import {repeat, Subject, takeUntil, takeWhile, tap, timer} from "rxjs";
 
 @Component({
   selector: 'pure-notification',

@@ -1,9 +1,8 @@
-import { inject, Injectable } from '@angular/core';
-import { AbstractControl, FormGroup, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Errors } from "src/app/model/errors";
+import {inject, Injectable} from '@angular/core';
+import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {Errors} from "src/app/model/errors";
 
-import { _, TranslateService } from '@ngx-translate/core'
-import { lastValueFrom } from 'rxjs';
+import {_, TranslateService} from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'

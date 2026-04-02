@@ -1,22 +1,21 @@
-import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from "@angular/core";
-import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
-import { catchError, map, Observable, of } from "rxjs";
-import { ItemVersionVO, MdsPublicationGenre } from "../../model/inge";
-import { ItemsService } from "../../services/pubman-rest-client/items.service";
-import { AsyncPipe, DatePipe, isPlatformBrowser, SlicePipe } from "@angular/common";
-import { RouterLink } from "@angular/router";
-import { SanitizeHtmlPipe } from "../../pipes/sanitize-html.pipe";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { LoadingComponent } from "../shared/loading/loading.component";
+import {Component, inject, OnInit, PLATFORM_ID} from "@angular/core";
+import {baseElasticSearchQueryBuilder} from "../../utils/search-utils";
+import {catchError, map, Observable, of} from "rxjs";
+import {ItemVersionVO} from "../../model/inge";
+import {ItemsService} from "../../services/pubman-rest-client/items.service";
+import {AsyncPipe, DatePipe, isPlatformBrowser, SlicePipe} from "@angular/common";
+import {RouterLink} from "@angular/router";
+import {SanitizeHtmlPipe} from "../../pipes/sanitize-html.pipe";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
+import {LoadingComponent} from "../shared/loading/loading.component";
 
 //My Imports
-import { Chart, Tooltip } from 'chart.js/auto';
-import { CountUp } from 'countup.js';
-import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
-import { TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { FormsModule, NgModel } from "@angular/forms";
-import { SimplesearchService } from "src/app/services/simplesearch.service";
+import {Chart} from 'chart.js/auto';
+import {getThumbnailUrlForFile} from "../../utils/item-utils";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {FormsModule} from "@angular/forms";
+import {SimplesearchService} from "src/app/services/simplesearch.service";
 
 @Component({
   selector: 'pure-home',

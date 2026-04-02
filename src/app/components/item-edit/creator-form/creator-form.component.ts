@@ -1,22 +1,19 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
-import { CreatorRole, CreatorType, IdentifierVO, IdType, OrganizationVO, PersonVO } from 'src/app/model/inge';
-import { ConeService, PersonResource } from 'src/app/services/cone.service';
-import {
-  AddRemoveButtonsComponent
-} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
-import { OuAutosuggestComponent } from 'src/app/components/shared/ou-autosuggest/ou-autosuggest.component';
-import { PersonAutosuggestComponent } from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
-import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import { Errors } from 'src/app/model/errors';
-import { environment } from 'src/environments/environment';
-import { CdkDragHandle } from "@angular/cdk/drag-drop";
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorComponent } from "../../shared/validation-error/validation-error.component";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ControlType, FormBuilderService} from '../../../services/form-builder.service';
+import {CreatorRole, CreatorType, IdentifierVO, IdType, OrganizationVO, PersonVO} from 'src/app/model/inge';
+import {ConeService, PersonResource} from 'src/app/services/cone.service';
+import {AddRemoveButtonsComponent} from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
+import {OuAutosuggestComponent} from 'src/app/components/shared/ou-autosuggest/ou-autosuggest.component';
+import {PersonAutosuggestComponent} from 'src/app/components/shared/person-autosuggest/person-autosuggest.component';
+import {MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import {Errors} from 'src/app/model/errors';
+import {environment} from 'src/environments/environment';
+import {CdkDragHandle} from "@angular/cdk/drag-drop";
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-creator-form',

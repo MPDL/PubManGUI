@@ -1,19 +1,18 @@
+import {Component, ElementRef, HostListener, inject} from '@angular/core';
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {AddLocalTagsParams} from 'src/app/components/batch/interfaces/batch-params';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { AddLocalTagsParams } from 'src/app/components/batch/interfaces/batch-params';
+import {ChipsComponent} from 'src/app/components/shared/chips/chips.component';
 
-import { ChipsComponent } from 'src/app/components/shared/chips/chips.component';
+import {TranslatePipe} from "@ngx-translate/core";
 
-import { TranslatePipe } from "@ngx-translate/core";
-
-import { ControlType } from 'src/app/services/form-builder.service';
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {ControlType} from 'src/app/services/form-builder.service';
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 
 @Component({

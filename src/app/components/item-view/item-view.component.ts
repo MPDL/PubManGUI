@@ -1,8 +1,9 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { ItemsService } from "../../services/pubman-rest-client/items.service";
-import { AaService } from "../../services/aa.service";
+import {Component, Inject, PLATFORM_ID} from '@angular/core';
+import {ItemsService} from "../../services/pubman-rest-client/items.service";
+import {AaService} from "../../services/aa.service";
 import {
-  AccountUserDbVO, AlternativeTitleType,
+  AccountUserDbVO,
+  AlternativeTitleType,
   AuditDbVO,
   FileDbVO,
   ItemVersionState,
@@ -10,41 +11,41 @@ import {
   Storage,
   Visibility
 } from "../../model/inge";
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { TopnavComponent } from "../shared/topnav/topnav.component";
-import { AsyncPipe, DatePipe, isPlatformBrowser, NgOptimizedImage, ViewportScroller } from "@angular/common";
-import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
-import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
-import { catchError, finalize, forkJoin, map, Observable, tap, throwError, timer } from "rxjs";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {TopnavComponent} from "../shared/topnav/topnav.component";
+import {AsyncPipe, DatePipe, isPlatformBrowser, ViewportScroller} from "@angular/common";
+import {ItemBadgesComponent} from "../shared/item-badges/item-badges.component";
+import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {ItemViewMetadataComponent} from "./item-view-metadata/item-view-metadata.component";
+import {catchError, finalize, forkJoin, map, Observable, tap, throwError, timer} from "rxjs";
 import {
   ItemViewMetadataElementComponent
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
-import { SanitizeHtmlPipe } from "../../pipes/sanitize-html.pipe";
-import { ItemViewFileComponent } from "./item-view-file/item-view-file.component";
-import { NotEmptyPipe } from "../../pipes/notEmpty.pipe";
-import { MessageService } from "../../services/message.service";
-import { ExportItemsComponent } from "../shared/export-items/export-items.component";
-import { PaginatorComponent } from "../shared/paginator/paginator.component";
-import { TopnavBatchComponent } from "../shared/topnav/topnav-batch/topnav-batch.component";
-import { TopnavCartComponent } from "../shared/topnav/topnav-cart/topnav-cart.component";
-import { ItemListStateService } from "../item-list/item-list-state.service";
-import { SanitizeHtmlCitationPipe } from "../../pipes/sanitize-html-citation.pipe";
-import { ItemSelectionService } from "../../services/item-selection.service";
-import { Title } from "@angular/platform-browser";
-import { ItemActionsModalComponent } from "../shared/item-actions-modal/item-actions-modal.component";
-import { LoadingComponent } from "../shared/loading/loading.component";
-import { TranslatePipe } from "@ngx-translate/core";
-import { itemToVersionId } from "../../utils/utils";
-import { UsersService } from "../../services/pubman-rest-client/users.service";
+import {SanitizeHtmlPipe} from "../../pipes/sanitize-html.pipe";
+import {ItemViewFileComponent} from "./item-view-file/item-view-file.component";
+import {NotEmptyPipe} from "../../pipes/notEmpty.pipe";
+import {MessageService} from "../../services/message.service";
+import {ExportItemsComponent} from "../shared/export-items/export-items.component";
+import {PaginatorComponent} from "../shared/paginator/paginator.component";
+import {TopnavBatchComponent} from "../shared/topnav/topnav-batch/topnav-batch.component";
+import {TopnavCartComponent} from "../shared/topnav/topnav-cart/topnav-cart.component";
+import {ItemListStateService} from "../item-list/item-list-state.service";
+import {SanitizeHtmlCitationPipe} from "../../pipes/sanitize-html-citation.pipe";
+import {ItemSelectionService} from "../../services/item-selection.service";
+import {Title} from "@angular/platform-browser";
+import {ItemActionsModalComponent} from "../shared/item-actions-modal/item-actions-modal.component";
+import {LoadingComponent} from "../shared/loading/loading.component";
+import {TranslatePipe} from "@ngx-translate/core";
+import {itemToVersionId} from "../../utils/utils";
+import {UsersService} from "../../services/pubman-rest-client/users.service";
 import sanitizeHtml from "sanitize-html";
-import { CopyButtonDirective } from "../../directives/copy-button.directive";
-import { PubManHttpErrorResponse } from "../../services/interceptors/http-error.interceptor";
-import { ChangeContextModalComponent } from "../shared/change-context-modal/change-context-modal.component";
-import { UpdateLocaltagsModalComponent } from "../shared/update-localtags-modal/update-localtags-modal.component";
-import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
-import { MatomoTracker } from "ngx-matomo-client";
-import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
+import {CopyButtonDirective} from "../../directives/copy-button.directive";
+import {PubManHttpErrorResponse} from "../../services/interceptors/http-error.interceptor";
+import {ChangeContextModalComponent} from "../shared/change-context-modal/change-context-modal.component";
+import {UpdateLocaltagsModalComponent} from "../shared/update-localtags-modal/update-localtags-modal.component";
+import {getThumbnailUrlForFile, getUrlForFile} from "../../utils/item-utils";
+import {MatomoTracker} from "ngx-matomo-client";
+import {ConeIconComponent} from "../shared/cone-icon/cone-icon.component";
 
 @Component({
   selector: 'pure-item-view',

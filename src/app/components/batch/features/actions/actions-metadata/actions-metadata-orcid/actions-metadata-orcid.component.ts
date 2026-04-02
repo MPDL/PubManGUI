@@ -1,6 +1,5 @@
-
-import { Component } from '@angular/core';
-import { ReplaceOrcidFormComponent } from './replace-orcid-form/replace-orcid-form.component'
+import {Component} from '@angular/core';
+import {ReplaceOrcidFormComponent} from './replace-orcid-form/replace-orcid-form.component'
 
 @Component({
   selector: 'pure-batch-actions-metadata-orcid',

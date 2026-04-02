@@ -1,9 +1,8 @@
-import { SearchCriterion } from "./SearchCriterion";
-import { Observable, of } from "rxjs";
-import { FormControl, FormGroup } from "@angular/forms";
-import { DegreeType, MdsPublicationGenre } from "../../../model/inge";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
-import { TranslateService } from "@ngx-translate/core";
+import {SearchCriterion} from "./SearchCriterion";
+import {Observable, of} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
+import {DegreeType, MdsPublicationGenre} from "../../../model/inge";
+import {baseElasticSearchQueryBuilder} from "../../../utils/search-utils";
 
 export class GenreListSearchCriterion extends SearchCriterion {
 

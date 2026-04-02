@@ -1,8 +1,8 @@
-import { computed, Injectable, signal, inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpContext } from '@angular/common/http';
-import { catchError, Observable, of, tap, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { DISPLAY_ERROR } from 'src/app/services/interceptors/http-context-tokens';
+import {computed, inject, Injectable, signal} from '@angular/core';
+import {HttpClient, HttpContext, HttpHeaders} from '@angular/common/http';
+import {catchError, Observable, of, tap, throwError} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {DISPLAY_ERROR} from 'src/app/services/interceptors/http-context-tokens';
 
 import type * as params from '../interfaces/imports-params';
 
@@ -14,7 +14,7 @@ import {
   ItemVersionVO,
 } from 'src/app/model/inge';
 
-import { AaService } from 'src/app/services/aa.service';
+import {AaService} from 'src/app/services/aa.service';
 
 @Injectable({
   providedIn: 'root'

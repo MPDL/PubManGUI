@@ -1,7 +1,7 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { MdsPublicationGenre } from "src/app/model/inge";
-import { Errors } from "src/app/model/errors";
-import { isFormValueEmpty } from "../../utils/utils";
+import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {MdsPublicationGenre} from "src/app/model/inge";
+import {Errors} from "src/app/model/errors";
+import {isFormValueEmpty} from "../../utils/utils";
 
 export const datesValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const event = control.get('event');

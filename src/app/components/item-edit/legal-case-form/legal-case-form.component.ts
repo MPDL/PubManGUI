@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslatePipe } from "@ngx-translate/core";
-import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
-import { ValidationErrorMessageDirective } from "../../../directives/validation-error-message.directive";
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TranslatePipe} from "@ngx-translate/core";
+import {BootstrapValidationDirective} from "../../../directives/bootstrap-validation.directive";
+import {ValidationErrorMessageDirective} from "../../../directives/validation-error-message.directive";
 
 @Component({
   selector: 'pure-legal-case-form',

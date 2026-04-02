@@ -1,20 +1,13 @@
-import {
-  HttpContext,
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandlerFn,
-  HttpRequest
-} from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { async, finalize, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { MessageService } from 'src/app/services/message.service';
-import { AaService } from "../aa.service";
-import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
-import { LoginComponent } from "../../components/aa/login/login.component";
-import { Router } from "@angular/router";
-import { WindowFocusCheckLoginService } from "../window-focus-check-login.service";
-import { DISPLAY_ERROR, IGNORED_STATUSES, SILENT_LOGOUT, ignoredStatuses } from './http-context-tokens';
+import {HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {finalize, Observable, switchMap, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {MessageService} from 'src/app/services/message.service';
+import {AaService} from "../aa.service";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {LoginComponent} from "../../components/aa/login/login.component";
+import {WindowFocusCheckLoginService} from "../window-focus-check-login.service";
+import {DISPLAY_ERROR, IGNORED_STATUSES, ignoredStatuses, SILENT_LOGOUT} from './http-context-tokens';
 
 // Re-export for compatibility with existing imports.
 export { ignoredStatuses };

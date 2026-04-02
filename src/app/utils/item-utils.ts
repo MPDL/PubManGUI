@@ -1,7 +1,7 @@
-import { CreatorVO, FileDbVO, ItemVersionVO, OrganizationVO, PersonVO, Visibility } from "../model/inge";
-import { Principal } from "../services/aa.service";
-import { isFormValueEmpty } from "./utils";
-import { environment } from "../../environments/environment";
+import {CreatorVO, FileDbVO, ItemVersionVO, OrganizationVO, PersonVO, Visibility} from "../model/inge";
+import {Principal} from "../services/aa.service";
+import {isFormValueEmpty} from "./utils";
+import {environment} from "../../environments/environment";
 
 export const checkFileAccess = (file: FileDbVO, item: ItemVersionVO, principal: Principal): boolean => {
   //console.log(file.visibility === Visibility.PUBLIC)

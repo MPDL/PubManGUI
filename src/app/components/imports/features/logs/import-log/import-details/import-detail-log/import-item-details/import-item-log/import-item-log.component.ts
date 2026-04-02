@@ -1,17 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, inject, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, HostListener, inject, Input} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportLogItemDetailDbVO } from 'src/app/model/inge';
-import { MessageService } from 'src/app/services/message.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {ImportLogItemDetailDbVO} from 'src/app/model/inge';
+import {MessageService} from 'src/app/services/message.service';
 
-import { SeparateFilterPipe } from 'src/app/components/imports/pipes/separateFilter.pipe';
+import {SeparateFilterPipe} from 'src/app/components/imports/pipes/separateFilter.pipe';
 import xmlFormat from 'xml-formatter';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbCollapseModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {LocalizeDatePipe} from "src/app/pipes/localize-date.pipe";
 
 
 @Component({

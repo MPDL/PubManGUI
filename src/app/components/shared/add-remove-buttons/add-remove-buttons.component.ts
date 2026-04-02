@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateService } from "@ngx-translate/core";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-add-remove-buttons',

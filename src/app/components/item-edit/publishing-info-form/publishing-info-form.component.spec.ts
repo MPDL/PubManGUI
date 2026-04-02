@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PublishingInfoFormComponent } from './publishing-info-form.component';
+import {PublishingInfoFormComponent} from './publishing-info-form.component';
 
 describe('PublishingInfoFormComponent', () => {
   let component: PublishingInfoFormComponent;

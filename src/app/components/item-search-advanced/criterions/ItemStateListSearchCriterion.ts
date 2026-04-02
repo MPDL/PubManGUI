@@ -1,9 +1,9 @@
-import { SearchCriterion } from "./SearchCriterion";
-import { Observable, of } from "rxjs";
-import { FormControl, FormGroup } from "@angular/forms";
-import { ItemVersionState } from "../../../model/inge";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
-import { AaService } from "../../../services/aa.service";
+import {SearchCriterion} from "./SearchCriterion";
+import {Observable, of} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
+import {ItemVersionState} from "../../../model/inge";
+import {baseElasticSearchQueryBuilder} from "../../../utils/search-utils";
+import {AaService} from "../../../services/aa.service";
 
 export class ItemStateListSearchCriterion extends SearchCriterion {
 

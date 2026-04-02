@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { MessageService } from 'src/app/services/message.service';
-import { AaService } from 'src/app/services/aa.service';
-import { LoginComponent } from './login/login.component';
+import {Component} from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {MessageService} from 'src/app/services/message.service';
+import {AaService} from 'src/app/services/aa.service';
+import {LoginComponent} from './login/login.component';
 
-import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { UserProfileComponent } from "../user-profile/user-profile.component";
+import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {UserProfileComponent} from "../user-profile/user-profile.component";
 import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({

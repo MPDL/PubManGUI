@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core'
-import { Router, RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core'
+import {Router, RouterModule} from '@angular/router';
 
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { ImportErrorLevel, ImportLogDbVO, ImportStatus } from 'src/app/model/inge';
-import { MessageService } from 'src/app/services/message.service';
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {ImportErrorLevel, ImportLogDbVO, ImportStatus} from 'src/app/model/inge';
+import {MessageService} from 'src/app/services/message.service';
 
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
-import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
-import { MatBadgeModule } from '@angular/material/badge';
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {MatBadgeModule} from '@angular/material/badge';
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
+import {_, TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {LocalizeDatePipe} from "src/app/pipes/localize-date.pipe";
 
 @Component({
   selector: 'pure-import-log',

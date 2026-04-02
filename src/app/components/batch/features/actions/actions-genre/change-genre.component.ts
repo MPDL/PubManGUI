@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component, inject} from '@angular/core';
 
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { ChangeGenreParams } from 'src/app/components/batch/interfaces/batch-params';
-import { DegreeType, MdsPublicationGenre } from 'src/app/model/inge';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {ChangeGenreParams} from 'src/app/components/batch/interfaces/batch-params';
+import {DegreeType, MdsPublicationGenre} from 'src/app/model/inge';
 
-import { TranslatePipe } from "@ngx-translate/core";
-import { SortByLabelPipe } from "src/app/pipes/sort-by-label.pipe";
+import {TranslatePipe} from "@ngx-translate/core";
+import {SortByLabelPipe} from "src/app/pipes/sort-by-label.pipe";
 
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 
 @Component({

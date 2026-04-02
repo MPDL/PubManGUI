@@ -1,6 +1,6 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { Errors } from "src/app/model/errors";
-import { MdsPublicationGenre } from "src/app/model/inge";
+import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {Errors} from "src/app/model/errors";
+import {MdsPublicationGenre} from "src/app/model/inge";
 
 export const SourceRequiredValidator: ValidatorFn = (control: AbstractControl,): ValidationErrors | null => {
   const genre_types = MdsPublicationGenre;

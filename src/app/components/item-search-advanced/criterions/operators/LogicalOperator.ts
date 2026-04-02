@@ -1,5 +1,5 @@
-import { SearchCriterion } from "../SearchCriterion";
-import { Observable, of } from "rxjs";
+import {SearchCriterion} from "../SearchCriterion";
+import {Observable, of} from "rxjs";
 
 export class LogicalOperator extends SearchCriterion {
 

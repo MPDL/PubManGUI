@@ -1,8 +1,8 @@
-import { SearchCriterion } from "./SearchCriterion";
-import { FormControl, Validators } from "@angular/forms";
-import { buildDateRangeQuery } from "../../../utils/search-utils";
-import { Observable, of } from "rxjs";
-import { DATE_PATTERN } from "../../../services/form-builder.service";
+import {SearchCriterion} from "./SearchCriterion";
+import {FormControl, Validators} from "@angular/forms";
+import {buildDateRangeQuery} from "../../../utils/search-utils";
+import {Observable, of} from "rxjs";
+import {DATE_PATTERN} from "../../../services/form-builder.service";
 
 export enum DATE_SEARCH_TYPES {
   ANYDATE = "anyDate",

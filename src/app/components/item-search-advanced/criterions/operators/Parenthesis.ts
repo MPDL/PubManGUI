@@ -1,5 +1,5 @@
-import { SearchCriterion } from "../SearchCriterion";
-import { Observable, of } from "rxjs";
+import {SearchCriterion} from "../SearchCriterion";
+import {Observable, of} from "rxjs";
 
 export enum PARENTHESIS_TYPE {
   OPENING_PARENTHESIS="opening_parenthesis",

@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Component, inject} from '@angular/core';
+import {RouterLink} from '@angular/router';
 
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-lang-switch',

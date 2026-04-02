@@ -1,4 +1,4 @@
-import { Component, ContentChildren, Input, QueryList } from '@angular/core';
+import {Component, ContentChildren, Input, QueryList} from '@angular/core';
 
 @Component({
   selector: 'pure-item-view-metadata-element',

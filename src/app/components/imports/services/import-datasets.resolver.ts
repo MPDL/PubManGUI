@@ -1,9 +1,9 @@
-import { inject } from "@angular/core";
-import { ActivatedRouteSnapshot, ResolveFn, Router } from "@angular/router";
-import { EMPTY, mergeMap, of } from "rxjs";
-import { MessageService } from "src/app/services/message.service";
-import { ImportsService } from 'src/app/components/imports/services/imports.service';
-import { _, TranslateService } from "@ngx-translate/core";
+import {inject} from "@angular/core";
+import {ResolveFn, Router} from "@angular/router";
+import {EMPTY, mergeMap, of} from "rxjs";
+import {MessageService} from "src/app/services/message.service";
+import {ImportsService} from 'src/app/components/imports/services/imports.service';
+import {_, TranslateService} from "@ngx-translate/core";
 
 
 export const importDatasetsResolver: ResolveFn<String[]> = (route, state) => {

@@ -1,19 +1,18 @@
+import {Component, ElementRef, HostListener, inject, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import { IpEntry, MiscellaneousService } from 'src/app/services/pubman-rest-client/miscellaneous.service';
-import type { ReplaceFileAudienceParams } from 'src/app/components/batch/interfaces/batch-params';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import {IpEntry, MiscellaneousService} from 'src/app/services/pubman-rest-client/miscellaneous.service';
+import type {ReplaceFileAudienceParams} from 'src/app/components/batch/interfaces/batch-params';
 
 import {
   AudienceFormComponent
 } from 'src/app/components/batch/features/actions/actions-metadata/actions-metadata-files/replace-file-audience-form/audience-form/audience-form.component'
-import { TranslatePipe } from "@ngx-translate/core";
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {TranslatePipe} from "@ngx-translate/core";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-replace-file-audience-form',
@@ -108,7 +107,7 @@ export class ReplaceFileAudienceFormComponent implements OnInit {
 
   checkIfAllRequired() {
     this.replaceFileAudienceForm.updateValueAndValidity();
-    
+
     if (this.replaceFileAudienceForm.get('allowedAudienceIds')?.value.length === 1 && this.replaceFileAudienceForm.get('allowedAudienceIds')?.invalid) {
       this.replaceFileAudienceForm.get('allowedAudienceIds')?.markAsPending();
     }

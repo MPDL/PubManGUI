@@ -1,14 +1,14 @@
-import { Injectable, signal } from '@angular/core';
-import { Dialog } from '@angular/cdk/dialog';
+import {Injectable, signal} from '@angular/core';
+import {Dialog} from '@angular/cdk/dialog';
 
-import { MessageComponent } from '../components/shared/message/message.component';
-import { ConfirmationComponent } from '../components/shared/confirmation/confirmation.component';
-import { PubManHttpErrorResponse } from "./interceptors/http-error.interceptor";
-import { TranslateService } from "@ngx-translate/core";
+import {MessageComponent} from '../components/shared/message/message.component';
+import {ConfirmationComponent} from '../components/shared/confirmation/confirmation.component';
+import {PubManHttpErrorResponse} from "./interceptors/http-error.interceptor";
+import {TranslateService} from "@ngx-translate/core";
 import sanitizeHtml from "sanitize-html";
-import { Subject, takeUntil, tap, timer } from "rxjs";
-import { filter } from "rxjs/operators";
-import { NavigationEnd, Router } from "@angular/router";
+import {Subject, takeUntil, tap} from "rxjs";
+import {filter} from "rxjs/operators";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'

@@ -1,13 +1,11 @@
+import {Component, inject} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
-import { Component, inject, computed } from '@angular/core';
-import { Observable, of, map } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
+import {ActivatedRoute} from '@angular/router';
 
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { ItemListComponent } from "../../item-list/item-list.component";
-import { baseElasticSearchQueryBuilder } from "../../../utils/search-utils";
-import { SortSelectorComponent } from "../../item-list/filters/sort-selector/sort-selector.component";
+import {ItemListComponent} from "../../item-list/item-list.component";
+import {baseElasticSearchQueryBuilder} from "../../../utils/search-utils";
+import {SortSelectorComponent} from "../../item-list/filters/sort-selector/sort-selector.component";
 
 @Component({
   selector: 'pure-import-datasets',

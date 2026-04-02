@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FilterEvent, ItemListComponent } from "../../item-list.component";
-import { ItemFilterDirective } from "../directives/item-filter.directive";
-import { DefaultKeyValuePipe } from "../../../../pipes/default-key-value.pipe";
-import { TranslatePipe } from "@ngx-translate/core";
-import { FormsModule } from "@angular/forms";
+import {Component, Input} from '@angular/core';
+import {FilterEvent, ItemListComponent} from "../../item-list.component";
+import {ItemFilterDirective} from "../directives/item-filter.directive";
+import {DefaultKeyValuePipe} from "../../../../pipes/default-key-value.pipe";
+import {TranslatePipe} from "@ngx-translate/core";
+import {FormsModule} from "@angular/forms";
 
 
 @Component({

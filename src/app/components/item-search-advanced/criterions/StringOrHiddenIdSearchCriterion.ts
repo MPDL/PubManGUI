@@ -1,8 +1,8 @@
-import { SearchCriterion } from "./SearchCriterion";
-import { FormControl } from "@angular/forms";
+import {SearchCriterion} from "./SearchCriterion";
+import {FormControl} from "@angular/forms";
 import {baseElasticSearchQueryBuilder, IndexField} from "../../../utils/search-utils";
-import { forkJoin, map, Observable, of } from "rxjs";
-import { OrganizationsService } from "../../../services/pubman-rest-client/organizations.service";
+import {forkJoin, map, Observable, of} from "rxjs";
+import {OrganizationsService} from "../../../services/pubman-rest-client/organizations.service";
 
 
 export abstract class StringOrHiddenIdSearchCriterion extends SearchCriterion {

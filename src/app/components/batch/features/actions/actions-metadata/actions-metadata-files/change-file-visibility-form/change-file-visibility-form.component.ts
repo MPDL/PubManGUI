@@ -1,16 +1,15 @@
+import {Component, ElementRef, HostListener, inject} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {BatchValidatorsService} from 'src/app/components/batch/services/batch-validators.service';
+import {BatchService} from 'src/app/components/batch/services/batch.service';
+import type {ChangeFileVisibilityParams} from 'src/app/components/batch/interfaces/batch-params';
+import {Visibility} from 'src/app/model/inge';
 
-import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
-import { BatchService } from 'src/app/components/batch/services/batch.service';
-import type { ChangeFileVisibilityParams } from 'src/app/components/batch/interfaces/batch-params';
-import { Visibility } from 'src/app/model/inge';
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
-import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
-
-import { ValidationErrorComponent } from "src/app/components/shared/validation-error/validation-error.component";
+import {ValidationErrorComponent} from "src/app/components/shared/validation-error/validation-error.component";
 
 @Component({
   selector: 'pure-change-file-visibility-form',
@@ -35,7 +34,7 @@ export class ChangeFileVisibilityFormComponent {
   public changeFileVisibilityForm: FormGroup = this.fb.group({
     fileVisibilityFrom: [null, [Validators.required]],
     fileVisibilityTo: [null, [Validators.required]],
-    }, 
+    },
     { validators: [this.valSvc.notSameValues('fileVisibilityFrom', 'fileVisibilityTo')] });
 
   get changeFileVisibilityParams(): ChangeFileVisibilityParams {
