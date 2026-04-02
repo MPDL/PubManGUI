@@ -22,32 +22,9 @@
 </div>
 
 
-<div class="bg-mpg-blue text-white rounded-4 p-5 mb-4">
-  <!-- News Section -->
-  <div id="news-section" class="mb-5">
-    <h4>MPG.PuRe {{'Home.News'| translate}}</h4>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      @if(newsItems | async; as blogEntries) {
-        @for(blogEntry of blogEntries.slice(0,3); track blogEntry) {
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-header bg-white text-mpg-blue">
-                <small class="card-title">{{ blogEntry.date | date:'short' }}</small>
-                <h6 class="card-title">{{ blogEntry.title }}</h6>
-              </div>
-              <div class="card-body">
-                {{ blogEntry.excerpt | slice:0:300 }} ...
-              </div>
-              <a href="{{ blogEntry.link }}" target="_blank" class="stretched-link"></a>
-            </div>
-          </div>
-        }
-      }
-      @else {
-        <pure-loading/>
-      }
-    </div>
-  </div>
+
+
+<div class="bg-mpg-blue text-white rounded-4 p-5 mb-5">
 
   <!-- Latest Featured Releases Section -->
   <div id="releases-section">
@@ -76,6 +53,35 @@
       }
     </div>
   </div>
+
+
+  <!-- News Section -->
+  <div id="news-section" class="mt-5">
+    <h4>MPG.PuRe {{'Home.News'| translate}}</h4>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      @if(newsItems | async; as blogEntries) {
+        @for(blogEntry of blogEntries.slice(0,3); track blogEntry) {
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-header bg-white text-mpg-blue">
+                <small class="card-title">{{ blogEntry.date | date:'short' }}</small>
+                <h6 class="card-title">{{ blogEntry.title }}</h6>
+              </div>
+              <div class="card-body">
+                {{ blogEntry.excerpt | slice:0:300 }} ...
+              </div>
+              <a href="{{ blogEntry.link }}" target="_blank" class="stretched-link"></a>
+            </div>
+          </div>
+        }
+      }
+      @else {
+        <pure-loading/>
+      }
+    </div>
+  </div>
+
+
 </div>
 
 <!-- Document Types Distribution Section -->
