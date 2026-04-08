@@ -38,7 +38,7 @@
     @if (authorizationInfo && authorizationInfo.actions['REVISE' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.revise' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('revise')">
-        <svg fill="currentColor" height="24px" width="24px">
+        <svg fill="currentColor" height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#revise"></use>
         </svg>
       </button>
@@ -64,7 +64,7 @@
     @if (authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.addDoi' | translate}}" >
       <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')">
-        <svg fill="currentColor" height="24px" width="24px">
+        <svg fill="currentColor" height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#doi"></use>
         </svg>
       </button>
