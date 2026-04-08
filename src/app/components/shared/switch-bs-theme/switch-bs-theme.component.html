@@ -3,7 +3,7 @@
         (click)="switch_theme()">
 </div>-->
 <div>
-    <a [routerLink]="[]" class="nav-link" (click)="switch_theme()">
+    <button type="button" class="nav-link" (click)="switch_theme()">
         @if (icon.localeCompare('moon') === 0) {
             <span class="material-symbols-outlined">
                 dark_mode
@@ -13,5 +13,5 @@
                 light_mode
                 </span>
         }
-    </a>
+    </button>
 </div>

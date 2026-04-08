@@ -13,8 +13,8 @@
   }
 
   @if(formForOuId?.value) {
-    <button type="button" class="btn btn-outline-dark btn-sm">
-      <span class="material-symbols-outlined"  title="{{formForOuId?.value}}" (click)="toggleAffPopover(formForOuId?.value)">info</span>
+    <button type="button" class="btn btn-outline-dark btn-sm" (click)="toggleAffPopover(formForOuId?.value)">
+      <span class="material-symbols-outlined"  title="{{formForOuId?.value}}">info</span>
     </button>
 
   <button class="btn btn-outline-dark btn-sm" type="button" (click)="deleteFields()">

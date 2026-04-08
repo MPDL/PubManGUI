@@ -54,12 +54,12 @@
           </a>
 
           <div>
-            <a role="button" [ngbPopover]="ipInfo" class="nav-link"
+            <button type="button" [ngbPopover]="ipInfo" class="nav-link"
               [ngbTooltip]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
               <span class="material-symbols-outlined">{{aaService.principal.value.matchedIpName ? 'location_on' :
                 'location_off'
                 }}</span>
-            </a>
+            </button>
             <ng-template #ipInfo>
               @if(aaService.principal.value.matchedIpName) {
               <span class="fw-bold text-success">{{aaService.principal.value.matchedIpName}}</span>

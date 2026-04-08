@@ -1,8 +1,8 @@
 <div class="nav-item dropdown-center">
 
-  <a class="nav-link dropdown-toggle" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" [ngbTooltip]="'header.tools.name' | translate">
+  <button type="button" class="nav-link dropdown-toggle" id="toolsDropdown" data-bs-toggle="dropdown" aria-expanded="false" [ngbTooltip]="'header.tools.name' | translate">
     <span class="material-symbols-outlined">apps</span>
-  </a>
+  </button>
 
   <ul class="dropdown-menu" aria-labelledby="toolsDropdown" style="transform: translateX(-4em);">
     @if (aaService.principal.getValue().isLocalAdmin || aaService.principal.getValue().isAdmin) {
