@@ -1,13 +1,13 @@
 
 <div class="row align-items-center top_nav_pos bg-body" [ngClass]="{ 'scrolled': isScrolled }">
   <div class="col-md ps-0">
-    <nav id="topnav" class="navbar navbar-expand bg-body">
+    <div id="topnav" class="navbar navbar-expand bg-body" role="toolbar">
         <div class="collapse navbar-collapse" id="top_nav">
           <div class="navbar-nav ms-2">
                 <ng-content select="[start]"></ng-content>
           </div>
         </div>
-    </nav>
+    </div>
 
   </div>
   <div class="col-md-7 ps-0">
