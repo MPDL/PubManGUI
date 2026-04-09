@@ -302,7 +302,7 @@ export class MetadataFormComponent implements OnInit {
             let personVO: PersonVO = { completeName: undefined, familyName: creator.family, givenName: creator.given, alternativeNames: undefined, titles: undefined, pseudonyms: undefined, organizations: undefined, identifier: undefined, orcid: undefined };
             let creatorVO: CreatorVO = { person: personVO, role: CreatorRole.AUTHOR, type: CreatorType.PERSON, organization: undefined };
             this.creators.push(this.fbs.creator_FG(creatorVO));
-
+            this.triggerViewportRefresh();
           }
           this.messageService.success('Adding multiple creators successful. Please review the list of creators.');
           this.multipleCreators.setValue('');

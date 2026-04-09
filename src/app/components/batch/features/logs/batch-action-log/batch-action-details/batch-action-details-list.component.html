@@ -4,20 +4,20 @@
       <div class="col-12 d-inline-flex justify-content-between">
 
         <div class="d-inline-flex justify-content-start align-items-center">
-          <a ngbTooltip="{{ 'batch.logs.details.fill.all' | translate }}" placement="bottom-left"
+          <button type="button" class="btn focus-ring p-0" ngbTooltip="{{ 'batch.logs.details.fill.all' | translate }}" placement="bottom-left"
             (click)="fillWithAll()">
-            <span class="material-symbols-outlined" style="cursor:pointer">
+            <span class="material-symbols-outlined">
               list_alt
             </span>
-          </a>
+          </button>
           @if(failed > 0) {
 
-          <a class="ms-3" ngbTooltip="{{ 'batch.logs.details.fill.errors' | translate }}" placement="bottom-left"
+          <button type="button" class="btn focus-ring p-0 ms-3" ngbTooltip="{{ 'batch.logs.details.fill.errors' | translate }}" placement="bottom-left"
             (click)="fillWithFailed()">
-            <span class="material-symbols-outlined" style="cursor:pointer">
+            <span class="material-symbols-outlined">
               breaking_news_alt_1
             </span>
-          </a>
+          </button>
 
           }
         </div>
@@ -73,7 +73,7 @@
               @for (log of inPage; track log.itemObjectId) {
               @defer (on viewport) {
 
-              <pure-batch-action-dataset-log [log]="log"></pure-batch-action-dataset-log>
+              <pure-batch-action-dataset-log [log]="log" [title]="titles[log.itemObjectId || 'no-id-' + inPage.indexOf(log)]"></pure-batch-action-dataset-log>
 
               }
               @placeholder {

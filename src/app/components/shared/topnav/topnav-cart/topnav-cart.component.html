@@ -3,7 +3,7 @@
 
     <span class="d-inline-block" ngbTooltip="{{ 'common.addToCart' | translate }}" [attr.tabindex]="(!isAdd) ? 0 : null">
       <button class="btn btn-link svg-icon nav-link px-2" (click)="addSelectedToCart()" style="vertical-align: baseline;" [disabled]="!isAdd">
-        <svg fill="currentColor" height="24px" width="24px">
+        <svg fill="currentColor" height="1.5em" width="1.5em">
             <use href="assets/icons/icons.svg#cart-add"></use>
         </svg>
       </button>
@@ -14,7 +14,7 @@
 
     <span class="d-inline-block" ngbTooltip="{{ 'common.removeFromCart' | translate }}" [attr.tabindex]="(!isRemove) ? 0 : null">
       <button  class=" btn btn-link nav-link px-2" [disabled]="!isRemove" (click)="removeSelectedFromCart()">
-        <svg fill="currentColor" height="24px" width="24px">
+        <svg fill="currentColor" height="1.5em" width="1.5em">
             <use href="assets/icons/icons.svg#cart-remove"></use>
         </svg>
       </button>

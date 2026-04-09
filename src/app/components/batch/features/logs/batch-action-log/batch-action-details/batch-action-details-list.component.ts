@@ -59,6 +59,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
   filteredLogs: resp.BatchProcessLogDetailDbVO[] = [];
 
   items: ItemVersionVO[] = [];
+  titles: { [key: string]: string } = {};
 
   batchLogHeader!: resp.BatchProcessLogHeaderDbVO;
   failed: number = 0;
@@ -89,6 +90,19 @@ export default class BatchActionDetailsListComponent implements OnInit {
           batchResponse.sort((a, b) => b.startDate.valueOf() - a.startDate.valueOf())
             .forEach((element, index) => {
               if (element.state != resp.BatchProcessLogDetailState.SUCCESS) this.failed++;
+              if (element.itemObjectId) {
+                this.batchSvc.getItem(element.itemObjectId)
+                  .subscribe({
+                    next: (value) => {
+                      this.titles[element.itemObjectId!] = value.metadata?.title || '';
+                    },
+                    error: () => {
+                      this.titles[element.itemObjectId!] = '404';
+                    }
+                  });
+              } else {
+                this.titles[`no-id-${index}`] = 'N/A';
+              }   
             })
           this.filteredLogs = this.unfilteredLogs = batchResponse;
           this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
