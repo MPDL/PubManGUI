@@ -1,4 +1,4 @@
-<div class="d-flex flex-column px-0 py-2" style="min-height: 200px;"
+<div class="d-flex flex-column px-0 py-2" style="min-height: 12.5rem;"
      [ngClass]="{'border-bottom': !last_item}">
   <!-- Badges -->
   <div class="mt-1 mb-2">
@@ -49,7 +49,7 @@
       @if(abstract) {
 
         <div class="mt-auto">
-        <button type="button" class="btn btn-sm p-0" tabindex="0"
+        <button type="button" class="btn btn-sm p-0"
            ngbTooltip="Abstract" [ngbPopover]="abstract" [popoverTitle]="item?.metadata?.title" popoverClass="custom-popover"><i class="bi bi-card-text"></i>
         </button>
         </div>

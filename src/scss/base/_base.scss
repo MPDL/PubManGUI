@@ -8,7 +8,6 @@
 
 html {
   box-sizing: border-box;
-  font-size: 16px;
 }
 
 /**
@@ -75,7 +74,7 @@ ngb-typeahead-window {
   }
 }
 .accordion {
-  .accordion-button {
+  .accordion-button:not(:focus-visible) {
     box-shadow: none !important;
   }
 }

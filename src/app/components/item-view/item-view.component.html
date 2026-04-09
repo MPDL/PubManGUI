@@ -38,7 +38,7 @@
     @if (authorizationInfo && authorizationInfo.actions['REVISE' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.revise' | translate}}" >
       <button class="nav-link" (click)="openActionsModal('revise')">
-        <svg fill="currentColor" height="24px" width="24px">
+        <svg fill="currentColor" height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#revise"></use>
         </svg>
       </button>
@@ -64,7 +64,7 @@
     @if (authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.addDoi' | translate}}" >
       <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')">
-        <svg fill="currentColor" height="24px" width="24px">
+        <svg fill="currentColor" height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#doi"></use>
         </svg>
       </button>
@@ -206,7 +206,7 @@
       <div class="row mt-5" id="item-view-subnav">
         <ul class="nav nav-pills nav-fill">
           <li class="nav-item">
-            <button type="button" class="nav-link {{currentSubMenuSelection === 'abstract' ? 'active' : ''}}" href="#"
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'abstract' ? 'active' : ''}}"
               (click)="changeSubMenu('abstract')">{{ 'MetadataFields.abstract' | translate }}
             </button>
           </li>
@@ -216,13 +216,13 @@
             </button>
           </li>
           <li class="nav-item">
-            <button type="button" class="nav-link {{currentSubMenuSelection === 'versions' ? 'active' : ''}}" href="#"
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'versions' ? 'active' : ''}}"
               (click)="changeSubMenu('versions')">{{ 'common.versions' | translate }}
             </button>
           </li>
           @if (aaService.principal.value.loggedIn) {
           <li class="nav-item">
-            <button type="button" class="nav-link {{currentSubMenuSelection === 'admin' ? 'active' : ''}}" href="#"
+            <button type="button" class="nav-link {{currentSubMenuSelection === 'admin' ? 'active' : ''}}"
               (click)="changeSubMenu('admin')">Admin
             </button>
           </li>
@@ -442,7 +442,7 @@
             </a>
           </div>
           <div class="col-1 p-0">
-            <button class="btn btn-sm border-0 p-0" pureCopyButton
+            <button class="btn btn-sm focus-ring border-0 p-0" pureCopyButton
               [textToCopy]="'https://hdl.handle.net/' + item.objectPid?.substring(4)"></button>
           </div>
         </div>
@@ -460,7 +460,7 @@
             </a>
           </div>
           <div class="col-1 p-0">
-            <button class="btn btn-sm border-0 p-0" pureCopyButton
+            <button class="btn btn-sm focus-ring border-0 p-0" pureCopyButton
               [textToCopy]="'https://hdl.handle.net/' + item.versionPid?.substring(4)"></button>
           </div>
         </div>

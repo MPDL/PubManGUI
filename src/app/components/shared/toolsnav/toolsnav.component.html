@@ -1,8 +1,8 @@
 <div class="nav-item dropdown-center">
 
-  <a class="nav-link dropdown-toggle" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" [ngbTooltip]="'header.tools.name' | translate">
+  <button type="button" class="nav-link dropdown-toggle" id="toolsDropdown" data-bs-toggle="dropdown" aria-expanded="false" [ngbTooltip]="'header.tools.name' | translate">
     <span class="material-symbols-outlined">apps</span>
-  </a>
+  </button>
 
   <ul class="dropdown-menu" aria-labelledby="toolsDropdown" style="transform: translateX(-4em);">
     @if (aaService.principal.getValue().isLocalAdmin || aaService.principal.getValue().isAdmin) {
@@ -13,14 +13,14 @@
       <hr class="m-1"/>
     }
     <li><a class="dropdown-item" [href]="env.cone_instance_uri" target="_blank" rel="noopener noreferrer">
-        <svg height="24px" width="24px">
+        <svg height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#cone-bw"></use>
         </svg> {{ 'header.tools.cone' | translate}}</a>
     </li>
     <hr class="m-1"/>
 
     <li><a class="dropdown-item" [href]="env.inge_uri + '/csl-editor/'" target="_blank" rel="noopener noreferrer">
-      <svg height="24px" width="24px">
+      <svg height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#format_quote"></use>
       </svg><span> {{'header.tools.cslEditor' | translate}}</span></a>
     </li>

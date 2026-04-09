@@ -5,13 +5,13 @@
     alternative: use navbar-expand-lg (requires navbar-toggler and collapse navbar-collapse d-lg-flex)
 -->
 @if (!mobile) {
-<nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()">
+<nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()" aria-label="{{ 'common.sidenav' | translate }}">
   <div class="container px-0">
 
     <div class="collapse navbar-collapse d-flex" id="side_nav">
-      <nav class="nav flex-column ps-4 py-2">
+      <div class="nav flex-column ps-4 py-2">
         <ng-container *ngTemplateOutlet="options"></ng-container>
-      </nav>
+      </div>
     </div>
 
   </div>
@@ -54,12 +54,12 @@
           </a>
 
           <div>
-            <a role="button" [ngbPopover]="ipInfo" class="nav-link"
+            <button type="button" [ngbPopover]="ipInfo" class="nav-link"
               [ngbTooltip]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
               <span class="material-symbols-outlined">{{aaService.principal.value.matchedIpName ? 'location_on' :
                 'location_off'
                 }}</span>
-            </a>
+            </button>
             <ng-template #ipInfo>
               @if(aaService.principal.value.matchedIpName) {
               <span class="fw-bold text-success">{{aaService.principal.value.matchedIpName}}</span>
@@ -113,7 +113,7 @@
 
   <a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['cart']" (click)="collapse()"
     data-test="sidenav-basket">
-    <svg fill="currentColor" height="24px" width="24px">
+    <svg fill="currentColor" height="1.5em" width="1.5em">
       <use href="assets/icons/icons.svg#cart"></use>
     </svg>
     <span class="nav-label ms-3 text-nowrap">{{'common.basket'| translate }}</span>
