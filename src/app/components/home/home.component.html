@@ -33,18 +33,17 @@
       @if(latestReleasedItems | async; as items) {
         @for(item of items.slice(0,5); track item) {
           <div class="col">
-            <div class="card h-100">
+            <a routerLink="/view/{{item?.objectId}}" class="card card-link h-100">
               @let thumbUrl = getFirstPublicThumbnailUrl(item);
               @if(thumbUrl) {
-                <img src="{{thumbUrl}}" alt="Thumbnail" class="card-img-top">
+                <img src="{{thumbUrl}}" alt="" class="card-img-top">
               }
 
               <div class="card-body">
                 <small class="card-title">{{ item.latestRelease?.modificationDate | date:'shortDate' }}</small>
                 <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
-                <a routerLink="/view/{{item?.objectId}}" class="stretched-link"></a>
               </div>
-            </div>
+            </a>
           </div>
         }
       }
