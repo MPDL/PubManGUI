@@ -24,4 +24,6 @@ pre {
     --bs-popover-body-padding-y: .5rem;
 }
 
-
+.focus-ring:not(:focus-visible) {
+    box-shadow: none;
+}

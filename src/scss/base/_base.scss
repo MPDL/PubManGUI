@@ -74,7 +74,7 @@ ngb-typeahead-window {
   }
 }
 .accordion {
-  .accordion-button {
+  .accordion-button:not(:focus-visible) {
     box-shadow: none !important;
   }
 }
