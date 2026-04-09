@@ -35,8 +35,7 @@ import { SanitizeHtmlCitationPipe } from "../../../pipes/sanitize-html-citation.
     ValidationErrorComponent,
     SanitizeHtmlCitationPipe
   ],
-  templateUrl: './export-items.component.html',
-  styleUrl: './export-items.component.scss'
+  templateUrl: './export-items.component.html'
 })
 export class ExportItemsComponent {
 

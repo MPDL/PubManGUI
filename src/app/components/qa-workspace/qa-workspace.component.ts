@@ -25,8 +25,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ItemImportFilterDirective,
     TranslatePipe,
   ],
-  templateUrl: './qa-workspace.component.html',
-  styleUrl: './qa-workspace.component.scss'
+  templateUrl: './qa-workspace.component.html'
 })
 export class QaWorkspaceComponent {
 

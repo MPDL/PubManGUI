@@ -38,8 +38,7 @@ import {ItemSearchAdvancedService} from "../item-search-advanced/item-search-adv
     ItemSourceTitleAggregationDirective,
     TranslatePipe
   ],
-  templateUrl: './search-result-list.component.html',
-  styleUrl: './search-result-list.component.scss'
+  templateUrl: './search-result-list.component.html'
 })
 export class SearchResultListComponent {
 

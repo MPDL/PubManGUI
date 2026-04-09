@@ -8,8 +8,7 @@ import { CopyButtonDirective } from "../../../directives/copy-button.directive";
   imports: [
     CopyButtonDirective
   ],
-  templateUrl: './feed-modal.component.html',
-  styleUrl: './feed-modal.component.scss'
+  templateUrl: './feed-modal.component.html'
 })
 export class FeedModalComponent {
 
