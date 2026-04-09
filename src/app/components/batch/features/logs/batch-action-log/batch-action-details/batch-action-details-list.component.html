@@ -73,7 +73,7 @@
               @for (log of inPage; track log.itemObjectId) {
               @defer (on viewport) {
 
-              <pure-batch-action-dataset-log [log]="log"></pure-batch-action-dataset-log>
+              <pure-batch-action-dataset-log [log]="log" [title]="titles[log.itemObjectId || 'no-id-' + inPage.indexOf(log)]"></pure-batch-action-dataset-log>
 
               }
               @placeholder {
