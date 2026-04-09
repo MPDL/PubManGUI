@@ -17,8 +17,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     NgbTooltip,
     TranslatePipe
   ],
-  templateUrl: './cart-list.component.html',
-  styleUrl: './cart-list.component.scss'
+  templateUrl: './cart-list.component.html'
 })
 export class CartListComponent {
 

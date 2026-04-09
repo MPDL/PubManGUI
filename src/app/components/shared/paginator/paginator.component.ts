@@ -10,8 +10,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     ReactiveFormsModule,
     TranslatePipe
   ],
-  templateUrl: './paginator.component.html',
-  styleUrl: './paginator.component.scss'
+  templateUrl: './paginator.component.html'
 })
 export class PaginatorComponent {
 

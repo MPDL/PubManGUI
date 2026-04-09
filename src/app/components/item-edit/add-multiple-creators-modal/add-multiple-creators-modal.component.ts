@@ -10,8 +10,7 @@ import { TranslatePipe, TranslateService } from "@ngx-translate/core";
     ReactiveFormsModule,
     TranslatePipe,
   ],
-  templateUrl: './add-multiple-creators-modal.component.html',
-  styleUrl: './add-multiple-creators-modal.component.scss'
+  templateUrl: './add-multiple-creators-modal.component.html'
 })
 export class AddMultipleCreatorsModalComponent {
   @Input() callback!: (creators: string) => void;

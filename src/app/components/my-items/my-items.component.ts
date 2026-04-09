@@ -23,8 +23,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ItemImportFilterDirective,
     TranslatePipe
   ],
-  templateUrl: './my-items.component.html',
-  styleUrl: './my-items.component.scss',
+  templateUrl: './my-items.component.html'
 })
 export class MyItemsComponent {
 

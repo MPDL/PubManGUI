@@ -21,8 +21,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     ValidationErrorMessageDirective,
     ConeAutosuggestComponent,
   ],
-  templateUrl: './abstract-form.component.html',
-  styleUrl: './abstract-form.component.scss'
+  templateUrl: './abstract-form.component.html'
 })
 export class AbstractFormComponent {
   @Input() abstract_form!: FormGroup;
