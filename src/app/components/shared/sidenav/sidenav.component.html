@@ -5,13 +5,13 @@
     alternative: use navbar-expand-lg (requires navbar-toggler and collapse navbar-collapse d-lg-flex)
 -->
 @if (!mobile) {
-<nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()">
+<nav id="sidenav" #sidenav class="navbar bg-body side_nav" (mouseenter)="expand()" (mouseleave)="collapse()" aria-label="{{ 'common.sidenav' | translate }}">
   <div class="container px-0">
 
     <div class="collapse navbar-collapse d-flex" id="side_nav">
-      <nav class="nav flex-column ps-4 py-2">
+      <div class="nav flex-column ps-4 py-2">
         <ng-container *ngTemplateOutlet="options"></ng-container>
-      </nav>
+      </div>
     </div>
 
   </div>

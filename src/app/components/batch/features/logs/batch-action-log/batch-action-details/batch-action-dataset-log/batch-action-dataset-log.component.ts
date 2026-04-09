@@ -24,23 +24,9 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 })
 export class BatchActionDatasetLogComponent {
   @Input() log?: resp.BatchProcessLogDetailDbVO;
+  @Input() title?: string;
 
   batchSvc = inject(BatchService);
   logDetailState: typeof resp.BatchProcessLogDetailState = resp.BatchProcessLogDetailState;
-
-  title = '';
-
-  ngOnInit(): void {
-
-    this.batchSvc.getItem(this.log!.itemObjectId)
-      .subscribe({
-        next: (value) => {
-          this.title = value.metadata?.title;
-        },
-        error: () => {
-          this.title = '404';
-        }
-      });
-  }
 
 }
