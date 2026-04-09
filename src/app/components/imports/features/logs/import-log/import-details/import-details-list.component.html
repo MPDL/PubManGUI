@@ -8,31 +8,31 @@
         @if(this.import.anzImportedItems && this.filteredSize > 0) {
         <div class="d-inline-flex justify-content-start align-items-center">
           @if(!this.released) {
-          <a id="delete" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.delete' | translate }}" placement="bottom-left" (click)='doDelete();'>
+          <button type="button" id="delete" class="btn border-0" ngbTooltip="{{ 'imports.list.details.delete' | translate }}" placement="bottom-left" (click)='doDelete();'>
             <span class="material-symbols-outlined">
               delete_forever
             </span>
-          </a>
+          </button>
           } @else {
-            <a class="btn border-0" style="pointer-events: none">
+            <button type="button" class="btn border-0" style="pointer-events: none" disabled>
               <span class="material-symbols-outlined" [ngClass]="{'text-secondary': true}">
                 delete_forever
               </span>
-            </a>
+            </button>
           }
           @if(caseSubmit()) {
-          <a id="submit" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.submit' | translate }}" placement="bottom-left" (click)='doSubmit();'>
+          <button type="button" id="submit" class="btn border-0" ngbTooltip="{{ 'imports.list.details.submit' | translate }}" placement="bottom-left" (click)='doSubmit();'>
             <span class="material-symbols-outlined">
               workspace_premium
             </span>
-          </a>
+          </button>
           }
           @if(caseSubmitAndRelease() || caseRelease()) {
-          <a id="release" role="button" class="btn border-0" ngbTooltip="{{ 'imports.list.details.release' | translate }}" placement="bottom-left" (click)='doRelease();'>
+          <button type="button" id="release" class="btn border-0" ngbTooltip="{{ 'imports.list.details.release' | translate }}" placement="bottom-left" (click)='doRelease();'>
             <span class="material-symbols-outlined">
               public
             </span>
-          </a>
+          </button>
           }
         </div>
         }
