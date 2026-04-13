@@ -54,6 +54,7 @@ export class FileFormComponent {
 
   audiencePriorityList = ['mpg'];
   isReadOnlyContent = false;
+  private shouldSyncTitleFromContent = false;
 
   constructor(miscellaneousService: MiscellaneousService, private coneService: ConeService) {
     miscellaneousService.retrieveIpList().subscribe(
@@ -64,10 +65,38 @@ export class FileFormComponent {
   }
 
   ngOnInit(): void {
-    if (this.file_form?.get('storage')?.value === 'EXTERNAL_URL' && !isFormValueEmpty(this.file_form.get('content')?.value))
-      { 
-        this.isReadOnlyContent = true; 
-      }    
+    if (this.file_form?.get('storage')?.value === 'EXTERNAL_URL') {
+      const contentControl = this.file_form.get('content');
+      const titleControl = this.metadata.get('title');
+
+      this.shouldSyncTitleFromContent = !!titleControl && isFormValueEmpty(titleControl.value);
+
+      if (!isFormValueEmpty(contentControl?.value)) {
+        this.isReadOnlyContent = true;
+      }
+
+      this.syncTitleFromContent(contentControl?.value);
+
+      contentControl?.valueChanges.subscribe(contentValue => {
+        this.syncTitleFromContent(contentValue);
+      });
+    }
+  }
+
+  private syncTitleFromContent(contentValue: string | null | undefined) {
+    if (!this.shouldSyncTitleFromContent) {
+      return;
+    }
+
+    const titleControl = this.metadata.get('title');
+
+    if (!titleControl) {
+      return;
+    }
+
+    if (typeof contentValue === 'string') {
+      titleControl.setValue(contentValue);
+    }
   }
 
   get allowedAudienceIds() {
