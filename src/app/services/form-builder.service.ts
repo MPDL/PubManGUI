@@ -164,7 +164,7 @@ export class FormBuilderService {
         mimeType: this.fb.nonNullable.control(file?.mimeType ? file.mimeType : undefined),
         size: this.fb.nonNullable.control(file?.size ? file.size : undefined),
         metadata: file?.metadata ? this.mds_file_FG(file.metadata) : this.mds_file_FG(null),
-        allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.nonNullable.control(audiencId) as AbstractControl) : []),
+        allowedAudienceIds: this.fb.array(file?.allowedAudienceIds ? file.allowedAudienceIds.map(audiencId => this.fb.nonNullable.control(audiencId) as AbstractControl) : [{} as AbstractControl]),
         sortkz: this.fb.nonNullable.control(file?.sortkz ? file.sortkz : undefined),
       },
       { validators: [fileDataValidator], updateOn: VALIDATION_UPDATE_ON });
