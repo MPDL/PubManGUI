@@ -20,7 +20,7 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
 
   public genrePropertiesResource = resource({
     params: () => this.selectedGenre(),
-    loader: async ({ params })  => {
+    loader: async ({ params }) => {
       const response = await firstValueFrom(this.getGenreProperties(params));
       const data: GenrePresentationObject = await response;
       console.log("genrespecific", data)
@@ -30,15 +30,11 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
 
   constructor() {
     super('/miscellaneous');
-    for (var i = 0; i < this.genre_types.length; i++) {
-      let genre = this.genre_types.at(i);
-      if (genre) {
-        this.getGenreProperties(genre).subscribe(genreJson => {
-          if (genreJson.genre == 'ARTICLE') {
-            this.genreSpecficProperties.set(genreJson as GenrePresentationObject);
-          }
-        });
-      }
+    // this is needed to load the genre specific properties for the default genre
+    if (this.selectedGenre() == 'ARTICLE') {
+      this.getGenreProperties(this.selectedGenre()).subscribe(genreJson => {
+        this.genreSpecficProperties.set(genreJson as GenrePresentationObject);
+      });
     }
   }
 
@@ -47,8 +43,8 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
     return this.httpGet(this.subPath + '/' + genrePropertiesPath + '?genre=' + genre);
   }
 
-  getDecodedMultiplePersons(multiplePersonNameString: string): Observable<PersonName[]>{
-      return this.httpPostJson(this.subPath + '/' + aiPersonNamePath, multiplePersonNameString);
+  getDecodedMultiplePersons(multiplePersonNameString: string): Observable<PersonName[]> {
+    return this.httpPostJson(this.subPath + '/' + aiPersonNamePath, multiplePersonNameString);
   }
 
   retrieveIpList(): Observable<IpEntry[]> {
