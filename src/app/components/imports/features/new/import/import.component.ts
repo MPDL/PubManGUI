@@ -42,6 +42,8 @@ export default class ImportComponent implements OnInit {
   coneSwitch!: HTMLInputElement;
   data: any = '';
 
+  hasCone: boolean = false;
+
   constructor(
     private changeDetector: ChangeDetectorRef
   ) { }
@@ -101,8 +103,11 @@ export default class ImportComponent implements OnInit {
     const defaultArray = this.formatObject["_default"];
     const coNEEntry = defaultArray.find((entry: string) => entry.startsWith("CoNE="));
     if (coNEEntry) {
+      this.hasCone = true;
       this.coneSwitch = document.getElementById("coneSwitch") as HTMLInputElement;
       this.coneSwitch.checked = (coNEEntry.split("=")[1] === "true");
+    } else {
+      this.hasCone = false;
     }
   }
 
@@ -185,12 +190,20 @@ export default class ImportComponent implements OnInit {
   }
 
   get getImportParams(): PostImportParams {
-    const importParams: PostImportParams = {
-      contextId: this.importForm.controls['contextId'].value,
-      importName: this.importForm.controls['importName'].value,
-      format: this.importForm.controls['format'].value,
-      formatConfig: 'CoNE=' + (this.importForm.controls['cone'].value ? 'true' : 'false') + (this.hasSelect() ? ',' + this.getSelectName() + '=' + this.importForm.controls['formatConfig'].value : '')
-    }
+      const importParams: PostImportParams = this.hasConfig() ? 
+      {
+        contextId: this.importForm.controls['contextId'].value,
+        importName: this.importForm.controls['importName'].value,
+        format: this.importForm.controls['format'].value,
+        formatConfig: (this.hasCone ? 'CoNE=' + (this.importForm.controls['cone'].value ? 'true' : 'false') : '') 
+          + (this.hasCone && this.hasSelect() ? ',' : '')
+          + (this.hasSelect() ? this.getSelectName() + '=' + this.importForm.controls['formatConfig'].value : '') 
+      } : {
+        contextId: this.importForm.controls['contextId'].value,
+        importName: this.importForm.controls['importName'].value,
+        format: this.importForm.controls['format'].value
+      }
+
     return importParams;
   }
 
