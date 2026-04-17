@@ -18,6 +18,7 @@ import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { FormsModule, NgModel } from "@angular/forms";
 import { SimplesearchService } from "src/app/services/simplesearch.service";
 import {DISPLAY_ERROR} from "src/app/services/interceptors/http-context-tokens";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'pure-home',
@@ -26,6 +27,7 @@ import {DISPLAY_ERROR} from "src/app/services/interceptors/http-context-tokens";
   standalone: true,
   imports: [
     AsyncPipe,
+    DecimalPipe,
     RouterLink,
     SanitizeHtmlPipe,
     SlicePipe,

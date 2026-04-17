@@ -6,7 +6,7 @@
         <div class="infobox bg-light opacity-75 rounded-4 text-secondary-emphasis p-4">
           <h1 class="mb-1 fw-bold">{{'Home.welcomeMessage'|translate}}</h1>
           <p class="fs-5">{{'Home.P'|translate}}</p>
-          <p class="fs-5"><span id="pubCounter" class="fw-bold">{{totalPublications}}</span> {{'Home.p2'|translate}}</p>
+          <p class="fs-5"><span id="pubCounter" class="fw-bold text-nowrap">{{totalPublications | number}}</span> {{'Home.p2'|translate}}</p>
         </div>
         <div class="search-wrapper">
           <form (ngSubmit)="onSearch()">
