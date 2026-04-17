@@ -38,7 +38,19 @@
             }
             @else {
               <span [ngbTooltip]="fileToolTipContent" placement="top-start">
-                <i class="bi-eye-slash-fill"></i> {{ file.metadata.title }}
+                <i class="bi-eye-slash-fill"></i>
+                @if((file.visibility === 'AUDIENCE' || file.visibility === 'PRIVATE') && getFileAccessGranted(file)) {
+                  {{ file.metadata.title }}
+                }
+                @else if(file.visibility === 'PRIVATE') {
+                  {{ 'common.privateFile' | translate }}
+                }
+                @else if(file.visibility === 'AUDIENCE') {
+                  {{ 'common.restrictedFile' | translate }}
+                }
+                @else {
+                  {{ file.metadata.title }}
+                }
               </span>
 
               <ng-template #fileToolTipContent>
