@@ -1,18 +1,19 @@
-<ng-template #personAutosuggestTemplate let-r="result" let-t="term">
-  <div [class]="(r.type==='alt') ? 'ms-3 small' : 'border-top'" class="text-wrap">
-    <ngb-highlight [result]="r.value" [term]="t"></ngb-highlight>
+<ng-template #personAutosuggestTemplate let-r="result" let-t="term" >
+  <div [class]="(r.type==='alt') ? 'alt-title ms-3' : 'main-title fw-bold'" class="small text-wrap">
+    {{r.value}}
+    <!--<ngb-highlight [result]="r.value" [term]="t"></ngb-highlight>-->
   </div>
 
 </ng-template>
 
 <div class="input-group">
   @if(formForPersonsCompleteName) {
-  <input class="form-control" type="text" [formControl]="formForPersonsCompleteName" [ngbTypeahead]="suggestPersons"
+  <input class="form-control" type="text" [formControl]="formForPersonsCompleteName" [ngbTypeahead]="suggestPersons" popupClass="person-autosuggest-window"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" [placeholder]="'common.autosuggestPlaceholder' | translate" container="body"
     [ngClass]="{'border border-danger': formForPersonsCompleteName.parent?.pending || formForPersonsCompleteName.parent?.invalid && (formForPersonsCompleteName.parent?.touched || formForPersonsCompleteName.parent?.dirty)}"/>
   } @else if (formForPersonsGivenName && formForPersonsFamilyName) {
-    <input class="form-control {{formForPersonsFamilyName.value ? 'fw-bold' : ''}}" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons"
+    <input class="form-control {{formForPersonsFamilyName.value ? 'fw-bold' : ''}}" type="text" [formControl]="formForPersonsFamilyName" [ngbTypeahead]="suggestPersons" popupClass="personAutosuggestWindow"
     (selectItem)="suggestPersonsSelector($event)" [resultTemplate]="personAutosuggestTemplate"
     [readonly]="formForPersonsIdValue && formForPersonsIdValue.value" [placeholder]="'common.autosuggestPlaceholder' | translate" container="body"
     [ngClass]="{'border border-danger': formForPersonsFamilyName.parent?.pending || formForPersonsFamilyName.parent?.invalid && (formForPersonsFamilyName.parent?.touched || formForPersonsFamilyName.parent?.dirty)}"/>
