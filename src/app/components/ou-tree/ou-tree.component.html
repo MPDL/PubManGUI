@@ -8,6 +8,9 @@
             @if(node.item.publicStatus === 'CLOSED') {
                 <span class="badge bg-dark mt-1 me-2">Closed</span>
             }
+            <button class="btn btn-link p-0 ms-1" (click)="searchForOu(node)">
+                <span class="material-symbols-outlined mb-1">search</span>
+            </button>
             <button class="btn btn-link p-0 ms-1" (click)="info(node)">
                 <span class="material-symbols-outlined mb-1">info</span>
             </button>
@@ -23,6 +26,9 @@
             @if(node.item.publicStatus === 'CLOSED') {
                 <span class="badge bg-dark mt-1 me-2">Closed</span>
             }
+            <button class="btn btn-link p-0 ms-1" (click)="searchForOu(node)">
+                <span class="material-symbols-outlined mb-1">search</span>
+            </button>
             <button class="btn btn-link p-0 ms-1" (click)="info(node)">
                 <span class="material-symbols-outlined mb-1">info</span>
             </button>
