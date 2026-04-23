@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ItemListComponent } from "../../item-list.component";
 import {baseElasticSearchSortBuilder, IndexField} from "../../../../utils/search-utils";
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { AddRemoveButtonsComponent } from "src/app/components/shared/add-remove-buttons/add-remove-buttons.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'pure-sort-selector',
@@ -20,9 +21,10 @@ import { AddRemoveButtonsComponent } from "src/app/components/shared/add-remove-
   templateUrl: './sort-selector.component.html',
   styleUrl: './sort-selector.component.scss'
 })
-export class SortSelectorComponent {
+export class SortSelectorComponent implements OnDestroy {
   @Input() itemList!: ItemListComponent;
   @Input() defaultSort:string = "modificationDate";
+  @Input() handleQueryParams:boolean = false;
 
   sortOptionEntries = Object.entries(sortOptions);
 
@@ -30,12 +32,45 @@ export class SortSelectorComponent {
 
   currentSortQuery: any;
 
+  private queryParamsSubscription!: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.sortEntries.push({sort: this.defaultSort, sortOrder: sortOptions[this.defaultSort].order})
-    this.currentSortQuery = this.getCurrentSortQuery();
+    if (this.handleQueryParams) {
+      this.queryParamsSubscription = this.route.queryParamMap.subscribe(params => {
+        const sortParam = params.get('sort');
+        const sortOrderParam = params.get('sortOrder');
+        if (sortParam && sortOptions[sortParam]) {
+          const sortOrder = (sortOrderParam === 'asc' || sortOrderParam === 'desc')
+            ? sortOrderParam
+            : sortOptions[sortParam].order;
+          this.sortEntries = [{sort: sortParam, sortOrder: sortOrder}];
+        } else {
+          // Handle missing or invalid sort param the same way
+          // We only set to default if we don't have a selection yet
+          if (this.sortEntries.length === 0) {
+            this.sortEntries = [{sort: this.defaultSort, sortOrder: sortOptions[this.defaultSort].order}];
+          }
+        }
+        this.currentSortQuery = this.getCurrentSortQuery();
+
+        if (this.itemList) {
+          this.itemList.updateFilterOrSort();
+        }
+
+
+      });
+    } else {
+      this.sortEntries = [{sort: this.defaultSort, sortOrder: sortOptions[this.defaultSort].order}];
+      this.currentSortQuery = this.getCurrentSortQuery();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
   }
 
   getCurrentSortQuery(){
@@ -52,7 +87,7 @@ export class SortSelectorComponent {
     this.sortEntries[index].sort = targetVal;
     this.sortEntries[index].sortOrder = sortOptions[targetVal].order;
     this.currentSortQuery = this.getCurrentSortQuery();
-    this.itemList.updateFilterOrSort();
+    this.updateQueryParams();
   }
 
   switchSortOrder(index: number) {
@@ -62,7 +97,7 @@ export class SortSelectorComponent {
     else
       this.sortEntries[index].sortOrder = 'asc';
     this.currentSortQuery = this.getCurrentSortQuery();
-    this.itemList.updateFilterOrSort();
+    this.updateQueryParams();
     //this.updateQueryParams()
   }
 
@@ -70,16 +105,33 @@ export class SortSelectorComponent {
     const selectedSortEntry = this.sortEntries[index];
     this.sortEntries.push({sort: selectedSortEntry.sort, sortOrder: selectedSortEntry.sortOrder});
     this.currentSortQuery = this.getCurrentSortQuery();
-    this.itemList.updateFilterOrSort();
+    this.updateQueryParams();
     //this.itemList.updateSort(this.getCurrentSortQuery());
   }
 
   removeSortCriterion(index:number) {
     this.sortEntries.splice(index,1);
     this.currentSortQuery = this.getCurrentSortQuery();
-    this.itemList.updateFilterOrSort();
+    this.updateQueryParams();
     //this.itemList.updateSort(this.getCurrentSortQuery());
     }
+
+  updateQueryParams() {
+    if (this.handleQueryParams && this.sortEntries.length > 0) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: {
+          sort: this.sortEntries[0].sort,
+          sortOrder: this.sortEntries[0].sortOrder
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else if (!this.handleQueryParams) {
+      if (this.itemList) {
+        this.itemList.updateFilterOrSort();
+      }
+    }
+  }
 
 
 }
