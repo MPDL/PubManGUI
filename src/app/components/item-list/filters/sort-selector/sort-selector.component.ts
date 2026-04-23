@@ -36,6 +36,8 @@ export class SortSelectorComponent {
   ngOnInit() {
     this.sortEntries.push({sort: this.defaultSort, sortOrder: sortOptions[this.defaultSort].order})
     this.currentSortQuery = this.getCurrentSortQuery();
+
+
   }
 
   getCurrentSortQuery(){
