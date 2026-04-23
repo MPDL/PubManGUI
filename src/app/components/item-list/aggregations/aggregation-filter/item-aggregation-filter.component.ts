@@ -3,6 +3,7 @@ import { AggregationEvent, FilterEvent, ItemListComponent } from "../../item-lis
 import { BehaviorSubject } from "rxjs";
 import { ItemAggregationBaseDirective } from "./directives/item-aggregation-base.directive";
 import { TranslatePipe } from "@ngx-translate/core";
+import { DecimalPipe } from '@angular/common';
 
 
 let uniqueId = 0;
@@ -11,7 +12,8 @@ let uniqueId = 0;
   selector: 'pure-item-aggregation-filter',
   standalone: true,
   imports: [
-    TranslatePipe
+    TranslatePipe,
+    DecimalPipe
   ],
   templateUrl: './item-aggregation-filter.component.html',
   styleUrl: './item-aggregation-filter.component.scss'

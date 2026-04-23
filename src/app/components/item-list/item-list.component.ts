@@ -24,6 +24,7 @@ import { ItemFilterComponent } from "./filters/item-filter/item-filter.component
 import { ItemAggregationFilterComponent } from "./aggregations/aggregation-filter/item-aggregation-filter.component";
 import { SortSelectorComponent } from "./filters/sort-selector/sort-selector.component";
 import {filter} from "rxjs/operators";
+import { DecimalPipe } from '@angular/common';
 
 
 
@@ -42,7 +43,8 @@ import {filter} from "rxjs/operators";
     TopnavBatchComponent,
     LoadingComponent,
     NgbTooltip,
-    TranslatePipe
+    TranslatePipe,
+    DecimalPipe
   ],
   templateUrl: './item-list.component.html'
 })

@@ -6,7 +6,7 @@
         <div class="infobox bg-light opacity-75 rounded-4 text-secondary-emphasis p-4">
           <h1 class="mb-1 fw-bold">{{'Home.welcomeMessage'|translate}}</h1>
           <p class="fs-5">{{'Home.P'|translate}}</p>
-          <p class="fs-5"><span id="pubCounter" class="fw-bold">{{totalPublications}}</span> {{'Home.p2'|translate}}</p>
+          <p class="fs-5"><span id="pubCounter" class="fw-bold text-nowrap">{{totalPublications | number}}</span> {{'Home.p2'|translate}}</p>
         </div>
         <div class="search-wrapper">
           <form (ngSubmit)="onSearch()">
@@ -22,9 +22,40 @@
 </div>
 
 
-<div class="bg-mpg-blue text-white rounded-4 p-5 mb-4">
+
+
+<div class="bg-mpg-blue text-white rounded-4 p-5 mb-5">
+
+  <!-- Latest Featured Releases Section -->
+  <div id="releases-section">
+    <h4>{{'Home.latestReleases'| translate}}</h4>
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 g-4">
+      @if(latestReleasedItems | async; as items) {
+        @for(item of items.slice(0,5); track item) {
+          <div class="col">
+            <a routerLink="/view/{{item?.objectId}}" class="card card-link h-100">
+              @let thumbUrl = getFirstPublicThumbnailUrl(item);
+              @if(thumbUrl) {
+                <img src="{{thumbUrl}}" alt="" class="card-img-top">
+              }
+
+              <div class="card-body">
+                <small class="card-title">{{ item.latestRelease?.modificationDate | date:'shortDate' }}</small>
+                <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
+              </div>
+            </a>
+          </div>
+        }
+      }
+      @else {
+        <pure-loading/>
+      }
+    </div>
+  </div>
+
+
   <!-- News Section -->
-  <div id="news-section" class="mb-5">
+  <div id="news-section" class="mt-5">
     <h4>MPG.PuRe {{'Home.News'| translate}}</h4>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
       @if(newsItems | async; as blogEntries) {
@@ -49,33 +80,7 @@
     </div>
   </div>
 
-  <!-- Latest Featured Releases Section -->
-  <div id="releases-section">
-    <h4>{{'Home.latestReleases'| translate}}</h4>
-    <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 g-4">
-      @if(latestReleasedItems | async; as items) {
-        @for(item of items.slice(0,5); track item) {
-          <div class="col">
-            <div class="card h-100">
-              @let thumbUrl = getFirstPublicThumbnailUrl(item);
-              @if(thumbUrl) {
-                <img src="{{thumbUrl}}" alt="Thumbnail" class="card-img-top">
-              }
 
-              <div class="card-body">
-                <small class="card-title">{{ item.latestRelease?.modificationDate | date:'shortDate' }}</small>
-                <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
-                <a routerLink="/view/{{item?.objectId}}" class="stretched-link"></a>
-              </div>
-            </div>
-          </div>
-        }
-      }
-      @else {
-        <pure-loading/>
-      }
-    </div>
-  </div>
 </div>
 
 <!-- Document Types Distribution Section -->

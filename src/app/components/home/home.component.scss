@@ -10,9 +10,17 @@
   backdrop-filter: blur(3px); /* subtle glass effect */
 }
 
+.card-link {
+  text-decoration: none;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}
+
 .card-img-top {
   height: 12vw;
-  min-height: 150px;
+  min-height: 9.375rem;
   object-fit: cover;
   object-position: top;
 }

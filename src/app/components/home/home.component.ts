@@ -6,7 +6,7 @@ import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AsyncPipe, DatePipe, SlicePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { SanitizeHtmlPipe } from "../../pipes/sanitize-html.pipe";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpContext} from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { LoadingComponent } from "../shared/loading/loading.component";
 
@@ -17,6 +17,8 @@ import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { FormsModule, NgModel } from "@angular/forms";
 import { SimplesearchService } from "src/app/services/simplesearch.service";
+import {DISPLAY_ERROR} from "src/app/services/interceptors/http-context-tokens";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'pure-home',
@@ -25,6 +27,7 @@ import { SimplesearchService } from "src/app/services/simplesearch.service";
   standalone: true,
   imports: [
     AsyncPipe,
+    DecimalPipe,
     RouterLink,
     SanitizeHtmlPipe,
     SlicePipe,
@@ -102,7 +105,8 @@ export class HomeComponent implements OnInit {
   }
 
   loadNewsItems() {
-    this.newsItems = this.httpClient.request<PuReBlogEntry[]>('GET', environment.pure_blog_feed_url).pipe(
+    const context:HttpContext = new HttpContext().set(DISPLAY_ERROR, false);
+    this.newsItems = this.httpClient.request<PuReBlogEntry[]>('GET', environment.pure_blog_feed_url, {context: context}).pipe(
       catchError(err => {
         this.newsItemError = true;
         return of([]);

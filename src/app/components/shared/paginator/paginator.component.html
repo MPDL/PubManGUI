@@ -1,15 +1,15 @@
 
-<nav class="align-items-center">
+<nav class="align-items-center" aria-label="{{ 'common.pagination.title' | translate }}">
 
   <div class="mpdl-pagination">
     @if(totalNumberOfPages > 0) {
-    <button type="button" class="btn btn-sm border border-0" (click)="first()"
+    <button type="button" class="btn btn-sm border border-0 focus-ring" (click)="first()"
             [disabled]="isFirst || loadingSignal()">
                 <span class="material-symbols-outlined">
                     first_page
                 </span>
     </button>
-    <button type="button" class="btn btn-sm border border-0" (click)="prev()"
+    <button type="button" class="btn btn-sm border border-0 focus-ring" (click)="prev()"
             [disabled]="isFirst || loadingSignal()">
                 <span class="material-symbols-outlined">
                     navigate_before
@@ -18,14 +18,14 @@
     <span i18n="@@pagination.page">{{ 'common.pagination.page' | translate }}</span>
     <input type="text" class="form-control mx-2" [formControl]="pageNumberField"
            (keyup.enter)="jumpToPage()">
-    <span i18n="@@pagination.of">{{ 'common.pagination.of' | translate }}</span><span> {{totalNumberOfPages}}</span>
-    <button type="button" class="btn btn-sm border border-0" (click)="next()"
+    <span i18n="@@pagination.of">{{ 'common.pagination.of' | translate }}</span><span class="text-nowrap">&nbsp;{{totalNumberOfPages | number}}</span>
+    <button type="button" class="btn btn-sm border border-0 focus-ring" (click)="next()"
             [disabled]="isLast || loadingSignal()">
                 <span class="material-symbols-outlined">
                     navigate_next
                 </span>
     </button>
-    <button type="button" class="btn btn-sm border border-0" (click)="last()"
+    <button type="button" class="btn btn-sm border border-0 focus-ring" (click)="last()"
             [disabled]="isLast || loadingSignal()">
                 <span class="material-symbols-outlined">
                     last_page

@@ -13,12 +13,22 @@ export class LangSwitchComponent {
 
   translateSvc = inject(TranslateService);
 
+  ngOnInit(): void {
+      this.syncHtmlLang();
+  }
+
   switchLang(lang: string) {
       this.translateSvc.use(lang);
+      this.syncHtmlLang();
   }
 
   public get currentLang(): string {
     return this.translateSvc.currentLang;
    }
 
+  private syncHtmlLang() {
+      if (typeof document !== 'undefined') {
+          document.documentElement.lang = this.currentLang;
+      }
+  }
 }

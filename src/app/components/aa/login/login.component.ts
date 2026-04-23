@@ -16,7 +16,6 @@ import { MatomoTracker } from "ngx-matomo-client";
 @Component({
     selector: 'pure-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
     standalone: true,
   imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent, BootstrapValidationDirective, NotificationComponent, TranslatePipe]
 })

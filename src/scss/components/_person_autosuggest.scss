@@ -1,0 +1,8 @@
+.person-autosuggest-window .dropdown-item:has(.main-title) {
+  border-top: 1px solid var(--bs-body-color);
+
+}
+
+.person-autosuggest-window .dropdown-item:has(.alt-title) {
+  //border-top: 1px solid var(--bs-dropdown-divider-bg);
+}

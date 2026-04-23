@@ -61,7 +61,6 @@ import {MessageService} from "../../services/message.service";
     CopyButtonDirective
   ],
   templateUrl: './item-search-advanced.component.html',
-  styleUrl: './item-search-advanced.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class ItemSearchAdvancedComponent {

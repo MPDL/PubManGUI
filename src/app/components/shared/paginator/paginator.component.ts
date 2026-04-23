@@ -2,16 +2,18 @@ import { Component, EventEmitter, Input, Output, signal, Signal } from '@angular
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import {TranslatePipe} from "@ngx-translate/core";
+import { DecimalPipe } from '@angular/common';
+
 
 @Component({
   selector: 'pure-paginator',
   standalone: true,
   imports: [
+    DecimalPipe,
     ReactiveFormsModule,
     TranslatePipe
   ],
-  templateUrl: './paginator.component.html',
-  styleUrl: './paginator.component.scss'
+  templateUrl: './paginator.component.html'
 })
 export class PaginatorComponent {
 

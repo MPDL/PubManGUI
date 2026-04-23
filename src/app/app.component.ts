@@ -19,8 +19,7 @@ import { WindowFocusCheckLoginService } from "./services/window-focus-check-logi
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoSubheaderComponent, TranslateModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   defaultTitle = 'MPG.PuRe';

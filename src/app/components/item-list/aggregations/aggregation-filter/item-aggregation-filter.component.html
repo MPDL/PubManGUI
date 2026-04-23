@@ -14,7 +14,7 @@
             @for (val of resultView.values(); track val.selectionValue; let last = $last ) {
 
 
-              <button class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}  pt-1 pb-1" (click)="selectValue(val)">
+              <button class="list-group-item list-group-item-action {{val.selected ? 'fw-bold' : '' }}  pt-1 pb-1" (click)="selectValue(val)" aria-pressed="{{ val.selected }}">
                 <div class="row">
                   <div class="col-9 text-break">
                     @if(val.translateDisplayValue) {
@@ -23,8 +23,8 @@
                       {{val.displayValue}}
                     }
                   </div>
-                  <div class="col-3 text-end">
-                    {{val.docCount}}
+                  <div class="col-3 text-end text-nowrap">
+                    {{val.docCount | number}}
                   </div>
                 </div>
 
