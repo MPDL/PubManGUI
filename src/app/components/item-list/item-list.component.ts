@@ -149,7 +149,10 @@ export class ItemListComponent implements AfterViewInit{
 
       }
     })
-
+    // Ensure child components that might have triggered updates before we were ready get a chance now
+    if (this.sortSelectorComponent) {
+      this.updateList();
+    }
   }
 
 
@@ -172,14 +175,19 @@ export class ItemListComponent implements AfterViewInit{
 
 
   updateList() {
-    this.selectionService.resetList();
+    if (this.selectionService) {
+      this.selectionService.resetList();
+    }
+    if (!this.currentQuery) {
+      return;
+    }
     let query = this.currentQuery;
 
-    const filterQueries = this.filterComponents
+    const filterQueries = (this.filterComponents?.toArray() || [])
       .map(filter =>
       filter.selectedFilterEvent.query)
       .filter(filterQuery => filterQuery);
-    const aggFilterQueries = this.aggregationComponents
+    const aggFilterQueries = (this.aggregationComponents?.toArray() || [])
       .map(aggComp => aggComp.selectedFilterEvent?.query)
       .filter(aggQuery => aggQuery);
 
@@ -202,7 +210,7 @@ export class ItemListComponent implements AfterViewInit{
     let aggQueries = undefined;
     let runtimeMappings = undefined;
 
-    const aggEvents = this.aggregationComponents
+    const aggEvents = (this.aggregationComponents?.toArray() || [])
       .map(aggComponent => aggComponent.aggEvent);
 
     if(aggEvents.length > 0) {
@@ -300,8 +308,9 @@ export class ItemListComponent implements AfterViewInit{
  */
 
   updateFilterOrSort() {
-    this.currentPage=1
-    this.updateList();
+    if (this.filterComponents) {
+      this.updateList();
+    }
   }
 
 
