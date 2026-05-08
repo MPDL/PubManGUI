@@ -119,40 +119,6 @@ export class CreatorFormComponent {
     this.organization.patchValue({ identifier: event.id }, { emitEvent: false });
   }
 
-  updatePerson(event: any) {
-    const selected_person = event.selected as string;
-    const selected_ou = selected_person.substring(selected_person.indexOf('(') + 1, selected_person.lastIndexOf(','));
-    this.coneService.getPersonResource(event.id).subscribe(
-      (person: PersonResource) => {
-        const patched: Partial<PersonVO> = {
-          givenName: person.http_xmlns_com_foaf_0_1_givenname,
-          familyName: person.http_xmlns_com_foaf_0_1_family_name,
-          identifier: {
-            type: IdType.CONE,
-            id: person.id.substring(24)
-          }
-        }
-        this.person.patchValue(patched, { emitEvent: false });
-        let ou_id = '', ou_name = '';
-        if (Array.isArray(person.http_purl_org_escidoc_metadata_terms_0_1_position)) {
-          const ou_2_display = person.http_purl_org_escidoc_metadata_terms_0_1_position.filter(ou => ou.http_purl_org_eprint_terms_affiliatedInstitution.includes(selected_ou));
-          if (ou_2_display && ou_2_display.length === 1) {
-            ou_id = ou_2_display[0].http_purl_org_dc_elements_1_1_identifier;
-            ou_name = ou_2_display[0].http_purl_org_eprint_terms_affiliatedInstitution;
-          }
-        } else {
-          ou_id = person.http_purl_org_escidoc_metadata_terms_0_1_position.http_purl_org_dc_elements_1_1_identifier;
-          ou_name = person.http_purl_org_escidoc_metadata_terms_0_1_position.http_purl_org_eprint_terms_affiliatedInstitution;
-        }
-        const patched_ou: OrganizationVO = {
-          identifier: ou_id,
-          name: ou_name
-        }
-        this.organizations.clear();
-        this.organizations.push(this.fbs.organization_FG(patched_ou));
-      });
-  }
-
   updatePersonOU(event: any, index: number) {
     this.organizations.at(index).patchValue({ identifier: event.id }, { emitEvent: false });
   }
