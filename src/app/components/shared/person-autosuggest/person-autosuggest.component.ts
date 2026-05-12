@@ -95,13 +95,13 @@ export class PersonAutosuggestComponent {
     this.formForPersonsIdType?.setValue(IdType.CONE);
     console.log("Item", JSON.stringify(event.item));
     if (this.formForPersonsCompleteName) {
-      this.formForPersonsCompleteName.setValue(event.item.value);
+      this.formForPersonsCompleteName.setValue(event.item.value.trim());
     }
     if (this.formForPersonsGivenName) {
-      this.formForPersonsGivenName.setValue(event.item.value.substring(event.item.value.indexOf(", ") + 2, event.item.value.indexOf("(")));
+      this.formForPersonsGivenName.setValue(event.item.value.substring(event.item.value.indexOf(", ") + 2, event.item.value.indexOf("(")).trim());
     }
     if (this.formForPersonsFamilyName) {
-      this.formForPersonsFamilyName.setValue(event.item.value.substring(0, event.item.value.indexOf(", ")));
+      this.formForPersonsFamilyName.setValue(event.item.value.substring(0, event.item.value.indexOf(", ")).trim());
     }
     console.log("formForPersonOrganization before set", this.formForPersonOrganizations?.value);
     if (!this.formForPersonOrganizations) {
