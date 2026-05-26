@@ -45,7 +45,7 @@ export default class DatasetsComponent {
             ]
           }
         }
-      }))
+      })) 
   }
 
 }
