@@ -10,10 +10,16 @@ import { join } from 'node:path';
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
-app.set('trust proxy', true);
 const angularApp = new AngularNodeAppEngine(
   {
-    trustProxyHeaders: true, // Trust all X-Forwarded-* headers
+    trustProxyHeaders: [
+      'x-forwarded-for',
+      'x-forwarded-host',
+      'x-forwarded-port',
+      'x-forwarded-proto',
+      'x-forwarded-prefix',
+      'x-forwarded-server'
+    ] // Trust all X-Forwarded-* headers
   }
 );
 
