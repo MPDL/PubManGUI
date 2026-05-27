@@ -122,7 +122,7 @@ export class MetaTagsTransformerService {
    * Generate Highwire Press Citation meta tags (for Google Scholar)
    */
   private generateHighwireMetaTags(itemVersion: ItemVersionVO): MetaTag[] {
-    console.log('Generating Highwire meta tags for itemVersion:', itemVersion);
+    //console.log('Generating Highwire meta tags for itemVersion:', itemVersion);
     const tags: MetaTag[] = [];
     const metadata = itemVersion.metadata;
     const genre = itemVersion.metadata.genre;
