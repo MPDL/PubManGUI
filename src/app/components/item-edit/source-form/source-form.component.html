@@ -74,7 +74,7 @@
                     <ng-container [formGroupName]="ci">
                         <div class="drag-list-box" cdkDrag>
                             <pure-creator-form [creator_form]="creature" [index]="ci" [index_length]="creators.length"
-                                [isSource]="true" (notice)="handleCreatorNotification($event)"></pure-creator-form>
+                                [isSource]="true" [useDragDrop]="true" (notice)="handleCreatorNotification($event)"></pure-creator-form>
                         </div>
                     </ng-container>
                     } @empty {

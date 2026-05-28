@@ -15,6 +15,8 @@ import { ItemsService } from "src/app/services/pubman-rest-client/items.service"
 
 import { PaginatorComponent } from "src/app/components/shared/paginator/paginator.component";
 import { BatchActionDatasetLogComponent } from "./batch-action-dataset-log/batch-action-dataset-log.component";
+import { baseElasticSearchQueryBuilder } from "src/app/utils/search-utils"; // INGUI-264
+import { map, catchError, Observable, BehaviorSubject, of, tap } from 'rxjs'; // INGUI-264
 
 import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
 
@@ -59,6 +61,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
   filteredLogs: resp.BatchProcessLogDetailDbVO[] = [];
 
   items: ItemVersionVO[] = [];
+  itemList: string[] = []; // INGUI-264
   titles: { [key: string]: string } = {};
 
   batchLogHeader!: resp.BatchProcessLogHeaderDbVO;
@@ -76,6 +79,9 @@ export default class BatchActionDetailsListComponent implements OnInit {
 
   isScrolled = false;
 
+  query: Observable<any> = new Observable(); // INGUI-264
+  objectIds: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]); // INGUI-264
+
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(value => {
       this.batchLogHeader = value['log'];
@@ -91,19 +97,42 @@ export default class BatchActionDetailsListComponent implements OnInit {
             .forEach((element, index) => {
               if (element.state != resp.BatchProcessLogDetailState.SUCCESS) this.failed++;
               if (element.itemObjectId) {
-                this.batchSvc.getItem(element.itemObjectId)
-                  .subscribe({
-                    next: (value) => {
-                      this.titles[element.itemObjectId!] = value.metadata?.title || '';
-                    },
-                    error: () => {
-                      this.titles[element.itemObjectId!] = '404';
-                    }
-                  });
-              } else {
-                this.titles[`no-id-${index}`] = 'N/A';
-              }   
+                this.itemList.push(element.itemObjectId);
+              }
             })
+
+          this.objectIds = new BehaviorSubject<string[]>(this.itemList);
+          const q = {
+            "query": {
+              bool: {
+                must: [
+                  baseElasticSearchQueryBuilder({ index: "objectId", type: "keyword" }, this.itemList),
+                  {
+                    script: {
+                      script: "doc['latestVersion.versionNumber']==doc['versionNumber']"
+                    }
+                  }
+                ]
+              }
+            },
+            size: this.itemList.length
+          };
+          this.itemSvc.elasticSearch(q).pipe(
+            map(result => {
+              return result.hits.hits.map((record: any) => record._source as ItemVersionVO)
+            }),
+            tap(items => {
+              this.items = items || [];
+              this.items.forEach(item => {
+                this.titles[item.objectId!] = item.metadata?.title || '';
+              });
+            }),
+            catchError(err => {
+              console.error('Error fetching items: ', err);
+              return of([]);
+            })
+          ).subscribe()
+
           this.filteredLogs = this.unfilteredLogs = batchResponse;
           this.filteredSize = this.unfilteredSize = this.unfilteredLogs.length;
 
@@ -124,7 +153,6 @@ export default class BatchActionDetailsListComponent implements OnInit {
               this.updateFilteredLogs();
             }
           }
-          //return;
         });
     }
   }
@@ -186,7 +214,7 @@ export default class BatchActionDetailsListComponent implements OnInit {
     this.refreshLogs();
   }
 
-  updateFilteredLogs():void {
+  updateFilteredLogs(): void {
     this.filteredLogs = this.unfilteredLogs.filter(item => this.activeFilters.includes(item.state));
     this.filteredSize = this.filteredLogs.length;
   }
