@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from "@angular/core";
 import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
 import { catchError, map, Observable, of } from "rxjs";
-import { ItemVersionVO, MdsPublicationGenre } from "../../model/inge";
+import { ItemVersionVO } from "../../model/inge";
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
-import { AsyncPipe, DatePipe, SlicePipe } from "@angular/common";
+import { AsyncPipe, DatePipe, DecimalPipe, isPlatformBrowser, SlicePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { SanitizeHtmlPipe } from "../../pipes/sanitize-html.pipe";
 import {HttpClient, HttpContext} from "@angular/common/http";
@@ -11,14 +11,12 @@ import { environment } from "../../../environments/environment";
 import { LoadingComponent } from "../shared/loading/loading.component";
 
 //My Imports
-import { Chart, Tooltip } from 'chart.js/auto';
-import { CountUp } from 'countup.js';
-import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
+import { Chart } from 'chart.js/auto';
+import { getThumbnailUrlForFile } from "../../utils/item-utils";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { FormsModule, NgModel } from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { SimplesearchService } from "src/app/services/simplesearch.service";
 import {DISPLAY_ERROR} from "src/app/services/interceptors/http-context-tokens";
-import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'pure-home',
@@ -37,7 +35,9 @@ import { DecimalPipe } from '@angular/common';
     FormsModule
   ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('documentChart') private chartCanvas?: ElementRef<HTMLCanvasElement>;
+
   latestReleasedItems: Observable<ItemVersionVO[]> = of([]);
   newsItems: Observable<PuReBlogEntry[]> = of([]);
   newsItemError: boolean = false;
@@ -47,6 +47,8 @@ export class HomeComponent implements OnInit {
   documentTypes: { [key: string]: number } = {};
   totalPublications:number =0;
   chart: Chart | undefined;
+  private chartDataReady = false;
+  private readonly platformId = inject(PLATFORM_ID);
 
   searchTerm:string = "";
 
@@ -57,6 +59,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   this.loadGenreAggs(); // new method to fetch real chart data
+  }
+
+  ngAfterViewInit(): void {
+    this.tryCreateChart();
+  }
+
+  ngOnDestroy(): void {
+    this.chart?.destroy();
   }
 
   onSearch(): void{
@@ -141,19 +151,32 @@ export class HomeComponent implements OnInit {
     });
 
 
-    setTimeout(() => this.createChart(), 0);
+    this.chartDataReady = true;
+    this.tryCreateChart();
   });
   }
 
+  private tryCreateChart(): void {
+    if (!this.chartDataReady || !isPlatformBrowser(this.platformId)) {
+      return;
+    }
 
-  createChart(): void{
-  const canvas = document.getElementById('documentChart') as HTMLCanvasElement;
-  let ctx;
-  if (canvas !== null && canvas !== undefined){
-    ctx = canvas.getContext('2d')
-  }if (!ctx){
+    const canvas = this.chartCanvas?.nativeElement;
+    if (!canvas) {
+      return;
+    }
+
+    this.createChart(canvas);
+  }
+
+
+  createChart(canvas: HTMLCanvasElement): void{
+  const ctx = canvas.getContext('2d');
+  if (!ctx){
     return;
   }
+
+  this.chart?.destroy();
 
   const labels = Object.keys(this.documentTypes);
   const data= Object.values(this.documentTypes);
@@ -190,7 +213,7 @@ export class HomeComponent implements OnInit {
     },
 
 
-  })
+  });
   }
 
  /* createChart(): void {

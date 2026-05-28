@@ -6,6 +6,18 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server
   },
   {
+    path: 'home',
+    renderMode: RenderMode.Server
+  },
+  {
+    path: 'disclaimer',
+    renderMode: RenderMode.Prerender
+  },
+  {
+    path: 'privacy-policy',
+    renderMode: RenderMode.Prerender
+  },
+  {
     path: '**',
     renderMode: RenderMode.Client
   }
