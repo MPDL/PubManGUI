@@ -270,7 +270,8 @@ export class ItemViewComponent {
       });
 
       */
-     this.metaTagService.transformAndSetMetaTags(i);
+     const appliedTags = this.metaTagService.transformAndSetMetaTags(i);
+     this.metaTagSelectors = appliedTags.map(tag => `name="${tag.name}"`);
 
     } else if (i.publicState == ItemVersionState.WITHDRAWN) {
       try {

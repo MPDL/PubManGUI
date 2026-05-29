@@ -97,31 +97,32 @@ export class MetaTagsTransformerService {
    */
   public transformAndSetMetaTags(
     itemVersion: ItemVersionVO
-  ): void {
+  ): MetaTag[] {
     if (!itemVersion) {
       console.warn('ItemVersionVO is empty or null');
-      return;
+      return [];
     }
 
     const metaTags: MetaTag[] = [];
 
 
-    metaTags.push(...this.generateHighwireMetaTags(itemVersion));
-
-
-    // Set page title
-    //if (itemVersion.metadata?.title) {
-    //this.title.setTitle(this.stripHtml(itemVersion.metadata.title));
-    //}
+    metaTags.push(...this.generateMetaTags(itemVersion));
 
     // Apply all meta tags
-    this.applyMetaTags(metaTags);
+    return this.applyMetaTags(metaTags);
+  }
+
+  private removeAllTagsFromPage() {
+    const allTagNames = Object.values(this.HIGHWIRE_KEYS).concat(Object.values(this.DC_KEYS));
+    allTagNames.forEach(val => {
+      this.meta.removeTag("name='" + val +"'");
+    });
   }
 
   /**
    * Generate Highwire Press Citation meta tags (for Google Scholar)
    */
-  private generateHighwireMetaTags(itemVersion: ItemVersionVO): MetaTag[] {
+  private generateMetaTags(itemVersion: ItemVersionVO): MetaTag[] {
     //console.log('Generating Highwire meta tags for itemVersion:', itemVersion);
     const tags: MetaTag[] = [];
     const metadata = itemVersion.metadata;
@@ -354,30 +355,6 @@ export class MetaTagsTransformerService {
     return tags;
   }
 
-  /**
-   * Generate Dublin Core meta tags
-   */
-  private generateDublinCoreMetaTags(itemVersion: ItemVersionVO): MetaTag[] {
-    const tags: MetaTag[] = [];
-    const metadata = itemVersion.metadata;
-
-    if (!metadata) {
-      return tags;
-    }
-
-    //SUBJECT???
-
-
-
-
-
-
-
-
-
-
-    return tags;
-  }
 
   /**
    * Generate source/journal specific meta tags (Highwire)
@@ -647,15 +624,18 @@ export class MetaTagsTransformerService {
   /**
    * Apply meta tags to the document
    */
-  private applyMetaTags(tags: MetaTag[]): void {
+  private applyMetaTags(tags: MetaTag[]): MetaTag[] {
+    const appliedTags: MetaTag[] = []
     for (const tag of tags) {
       if (this.isValidTag(tag)) {
         // Remove existing tag if it exists
         this.meta.removeTag(`name='${tag.name}'`);
         // Add new tag
         this.meta.addTag({ name: tag.name, content: tag.content });
+        appliedTags.push(tag);
       }
     }
+    return appliedTags;
   }
 
   /**
