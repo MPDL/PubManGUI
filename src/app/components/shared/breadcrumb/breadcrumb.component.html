@@ -1,5 +1,5 @@
 <nav aria-label="{{ 'common.breadcrumb' | translate }}">
-  <a [routerLink]="['/home']">
+  <a [routerLink]="['/']">
     <span class="material-symbols-outlined">home</span>
   </a>
   @for(breadcrumb of breadcrumbs$ | async; track breadcrumb.labelKey; let last = $last) {

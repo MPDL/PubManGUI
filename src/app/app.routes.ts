@@ -9,11 +9,6 @@ import { fetchItemResolver } from './components/imports/services/fetch-item-reso
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
     //component: HomeComponent,
     loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
     data: {
@@ -21,6 +16,11 @@ export const routes: Routes = [
         labelKey: 'common.home',
       }
     },
+  },
+  {
+    path: 'home',
+    redirectTo: '',
+    pathMatch: 'full',
   },
   {
     path: 'my',

@@ -16,7 +16,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   } else {
     msgSvc.warning(`Please, log in!\n`);
     msgSvc.dialog.afterAllClosed.subscribe(result => {
-      router.navigate(['/home'])
+      router.navigate(['/'])
     })
     return false;
   }
