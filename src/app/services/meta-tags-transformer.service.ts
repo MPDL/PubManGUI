@@ -67,7 +67,6 @@ export class MetaTagsTransformerService {
     citation_issue: 'DC.citation.issue',
     citation_spage: 'DC.citation.spage',
     citation_epage: 'DC.citation.epage',
-    citation_issn: 'citation_issn'
   };
 
   // Genre to publication type mapping
@@ -192,11 +191,13 @@ export class MetaTagsTransformerService {
             if (creator.person?.organizations && Array.isArray(creator.person.organizations)) {
               for (const affiliation of creator.person.organizations) {
 
-                if (genre === MdsPublicationGenre.THESIS && !metadata.publishingInfo?.publisher) {
-                  tags.push({
-                    name: this.HIGHWIRE_KEYS.dissertation_institution,
-                    content: affiliation.name || ''
-                  });
+                if (genre === MdsPublicationGenre.THESIS) {
+                  if(!metadata.publishingInfo?.publisher) {
+                    tags.push({
+                      name: this.HIGHWIRE_KEYS.dissertation_institution,
+                      content: affiliation.name || ''
+                    });
+                  }
                 } else {
                   tags.push({
                     name: this.HIGHWIRE_KEYS.author_affiliation,
@@ -215,11 +216,13 @@ export class MetaTagsTransformerService {
               content: creator.organization.name
             });
 
-            if (genre === MdsPublicationGenre.THESIS && !metadata.publishingInfo?.publisher) {
-              tags.push({
-                name: this.HIGHWIRE_KEYS.dissertation_institution,
-                content: creator.organization.name
-              });
+            if (genre === MdsPublicationGenre.THESIS) {
+              if (!metadata.publishingInfo?.publisher) {
+                tags.push({
+                  name: this.HIGHWIRE_KEYS.dissertation_institution,
+                  content: creator.organization.name
+                });
+              }
             }
             else {
               tags.push({
@@ -280,7 +283,7 @@ export class MetaTagsTransformerService {
 
       // ISBN
       const isbn = this.extractIdentifier(itemVersion, IdType.ISBN);
-      if (isbn && this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
+      if (isbn && this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK, MdsPublicationGenre.COLLECTED_EDITION, MdsPublicationGenre.FESTSCHRIFT, MdsPublicationGenre.HANDBOOK, MdsPublicationGenre.MONOGRAPH])) {
         tags.push({
           name: this.HIGHWIRE_KEYS.isbn,
           content: isbn
@@ -294,7 +297,11 @@ export class MetaTagsTransformerService {
       const issn = this.extractIdentifier(itemVersion, IdType.ISSN);
       if (issn) {
         tags.push({
-          name: this.DC_KEYS.citation_issn,
+          name: this.HIGHWIRE_KEYS.issn,
+          content: issn
+        });
+        tags.push({
+          name: this.DC_KEYS.identifier,
           content: `urn:ISSN:${issn}`
         });
       }
@@ -318,18 +325,24 @@ export class MetaTagsTransformerService {
     // Publisher
     if (metadata.publishingInfo?.publisher) {
       const publisherName = this.normalizeSpace(metadata.publishingInfo.publisher);
-      tags.push({
-        name: this.DC_KEYS.publisher,
-        content: publisherName
-      });
+
       if (genre === MdsPublicationGenre.THESIS) {
+        const publisherNameWithPlace = publisherName + (metadata.publishingInfo?.place ? (' ' + metadata.publishingInfo?.place) : '');
         tags.push({
           name: this.HIGHWIRE_KEYS.dissertation_institution,
-          content: publisherName
+          content: publisherNameWithPlace
+        });
+        tags.push({
+          name: this.DC_KEYS.publisher,
+          content: publisherNameWithPlace
         });
       } else {
         tags.push({
           name: this.HIGHWIRE_KEYS.publisher,
+          content: publisherName
+        });
+        tags.push({
+          name: this.DC_KEYS.publisher,
           content: publisherName
         });
       }
@@ -340,6 +353,10 @@ export class MetaTagsTransformerService {
     if (eventTitle && this.isApplicableGenre(genre, [MdsPublicationGenre.CONFERENCE_PAPER, MdsPublicationGenre.PROCEEDINGS, MdsPublicationGenre.CONFERENCE_REPORT, MdsPublicationGenre.TALK_AT_EVENT, MdsPublicationGenre.COURSEWARE_LECTURE, MdsPublicationGenre.POSTER])) {
       tags.push({
         name: this.HIGHWIRE_KEYS.conference,
+        content: eventTitle
+      });
+      tags.push({
+        name: this.DC_KEYS.relation_ispartof,
         content: eventTitle
       });
     }
@@ -368,15 +385,14 @@ export class MetaTagsTransformerService {
     }
 
     if (source.title) {
-      tags.push({
-        name: this.DC_KEYS.relation_ispartof,
-        content: source.title
-      });
-
       // Journal Title
       if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.BOOK_REVIEW, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
         tags.push({
           name: this.HIGHWIRE_KEYS.journal_title,
+          content: source.title
+        });
+        tags.push({
+          name: this.DC_KEYS.relation_ispartof,
           content: source.title
         });
       }
@@ -385,6 +401,10 @@ export class MetaTagsTransformerService {
       if (this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
         tags.push({
           name: this.HIGHWIRE_KEYS.inbook_title,
+          content: source.title
+        });
+        tags.push({
+          name: this.DC_KEYS.relation_ispartof,
           content: source.title
         });
       }
@@ -407,13 +427,14 @@ export class MetaTagsTransformerService {
 
     // Volume
     if (source.volume) {
-      tags.push({
-        name: this.DC_KEYS.citation_volume,
-        content: source.volume
-      });
+
       if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
         tags.push({
           name: this.HIGHWIRE_KEYS.volume,
+          content: source.volume
+        });
+        tags.push({
+          name: this.DC_KEYS.citation_volume,
           content: source.volume
         });
       }
@@ -421,13 +442,13 @@ export class MetaTagsTransformerService {
 
     // Issue
     if (source.issue) {
-      tags.push({
-        name: this.DC_KEYS.citation_issue,
-        content: source.issue
-      });
       if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
         tags.push({
           name: this.HIGHWIRE_KEYS.issue,
+          content: source.issue
+        });
+        tags.push({
+          name: this.DC_KEYS.citation_issue,
           content: source.issue
         });
       }
@@ -447,12 +468,10 @@ export class MetaTagsTransformerService {
 
     // End Page
     if (source.endPage) {
-      if (source.endPage) {
-        tags.push({
-          name: this.DC_KEYS.citation_epage,
-          content: source.endPage
-        });
-      }
+      tags.push({
+        name: this.DC_KEYS.citation_epage,
+        content: source.endPage
+      });
       tags.push({
         name: this.HIGHWIRE_KEYS.lastpage,
         content: source.endPage
@@ -465,6 +484,10 @@ export class MetaTagsTransformerService {
         name: this.HIGHWIRE_KEYS.publisher,
         content: source.publishingInfo.publisher
       });
+      tags.push({
+        name: this.DC_KEYS.publisher,
+        content: source.publishingInfo.publisher
+      });
     }
 
     // ISSN
@@ -474,14 +497,25 @@ export class MetaTagsTransformerService {
         name: this.HIGHWIRE_KEYS.issn,
         content: issn
       });
+      tags.push({
+        name: this.DC_KEYS.identifier,
+        content: `urn:ISSN:${issn}`
+      });
     }
 
     // ISBN
+
     const isbn = source.identifiers?.find(id => id.type === IdType.ISBN)?.id;
+    console.log("ISBN", isbn);
+    console.log("Genre", genre);
     if (isbn && this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
       tags.push({
         name: this.HIGHWIRE_KEYS.isbn,
         content: isbn
+      });
+      tags.push({
+        name: this.DC_KEYS.identifier,
+        content: `urn:ISBN:${isbn}`
       });
     }
 
@@ -519,9 +553,17 @@ export class MetaTagsTransformerService {
             name: this.HIGHWIRE_KEYS.pdf_url,
             content: file.content
           });
+          tags.push({
+            name: this.DC_KEYS.identifier,
+            content: file.content
+          });
         } else if (file.mimeType === 'text/html' || file.mimeType === 'application/xhtml+xml') {
           tags.push({
             name: this.HIGHWIRE_KEYS.fulltext_html_url,
+            content: file.content
+          });
+          tags.push({
+            name: this.DC_KEYS.identifier,
             content: file.content
           });
         }
@@ -531,6 +573,10 @@ export class MetaTagsTransformerService {
       if (file.storage === Storage.EXTERNAL_URL && file.content) {
         tags.push({
           name: this.HIGHWIRE_KEYS.fulltext_html_url,
+          content: file.content
+        });
+        tags.push({
+          name: this.DC_KEYS.identifier,
           content: file.content
         });
       }
@@ -598,7 +644,8 @@ export class MetaTagsTransformerService {
    * Format date for meta tags (replace dashes with slashes)
    */
   private formatDate(date: string): string {
-    return date.replace(/-/g, '/');
+    //return date.replace(/-/g, '/');
+    return date;
   }
 
   /**
@@ -629,7 +676,7 @@ export class MetaTagsTransformerService {
     for (const tag of tags) {
       if (this.isValidTag(tag)) {
         // Remove existing tag if it exists
-        this.meta.removeTag(`name='${tag.name}'`);
+        //this.meta.removeTag(`name='${tag.name}'`);
         // Add new tag
         this.meta.addTag({ name: tag.name, content: tag.content });
         appliedTags.push(tag);
