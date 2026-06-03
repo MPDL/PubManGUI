@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { AlternativeTitleType, CreatorType, IdType, ItemVersionVO, MdsPublicationGenre, Visibility, Storage } from "../model/inge";
+import {getUrlForFile} from "src/app/utils/item-utils";
 
 
 
@@ -506,8 +507,6 @@ export class MetaTagsTransformerService {
     // ISBN
 
     const isbn = source.identifiers?.find(id => id.type === IdType.ISBN)?.id;
-    console.log("ISBN", isbn);
-    console.log("Genre", genre);
     if (isbn && this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
       tags.push({
         name: this.HIGHWIRE_KEYS.isbn,
@@ -548,23 +547,24 @@ export class MetaTagsTransformerService {
 
       // Internal managed files
       if (file.storage === Storage.INTERNAL_MANAGED && file.content) {
+        const fullUrl = getUrlForFile(file) || '';
         if (file.mimeType === 'application/pdf') {
           tags.push({
             name: this.HIGHWIRE_KEYS.pdf_url,
-            content: file.content
+            content: fullUrl
           });
           tags.push({
             name: this.DC_KEYS.identifier,
-            content: file.content
+            content: fullUrl
           });
         } else if (file.mimeType === 'text/html' || file.mimeType === 'application/xhtml+xml') {
           tags.push({
             name: this.HIGHWIRE_KEYS.fulltext_html_url,
-            content: file.content
+            content: fullUrl
           });
           tags.push({
             name: this.DC_KEYS.identifier,
-            content: file.content
+            content: fullUrl
           });
         }
       }
