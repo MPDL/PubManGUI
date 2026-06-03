@@ -379,144 +379,151 @@ export class MetaTagsTransformerService {
    */
   private generateSourceMetaTags(itemVersion: ItemVersionVO, genre?: MdsPublicationGenre): MetaTag[] {
     const tags: MetaTag[] = [];
-    const source = itemVersion.metadata.sources?.[0]; // Assuming first source is the main one, can be adjusted if needed
 
-    if (!source) {
+    if (!itemVersion.metadata.sources || itemVersion.metadata.sources.length === 0) {
       return tags;
     }
 
-    if (source.title) {
-      // Journal Title
-      if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.BOOK_REVIEW, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
-        tags.push({
-          name: this.HIGHWIRE_KEYS.journal_title,
-          content: source.title
-        });
-        tags.push({
-          name: this.DC_KEYS.relation_ispartof,
-          content: source.title
-        });
+    for(const source of itemVersion.metadata.sources) {
+
+      if(!source) {
+        continue;
       }
 
-      // Book Title (for book chapters)
-      if (this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
-        tags.push({
-          name: this.HIGHWIRE_KEYS.inbook_title,
-          content: source.title
-        });
-        tags.push({
-          name: this.DC_KEYS.relation_ispartof,
-          content: source.title
-        });
-      }
-
-
-
-    }
-
-    // Journal Abbreviation
-    if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
-      source.alternativeTitles?.filter(alt => alt.type === AlternativeTitleType.ABBREVIATION)?.forEach(alt => {
-        if (alt.value) {
+      if (source.title) {
+        // Journal Title
+        if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.BOOK_REVIEW, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
           tags.push({
-            name: this.HIGHWIRE_KEYS.journal_abbrev,
-            content: alt.value
+            name: this.HIGHWIRE_KEYS.journal_title,
+            content: source.title
+          });
+          tags.push({
+            name: this.DC_KEYS.relation_ispartof,
+            content: source.title
           });
         }
-      });
-    }
 
-    // Volume
-    if (source.volume) {
+        // Book Title (for book chapters)
+        if (this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
+          tags.push({
+            name: this.HIGHWIRE_KEYS.inbook_title,
+            content: source.title
+          });
+          tags.push({
+            name: this.DC_KEYS.relation_ispartof,
+            content: source.title
+          });
+        }
 
+
+
+      }
+
+      // Journal Abbreviation
       if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
-        tags.push({
-          name: this.HIGHWIRE_KEYS.volume,
-          content: source.volume
-        });
-        tags.push({
-          name: this.DC_KEYS.citation_volume,
-          content: source.volume
+        source.alternativeTitles?.filter(alt => alt.type === AlternativeTitleType.ABBREVIATION)?.forEach(alt => {
+          if (alt.value) {
+            tags.push({
+              name: this.HIGHWIRE_KEYS.journal_abbrev,
+              content: alt.value
+            });
+          }
         });
       }
-    }
 
-    // Issue
-    if (source.issue) {
-      if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
+      // Volume
+      if (source.volume) {
+
+        if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
+          tags.push({
+            name: this.HIGHWIRE_KEYS.volume,
+            content: source.volume
+          });
+          tags.push({
+            name: this.DC_KEYS.citation_volume,
+            content: source.volume
+          });
+        }
+      }
+
+      // Issue
+      if (source.issue) {
+        if (this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
+          tags.push({
+            name: this.HIGHWIRE_KEYS.issue,
+            content: source.issue
+          });
+          tags.push({
+            name: this.DC_KEYS.citation_issue,
+            content: source.issue
+          });
+        }
+      }
+
+      // Start Page
+      if (source.startPage) {
         tags.push({
-          name: this.HIGHWIRE_KEYS.issue,
-          content: source.issue
+          name: this.DC_KEYS.citation_spage,
+          content: source.startPage
         });
         tags.push({
-          name: this.DC_KEYS.citation_issue,
-          content: source.issue
+          name: this.HIGHWIRE_KEYS.firstpage,
+          content: source.startPage
         });
       }
-    }
 
-    // Start Page
-    if (source.startPage) {
-      tags.push({
-        name: this.DC_KEYS.citation_spage,
-        content: source.startPage
-      });
-      tags.push({
-        name: this.HIGHWIRE_KEYS.firstpage,
-        content: source.startPage
-      });
-    }
+      // End Page
+      if (source.endPage) {
+        tags.push({
+          name: this.DC_KEYS.citation_epage,
+          content: source.endPage
+        });
+        tags.push({
+          name: this.HIGHWIRE_KEYS.lastpage,
+          content: source.endPage
+        });
+      }
 
-    // End Page
-    if (source.endPage) {
-      tags.push({
-        name: this.DC_KEYS.citation_epage,
-        content: source.endPage
-      });
-      tags.push({
-        name: this.HIGHWIRE_KEYS.lastpage,
-        content: source.endPage
-      });
-    }
+      // Publisher
+      if (source.publishingInfo?.publisher) {
+        tags.push({
+          name: this.HIGHWIRE_KEYS.publisher,
+          content: source.publishingInfo.publisher
+        });
+        tags.push({
+          name: this.DC_KEYS.publisher,
+          content: source.publishingInfo.publisher
+        });
+      }
 
-    // Publisher
-    if (source.publishingInfo?.publisher) {
-      tags.push({
-        name: this.HIGHWIRE_KEYS.publisher,
-        content: source.publishingInfo.publisher
-      });
-      tags.push({
-        name: this.DC_KEYS.publisher,
-        content: source.publishingInfo.publisher
-      });
-    }
+      // ISSN
+      const issn = source.identifiers?.find(id => id.type === IdType.ISSN)?.id;
+      if (issn && this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
+        tags.push({
+          name: this.HIGHWIRE_KEYS.issn,
+          content: issn
+        });
+        tags.push({
+          name: this.DC_KEYS.identifier,
+          content: `urn:ISSN:${issn}`
+        });
+      }
 
-    // ISSN
-    const issn = source.identifiers?.find(id => id.type === IdType.ISSN)?.id;
-    if (issn && this.isApplicableGenre(genre, [MdsPublicationGenre.ARTICLE, MdsPublicationGenre.NEWSPAPER_ARTICLE, MdsPublicationGenre.MAGAZINE_ARTICLE, MdsPublicationGenre.REVIEW_ARTICLE])) {
-      tags.push({
-        name: this.HIGHWIRE_KEYS.issn,
-        content: issn
-      });
-      tags.push({
-        name: this.DC_KEYS.identifier,
-        content: `urn:ISSN:${issn}`
-      });
-    }
+      // ISBN
 
-    // ISBN
+      const isbn = source.identifiers?.find(id => id.type === IdType.ISBN)?.id;
+      if (isbn && this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
+        tags.push({
+          name: this.HIGHWIRE_KEYS.isbn,
+          content: isbn
+        });
+        tags.push({
+          name: this.DC_KEYS.identifier,
+          content: `urn:ISBN:${isbn}`
+        });
+      }
 
-    const isbn = source.identifiers?.find(id => id.type === IdType.ISBN)?.id;
-    if (isbn && this.isApplicableGenre(genre, [MdsPublicationGenre.BOOK_ITEM, MdsPublicationGenre.CONTRIBUTION_TO_COLLECTED_EDITION, MdsPublicationGenre.CONTRIBUTION_TO_FESTSCHRIFT, MdsPublicationGenre.CONTRIBUTION_TO_HANDBOOK])) {
-      tags.push({
-        name: this.HIGHWIRE_KEYS.isbn,
-        content: isbn
-      });
-      tags.push({
-        name: this.DC_KEYS.identifier,
-        content: `urn:ISBN:${isbn}`
-      });
-    }
+      };
 
     return tags;
   }
