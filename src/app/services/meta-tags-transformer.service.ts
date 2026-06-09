@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { AlternativeTitleType, CreatorType, IdType, ItemVersionVO, MdsPublicationGenre, Visibility, Storage } from "../model/inge";
+import {
+  AlternativeTitleType, CreatorType, IdType, ItemVersionVO, MdsPublicationGenre, Visibility, Storage,
+  MdsPublicationVO
+} from "../model/inge";
 import {getUrlForFile} from "src/app/utils/item-utils";
 
 
@@ -611,14 +614,14 @@ export class MetaTagsTransformerService {
   /**
    * Get publication date in priority order
    */
-  private getPublicationDate(metadata: any): string | undefined {
+  private getPublicationDate(metadata: MdsPublicationVO): string | undefined {
     return (
-      metadata.issued ||
-      metadata.publishedOnline ||
+      metadata.datePublishedInPrint ||
+      metadata.datePublishedOnline ||
       metadata.dateAccepted ||
       metadata.dateSubmitted ||
-      metadata.modified ||
-      metadata.created
+      metadata.dateModified ||
+      metadata.dateCreated
     );
   }
 
@@ -652,7 +655,11 @@ export class MetaTagsTransformerService {
    */
   private formatDate(date: string): string {
     //return date.replace(/-/g, '/');
+    if(date?.length >=4) {
+      return date?.substring(0,4);
+    }
     return date;
+
   }
 
   /**
