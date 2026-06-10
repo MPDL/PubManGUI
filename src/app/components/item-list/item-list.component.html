@@ -4,20 +4,20 @@
       <ng-content select="[listTopNavElements]" start>
 
           <span start class="d-inline-block" ngbTooltip="{{ 'common.export' | translate }} ({{ 'common.selection' | translate }})" [attr.tabindex]="(selectionService.selectedIds$.value.length === 0) ? 0 : null">
-            <button class="btn btn-link nav-link" (click)="openExportModal()" [disabled]="selectionService.selectedIds$.value.length === 0">
+            <button class="btn btn-link nav-link" (click)="openExportModal()" [disabled]="selectionService.selectedIds$.value.length === 0" aria-label="{{ 'common.export' | translate }} ({{ 'common.selection' | translate }})">
               <span class="material-symbols-outlined">upload</span>
             </button>
           </span>
           @if (aa.isLoggedIn) {
             <span start class="d-inline-block" ngbTooltip="{{ 'common.export' | translate }} ({{ 'common.all' | translate }})" [attr.tabindex]="(number_of_results === 0) ? 0 : null">
-              <button class="btn btn-link nav-link" (click)="openExportAllModal()" [disabled]="number_of_results === 0">
+              <button class="btn btn-link nav-link" (click)="openExportAllModal()" [disabled]="number_of_results === 0" aria-label="{{ 'common.export' | translate }} ({{ 'common.all' | translate }})">
                 <span class="material-symbols-outlined">unarchive</span>
               </button>
             </span>
           }
           @if (searchResultType) {
             <span start class="d-inline-block" ngbTooltip="Atom Feed URL">
-              <button class="btn btn-link nav-link" (click)="openFeedModal()">
+              <button class="btn btn-link nav-link" (click)="openFeedModal()" aria-label="Atom Feed URL">
                 <span class="material-symbols-outlined">rss_feed</span>
               </button>
             </span>

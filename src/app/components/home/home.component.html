@@ -12,7 +12,7 @@
           <form (ngSubmit)="onSearch()">
             <div class="search d-flex align-items-center bg-light opacity-75 rounded-5 p-3">
               <span class="material-symbols-outlined">search</span>
-              <input type="search" class="form-control ms-3 border-0 bg-transparent w-100" [placeholder]="'Home.Search'| translate" [(ngModel)]="searchTerm" name="homeSearch"/>
+              <input type="search" class="form-control ms-3 border-0 bg-transparent w-100" [placeholder]="'Home.Search'| translate" [(ngModel)]="searchTerm" name="homeSearch" [aria-label]="'Home.Search'| translate"/>
             </div>
           </form>
         </div>
@@ -70,7 +70,7 @@
                 <div class="card-body">
                   {{ blogEntry.excerpt | slice:0:300 }} ...
                 </div>
-                <a href="{{ blogEntry.link }}" target="_blank" class="stretched-link"></a>
+                <a href="{{ blogEntry.link }}" target="_blank" class="stretched-link" [aria-label]="'Home.NewsLink'| translate"></a>
               </div>
             </div>
           }

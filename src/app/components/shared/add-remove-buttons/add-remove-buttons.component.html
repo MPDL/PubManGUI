@@ -1,5 +1,5 @@
 <div class="d-flex">
-    <button type="button" [ngClass]="!hiddenAddButton ? 'btn btn-sm btn-outline-secondary me-1' : 'invisible'" name="add" [disabled]="disableAdd" (click)="add(index)">
+    <button type="button" [ngClass]="!hiddenAddButton ? 'btn btn-sm btn-outline-secondary me-1' : 'invisible'" name="add" [disabled]="disableAdd" (click)="add(index)" aria-label="+">
       @if(addIconAndText) {
         <i class="bi bi-plus-lg"></i>
       }
@@ -9,7 +9,7 @@
         <i class="bi bi-plus"></i>
       }
     </button>
-    <button type="button" class="btn btn-sm btn-outline-secondary" name="remove" (click)="remove(index)" [disabled]="disableRemove" [hidden]="del_val === 'hidden'">
+    <button type="button" class="btn btn-sm btn-outline-secondary" name="remove" (click)="remove(index)" [disabled]="disableRemove" [hidden]="del_val === 'hidden'" aria-label="-">
       @if(addIconAndText) {
         <i class="bi bi-dash-lg"></i>
       }

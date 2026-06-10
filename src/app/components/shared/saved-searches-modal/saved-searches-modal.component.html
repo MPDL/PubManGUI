@@ -60,8 +60,8 @@
               <button class="btn btn-sm btn-primary me-2 opacity-75" pureCopyButton [textToCopy]="getSavedSearchLinkResults(savedSearch.objectId!)"> {{'SavedSearches.result' | translate}}</button>
 
             <td>
-              <button class="btn btn-sm btn-warning me-2 opacity-75" (click)="updateSavedSearch(i)" [ngbTooltip]="'SavedSearches.update' | translate"><span class="material-symbols-outlined">change_circle</span></button>
-              <button class="btn btn-sm btn-danger opacity-75" (click)="deleteSavedSearch(i)" [ngbTooltip]="'SavedSearches.delete' | translate"><i class="bi bi-trash"></i></button>
+              <button class="btn btn-sm btn-warning me-2 opacity-75" (click)="updateSavedSearch(i)" [ngbTooltip]="'SavedSearches.update' | translate" [ariaLabel]="'SavedSearches.update' | translate"><span class="material-symbols-outlined">change_circle</span></button>
+              <button class="btn btn-sm btn-danger opacity-75" (click)="deleteSavedSearch(i)" [ngbTooltip]="'SavedSearches.delete' | translate" [ariaLabel]="'SavedSearches.delete' | translate"><i class="bi bi-trash"></i></button>
 
             </td>
           </tr>
@@ -81,8 +81,8 @@
       <div class="col-3">
         <button class="btn btn-sm btn-primary me-2" pureCopyButton [textToCopy]="getSavedSearchLinkMask(savedSearch.objectId!)"></button>
         <button class="btn btn-sm btn-primary me-2" pureCopyButton [textToCopy]="getSavedSearchLinkResults(savedSearch.objectId!)"></button>
-        <button class="btn btn-sm btn-warning me-2" (click)="updateSavedSearch(i)" [ngbTooltip]="'SavedSearches.update' | translate"><span class="material-symbols-outlined">change_circle</span></button>
-        <button class="btn btn-sm btn-danger" (click)="deleteSavedSearch(i)" [ngbTooltip]="'SavedSearches.delete' | translate"><i class="bi bi-trash"></i></button>
+        <button class="btn btn-sm btn-warning me-2" (click)="updateSavedSearch(i)" [ngbTooltip]="'SavedSearches.update' | translate" [ariaLabel]="'SavedSearches.update' | translate"><span class="material-symbols-outlined">change_circle</span></button>
+        <button class="btn btn-sm btn-danger" (click)="deleteSavedSearch(i)" [ngbTooltip]="'SavedSearches.delete' | translate" [ariaLabel]="'SavedSearches.delete' | translate"><i class="bi bi-trash"></i></button>
       </div>
     </div>
 

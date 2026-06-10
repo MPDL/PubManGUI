@@ -13,7 +13,7 @@
   <div class="navbar-nav" start>
     @if (authorizationInfo && authorizationInfo.actions['EDIT'] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'common.edit' | translate}}" >
-      <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2">
+      <a [routerLink]="['/edit/'+ item.objectId]" class="nav-link px-2" aria-label="{{'common.edit' | translate}}">
         <span class="material-symbols-outlined">edit</span>
       </a>
     </span>
@@ -21,7 +21,7 @@
 
     @if (authorizationInfo && authorizationInfo.actions['RELEASE' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.release' | translate}}" >
-      <button class="nav-link" (click)="openActionsModal('release')">
+      <button class="nav-link" (click)="openActionsModal('release')" aria-label="{{'ItemActions.release' | translate}}">
         <span class="material-symbols-outlined">public</span>
       </button>
     </span>
@@ -29,7 +29,7 @@
 
     @if (authorizationInfo && authorizationInfo.actions['SUBMIT' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.submit' | translate}}" >
-      <button class="nav-link" (click)="openActionsModal('submit')">
+      <button class="nav-link" (click)="openActionsModal('submit')" aria-label="{{'ItemActions.submit' | translate}}">
         <span class="material-symbols-outlined">workspace_premium</span>
       </button>
     </span>
@@ -37,7 +37,7 @@
 
     @if (authorizationInfo && authorizationInfo.actions['REVISE' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.revise' | translate}}" >
-      <button class="nav-link" (click)="openActionsModal('revise')">
+      <button class="nav-link" (click)="openActionsModal('revise')" aria-label="{{'ItemActions.revise' | translate}}">
         <svg fill="currentColor" height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#revise"></use>
         </svg>
@@ -47,7 +47,7 @@
 
     @if (authorizationInfo && authorizationInfo.actions['WITHDRAW' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.withdraw' | translate}}" >
-      <button class="nav-link" (click)="openActionsModal('withdraw')">
+      <button class="nav-link" (click)="openActionsModal('withdraw')" aria-label="{{'ItemActions.withdraw' | translate}}">
         <span class="material-symbols-outlined">public_off</span>
       </button>
     </span>
@@ -55,7 +55,7 @@
 
     @if (authorizationInfo && authorizationInfo.actions['DELETE' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.delete' | translate}}" >
-      <button class="nav-link" (click)="openActionsModal('delete')">
+      <button class="nav-link" (click)="openActionsModal('delete')" aria-label="{{'ItemActions.delete' | translate}}">
         <span class="material-symbols-outlined">delete_forever</span>
       </button>
     </span>
@@ -63,7 +63,7 @@
 
     @if (authorizationInfo && authorizationInfo.actions['ADD_NEW_DOI' ] && isLatestVersion) {
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.addDoi' | translate}}" >
-      <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')">
+      <button class="nav-link svg-icon" (click)="openActionsModal('addDoi')" aria-label="{{'ItemActions.addDoi' | translate}}">
         <svg fill="currentColor" height="1.5em" width="1.5em">
           <use href="assets/icons/icons.svg#doi"></use>
         </svg>
@@ -75,7 +75,7 @@
     item.versionNumber) {
 
     <span class="d-inline-block" ngbTooltip="{{'ItemActions.rollback' | translate}} (Version {{item?.versionNumber}})" >
-      <button class="nav-link" (click)="openActionsModal('rollback', item?.versionNumber)">
+      <button class="nav-link" (click)="openActionsModal('rollback', item?.versionNumber)" aria-label="{{'ItemActions.rollback' | translate}} (Version {{item?.versionNumber}})">
         <span class="material-symbols-outlined">history</span>
       </button>
     </span>
@@ -85,7 +85,7 @@
 
     @if (aaService.principal.value.isDepositor) {
     <span class="d-inline-block" ngbTooltip="{{'common.useAsTemplate' | translate}}" >
-      <button class="nav-link" (click)="useAsTemplate()">
+      <button class="nav-link" (click)="useAsTemplate()" aria-label="{{'common.useAsTemplate' | translate}}">
         <span class="material-symbols-outlined">copy_all</span>
       </button>
     </span>
@@ -94,7 +94,7 @@
     <div class="vr"></div>
 
     <span class="d-inline-block" ngbTooltip="{{'common.export' | translate}}" >
-      <button class="nav-link" (click)="openExportModal()">
+      <button class="nav-link" (click)="openExportModal()" aria-label="{{'common.export' | translate}}">
         <span class="material-symbols-outlined">upload</span>
       </button>
     </span>

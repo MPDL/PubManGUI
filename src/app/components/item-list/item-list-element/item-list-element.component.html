@@ -50,7 +50,7 @@
 
         <div class="mt-auto">
         <button type="button" class="btn btn-sm p-0"
-           ngbTooltip="Abstract" [ngbPopover]="abstract" [popoverTitle]="item?.metadata?.title" popoverClass="custom-popover"><i class="bi bi-card-text"></i>
+           ngbTooltip="Abstract" [ngbPopover]="abstract" [popoverTitle]="item?.metadata?.title" popoverClass="custom-popover" aria-label="Abstract"><i class="bi bi-card-text"></i>
         </button>
         </div>
       }
@@ -67,7 +67,7 @@
           @for (file of publicFiles.slice(0,2); track file) {
 
               <a class="small" href="{{ingeUri + file.content}}" target="_blank"
-                 style="overflow-wrap: break-word;" [ngbTooltip]="file.metadata.title">
+                 style="overflow-wrap: break-word;" [ngbTooltip]="file.metadata.title" [ariaLabel]="file.metadata.title">
                   <i class="bi-file-earmark-text me-1"></i>{{'ContentCategories.' + file.metadata.contentCategory | translate}}
               </a>
           }
@@ -85,7 +85,7 @@
           @for (file of locators.slice(0,2); track file) {
 
             <a class="small" href="{{file.content}}" target="_blank"
-               style="overflow-wrap: break-word;" [ngbTooltip]="file.metadata.title">
+               style="overflow-wrap: break-word;" [ngbTooltip]="file.metadata.title" [ariaLabel]="file.metadata.title">
               <i class="bi-link me-1"></i>{{'ContentCategories.' + file.metadata.contentCategory | translate}}
             </a>
           }

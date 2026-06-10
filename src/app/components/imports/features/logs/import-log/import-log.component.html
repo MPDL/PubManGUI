@@ -42,7 +42,7 @@
 
   <td class="d-flex flex-column col-7 col-sm-6 col-xl-4 pe-xxl-2 text-nowrap text-truncate">
     @if( isFinished(log.status) ) {
-      <a [routerLink]="['/imports/myimports/', log.id, 'datasets']" 
+      <a [routerLink]="['/imports/myimports/', log.id, 'datasets']"
           [ngStyle]="{'pointer-events': log.anzImportedItems > 0 ? 'auto' : 'none', 'text-decoration': log.anzImportedItems > 0 ? 'underline' : 'none'}">
         <span>
           {{ log.name }}
@@ -87,7 +87,8 @@
           'pointer-events': !isFinished(log.status) ? 'none' : 'auto',
           'cursor': !isFinished(log.status) ? 'not-allowed' : 'pointer'
         }"
-        ngbTooltip="{{ 'imports.list.remove' | translate }}" placement="bottom-left" (click)="deleteImportLog(log)">
+        ngbTooltip="{{ 'imports.list.remove' | translate }}" placement="bottom-left" (click)="deleteImportLog(log)"
+        aria-label="{{ 'imports.list.remove' | translate }}">
         delete
       </button>
   </td>

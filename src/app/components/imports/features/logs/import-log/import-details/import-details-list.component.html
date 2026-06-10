@@ -8,7 +8,8 @@
         @if(this.import.anzImportedItems && this.filteredSize > 0) {
         <div class="d-inline-flex justify-content-start align-items-center">
           @if(!this.released) {
-          <button type="button" id="delete" class="btn border-0" ngbTooltip="{{ 'imports.list.details.delete' | translate }}" placement="bottom-left" (click)='doDelete();'>
+          <button type="button" id="delete" class="btn border-0" ngbTooltip="{{ 'imports.list.details.delete' | translate }}" placement="bottom-left" (click)='doDelete();'
+            aria-label="{{ 'imports.list.details.delete' | translate }}">
             <span class="material-symbols-outlined">
               delete_forever
             </span>
@@ -21,14 +22,16 @@
             </button>
           }
           @if(caseSubmit()) {
-          <button type="button" id="submit" class="btn border-0" ngbTooltip="{{ 'imports.list.details.submit' | translate }}" placement="bottom-left" (click)='doSubmit();'>
+          <button type="button" id="submit" class="btn border-0" ngbTooltip="{{ 'imports.list.details.submit' | translate }}" placement="bottom-left" (click)='doSubmit();'
+            aria-label="{{ 'imports.list.details.submit' | translate }}">
             <span class="material-symbols-outlined">
               workspace_premium
             </span>
           </button>
           }
           @if(caseSubmitAndRelease() || caseRelease()) {
-          <button type="button" id="release" class="btn border-0" ngbTooltip="{{ 'imports.list.details.release' | translate }}" placement="bottom-left" (click)='doRelease();'>
+          <button type="button" id="release" class="btn border-0" ngbTooltip="{{ 'imports.list.details.release' | translate }}" placement="bottom-left" (click)='doRelease();'
+            aria-label="{{ 'imports.list.details.release' | translate }}">
             <span class="material-symbols-outlined">
               public
             </span>
@@ -44,7 +47,7 @@
         }
 
       </div>
-      
+
     </div>
     }
 
@@ -98,22 +101,22 @@
             <ng-container>
               @for (item of inPage; track item.id) {
                 @defer (on viewport) {
-  
+
                 <pure-detail-log [item]="item"></pure-detail-log>
-  
+
                 }
                 @placeholder {
                 <div>...</div>
                 }
               }
               @empty {
-  
+
               <tr>
                 <th colspan="3" class="text-center col-12">
                   <span class="text-center">{{ 'imports.list.empty' | translate }}</span>
                 </th>
               </tr>
-  
+
               }
             </ng-container>
           </tbody>

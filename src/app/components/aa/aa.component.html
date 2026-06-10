@@ -1,7 +1,7 @@
 @if (!aa.isLoggedIn) {
   <div class="nav-item">
     <!-- empty array as routerLink value enables hand pointer -->
-    <button type="button" class="nav-link" (click)="modalService.open(LoginComponent)" data-test="user-login" [ngbTooltip]="'header.signIn' | translate">
+    <button type="button" class="nav-link" (click)="modalService.open(LoginComponent)" data-test="user-login" [ngbTooltip]="'header.signIn' | translate" [ariaLabel]="'header.signIn' | translate">
       <span class="material-symbols-outlined">login</span></button>
       <!--<button type="button" class="btn btn-outline-primary" (click)="modalService.open(LoginComponent)">Login</button>-->
     </div>

@@ -114,7 +114,7 @@
               }
             </div>
             <div class="col-sm-2 mb-auto">
-              <select class="form-select" formControlName="type" (change)="changeType(i, t.value)" #t>
+              <select id="searchCriterionSelect_{{i}}" class="form-select" formControlName="type" (change)="changeType(i, t.value)" #t>
                 <option value="title">{{ 'MetadataFields.title' | translate }}</option>
                 <option value="keyword">{{ 'MetadataFields.keywords' | translate }}</option>
                 <option value="classification">{{ 'MetadataFields.classification' | translate }}</option>
@@ -166,7 +166,7 @@
             <!-- Input -->
             @if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.STANDARD) {
             <div class="col mb-auto" formGroupName="content">
-              <input class="form-control" type="text" formControlName="text" />
+              <input class="form-control" type="text" formControlName="text" [aria-label]="t.selectedOptions[0].label" />
             </div>
             } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.PERSON) {
             <div class="col-sm-2 mb-auto" formGroupName="content">

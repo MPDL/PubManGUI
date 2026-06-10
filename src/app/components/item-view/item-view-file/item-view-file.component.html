@@ -22,7 +22,7 @@
         </div>
         @if(file.storage==='EXTERNAL_URL' || fileAccessGranted) {
         @let link = (file.storage==='EXTERNAL_URL' ? '' : ingeUri) + file.content;
-        <a class="matomo_download w-100" href="{{link}}" target="_blank" [ngbTooltip]="file.name" placement="top-start">
+        <a class="matomo_download w-100" href="{{link}}" target="_blank" [ngbTooltip]="file.name" placement="top-start" [ariaLabel]="file.name">
           <i class="{{file.storage==='INTERNAL_MANAGED' ?'bi-file-earmark-text' : 'bi-link'}} me-1"></i>{{
           file.metadata.title }}
         </a>
@@ -79,12 +79,12 @@
       </div>
       <div class="col-3">
         <button class="float-end btn collapsed accordion-button bg-transparent" type="button" data-bs-toggle="collapse"
-          [attr.data-bs-target]="'#collapse'+file.objectId" aria-expanded="true" aria-controls="collapseOne">
+          [attr.data-bs-target]="'#collapse'+file.objectId" aria-expanded="true" aria-controls="collapse{{file.objectId}}" aria-label="More file information">
           <!--<i class="bi bi-chevron-down"></i>-->
         </button>
       </div>
     </div>
-    <div id="collapse{{file.objectId}}" class="accordion-collapse collapse bg-light" aria-labelledby="headingOne">
+    <div id="collapse{{file.objectId}}" class="accordion-collapse collapse bg-light">
       <div class="p-2">
         <small>
           @if(file.storage==='INTERNAL_MANAGED') {

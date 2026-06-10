@@ -49,13 +49,14 @@
 
         <div class="d-flex justify-content-evenly mb-3">
           <a ngbTooltip="{{ 'common.help' | translate }}" placement="bottom-left" [routerLink]="['/help']"
-            class="nav-link" (click)="collapse()">
+            class="nav-link" (click)="collapse()" aria-label="{{ 'common.help' | translate }}">
             <span class="material-symbols-outlined">help</span>
           </a>
 
           <div>
             <button type="button" [ngbPopover]="ipInfo" class="nav-link"
-              [ngbTooltip]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
+              [ngbTooltip]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'"
+              [ariaLabel]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
               <span class="material-symbols-outlined">{{aaService.principal.value.matchedIpName ? 'location_on' :
                 'location_off'
                 }}</span>

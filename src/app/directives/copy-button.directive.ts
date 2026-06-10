@@ -36,13 +36,16 @@ export class CopyButtonDirective {
       this.copyIcon = this.document.createElement('i');
       this.elementRef.nativeElement.appendChild(this.copyIcon);
       this.setCopyIcon();
-      this.ngbTooltip.ngbTooltip = this.translateService.instant('common.copyToClipboard');
+      const tooltipText = this.translateService.instant('common.copyToClipboard');
+      this.ngbTooltip.ngbTooltip = tooltipText;
+      this.elementRef.nativeElement.setAttribute('aria-label', tooltipText);
     }
   }
 
   ngOnInit() {
     if (this.tooltip) {
       this.ngbTooltip.ngbTooltip = this.tooltip;
+      this.elementRef.nativeElement.setAttribute('aria-label', this.tooltip);
     }
   }
 
