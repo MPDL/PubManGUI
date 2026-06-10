@@ -204,7 +204,6 @@ export class MetaTagsTransformerService {
                     });
                   }
                 } else {
-                  console.log("Push:",affiliation.name);
                   tags.push({
                     name: this.HIGHWIRE_KEYS.author_affiliation,
                     content: affiliation.name || ''
