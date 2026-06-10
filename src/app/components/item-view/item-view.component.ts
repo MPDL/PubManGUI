@@ -188,6 +188,11 @@ export class ItemViewComponent {
               //Retrieve citation for item view
               this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined, undefined).subscribe(citation => {
                 this.citation = citation;
+                if(citation) {
+                  this.meta.addTag({name: 'description', content: sanitizeHtml(this.citation, {allowedTags: [], allowedAttributes: {}})}, false);
+                  this.metaTagSelectors.push('name="description"');
+                }
+
               })
 
 
@@ -249,7 +254,6 @@ export class ItemViewComponent {
       try {
         this.meta.removeTag(selector);
       } catch (e) {
-        // ignore
       }
     });
     this.metaTagSelectors = [];
@@ -272,6 +276,8 @@ export class ItemViewComponent {
       */
      const appliedTags = this.metaTagService.transformAndSetMetaTags(i);
      this.metaTagSelectors = appliedTags.map(tag => `name="${tag.name}"`);
+
+
 
     } else if (i.publicState == ItemVersionState.WITHDRAWN) {
       try {

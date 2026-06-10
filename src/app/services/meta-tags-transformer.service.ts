@@ -195,6 +195,7 @@ export class MetaTagsTransformerService {
             if (creator.person?.organizations && Array.isArray(creator.person.organizations)) {
               for (const affiliation of creator.person.organizations) {
 
+
                 if (genre === MdsPublicationGenre.THESIS) {
                   if(!metadata.publishingInfo?.publisher) {
                     tags.push({
@@ -203,6 +204,7 @@ export class MetaTagsTransformerService {
                     });
                   }
                 } else {
+                  console.log("Push:",affiliation.name);
                   tags.push({
                     name: this.HIGHWIRE_KEYS.author_affiliation,
                     content: affiliation.name || ''
@@ -692,7 +694,8 @@ export class MetaTagsTransformerService {
         // Remove existing tag if it exists
         //this.meta.removeTag(`name='${tag.name}'`);
         // Add new tag
-        this.meta.addTag({ name: tag.name, content: tag.content });
+        //Keep forceCreation to false, otherwise the removeTag will not work correctly
+        this.meta.addTag({ name: tag.name, content: tag.content }, false);
         appliedTags.push(tag);
       }
     }
