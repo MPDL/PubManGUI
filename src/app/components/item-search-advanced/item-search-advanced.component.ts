@@ -57,8 +57,7 @@ import {MessageService} from "../../services/message.service";
     AddRemoveButtonsComponent,
     ConeAutosuggestComponent,
     BootstrapValidationDirective,
-    ValidationErrorComponent,
-    CopyButtonDirective
+    ValidationErrorComponent
   ],
   templateUrl: './item-search-advanced.component.html',
   encapsulation: ViewEncapsulation.None
@@ -207,8 +206,7 @@ export class ItemSearchAdvancedComponent {
 
   changeType(index: number, newType: string) {
     //console.log("Change criterion at index " + index + " to type " + newType);
-
-    const newSearchCriterion: SearchCriterion = new searchTypes[newType].handlerClass(newType, this.advancedSearchService.servicesForCriterions);
+    const newSearchCriterion: SearchCriterion = searchTypes[newType].factory(newType, this.advancedSearchService.servicesForCriterions);
     this.flexibleFields.removeAt(index);
     this.flexibleFields.insert(index, newSearchCriterion);
   }
@@ -242,7 +240,7 @@ export class ItemSearchAdvancedComponent {
     if (DisplayType.PARENTHESIS === this.searchTypes[searchCriterion.type].displayType) {
       newSearchCriterion = new TitleSearchCriterion();
     } else {
-      newSearchCriterion = new searchTypes[searchCriterion.type].handlerClass(searchCriterion.type, this.advancedSearchService.servicesForCriterions);
+      newSearchCriterion = searchTypes[searchCriterion.type].factory(searchCriterion.type, this.advancedSearchService.servicesForCriterions);
     }
 
     newSearchCriterion.level = searchCriterion.level;

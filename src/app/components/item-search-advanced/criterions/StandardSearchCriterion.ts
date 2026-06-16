@@ -37,7 +37,7 @@ export abstract class StandardSearchCriterion extends SearchCriterion {
 }
 
 export class TitleSearchCriterion extends StandardSearchCriterion {
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("title", opts);
   }
 
@@ -49,7 +49,7 @@ export class TitleSearchCriterion extends StandardSearchCriterion {
 
 export class KeywordSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("keyword", opts);
   }
 
@@ -61,7 +61,7 @@ export class KeywordSearchCriterion extends StandardSearchCriterion {
 
 export class ClassificationSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("classification", opts);
     this.content.addControl("classificationType", new FormControl(SubjectClassification.DDC.valueOf()));
   }
@@ -98,7 +98,7 @@ export class ClassificationSearchCriterion extends StandardSearchCriterion {
 export class IdentifierSearchCriterion extends StandardSearchCriterion {
 
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("identifier", opts);
     this.content.addControl("identifierType", new FormControl(''));
   }
@@ -158,7 +158,7 @@ export class CollectionSearchCriterion extends StandardSearchCriterion {
 
   private contextsService: ContextsService;
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("collection", opts);
     this.contextsService = opts.contextsService;
 
@@ -180,7 +180,7 @@ export class CollectionSearchCriterion extends StandardSearchCriterion {
 
 export class AnyFieldSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("anyField", opts);
   }
 
@@ -228,7 +228,7 @@ export class FulltextSearchCriterion extends StandardSearchCriterion {
 
 export class AnyFieldAndFulltextSearchCriterion extends FulltextSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("anyFieldAndFulltext", opts);
   }
 
@@ -249,7 +249,7 @@ export class AnyFieldAndFulltextSearchCriterion extends FulltextSearchCriterion 
 
 export class ComponentContentCategorySearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("componentContentCategory", opts);
   }
 
@@ -268,7 +268,7 @@ export class ComponentContentCategorySearchCriterion extends StandardSearchCrite
 
 export class ComponentVisibilitySearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("componentVisibility",opts);
   }
 
@@ -283,7 +283,7 @@ export class ComponentVisibilitySearchCriterion extends StandardSearchCriterion 
 
 export class DegreeSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("degree", opts);
   }
 
@@ -294,7 +294,7 @@ export class DegreeSearchCriterion extends StandardSearchCriterion {
 
 export class EventTitleSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("eventTitle", opts);
   }
 
@@ -305,7 +305,7 @@ export class EventTitleSearchCriterion extends StandardSearchCriterion {
 
 export class JournalSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("journal", opts);
   }
 
@@ -328,7 +328,7 @@ export class JournalSearchCriterion extends StandardSearchCriterion {
 
 export class LanguageSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("language", opts);
   }
 
@@ -339,7 +339,7 @@ export class LanguageSearchCriterion extends StandardSearchCriterion {
 
 export class LocalTagSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("localTag", opts);
   }
 
@@ -350,7 +350,7 @@ export class LocalTagSearchCriterion extends StandardSearchCriterion {
 
 export class OrcidSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("orcid", opts);
   }
 
@@ -362,7 +362,7 @@ export class OrcidSearchCriterion extends StandardSearchCriterion {
 
 export class ProjectInfoSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("projectInfo", opts);
   }
 
@@ -376,7 +376,7 @@ export class ProjectInfoSearchCriterion extends StandardSearchCriterion {
 
 export class SourceSearchCriterion extends StandardSearchCriterion {
 
-  constructor(type?: string, opts?:any) {
+  constructor(opts?:any) {
     super("source", opts);
   }
 

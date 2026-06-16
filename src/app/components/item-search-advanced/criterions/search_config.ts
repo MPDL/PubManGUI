@@ -47,8 +47,9 @@ export interface searchTypesI {
 }
 
 export interface searchTypeI {
-  displayType?: DisplayType;
-  handlerClass?: any;
+  displayType: DisplayType;
+  handlerClass: any;
+  factory: (type: string, opts: any) => any;
 }
 
 
@@ -58,155 +59,193 @@ export interface searchTypeI {
 export const searchTypes : searchTypesI = {
   title: {
     displayType: DisplayType.STANDARD,
-    handlerClass: TitleSearchCriterion
+    handlerClass: TitleSearchCriterion,
+    factory: (type, opts) => new TitleSearchCriterion(opts)
   },
   keyword: {
     displayType: DisplayType.STANDARD,
-    handlerClass: KeywordSearchCriterion
+    handlerClass: KeywordSearchCriterion,
+    factory: (type, opts) => new KeywordSearchCriterion(opts)
   },
   person: {
     displayType: DisplayType.PERSON,
-    handlerClass: PersonSearchCriterion
+    handlerClass: PersonSearchCriterion,
+    factory: (type, opts) => new PersonSearchCriterion(opts)
   },
   organization: {
     displayType: DisplayType.ORGANIZATION,
-    handlerClass: OrganizationSearchCriterion
+    handlerClass: OrganizationSearchCriterion,
+    factory: (type, opts) => new OrganizationSearchCriterion(opts)
   },
   classification: {
     displayType: DisplayType.CLASSIFICATION,
-    handlerClass: ClassificationSearchCriterion
+    handlerClass: ClassificationSearchCriterion,
+    factory: (type, opts) => new ClassificationSearchCriterion(opts)
   },
   anyField: {
     displayType: DisplayType.STANDARD,
-    handlerClass: AnyFieldSearchCriterion
+    handlerClass: AnyFieldSearchCriterion,
+    factory: (type, opts) => new AnyFieldSearchCriterion(opts)
   },
   fulltext: {
     displayType: DisplayType.STANDARD,
-    handlerClass: FulltextSearchCriterion
+    handlerClass: FulltextSearchCriterion,
+    factory: (type, opts) => new FulltextSearchCriterion(type, opts)
   },
   orcid: {
     displayType: DisplayType.STANDARD,
-    handlerClass: OrcidSearchCriterion
+    handlerClass: OrcidSearchCriterion,
+    factory: (type, opts) => new OrcidSearchCriterion(opts)
   },
   language: {
     displayType: DisplayType.LANGUAGE,
-    handlerClass: LanguageSearchCriterion
+    handlerClass: LanguageSearchCriterion,
+    factory: (type, opts) => new LanguageSearchCriterion(opts)
   },
   eventTitle: {
     displayType: DisplayType.STANDARD,
-    handlerClass: EventTitleSearchCriterion
+    handlerClass: EventTitleSearchCriterion,
+    factory: (type, opts) => new EventTitleSearchCriterion(opts)
   },
   source: {
     displayType: DisplayType.STANDARD,
-    handlerClass: SourceSearchCriterion
+    handlerClass: SourceSearchCriterion,
+    factory: (type, opts) => new SourceSearchCriterion(opts)
   },
   journal: {
     displayType: DisplayType.JOURNAL,
-    handlerClass: JournalSearchCriterion
+    handlerClass: JournalSearchCriterion,
+    factory: (type, opts) => new JournalSearchCriterion(opts)
   },
   localTag: {
     displayType: DisplayType.STANDARD,
-    handlerClass: LocalTagSearchCriterion
+    handlerClass: LocalTagSearchCriterion,
+    factory: (type, opts) => new LocalTagSearchCriterion(opts)
   },
   identifier: {
     displayType: DisplayType.IDENTIFIER,
-    handlerClass: IdentifierSearchCriterion
+    handlerClass: IdentifierSearchCriterion,
+    factory: (type, opts) => new IdentifierSearchCriterion(opts)
   },
   collection: {
     displayType: DisplayType.CONTEXT,
-    handlerClass: CollectionSearchCriterion
+    handlerClass: CollectionSearchCriterion,
+    factory: (type, opts) => new CollectionSearchCriterion(opts)
   },
   projectInfo: {
     displayType: DisplayType.STANDARD,
-    handlerClass: ProjectInfoSearchCriterion
+    handlerClass: ProjectInfoSearchCriterion,
+    factory: (type, opts) => new ProjectInfoSearchCriterion(opts)
   },
   [DATE_SEARCH_TYPES.ANYDATE]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.PUBLISHED]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.PUBLISHEDPRINT]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.ACCEPTED]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.SUBMITTED]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.MODIFIED]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.CREATED]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.EVENT_STARTDATE]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.EVENT_ENDDATE]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.CREATED_INTERNAL]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.MODIFIED_INTERNAL]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   [DATE_SEARCH_TYPES.COMPONENT_EMBARGO_DATE]: {
     displayType: DisplayType.DATE,
-    handlerClass: DateSearchCriterion
+    handlerClass: DateSearchCriterion,
+    factory: (type, opts) => new DateSearchCriterion(type, opts)
   },
   modifiedBy: {
     displayType: DisplayType.STANDARD,
-    handlerClass: ModifiedBySearchCriterion
+    handlerClass: ModifiedBySearchCriterion,
+    factory: (type, opts) => new ModifiedBySearchCriterion(opts)
   },
   createdBy: {
     displayType: DisplayType.STANDARD,
-    handlerClass: CreatedBySearchCriterion
+    handlerClass: CreatedBySearchCriterion,
+    factory: (type, opts) => new CreatedBySearchCriterion(opts)
   },
   reviewMethod: {
     displayType: DisplayType.ENUM,
-    handlerClass: ReviewMethodSearchCriterion
+    handlerClass: ReviewMethodSearchCriterion,
+    factory: (type, opts) => new ReviewMethodSearchCriterion(opts)
   },
   genre: {
     displayType: DisplayType.ENUM,
-    handlerClass: GenreSearchCriterion
+    handlerClass: GenreSearchCriterion,
+    factory: (type, opts) => new GenreSearchCriterion(opts)
   },
   state: {
     displayType: DisplayType.ENUM,
-    handlerClass: StateSearchCriterion
+    handlerClass: StateSearchCriterion,
+    factory: (type, opts) => new StateSearchCriterion(opts)
   },
   and: {
     displayType: DisplayType.OPERATOR,
-    handlerClass: LogicalOperator
+    handlerClass: LogicalOperator,
+    factory: (type, opts) => new LogicalOperator(type, opts)
   },
   or: {
     displayType: DisplayType.OPERATOR,
-    handlerClass: LogicalOperator
+    handlerClass: LogicalOperator,
+    factory: (type, opts) => new LogicalOperator(type, opts)
   },
   not: {
     displayType: DisplayType.OPERATOR,
-    handlerClass: LogicalOperator
+    handlerClass: LogicalOperator,
+    factory: (type, opts) => new LogicalOperator(type, opts)
   },
   opening_parenthesis: {
     displayType: DisplayType.PARENTHESIS,
-    handlerClass: Parenthesis
+    handlerClass: Parenthesis,
+    factory: (type, opts) => new Parenthesis(type, opts)
   },
   closing_parenthesis: {
     displayType: DisplayType.PARENTHESIS,
-    handlerClass: Parenthesis
+    handlerClass: Parenthesis,
+    factory: (type, opts) => new Parenthesis(type, opts)
   }
 
 

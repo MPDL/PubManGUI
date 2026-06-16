@@ -390,7 +390,7 @@ export class ItemSearchAdvancedService {
         flexibleFields.clear();
         //Recreate flexible search criterions and patch form values
         for (let currentField of (value as any[])) {
-          const newSearchCriterion: SearchCriterion = new searchTypes[currentField.type].handlerClass(currentField.type, this.servicesForCriterions);
+          const newSearchCriterion = searchTypes[currentField.type].factory(currentField.type, this.servicesForCriterions);
           newSearchCriterion.patchValue(currentField);
           flexibleFields.push(newSearchCriterion);
         }
