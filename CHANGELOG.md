@@ -1,3 +1,65 @@
+# [1.1.0](https://github.com/MPDL/PubManGUI/compare/1.0.9...1.1.0) (2026-06-16)
+
+
+### Bug Fixes
+
+* [INGUI-264] Optimize batch log detail list by limiting backend calls ([0820d28](https://github.com/MPDL/PubManGUI/commit/0820d28c42890793120d25c590b16e4b009c2bde))
+* [INGUI-322] - Author autosuggest adds additional space ([97dd48a](https://github.com/MPDL/PubManGUI/commit/97dd48a238ebe590a7cdf9f31a8b58d1c9dfc6bf))
+* [INGUI-326] - Change symbols for drag and drop of source creators ([88b0faf](https://github.com/MPDL/PubManGUI/commit/88b0faf256b15fa9649779e70d39e23451161909))
+* disable global error display for item creator and modifier retrieval ([e2e2aaa](https://github.com/MPDL/PubManGUI/commit/e2e2aaa45aff00648a48e7f01a0698d7224d3162))
+* enhance source meta tag generation to handle multiple sources ([924a5e1](https://github.com/MPDL/PubManGUI/commit/924a5e16c7a11043877427cf285321cda7d6f13f))
+* improve publication date extraction for meta tags ([259ebca](https://github.com/MPDL/PubManGUI/commit/259ebca13482d5608f06687541b623fe4f62b63b))
+* refine meta tag handling and add description tag in item view component ([5ffd11a](https://github.com/MPDL/PubManGUI/commit/5ffd11a75da1286b2a19db2872fe1bf6c06b20e2))
+* refine meta tag logic for DC and Highwire Press tags ([6cb919a](https://github.com/MPDL/PubManGUI/commit/6cb919a72400d8b031eb0a17e1274cdce7f2ce3f))
+* remove meta tags when leaving item view component ([9d522f4](https://github.com/MPDL/PubManGUI/commit/9d522f4f16ec1f930d4a3f95f8f80a711f319831))
+* trust all x-forwarded-* headers ([d736fdc](https://github.com/MPDL/PubManGUI/commit/d736fdc0015af35b222cc2f8aaebc1c187add85c))
+* Trust proxy enabled ([7e364c6](https://github.com/MPDL/PubManGUI/commit/7e364c6f2f1ebc3707a0ccb642602e27561da49a))
+* trustedProxyHeaders allowed for all X-Forwarded-* Headers ([2e73570](https://github.com/MPDL/PubManGUI/commit/2e73570feceaab65ec6e7f107acffe87d96eaf8d))
+* update routes and links to use root path instead of /home ([b3b7ee2](https://github.com/MPDL/PubManGUI/commit/b3b7ee22b0dad07ea7603aa130e84f7ffb6e5ce0))
+* use full URL for internal  meta tags ([262c669](https://github.com/MPDL/PubManGUI/commit/262c66907fcedcc8385a94217bb8a198250c1d47))
+
+
+### Features
+
+* [INGUI-328] - More paths should be rendered in SSR ([9ed46c4](https://github.com/MPDL/PubManGUI/commit/9ed46c49b2cec8028d90aa32c781b1755aafe1b6))
+* add `aria-label` attributes to improve accessibility across components ([8b47646](https://github.com/MPDL/PubManGUI/commit/8b476469f181cf80afa24d9d029cf1c143e79bb3))
+
+
+### Performance Improvements
+
+* add defer to news section rendering for improved performance ([829adbe](https://github.com/MPDL/PubManGUI/commit/829adbe49c690454b7a66e71d6a1fa1feea91d80))
+
+# [1.1.0](https://github.com/MPDL/PubManGUI/compare/1.0.9...1.1.0) (2026-06-16)
+
+
+### Bug Fixes
+
+* [INGUI-264] Optimize batch log detail list by limiting backend calls ([0820d28](https://github.com/MPDL/PubManGUI/commit/0820d28c42890793120d25c590b16e4b009c2bde))
+* [INGUI-322] - Author autosuggest adds additional space ([97dd48a](https://github.com/MPDL/PubManGUI/commit/97dd48a238ebe590a7cdf9f31a8b58d1c9dfc6bf))
+* [INGUI-326] - Change symbols for drag and drop of source creators ([88b0faf](https://github.com/MPDL/PubManGUI/commit/88b0faf256b15fa9649779e70d39e23451161909))
+* disable global error display for item creator and modifier retrieval ([e2e2aaa](https://github.com/MPDL/PubManGUI/commit/e2e2aaa45aff00648a48e7f01a0698d7224d3162))
+* enhance source meta tag generation to handle multiple sources ([924a5e1](https://github.com/MPDL/PubManGUI/commit/924a5e16c7a11043877427cf285321cda7d6f13f))
+* improve publication date extraction for meta tags ([259ebca](https://github.com/MPDL/PubManGUI/commit/259ebca13482d5608f06687541b623fe4f62b63b))
+* refine meta tag handling and add description tag in item view component ([5ffd11a](https://github.com/MPDL/PubManGUI/commit/5ffd11a75da1286b2a19db2872fe1bf6c06b20e2))
+* refine meta tag logic for DC and Highwire Press tags ([6cb919a](https://github.com/MPDL/PubManGUI/commit/6cb919a72400d8b031eb0a17e1274cdce7f2ce3f))
+* remove meta tags when leaving item view component ([9d522f4](https://github.com/MPDL/PubManGUI/commit/9d522f4f16ec1f930d4a3f95f8f80a711f319831))
+* trust all x-forwarded-* headers ([d736fdc](https://github.com/MPDL/PubManGUI/commit/d736fdc0015af35b222cc2f8aaebc1c187add85c))
+* Trust proxy enabled ([7e364c6](https://github.com/MPDL/PubManGUI/commit/7e364c6f2f1ebc3707a0ccb642602e27561da49a))
+* trustedProxyHeaders allowed for all X-Forwarded-* Headers ([2e73570](https://github.com/MPDL/PubManGUI/commit/2e73570feceaab65ec6e7f107acffe87d96eaf8d))
+* update routes and links to use root path instead of /home ([b3b7ee2](https://github.com/MPDL/PubManGUI/commit/b3b7ee22b0dad07ea7603aa130e84f7ffb6e5ce0))
+* use full URL for internal  meta tags ([262c669](https://github.com/MPDL/PubManGUI/commit/262c66907fcedcc8385a94217bb8a198250c1d47))
+
+
+### Features
+
+* [INGUI-328] - More paths should be rendered in SSR ([9ed46c4](https://github.com/MPDL/PubManGUI/commit/9ed46c49b2cec8028d90aa32c781b1755aafe1b6))
+* add `aria-label` attributes to improve accessibility across components ([8b47646](https://github.com/MPDL/PubManGUI/commit/8b476469f181cf80afa24d9d029cf1c143e79bb3))
+
+
+### Performance Improvements
+
+* add defer to news section rendering for improved performance ([829adbe](https://github.com/MPDL/PubManGUI/commit/829adbe49c690454b7a66e71d6a1fa1feea91d80))
+
 ## [1.0.9](https://github.com/MPDL/PubManGUI/compare/1.0.8...1.0.9) (2026-04-21)
 
 
