@@ -164,8 +164,8 @@ export class ItemViewComponent {
               this.initVersions(i);
 
               //Get creator and modifier
-              this.itemCreator$ = this.usersService.retrieve(i!.creator!.objectId);
-              this.itemModifier$ = this.usersService.retrieve(i!.modifier!.objectId);
+              this.itemCreator$ = this.usersService.retrieve(i!.creator!.objectId, {globalErrorDisplay: false});
+              this.itemModifier$ = this.usersService.retrieve(i!.modifier!.objectId, {globalErrorDisplay: false});
 
               //retrieve authorization information for item (for relase, submit, etc...)
               this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i))
