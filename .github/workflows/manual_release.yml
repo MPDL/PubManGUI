@@ -52,27 +52,27 @@ jobs:
           # 1. Production Pure
           npm run build -- --c productive-pure
           zip -r release-productive-pure-${{ env.VERSION }}.zip dist/
-          
+
           # 2. QA Pure Dev
           npm run build -- --c qa-pure-dev
           zip -r release-qa-pure-dev-${{ env.VERSION }}.zip dist/
-          
+
           # 3. QA Pure
           npm run build -- --c qa-pure
           zip -r release-qa-pure-${{ env.VERSION }}.zip dist/
-          
+
       - name: Generate Conventional Changelog
         id: build_changelog
         run: |
           # Use npx to run the CLI without installing it into the project
           # -p conventional-changelog ensures npx uses the package directly
-          
-          # 1. Update the [CHANGELOG.md](http://_vscodecontentref_/1) file permanently
-          npx -p conventional-changelog conventional-changelog -p angular -i [CHANGELOG.md](http://_vscodecontentref_/2) -s -u ${{ env.VERSION }}
-          
+
+          # 1. Update the CHANGELOG.md file permanently
+          npx -p conventional-changelog conventional-changelog -p angular -i CHANGELOG.md -s -u ${{ env.VERSION }}
+
           # 2. Generate ONLY the delta for the GitHub Release Body
           npx -p conventional-changelog conventional-changelog -p angular -r 1 -u ${{ env.VERSION }} > release_notes.md
-          
+
           # Debug: Show what was generated
           echo "--- Generated Release Notes ---"
           cat release_notes.md
