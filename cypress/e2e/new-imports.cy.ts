@@ -38,11 +38,9 @@ describe('New Import', () => {
       // When
       //TODO: Move the select of the source behind the context selection. As soon as the Context select error is fixed
       cy.get('select[formcontrolname="source"]').select(source)
-      //FIXME: Sometimes no context can be selected! After some time it can be selected?
-      cy.get('select[data-test=fetch-context]').select(Cypress.env('testContext').name)
       //TODO: Use other test IDs?
       cy.get('input[formcontrolname="identifier"]').type(identifier)
-      cy.get('button[data-test=fetch-button]').click()
+      cy.get('[data-test=fetch-button]').click()
 
       // Then
       cy.wait('@fetch').its('response.statusCode').should('eq', 200)
@@ -77,7 +75,7 @@ describe('New Import', () => {
       cy.get('[data-test=file-upload-input]').selectFile({contents: 'cypress/fixtures/' + fileName,}, {force: true})
       cy.get('#fileName').invoke('val').should('contain', fileName)
 
-      cy.get('select[data-test=import-context]').select(Cypress.env('testContext').name)
+      cy.get('[data-test=import-context]').select(Cypress.env('testContext').name)
       cy.get('select[formControlName="format"]').select(format)
       cy.get('input[formControlName="importName"]').type('Cypress Test Import ' + new Date().toISOString())
 

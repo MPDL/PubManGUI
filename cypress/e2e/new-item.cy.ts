@@ -45,22 +45,22 @@ describe('New Item', () => {
       const genre = itemData.metadata.genre
 
       //When
-      cy.get('select[data-test="context"]').select(context)
+      cy.get('[data-test="context"]').select(context)
 
-      cy.get('select[data-test="genre"]').select(genre)
-      cy.get('textarea[data-test="title"]').type(title)
+      cy.get('[data-test="genre"]').select(genre)
+      cy.get('[data-test="title"]').type(title)
 
       cy.get('#familyName').find('input').type(familyName)
       cy.get('[data-test="add-remove-organizations"]').find('button[name="add"]').click()
       cy.get('#personOu1').find('input').type(affiliation)
 
-      cy.get('input[data-test="date-created"]').type(dateCreated)
+      cy.get('[data-test="date-created"]').type(dateCreated)
 
       cy.get('#sources-metadata').click()
       cy.get('pure-source-form #genre').select(sourceGenre)
       cy.get('#source_title').type(sourceTitle)
 
-      cy.get('button[data-test="save"]').click()
+      cy.get('[data-test="save"]').click()
 
       //Then
       cy.wait('@createItem').then((interception) => {

@@ -39,9 +39,9 @@ describe('Execute Batch Actions', () => {
   it('Change Genre', () => {
     //Given
     let newItemGenre: string = 'ARTICLE';
+    let batchLogHeaderId: string;
     window.localStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/changeGenre?*').as('changeGenre')
-    cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
     cy.visit('/batch/actions')
 
@@ -59,6 +59,11 @@ describe('Execute Batch Actions', () => {
 
       //TODO: Check the exact confirmation/empty-batch message is displayed
       cy.get('pure-notification').should('exist')
+
+      // Set an interception for the batch process log response, with the batchLogHeaderId
+      // @ts-ignore
+      batchLogHeaderId = interception.response.body.batchLogHeaderId
+      cy.intercept('GET', `/rest/batchProcess/${batchLogHeaderId}`).as('batchProcess')
     })
 
     cy.repeatedWait('@batchProcess', 'state', ['FINISHED', 'FINISHED_WITH_ERROR'], 10000, 5).then((response) => {
@@ -79,9 +84,9 @@ describe('Execute Batch Actions', () => {
   it('Add Local Tags', () => {
     //Given
     let newTag: string = 'NewTag';
+    let batchLogHeaderId: string;
     window.localStorage.setItem('batch-items', JSON.stringify(new Array(itemId)))
     cy.intercept('PUT', '/rest/batchProcess/addLocalTags').as('addLocalTags')
-    cy.intercept('GET', '/rest/batchProcess/*').as('batchProcess')
 
     cy.visit('/batch/actions')
 
@@ -98,6 +103,11 @@ describe('Execute Batch Actions', () => {
 
       //TODO: Check the exact confirmation/empty-batch message is displayed
       cy.get('pure-notification').should('exist')
+
+      // Set an interception for the batch process log response, with the batchLogHeaderId
+      // @ts-ignore
+      batchLogHeaderId = interception.response.body.batchLogHeaderId
+      cy.intercept('GET', `/rest/batchProcess/${batchLogHeaderId}`).as('batchProcess')
     })
 
     cy.repeatedWait('@batchProcess', 'state', ['FINISHED', 'FINISHED_WITH_ERROR'], 10000, 5).then((response) => {

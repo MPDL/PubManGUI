@@ -12,11 +12,11 @@ describe('Logout', () => {
     cy.visit('/')
 
     //When
-    cy.get('a[data-test="user"]').click()
-    cy.get('a[data-test="sign-out"]').click()
+    cy.get('[data-test="user"]').click()
+    cy.get('[data-test="sign-out"]').click()
 
     //Then
-    cy.get('a[data-test="user-login"]').should("be.visible").then(() => {
+    cy.get('[data-test="user-login"]').should("be.visible").then(() => {
       expect(localStorage.getItem("token")).to.be.a("null")
     })
   })
