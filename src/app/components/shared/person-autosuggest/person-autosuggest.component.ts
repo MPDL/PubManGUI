@@ -29,7 +29,6 @@ import { ConeIconComponent } from "../cone-icon/cone-icon.component";
   imports: [
     NgbTypeahead,
     ReactiveFormsModule,
-    NgbHighlight,
     CommonModule,
     TranslatePipe,
     BootstrapValidationDirective, ValidationErrorMessageDirective, ConeIconComponent

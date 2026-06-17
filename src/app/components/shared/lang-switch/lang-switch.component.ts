@@ -6,7 +6,7 @@ import { TranslateModule, TranslateService } from "@ngx-translate/core";
 @Component({
   selector: 'pure-lang-switch',
   standalone: true,
-  imports: [RouterLink, TranslateModule],
+  imports: [TranslateModule],
   templateUrl: './lang-switch.component.html'
 })
 export class LangSwitchComponent {

@@ -12,7 +12,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
     standalone: true,
-  imports: [RouterLink, NgbTooltip, TranslatePipe]
+  imports: [NgbTooltip, TranslatePipe]
 })
 export class AaComponent {
 
