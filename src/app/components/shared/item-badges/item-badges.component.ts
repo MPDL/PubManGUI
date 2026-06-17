@@ -61,6 +61,10 @@ export class ItemBadgesComponent {
       return "accepted"
     } else if (this.item?.metadata.dateSubmitted) {
       return "submitted"
+    } else if (this.item?.metadata.dateModified) {
+      return "modified"
+    } else if (this.item?.metadata.dateCreated) {
+      return "created"
     } else {
       return undefined;
     }
@@ -76,6 +80,10 @@ export class ItemBadgesComponent {
       return this.item?.metadata.dateAccepted;
     } else if (this.item?.metadata.dateSubmitted) {
       return this.item?.metadata.dateSubmitted;
+    } else if (this.item?.metadata.dateModified) {
+      return this.item?.metadata.dateModified;
+    } else if (this.item?.metadata.dateCreated) {
+      return this.item?.metadata.dateCreated;
     } else {
       return undefined;
     }

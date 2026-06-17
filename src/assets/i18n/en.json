@@ -898,7 +898,9 @@
     "not-specified": "Not specified",
     "published-in-print": "Issued",
     "published-online": "Published online",
-    "submitted": "Submitted"
+    "submitted": "Submitted",
+    "modified": "Modified",
+    "created": "Created"
   },
   "ReviewMethod": {
     "INTERNAL": "Internal",

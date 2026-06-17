@@ -898,7 +898,9 @@
     "not-specified": "Keine Angabe",
     "published-in-print": "Erschienen",
     "published-online": "Online veröffentlicht",
-    "submitted": "Eingereicht"
+    "submitted": "Eingereicht",
+    "modified": "Geändert",
+    "created": "Erstellt"
   },
   "ReviewMethod": {
     "INTERNAL": "Interne Begutachtung",
