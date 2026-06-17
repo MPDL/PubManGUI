@@ -31,14 +31,14 @@ describe('Edit Item', () => {
     const alternativeTitleValue = itemData.metadata.alternativeTitles[0].value
 
     //When
-    cy.get('textarea[data-test="title"]').clear()
-    cy.get('textarea[data-test="title"]').type(title)
+    cy.get('[data-test="title"]').clear()
+    cy.get('[data-test="title"]').type(title)
 
     cy.get('[data-test="alternativeTitles-add-remove-buttons"]').find('button[name="add"]').click({force: true})
     cy.get('select[id="alt_title_type"]').select('5: ' + alternativeTitleType)
     cy.get('input[id="alt_title_value"]').type(alternativeTitleValue)
 
-    cy.get('button[data-test="save"]').click()
+    cy.get('[data-test="save"]').click()
 
     //Then
     cy.wait('@editItem').then((interception) => {
