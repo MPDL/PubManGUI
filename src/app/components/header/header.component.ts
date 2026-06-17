@@ -65,6 +65,15 @@ export class HeaderComponent {
     location.reload();
   }
 
+  get singleIPAdress() {
+    const ip= this.aa.principal.value.ipAddress;
+    if(ip?.includes(',')) {
+      return ip.split(',')[0];
+    } else {
+      return ip;
+    }
+  }
+
   @HostListener('window:scroll')
   onWindowScroll() {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
