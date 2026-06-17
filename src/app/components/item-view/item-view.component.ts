@@ -354,7 +354,7 @@ export class ItemViewComponent {
   get firstSubtitle() {
     return this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.SUBTITLE) ||
     this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.OTHER) ||
-      this.item?.metadata?.alternativeTitles?.at(0);
+      this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.ABBREVIATION);
   }
 
   get isModeratorOrDepositor() {
