@@ -16,7 +16,7 @@ import { AsyncPipe, DatePipe, isPlatformBrowser, isPlatformServer, NgOptimizedIm
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
-import { catchError, finalize, forkJoin, map, Observable, tap, throwError, timer } from "rxjs";
+import {catchError, finalize, forkJoin, map, Observable, Subject, takeUntil, tap, throwError, timer} from "rxjs";
 import {
   ItemViewMetadataElementComponent
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
@@ -46,6 +46,7 @@ import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 import { MatomoTracker } from "ngx-matomo-client";
 import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
 import { MetaTagsTransformerService } from 'src/app/services/meta-tags-transformer.service';
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'pure-item-view',
@@ -57,7 +58,6 @@ import { MetaTagsTransformerService } from 'src/app/services/meta-tags-transform
     ItemViewMetadataComponent,
     ItemViewMetadataElementComponent,
     AsyncPipe,
-    NgOptimizedImage,
     SanitizeHtmlPipe,
     ItemViewFileComponent,
     NotEmptyPipe,
@@ -104,6 +104,8 @@ export class ItemViewComponent {
 
   errorMessages: string[] = [];
 
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
   private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService) {
@@ -114,12 +116,26 @@ export class ItemViewComponent {
 
   ngOnInit()
   {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id')
-      if(id) {
+    this.route.paramMap.pipe(
+      takeUntil(this.destroy$),
+      tap(params => {
+        const id = params.get('id')
+        if(id) {
           this.init(id);
-      }
-    })
+        }
+      })
+    ).subscribe();
+
+    //Update item after login
+    this.aaService.logout$.pipe(
+      takeUntil(this.destroy$),
+      filter(logoutStatus => logoutStatus === false),
+      tap(logoutStatus => {
+        if(this.item) {
+          this.init(itemToVersionId(this.item!))
+        }
+      })
+    ).subscribe()
 
     if (isPlatformBrowser(this.platformId)) {
       const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
@@ -228,6 +244,8 @@ export class ItemViewComponent {
   ngOnDestroy() {
     //Remove meta tags from DOM
     this.removeMetaTags();
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   initVersions(i: ItemVersionVO) {

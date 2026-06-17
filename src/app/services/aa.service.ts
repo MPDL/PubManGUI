@@ -8,7 +8,7 @@ import {
   forkJoin,
   map,
   Observable,
-  of,
+  of, Subject,
   switchMap,
   tap,
   throwError
@@ -58,7 +58,7 @@ export class AaService {
   private logoutUrl = environment.inge_rest_uri.concat('/logout');
 
   principal: BehaviorSubject<Principal>;
-  logout$ = new BehaviorSubject(false);
+  logout$ = new Subject<boolean>();
 
 
   constructor(
