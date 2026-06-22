@@ -292,6 +292,7 @@
   },
   "chips.localTags.placeholder": "Lokalen Tag hinzufügen",
   "common": {
+    "action": "Aktion",
     "actions": "Aktionen",
     "actionWarning": "Diese Aktion ist nicht umkehrbar. Sind sie sicher?",
     "add": "Hinzufügen",

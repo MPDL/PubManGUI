@@ -292,6 +292,7 @@
   },
   "chips.localTags.placeholder": "Add local tag",
   "common": {
+    "action": "Action",
     "actions": "Actions",
     "actionWarning": "This action is irreversible. Are you sure?",
     "add": "Add",
