@@ -5,6 +5,7 @@ export const environment = {
   inge_rest_uri: "/rest",
   inge_uri: "",
   pure_blog_feed_url: "https://blog.pure.mpg.de/json1",
+  trustedProxies: "loopback",
   matomo_enabled: false,
   matomo_site_url: "",
   matomo_site_id: ""
