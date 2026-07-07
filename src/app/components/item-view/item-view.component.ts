@@ -12,7 +12,7 @@ import {
 } from "../../model/inge";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { TopnavComponent } from "../shared/topnav/topnav.component";
-import { AsyncPipe, DatePipe, isPlatformBrowser, isPlatformServer, NgOptimizedImage, ViewportScroller } from "@angular/common";
+import { AsyncPipe, DatePipe, isPlatformBrowser, isPlatformServer, NgOptimizedImage, ViewportScroller, Location } from "@angular/common";
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
@@ -108,7 +108,7 @@ export class ItemViewComponent {
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
   private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
-  private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService) {
+  private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService, private location: Location) {
 
   }
 
@@ -418,7 +418,7 @@ export class ItemViewComponent {
       if(type !== 'delete') {
         this.init(this.item?.objectId!)
       }
-      else {this.router.navigate(['/my']);
+      else { this.location.back();
       }
 
     })
