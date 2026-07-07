@@ -18,6 +18,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
 import { ValidationErrorComponent } from "../validation-error/validation-error.component";
 import { MatomoTracker } from "ngx-matomo-client";
 import { SanitizeHtmlCitationPipe } from "../../../pipes/sanitize-html-citation.pipe";
+import {SearchStateService} from "src/app/components/search-result-list/search-state.service";
 
 
 @Component({
@@ -44,6 +45,8 @@ export class ExportItemsComponent {
 
   @Input() sortQuery: any;
   @Input() completeQuery: any;
+  @Input() queryOnly: any;
+  @Input() displayQueries:boolean = false;
   @Input() type: 'exportSelected' | 'exportAll' | 'exportSingle' = 'exportSelected';
   //@ViewChildren(CslAutosuggestComponent) cslAutosuggestComponent!: CslAutosuggestComponent;
 
@@ -70,7 +73,11 @@ export class ExportItemsComponent {
 
   protected atomFeedUrl = "";
 
-  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService, formBuilder: FormBuilder, private messageService: MessageService, private matomoTracker: MatomoTracker) {
+  protected curlUrl = "";
+  protected completeQueryAsJson = "";
+  protected queryOnlyAsJson = "";
+
+  constructor(private itemService: ItemsService, protected activeModal: NgbActiveModal, private selectionService: ItemSelectionService, formBuilder: FormBuilder, private messageService: MessageService, private matomoTracker: MatomoTracker, protected searchStateService: SearchStateService) {
 
     this.selectedExportType = formBuilder.nonNullable.control(exportTypes.ENDNOTE);
     this.selectedCitationType  = formBuilder.nonNullable.control(citationTypes.APA);
@@ -114,6 +121,9 @@ export class ExportItemsComponent {
 
 
     this.loadCitation();
+    this.curlUrl = this.createCurlUrl();
+    this.completeQueryAsJson = JSON.stringify(this.completeQuery);
+    this.queryOnlyAsJson = JSON.stringify(this.queryOnly);
   }
 
   updateStoredExportInfo() {
@@ -303,7 +313,7 @@ export class ExportItemsComponent {
       .subscribe()
   }
 
-  get curlUrl() {
+  createCurlUrl() {
     let url = undefined;
     if(environment.inge_rest_uri?.startsWith("http")) {
       url = new URL(environment.inge_rest_uri + "/items/search");
@@ -326,6 +336,7 @@ export class ExportItemsComponent {
     return curl;
 
   }
+
 }
 
 export interface ExportType {

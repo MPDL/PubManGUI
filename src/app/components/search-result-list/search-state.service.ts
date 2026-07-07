@@ -14,8 +14,9 @@ export class SearchStateService {
   route = inject(ActivatedRoute);
 
   $currentQuery = new BehaviorSubject<object | undefined>(undefined)
-
   type: 'simple' | 'advanced' = 'simple';
+  relasedOnly = false;
+
 
   constructor() {
     this.$currentQuery.subscribe((query) => {

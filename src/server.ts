@@ -6,10 +6,8 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
-import { environment } from 'src/environments/environment';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
-const trustedProxies = environment.trustedProxies.trim().split(',');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine(
@@ -24,9 +22,6 @@ const angularApp = new AngularNodeAppEngine(
     ] // Trust all X-Forwarded-* headers
   }
 );
-
-console.log(`Trusted proxies: ${trustedProxies.join(', ')}`);
-app.set('trust proxy', [...trustedProxies]); // Trust environment-defined proxies
 
 /**
  * Example Express Rest API endpoints can be defined here.

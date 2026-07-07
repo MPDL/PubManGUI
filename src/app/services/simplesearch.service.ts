@@ -49,6 +49,7 @@ export class SimplesearchService {
         this.matomoTracker.trackSiteSearch(searchString, "simple");
 
         this.searchState.$currentQuery.next(query);
+        this.searchState.type = 'simple';
         //sessionStorage.setItem('currentQuery', JSON.stringify(query));
         this.router.navigateByUrl('/search');
       }

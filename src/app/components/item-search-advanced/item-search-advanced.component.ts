@@ -351,6 +351,7 @@ export class ItemSearchAdvancedComponent {
       .subscribe(query => {
         this.matomoTracker.trackSiteSearch("ADVANCED_SEARCH", "advanced")
         this.searchStateService.type="advanced";
+        this.searchStateService.relasedOnly = this.onlyReleasedSelected;
         this.searchStateService.$currentQuery.next(query);
         this.router.navigateByUrl('/search')
       });
@@ -452,6 +453,10 @@ export class ItemSearchAdvancedComponent {
       .map(key => this.contextListSearchCriterion.contextListFormGroup.get(key)?.value)
       .includes(true);
 
+    return (!anyContextSelected) && this.onlyReleasedSelected;
+  }
+
+  get onlyReleasedSelected() {
     const onlyReleasedSelected =
       this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.PENDING.valueOf())?.value == false &&
       this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.SUBMITTED.valueOf())?.value == false &&
@@ -459,7 +464,7 @@ export class ItemSearchAdvancedComponent {
       this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.IN_REVISION.valueOf())?.value == false
     //this.itemStateListSearchCriterion.publicationStatesFormGroup.get(ItemVersionState.WITHDRAWN.valueOf())?.value == false;
 
-    return (!anyContextSelected) && onlyReleasedSelected;
+    return onlyReleasedSelected;
   }
 
   get isValid() {

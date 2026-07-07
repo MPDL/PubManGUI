@@ -328,6 +328,7 @@ export class ItemListComponent implements AfterViewInit{
     const queryWithoutAggs = this.currentCompleteQuery;
     delete queryWithoutAggs.aggs;
     comp.completeQuery = queryWithoutAggs;
+
   }
 
   openExportAllModal() {
@@ -337,6 +338,8 @@ export class ItemListComponent implements AfterViewInit{
     const queryWithoutAggs = this.currentCompleteQuery;
     delete queryWithoutAggs.aggs;
     comp.completeQuery = queryWithoutAggs;
+    comp.queryOnly = this.currentQuery;
+    comp.displayQueries = this.searchResultType;
     if(this.listStateService.currentResultList.at(0)) {
       const item = this.listStateService.currentResultList.at(0)!;
       comp.itemIds = [itemToVersionId(item)];
