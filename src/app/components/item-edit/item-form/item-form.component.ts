@@ -103,6 +103,14 @@ export class ItemFormComponent implements OnInit {
   allValidationErrorSubscription?: Subscription;
   allValidationErrors: any[] = [];
   protected saveInProgress: boolean = false;
+  protected submitAction: 'save' | 'save_to_view' | 'submit' | 'release' = 'save';
+
+  preventEnterSubmit(event: any): void {
+    const target = event.target as HTMLElement;
+    if (target.tagName !== 'TEXTAREA' && target.tagName !== 'BUTTON' && target.tagName !== 'A') {
+      event.preventDefault();
+    }
+  }
 
   ngOnInit(): void {
     this.user_contexts = this.aaService.principal.value.depositorContexts.filter(ctx => ctx.state === ContextState.OPENED)

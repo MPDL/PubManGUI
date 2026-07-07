@@ -3,7 +3,7 @@ aaService.principal.getValue().isAdmin)
 {
 <pure-item-badges [item]="item" [showVersion]="true" [showMetadata]="false"></pure-item-badges>
 <div class="container-fluid">
-  <form [formGroup]="form">
+  <form [formGroup]="form" (ngSubmit)="submit(submitAction)" (keydown.enter)="preventEnterSubmit($event)">
     <!-- context selection only for new items -->
     <div class="d-sm-flex flex-sm-row gap-1 mb-3 mt-2 px-3 align-items-center" formGroupName="context">
       @if(isNewItem) {
@@ -192,7 +192,7 @@ aaService.principal.getValue().isAdmin)
     <div class="d-sm-flex flex-sm-row mb-3 px-3 justify-content-end">
       <div class="col-auto">
         <div class="btn-group me-3">
-          <button type="button" id="save" class="btn btn-primary" value="save" data-test="save" (click)="submit('save')"
+          <button type="submit" id="save" class="btn btn-primary" value="save" data-test="save" (click)="submitAction = 'save'"
             [disabled]="!validForSave || saveInProgress">
             @if(saveInProgress) {
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -204,23 +204,23 @@ aaService.principal.getValue().isAdmin)
             <span class="visually-hidden">Toggle Dropdown</span>
           </button>
           <ul class="dropdown-menu">
-            <li><button type="button" class="dropdown-item" value="save" (click)="submit('save')">{{'common.save' |
+            <li><button type="submit" class="dropdown-item" value="save" (click)="submitAction = 'save'">{{'common.save' |
                 translate}}</button></li>
-            <li><button type="button" class="dropdown-item" value="save_to_view"
-                (click)="submit('save_to_view')">{{'common.saveToView' |
+            <li><button type="submit" class="dropdown-item" value="save_to_view"
+                (click)="submitAction = 'save_to_view'">{{'common.saveToView' |
                 translate}}</button></li>
           </ul>
         </div>
 
 
         @if (authorizationInfo && authorizationInfo.actions['SUBMIT']) {
-        <button class="btn btn-primary me-3" id="submit" type="button" value="submit" (click)="submit('submit')"
+        <button class="btn btn-primary me-3" id="submit" type="submit" value="submit" (click)="submitAction = 'submit'"
           [disabled]="!allValid || saveInProgress">
           {{'ItemActions.submit' | translate}}
         </button>
         }
         @if (authorizationInfo && authorizationInfo.actions['RELEASE']) {
-        <button class="btn btn-primary" id="release" type="button" value="release" (click)="submit('release')"
+        <button class="btn btn-primary" id="release" type="submit" value="release" (click)="submitAction = 'release'"
           [disabled]="!allValid || saveInProgress">
           {{'ItemActions.release' | translate}}
         </button>
