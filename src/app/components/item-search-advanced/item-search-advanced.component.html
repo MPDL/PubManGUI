@@ -2,7 +2,7 @@
 
 
 <div class="accordion">
-  <form [formGroup]="searchForm" (ngSubmit)="search()">
+  <form [formGroup]="searchForm" (ngSubmit)="search()" (keydown.enter)="preventEnterSubmit($event)">
 
 
     @if(aaService.isLoggedIn) {
@@ -208,12 +208,12 @@
             } @else if (searchTypes[$any(currentFormGroup).type]['displayType'] == DisplayType.DATE) {
 
             <div class="col mb-auto" formGroupName="content">
-              <input class="form-control" type="text" formControlName="from"
+              <input class="form-control" type="text" formControlName="from" name="from"
                 [placeholder]="'common.dateFormat' | translate" />
               <pure-validation-error [control]="currentFormGroup.get('content.from')" />
             </div>
             <div class="col mb-auto" formGroupName="content">
-              <input class="form-control" type="text" formControlName="to"
+              <input class="form-control" type="text" formControlName="to" name="to"
                 [placeholder]="'common.dateFormat' | translate" />
               <pure-validation-error [control]="currentFormGroup.get('content.to')" />
             </div>
