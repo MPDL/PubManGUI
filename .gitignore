@@ -20,6 +20,7 @@ yarn-error.log
 .idea/
 .project
 .classpath
+.junie/
 .c9/
 *.launch
 .settings/
