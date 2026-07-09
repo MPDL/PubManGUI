@@ -67,7 +67,9 @@
                 "maximumError": "4mb"
               }
             ],
-            "outputHashing": "all",
+            "outputHashing": "all"
+            //Uncomment the following lines to enable SSR (Server Side Rendering)
+            /*
             "outputMode": "server",
             "server": "src/main.server.ts",
             "security": {
@@ -76,6 +78,7 @@
             "ssr": {
               "entry": "src/server.ts"
             }
+            */
           },
           "configurations": {
             "production": {
