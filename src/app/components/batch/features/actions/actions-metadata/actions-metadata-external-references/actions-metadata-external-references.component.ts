@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   ChangeExternalReferenceContentCategoryFormComponent
 } from './change-external-reference-content-category-form/change-external-reference-content-category-form.component'
@@ -10,6 +10,7 @@ import {
   imports: [
     ChangeExternalReferenceContentCategoryFormComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions-metadata-external-references.component.html',
 })
 export class ActionsMetadataExternalReferencesComponent { }

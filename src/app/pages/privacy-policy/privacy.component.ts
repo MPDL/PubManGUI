@@ -11,6 +11,7 @@ import { MatomoOptOutDirective } from "./matomo-opt-out.directive";
     MatomoOptOutDirective,
     ReactiveFormsModule
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './en/privacy.en.component.html'
 })
 export class en {
@@ -22,6 +23,7 @@ export class en {
     MatomoOptOutDirective,
     FormsModule
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './de/privacy.de.component.html'
 })
 export class de {
@@ -42,10 +44,10 @@ export class PrivacyComponent {
 
 
   ngOnInit() {
-    this.loadContent(this.translateSvc.currentLang);
+    this.loadContent(this.translateSvc.currentLang()!);
     this.translateSvc.onLangChange.subscribe((event: LangChangeEvent) => {
       console.log(event.lang);
-      this.loadContent(this.translateSvc.currentLang);
+      this.loadContent(this.translateSvc.currentLang()!);
     });
   }
 

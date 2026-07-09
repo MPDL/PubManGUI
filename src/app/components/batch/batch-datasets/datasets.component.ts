@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { map, Observable } from "rxjs";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -21,6 +21,7 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     TranslatePipe,
     NgbTooltip
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './datasets.component.html'
 })
 export default class DatasetsComponent {

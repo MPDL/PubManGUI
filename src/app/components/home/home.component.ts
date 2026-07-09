@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
 import { catchError, map, Observable, of } from "rxjs";
 import { ItemVersionVO } from "../../model/inge";
@@ -23,6 +23,7 @@ import {DISPLAY_ERROR} from "src/app/services/interceptors/http-context-tokens";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     AsyncPipe,
     DecimalPipe,

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
@@ -10,6 +10,7 @@ import { TranslatePipe, TranslateService } from "@ngx-translate/core";
     ReactiveFormsModule,
     TranslatePipe,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './add-multiple-creators-modal.component.html'
 })
 export class AddMultipleCreatorsModalComponent {

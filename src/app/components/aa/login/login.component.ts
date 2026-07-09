@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { AaService } from "../../../services/aa.service";
@@ -17,6 +17,7 @@ import { MatomoTracker } from "ngx-matomo-client";
     selector: 'pure-login',
     templateUrl: './login.component.html',
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, ReactiveFormsModule, ValidationErrorComponent, ChangePasswordComponent, BootstrapValidationDirective, NotificationComponent, TranslatePipe]
 })
 export class LoginComponent implements OnInit {

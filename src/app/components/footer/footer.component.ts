@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslatePipe } from "@ngx-translate/core";
 import { version } from "../../../../package.json"
 
@@ -6,6 +6,7 @@ import { version } from "../../../../package.json"
   selector: 'pure-footer',
   templateUrl: './footer.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslatePipe]
 })
 export class FooterComponent {

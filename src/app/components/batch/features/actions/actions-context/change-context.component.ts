@@ -1,5 +1,5 @@
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,6 +25,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     TranslatePipe,
     ValidationErrorComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './change-context.component.html',
 })
 export class ActionsContextComponent implements OnInit {

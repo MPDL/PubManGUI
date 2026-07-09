@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { MessageService } from "../../../../services/message.service";
 import { CartService } from "../../../../services/cart.service";
@@ -17,6 +17,7 @@ import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
   host: {
     style: "display: contents"
   },
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './topnav-cart.component.html',
   //styleUrl: './topnav-cart.component.scss'
 })

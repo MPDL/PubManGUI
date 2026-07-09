@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import {
     ItemViewMetadataElementComponent
 } from "../../item-view/item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
@@ -23,6 +23,7 @@ import {NotEmptyPipe} from "../../../pipes/notEmpty.pipe";
     NotEmptyPipe
   ],
   templateUrl: './ou-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ou-modal.component.scss'
 })
 export class OuModalComponent {

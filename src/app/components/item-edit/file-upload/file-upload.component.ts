@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { FileUploadDirective } from 'src/app/directives/file-upload.directive';
 import { FileStagingService } from 'src/app/services/pubman-rest-client/file-staging.service';
@@ -11,6 +11,7 @@ import { filter, map } from "rxjs/operators";
   standalone: true,
   imports: [FileUploadDirective],
   templateUrl: './file-upload.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './file-upload.component.scss'
 })
 export class FileUploadComponent {

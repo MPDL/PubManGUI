@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FilterEvent, ItemListComponent } from "../../item-list.component";
 import { ItemFilterDirective } from "../directives/item-filter.directive";
 import { DefaultKeyValuePipe } from "../../../../pipes/default-key-value.pipe";
@@ -15,6 +15,7 @@ import { FormsModule } from "@angular/forms";
     FormsModule
   ],
   templateUrl: './item-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-filter.component.scss'
 })
 export class ItemFilterComponent {

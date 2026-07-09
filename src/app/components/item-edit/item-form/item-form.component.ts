@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
 import {
@@ -62,6 +62,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     CdkDropList,
     CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective, AccordionGroupValidationDirective, LoadingComponent],
   templateUrl: './item-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./item-form.component.scss'],
 })
 export class ItemFormComponent implements OnInit {

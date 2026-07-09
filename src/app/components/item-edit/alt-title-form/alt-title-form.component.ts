@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlternativeTitleType } from 'src/app/model/inge';
@@ -15,6 +15,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, BootstrapValidationDirective, ValidationErrorMessageDirective, TranslatePipe],
   templateUrl: './alt-title-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./alt-title-form.component.scss']
 })
 export class AltTitleFormComponent {

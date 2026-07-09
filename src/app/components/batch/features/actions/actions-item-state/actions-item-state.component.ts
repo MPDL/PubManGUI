@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DeletePubItemsFormComponent } from './delete-pub-items-form/delete-pub-items-form.component';
 import { ReleasePubItemsFormComponent } from './release-pub-items-form/release-pub-items-form.component';
 import { RevisePubItemsFormComponent } from './revise-pub-items-form/revise-pub-items-form.component';
@@ -16,6 +16,7 @@ import { WithdrawPubItemsFormComponent } from './withdraw-pub-items-form/withdra
     SubmitPubItemsFormComponent,
     WithdrawPubItemsFormComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions-item-state.component.html'
 })
 export class ActionsItemStateComponent { }

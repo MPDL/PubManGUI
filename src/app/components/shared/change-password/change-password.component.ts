@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Principal } from "../../../services/aa.service";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -24,6 +24,7 @@ import { Message, MessageService } from "../../../services/message.service";
     NotificationComponent
   ],
   templateUrl: './change-password.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './change-password.component.scss'
 })
 export class ChangePasswordComponent {

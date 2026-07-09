@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FileSectionSearchCriterion } from "../criterions/FileSectionSearchCriterion";
 import { TranslatePipe } from "@ngx-translate/core";
@@ -12,6 +12,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     TranslatePipe
   ],
   templateUrl: './file-section-component.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './file-section-component.component.scss'
 })
 export class FileSectionComponent {

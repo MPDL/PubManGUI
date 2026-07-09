@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,6 +25,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     SortByLabelPipe,
     ValidationErrorComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './change-genre.component.html',
 })
 export class ActionsGenreComponent {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from "@ngx-translate/core";
 
@@ -7,6 +7,7 @@ import { TranslateService } from "@ngx-translate/core";
   standalone: true,
   imports: [CommonModule],
   templateUrl: './add-remove-buttons.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./add-remove-buttons.component.scss']
 })
 

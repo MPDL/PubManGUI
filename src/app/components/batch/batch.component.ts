@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { BatchNavComponent } from './batch-nav/batch-nav.component';
@@ -12,6 +12,7 @@ import { BatchService } from './services/batch.service';
     RouterModule,
     BatchNavComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './batch.component.html',
 })
 export default class BatchComponent implements OnInit {

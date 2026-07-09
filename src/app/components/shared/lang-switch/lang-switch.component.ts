@@ -1,12 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'pure-lang-switch',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './lang-switch.component.html'
 })
 export class LangSwitchComponent {
@@ -23,7 +24,7 @@ export class LangSwitchComponent {
   }
 
   public get currentLang(): string {
-    return this.translateSvc.currentLang;
+    return this.translateSvc.currentLang()!;
    }
 
   private syncHtmlLang() {

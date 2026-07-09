@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { ChangeSourceGenreFormComponent } from './change-source-genre-form/change-source-genre-form.component';
 import { ReplaceSourceEditionFormComponent } from './replace-source-edition-form/replace-source-edition-form.component';
@@ -17,6 +17,7 @@ import {
     AddSourceIdentifierFormComponent,
     ChangeSourceIdentifierFormComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions-metadata-source.component.html',
 })
 export class ActionsMetadataSourceComponent { }

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MessageService } from "../../../../services/message.service";
 import { BatchService } from "../../../batch/services/batch.service";
 import { AaService } from "../../../../services/aa.service";
@@ -17,6 +17,7 @@ import { versionIdToObjectId } from "../../../../utils/utils";
   host: {
     style: "display: contents"
   },
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './topnav-batch.component.html',
 })
 export class TopnavBatchComponent {

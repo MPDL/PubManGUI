@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ActionsItemStateComponent } from './actions-item-state/actions-item-state.component';
@@ -23,6 +23,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ActionsMetadataComponent,
     TranslatePipe
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions.component.html'
 })
 export default class ActionsComponent implements OnInit {

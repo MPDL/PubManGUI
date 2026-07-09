@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
@@ -23,6 +23,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, PersonAutosuggestComponent, OuAutosuggestComponent, CdkDragHandle, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './creator-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./creator-form.component.scss']
 })
 export class CreatorFormComponent {

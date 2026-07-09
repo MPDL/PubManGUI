@@ -3,12 +3,14 @@ import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'en-content',
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './en/help.component.html'
 })
 export class en { }
 
 @Component({
   selector: 'de-content',
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './de/help.component.html'
 })
 export class de { }
@@ -25,10 +27,10 @@ export class HelpComponent {
   private viewContainer = inject(ViewContainerRef);
 
   ngOnInit() {
-    this.loadContent(this.translateSvc.currentLang);
+    this.loadContent(this.translateSvc.currentLang()!);
     this.translateSvc.onLangChange.subscribe((event: LangChangeEvent) => {
       console.log(event.lang);
-      this.loadContent(this.translateSvc.currentLang);
+      this.loadContent(this.translateSvc.currentLang()!);
     });
   }
 

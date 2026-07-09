@@ -20,7 +20,7 @@ import { AaService } from "../../services/aa.service";
 import { Clipboard } from "@angular/cdk/clipboard";
 import { ItemStateListSearchCriterion } from "./criterions/ItemStateListSearchCriterion";
 import { SavedSearchService } from "../../services/pubman-rest-client/saved-search.service";
-import { Component, HostListener, ViewEncapsulation } from "@angular/core";
+import { Component, HostListener, ViewEncapsulation, ChangeDetectionStrategy } from "@angular/core";
 import { ContextListSearchCriterion } from "./criterions/ContextListSearchCriterion";
 import { SearchStateService } from "../search-result-list/search-state.service";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
@@ -60,6 +60,7 @@ import {MessageService} from "../../services/message.service";
     ValidationErrorComponent
   ],
   templateUrl: './item-search-advanced.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None
 })
 export class ItemSearchAdvancedComponent {

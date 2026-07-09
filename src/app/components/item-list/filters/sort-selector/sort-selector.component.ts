@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ItemListComponent } from "../../item-list.component";
 import {baseElasticSearchSortBuilder, IndexField} from "../../../../utils/search-utils";
@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
     AddRemoveButtonsComponent
   ],
   templateUrl: './sort-selector.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sort-selector.component.scss'
 })
 export class SortSelectorComponent implements OnDestroy {

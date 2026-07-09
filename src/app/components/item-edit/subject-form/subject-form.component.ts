@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, inject, Input, Output, Signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output, Signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
@@ -24,6 +24,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     ConeAutosuggestComponent
   ],
   templateUrl: './subject-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './subject-form.component.scss'
 })
 export class SubjectFormComponent {

@@ -1,5 +1,5 @@
 
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -16,6 +16,7 @@ import { SortSelectorComponent } from "../../item-list/filters/sort-selector/sor
     ItemListComponent,
     SortSelectorComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './datasets.component.html'
 })
 export default class DatasetsComponent {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
@@ -10,6 +10,7 @@ import { ConeAutosuggestComponent } from "../../shared/cone-autosuggest/cone-aut
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, ConeAutosuggestComponent],
   templateUrl: './language-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './language-form.component.scss'
 })
 export class LanguageFormComponent {

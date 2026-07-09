@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, Input, Output } from '@angular/core';
+import { Component, computed, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbHighlight, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
@@ -30,6 +30,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     NgbHighlight
   ],
   templateUrl: './cone-autosuggest.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cone-autosuggest.component.scss'
 })
 export class ConeAutosuggestComponent {

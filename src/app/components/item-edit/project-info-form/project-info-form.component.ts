@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FundingInfoVO, FundingProgramVO, IdentifierVO, IdType } from 'src/app/model/inge';
@@ -16,6 +16,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, AddRemoveButtonsComponent, TranslatePipe, BootstrapValidationDirective, ConeAutosuggestComponent, ValidationErrorMessageDirective],
   templateUrl: './project-info-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './project-info-form.component.scss'
 })
 export class ProjectInfoFormComponent {

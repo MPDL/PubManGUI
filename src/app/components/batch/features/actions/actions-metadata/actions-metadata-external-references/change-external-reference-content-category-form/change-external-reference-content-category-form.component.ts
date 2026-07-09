@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,6 +24,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     SortByLabelPipe,
     ValidationErrorComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './change-external-reference-content-category-form.component.html',
 })
 export class ChangeExternalReferenceContentCategoryFormComponent {

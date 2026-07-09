@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DOCUMENT, HostListener, inject, OnInit, signal } from '@angular/core';
+import { Component, DOCUMENT, HostListener, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -14,6 +14,7 @@ import { _, TranslatePipe, TranslateService } from "@ngx-translate/core";
   selector: 'pure-batch-nav',
   templateUrl: './batch-nav.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     RouterModule,

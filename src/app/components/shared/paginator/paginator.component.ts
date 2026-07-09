@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal, Signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -13,6 +13,7 @@ import { DecimalPipe } from '@angular/common';
     ReactiveFormsModule,
     TranslatePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './paginator.component.html'
 })
 export class PaginatorComponent {

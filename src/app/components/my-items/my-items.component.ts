@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AaService } from "../../services/aa.service";
 import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
 import { ItemListComponent } from "../item-list/item-list.component";
@@ -23,6 +23,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ItemImportFilterDirective,
     TranslatePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './my-items.component.html'
 })
 export class MyItemsComponent {

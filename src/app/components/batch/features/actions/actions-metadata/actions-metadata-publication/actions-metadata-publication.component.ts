@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ChangeReviewMethodFormComponent } from './change-review-method-form/change-review-method-form.component';
 import { AddKeywordsFormComponent } from './add-keywords-form/add-keywords-form.component';
 import { ReplaceKeywordsComponent } from './replace-keywords/replace-keywords.component';
@@ -13,6 +13,7 @@ import { ReplaceKeywordsComponent } from './replace-keywords/replace-keywords.co
     AddKeywordsFormComponent,
     ReplaceKeywordsComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions-metadata-publication.component.html',
 })
 export class ActionsMetadataPublicationComponent { }

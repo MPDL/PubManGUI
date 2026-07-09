@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ItemListComponent } from "../item-list/item-list.component";
 import {Observable, of} from "rxjs";
 import { AaService } from "../../services/aa.service";
@@ -38,6 +38,7 @@ import {ItemSearchAdvancedService} from "../item-search-advanced/item-search-adv
     ItemSourceTitleAggregationDirective,
     TranslatePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './search-result-list.component.html'
 })
 export class SearchResultListComponent {

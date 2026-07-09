@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { Errors } from "../../../model/errors";
@@ -14,6 +14,7 @@ import {
   selector: 'pure-validation-error',
   imports: [],
   templateUrl: './validation-error.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './validation-error.component.scss'
 })
 export class ValidationErrorComponent {

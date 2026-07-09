@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { TranslatePipe } from "@ngx-translate/core";
 import { environment } from "../../../../environments/environment";
@@ -10,6 +10,7 @@ import { CopyButtonDirective } from "../../../directives/copy-button.directive";
     CopyButtonDirective,
     TranslatePipe,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './feed-modal.component.html'
 })
 export class FeedModalComponent {

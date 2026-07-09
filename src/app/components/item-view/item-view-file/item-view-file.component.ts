@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FileDbVO, ItemVersionVO, OA_STATUS, Storage, Visibility } from "../../../model/inge";
 import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { environment } from 'src/environments/environment';
@@ -27,6 +27,7 @@ import mime from "mime";
     UpperCasePipe
   ],
   templateUrl: './item-view-file.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-view-file.component.scss'
 })
 export class ItemViewFileComponent {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemVersionVO } from "../../../model/inge";
@@ -24,6 +24,7 @@ import { ValidationErrorComponent } from "../validation-error/validation-error.c
     BootstrapValidationDirective,
     ValidationErrorComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './item-actions-modal.component.html'
 })
 export class ItemActionsModalComponent {

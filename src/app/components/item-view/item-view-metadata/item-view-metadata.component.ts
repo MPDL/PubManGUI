@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { IdentifierVO, IdType, ItemVersionVO, PublishingInfoVO } from "../../../model/inge";
 import { ItemViewMetadataElementComponent } from "./item-view-metadata-element/item-view-metadata-element.component";
 import { ItemViewCreatorsComponent } from "./item-view-creators/item-view-creators.component";
@@ -19,6 +19,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     TranslatePipe
   ],
   templateUrl: './item-view-metadata.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-view-metadata.component.scss'
 })
 export class ItemViewMetadataComponent {

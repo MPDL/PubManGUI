@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -13,6 +13,7 @@ import { TranslatePipe } from "@ngx-translate/core";
   imports: [
     TranslatePipe
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './submit-pub-items-form.component.html',
 })
 export class SubmitPubItemsFormComponent {

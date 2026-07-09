@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, inject, Input, OnInit, Output, ViewChild, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, OnInit, Output, ViewChild, signal, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, FormBuilderService } from '../../../services/form-builder.service';
@@ -86,6 +86,7 @@ import { hasFormValues } from '../../../utils/utils';
     ValidationErrorComponent
   ],
   templateUrl: './metadata-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./metadata-form.component.scss']
 })
 export class MetadataFormComponent implements OnInit {

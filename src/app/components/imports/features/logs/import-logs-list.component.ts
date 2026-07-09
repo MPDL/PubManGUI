@@ -1,5 +1,5 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { Component, HostListener, Inject, inject, LOCALE_ID, OnInit, viewChild } from '@angular/core'
+import { Component, HostListener, Inject, inject, LOCALE_ID, OnInit, viewChild, ChangeDetectionStrategy } from '@angular/core'
 import { Router, RouterModule } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
@@ -26,6 +26,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     TranslatePipe,
     MatBadgeModule
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './import-logs-list.component.html'
 })
 export default class ImportLogsListComponent implements OnInit {

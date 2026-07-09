@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule, Location } from '@angular/common';
-import { AfterViewInit, Component, ContentChild, ContentChildren, Input, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ContentChildren, Input, QueryList, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemListElementComponent } from './item-list-element/item-list-element.component';
 import {ActivatedRoute, NavigationEnd, NavigationSkipped, NavigationStart, Router} from '@angular/router';
@@ -46,6 +46,7 @@ import { DecimalPipe } from '@angular/common';
     TranslatePipe,
     DecimalPipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './item-list.component.html'
 })
 export class ItemListComponent implements AfterViewInit{

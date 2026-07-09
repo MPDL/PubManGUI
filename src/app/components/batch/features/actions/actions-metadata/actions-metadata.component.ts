@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { ActionsMetadataFilesComponent } from './actions-metadata-files/actions-metadata-files.component';
 import {
@@ -24,6 +24,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ActionsMetadataSourceComponent,
     TranslatePipe
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions-metadata.component.html',
 })
 export class ActionsMetadataComponent { }

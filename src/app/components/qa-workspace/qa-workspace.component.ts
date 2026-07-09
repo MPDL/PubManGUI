@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { map, Observable } from "rxjs";
 import { AaService } from "../../services/aa.service";
 import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
@@ -25,6 +25,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     ItemImportFilterDirective,
     TranslatePipe,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './qa-workspace.component.html'
 })
 export class QaWorkspaceComponent {

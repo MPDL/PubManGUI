@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ContextDbVO, ContextState, ItemVersionState, ItemVersionVO, Workflow } from "../../../model/inge";
@@ -21,6 +21,7 @@ import { NotificationComponent } from "../notification/notification.component";
     SanitizeHtmlPipe,
     NotificationComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './change-context-modal.component.html'
 })
 export class ChangeContextModalComponent {

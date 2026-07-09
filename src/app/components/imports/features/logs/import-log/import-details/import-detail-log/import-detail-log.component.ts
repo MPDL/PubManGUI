@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { ImportsService } from 'src/app/components/imports/services/imports.service';
@@ -23,6 +23,7 @@ import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
     TranslatePipe,
     LocalizeDatePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './import-detail-log.component.html'
 })
 export class ImportDetailLogComponent {

@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { ItemViewMetadataElementComponent } from "../item-view-metadata-element/item-view-metadata-element.component";
 import { AffiliationDbVO, CreatorVO, OrganizationVO } from "../../../../model/inge";
 import { environment } from 'src/environments/environment';
@@ -20,6 +20,7 @@ import { ConeIconComponent } from "../../../shared/cone-icon/cone-icon.component
     ConeIconComponent,
   ],
   templateUrl: './item-view-creators.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-view-creators.component.scss'
 })
 export class ItemViewCreatorsComponent {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbHighlight, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from "@angular/forms";
@@ -33,6 +33,7 @@ import { ConeIconComponent } from "../cone-icon/cone-icon.component";
     TranslatePipe,
     BootstrapValidationDirective, ValidationErrorMessageDirective, ConeIconComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './person-autosuggest.component.html'
 })
 export class PersonAutosuggestComponent {

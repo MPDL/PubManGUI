@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,6 +27,7 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     NgbTooltip
   ],
   templateUrl: './import.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [".dropzone { width: 100%; padding: 0.5rem 1.5rem 0.5rem 1.5rem; text-align: center; border: dashed 2px; }"], // TO-DO move to scss
 })
 export default class ImportComponent implements OnInit {

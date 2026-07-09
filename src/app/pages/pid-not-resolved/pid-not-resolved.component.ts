@@ -4,12 +4,14 @@ import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'en-content',
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './en/pid-not-resolved.component.html'
 })
 export class en { }
 
 @Component({
   selector: 'de-content',
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './de/pid-not-resolved.component.html'
 })
 export class de { }
@@ -37,10 +39,10 @@ export class PidNotResolvedComponent {
       }
     });
     */
-    this.loadContent(this.translateSvc.currentLang);
+    this.loadContent(this.translateSvc.currentLang()!);
     this.translateSvc.onLangChange.subscribe((event: LangChangeEvent) => {
       console.log(event.lang);
-      this.loadContent(this.translateSvc.currentLang);
+      this.loadContent(this.translateSvc.currentLang()!);
     });
   }
 

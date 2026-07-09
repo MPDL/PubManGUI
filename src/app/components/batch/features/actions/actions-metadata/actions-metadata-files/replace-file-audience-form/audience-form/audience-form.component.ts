@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddRemoveButtonsComponent } from 'src/app/components/shared/add-remove-buttons/add-remove-buttons.component';
 
@@ -19,6 +19,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     TranslatePipe,
     ValidationErrorComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './audience-form.component.html'
 })
 export class AudienceFormComponent {

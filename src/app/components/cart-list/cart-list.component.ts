@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { map, Observable } from "rxjs";
 import { AaService } from "../../services/aa.service";
 import { Router } from "@angular/router";
@@ -17,6 +17,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     NgbTooltip,
     TranslatePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './cart-list.component.html'
 })
 export class CartListComponent {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, OnInit, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,6 +23,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     TranslatePipe,
     ValidationErrorComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './fetch.component.html',
 })
 export default class FetchComponent implements OnInit {

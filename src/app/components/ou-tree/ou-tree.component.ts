@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, Injectable } from '@angular/core';
+import { Component, inject, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Database, DynamicDataSource, DynamicFlatTreeControl, FlatNode } from './dyn-tree';
 import { NgClass } from '@angular/common';
@@ -59,6 +59,7 @@ export class OUsDatabase extends Database<any> {
   styleUrls: ['./ou-tree.component.scss'],
   providers: [OUsDatabase],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CdkTreeModule, NgClass]
 })
 export class OuTreeComponent {

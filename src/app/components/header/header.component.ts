@@ -1,4 +1,4 @@
-import { Component, DOCUMENT, HostListener, inject } from '@angular/core';
+import { Component, DOCUMENT, HostListener, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AaComponent } from '../aa/aa.component';
@@ -19,6 +19,7 @@ import {environment} from "../../../environments/environment";
   selector: 'pure-header',
   templateUrl: './header.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     FormsModule,

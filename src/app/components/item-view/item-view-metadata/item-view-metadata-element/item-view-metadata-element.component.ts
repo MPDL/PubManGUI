@@ -1,10 +1,11 @@
-import { Component, ContentChildren, Input, QueryList } from '@angular/core';
+import { Component, ContentChildren, Input, QueryList, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'pure-item-view-metadata-element',
   standalone: true,
   imports: [],
   templateUrl: './item-view-metadata-element.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-view-metadata-element.component.scss',
 })
 export class ItemViewMetadataElementComponent {

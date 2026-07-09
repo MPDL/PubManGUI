@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { JsonPipe } from "@angular/common";
 import { LoadingComponent } from "../shared/loading/loading.component";
@@ -22,6 +22,7 @@ import { ChangePasswordComponent } from "../shared/change-password/change-passwo
     TranslatePipe
   ],
   templateUrl: './user-profile.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './user-profile.component.scss'
 })
 

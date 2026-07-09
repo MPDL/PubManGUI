@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { ImportsNavComponent } from './imports-nav/imports-nav.component';
@@ -12,6 +12,7 @@ import { ImportsService } from './services/imports.service';
     RouterModule,
     ImportsNavComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './imports.component.html',
 })
 export default class ImportsComponent implements OnInit {

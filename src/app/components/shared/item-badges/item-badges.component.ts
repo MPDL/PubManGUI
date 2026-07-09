@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DateToYearPipe } from "../../../pipes/date-to-year.pipe";
 import { IdType, ItemVersionVO } from "../../../model/inge";
 import { AaService } from "../../../services/aa.service";
@@ -16,6 +16,7 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     NgbTooltip
   ],
   templateUrl: './item-badges.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-badges.component.scss'
 })
 export class ItemBadgesComponent {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AggregationEvent, FilterEvent, ItemListComponent } from "../../item-list.component";
 import { BehaviorSubject } from "rxjs";
 import { ItemAggregationBaseDirective } from "./directives/item-aggregation-base.directive";
@@ -16,6 +16,7 @@ let uniqueId = 0;
     DecimalPipe
   ],
   templateUrl: './item-aggregation-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-aggregation-filter.component.scss'
 })
 export class ItemAggregationFilterComponent {

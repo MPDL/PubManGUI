@@ -1,5 +1,5 @@
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -26,6 +26,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     ValidationErrorComponent
 ],
   templateUrl: './add-local-tags-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(keydown.enter)' : 'onKeydownEnterHandler($event)'
   }

@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
 import { ItemsService } from "../../services/pubman-rest-client/items.service";
 import { AaService } from "../../services/aa.service";
 import {
@@ -72,6 +72,7 @@ import {filter} from "rxjs/operators";
     CopyButtonDirective,
     ConeIconComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './item-view.component.html'
 })
 export class ItemViewComponent {

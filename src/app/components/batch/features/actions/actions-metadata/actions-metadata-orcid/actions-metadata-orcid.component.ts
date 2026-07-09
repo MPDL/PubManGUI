@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ReplaceOrcidFormComponent } from './replace-orcid-form/replace-orcid-form.component'
 
 @Component({
@@ -8,6 +8,7 @@ import { ReplaceOrcidFormComponent } from './replace-orcid-form/replace-orcid-fo
   imports: [
     ReplaceOrcidFormComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions-metadata-orcid.component.html',
 })
 export class ActionsMetadataOrcidComponent { }

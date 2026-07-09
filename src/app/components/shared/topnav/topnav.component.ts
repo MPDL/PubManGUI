@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -12,6 +12,7 @@ import { NgClass } from "@angular/common";
   imports: [
     NgClass
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './topnav.component.html'
 })
 export class TopnavComponent {

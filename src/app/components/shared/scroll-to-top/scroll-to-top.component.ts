@@ -1,10 +1,11 @@
 import { NgClass } from '@angular/common';
-import { Component, DOCUMENT, HostListener, Inject } from '@angular/core';
+import { Component, DOCUMENT, HostListener, Inject, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'pure-scroll-to-top',
   standalone: true,
   imports: [NgClass],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './scroll-to-top.component.html'
 })
 export class ScrollToTopComponent {

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from "@ngx-translate/core";
@@ -11,6 +11,7 @@ import { MiscellaneousService } from 'src/app/services/pubman-rest-client/miscel
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './publishing-info-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './publishing-info-form.component.scss'
 })
 export class PublishingInfoFormComponent {

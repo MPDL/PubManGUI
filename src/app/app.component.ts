@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -7,7 +7,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ScrollToTopComponent } from './components/shared/scroll-to-top/scroll-to-top.component';
 import { InfoSubheaderComponent } from "./components/shared/info-subheader/info-subheader.component";
 
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {TranslateService} from "@ngx-translate/core";
 import { NgbTooltipConfig } from "@ng-bootstrap/ng-bootstrap";
 import { filter } from "rxjs/operators";
 import { Title } from "@angular/platform-browser";
@@ -18,7 +18,8 @@ import { WindowFocusCheckLoginService } from "./services/window-focus-check-logi
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoSubheaderComponent, TranslateModule],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoSubheaderComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './app.component.html'
 })
 export class AppComponent {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkDragHandle, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +32,7 @@ import { isFormValueEmpty } from 'src/app/utils/utils';
     ConeAutosuggestComponent
   ],
   templateUrl: './file-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './file-form.component.scss'
 })
 export class FileFormComponent {

@@ -1,5 +1,5 @@
 
-import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, OnInit, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,6 +24,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     TranslatePipe,
     ValidationErrorComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './replace-file-audience-form.component.html',
 })
 export class ReplaceFileAudienceFormComponent implements OnInit {

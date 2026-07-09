@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from "@ngx-translate/core";
@@ -10,6 +10,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './legal-case-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './legal-case-form.component.scss'
 })
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, HostListener, inject } from '@angular/core';
+import { Component, computed, effect, HostListener, inject, ChangeDetectionStrategy } from '@angular/core';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { NotificationComponent } from '../notification/notification.component';
 import { Message, MessageService } from "../../../services/message.service";
@@ -11,6 +11,7 @@ import { Subject, takeUntil, tap } from "rxjs";
   selector: 'pure-info-subheader',
   standalone: true,
   imports: [CommonModule, BreadcrumbComponent, NotificationComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './info-subheader.component.html'
 })
 export class InfoSubheaderComponent {

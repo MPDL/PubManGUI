@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { citationTypes, exportTypes } from "../../../model/inge";
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
@@ -36,6 +36,7 @@ import {SearchStateService} from "src/app/components/search-result-list/search-s
     ValidationErrorComponent,
     SanitizeHtmlCitationPipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './export-items.component.html'
 })
 export class ExportItemsComponent {

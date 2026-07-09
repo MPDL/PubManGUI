@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { AaService } from 'src/app/services/aa.service';
@@ -12,6 +12,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     selector: 'pure-aa',
     templateUrl: './aa.component.html',
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgbTooltip, TranslatePipe]
 })
 export class AaComponent {

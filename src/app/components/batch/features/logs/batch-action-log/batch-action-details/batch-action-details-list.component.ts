@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -36,6 +36,7 @@ import { LocalizeDatePipe } from "src/app/pipes/localize-date.pipe";
     TranslatePipe,
     LocalizeDatePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './batch-action-details-list.component.html',
 })
 

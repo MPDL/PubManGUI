@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { ChangeFileVisibilityFormComponent } from './change-file-visibility-form/change-file-visibility-form.component';
 import {
@@ -15,6 +15,7 @@ import { ReplaceFileAudienceFormComponent } from './replace-file-audience-form/r
     ChangeFileContentCategoryFormComponent,
     ReplaceFileAudienceFormComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './actions-metadata-files.component.html',
 })
 export class ActionsMetadataFilesComponent { }

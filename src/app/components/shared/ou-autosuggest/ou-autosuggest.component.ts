@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   catchError,
@@ -25,6 +25,7 @@ import { BootstrapValidationDirective } from "../../../directives/bootstrap-vali
   standalone: true,
   imports: [CommonModule, NgbTypeahead, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective],
   templateUrl: './ou-autosuggest.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ou-autosuggest.component.scss'
 })
 export class OuAutosuggestComponent {

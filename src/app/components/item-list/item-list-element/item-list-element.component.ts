@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FileDbVO, ItemVersionVO, Storage, Visibility } from 'src/app/model/inge';
 import { KeyValuePipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -18,6 +18,7 @@ import { ConeIconComponent } from "../../shared/cone-icon/cone-icon.component";
   standalone: true,
   imports: [NgClass, FormsModule, ReactiveFormsModule, NgbTooltip, RouterLink, SanitizeHtmlPipe, ItemBadgesComponent, TranslatePipe, NgbPopover, ConeIconComponent],
   templateUrl: './item-list-element.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-list-element.component.scss'
 })
 export class ItemListElementComponent {

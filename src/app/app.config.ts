@@ -20,12 +20,13 @@ import {
   HttpClient,
   provideHttpClient,
   withFetch, withInterceptors,
-  withInterceptorsFromDi
+  withInterceptorsFromDi,
+  withXhr
 } from '@angular/common/http';
 import { httpBlobErrorInterceptor, httpErrorInterceptor } from "./services/interceptors/http-error.interceptor";
 
 import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx-translate/core";
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {provideTranslateHttpLoader, TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { isPlatformBrowser, registerLocaleData } from "@angular/common";
 import { lastValueFrom } from "rxjs";
 import { AaService } from "./services/aa.service";
@@ -33,10 +34,7 @@ import { provideMatomo, withRouter } from 'ngx-matomo-client';
 import { environment } from "../environments/environment";
 import { ContextsService } from "./services/pubman-rest-client/contexts.service";
 import { MessageService } from './services/message.service';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-
-const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
-  new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+import { provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
 
 
 export const appConfig: ApplicationConfig = {
@@ -51,11 +49,11 @@ export const appConfig: ApplicationConfig = {
       provide: RouteReuseStrategy,
       useClass: PureRrs
     },
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
 
     importProvidersFrom(DialogModule),
 
-    provideHttpClient(
+    provideHttpClient(withXhr(),
       //withInterceptorsFromDi(),
       withInterceptors([httpErrorInterceptor, httpBlobErrorInterceptor])
       //withFetch() cannot be used right now, as it does not provide Upload progress reporting: https://github.com/angular/angular/issues/53650
@@ -67,17 +65,14 @@ export const appConfig: ApplicationConfig = {
     {
       provide: LOCALE_ID,
       useFactory: (translateService: TranslateService) => {
-        return translateService.currentLang},
+        return translateService.currentLang()},
       deps: [TranslateService],
     },
 
     //provide translation service by ngx-translate
     provideTranslateService({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpLoaderFactory,
-        deps: [HttpClient],
-      },
+      loader: provideTranslateHttpLoader({prefix: '/assets/i18n/', suffix: '.json', useHttpBackend: true}),
+      fallbackLang: 'en'
     }),
 
     provideAppInitializer(async () => {
@@ -90,7 +85,7 @@ export const appConfig: ApplicationConfig = {
 
       //Configure ngx translate
       translateSvc.addLangs(['de', 'en']);
-      translateSvc.setDefaultLang('en');
+      translateSvc.setFallbackLang('en');
 
       if (isPlatformBrowser(platformId)) {
         //Store selected language in local storage
@@ -106,7 +101,7 @@ export const appConfig: ApplicationConfig = {
       }
       const browserLocale = translateSvc.getBrowserLang() || 'en';
 
-      let finalLocale = translateSvc.getDefaultLang();
+      let finalLocale = translateSvc.getFallbackLang();
       if (userLocale) {
         finalLocale = userLocale;
       } else {
@@ -118,7 +113,7 @@ export const appConfig: ApplicationConfig = {
       }
 
       //Wait until lang is loaded, so that translateService.instant() method can be used any time
-      await lastValueFrom(translateSvc.use(finalLocale));
+      await lastValueFrom(translateSvc.use(finalLocale!));
     }),
 
 

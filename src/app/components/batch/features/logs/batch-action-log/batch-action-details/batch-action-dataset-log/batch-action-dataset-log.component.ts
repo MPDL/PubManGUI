@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -20,6 +20,7 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     TranslatePipe,
     NgbTooltip
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './batch-action-dataset-log.component.html',
 })
 export class BatchActionDatasetLogComponent {

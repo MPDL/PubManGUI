@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from "@angular/common";
 import { environment } from "../../../../environments/environment";
 
@@ -8,6 +8,7 @@ import { environment } from "../../../../environments/environment";
     NgClass
   ],
   templateUrl: './cone-icon.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cone-icon.component.scss'
 })
 export class ConeIconComponent {

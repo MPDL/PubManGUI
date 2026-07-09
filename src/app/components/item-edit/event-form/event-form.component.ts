@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventVO, InvitationStatus } from 'src/app/model/inge';
@@ -23,6 +23,7 @@ export enum ValidationErrorsEnum {
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective],
   templateUrl: './event-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './event-form.component.scss'
 })
 export class EventFormComponent {

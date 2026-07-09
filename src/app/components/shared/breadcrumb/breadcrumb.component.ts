@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 import { Observable, of } from 'rxjs';
 import { RouterLink } from '@angular/router';
@@ -20,6 +20,7 @@ interface Breadcrumb {
     AsyncPipe,
     TranslatePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './breadcrumb.component.html'
 })
 export class BreadcrumbComponent implements OnInit {

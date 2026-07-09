@@ -1,5 +1,5 @@
 
-import { Component, inject, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -20,6 +20,7 @@ import { ValidationErrorComponent } from "src/app/components/shared/validation-e
     TranslatePipe,
     ValidationErrorComponent
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './change-file-visibility-form.component.html',
 })
 export class ChangeFileVisibilityFormComponent {

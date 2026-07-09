@@ -7,7 +7,8 @@ import {
   HostListener,
   inject,
   Renderer2,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AaService } from "../../../services/aa.service";
@@ -42,6 +43,7 @@ import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
     NgbPopover,
     NgbTooltip,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements AfterViewInit {

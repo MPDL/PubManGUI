@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { exportTypes } from "../../../model/inge";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ItemsService } from "../../../services/pubman-rest-client/items.service";
@@ -26,6 +26,7 @@ import { MessageService } from "../../../services/message.service";
     BootstrapValidationDirective,
     NotificationComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './jus-report.component.html'
 })
 export class JusReportComponent {
