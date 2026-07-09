@@ -140,4 +140,6 @@ export class ItemsService extends PubmanSearchableGenericRestClientService<ItemV
     return this.httpPut(this.subPath + '/' + id + '/localtags', localTags, opts);
   }
 
+  
+
 }

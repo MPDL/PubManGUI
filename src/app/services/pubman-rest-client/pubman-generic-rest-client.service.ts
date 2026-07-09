@@ -42,17 +42,14 @@ export abstract class PubmanGenericRestClientService<modelType> {
   }
 
   create(obj: modelType, opts?: HttpOptions) : Observable<modelType> {
-    console.log('Creating: ', typeof obj);
     return this.httpPostJson(this.subPath, obj, opts);
   }
 
   retrieve(id: string, opts?: HttpOptions): Observable<modelType> {
-    console.log('Retrieving:', id, this.subPath);
     return this.httpGet(this.subPath + '/' + id, opts);
   }
 
   update(id: string, obj: modelType, opts?: HttpOptions): Observable<modelType> {
-    console.log('Updating:', id, typeof id)
     return this.httpPut(this.subPath + '/' + id, obj, opts);
   }
 

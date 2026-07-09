@@ -67,7 +67,8 @@ export const appConfig: ApplicationConfig = {
     {
       provide: LOCALE_ID,
       useFactory: (translateService: TranslateService) => {
-        return translateService.currentLang},
+        return translateService.currentLang
+      },
       deps: [TranslateService],
     },
 
@@ -110,8 +111,7 @@ export const appConfig: ApplicationConfig = {
       if (userLocale) {
         finalLocale = userLocale;
       } else {
-        if (browserLocale ==='de' || browserLocale==='en')
-        {
+        if (browserLocale === 'de' || browserLocale === 'en') {
           finalLocale = browserLocale;
         }
 
@@ -137,13 +137,13 @@ export const appConfig: ApplicationConfig = {
 
     provideMatomo(
       {
-        disabled: !environment.matomo_enabled,
+        // Matomo is deactivated, when it is turned off in the environment
+        // OR when we are in the SSR environment (Node.js), where 'window' is undefine
+        disabled: !environment.matomo_enabled || typeof window === 'undefined',
         trackerUrl: environment.matomo_site_url,
         siteId: environment.matomo_site_id,
-        //use cookieless tracking
         requireConsent: 'cookie',
         acceptDoNotTrack: true,
-
       },
       withRouter()
     ),

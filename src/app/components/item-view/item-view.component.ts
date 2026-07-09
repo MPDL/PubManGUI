@@ -16,7 +16,7 @@ import { AsyncPipe, DatePipe, isPlatformBrowser, isPlatformServer, NgOptimizedIm
 import { ItemBadgesComponent } from "../shared/item-badges/item-badges.component";
 import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { ItemViewMetadataComponent } from "./item-view-metadata/item-view-metadata.component";
-import {catchError, finalize, forkJoin, map, Observable, Subject, takeUntil, tap, throwError, timer} from "rxjs";
+import { catchError, finalize, forkJoin, map, Observable, Subject, takeUntil, tap, throwError, timer } from "rxjs";
 import {
   ItemViewMetadataElementComponent
 } from "./item-view-metadata/item-view-metadata-element/item-view-metadata-element.component";
@@ -31,7 +31,7 @@ import { TopnavCartComponent } from "../shared/topnav/topnav-cart/topnav-cart.co
 import { ItemListStateService } from "../item-list/item-list-state.service";
 import { SanitizeHtmlCitationPipe } from "../../pipes/sanitize-html-citation.pipe";
 import { ItemSelectionService } from "../../services/item-selection.service";
-import {Meta, Title} from "@angular/platform-browser";
+import { Meta, Title } from "@angular/platform-browser";
 import { ItemActionsModalComponent } from "../shared/item-actions-modal/item-actions-modal.component";
 import { LoadingComponent } from "../shared/loading/loading.component";
 import { TranslatePipe } from "@ngx-translate/core";
@@ -46,7 +46,7 @@ import { getThumbnailUrlForFile, getUrlForFile } from "../../utils/item-utils";
 import { MatomoTracker } from "ngx-matomo-client";
 import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
 import { MetaTagsTransformerService } from 'src/app/services/meta-tags-transformer.service';
-import {filter} from "rxjs/operators";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: 'pure-item-view',
@@ -75,7 +75,7 @@ import {filter} from "rxjs/operators";
   templateUrl: './item-view.component.html'
 })
 export class ItemViewComponent {
-  loading=false;
+  loading = false;
 
   currentSubMenuSelection = "abstract";
 
@@ -107,20 +107,19 @@ export class ItemViewComponent {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
-  private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
-  private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService, private location: Location) {
+    private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
+    private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService, private location: Location) {
 
   }
 
 
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.route.paramMap.pipe(
       takeUntil(this.destroy$),
       tap(params => {
         const id = params.get('id')
-        if(id) {
+        if (id) {
           this.init(id);
         }
       })
@@ -131,7 +130,7 @@ export class ItemViewComponent {
       takeUntil(this.destroy$),
       filter(logoutStatus => logoutStatus === false),
       tap(logoutStatus => {
-        if(this.item) {
+        if (this.item) {
           this.init(itemToVersionId(this.item!))
         }
       })
@@ -139,7 +138,7 @@ export class ItemViewComponent {
 
     if (isPlatformBrowser(this.platformId)) {
       const subMenu = sessionStorage.getItem('selectedSubMenuItemView');
-      if(subMenu) {
+      if (subMenu) {
         this.currentSubMenuSelection = subMenu;
       }
     }
@@ -147,7 +146,7 @@ export class ItemViewComponent {
 
   }
 
-  init(id:string) {
+  init(id: string) {
 
     //console.log("init " + id);
 
@@ -159,86 +158,89 @@ export class ItemViewComponent {
     this.authorizationInfo = undefined;
     this.latestVersionAuthorizationInfo = undefined;
     if (id)
-      this.item$ = this.itemsService.retrieve(id, {globalErrorDisplay: true});
-      this.item$
-        .pipe(
-          tap(i => {
-            if (i.objectId) {
+      this.item$ = this.itemsService.retrieve(id, { globalErrorDisplay: true });
+    this.item$
+      .pipe(
+        tap(i => {
+          if (i.objectId) {
 
-              //set HTMl title
-              if (i.metadata?.title) {
-                const sanitizedTitle = sanitizeHtml(i.metadata.title, {allowedTags: []}) + ' | ' + this.title.getTitle();
-                this.title.setTitle(sanitizedTitle);
-              }
-              //this.matomoTracker.trackPageView(i.metadata?.title);
+            //set HTMl title
+            if (i.metadata?.title) {
+              const sanitizedTitle = sanitizeHtml(i.metadata.title, { allowedTags: [] }) + ' | ' + this.title.getTitle();
+              this.title.setTitle(sanitizedTitle);
+            }
+            //this.matomoTracker.trackPageView(i.metadata?.title);
 
-              //init item in selection and state (for export, basket, batch, pagination etc)
-              this.listStateService.initItemId(i.objectId);
-              this.itemSelectionService.addToSelection(itemToVersionId(i));
+            //init item in selection and state (for export, basket, batch, pagination etc)
+            this.listStateService.initItemId(i.objectId);
+            this.itemSelectionService.addToSelection(itemToVersionId(i));
 
-              //Get versions and create version map
-              this.initVersions(i);
+            //Get versions and create version map
+            this.initVersions(i);
 
-              //Get creator and modifier
-              this.itemCreator$ = this.usersService.retrieve(i!.creator!.objectId, {globalErrorDisplay: false});
-              this.itemModifier$ = this.usersService.retrieve(i!.modifier!.objectId, {globalErrorDisplay: false});
+            //Get creator and modifier
+            this.itemCreator$ = this.usersService.retrieve(i!.creator!.objectId, { globalErrorDisplay: false });
+            this.itemModifier$ = this.usersService.retrieve(i!.modifier!.objectId, { globalErrorDisplay: false });
 
-              //retrieve authorization information for item (for relase, submit, etc...)
-              this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i))
-                .pipe(
-                  tap(authInfo => {
-                    this.authorizationInfo = authInfo;
-                    if (i.latestVersion?.versionNumber === i.versionNumber) {
-                      this.latestVersionAuthorizationInfo = this.authorizationInfo;
-                    } else {
-                      if (i && i.objectId) {
-                        this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i.latestVersion!)).subscribe(authInfoLv => {
-                          this.latestVersionAuthorizationInfo = authInfoLv
-                        })
-                      }
+            //retrieve authorization information for item (for relase, submit, etc...)
+            this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i))
+              .pipe(
+                tap(authInfo => {
+                  this.authorizationInfo = authInfo;
+                  if (i.latestVersion?.versionNumber === i.versionNumber) {
+                    this.latestVersionAuthorizationInfo = this.authorizationInfo;
+                  } else {
+                    if (i && i.objectId) {
+                      this.itemsService.retrieveAuthorizationInfo(itemToVersionId(i.latestVersion!)).subscribe(authInfoLv => {
+                        this.latestVersionAuthorizationInfo = authInfoLv
+                      })
                     }
-                  })
-                )
-                .subscribe()
+                  }
+                })
+              )
+              .subscribe()
 
-              //Retrieve citation for item view
-              this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined, undefined).subscribe(citation => {
-                this.citation = citation;
-                if(citation) {
-                  this.meta.addTag({name: 'description', content: sanitizeHtml(this.citation, {allowedTags: [], allowedAttributes: {}})}, false);
-                  this.metaTagSelectors.push('name="description"');
-                }
+            //Retrieve citation for item view
+            this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined, undefined).subscribe(citation => {
+              this.citation = citation;
+              if (citation) {
+                this.meta.addTag({ name: 'description', content: sanitizeHtml(this.citation, { allowedTags: [], allowedAttributes: {} }) }, false);
+                this.metaTagSelectors.push('name="description"');
+              }
 
-              })
+            })
 
 
-              //retrieve thumbnail, if available
-              this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType === 'application/pdf'));
-              this.firstPublicPdfFileUrl = getUrlForFile(this.firstPublicPdfFile);
+            //retrieve thumbnail, if available
+            this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType === 'application/pdf'));
+            this.firstPublicPdfFileUrl = getUrlForFile(this.firstPublicPdfFile);
+            if (isPlatformBrowser(this.platformId)) {
               if (this.firstPublicPdfFile) {
-                this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId!, {globalErrorDisplay: false}).subscribe(thumbAvailable => {
-                  this.thumbnailUrl = getThumbnailUrlForFile(this.firstPublicPdfFile);
-
+                this.itemsService.thumbnailAvalilable(i.objectId, this.firstPublicPdfFile.objectId!, { globalErrorDisplay: false }).subscribe(thumbAvailable => {
+                  if (thumbAvailable) {
+                    this.thumbnailUrl = getThumbnailUrlForFile(this.firstPublicPdfFile);
+                  }
                 })
               }
-
-              this.addMetaTags(i);
-
-              //Set item
-              this.item = i;
             }
-          }),
-          catchError((err: PubManHttpErrorResponse) => {
-            //this.errorMessages.push(err.userMessage);
-            //return EMPTY;
-            return throwError(err)
-          }),
-           finalize(() => {
-             this.loading = false;
-           })
 
-        )
-        .subscribe()
+            this.addMetaTags(i);
+
+            //Set item
+            this.item = i;
+          }
+        }),
+        catchError((err: PubManHttpErrorResponse) => {
+          //this.errorMessages.push(err.userMessage);
+          //return EMPTY;
+          return throwError(err)
+        }),
+        finalize(() => {
+          this.loading = false;
+        })
+
+      )
+      .subscribe()
   }
 
   ngOnDestroy() {
@@ -292,8 +294,8 @@ export class ItemViewComponent {
       });
 
       */
-     const appliedTags = this.metaTagService.transformAndSetMetaTags(i);
-     this.metaTagSelectors = appliedTags.map(tag => `name="${tag.name}"`);
+      const appliedTags = this.metaTagService.transformAndSetMetaTags(i);
+      this.metaTagSelectors = appliedTags.map(tag => `name="${tag.name}"`);
 
 
 
@@ -358,11 +360,11 @@ export class ItemViewComponent {
   }
 
   get firstAuthors() {
-    return this.item?.metadata?.creators?.slice(0,10);
+    return this.item?.metadata?.creators?.slice(0, 10);
   }
 
   get storedFiles() {
-   return this.item?.files?.filter(f => f.storage === Storage.INTERNAL_MANAGED);
+    return this.item?.files?.filter(f => f.storage === Storage.INTERNAL_MANAGED);
   }
 
   get externalReferences() {
@@ -371,14 +373,14 @@ export class ItemViewComponent {
 
   get firstSubtitle() {
     return this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.SUBTITLE) ||
-    this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.OTHER) ||
+      this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.OTHER) ||
       this.item?.metadata?.alternativeTitles?.find(at => at.type === AlternativeTitleType.ABBREVIATION);
   }
 
   get isModeratorOrDepositor() {
     return this.item && this.aaService.isLoggedIn &&
-    ((this.item?.creator?.objectId === this.aaService.principal.value.user?.objectId)
-      || (this.aaService.principal.value.moderatorContexts.map(c => c.objectId).includes(this.item.context!.objectId)));
+      ((this.item?.creator?.objectId === this.aaService.principal.value.user?.objectId)
+        || (this.aaService.principal.value.moderatorContexts.map(c => c.objectId).includes(this.item.context!.objectId)));
   }
 
 
@@ -406,19 +408,20 @@ export class ItemViewComponent {
   }
 
 
-  openActionsModal(type: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi' | 'rollback', rollbackVersion?:number) {
+  openActionsModal(type: 'release' | 'submit' | 'revise' | 'withdraw' | 'delete' | 'addDoi' | 'rollback', rollbackVersion?: number) {
     const comp: ItemActionsModalComponent = this.modalService.open(ItemActionsModalComponent).componentInstance;
     comp.item = this.item!;
     comp.action = type;
-    if(type==='rollback') {
+    if (type === 'rollback') {
       comp.rollbackVersion = rollbackVersion;
     }
     comp.successfullyDone.subscribe(data => {
       //this.listStateService.itemUpdated.next(this.item?.objectId);
-      if(type !== 'delete') {
+      if (type !== 'delete') {
         this.init(this.item?.objectId!)
       }
-      else { this.location.back();
+      else {
+        this.location.back();
       }
 
     })
@@ -433,7 +436,7 @@ export class ItemViewComponent {
 
 
   useAsTemplate() {
-    this.router.navigate(['/edit'], {queryParams: {'template' : itemToVersionId(this.item!)}});
+    this.router.navigate(['/edit'], { queryParams: { 'template': itemToVersionId(this.item!) } });
   }
 
   protected readonly timer = timer;

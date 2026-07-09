@@ -1,8 +1,9 @@
-import { Injectable, resource, signal } from '@angular/core';
+import { Injectable, inject, resource, signal, PLATFORM_ID } from '@angular/core';
 import { PubmanGenericRestClientService } from './pubman-generic-rest-client.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { MdsPublicationGenre } from 'src/app/model/inge';
 import {HttpClient} from "@angular/common/http";
+import { isPlatformBrowser } from '@angular/common';
 
 const ipListPath = 'getIpList';
 const genrePropertiesPath = 'getGenreProperties';
@@ -24,15 +25,14 @@ export class MiscellaneousService extends PubmanGenericRestClientService<any> {
     loader: async ({ params }) => {
       const response = await firstValueFrom(this.getGenreProperties(params));
       const data: GenrePresentationObject = await response;
-      console.log("genrespecific", data)
       return data
     },
   });
 
   constructor(httpClient: HttpClient) {
     super('/miscellaneous', httpClient);
-    // this is needed to load the genre specific properties for the default genre
-    if (this.selectedGenre() == 'ARTICLE') {
+    // Only pre-load genre properties in the browser; on the server the resource loader handles it lazily.
+    if (isPlatformBrowser(inject(PLATFORM_ID)) && this.selectedGenre() == 'ARTICLE') {
       this.getGenreProperties(this.selectedGenre()).subscribe(genreJson => {
         this.genreSpecficProperties.set(genreJson as GenrePresentationObject);
       });
