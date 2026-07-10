@@ -132,7 +132,9 @@ export const appConfig: ApplicationConfig = {
 
     provideMatomo(
       {
-        disabled: !environment.matomo_enabled,
+        // Matomo is deactivated, when it is turned off in the environment
+        // OR when we are in the SSR environment (Node.js), where 'window' is undefine
+        disabled: !environment.matomo_enabled || typeof window === 'undefined',
         trackerUrl: environment.matomo_site_url,
         siteId: environment.matomo_site_id,
         //use cookieless tracking

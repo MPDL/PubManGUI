@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ChangeDetectionStrategy } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ChangeDetectionStrategy, DestroyRef } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { baseElasticSearchQueryBuilder } from "../../utils/search-utils";
 import { catchError, map, Observable, of } from "rxjs";
 import { ItemVersionVO } from "../../model/inge";
@@ -11,7 +12,8 @@ import { environment } from "../../../environments/environment";
 import { LoadingComponent } from "../shared/loading/loading.component";
 
 //My Imports
-import { Chart } from 'chart.js/auto';
+import { Chart, DoughnutController, ArcElement, Legend, Tooltip } from 'chart.js';
+Chart.register(DoughnutController, ArcElement, Legend, Tooltip);
 import { getThumbnailUrlForFile } from "../../utils/item-utils";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { FormsModule } from "@angular/forms";
@@ -50,6 +52,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   chart: Chart | undefined;
   private chartDataReady = false;
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
 
   searchTerm:string = "";
 
@@ -59,7 +62,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  this.loadGenreAggs(); // new method to fetch real chart data
+    // Chart data is only used browser-side — skip the ES aggregation call on the server.
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadGenreAggs();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -141,7 +147,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     size: 0
   };
 
-  this.itemsService.elasticSearch(agg,{withCredentials: false}).subscribe(result => {
+  this.itemsService.elasticSearch(agg,{withCredentials: false}).pipe(
+    takeUntilDestroyed(this.destroyRef)
+  ).subscribe(result => {
 
     this.totalPublications = result.hits.total.value;
     const buckets = result.aggregations['sterms#publications_by_genre'].buckets;

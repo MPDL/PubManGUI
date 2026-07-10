@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy, PLATFORM_ID, inject  } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { NgClass } from '@angular/common';
+import { NgClass, isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'pure-message',
@@ -12,6 +12,7 @@ import { NgClass } from '@angular/common';
 export class MessageComponent implements OnInit {
 
   message: any;
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(
     private dialog: DialogRef<any>,
@@ -20,7 +21,7 @@ export class MessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = this.data;
-    if (this.message.type === 'info' || this.message.type === 'success') {
+    if (isPlatformBrowser(this.platformId) && (this.message.type === 'info' || this.message.type === 'success')) {
       setTimeout(() => {
         this.close();
       }, 20000);

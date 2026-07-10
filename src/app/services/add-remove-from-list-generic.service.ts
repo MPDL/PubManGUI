@@ -9,6 +9,7 @@ import {isPlatformBrowser} from "@angular/common";
 export abstract class AddRemoveFromListGenericService {
 
   private localStorageKey: string;
+  private readonly platformId = inject(PLATFORM_ID);
 
   private storageSubscription?: Subscription;
   private logoutSubscription: Subscription;
@@ -16,9 +17,8 @@ export abstract class AddRemoveFromListGenericService {
   public objectIds$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
   constructor(localStorageKey: string, aaService: AaService) {
-    const platformId = inject(PLATFORM_ID)
     this.localStorageKey = localStorageKey;
-    if(isPlatformBrowser(platformId)) {
+    if(isPlatformBrowser(this.platformId)) {
 
 
       const obs = fromEvent(window, 'storage').pipe(
@@ -58,12 +58,17 @@ export abstract class AddRemoveFromListGenericService {
 
 
   private setLocalStorage(ids: string[]) {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(ids));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.localStorageKey, JSON.stringify(ids));
+    }
     this.objectIds$.next(ids);
   }
 
 
   private getLocalStorage(): string[] {
+    if (!isPlatformBrowser(this.platformId)) {
+      return [];
+    }
     return JSON.parse(localStorage.getItem(this.localStorageKey) || '[]');
   }
 

@@ -23,6 +23,22 @@ const angularApp = new AngularNodeAppEngine(
   }
 );
 
+// Live-Check: check if the event loop is responsive.
+app.get('/healthz', (_req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+// Ready-Check: check if the server is ready to accept traffic. If the server is shutting down, return 503.
+let isShuttingDown = false;
+app.get('/readyz', (_req, res) => {
+  if (isShuttingDown) {
+    // Prozess fährt herunter — keinen neuen Traffic mehr annehmen.
+    res.status(503).json({ status: 'shutting_down' });
+    return;
+  }
+  res.status(200).json({ status: 'ready' });
+});
+
 /**
  * Example Express Rest API endpoints can be defined here.
  * Uncomment and define endpoints as necessary.
@@ -43,6 +59,15 @@ app.use(
     maxAge: '1y',
     index: false,
     redirect: false,
+    setHeaders: (res, filePath) => {
+      if (/\.[0-9a-f]{8,}\.(js|css|woff2?)$/i.test(filePath)) {
+        // Fingerprinted: ein Jahr, unveränderlich.
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      } else {
+        // Nicht gehashte Dateien (z. B. favicon, robots.txt): kurz cachen (10 Minuten), aber revalidieren lassen.
+        res.setHeader('Cache-Control', 'public, max-age=600, must-revalidate');
+      }
+    },
   }),
 );
 
@@ -52,10 +77,56 @@ app.use(
 app.use((req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then((response) => {
+      if (!response) {
+        next();
+        return;
+      }
+      // HTML-Antworten kurz cachen und revalidieren lassen. 
+      // No-cache means: revalidate before use, but not not to cache at all
+      if (!res.headersSent) {
+        res.setHeader(
+          'Cache-Control',
+          'no-cache, max-age=0, must-revalidate',
+        );
+      }
+      return writeResponseToNodeResponse(response, res);
+    })
     .catch(next);
+});
+
+/**
+ * Error handler — must be the last middleware registered.
+ * Four parameters are mandatory so Express recognises it as an error handler.
+ * A single failed SSR render must never bring down the whole process.
+ */
+app.use(
+  (
+    err: unknown,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction,
+  ) => {
+    console.error('SSR render failed:', err);
+    if (res.headersSent) {
+      // Response already started — just close the connection cleanly.
+      res.end();
+      return;
+    }
+    res.status(500).send('Internal Server Error');
+  },
+);
+
+// Log unhandled promise rejections but keep the process alive.
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled promise rejection:', reason);
+});
+
+// An uncaughtException leaves the process in an undefined state — exit so the
+// process manager (PM2, Kubernetes, …) can restart it cleanly.
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception — shutting down:', err);
+  process.exit(1);
 });
 
 /**
