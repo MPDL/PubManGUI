@@ -1,3 +1,23 @@
+# [1.2.0](https://github.com/MPDL/PubManGUI/compare/1.1.0...1.2.0) (2026-07-14)
+
+
+### Bug Fixes
+
+* [INGUI-317] refine logic for selecting alternative title in item view component ([12b36fe](https://github.com/MPDL/PubManGUI/commit/12b36fe64506df8bd6e866d3b584cbc71232af82))
+* [INGUI-318] add `type="button"` to prevent default form submission in shared notification component ([154fd02](https://github.com/MPDL/PubManGUI/commit/154fd02c443e8ebc1d2871a01e080d216ef83021))
+* [INGUI-325] replace constructor argument `type` with `factory` for search criteria initialization ([99e47c0](https://github.com/MPDL/PubManGUI/commit/99e47c0a99d34b6326a2d068175a4f0c01c2ebd1))
+* INGUI-320 Deletion of an item from search results redirects to “My Datasets” ([b3dc528](https://github.com/MPDL/PubManGUI/commit/b3dc5288c19afb22c10706c096ca6211306641de))
+
+
+### Features
+
+* [INGUI-275] form submission handling for browser autofill ([88ef09c](https://github.com/MPDL/PubManGUI/commit/88ef09c8478d6c81e3b4afe630a596a67ffede04))
+* [INGUI-314] add support for `modified` and `created` status badges and translations ([ed5740b](https://github.com/MPDL/PubManGUI/commit/ed5740b6fd8ec9d07ccd039faabaec2571944d3a))
+* [INGUI-329] update login behavior in item view ([0a54047](https://github.com/MPDL/PubManGUI/commit/0a54047d9e26385c7d4d699fedf7d72fa9bdc50f))
+* [INGUI-336] Query display in "export all" functionality ([82bed11](https://github.com/MPDL/PubManGUI/commit/82bed11cde9cac26f399d13a71868da624e8c039))
+* [INGUI-337] - Performance Boost for SSR (v1) ([ec0eb5a](https://github.com/MPDL/PubManGUI/commit/ec0eb5a0e30c49030eaa646426ac29872ee3f049))
+* [NGUI-299] add `singleIPAdress` getter to display only the first IP in header component ([3a1b884](https://github.com/MPDL/PubManGUI/commit/3a1b8847a20d9a9a4f887eae397102b5599e2ff2))
+* INGUI-275 Browser autofill - date fields ([5e374aa](https://github.com/MPDL/PubManGUI/commit/5e374aa5adec38084c14a5e016909b200adfcfb8))
 # [1.1.0](https://github.com/MPDL/PubManGUI/compare/1.0.9...1.1.0) (2026-06-16)
 
 
