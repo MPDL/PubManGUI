@@ -11,6 +11,6 @@
         }
         <input class="form-control" [placeholder]="'chips.localTags.placeholder' | translate"
             [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" />
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" autocomplete="chipGrid" />
     </mat-chip-grid>
 </div>
