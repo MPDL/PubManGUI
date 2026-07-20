@@ -113,13 +113,6 @@ export class ItemSearchAdvancedComponent {
     ).subscribe()
   }
 
-  preventEnterSubmit(event: any): void {
-    const target = event.target as HTMLElement;
-    if (target.tagName !== 'TEXTAREA' && target.tagName !== 'BUTTON' && target.tagName !== 'A') {
-      event.preventDefault();
-    }
-  }
-
   ngOnInit() {
     this.reset();
     const searchIdParam = this.route.snapshot.queryParamMap.get("searchId");

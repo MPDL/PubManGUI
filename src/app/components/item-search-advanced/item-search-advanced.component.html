@@ -2,7 +2,7 @@
 
 
 <div class="accordion">
-  <form [formGroup]="searchForm" (ngSubmit)="search()" (keydown.enter)="preventEnterSubmit($event)">
+  <form [formGroup]="searchForm" (ngSubmit)="search()">
 
 
     @if(aaService.isLoggedIn) {
