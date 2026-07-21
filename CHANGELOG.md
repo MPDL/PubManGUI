@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/MPDL/PubManGUI/compare/1.2.0...1.2.1) (2026-07-21)
+
+
+### Features
+
+* [INGUI-342] [INGUI-316] Reset search on menu click. Handle saved context searches for non-logged-in users ([ca3a0a8](https://github.com/MPDL/PubManGUI/commit/ca3a0a86d287f80f6e245e13abf30595be18ab61))
+* INGUI-275 Browser autofill - local tags on edit ([e14ce75](https://github.com/MPDL/PubManGUI/commit/e14ce75df4d2ca82e32643b24e7e82e952103415))
+* INGUI-275 Browser autofill - textarea autocomplete deleted ([2c64fcc](https://github.com/MPDL/PubManGUI/commit/2c64fcc5bf94df11346704118fd36667808496c5))
 # [1.2.0](https://github.com/MPDL/PubManGUI/compare/1.1.0...1.2.0) (2026-07-14)
 
 
