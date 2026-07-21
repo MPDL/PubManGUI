@@ -10,7 +10,7 @@
       [placeholder]="'header.search'| translate" aria-label="Search">
     <div class="input-group-text border-0 bg-body">
       <a class="btn focus-ring p-0" role="button" [ngbTooltip]="'header.advancedSearch' | translate"
-        [routerLink]="['/advanced-search']" (click)="collapse()" [ariaLabel]="'header.advancedSearch' | translate">
+        [routerLink]="['/advanced-search']" [queryParams]="{ reset: true }" (click)="collapse()" [ariaLabel]="'header.advancedSearch' | translate">
         <span class="material-symbols-outlined">tune</span>
       </a>
     </div>

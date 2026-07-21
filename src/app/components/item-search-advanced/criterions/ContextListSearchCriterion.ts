@@ -9,7 +9,7 @@ export class ContextListSearchCriterion extends SearchCriterion {
 
 
 
-  contextOptions: {[key:string]: ContextDbVO} = {};
+  contextOptions: {[key:string]: string} = {};
 
 
   constructor(checkAll: boolean, opts?:any) {
@@ -28,7 +28,7 @@ export class ContextListSearchCriterion extends SearchCriterion {
         //filter duplicates
         .filter((val, pos, arr) => arr.indexOf(val)===pos)
         .forEach(c => {
-          this.contextOptions[c.objectId!] = c;
+          this.contextOptions[c.objectId!] = c.name || "n/a";
         })
 
       Object.keys(this.contextOptions).forEach(itemState => this.contextListFormGroup.addControl(itemState, new FormControl(checkAll)));
@@ -70,6 +70,22 @@ export class ContextListSearchCriterion extends SearchCriterion {
 
   get contextListFormGroup() {
     return this.content.get("contexts") as FormGroup;
+  }
+
+  /**
+   * Apply the saved search context list to the current context list form group, if the context is not already present.
+   * @param contextList The saved search context list to apply.
+   */
+  applyFromSavedSearch(contextList: any) {
+    if(contextList?.content?.contexts) {
+      Object.keys(contextList?.content?.contexts).forEach(contextId => {
+        if ((!this.contextListFormGroup.get(contextId)) && contextList.content.contexts[contextId]) {
+          this.contextOptions[contextId] = contextId;
+          this.contextListFormGroup.addControl(contextId, new FormControl(contextList.content.contexts[contextId]));
+        }
+      });
+    }
+
   }
 
 

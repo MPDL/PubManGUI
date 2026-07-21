@@ -1,5 +1,5 @@
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, NavigationSkipped, Router } from "@angular/router";
 import { JsonPipe, KeyValuePipe, NgTemplateOutlet } from "@angular/common";
 import { SearchCriterion } from "./criterions/SearchCriterion";
 import { LogicalOperator } from "./criterions/operators/LogicalOperator";
@@ -84,11 +84,16 @@ export class ItemSearchAdvancedComponent {
   locatorSectionSearchCriterion!: FileSectionSearchCriterion;
 
   private logoutSubscription?: Subscription;
+  private routerEventsSubscription?: Subscription;
 
   anzGenreCols: number = 0;
   anzGenreRows: number = 0;
   genreRows: number[] = [];
   genreCols: number[] = [];
+
+  /** Used for saved searches, admin section should be displayed even if not logged in **/
+  displayAdminAnyway = false
+  private readonly advancedSearchUrl = '/advanced-search';
 
   constructor(
     private router: Router,
@@ -110,7 +115,23 @@ export class ItemSearchAdvancedComponent {
     this.logoutSubscription = aaService.logout$.pipe(
       filter(val => val===true),
       tap(val => this.reset())
-    ).subscribe()
+    ).subscribe();
+
+    // Listen to router events to reset the form when navigating to the advanced search page with a reset query parameter
+    this.routerEventsSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationSkipped || event instanceof NavigationEnd),
+      filter((event: NavigationSkipped | NavigationEnd) => event.url.split('?')[0] === this.advancedSearchUrl),
+    ).subscribe(() => {
+      if (this.route.snapshot.queryParamMap.get('reset') === 'true') {
+        this.reset();
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { reset: null },
+          queryParamsHandling: 'merge',
+          replaceUrl: true,
+        });
+      }
+    });
   }
 
   ngOnInit() {
@@ -118,12 +139,19 @@ export class ItemSearchAdvancedComponent {
     const searchIdParam = this.route.snapshot.queryParamMap.get("searchId");
     const searchFormParam = this.route.snapshot.queryParamMap.get("searchForm");
     if (searchIdParam) {
+
       this.savedSearchService.retrieve(searchIdParam).subscribe(savedSearch => {
         this.parseFormJson(savedSearch.searchForm);
+        this.displayAdminAnyway = true;
       })
     }
     else if (searchFormParam) {
+
       this.parseFormJson(JSON.parse(searchFormParam));
+      this.displayAdminAnyway = true;
+    }
+    else {
+      this.displayAdminAnyway = false;
     }
 
   }
@@ -131,6 +159,7 @@ export class ItemSearchAdvancedComponent {
   ngOnDestroy() {
     console.log("Destroying advanced search");
     this.logoutSubscription?.unsubscribe();
+    this.routerEventsSubscription?.unsubscribe();
   }
 
   reset(fromJson:any = undefined) {
@@ -141,6 +170,7 @@ export class ItemSearchAdvancedComponent {
       this.searchForm = this.advancedSearchService.initSearchForm(true);
     }
 
+    this.displayAdminAnyway = false;
     this.initCriterions();
     this.initializeGenres();
     this.currentlyOpenedParenthesis = undefined;
@@ -489,5 +519,4 @@ export class ItemSearchAdvancedComponent {
 
   protected readonly SubjectClassification = SubjectClassification;
 }
-
 

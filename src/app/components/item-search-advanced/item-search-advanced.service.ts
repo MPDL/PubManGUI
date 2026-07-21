@@ -399,6 +399,11 @@ export class ItemSearchAdvancedService {
         searchForm.patchValue({[key]: value});
       }
     }
+
+    //Additinally, add possible missing contexts to the context list search criterion as the list might change due to the logged in user and the contexts he/she has access to.
+    // This is necessary to be able to display the saved search correctly.
+    const contextListSC: ContextListSearchCriterion = searchForm.get("contexts") as ContextListSearchCriterion;
+    contextListSC.applyFromSavedSearch(formJson.contexts);
     return searchForm;
   }
 
