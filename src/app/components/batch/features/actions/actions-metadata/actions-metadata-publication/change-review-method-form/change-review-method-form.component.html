@@ -21,7 +21,7 @@
           <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
-          <option [value]=''>---</option>
+          <option [value]=''>-</option>
           @for (method of reviewMethods; track method) {
           <option [value]="method"> {{ 'ReviewMethod.' + method | translate}} </option>
           }
@@ -46,7 +46,7 @@
           <option [value]="null" selected disabled hidden>
             {{ 'batch.actions.metadata.publication.reviewType' | translate }}
           </option>
-          <option [value]=''>---</option>
+          <option [value]=''>-</option>
           @for (method of reviewMethods; track method) {
           <option [value]="method"> {{ 'ReviewMethod.' + method | translate}} </option>
           }

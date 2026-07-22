@@ -1,6 +1,6 @@
 import { computed, Injectable, OnDestroy, signal} from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import type * as params from '../interfaces/batch-params';
@@ -404,7 +404,12 @@ export class BatchService extends AddRemoveFromListGenericService implements OnD
     actionParams.itemIds = this.items;
 
     const url = `${this.#baseUrl}/batchProcess/changeReviewMethod`;
-    const query = `?reviewMethodFrom=${actionParams.reviewMethodFrom}&reviewMethodTo=${actionParams.reviewMethodTo}`;
+
+    let query = '';
+    if (actionParams.reviewMethodFrom || actionParams.reviewMethodTo) query += '?';
+    if (actionParams.reviewMethodFrom) query += `reviewMethodFrom=${actionParams.reviewMethodFrom}`;
+    if (actionParams.reviewMethodFrom && actionParams.reviewMethodTo) query += '&';
+    if (actionParams.reviewMethodTo) query += `reviewMethodTo=${actionParams.reviewMethodTo}`;
     const body = { itemIds: actionParams.itemIds };
 
     const actionResponse: Observable<resp.ActionGenericResponse> = this.http.put<resp.ActionGenericResponse>(url + query, body, { withCredentials: true })

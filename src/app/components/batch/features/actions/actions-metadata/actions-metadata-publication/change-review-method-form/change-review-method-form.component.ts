@@ -2,7 +2,7 @@
 import { Component, inject, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { BatchValidatorsService } from 'src/app/components/batch/services/batch-validators.service';
 import { BatchService } from 'src/app/components/batch/services/batch.service';
@@ -42,8 +42,8 @@ export class ChangeReviewMethodFormComponent {
 
   get changeReviewMethodParams(): ChangeReviewMethodParams {
     const actionParams: ChangeReviewMethodParams = {
-      reviewMethodFrom: this.changeReviewMethodForm.controls['reviewMethodFrom'].value,
-      reviewMethodTo: this.changeReviewMethodForm.controls['reviewMethodTo'].value,
+      reviewMethodFrom: this.changeReviewMethodForm.controls['reviewMethodFrom'].value?.[0] === '-' ? null : this.changeReviewMethodForm.controls['reviewMethodFrom'].value,
+      reviewMethodTo: this.changeReviewMethodForm.controls['reviewMethodTo'].value?.[0] === '-' ? null : this.changeReviewMethodForm.controls['reviewMethodTo'].value,
       itemIds: []
     }
     return actionParams;
@@ -55,7 +55,6 @@ export class ChangeReviewMethodFormComponent {
   
   onSubmit(): void {
     if (this.changeReviewMethodForm.valid) {
-
       this.batchSvc.changeReviewMethod(this.changeReviewMethodParams).subscribe(actionResponse => {
         this.batchSvc.startProcess(actionResponse.batchLogHeaderId);
         this.router.navigate(['/batch/logs']);
