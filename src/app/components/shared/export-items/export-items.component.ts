@@ -210,6 +210,7 @@ export class ExportItemsComponent {
       this.selectedCslId.setValue('');
       this.currentCitation = '';
     }
+    this.updateQueries();
     }
 
 
