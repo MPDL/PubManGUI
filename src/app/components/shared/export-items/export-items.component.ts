@@ -122,6 +122,12 @@ export class ExportItemsComponent {
 
 
     this.loadCitation();
+    this.updateQueries();
+
+
+  }
+
+  updateQueries() {
     this.curlUrl = this.createCurlUrl();
     this.completeQueryAsJson = JSON.stringify(this.completeQuery);
     this.queryOnlyAsJson = JSON.stringify(this.queryOnly);
@@ -157,30 +163,36 @@ export class ExportItemsComponent {
   }
 
   isValid(): boolean {
-    return this.itemIds.length > 0 &&
-      (this.selectedCitationType.value !== citationTypes.CSL || (this.selectedCslId?.value?.length > 0)) && this.selectedSize <= this.maxSize;
+    const valid= this.itemIds.length > 0 &&
+      (this.isFormat || this.selectedCitationType.value !== citationTypes.CSL || this.selectedCslId?.value?.length > 0) && this.selectedSize <= this.maxSize;
+    return valid;
   }
 
   handleFormatChange($event: Event) {
     this.currentCitation = '';
     this.loadCitation();
+    this.updateQueries();
     this.updateStoredExportInfo();
   }
 
   handleCitationChange($event: Event) {
     this.currentCitation = '';
     this.loadCitation();
+    this.updateQueries();
     this.updateStoredExportInfo();
   }
 
   handleSizeChange($event: Event) {
-    console.log("handleSizeChange", $event,  this.selectedSize);
     this.completeQuery.size = this.selectedSize;
+    this.updateQueries();
   }
 
   handleFromChange($event: Event) {
     this.completeQuery.from = this.selectedFrom;
+    this.updateQueries();
   }
+
+
 
   selectCsl(event: any) {
     if(event) {
@@ -283,7 +295,6 @@ export class ExportItemsComponent {
         tap(result => {
           if (result.body) {
             const blob: Blob = result.body;
-            console.log("Blob type: " + blob.type);
             const data = window.URL.createObjectURL(blob);
             let filename = "download"
 
