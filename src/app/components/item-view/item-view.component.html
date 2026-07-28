@@ -293,7 +293,7 @@
             <span label>{{ 'common.action' | translate }}</span>
             <span content>{{ auditEntry.event }}</span>
           </pure-item-view-metadata-element>
-          @if (isModeratorOrDepositor) {
+          @if (isModeratorOrDepositor && auditEntry.comment) {
           <pure-item-view-metadata-element [sub]="true">
             <span label>{{ 'common.comment' | translate }}</span>
             <span content>{{ auditEntry.comment }}</span>
