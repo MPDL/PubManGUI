@@ -1,3 +1,12 @@
+## [1.2.2](https://github.com/MPDL/PubManGUI/compare/1.2.1...1.2.2) (2026-07-28)
+
+
+### Bug Fixes
+
+* [INGUI-184] - Remove the Comment line in the Versions tab if the comment is empty ([cd74613](https://github.com/MPDL/PubManGUI/commit/cd74613bfe66c8ca19d17fa22aa195a97f099367))
+* [INGUI-344, INGUI-345] Update CSL style for cURL export all component ([84d2913](https://github.com/MPDL/PubManGUI/commit/84d29135e85839d7e910585a6e1e6965c6508c78))
+* [INGUI-344, INGUI-345] Update queries on citation, format, size, and from changes in export items component. Fix Download button behaviour ([8ca85f1](https://github.com/MPDL/PubManGUI/commit/8ca85f17b71eb79ac7c98aacb4edc8ce57813b02))
+* INGUI-340 Batch processing fails with 'Unknown Error' when changing review type ([260ebe1](https://github.com/MPDL/PubManGUI/commit/260ebe17754328497ba5f519b8f7b727098b172e))
 ## [1.2.1](https://github.com/MPDL/PubManGUI/compare/1.2.0...1.2.1) (2026-07-21)
 
 
