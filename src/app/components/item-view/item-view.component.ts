@@ -47,6 +47,7 @@ import { MatomoTracker } from "ngx-matomo-client";
 import { ConeIconComponent } from "../shared/cone-icon/cone-icon.component";
 import { MetaTagsTransformerService } from 'src/app/services/meta-tags-transformer.service';
 import { filter } from "rxjs/operators";
+import {BreadcrumbService} from "src/app/services/breadcrumb.service";
 
 @Component({
   selector: 'pure-item-view',
@@ -109,7 +110,8 @@ export class ItemViewComponent {
 
   constructor(private itemsService: ItemsService, private usersService: UsersService, protected aaService: AaService, private route: ActivatedRoute, private router: Router,
     private scroller: ViewportScroller, private messageService: MessageService, private modalService: NgbModal, protected listStateService: ItemListStateService, private itemSelectionService: ItemSelectionService,
-    private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService, private location: Location) {
+    private title: Title, private meta: Meta, private matomoTracker: MatomoTracker, @Inject(PLATFORM_ID) private platformId: any, private metaTagService: MetaTagsTransformerService, private location: Location,
+              private breadcrumbService: BreadcrumbService) {
 
   }
 
@@ -422,7 +424,7 @@ export class ItemViewComponent {
         this.init(this.item?.objectId!)
       }
       else {
-        this.location.back();
+        this.breadcrumbService.navigateToLastBreadcrumb();
       }
 
     })

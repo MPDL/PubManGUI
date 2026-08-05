@@ -101,4 +101,14 @@ export class BreadcrumbService {
 
   }
 
+  public navigateToLastBreadcrumb() {
+    const breadcrumbs = this.breadcrumbs$.value;
+    if(breadcrumbs.length > 1) {
+      this.router.navigate([breadcrumbs[breadcrumbs.length - 2].url]);
+    }
+    else {
+      this.router.navigate(['/']);
+    }
+  }
+
 }
