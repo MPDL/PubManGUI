@@ -24,6 +24,12 @@ import {
 import { TranslatePipe } from "@ngx-translate/core";
 import {SavedSearchService} from "../../services/pubman-rest-client/saved-search.service";
 import {ItemSearchAdvancedService} from "../item-search-advanced/item-search-advanced.service";
+import {
+  FileVisibilityAggregationDirective
+} from "src/app/components/item-list/aggregations/aggregation-filter/directives/file-visibility-aggregation.directive";
+import {
+  ItemDateAggregationDirective
+} from "src/app/components/item-list/aggregations/aggregation-filter/directives/item-date-aggregation.directive";
 
 @Component({
   selector: 'pure-search-result-list',
@@ -36,7 +42,8 @@ import {ItemSearchAdvancedService} from "../item-search-advanced/item-search-adv
     ItemGenreAggregationDirective,
     ItemReviewMethodDirective,
     ItemSourceTitleAggregationDirective,
-    TranslatePipe
+    TranslatePipe,
+    FileVisibilityAggregationDirective
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './search-result-list.component.html'

@@ -4,9 +4,11 @@
   <!--<pure-item-aggregation-filter [itemList]="itemList" [label]="'Dates'" pureItemDateAggregation/>-->
   <!--<pure-item-aggregation-filter [itemList]="itemList" [label]="'State'" pureItemStatusAggregation/>-->
   <pure-item-aggregation-filter [itemList]="itemList" [label]="'MetadataFields.genre' | translate" pureItemGenreAggregation/>
+  <pure-item-aggregation-filter [itemList]="itemList" [label]="('common.file' | translate) + '-' + ('FileMetadataFields.visibility' | translate)" pureFileVisibilityAggregation/>
   <pure-item-aggregation-filter [itemList]="itemList" [label]="'MetadataFields.creators' | translate" pureItemCreatorAggregation/>
   <pure-item-aggregation-filter [itemList]="itemList" [label]="'MetadataFields.reviewMethod' | translate" pureItemReviewMethodAggregation/>
   <pure-item-aggregation-filter [itemList]="itemList" [label]="'MetadataFields.source' | translate" pureItemSourceTitleAggregation/>
+
   <!--<pure-item-aggregation-filter [itemList]="itemList" [label]="'Local Tags'" pureItemLocalTagAggregation/>-->
 
   <!--<pure-item-aggregation-filter [itemList]="itemList" [label]="'Affiliations'"pureItemOuAggregation/>-->
