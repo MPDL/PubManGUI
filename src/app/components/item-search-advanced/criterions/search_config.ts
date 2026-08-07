@@ -23,7 +23,12 @@ import {
   OrganizationSearchCriterion,
   PersonSearchCriterion
 } from "./StringOrHiddenIdSearchCriterion";
-import { GenreSearchCriterion, ReviewMethodSearchCriterion, StateSearchCriterion } from "./EnumSearchCriterion";
+import {
+  EventInvitationStatusSearchCriterion,
+  GenreSearchCriterion,
+  ReviewMethodSearchCriterion,
+  StateSearchCriterion
+} from "./EnumSearchCriterion";
 
 
 export enum DisplayType {
@@ -221,6 +226,11 @@ export const searchTypes : searchTypesI = {
     displayType: DisplayType.ENUM,
     handlerClass: StateSearchCriterion,
     factory: (type, opts) => new StateSearchCriterion(opts)
+  },
+  eventInvitationStatus: {
+    displayType: DisplayType.ENUM,
+    handlerClass: EventInvitationStatusSearchCriterion,
+    factory: (type, opts) => new EventInvitationStatusSearchCriterion(opts)
   },
   and: {
     displayType: DisplayType.OPERATOR,

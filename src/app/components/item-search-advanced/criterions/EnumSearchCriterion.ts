@@ -1,5 +1,5 @@
 import { StandardSearchCriterion } from "./StandardSearchCriterion";
-import { ItemVersionState, MdsPublicationGenre, ReviewMethod } from "../../../model/inge";
+import {InvitationStatus, ItemVersionState, MdsPublicationGenre, ReviewMethod} from "../../../model/inge";
 import {IndexField} from "../../../utils/search-utils";
 
 export abstract class EnumSearchCriterion extends StandardSearchCriterion {
@@ -54,5 +54,16 @@ export class StateSearchCriterion extends EnumSearchCriterion {
 
   override getElasticIndexes(): IndexField[] {
     return [{index: "publicState", type: "keyword"}];
+  }
+}
+
+export class EventInvitationStatusSearchCriterion extends EnumSearchCriterion {
+
+  constructor(opts?: any) {
+    super("eventInvitationStatus", Object.keys(InvitationStatus), opts, 'InvitationStatus.');
+  }
+
+  override getElasticIndexes(): IndexField[] {
+    return [{index: "metadata.event.invitationStatus", type: "keyword"}];
   }
 }

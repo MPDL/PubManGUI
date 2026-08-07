@@ -320,6 +320,9 @@
     "PENDING": "Pending",
     "SUSPENDED": "Suspended"
   },
+  "InvitationStatus": {
+    "INVITED": "Invited"
+  },
   "ItemActions": {
     "addDoi": "Add DOI",
     "delete": "Delete",
