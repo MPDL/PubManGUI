@@ -53,7 +53,6 @@ export class FileVisibilityAggregationDirective extends ItemAggregationBaseDirec
 
   parseResult(aggResult: any): AggregationResultView[] {
     const resultViews: AggregationResultView[] = [];
-    console.log("aggResult", aggResult);
     aggResult['filter#internalFiles']['sterms#visibilityAgg'].buckets.forEach((b: any) => {
       const aggResult: AggregationResultView = {
         displayValue: 'Visibility.' +b.key,
