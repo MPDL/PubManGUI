@@ -30,6 +30,9 @@ import {
 import {
   ItemDateAggregationDirective
 } from "src/app/components/item-list/aggregations/aggregation-filter/directives/item-date-aggregation.directive";
+import {
+  FileOaStatusAggregationDirective
+} from "src/app/components/item-list/aggregations/aggregation-filter/directives/file-oastatus-aggregation.directive";
 
 @Component({
   selector: 'pure-search-result-list',
@@ -43,7 +46,8 @@ import {
     ItemReviewMethodDirective,
     ItemSourceTitleAggregationDirective,
     TranslatePipe,
-    FileVisibilityAggregationDirective
+    FileVisibilityAggregationDirective,
+    FileOaStatusAggregationDirective
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './search-result-list.component.html'
