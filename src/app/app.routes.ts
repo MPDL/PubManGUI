@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { itemResolver } from "./services/pubman-rest-client/item-resolver";
 import { fetchItemResolver } from './components/imports/services/fetch-item-resolver';
+import { orcidRequestGuard } from './services/guards/orcid-request.guard';
 
 
 
@@ -179,6 +180,17 @@ export const routes: Routes = [
     data: {
       breadcrumb: {
         labelKey: 'common.pidNotResolved',
+        keepIfLast: [],
+      }
+    },
+  },
+  {
+    path: 'orcid/request-orcid-auth',
+    canActivate: [orcidRequestGuard],
+    loadComponent: () => import('./components/orcid/request-orcid-authentication/request-orcid-autorization.component').then(m => m.RequestOrcidAutorizationComponent),
+    data: {
+      breadcrumb: {
+        labelKey: 'orcid.requestAuthentication',
         keepIfLast: [],
       }
     },

@@ -1030,6 +1030,7 @@
     "invalidCharacters": "Der Text enthält ungültige Zeichen",
     "invalidDateFormat": "Falsches Datumsformat (JJJJ-MM-DD)",
     "invalidDoi": "Ungültiges DOI Format",
+    "invalidEmail": "Ungültige E-Mail-Adresse",
     "invalidOrcid": "Die Orcid ist ungültig. Bitte in CoNE ändern",
     "invalidUrlFormat": "Ungültige URL",
     "invalidUtfChar": "Ungültige (nicht UTF-8) Zeichen im Text",

@@ -1030,6 +1030,7 @@
     "invalidCharacters": "The text contains invalid characters",
     "invalidDateFormat": "Invalid date format (YYYY-MM-DD)",
     "invalidDoi": "Invalid DOI format",
+    "invalidEmail": "Invalid email address",
     "invalidOrcid": "Invalid Orcid. Please change in CoNE",
     "invalidUrlFormat": "Invalid URL",
     "invalidUtfChar": "Invalid (non-UTF8) characters found in text",

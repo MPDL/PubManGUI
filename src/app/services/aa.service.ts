@@ -80,6 +80,11 @@ export class AaService {
     return this.principal.getValue().loggedIn;
   }
 
+  hasOrcidRequestPermission(): boolean {
+    const principal = this.principal.getValue();
+    return principal.loggedIn && (principal.isModerator || principal.isAdmin || principal.isLocalAdmin);
+  }
+
   checkLogin(): Observable<Principal> {
     console.log("Check login");
 

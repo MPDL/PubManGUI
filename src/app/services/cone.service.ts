@@ -39,6 +39,31 @@ export class ConeService {
     const params = new HttpParams().set('format', format);
     return this.http.get<any>(requestUrl, { params })
   }
+
+  normalizePersonConeId(rawConeId: string): string {
+    const trimmedConeId = rawConeId.trim();
+    if (trimmedConeId.includes('/persons/')) {
+      return trimmedConeId.substring(trimmedConeId.indexOf('/persons/'));
+    }
+    const withoutLeadingSlashes = trimmedConeId.replace(/^\/+/, '');
+    if (withoutLeadingSlashes.startsWith('persons/')) {
+      return `/${withoutLeadingSlashes}`;
+    }
+    return `/persons/${withoutLeadingSlashes}`;
+  }
+
+  getIdentifierValueByType(identifier: identifier_bunch[] | identifier_bunch, typeMarker: string): string | undefined {
+    if (Array.isArray(identifier)) {
+      return identifier.find(idValue => idValue.http_www_w3_org_2001_XMLSchema_instance_type?.includes(typeMarker))
+        ?.http_www_w3_org_1999_02_22_rdf_syntax_ns_value;
+    }
+
+    if (identifier?.http_www_w3_org_2001_XMLSchema_instance_type?.includes(typeMarker)) {
+      return identifier.http_www_w3_org_1999_02_22_rdf_syntax_ns_value;
+    }
+
+    return undefined;
+  }
 }
 
 export interface PersonResource {

@@ -127,6 +127,9 @@ export class ValidationErrorComponent {
       case 'min' : {
         return "Minimum: " + val.min;
       }
+      case  'email' : {
+        return this.translateService.instant('validation.invalidEmail');
+      }
       case Errors.CREATOR_ORCID_INVALID.toString() :
         return this.translateService.instant('validation.invalidOrcid');
       case Errors.DATE_NOT_PROVIDED.toString() :
