@@ -19,7 +19,17 @@ export class ChartsComponent implements OnDestroy {
   private readonly agg = {
     //includes total count in the response
     track_total_hits: true,
-
+    "query": {
+      "bool": {
+        "must_not": [
+          {
+            "term": {
+              "publicState": "WITHDRAWN"
+            }
+          }
+        ]
+      }
+    },
     aggs: {
       publications_by_genre: {
         terms: {
@@ -35,7 +45,7 @@ export class ChartsComponent implements OnDestroy {
   private documentTypes: { [key: string]: number } = {};
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
-  
+
 
   constructor(private itemsService: ItemsService, private translateService: TranslateService) {
     if (isPlatformBrowser(this.platformId)) {
@@ -44,7 +54,7 @@ export class ChartsComponent implements OnDestroy {
       ).subscribe(result => {
 
         let totalPublications = result.hits.total.value;
-        this.totalPublicationsChange.emit(totalPublications);  
+        this.totalPublicationsChange.emit(totalPublications);
         const buckets = result.aggregations['sterms#publications_by_genre'].buckets;
         this.documentTypes = {};
 
