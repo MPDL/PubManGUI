@@ -6,13 +6,16 @@
         <div class="infobox bg-light opacity-75 rounded-4 text-secondary-emphasis p-4">
           <h1 class="mb-1 fw-bold">{{'Home.welcomeMessage'|translate}}</h1>
           <p class="fs-5">{{'Home.P'|translate}}</p>
-          <p class="fs-5"><span id="pubCounter" class="fw-bold text-nowrap">{{totalPublications | number}}</span> {{'Home.p2'|translate}}</p>
+          <p class="fs-5"><span id="pubCounter" class="fw-bold text-nowrap">{{totalPublications | number}}</span>
+            {{'Home.p2'|translate}}</p>
         </div>
         <div class="search-wrapper">
           <form (ngSubmit)="onSearch()">
             <div class="search d-flex align-items-center bg-light opacity-75 rounded-5 p-3">
               <span class="material-symbols-outlined">search</span>
-              <input type="search" class="form-control ms-3 border-0 bg-transparent w-100" [placeholder]="'Home.Search'| translate" [(ngModel)]="searchTerm" name="homeSearch" [aria-label]="'Home.Search'| translate"/>
+              <input type="search" class="form-control ms-3 border-0 bg-transparent w-100"
+                [placeholder]="'Home.Search'| translate" [(ngModel)]="searchTerm" name="homeSearch"
+                [aria-label]="'Home.Search'| translate" />
             </div>
           </form>
         </div>
@@ -31,24 +34,24 @@
     <h4>{{'Home.latestReleases'| translate}}</h4>
     <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 g-4">
       @if(latestReleasedItems | async; as items) {
-        @for(item of items.slice(0,5); track item) {
-          <div class="col">
-            <a routerLink="/view/{{item?.objectId}}" class="card card-link h-100">
-              @let thumbUrl = getFirstPublicThumbnailUrl(item);
-              @if(thumbUrl) {
-                <img src="{{thumbUrl}}" alt="" class="card-img-top">
-              }
+      @for(item of items.slice(0,5); track item) {
+      <div class="col">
+        <a routerLink="/view/{{item?.objectId}}" class="card card-link h-100">
+          @let thumbUrl = getFirstPublicThumbnailUrl(item);
+          @if(thumbUrl) {
+          <img src="{{thumbUrl}}" alt="" class="card-img-top">
+          }
 
-              <div class="card-body">
-                <small class="card-title">{{ item.latestRelease?.modificationDate | date:'shortDate' }}</small>
-                <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
-              </div>
-            </a>
+          <div class="card-body">
+            <small class="card-title">{{ item.latestRelease?.modificationDate | date:'shortDate' }}</small>
+            <h6 class="card-title" [innerHTML]="item.metadata.title | sanitizeHtml"></h6>
           </div>
-        }
+        </a>
+      </div>
+      }
       }
       @else {
-        <pure-loading/>
+      <pure-loading />
       }
     </div>
   </div>
@@ -58,29 +61,30 @@
   <div id="news-section" class="mt-5">
     <h4>MPG.PuRe {{'Home.News'| translate}}</h4>
     @defer () {
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-        @if(newsItems | async; as blogEntries) {
-          @for(blogEntry of blogEntries.slice(0,3); track blogEntry) {
-            <div class="col">
-              <div class="card h-100">
-                <div class="card-header bg-white text-mpg-blue">
-                  <small class="card-title">{{ blogEntry.date | date:'short' }}</small>
-                  <h6 class="card-title">{{ blogEntry.title }}</h6>
-                </div>
-                <div class="card-body">
-                  {{ blogEntry.excerpt | slice:0:300 }} ...
-                </div>
-                <a href="{{ blogEntry.link }}" target="_blank" class="stretched-link" [aria-label]="'Home.NewsLink'| translate"></a>
-              </div>
-            </div>
-          }
-        }
-        @else {
-          <pure-loading/>
-        }
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      @if(newsItems | async; as blogEntries) {
+      @for(blogEntry of blogEntries.slice(0,3); track blogEntry) {
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-header bg-white text-mpg-blue">
+            <small class="card-title">{{ blogEntry.date | date:'short' }}</small>
+            <h6 class="card-title">{{ blogEntry.title }}</h6>
+          </div>
+          <div class="card-body">
+            {{ blogEntry.excerpt | slice:0:300 }} ...
+          </div>
+          <a href="{{ blogEntry.link }}" target="_blank" class="stretched-link"
+            [aria-label]="'Home.NewsLink'| translate"></a>
+        </div>
       </div>
+      }
+      }
+      @else {
+      <pure-loading />
+      }
+    </div>
     } @placeholder () {
-      <pure-loading/>
+    <pure-loading />
     }
 
   </div>
@@ -91,16 +95,10 @@
 <!-- Document Types Distribution Section -->
 <!-- @defer: the chart is browser-only; no canvas / chart.js code runs during SSR -->
 @defer {
-<div class="bg-mpg-blue text-white rounded-4 p-5 mb-4">
+<pure-charts (totalPublicationsChange)="totalPublications = $event"></pure-charts>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col mx-auto text-center">
-              <h4>{{'Home.chartTitle'|translate}}</h4>
-            <canvas #documentChart id="documentChart"></canvas>
-        </div>
-  </div>
-
-</div>
+}@placeholder () {
+<pure-loading />
 }
 
 
