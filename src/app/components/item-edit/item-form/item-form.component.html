@@ -1,5 +1,5 @@
-@if (aaService.principal.getValue().isDepositor || aaService.principal.getValue().isModerator ||
-aaService.principal.getValue().isAdmin)
+@if (aaService.principal.value.isDepositor || aaService.principal.value.isModerator ||
+aaService.principal.value.isAdmin)
 {
 <pure-item-badges [item]="item" [showVersion]="true" [showMetadata]="false"></pure-item-badges>
 <div class="container-fluid">
@@ -231,7 +231,7 @@ aaService.principal.getValue().isAdmin)
 </div>
 
 <!-- Debug output for admins -->
-@if (aaService.principal.getValue().isAdmin) {
+@if (aaService.principal.value.isAdmin) {
 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
   [attr.data-bs-target]="'#collapseJSON'" aria-expanded="true" aria-controls="collapseOne">Show JSON</button>
 
