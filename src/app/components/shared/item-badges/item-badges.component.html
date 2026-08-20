@@ -3,12 +3,12 @@
 
   @if(showMetadata) {
 
-    <span class="badge bg-primary me-2">{{'MdsPublicationGenre.' + item?.metadata?.genre | translate}}</span>
+    <span class="badge bg-primary me-2" data-test="item-badge-genre">{{'MdsPublicationGenre.' + item?.metadata?.genre | translate}}</span>
     @if (publicationState) {
-      <span class="badge bg-success me-2">{{'PublicationState.' + publicationState | translate}}: {{publicationStateDate | dateToYear}}</span>
+      <span class="badge bg-success me-2" data-test="item-badge-publication-state">{{'PublicationState.' + publicationState | translate}}: {{publicationStateDate | dateToYear}}</span>
     }
     @if (doi) {
-      <a class="badge bg-mpdl-purple me-2" href="https://doi.org/{{doi}}" target="_blank">DOI: {{doi}}</a>
+      <a class="badge bg-mpdl-purple me-2" data-test="item-badge-doi" href="https://doi.org/{{doi}}" target="_blank">DOI: {{doi}}</a>
     }
   }
 
@@ -23,13 +23,13 @@
   <span class="ms-sm-auto"></span>
 
     @if(!item?.objectId) {
-      <span class="badge bg-dark">NEW</span>
+      <span class="badge bg-dark" data-test="item-badge-new">NEW</span>
     }
     @else {
       @if(aaService.principal.value.loggedIn || state==='WITHDRAWN') {
 
 
-        <span class="badge {{state==='WITHDRAWN' ? 'bg-danger' : 'bg-dark' }} me-2">{{'ItemState.' + state | translate}}{{showVersion ? ' (v' + item?.versionNumber + ')' : ''}}</span>
+        <span class="badge {{state==='WITHDRAWN' ? 'bg-danger' : 'bg-dark' }} me-2" data-test="item-badge-state">{{'ItemState.' + state | translate}}{{showVersion ? ' (v' + item?.versionNumber + ')' : ''}}</span>
 
         @if(showPublicStatusIcon && state !== 'WITHDRAWN' && (isModeratorOrDepositor || aaService.principal.value.isAdmin)) {
 
