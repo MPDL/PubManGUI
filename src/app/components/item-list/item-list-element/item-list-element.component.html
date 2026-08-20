@@ -20,7 +20,7 @@
   <div class="row flex-grow-1">
     <div class="col-sm-9 flex-grow-1">
       <div class="d-flex flex-column h-100">
-        <div class="d-inline-flex">
+        <div class="d-inline-flex" data-test="item-authors">
           @for (author of first_three_authors; track author; let i = $index) {
             <div class="me-3">
               @if(author.person) {
