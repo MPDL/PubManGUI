@@ -519,6 +519,10 @@ export class MetadataFormComponent implements OnInit {
     this.moveItemInArray(this.creators, event.previousIndex, event.currentIndex);
   }
 
+  dropIdentifier(event: CdkDragDrop<string[]>) {
+    this.moveItemInArray(this.identifiers, event.previousIndex, event.currentIndex);
+  }
+
   /** Copied from Angular CDK to make our FormArrays work with drag and drop */
   moveItemInArray<T = any>(array: FormArray<FormGroup<ControlType<T>>>, fromIndex: number, toIndex: number): void {
     let object: any = array.at(fromIndex);
