@@ -74,15 +74,18 @@ export class OuTreeComponent {
   private static readonly EXPANDED_STATE_KEY = 'ou-tree-expanded-ous';
   private readonly document = inject(DOCUMENT);
   private restoreScheduled = false;
+  private isRestoringExpandedState = false;
 
   constructor(database: OUsDatabase, private modalService: NgbModal) {
     this.treeControl = new DynamicFlatTreeControl<AffiliationDbVO>();
     this.dataSource = new DynamicDataSource(this.treeControl, database);
 
-    // Persist the set of expanded node ids for the current session whenever the expansion state changes.
     this.treeControl.expansionModel.changed
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
+        if (this.isRestoringExpandedState) {
+          return;
+        }
         const expandedIds = this.treeControl.expansionModel.selected
           .map(node => node?.item?.objectId)
           .filter(id => !!id);
@@ -96,6 +99,9 @@ export class OuTreeComponent {
     database.initialData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(nodes => this.dataSource.data = nodes);
+
+    // Initialize the tree with persisted expanded node IDs.
+    this.scheduleExpandedStateRestore();
   }
 
   private get storage(): Storage | undefined {
@@ -143,7 +149,12 @@ export class OuTreeComponent {
       return;
     }
 
-    toExpand.forEach(node => this.treeControl.expansionModel.select(node));
+    this.isRestoringExpandedState = true;
+    try {
+      toExpand.forEach(node => this.treeControl.expansionModel.select(node));
+    } finally {
+      this.isRestoringExpandedState = false;
+    }
   }
 
   hasChildren = (_: number, nodeData: FlatNode<AffiliationDbVO>) => nodeData.hasChildren;
@@ -151,7 +162,6 @@ export class OuTreeComponent {
   info(node: FlatNode<AffiliationDbVO>) {
     const componentInstance = this.modalService.open(OuModalComponent, { size: 'lg' }).componentInstance;
     componentInstance.ouId = node.item.objectId;
-    // console.log(JSON.stringify(node));
   }
 
   searchForOu(node: FlatNode<AffiliationDbVO>) {
