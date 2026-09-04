@@ -17,6 +17,7 @@ import { AaService } from "../../../services/aa.service";
 import { ItemVersionState } from "../../../model/inge";
 import { MatomoTracker } from "ngx-matomo-client";
 import { SimplesearchService } from 'src/app/services/simplesearch.service';
+import { NgIf } from "../../../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   selector: 'pure-search',
@@ -26,7 +27,8 @@ import { SimplesearchService } from 'src/app/services/simplesearch.service';
     ReactiveFormsModule,
     TranslatePipe,
     NgbTooltip,
-  ],
+    
+],
   templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -63,9 +65,13 @@ export class SearchComponent implements OnInit{
     const search_term = this.search_form.get('text')?.value;
     this.simpleSearch.search(search_term)
 
-    this.search_form.controls['text'].patchValue('');
+  //  this.search_form.controls['text'].patchValue('');
+  //  this.search_form.controls['text'].patchValue(search_term ?? '');
   }
 
+  clearSearch(): void{
+    this.search_form.controls['text'].patchValue('');
+  }
 
   suggestSearchValues: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
     text$.pipe(

@@ -6,8 +6,23 @@
       </a>
     </div>
 
-    <input id="text" class="form-control border-0 col-10 shadow-none" type="search" formControlName="text"
+    <input id="text" class="form-control border-0 col-10 shadow-none" type="text" formControlName="text"
       [placeholder]="'header.search'| translate" aria-label="Search">
+     
+     @if(search_form.controls['text'].value){
+     <div class="input-group-text border-0 bg-body">
+      <button
+        type="button"
+        class="btn focus-ring p-0"
+        (click)="clearSearch()"
+        aria-label= "Clear search"
+      >
+      <span class = "material-symbols-outlined">close</span>
+     </button>
+     </div>      
+     }
+
+    
     <div class="input-group-text border-0 bg-body">
       <a class="btn focus-ring p-0" role="button" [ngbTooltip]="'header.advancedSearch' | translate"
         [routerLink]="['/advanced-search']" [queryParams]="{ reset: true }" (click)="collapse()" [ariaLabel]="'header.advancedSearch' | translate">
