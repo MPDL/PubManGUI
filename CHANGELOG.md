@@ -1,3 +1,27 @@
+## [1.3.1](https://github.com/MPDL/PubManGUI/compare/1.2.2...1.3.1) (2026-09-08)
+
+
+### Bug Fixes
+
+* [INGUI-320] Navigate to last breadcrumb after item deletion ([b5742d4](https://github.com/MPDL/PubManGUI/commit/b5742d45eacdef4968ebad5a327e4550562f3c3c))
+* [INGUI-330] - Wrong total number of publications on startpage ([e9c7442](https://github.com/MPDL/PubManGUI/commit/e9c7442e5b849ca6e10f12c0e1687d5baeef034d))
+* [INGUI-348] update translation loader path to remove leading slash ([ffaa95d](https://github.com/MPDL/PubManGUI/commit/ffaa95d1032ca08f0f96a0beac39981fb768a433))
+
+
+### Features
+
+* [INGUI-195] - Defer loading of charts on startpage ([1333913](https://github.com/MPDL/PubManGUI/commit/133391348c876d6bd6d7bbf1416edd0b242171f8))
+* [INGUI-217] Facet for file visibility ([b1c23a0](https://github.com/MPDL/PubManGUI/commit/b1c23a0b316c9f94185e72efa9994b1dc0661b2b))
+* [INGUI-253] - Enable admin for all actions ([01bb917](https://github.com/MPDL/PubManGUI/commit/01bb9173da6a5c64585dbe265c3c28d27febe5fb))
+* [INGUI-292] URL of external links should be editable ([38149a6](https://github.com/MPDL/PubManGUI/commit/38149a634436ef9c12f9cffe6f9569106daad5f4))
+* [INGUI-311] - The unfolding of the OU structure should be memorized. ([974e1a0](https://github.com/MPDL/PubManGUI/commit/974e1a015257164149e8bbef3bd0eccb54124225))
+* [INGUI-311] - The unfolding of the OU structure should be memorized. (until second level) ([e248954](https://github.com/MPDL/PubManGUI/commit/e2489540687538843f156b5bff962cbe1a5020d4))
+* [INGUI-321] - Always expand the "details" section in the submission mask ([3e46367](https://github.com/MPDL/PubManGUI/commit/3e463674c47c4fc7887e96847ec6327bb89b99a3))
+* [INGUI-327] New search category "invited" for events ([832bca9](https://github.com/MPDL/PubManGUI/commit/832bca9b33c8c18d129fa46f23d3efa616e527b0))
+* [INGUI-341] - Drag & Drop for IDs ([d53af2e](https://github.com/MPDL/PubManGUI/commit/d53af2e91ebde605fbf7135bae07720c57eebb2f))
+* [INGUI-347] - Adaptions to the header/search-bar in the mobile view ([2da7941](https://github.com/MPDL/PubManGUI/commit/2da794130c207bd0360eef710e18deca3bd3299b))
+* [INGUI-349] Add OA Status aggregation facet ([e3934aa](https://github.com/MPDL/PubManGUI/commit/e3934aa73a2e03ee79b6e545c6fcdc4c5b6c2a7a))
+* **orcid:** add ORCID request authorization component and related functionality ([3a717b1](https://github.com/MPDL/PubManGUI/commit/3a717b1bf4d203969128c365d93352ff4629838d))
 ## [1.2.2](https://github.com/MPDL/PubManGUI/compare/1.2.1...1.2.2) (2026-07-28)
 
 
