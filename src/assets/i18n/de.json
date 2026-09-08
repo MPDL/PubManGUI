@@ -65,6 +65,9 @@
     "SUBMIT_PUBITEMS": "Datensatz einstellen",
     "WITHDRAW_PUBITEMS": "Datensatz verwerfen"
   },
+  "Charts": {
+    "chartTitle": "Häufigste Genre-Typen"
+  },
   "ContentCategories": {
     "abstract": "Abstract",
     "any-fulltext": "Volltext",
@@ -141,7 +144,6 @@
     "News": "Nachrichten",
     "P": "dem Publikationsrepositorium der Max-Planck-Gesellschaft",
     "Search": "Suche",
-    "chartTitle": "Häufigste Genre-Typen",
     "latestReleases": "Neueste Volltexte",
     "p2": "Publikationen verfügbar",
     "welcomeMessage": "Willkommen auf MPG.PuRe"

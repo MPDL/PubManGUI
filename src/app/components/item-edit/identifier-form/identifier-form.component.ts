@@ -24,6 +24,7 @@ export class IdentifierFormComponent {
   @Input() index!: number;
   @Input() index_length!: number;
   @Input() multi!: boolean;
+  @Input() useDragDrop?: boolean = false;
   @Output() notice = new EventEmitter();
 
   error_types = Errors;

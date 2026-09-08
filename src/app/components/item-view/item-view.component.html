@@ -103,12 +103,12 @@
 
     <pure-topnav-cart [resetSelectionAfterAction]="false" />
 
-    @if (aaService.principal.value.isModerator) {
+    @if (aaService.principal.value.isModerator || aaService.principal.value.isAdmin) {
       <div class="vr"></div>
       <pure-topnav-batch [resetSelectionAfterAction]="false" />
     }
   </div>
-  }
+  }œ
 
   @if (listStateService.currentFullQuery && listStateService.page > 0) {
   <pure-paginator end [totalNumberOfItems]="listStateService.currentNumberOfRecords" [size]=1
@@ -118,7 +118,7 @@
 
 
 <div class="row mt-5">
-  @if (isModeratorOrDepositor && item.message && item.publicState !== 'WITHDRAWN') {
+  @if ((isModeratorOrDepositor || aaService.principal.value.isAdmin) && item.message && item.publicState !== 'WITHDRAWN') {
   <div class="alert alert-light">
     <b>{{ 'common.comment' | translate }}:</b> {{ item.message }}
   </div>
@@ -338,7 +338,7 @@
       <pure-item-view-metadata-element [sub]="true" [hl]="true">
         <span label>{{ 'MetadataFields.creator' | translate }}</span>
         <span content>
-          @if(isModeratorOrDepositor) {
+          @if(isModeratorOrDepositor || aaService.principal.value.isAdmin) {
           {{ (itemCreator$ | async)?.name }}
           }
           ({{item.creator?.objectId}})
@@ -359,13 +359,13 @@
       <pure-item-view-metadata-element [sub]="true" [hl]="true">
         <span label>{{ 'MetadataFields.modifier' | translate }}</span>
         <span content>
-          @if(isModeratorOrDepositor) {
+          @if(isModeratorOrDepositor || aaService.principal.value.isAdmin) {
           {{ (itemModifier$ | async)?.name }}
           }
           ({{item.modifier?.objectId}})
         </span>
       </pure-item-view-metadata-element>
-      @if(isModeratorOrDepositor) {
+      @if(isModeratorOrDepositor || aaService.principal.value.isAdmin) {
       <pure-item-view-metadata-element [sub]="true" [hl]="true">
         <span label>{{ 'common.comment' | translate }}</span>
         <span content>

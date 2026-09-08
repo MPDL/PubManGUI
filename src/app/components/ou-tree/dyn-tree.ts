@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { CollectionViewer, DataSource, SelectionChange } from '@angular/cdk/collections';
-import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, merge, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export class FlatNode<T> {
@@ -40,19 +40,20 @@ export class DynamicDataSource<T> implements DataSource<FlatNode<T>> {
     }
 
     constructor(private treeControl: DynamicFlatTreeControl<T>,
-        private database: Database<T>) { }
+        private database: Database<T>) {
+        this.expansionSubscription = this.treeControl.expansionModel.changed.subscribe(change => {
+            this.handleTreeControl(change as SelectionChange<FlatNode<T>>);
+        });
+    }
+
+    private readonly expansionSubscription: Subscription;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-    disconnect(collectionViewer: CollectionViewer): void { }
+    disconnect(_collectionViewer: CollectionViewer): void {
+        this.expansionSubscription.unsubscribe();
+    }
 
     connect(collectionViewer: CollectionViewer): Observable<FlatNode<T>[]> {
-        this.treeControl.expansionModel.changed.subscribe(change => {
-            if ((change as SelectionChange<FlatNode<T>>).added ||
-                (change as SelectionChange<FlatNode<T>>).removed) {
-                this.handleTreeControl(change as SelectionChange<FlatNode<T>>);
-            }
-        });
-
         return merge(collectionViewer.viewChange, this.dataChange).pipe(map(() => this.data));
     }
 
@@ -76,14 +77,29 @@ export class DynamicDataSource<T> implements DataSource<FlatNode<T>> {
         }
 
         if (expand) {
-            children.subscribe(items => {
+            children.pipe(
+                catchError(() => of([] as T[])),
+                finalize(() => {
+                    node.isLoading = false;
+                    this.dataChange.next(this.data);
+                })
+            ).subscribe(items => {
+                const currentIndex = this.data.indexOf(node);
+                if (currentIndex < 0) {
+                    return;
+                }
+
+                const existingDescendants = this.getContiguousDescendants(node);
+                if (existingDescendants.length > 0) {
+                    this.data.splice(currentIndex + 1, existingDescendants.length);
+                }
+
                 const nodes: FlatNode<T>[] = [];
                 items.forEach(item => nodes.push(
                     new FlatNode<T>(item, node.level + 1, this.database.hasChildren(item))
                 ));
-                this.data.splice(index + 1, 0, ...nodes);
+                this.data.splice(currentIndex + 1, 0, ...nodes);
                 this.dataChange.next(this.data);
-                node.isLoading = false;
             });
         } else {
             const count = this.countInvisibleDescendants(node);
@@ -101,6 +117,24 @@ export class DynamicDataSource<T> implements DataSource<FlatNode<T>> {
             });
         }
         return count;
+    }
+
+    private getContiguousDescendants(node: FlatNode<T>): FlatNode<T>[] {
+        const descendants: FlatNode<T>[] = [];
+        const nodeIndex = this.data.indexOf(node);
+        if (nodeIndex < 0) {
+            return descendants;
+        }
+
+        for (let i = nodeIndex + 1; i < this.data.length; i += 1) {
+            const current = this.data[i];
+            if (current.level <= node.level) {
+                break;
+            }
+            descendants.push(current);
+        }
+
+        return descendants;
     }
 
 }

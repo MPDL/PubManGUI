@@ -1,42 +1,59 @@
+<ng-template #nodeActions let-node="node">
+    <span>
+        @if (node.item.publicStatus === 'CLOSED') {
+            <span class="badge bg-dark mt-1 me-2">Closed</span>
+        }
+        <button
+            type="button"
+            class="btn btn-link p-0 ms-1"
+            (click)="searchForOu(node)"
+            [attr.aria-label]="'Search ' + node.item.name"
+            title="Search"
+        >
+            <span class="material-symbols-outlined mb-1" aria-hidden="true">search</span>
+        </button>
+        <button
+            type="button"
+            class="btn btn-link p-0 ms-1"
+            (click)="info(node)"
+            [attr.aria-label]="'Info for ' + node.item.name"
+            title="Info"
+        >
+            <span class="material-symbols-outlined mb-1" aria-hidden="true">info</span>
+        </button>
+    </span>
+</ng-template>
+
 <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding class="flat-tree-node">
-        <button class="btn btn-lg btn-outline border-0">
-            <i class="bi-dash" [style.visibility]="'hidden'"></i>
-            <span [ngClass]="{'text-secondary': node.item.publicStatus === 'CLOSED' }" class="ms-2" style="cursor: default">{{node.item.name}}</span>
+        <button type="button" class="btn btn-lg btn-outline border-0" [attr.aria-label]="node.item.name" style="cursor: default">
+            <i class="bi-dash" aria-hidden="true" [style.visibility]="'hidden'"></i>
+            <span [ngClass]="{'text-secondary': node.item.publicStatus === 'CLOSED'}" class="ms-2" style="cursor: default">{{ node.item.name }}</span>
         </button>
-        <span>
-            @if(node.item.publicStatus === 'CLOSED') {
-                <span class="badge bg-dark mt-1 me-2">Closed</span>
-            }
-            <button class="btn btn-link p-0 ms-1" (click)="searchForOu(node)">
-                <span class="material-symbols-outlined mb-1">search</span>
-            </button>
-            <button class="btn btn-link p-0 ms-1" (click)="info(node)">
-                <span class="material-symbols-outlined mb-1">info</span>
-            </button>
-        </span>
+        <ng-container *ngTemplateOutlet="nodeActions; context: { node: node }"></ng-container>
     </cdk-tree-node>
+
     <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChildren" cdkTreeNodePadding class="flat-tree-node">
-        <button class="btn btn-lg btn-outline border-0" cdkTreeNodeToggle>
-            <i class="text-primary"
-                [ngClass]="{'bi-chevron-down': treeControl.isExpanded(node), 'bi-chevron-right': !treeControl.isExpanded(node)}"></i>
-            <span [ngClass]="{'text-secondary': node.item.publicStatus === 'CLOSED'}" class="ms-2" >{{node.item.name}}</span>
+        <button
+            type="button"
+            class="btn btn-lg btn-outline border-0"
+            cdkTreeNodeToggle
+            [attr.aria-label]="(treeControl.isExpanded(node) ? 'Collapse ' : 'Expand ') + node.item.name"
+            [attr.aria-expanded]="treeControl.isExpanded(node)"
+        >
+            <i
+                class="text-primary"
+                aria-hidden="true"
+                [ngClass]="{'bi-chevron-down': treeControl.isExpanded(node), 'bi-chevron-right': !treeControl.isExpanded(node)}"
+            ></i>
+            <span [ngClass]="{'text-secondary': node.item.publicStatus === 'CLOSED'}" class="ms-2">{{ node.item.name }}</span>
         </button>
-        <span>
-            @if(node.item.publicStatus === 'CLOSED') {
-                <span class="badge bg-dark mt-1 me-2">Closed</span>
-            }
-            <button class="btn btn-link p-0 ms-1" (click)="searchForOu(node)">
-                <span class="material-symbols-outlined mb-1">search</span>
-            </button>
-            <button class="btn btn-link p-0 ms-1" (click)="info(node)">
-                <span class="material-symbols-outlined mb-1">info</span>
-            </button>
-        </span>
+        <ng-container *ngTemplateOutlet="nodeActions; context: { node: node }"></ng-container>
+
         @if (node.isLoading) {
-        <div class="ms-2 spinner-border spinner-border-sm text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
+            <div class="ms-2 spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         }
     </cdk-tree-node>
 </cdk-tree>

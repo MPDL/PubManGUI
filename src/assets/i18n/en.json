@@ -65,6 +65,9 @@
     "SUBMIT_PUBITEMS": "Submit dataset",
     "WITHDRAW_PUBITEMS": "Discard dataset"
   },
+  "Charts": {
+  "chartTitle": "Most common genres"
+  },
   "ContentCategories": {
     "abstract": "Abstract",
     "any-fulltext": "Full-text",
@@ -141,7 +144,6 @@
     "News": "News",
     "P": "the publication repository of the Max Planck Society",
     "Search": "Search",
-    "chartTitle": "Most common genres",
     "latestReleases": "Recent full-texts",
     "p2": "publications available",
     "welcomeMessage": "Welcome to MPG.PuRe"
