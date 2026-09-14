@@ -38,6 +38,7 @@ export class SubjectFormComponent {
   error_types = Errors;
 
   miscellaneousService = inject(MiscellaneousService);
+  genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
 
   constructor() {
@@ -53,9 +54,4 @@ export class SubjectFormComponent {
   add_remove_subject(event: any) {
     this.notice.emit(event);
   }
-
-  get genreSpecificProperties() {
-    return this.miscellaneousService.genreSpecficProperties();
-  }
-
 }

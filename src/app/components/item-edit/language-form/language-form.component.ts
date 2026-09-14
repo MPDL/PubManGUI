@@ -21,12 +21,9 @@ export class LanguageFormComponent {
   @Output() notice = new EventEmitter();
 
   miscellaneousService = inject(MiscellaneousService);
+  genreSpecificResource = this.miscellaneousService.genrePropertiesResource;
 
   add_remove_identifier(event: any) {
     this.notice.emit(event);
-  }
-
-  get genreSpecificProperties() {
-    return this.miscellaneousService.genreSpecficProperties();
   }
 }
