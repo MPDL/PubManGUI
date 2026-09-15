@@ -97,11 +97,13 @@ export default class FetchComponent implements OnInit {
               this.router.navigateByUrl('/edit_import');
             },
             error: (response) => {
+              /*
               if (response.error.cause !== undefined) {
                 this.msgSvc.warning(JSON.stringify(response.error.cause.cause.message));
               } else {
                 this.msgSvc.warning(JSON.stringify(response.error.exception));
               }
+              */
               this.fetchEnd();
             },
           });
