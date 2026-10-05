@@ -219,8 +219,8 @@ export class ExportItemsComponent {
       this.selectedExportType.value === exportTypes.BIBTEX ||
       this.selectedExportType.value === exportTypes.JSON ||
       this.selectedExportType.value === exportTypes.ESCIDOC_ITEMLIST_XML ||
-      this.selectedExportType.value === exportTypes.MARC_XML;
-
+      this.selectedExportType.value === exportTypes.MARC_XML ||
+      this.selectedExportType.value === exportTypes.ORCID;
   }
 
   closeModal() {
