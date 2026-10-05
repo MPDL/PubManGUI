@@ -697,7 +697,8 @@ export enum exportTypes {
     HTML_PLAIN = "html_plain",
     HTML_LINKED = "html_linked",
     JSON_CITATION = "json_citation",
-    ESCIDOC_SNIPPET = "escidoc_snippet"
+    ESCIDOC_SNIPPET = "escidoc_snippet",
+    ORCID = "orcid"
 }
 
 export enum citationTypes {
