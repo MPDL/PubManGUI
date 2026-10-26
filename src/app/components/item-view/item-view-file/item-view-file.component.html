@@ -150,16 +150,20 @@
             {{ file.metadata.description }}
           </div>
           }
-          @if(oaStatusIcon) {
-          <div class="mt-1">
-            <strong>{{ 'FileMetadataFields.oaStatus' | translate }}</strong>
-          </div>
-          <div>
 
-            <img alt="OA logo" src="assets/images/{{oaStatusIcon}}" style="height: 1.2em;" [ngbTooltip]="tipContent" />
-            {{ ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')) | translate }}
-          </div>
+          @if (oaStatusIcon || file.metadata.oaStatus==='CLOSED_ACCESS') {
+            <div class="mt-1">
+              <strong>{{ 'FileMetadataFields.oaStatus' | translate }}</strong>
+            </div>
+            <div>
+              @if (oaStatusIcon) {
+                <img alt="OA logo" src="assets/images/{{oaStatusIcon}}" style="height: 1.2em;" [ngbTooltip]="tipContent" />
+              }
+              {{ ('OAStatus.' + (file.metadata.oaStatus ?file.metadata.oaStatus : 'NOT_SPECIFIED')) | translate }}
+            </div>
           }
+
+
           @if(file.metadata.license | notEmpty) {
           <div class="mt-1">
             <strong>{{ 'FileMetadataFields.license' | translate }}</strong>
