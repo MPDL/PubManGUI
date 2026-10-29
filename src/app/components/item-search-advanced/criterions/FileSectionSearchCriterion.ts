@@ -19,10 +19,11 @@ export class FileSectionSearchCriterion extends SearchCriterion {
   componentContentCategorySearchCriterion = new ComponentContentCategorySearchCriterion();
   componentVisibilitySearchCriterion = new ComponentVisibilitySearchCriterion();
   embargoDateSearchCriterion = new DateSearchCriterion(DATE_SEARCH_TYPES.COMPONENT_EMBARGO_DATE);
-  oaStatusSearchCriterion = new ComponentOaStatusSearchCriterion();
+  oaStatusSearchCriterion;
 
   constructor(fileType: COMPONENT_SEARCH_TYPES, opts?:any) {
     super(fileType, opts);
+    this.oaStatusSearchCriterion = new ComponentOaStatusSearchCriterion(fileType);
     this.content.addControl("componentAvailable", new FormControl("WHATEVER"));
     this.content.addControl("contentCategory", this.componentContentCategorySearchCriterion);
     this.content.addControl("visibility", this.componentVisibilitySearchCriterion);
@@ -269,9 +270,14 @@ export class ComponentOaStatusSearchCriterion extends SearchCriterion {
   oaStatusOptions = Object.keys(OA_STATUS);
 
 
-  constructor(opts?:any) {
+  constructor(fileType: COMPONENT_SEARCH_TYPES, opts?:any) {
     super("oaStatus", opts);
     this.content.addControl("oaStatus", new FormGroup({}));
+    if(fileType === "INTERNAL_MANAGED") {
+      this.oaStatusOptions = this.oaStatusOptions
+        //filter "closed access" for internal managed files, as this is not a valid option for these files
+        .filter(oaStatus => oaStatus !== OA_STATUS.CLOSED_ACCESS);
+    }
     this.oaStatusOptions.forEach(cc => this.oaStatusFormGroup.addControl(cc, new FormControl(false)));
   }
 
