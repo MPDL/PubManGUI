@@ -78,7 +78,8 @@ export class ItemViewMetadataComponent {
 
   identifierUrl(id?: IdentifierVO) {
     if(id) {
-      if (IdType.DOI === id.type){
+      const doiTypes = [IdType.DOI, IdType.BIORXIV, IdType.CHEMRXIV, IdType.EARTHARXIV, IdType.EDARXIV, IdType.ESS_OPEN_ARCHIVE, IdType.MEDRXIV, IdType.PSYARXIV, IdType.RESEARCH_SQUARE, IdType.SOCARXIV];
+      if (id.type && doiTypes.includes(id.type)) {
         return 'https://doi.org/' + id.id;
       } else if (IdType.ADS == id.type) {
         return 'https://ui.adsabs.harvard.edu/abs/'+ id.id;
@@ -87,7 +88,7 @@ export class ItemViewMetadataComponent {
       } else if (IdType.CONE == id.type) {
         return this.coneUri + id.id;
       } else if (IdType.ISI == id.type) {
-        return 'http://gateway.isiknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcAuth=SFX&SrcApp=SFX&DestLinkType=FullRecord&DestApp=WOS&KeyUT=' + id.id;
+        return 'https://www.webofscience.com/wos/woscc/full-record/WOS:' + id.id;
       } else if (IdType.PMC == id.type) {
         return 'https://www.ncbi.nlm.nih.gov/pmc/articles/' + id.id;
       } else if (IdType.PMID == id.type) {
@@ -95,7 +96,9 @@ export class ItemViewMetadataComponent {
       } else if (IdType.SSRN == id.type) {
         return 'https://ssrn.com/abstract=' + id.id;
       } else if (IdType.ZDB == id.type) {
-        'https://ld.zdb-services.de/resource/' + id.id;
+        return 'https://ld.zdb-services.de/resource/' + id.id;
+      } else if (IdType.ISSN == id.type) {
+        return 'https://portal.issn.org/resource/ISSN/' + id.id;
       } else if (id.id && isUrl(id.id)) {
         return id.id;
       }
