@@ -1,7 +1,7 @@
 import { SearchCriterion } from "./SearchCriterion";
 import { FormControl } from "@angular/forms";
 import {baseElasticSearchQueryBuilder, IndexField} from "../../../utils/search-utils";
-import { Observable, of } from "rxjs";
+import { map, Observable, of } from "rxjs";
 import { ContextDbVO, SubjectClassification } from "../../../model/inge";
 import { ContextsService } from "../../../services/pubman-rest-client/contexts.service";
 
@@ -233,16 +233,16 @@ export class AnyFieldAndFulltextSearchCriterion extends FulltextSearchCriterion 
   }
 
   override toElasticSearchQuery(): Observable<Object | undefined> {
-    return of({
-      bool: {
-        should : [
-          {simple_query_string: {query: this.getFormContent(), default_operator: "and", analyze_wildcard: true}},
-          super.toElasticSearchQuery()
-
-        ]
-
-      }
-    })
+    return super.toElasticSearchQuery().pipe(
+      map(fulltextQuery => ({
+        bool: {
+          should : [
+            {simple_query_string: {query: this.getFormContent(), default_operator: "and", analyze_wildcard: true}},
+            fulltextQuery
+          ]
+        }
+      }))
+    );
     //return baseElasticSearchQueryBuilder(this.getElasticIndexes(), this.content.get('text')?.value);
   }
 }
