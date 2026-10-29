@@ -39,6 +39,7 @@ import {filter} from "rxjs/operators";
 import {ItemSearchAdvancedService} from "./item-search-advanced.service";
 import {CopyButtonDirective} from "../../directives/copy-button.directive";
 import {MessageService} from "../../services/message.service";
+import {IDENTIFIER_DISPLAY_TYPES} from "src/app/components/item-edit/identifier-form/identifier-form.component";
 
 @Component({
   selector: 'pure-item-search-advanced',
@@ -70,7 +71,7 @@ export class ItemSearchAdvancedComponent {
   result: any;
   query: any;
 
-  identifierOptions = Object.keys(IdType);
+  identifierOptions = IDENTIFIER_DISPLAY_TYPES;
   personOptions = Object.keys(CreatorRole);
   currentlyOpenedParenthesis!: Parenthesis | undefined;
   possibleCriterionsForClosingParenthesisMap: SearchCriterion[] = []

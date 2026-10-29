@@ -31,42 +31,44 @@ export class IdentifierFormComponent {
 
   identifier_types = Object.keys(IdType);
 
-  identifier_display_types = [
-    IdType.ADS,
-    IdType.ARXIV,
-    IdType.BIBTEX_CITEKEY,
-    IdType.BIORXIV,
-    IdType.BMC,
-    IdType.CHEMRXIV,
-    IdType.CONE,
-    IdType.DOI,
-    IdType.EARTHARXIV,
-    IdType.EDARXIV,
-    IdType.EDOC,
-    IdType.ESS_OPEN_ARCHIVE,
-    IdType.ISBN,
-    IdType.ISI,
-    IdType.ISSN,
-    IdType.MEDRXIV,
-    IdType.OTHER,
-    IdType.PATENT_APPLICATION_NR,
-    IdType.PATENT_NR,
-    IdType.PATENT_PUBLICATION_NR,
-    IdType.PII,
-    IdType.PMC,
-    IdType.PMID,
-    IdType.PND,
-    IdType.PSYARXIV,
-    IdType.REPORT_NR,
-    IdType.RESEARCH_SQUARE,
-    IdType.SOCARXIV,
-    IdType.SSRN,
-    IdType.URI,
-    IdType.URN,
-    IdType.ZDB
-  ]
+  identifier_display_types: IdType[] = IDENTIFIER_DISPLAY_TYPES;
 
   add_remove_identifier(event: any) {
     this.notice.emit(event);
   }
 }
+
+export const IDENTIFIER_DISPLAY_TYPES = [
+  IdType.ADS,
+  IdType.ARXIV,
+  IdType.BIBTEX_CITEKEY,
+  IdType.BIORXIV,
+  IdType.BMC,
+  IdType.CHEMRXIV,
+  IdType.CONE,
+  IdType.DOI,
+  IdType.EARTHARXIV,
+  IdType.EDARXIV,
+  IdType.EDOC,
+  IdType.ESS_OPEN_ARCHIVE,
+  IdType.ISBN,
+  IdType.ISI,
+  IdType.ISSN,
+  IdType.MEDRXIV,
+  IdType.OTHER,
+  IdType.PATENT_APPLICATION_NR,
+  IdType.PATENT_NR,
+  IdType.PATENT_PUBLICATION_NR,
+  IdType.PII,
+  IdType.PMC,
+  IdType.PMID,
+  IdType.PND,
+  IdType.PSYARXIV,
+  IdType.REPORT_NR,
+  IdType.RESEARCH_SQUARE,
+  IdType.SOCARXIV,
+  IdType.SSRN,
+  IdType.URI,
+  IdType.URN,
+  IdType.ZDB
+]

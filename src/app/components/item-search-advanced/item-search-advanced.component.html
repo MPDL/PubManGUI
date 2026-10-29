@@ -226,7 +226,7 @@
                 </option>
                 @for (idType of identifierOptions; track idType) {
                 <option [value]="idType">
-                  {{ idType }}
+                  {{'SourceIdType.' + idType | translate}}
                 </option>
                 }
               </select>
