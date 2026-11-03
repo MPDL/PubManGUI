@@ -23,6 +23,7 @@
                     <span> {{'common.datasets' | translate}}</span>
                 </a>
             </li>
+          @if (!aaSvc.principal.value.readOnlyMode) {
             <li class="pt-0 pb-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/batch/actions' ]"
                     (click)="whenReady('/batch/actions')"
@@ -30,8 +31,9 @@
                     <span> {{'common.actions' | translate}}</span>
                 </a>
             </li>
+          }
             <li class="pt-0 pb-0">
-                <a class="nav-link nav-label" [routerLink]="[ '/batch/logs' ]" 
+                <a class="nav-link nav-label" [routerLink]="[ '/batch/logs' ]"
                     (click)="whenReady('/batch/logs')"
                     [ngClass]="{'disabled pb-2' : !batchSvc.hasLogs()}" data-test="sidenav-batch-logs">
                     <span> {{'common.logs' | translate}}</span>

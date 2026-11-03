@@ -12,12 +12,14 @@
         </button>
 
         <ul [ngClass]="isMoreShown ? 'd-block' : 'd-none'" id="imports-options">
+          @if(!aaSvc.principal.value.readOnlyMode) {
             <li class="pt-0 pb-0 mx-0">
-                <a class="nav-link nav-label" [routerLink]="[ '/imports/new' ]"
-                (click)="whenReady('/imports/new')" data-test="sidenav-import-new">
-                    <span> {{'common.new' | translate}}</span>
-                </a>
-            </li>
+                  <a class="nav-link nav-label" [routerLink]="[ '/imports/new' ]"
+                  (click)="whenReady('/imports/new')" data-test="sidenav-import-new">
+                      <span> {{'common.new' | translate}}</span>
+                  </a>
+              </li>
+          }
             <li class="pt-0 pb-0">
                 <a class="nav-link nav-label" [routerLink]="[ '/imports/myimports' ]"
                     (click)="whenReady('/imports/myimports')"

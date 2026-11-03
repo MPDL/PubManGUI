@@ -6,6 +6,7 @@ import { SidenavComponent } from './components/shared/sidenav/sidenav.component'
 import { FooterComponent } from './components/footer/footer.component';
 import { ScrollToTopComponent } from './components/shared/scroll-to-top/scroll-to-top.component';
 import { InfoSubheaderComponent } from "./components/shared/info-subheader/info-subheader.component";
+import { TopInfoBannerComponent } from "./components/shared/top-info-banner/top-info-banner.component";
 
 import {TranslateService} from "@ngx-translate/core";
 import { NgbTooltipConfig } from "@ng-bootstrap/ng-bootstrap";
@@ -18,7 +19,7 @@ import { WindowFocusCheckLoginService } from "./services/window-focus-check-logi
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoSubheaderComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, SidenavComponent, ScrollToTopComponent, InfoSubheaderComponent, TopInfoBannerComponent],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './app.component.html'
 })

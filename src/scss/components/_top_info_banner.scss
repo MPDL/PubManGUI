@@ -1,0 +1,17 @@
+:root {
+  --top-info-banner-offset: 0px;
+}
+
+pure-top-info-banner {
+  display: block;
+  position: sticky;
+  top: 0;
+  //Paint above the fixed header so the logo keeps its original cut-off look while the banner is visible
+  z-index: 1040;
+}
+
+pure-top-info-banner .alert {
+  @media (max-width: 575.98px) {
+    font-size: 0.8125rem;
+  }
+}

@@ -638,6 +638,7 @@
     "OPTIMISTIC_LOCKING_ERROR": "The dataset was changed in the meantime",
     "PASSWORD_CHANGE_REQUIRED": "The password needs to be changed",
     "PASSWORD_PATTERN_INVALID": "The password does not match the password rules",
+    "READ_ONLY": "The system is in read-only maintenance mode; changes are not allowed",
     "PERMISSION_DENIED": "You have no sufficient permission",
     "PID_ERROR": "An error occured when applying the PID (handle)",
     "TOKEN_INVALID": "The token is invalid",
@@ -1024,6 +1025,11 @@
     "release.confirmation": "Do you really want to release this import \"{{name}}\"?",
     "remove.confirmation": "Do you really want to remove this import \"{{name}}\"?",
     "submit.confirmation": "Do you really want to submit this import \"{{name}}\"?"
+  },
+  "readOnly": {
+    "title": "Read-only mode",
+    "message": "The system is in read-only maintenance mode. Changes cannot be saved.",
+    "messageAdmin": "The system is in read-only maintenance mode. As a system administrator, you can still make changes."
   },
   "validation": {
     "allRequired": "Not all required values",

@@ -1,5 +1,6 @@
 .header {
   height: 100px;
+  top: var(--top-info-banner-offset, 0px);
   transition: all 0.1s ease;
 
   #brand {

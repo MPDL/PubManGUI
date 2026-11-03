@@ -1,7 +1,7 @@
 .side_nav {
   left: 9.7%;
   position: fixed;
-  top: 150px;
+  top: calc(var(--top-info-banner-offset, 0px) + 150px);
   width: 17em;
   z-index: 1032;
   overflow: hidden;
@@ -58,6 +58,7 @@
 
 .side_nav_mobile {
   position: fixed;
+  //The mobile sidenav lives inside the fixed (and transformed) header, so no banner offset here
   top: 1rem;
   width: 100%;
   z-index: 16;

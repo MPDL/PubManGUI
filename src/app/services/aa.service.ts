@@ -24,6 +24,14 @@ import {PureRrs} from "./pure-rrs";
 import { isPlatformBrowser } from "@angular/common";
 
 
+/**
+ * Response of the {@code /login/who} endpoint. The backend adds the global read-only flag to the
+ * user account response, but it is not part of the generated {@link AccountUserDbVO} model.
+ */
+export interface IpAccountUserDbVO extends AccountUserDbVO {
+  readOnlyMode?: boolean;
+}
+
 export class Principal{
   user?: AccountUserDbVO;
   loggedIn: boolean = false;
@@ -32,6 +40,7 @@ export class Principal{
   isAdmin: boolean = false;
   isLocalAdmin: boolean = false;
   isReporter: boolean = false;
+  readOnlyMode: boolean = false;
   moderatorContexts: ContextDbVO[] = [];
   depositorContexts: ContextDbVO[] = [];
   allContexts: ContextDbVO[] = [];
@@ -94,6 +103,7 @@ export class AaService {
         principal.ipAddress = user?.ipAddress;
         principal.matchedIpName = user?.matchedIpName;
         principal.matchedIpId = user?.matchedIpId;
+        principal.readOnlyMode = !!user?.readOnlyMode;
 
         if (!user || !user.active) {
           this.principal.next(principal);
@@ -202,6 +212,14 @@ export class AaService {
           this.router.navigate(['/'])
         }
 
+        //Pick up read-only mode changes (e.g. enabled/disabled at runtime) without a reload
+        const principal = this.principal.value;
+        const readOnlyMode = !!user?.readOnlyMode;
+        if (principal.readOnlyMode !== readOnlyMode) {
+          principal.readOnlyMode = readOnlyMode;
+          this.principal.next(principal);
+        }
+
         }
       )
     ).subscribe();
@@ -211,7 +229,7 @@ export class AaService {
 
 
 
-  private who(silentLogout=true): Observable<AccountUserDbVO> {
+  private who(silentLogout=true): Observable<IpAccountUserDbVO> {
     if (!isPlatformBrowser(this.platformId)) {
       return of({active: false} as AccountUserDbVO);
     }
@@ -219,7 +237,7 @@ export class AaService {
     const whoUrl = this.loginUrl + '/who';
     let user: any;
 
-    return this.http.request<AccountUserDbVO>('GET', whoUrl, {
+    return this.http.request<IpAccountUserDbVO>('GET', whoUrl, {
       //headers: headers,
       observe: 'body',
       withCredentials: true,

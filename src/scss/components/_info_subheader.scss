@@ -2,14 +2,14 @@ pure-info-subheader {
 
   .row {
     position: fixed;
-    top: 100px;
+    top: calc(var(--top-info-banner-offset, 0px) + 100px);
     z-index: 1010;
     height: 50px;
     padding-top: 15px;
     background-color: var(--bs-body-bg) !important;
 
     &.scrolled {
-      top: 50px;
+      top: calc(var(--top-info-banner-offset, 0px) + 50px);
       transition: all 0.1s ease;
       
     }
@@ -17,7 +17,7 @@ pure-info-subheader {
 
   @media (max-width: 1199.98px) {
     .row {
-      top: 50px;
+      top: calc(var(--top-info-banner-offset, 0px) + 50px);
     }
   }
 }

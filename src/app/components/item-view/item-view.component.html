@@ -83,7 +83,7 @@
 
     <div class="vr"></div>
 
-    @if (aaService.principal.value.isDepositor) {
+    @if (aaService.principal.value.isDepositor && !aaService.principal.value.readOnlyMode) {
     <span class="d-inline-block" ngbTooltip="{{'common.useAsTemplate' | translate}}" >
       <button class="nav-link" (click)="useAsTemplate()" aria-label="{{'common.useAsTemplate' | translate}}">
         <span class="material-symbols-outlined">copy_all</span>

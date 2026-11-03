@@ -1,0 +1,12 @@
+@if (aaService.principal.value.readOnlyMode) {
+<div class="alert mb-0 rounded-0 border-0 d-flex align-items-center justify-content-center px-3 py-2"
+     [class.alert-info]="aaService.principal.value.isAdmin"
+     [class.alert-warning]="!aaService.principal.value.isAdmin"
+     role="status" aria-live="polite">
+  <span class="material-symbols-outlined me-2" aria-hidden="true">lock</span>
+  <span class="text-center">
+    <strong class="me-1">{{ 'readOnly.title' | translate }}</strong>
+    <span>{{ (aaService.principal.value.isAdmin ? 'readOnly.messageAdmin' : 'readOnly.message') | translate }}</span>
+  </span>
+</div>
+}

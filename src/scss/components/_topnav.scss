@@ -1,6 +1,6 @@
 .top_nav_pos {
     position: sticky;
-    top: 150px;
+    top: calc(var(--top-info-banner-offset, 0px) + 150px);
     //z-index: 15;
     z-index: 1000;
     //overflow: hidden;
@@ -17,7 +17,7 @@
 
     &.scrolled {
         //z-index: 1031;
-        top: 100px;
+        top: calc(var(--top-info-banner-offset, 0px) + 100px);
     }
 
   div.vr:first-child, div.vr:last-child, div.vr+div.vr,div.vr:has(+ *:empty) {
@@ -26,7 +26,7 @@
 
 
   @media (max-width: 1399.98px) {
-    top: 100px;
+    top: calc(var(--top-info-banner-offset, 0px) + 100px);
   }
 
 }

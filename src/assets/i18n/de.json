@@ -638,6 +638,7 @@
     "OPTIMISTIC_LOCKING_ERROR": "Der Datensatz wurde in der Zwischenzeit geändert",
     "PASSWORD_CHANGE_REQUIRED": "Das Passwort muss geändert werden",
     "PASSWORD_PATTERN_INVALID": "Das Passwort entspricht nicht den Regeln",
+    "READ_ONLY": "Das System befindet sich im schreibgeschützten Wartungsmodus; Änderungen sind nicht erlaubt",
     "PERMISSION_DENIED": "Sie haben keine ausreichende Berechtigung",
     "PID_ERROR": "Es ist ein Fehler bei der Zuweisung der PID (handle) aufgetreten",
     "TOKEN_INVALID": "Das Token ist ungültig",
@@ -1024,6 +1025,11 @@
     "release.confirmation": "Möchten Sie den Import \"{{name}}\" wirklich freigeben?",
     "remove.confirmation": "Möchten Sie den Import \"{{name}}\" wirklich löschen?",
     "submit.confirmation": "Möchten Sie den Import \"{{name}}\" wirklich einstellen?"
+  },
+  "readOnly": {
+    "title": "Schreibgeschützter Modus",
+    "message": "Das System befindet sich im schreibgeschützten Wartungsmodus. Änderungen können nicht gespeichert werden.",
+    "messageAdmin": "Das System befindet sich im schreibgeschützten Wartungsmodus. Als Systemadministrator können Sie weiterhin Änderungen vornehmen."
   },
   "validation": {
     "allRequired": "Nicht alle erforderlichen Werte",
