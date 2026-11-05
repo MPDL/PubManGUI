@@ -1,102 +1,37 @@
-import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
-  DOCUMENT,
   ElementRef,
-  HostListener,
   inject,
   Renderer2,
-  ViewChild,
-  ChangeDetectionStrategy
+  ViewChild
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { AaService } from "../../../services/aa.service";
-
-import { MatBadgeModule } from '@angular/material/badge';
-import { BatchNavComponent } from 'src/app/components/batch/batch-nav/batch-nav.component';
-import { ImportsNavComponent } from 'src/app/components/imports/imports-nav/imports-nav.component';
-import { CartService } from "../../../services/cart.service";
 
 import { TranslatePipe } from "@ngx-translate/core";
 
-import { AaComponent } from 'src/app/components/aa/aa.component';
-import { SearchComponent } from 'src/app/components/shared/search/search.component';
-import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
-import { ToolsnavComponent } from 'src/app/components/shared/toolsnav/toolsnav.component';
-import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { SidenavOptionsComponent } from './sidenav-options/sidenav-options.component';
 
 @Component({
   selector: 'pure-sidenav',
   standalone: true,
   imports: [
-    RouterLink,
-    MatBadgeModule,
-    CommonModule,
-    BatchNavComponent,
-    ImportsNavComponent,
     TranslatePipe,
-    AaComponent,
-    SearchComponent,
-    LangSwitchComponent,
-    ToolsnavComponent,
-    NgbPopover,
-    NgbTooltip,
+    SidenavOptionsComponent,
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './sidenav.component.html'
 })
-export class SidenavComponent implements AfterViewInit {
+export class SidenavComponent {
 
   @ViewChild('sidenav', { read: ElementRef }) nav!: ElementRef;
   renderer = inject(Renderer2);
 
-  aaService = inject(AaService);
-  cartService = inject(CartService);
-  private document = inject(DOCUMENT);
-
-  mobile: boolean | null = null;
-  mobile_options: HTMLElement | null = null;
-
-  ngOnInit() {
-    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
-    this.mobile = viewWidth < 1200 ? true : false;
-  }
-
-  ngAfterViewInit(): void {
-    this.collapse();
-  }
-
-  /*
-  ex_col() {
-    const expanded = this.nav.nativeElement.classList.contains('collapsed');
-    this.renderer[expanded ? 'removeClass' : 'addClass'](this.nav.nativeElement, 'collapsed');
-  }
-  */
-
   expand() {
-    if (!this.mobile) {
-      this.renderer.removeClass(this.nav.nativeElement, 'collapsed');
-    }
+    this.renderer.removeClass(this.nav.nativeElement, 'collapsed');
   }
 
   collapse() {
-    if (this.mobile) {
-      if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
-      if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
-    }
-    else {
-      this.renderer.addClass(this.nav.nativeElement, 'collapsed');
-    }
-  }
-
-  @HostListener('window:resize')
-  onWindowResize() {
-    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
-    this.mobile = viewWidth < 992 ? true : false;
-    if (!this.mobile) {
-      this.collapse();
-    }
+    this.renderer.addClass(this.nav.nativeElement, 'collapsed');
   }
 
 }

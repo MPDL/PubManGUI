@@ -17,7 +17,8 @@ describe('Login', () => {
 
     //Then
     cy.wait('@login').its('response.statusCode').should('eq', 200)
-    cy.get('[data-test="username"]').should('have.text', Cypress.env('testUser').name)
+    // the header renders a desktop and a mobile account menu - assert the desktop one
+    cy.get('[data-test="username"]').first().should('have.text', Cypress.env('testUser').name)
   })
 
 })

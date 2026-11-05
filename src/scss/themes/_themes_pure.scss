@@ -70,9 +70,8 @@
     }
   }
 
-  .side_nav_mobile {
+  .offcanvas.sidenav-mobile {
     background-color: $body-secondary-bg;
-  ;
 
     a path {
       fill: $link-color;
@@ -219,7 +218,7 @@
     }
   }
 
-  .side_nav_mobile {
+  .offcanvas.sidenav-mobile {
     background-color: $body-secondary-bg-dark;
 
     a path {

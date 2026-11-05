@@ -1,0 +1,43 @@
+@if (aaService.principal.value.isDepositor ) {
+@if(!aaService.principal.value.readOnlyMode) {
+<a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['edit']" data-test="sidenav-entry">
+  <span class="material-symbols-outlined">note_add</span>
+  <span class="nav-label ms-3">{{'common.addItem'| translate }}</span>
+</a>
+}
+
+<a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['my']" data-test="sidenav-my-datasets">
+  <span class="material-symbols-outlined">folder_shared</span>
+  <span class="nav-label ms-3">{{'common.my'| translate }}</span>
+</a>
+}
+
+@if (aaService.principal.value.isModerator || aaService.principal.value.isAdmin) {
+<a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['qa']" data-test="sidenav-qa-area">
+  <span class="material-symbols-outlined">workspace_premium</span>
+  <span class="nav-label ms-3">{{'common.qa'| translate }}</span>
+</a>
+}
+
+@if (aaService.principal.value.isDepositor || aaService.principal.value.isModerator || aaService.principal.value.isAdmin) {
+<pure-imports-nav></pure-imports-nav>
+}
+
+@if (aaService.principal.value.isModerator || aaService.principal.value.isAdmin) {
+<pure-batch-nav></pure-batch-nav>
+}
+
+<a class="nav-link border-bottom py-2 py-xl-3" [routerLink]="['cart']" data-test="sidenav-basket">
+  <svg fill="currentColor" height="1.5em" width="1.5em">
+    <use href="assets/icons/icons.svg#cart"></use>
+  </svg>
+  <span class="nav-label ms-3 text-nowrap">{{'common.basket'| translate }}</span>
+  @if(cartService.objectIds$.value.length > 0) {
+  <div class="matBadge" matBadge='{{ cartService.objectIds$.value.length }}'></div>
+  }
+</a>
+
+<a class="nav-link py-2 py-xl-3" [routerLink]="['ou-tree']" data-test="sidenav-organizational-units">
+  <span class="material-symbols-outlined">account_tree</span>
+  <span class="nav-label ms-3 text-nowrap">{{'common.ouTree'| translate }}</span>
+</a>

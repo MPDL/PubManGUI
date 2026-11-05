@@ -15,10 +15,10 @@
                     navigate_before
                 </span>
     </button>
-    <span i18n="@@pagination.page">{{ 'common.pagination.page' | translate }}</span>
-    <input type="text" class="form-control mx-2" [formControl]="pageNumberField"
-           (keyup.enter)="jumpToPage()">
-    <span i18n="@@pagination.of">{{ 'common.pagination.of' | translate }}</span><span class="text-nowrap">&nbsp;{{totalNumberOfPages | number}}</span>
+    <span class="page-label" i18n="@@pagination.page">{{ 'common.pagination.page' | translate }}</span>
+    <input type="text" class="form-control page-input mx-2" [formControl]="pageNumberField"
+           (keyup.enter)="jumpToPage()" [attr.aria-label]="'common.pagination.page' | translate">
+    <span class="page-of" i18n="@@pagination.of">{{ 'common.pagination.of' | translate }}</span><span class="page-total text-nowrap">{{totalNumberOfPages | number}}</span>
     <button type="button" class="btn btn-sm border border-0 focus-ring" (click)="next()"
             [disabled]="isLast || loadingSignal()">
                 <span class="material-symbols-outlined">
@@ -32,9 +32,10 @@
                 </span>
     </button>
     }
-    @if(size > 1){
-    <select class="form-select" [formControl]="sizeField"
-            (change)="itemPerPageChange($event)" size="1">
+    @if(size > 1 && totalNumberOfPages > 0){
+    <select class="form-select page-size" [formControl]="sizeField"
+            (change)="itemPerPageChange($event)" size="1"
+            [attr.aria-label]="'common.pagination.itemsPerPage' | translate">
       @for (pages of itemPerPageOptions; track pages) {
         <option [value]="pages.value">{{pages.label}}</option>
       }

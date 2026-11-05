@@ -17,6 +17,11 @@ import {TranslatePipe} from "@ngx-translate/core";
 })
 export class AaComponent {
 
+  // The component is rendered twice (desktop header and mobile header), so the
+  // dropdown id must be unique to keep `aria-labelledby` unambiguous.
+  private static nextId = 0;
+  readonly dropdownId = `navbarDropdown${AaComponent.nextId++}`;
+
   dialog_conf = {
     hasBackdrop: false,
     panelClass: 'pure-dialog',

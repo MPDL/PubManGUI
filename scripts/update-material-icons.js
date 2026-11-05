@@ -37,6 +37,7 @@ const icons = [
   "list_alt",
   "location_on",
   "location_off",
+  "menu",
   "lock",
   "login",
   "navigate_before",

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DOCUMENT, HostListener, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { AaService } from 'src/app/services/aa.service';
@@ -26,17 +26,11 @@ export class ImportsNavComponent implements OnInit {
   importsSvc = inject(ImportsService);
   aaSvc = inject(AaService);
   translateSvc = inject(TranslateService);
-  private document = inject(DOCUMENT);
-
-  mobile: boolean | null = null;
-  mobile_options: HTMLElement | null = null;
 
   isMoreShown: boolean = false;
 
   ngOnInit(): void {
     this.importsSvc.checkImports();
-    const viewWidth = document.documentElement.offsetWidth || 0;
-    this.mobile = viewWidth < 1400 ? true : false;
   }
 
   whenReady(option: string) {
@@ -58,25 +52,11 @@ export class ImportsNavComponent implements OnInit {
         }
         break;
     }
-    this.collapse();
-  }
-
-  collapse() {
-    if (this.mobile) {
-      if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
-      if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
-    }
   }
 
   showMore(): boolean {
     this.isMoreShown = !this.isMoreShown;
     return this.isMoreShown;
-  }
-
-  @HostListener('window:resize')
-  onWindowResize() {
-    const viewWidth = document.documentElement.offsetWidth || 0;
-    this.mobile = viewWidth < 1400 ? true : false;
   }
 
 }

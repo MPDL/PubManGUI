@@ -1,11 +1,10 @@
-import { Component, DOCUMENT, HostListener, inject, ChangeDetectionStrategy, PLATFORM_ID } from '@angular/core';
+import { afterNextRender, Component, ElementRef, HostListener, inject, Injector, ChangeDetectionStrategy, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AaComponent } from '../aa/aa.component';
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { AaService } from 'src/app/services/aa.service';
 import { LangSwitchComponent } from 'src/app/components/shared/lang-switch/lang-switch.component';
-import { SidenavComponent } from 'src/app/components/shared/sidenav/sidenav.component';
 
 import { TranslatePipe } from "@ngx-translate/core";
 import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
@@ -13,6 +12,7 @@ import { NgbPopover, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { SearchComponent } from 'src/app/components/shared/search/search.component';
 import { ToolsnavComponent } from 'src/app/components/shared/toolsnav/toolsnav.component';
 import {environment} from "../../../environments/environment";
+import { MobileNavService } from '../shared/sidenav/mobile-nav.service';
 
 
 @Component({
@@ -26,7 +26,6 @@ import {environment} from "../../../environments/environment";
     ReactiveFormsModule,
     LangSwitchComponent,
     AaComponent,
-    SidenavComponent,
     NgClass,
     TranslatePipe,
     NgbTooltip,
@@ -38,36 +37,27 @@ import {environment} from "../../../environments/environment";
 export class HeaderComponent {
 
   aa = inject(AaService);
+  mobileNav = inject(MobileNavService);
 
-  headerHeight: number = 0;
-  header: HTMLElement | null = null;
-  private document = inject(DOCUMENT);
+  searchOpen = signal(false);
+  private mobileSearch = viewChild<ElementRef<HTMLElement>>('mobileSearch');
+  private injector = inject(Injector);
+
   private readonly platformId = inject(PLATFORM_ID);
   isScrolled = false;
 
-  ngOnInit() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-    const nav = this.document.getElementById('header');
-    if (nav) {
-      this.header = nav;
-      this.headerHeight = nav.offsetHeight;
-    }
-  }
-
-  tools() {
-    alert('select from tools ...');
-  }
-
-  switch_lang() {
-    const loc = localStorage.getItem('locale');
-    if (loc?.localeCompare('de') === 0) {
-      localStorage.setItem('locale', 'en');
-    } else {
-      localStorage.setItem('locale', 'de');
-    }
-    location.reload();
+  toggleSearch() {
+    const open = !this.searchOpen();
+    this.searchOpen.set(open);
+    afterNextRender(
+      () => {
+        if (open) {
+          // focus the input of the freshly rendered search row, once it is in the DOM
+          this.mobileSearch()?.nativeElement.querySelector('input')?.focus();
+        }
+      },
+      { injector: this.injector }
+    );
   }
 
   get singleIPAdress() {

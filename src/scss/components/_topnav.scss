@@ -29,4 +29,103 @@
     top: calc(var(--top-info-banner-offset, 0px) + 100px);
   }
 
+  // Up to the mobile header breakpoint (992px) there is no room for the
+  // desktop layout, so stack the toolbar and keep the paginator grouped left.
+  @media (max-width: 991.98px) {
+    // The mobile header is always 56px tall, so stick right below it. When the
+    // mobile search row is open, its extra height is published as a CSS
+    // variable so the toolbar follows the row instead of being covered by it.
+    top: calc(var(--top-info-banner-offset, 0px) + 56px + var(--mobile-search-offset, 0px));
+    border-radius: 0;
+    border-bottom: 1px solid var(--bs-border-color-translucent);
+
+    &.scrolled {
+      top: calc(var(--top-info-banner-offset, 0px) + 56px + var(--mobile-search-offset, 0px));
+    }
+
+    // breathing room above and below the two rows
+    padding: 0.375rem 0 0.5rem;
+
+    // stack the action icons and the paginator instead of keeping them in
+    // separate grid columns
+    > [class*="col-md"] {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    #topnav {
+      min-height: 0;
+      padding: 0;
+    }
+
+    .navbar-nav {
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.125rem;
+      margin-left: 0.75rem !important;
+    }
+
+    // the vertical rules add noise in the compact icon row
+    div.vr {
+      display: none !important;
+    }
+
+    .float-end {
+      float: none;
+      width: 100%;
+      padding-left: 0.75rem;
+
+      // separate the toolbar row from the paginator, but only when there is
+      // actually a paginator to show
+      &:has(.mpdl-pagination > button) {
+        margin-top: 0.375rem;
+        padding-top: 0.375rem;
+        border-top: 1px solid var(--bs-border-color-translucent);
+      }
+    }
+
+    // Lay the paginator out as a proper flex row so it wraps cleanly and give
+    // the arrow buttons a comfortable touch target.
+    .mpdl-pagination {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.125rem 0.25rem;
+      padding-left: 0.25rem;
+
+      // compact "1 / 198" page indicator on small screens
+      .page-label,
+      .page-of {
+        display: none;
+      }
+
+      .page-total::before {
+        content: "/";
+        margin-right: 0.25rem;
+      }
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2rem;
+        min-height: 2rem;
+        padding: 0;
+      }
+
+      .page-input {
+        width: 2.75rem;
+        height: 2rem;
+        margin: 0 0.125rem !important;
+      }
+
+      // keep the page-size select next to the navigation controls instead of
+      // floating it to the far right edge
+      .page-size {
+        margin-left: 0.5rem;
+        flex: 0 0 auto;
+      }
+    }
+  }
+
 }

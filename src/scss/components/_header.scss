@@ -1,3 +1,13 @@
+// The mobile search row is rendered below the 56px header and therefore
+// overflows it. Publish its height (51px) plus the 8px gap below the header as
+// a variable; the content, breadcrumb bar and sticky toolbar consume it so they
+// move down instead of being covered by the open search field.
+@media (max-width: 991.98px) {
+  :root:has(.header-mobile-search) {
+    --mobile-search-offset: 3.6875rem;
+  }
+}
+
 .header {
   height: 100px;
   top: var(--top-info-banner-offset, 0px);
@@ -23,7 +33,7 @@
     text-decoration: none;
   }
 
-  #search {
+  .search-form {
     .input-group-text {
       height: 2.2rem;
     }
@@ -40,41 +50,171 @@
     }
   }
 
-  &.scrolled {
-    height: 50px;
+  // Only the desktop header shrinks on scroll. On mobile the whole header is
+  // already compact, so the brand must keep its size and stay readable.
+  @media (min-width: 992px) {
+    &.scrolled {
+      height: 50px;
 
-    #logo {
-      width: 80px;
-      height: 80px;
-      margin-left: 30px;
-      margin-right: 30px;
-      margin-top: -10px;
+      #logo {
+        width: 80px;
+        height: 80px;
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-top: -10px;
+      }
+
     }
-
   }
 
   #header_nav {
     z-index: 99;
   }
 
-  @media (max-width: 1199.98px) {
-    height: 50px;
-
-    #logo {
-      width: 80px;
-      height: 80px;
-      margin-left: 30px;
-      margin-right: 30px;
-      margin-top: -20px;
-    }
+  @media (max-width: 991.98px) {
+    height: 56px;
+    padding: 0 0.25rem;
 
     #header_container {
-      transform: translateY(-12px);
-      height: 60px !important;
+      position: relative;
+      padding-left: 0;
+      padding-right: 0;
+
+      // The mobile search row overflows the 56px header box. Paint a full-bleed
+      // backdrop behind the container so scrolled page content cannot show
+      // through the gap below the header, and no page background shows at the
+      // sides of the search row (the header has an 8px padding).
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0 -0.5rem;
+        background-color: var(--bs-light);
+        z-index: -1;
+      }
     }
 
-    .side_nav_mobile {
-      transform: translateY(-20px);
+    #header_container>.row {
+      --bs-gutter-x: 0;
     }
+
+    #logo {
+      width: 44px;
+      height: 44px;
+      margin: 0;
+    }
+
+    #brand {
+      height: 56px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    #brand_name {
+      font-size: 1.15rem;
+      letter-spacing: 0.02rem;
+
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .header-desktop-actions > .header-action {
+    margin-right: 1.5rem;
+  }
+
+  // Between lg and xl the desktop header is visible, but the column widths on
+  // the search and action groups only apply from xl on. Let the search take
+  // the remaining space instead of its intrinsic width, and compact the brand
+  // and icon spacing so the account entry is never pushed off-screen.
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    #brand_name {
+      font-size: 1.9rem;
+    }
+
+    .header-desktop-search {
+      flex: 1 1 auto;
+      min-width: 8rem;
+      max-width: 22rem;
+    }
+
+    .header-desktop-search pure-search {
+      width: 100%;
+    }
+
+    .header-desktop-actions {
+      flex: 0 0 auto;
+    }
+
+    .header-desktop-actions > .header-action {
+      margin-right: 0.5rem;
+    }
+  }
+
+  // At exactly 1200px the xl column widths are still too narrow for the
+  // action group, which would clip the account entry. Relax the spacing until
+  // there is room for the full-width desktop layout again.
+  @media (min-width: 1200px) and (max-width: 1299.98px) {
+    .header-desktop-actions > .header-action {
+      margin-right: 0.75rem;
+    }
+  }
+
+  .header-mobile-burger,
+  .header-mobile-actions .nav-link {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .header-mobile-actions {
+    flex-shrink: 0;
+    // keep search, language switch and account comfortably apart
+    gap: 0.75rem;
+
+    pure-lang-switch {
+      margin-right: 0 !important;
+      display: inline-flex;
+      align-items: center;
+      height: 44px;
+      line-height: 1;
+
+      // The generic mobile action rule above forces a 44x44 hit area. The
+      // language switch is text-only, so keep its buttons compact instead of
+      // wrapping "en"/"de" in a large empty box.
+      .nav-link {
+        // Keep the label on the same baseline as its neighbour and the "|"
+        // separator; a fixed-height flex box would vertically center the text
+        // instead (and thus misalign "en"/"de"). The padding provides a decent
+        // touch area without adding horizontal bulk.
+        display: inline-block;
+        width: auto;
+        min-width: 0;
+        height: auto;
+        min-height: 0;
+        padding: 0.5rem 0.125rem;
+        margin: 0;
+        line-height: 1;
+        vertical-align: baseline;
+      }
+
+      b {
+        font-weight: 600;
+      }
+    }
+
+    // keep the account entry compact on small screens - icon only
+    pure-aa .dropdown-toggle span {
+      display: none;
+    }
+  }
+
+  .header-mobile-search {
+    padding: 0.25rem 0.25rem 0.5rem;
   }
 }

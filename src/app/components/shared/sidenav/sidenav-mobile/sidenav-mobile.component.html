@@ -1,0 +1,39 @@
+<div class="offcanvas-header sidenav-mobile-header">
+  <h5 class="offcanvas-title" id="sidenavMobileLabel">{{ 'header.brand.name' | translate }}</h5>
+  <button type="button" class="btn-close" data-test="mobile-nav-close" (click)="close()" [attr.aria-label]="'common.close' | translate"></button>
+</div>
+
+<div class="offcanvas-body sidenav-mobile-body">
+
+  <nav class="nav flex-column sidenav-mobile-nav" aria-label="{{ 'common.sidenav' | translate }}">
+    <pure-sidenav-options></pure-sidenav-options>
+    <pure-toolsnav [inline]="true"></pure-toolsnav>
+  </nav>
+
+  <div class="d-flex justify-content-evenly sidenav-mobile-meta">
+    <a ngbTooltip="{{ 'common.help' | translate }}" placement="top" container="body" [routerLink]="['/help']"
+      class="nav-link" aria-label="{{ 'common.help' | translate }}">
+      <span class="material-symbols-outlined">help</span>
+    </a>
+
+    <div>
+      <button type="button" [ngbPopover]="ipInfo" class="nav-link"
+        [ngbTooltip]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'"
+        [attr.aria-label]="aaService.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
+        <span class="material-symbols-outlined">{{aaService.principal.value.matchedIpName ? 'location_on' :
+          'location_off'
+          }}</span>
+      </button>
+      <ng-template #ipInfo>
+        @if(aaService.principal.value.matchedIpName) {
+        <span class="fw-bold text-success">{{aaService.principal.value.matchedIpName}}</span>
+        }
+        @else {
+        <span class="text-warning">{{ 'header.ipOffCampus' | translate }}</span>
+        }
+        <p class="small">IP: {{aaService.principal.value.ipAddress}}</p>
+      </ng-template>
+    </div>
+  </div>
+
+</div>

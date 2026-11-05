@@ -1,16 +1,18 @@
-<header id="header" class="navbar navbar-light navbar-expand-xl p-2 fixed-top header bg-light"
+<header id="header" class="navbar navbar-light navbar-expand-lg p-2 fixed-top header bg-light"
   [ngClass]="{ 'scrolled': isScrolled }">
   <div class="container-fluid d-flex justify-content-start" id="header_container">
 
-    <div class="d-block d-lg-none align-middle">
-      <pure-sidenav></pure-sidenav>
-    </div>
-
     <div class="row offset-0 col-12 offset-xxl-1 col-xxl-11">
 
-      <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-lg-between w-100">
 
-        <div id="brand" class="d-flex align-items-xl-center navbar-brand">
+        <button type="button" class="btn nav-link d-lg-none header-mobile-burger" (click)="mobileNav.open()"
+          [attr.aria-expanded]="mobileNav.isOpen()" data-test="mobile-nav-toggle"
+          [attr.aria-label]="'header.menu' | translate">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <div id="brand" class="d-flex align-items-center navbar-brand">
           <div class="d-none d-sm-flex">
             <a [routerLink]="['/']" >
               <img id="logo" src="assets/images/mpg_blue.svg" [aria-label]="'header.brand.name'| translate"/>
@@ -30,22 +32,22 @@
           </div>
         </div>
 
-        <div class="d-none justify-content-center d-lg-flex col-xl-4">
+        <div class="header-desktop-search d-none justify-content-center d-lg-flex col-xl-4">
           <pure-search class="col-xl-10"></pure-search>
         </div>
 
 
-        <div class="d-none col-xl-4 d-lg-flex align-items-center me-2">
+        <div class="header-desktop-actions d-none col-xl-4 d-lg-flex align-items-center me-2">
           <!--<pure-switch-bs-theme class="me-4"></pure-switch-bs-theme>-->
-          <div class="me-4">
+          <div class="header-action">
             <a ngbTooltip="{{ 'common.help' | translate }}" [routerLink]="['/help']" class="nav-link" aria-label="{{ 'common.help' | translate }}">
               <span class="material-symbols-outlined">help</span>
             </a>
           </div>
 
-          <pure-toolsnav class="me-4"></pure-toolsnav>
+          <pure-toolsnav class="header-action"></pure-toolsnav>
 
-          <div class="me-4">
+          <div class="header-action">
             <button type="button" [ngbPopover]="ipInfo" class="nav-link"
               [ngbTooltip]="aa.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'"
               [ariaLabel]="aa.principal.value.matchedIpName ? 'On Campus' : 'Off Campus'">
@@ -64,11 +66,27 @@
             </ng-template>
           </div>
 
-          <pure-lang-switch class="me-4"></pure-lang-switch>
-          <pure-aa class="me-4"></pure-aa>
+          <pure-lang-switch class="header-action"></pure-lang-switch>
+          <pure-aa class="header-action"></pure-aa>
 
         </div>
+
+        <div class="d-flex d-lg-none align-items-center header-mobile-actions ms-auto">
+          <button type="button" class="btn nav-link" (click)="toggleSearch()" data-test="mobile-search-toggle"
+            [attr.aria-expanded]="searchOpen()" [attr.aria-label]="'header.search' | translate">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+
+          <pure-lang-switch class="me-2"></pure-lang-switch>
+          <pure-aa></pure-aa>
+        </div>
       </div>
+
+      @if (searchOpen()) {
+      <div #mobileSearch class="header-mobile-search d-lg-none w-100 bg-light" data-test="mobile-search-row">
+        <pure-search></pure-search>
+      </div>
+      }
     </div>
 
   </div>

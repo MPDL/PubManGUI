@@ -15,15 +15,32 @@ pure-info-subheader {
     }
   }
 
-  @media (max-width: 1199.98px) {
+  // Below the desktop breakpoint the header is 56px tall and the breadcrumb is
+  // hidden, so the subheader sits directly under the compact header. There is
+  // nothing to reserve space for: collapse the bar entirely so it does not
+  // leave an empty strip between the header and the page content. Message
+  // alerts are absolutely positioned and still overlay the page when present.
+  @media (max-width: 991.98px) {
     .row {
-      top: calc(var(--top-info-banner-offset, 0px) + 50px);
+      top: calc(var(--top-info-banner-offset, 0px) + 56px + var(--mobile-search-offset, 0px));
+      height: auto;
+      min-height: 0;
+      padding-top: 0;
+      background-color: transparent !important;
+
+      &.scrolled {
+        top: calc(var(--top-info-banner-offset, 0px) + 56px + var(--mobile-search-offset, 0px));
+      }
     }
   }
 }
 
 #content {
-  @media (max-width: 1199.98px) {
-    margin-top: -50px;
+  @media (max-width: 991.98px) {
+    // Pull the content up to just below the compact header (16px gap) instead
+    // of leaving room for the empty breadcrumb bar. When the mobile search row
+    // is open, shift the content down by the row's extra height so the field
+    // never overlays it.
+    margin-top: calc(-80px + var(--mobile-search-offset, 0px));
   }
 }

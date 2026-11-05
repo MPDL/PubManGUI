@@ -19,10 +19,23 @@
 }
 
 .card-img-top {
+  // Same preview height as before: at least 150px, growing with the viewport.
   height: 12vw;
   min-height: 9.375rem;
   object-fit: cover;
   object-position: top;
+}
+
+// Long publication titles used to stretch a card over many lines. Clamp them
+// to three lines and reserve that space so all cards in a row line up.
+.card-title-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  min-height: calc(3 * 1.2em);
 }
 
 .search {

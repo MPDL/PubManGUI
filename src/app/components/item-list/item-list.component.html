@@ -41,8 +41,20 @@
   </pure-topnav>
 </ng-content>
 
+<button type="button" class="btn btn-outline-secondary d-lg-none w-100 d-flex align-items-center justify-content-between mt-3 item-list-filter-toggle"
+        data-test="item-list-filter-toggle"
+        #filterToggle
+        (click)="openFilterPanel()"
+        aria-haspopup="dialog" [attr.aria-expanded]="filterPanelOpen" aria-controls="item-list-filter-panel">
+    <span class="d-flex align-items-center gap-2">
+        <span class="material-symbols-outlined">tune</span>
+        {{ 'common.filterAndSort' | translate }}
+    </span>
+    <small class="text-muted">{{number_of_results | number}} {{'common.items' | translate}}</small>
+</button>
+
 <div class="row">
-    <div class="col-12 col-xl-9">
+    <div class="col-12 col-lg-8 col-xl-9">
         @if (result_list | async; as list) {
         <div>
             <div>
@@ -67,11 +79,26 @@
       }
 
     </div>
-    <aside class="d-none d-xl-block col-xl-3">
-        <div class="mt-4">
+    @if (filterPanelOpen) {
+      <div class="item-list-filter-backdrop d-lg-none" data-test="item-list-filter-backdrop" (click)="closeFilterPanel()"></div>
+    }
+    <aside id="item-list-filter-panel" data-test="item-list-filter-panel"
+           class="item-list-filter-panel col-12 col-lg-4 col-xl-3"
+           #filterPanel
+           [class.open]="filterPanelOpen"
+           [attr.role]="filterPanelOpen ? 'dialog' : null"
+           [attr.aria-modal]="filterPanelOpen ? 'true' : null"
+           [attr.aria-labelledby]="filterPanelOpen ? 'item-list-filter-title' : null"
+           (keydown.tab)="trapFocus($event)"
+           (keydown.shift.tab)="trapFocus($event)">
+        <div class="d-flex d-lg-none align-items-center justify-content-between item-list-filter-header">
+            <h5 class="mb-0" id="item-list-filter-title">{{ 'common.filterAndSort' | translate }}</h5>
+            <button type="button" class="btn-close" data-test="item-list-filter-close" #filterClose (click)="closeFilterPanel()" [attr.aria-label]="'common.close' | translate"></button>
+        </div>
+        <div class="mt-3 mt-lg-4">
 
             <div>
-              <div class="container pb-4 text-nowrap">{{number_of_results | number}} {{'common.items' | translate}}</div>
+              <div class="container pb-4 text-nowrap d-none d-lg-block">{{number_of_results | number}} {{'common.items' | translate}}</div>
               <div class="row">
               <ng-content #sortAndFilter></ng-content>
               </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, HostListener, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -17,7 +17,6 @@ import { AaService } from "../../../services/aa.service";
 import { ItemVersionState } from "../../../model/inge";
 import { MatomoTracker } from "ngx-matomo-client";
 import { SimplesearchService } from 'src/app/services/simplesearch.service';
-import { NgIf } from "../../../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   selector: 'pure-search',
@@ -32,7 +31,7 @@ import { NgIf } from "../../../../../node_modules/@angular/common/types/_common_
   templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit{
+export class SearchComponent {
 
   search_form = this.form_builder.group({
     text: '',
@@ -48,17 +47,6 @@ export class SearchComponent implements OnInit{
     private simpleSearch: SimplesearchService
   ) {
   }
-
-  private document = inject(DOCUMENT);
-
-  mobile: boolean | null = null;
-  mobile_options: HTMLElement | null = null;
-
-  ngOnInit(): void {
-    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
-    this.mobile = viewWidth < 1400 ? true : false;
-  }
-
 
   search(): void {
 
@@ -192,19 +180,5 @@ export class SearchComponent implements OnInit{
     event.preventDefault();
     this.search_form.controls['text'].patchValue(searchTerm);
   }
-
-  collapse() {
-    if (this.mobile) {
-      if (!this.mobile_options) this.mobile_options = this.document.getElementById('side_nav_mobile_options');
-      if (this.mobile_options?.classList.contains('show')) this.mobile_options!.classList.remove('show');
-    }
-  }
-
-  @HostListener('window:resize')
-  onWindowResize() {
-    const viewWidth = (this.document?.documentElement as any)?.offsetWidth || 0;
-    this.mobile = viewWidth < 1400 ? true : false;
-  }
-
 
 }

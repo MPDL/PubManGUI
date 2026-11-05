@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule, Location } from '@angular/common';
-import { AfterViewInit, Component, ContentChild, ContentChildren, Input, QueryList, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, HostListener, ViewChild, ElementRef, ContentChild, ContentChildren, Input, QueryList, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemListElementComponent } from './item-list-element/item-list-element.component';
 import {ActivatedRoute, NavigationEnd, NavigationSkipped, NavigationStart, Router} from '@angular/router';
@@ -65,6 +65,50 @@ export class ItemListComponent implements AfterViewInit{
   result_list: Observable<ItemVersionVO[]> | undefined;
   highlight_list: any[] = [];
   number_of_results: number = 0;
+  /** Open state of the sort/filter drawer (only relevant below the lg breakpoint) */
+  filterPanelOpen = false;
+
+  @ViewChild('filterToggle') private filterToggle?: ElementRef<HTMLElement>;
+  @ViewChild('filterPanel') private filterPanel?: ElementRef<HTMLElement>;
+  @ViewChild('filterClose') private filterClose?: ElementRef<HTMLElement>;
+
+  openFilterPanel() {
+    this.filterPanelOpen = true;
+    requestAnimationFrame(() => this.filterClose?.nativeElement.focus());
+  }
+
+  closeFilterPanel(restoreFocus = true) {
+    if (!this.filterPanelOpen) return;
+    this.filterPanelOpen = false;
+    if (restoreFocus) {
+      this.filterToggle?.nativeElement.focus();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.closeFilterPanel();
+  }
+
+  /** Keeps Tab navigation inside the open drawer. */
+  trapFocus(event: Event) {
+    if (!this.filterPanelOpen || !this.filterPanel) return;
+    const panel = this.filterPanel.nativeElement;
+    const focusable = Array.from(panel.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(el => el.offsetParent !== null);
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement;
+    if ((event as KeyboardEvent).shiftKey && (active === first || !panel.contains(active))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!(event as KeyboardEvent).shiftKey && (active === last || !panel.contains(active))) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
 
   //filterEvents: Map<string, FilterEvent> = new Map();
   //aggregationEvents: Map<string, AggregationEvent> = new Map();

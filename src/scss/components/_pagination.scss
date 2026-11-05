@@ -1,6 +1,10 @@
 .mpdl-pagination {
   font-size: 0.875rem;
 
+  .page-of {
+    margin-right: 0.25em;
+  }
+
   button {
     padding: 0 0.1em;
     vertical-align: baseline;
