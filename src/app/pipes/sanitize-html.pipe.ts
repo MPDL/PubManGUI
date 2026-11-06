@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import sanitizeHtml from 'sanitize-html'
+import { sanitizeHtml } from '../utils/html-sanitizer';
 
 @Pipe({
   name: 'sanitizeHtml',
@@ -7,15 +7,13 @@ import sanitizeHtml from 'sanitize-html'
 })
 export class SanitizeHtmlPipe implements PipeTransform {
 
-  transform(value: string | undefined, allowedTags?: string[]): unknown {
-    if(value) {
+  transform(value: string | undefined, allowedTags?: string[]): string | undefined {
+    if (value) {
       return sanitizeHtml(value, {
-        allowedTags: allowedTags ? allowedTags : ['sub', 'sup','b','i'],
-        disallowedTagsMode: 'escape'
+        allowedTags: allowedTags ?? ['sub', 'sup', 'b', 'i'],
       });
     }
     return value;
-
   }
 
 }

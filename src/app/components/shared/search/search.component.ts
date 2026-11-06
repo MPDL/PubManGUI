@@ -10,7 +10,7 @@ import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, OperatorFunction, switchMap } from "rxjs";
 import { ItemsService } from "src/app/services/pubman-rest-client/items.service";
-import sanitizeHtml from "sanitize-html";
+import { htmlToPlainText } from "../../../utils/utils";
 import { filter } from "rxjs/operators";
 
 import { AaService } from "../../../services/aa.service";
@@ -155,7 +155,7 @@ export class SearchComponent {
     let searchTerm = event.item.value;
 
     //strip all html tags
-    searchTerm = sanitizeHtml(searchTerm, { allowedTags: [] });
+    searchTerm = htmlToPlainText(searchTerm);
 
     const query = {
       bool: {

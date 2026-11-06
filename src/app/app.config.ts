@@ -34,7 +34,6 @@ import { provideMatomo, withRouter } from 'ngx-matomo-client';
 import { environment } from "../environments/environment";
 import { ContextsService } from "./services/pubman-rest-client/contexts.service";
 import { MessageService } from './services/message.service';
-import { provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
 
 
 export const appConfig: ApplicationConfig = {
@@ -49,8 +48,6 @@ export const appConfig: ApplicationConfig = {
       provide: RouteReuseStrategy,
       useClass: PureRrs
     },
-    provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
-
     importProvidersFrom(DialogModule),
 
     provideHttpClient(withXhr(),

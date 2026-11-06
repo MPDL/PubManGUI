@@ -18,14 +18,14 @@
   </ul>
 </div>
 } @else {
-<div class="nav-item dropdown-center">
+<div class="nav-item dropdown-center" ngbDropdown>
 
-  <button type="button" class="nav-link dropdown-toggle" [id]="dropdownId" data-bs-toggle="dropdown"
-    aria-expanded="false" [ngbTooltip]="'header.tools.name' | translate">
+  <button type="button" class="nav-link dropdown-toggle" [id]="dropdownId" ngbDropdownToggle
+    [ngbTooltip]="'header.tools.name' | translate">
     <span class="material-symbols-outlined">apps</span>
   </button>
 
-  <ul class="dropdown-menu" [attr.aria-labelledby]="dropdownId" style="transform: translateX(-4em);">
+  <ul class="dropdown-menu" ngbDropdownMenu [attr.aria-labelledby]="dropdownId" style="transform: translateX(-4em);">
     <ng-container *ngTemplateOutlet="items"></ng-container>
   </ul>
 

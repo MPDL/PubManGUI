@@ -2,7 +2,7 @@ import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core
 import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from "@ngx-translate/core";
 import { AaService } from "../../../services/aa.service";
-import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDropdown, NgbDropdownMenu, NgbDropdownToggle, NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { JusReportComponent } from "../jus-report/jus-report.component";
 import { environment } from 'src/environments/environment';
 
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './toolsnav.component.html',
     standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [TranslatePipe, NgbTooltip, NgTemplateOutlet]
+  imports: [TranslatePipe, NgbTooltip, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgTemplateOutlet]
 })
 export class ToolsnavComponent {
     aaService = inject(AaService);

@@ -55,10 +55,6 @@
               "node_modules/@angular/cdk/overlay-prebuilt.css",
               "src/scss/styles.scss"
             ],
-            "scripts": [
-              "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ],
             "budgets": [
               {
                 "type": "initial",

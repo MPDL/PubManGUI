@@ -35,9 +35,8 @@ import { Meta, Title } from "@angular/platform-browser";
 import { ItemActionsModalComponent } from "../shared/item-actions-modal/item-actions-modal.component";
 import { LoadingComponent } from "../shared/loading/loading.component";
 import { TranslatePipe } from "@ngx-translate/core";
-import { itemToVersionId } from "../../utils/utils";
+import { htmlToPlainText, itemToVersionId } from "../../utils/utils";
 import { UsersService } from "../../services/pubman-rest-client/users.service";
-import sanitizeHtml from "sanitize-html";
 import { CopyButtonDirective } from "../../directives/copy-button.directive";
 import { PubManHttpErrorResponse } from "../../services/interceptors/http-error.interceptor";
 import { ChangeContextModalComponent } from "../shared/change-context-modal/change-context-modal.component";
@@ -171,7 +170,7 @@ export class ItemViewComponent {
       this.itemsService.retrieveSingleCitation(id).subscribe(citation => {
         this.citation = citation;
         if (citation) {
-          this.meta.addTag({ name: 'description', content: sanitizeHtml(this.citation, { allowedTags: [], allowedAttributes: {} }) }, false);
+          this.meta.addTag({ name: 'description', content: htmlToPlainText(this.citation) }, false);
           this.metaTagSelectors.push('name="description"');
         }
       });
@@ -183,7 +182,7 @@ export class ItemViewComponent {
 
             //set HTMl title
             if (i.metadata?.title) {
-              const sanitizedTitle = sanitizeHtml(i.metadata.title, { allowedTags: [] }) + ' | ' + this.title.getTitle();
+              const sanitizedTitle = htmlToPlainText(i.metadata.title) + ' | ' + this.title.getTitle();
               this.title.setTitle(sanitizedTitle);
             }
             //this.matomoTracker.trackPageView(i.metadata?.title);

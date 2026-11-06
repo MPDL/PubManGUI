@@ -4,7 +4,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { AaService } from 'src/app/services/aa.service';
 import { LoginComponent } from './login/login.component';
 
-import { NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDropdown, NgbDropdownMenu, NgbDropdownToggle, NgbModal, NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import { UserProfileComponent } from "../user-profile/user-profile.component";
 import {TranslatePipe} from "@ngx-translate/core";
 
@@ -13,7 +13,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     templateUrl: './aa.component.html',
     standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [NgbTooltip, TranslatePipe]
+  imports: [NgbTooltip, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, TranslatePipe]
 })
 export class AaComponent {
 

@@ -5,7 +5,6 @@ import { MessageComponent } from '../components/shared/message/message.component
 import { ConfirmationComponent } from '../components/shared/confirmation/confirmation.component';
 import { PubManHttpErrorResponse } from "./interceptors/http-error.interceptor";
 import { TranslateService } from "@ngx-translate/core";
-import sanitizeHtml from "sanitize-html";
 import { Subject, takeUntil, tap, timer } from "rxjs";
 import { filter } from "rxjs/operators";
 import { NavigationEnd, Router } from "@angular/router";
@@ -141,7 +140,7 @@ export class MessageService {
       title = this.translateService.instant('backendErrors.PERMISSION_DENIED');
     }
     else {
-      title = sanitizeHtml(error.userMessage);
+      title = escapeHtml(error.userMessage);
     }
 
     let text = `
@@ -156,7 +155,7 @@ export class MessageService {
         validations = validations +
           `<li class="list-group-item bg-transparent">
             <span class="bi bi-info-circle-fill me-2"></span>
-             ${this.translateService.instant('backendValidation.' + sanitizeHtml(valrep.content))}
+             ${this.translateService.instant('backendValidation.' + escapeHtml(valrep.content))}
             </li>`;
       });
       text = validations + '</ul>';
@@ -165,19 +164,19 @@ export class MessageService {
     }
     else if(error.jsonMessage?.timestamp) {
       text = text +
-        `${sanitizeHtml(error.jsonMessage.message) || '-'}<br/>
+        `${escapeHtml(error.jsonMessage.message) || '-'}<br/>
          ${error.jsonMessage.reason || '-'}<br/>
-         ${sanitizeHtml(error.jsonMessage.exception)}<br/>
+         ${escapeHtml(error.jsonMessage.exception)}<br/>
          ${error.jsonMessage.timestamp}
         `
     }
     else {
 
       if(error.jsonMessage) {
-        text = text + sanitizeHtml(JSON.stringify(error.jsonMessage));
+        text = text + escapeHtml(JSON.stringify(error.jsonMessage));
       }
       else {
-        text = text + sanitizeHtml(error.error);
+        text = text + escapeHtml(error.error);
       }
 
     }
@@ -202,6 +201,19 @@ export class MessageService {
     const content = message.substring(0, message.lastIndexOf('\n'));
     return { title: title, text: content };
   }
+}
+
+/**
+ * Escapes a plain-text value before it is embedded in an HTML string.
+ * Backend error messages are never markup, so escaping is enough here.
+ */
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 export interface Message {

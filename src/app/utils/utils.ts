@@ -108,6 +108,18 @@ export const identifierUriToEnum = (idUri: string): IdType | undefined => {
   return undefined;
 }
 
+/**
+ * Converts an HTML fragment to plain text, e.g. for search terms built from a title
+ * that may contain markup. The parsed document is inert, so nothing in it is executed
+ * or loaded.
+ */
+export const htmlToPlainText = (html: string): string => {
+  if (!html) {
+    return '';
+  }
+  return new DOMParser().parseFromString(html, 'text/html').body.textContent ?? '';
+};
+
 export const removeDuplicates = (array: any[], key: any) => {
   return array.reduce((arr, item) => {
     const removed = arr.filter((i:any) => i[key] !== item[key]);

@@ -38,7 +38,7 @@ import { FileStagingService } from 'src/app/services/pubman-rest-client/file-sta
 import { MessageService } from 'src/app/services/message.service';
 import { itemToVersionId } from 'src/app/utils/utils';
 import { ItemActionsModalComponent } from 'src/app/components/shared/item-actions-modal/item-actions-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdown, NgbDropdownMenu, NgbDropdownToggle, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemBadgesComponent } from "../../shared/item-badges/item-badges.component";
 import { TranslatePipe } from "@ngx-translate/core";
 import { BootstrapValidationDirective } from "../../../directives/bootstrap-validation.directive";
@@ -60,7 +60,7 @@ import { ValidationErrorMessageDirective } from "../../../directives/validation-
     MetadataFormComponent,
     AddRemoveButtonsComponent,
     CdkDropList,
-    CdkDrag, ItemBadgesComponent, TranslatePipe, BootstrapValidationDirective, ValidationErrorMessageDirective, AccordionGroupValidationDirective, LoadingComponent],
+    CdkDrag, ItemBadgesComponent, TranslatePipe, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, BootstrapValidationDirective, ValidationErrorMessageDirective, AccordionGroupValidationDirective, LoadingComponent],
   templateUrl: './item-form.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./item-form.component.scss'],
