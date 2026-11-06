@@ -138,6 +138,11 @@
       flex: 1 1 auto;
       min-width: 8rem;
       max-width: 22rem;
+      // The growing search otherwise consumes all leftover space, so
+      // justify-content-between has no gap left to distribute between the
+      // search field and the action icons. Guarantee the gap ourselves - the
+      // flexible search simply gets narrower, nothing can be pushed off-screen.
+      margin-right: 1.5rem;
     }
 
     .header-desktop-search pure-search {
