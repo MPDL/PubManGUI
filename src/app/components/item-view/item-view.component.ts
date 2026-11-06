@@ -160,8 +160,22 @@ export class ItemViewComponent {
     this.firstPublicPdfFile = undefined
     this.authorizationInfo = undefined;
     this.latestVersionAuthorizationInfo = undefined;
-    if (id)
+    this.citation = undefined;
+    if (id) {
       this.item$ = this.itemsService.retrieve(id, { globalErrorDisplay: true });
+
+      // The citation is shown in the item header and can be the LCP element, so fetch it in
+      // parallel with the item instead of waiting for the item response first. The export
+      // endpoint accepts both object ids (item_123) and version ids (item_123_4), which means
+      // the route id can be used directly.
+      this.itemsService.retrieveSingleCitation(id).subscribe(citation => {
+        this.citation = citation;
+        if (citation) {
+          this.meta.addTag({ name: 'description', content: sanitizeHtml(this.citation, { allowedTags: [], allowedAttributes: {} }) }, false);
+          this.metaTagSelectors.push('name="description"');
+        }
+      });
+    }
     this.item$
       .pipe(
         tap(i => {
@@ -202,17 +216,6 @@ export class ItemViewComponent {
                 })
               )
               .subscribe()
-
-            //Retrieve citation for item view
-            this.itemsService.retrieveSingleCitation(itemToVersionId(i), undefined, undefined).subscribe(citation => {
-              this.citation = citation;
-              if (citation) {
-                this.meta.addTag({ name: 'description', content: sanitizeHtml(this.citation, { allowedTags: [], allowedAttributes: {} }) }, false);
-                this.metaTagSelectors.push('name="description"');
-              }
-
-            })
-
 
             //retrieve thumbnail, if available
             this.firstPublicPdfFile = i?.files?.find(f => (f.storage === Storage.INTERNAL_MANAGED && f.visibility === Visibility.PUBLIC && f.mimeType === 'application/pdf'));
