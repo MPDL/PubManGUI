@@ -301,9 +301,11 @@
 }
 
 /*
-Material Icons
-We are using a subset of material icons which can be created via GOOGLE API, because the complete set is > 3MB.
-You can use the script "update-material-icons.ts" in the root folder to add icons and create a new font file.
+Material Symbols
+We use a subset, because the complete variable font is > 3MB. Run `npm run update-icons` after
+using a new icon in the templates; the script derives the icon list from the source and creates
+the subset. The subset is instanced to the axis values in base/_base.scss, so changing
+font-variation-settings there requires regenerating it.
 */
 
 @font-face {
@@ -311,7 +313,7 @@ You can use the script "update-material-icons.ts" in the root folder to add icon
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('../../assets/fonts/material-icons/material_icons_subset.woff') format('woff');
+  src: url('../../assets/fonts/material-icons/material_icons_subset.woff2') format('woff2');
 }
 
 .material-symbols-outlined {
