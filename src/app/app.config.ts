@@ -29,9 +29,11 @@ import { provideTranslateService, TranslateLoader, TranslateService } from "@ngx
 import {provideTranslateHttpLoader, TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { isPlatformBrowser, registerLocaleData } from "@angular/common";
 import { lastValueFrom } from "rxjs";
+import { AaService } from "./services/aa.service";
 import { provideMatomo, withRouter } from 'ngx-matomo-client';
 import { environment } from "../environments/environment";
 import { ContextsService } from "./services/pubman-rest-client/contexts.service";
+import { MessageService } from './services/message.service';
 import { provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
 
 
@@ -115,9 +117,18 @@ export const appConfig: ApplicationConfig = {
     }),
 
 
-    // NOTE: The login check deliberately runs after the first render (see AppComponent) instead of
-    // in an app initializer. An initializer blocks bootstrap until /login/who (and the follow-up
-    // context requests) complete, which delays the first paint and therefore the LCP.
+    provideAppInitializer(async () => {
+      const aaService = inject(AaService);
+      const messageService = inject(MessageService)
+      const platformId = inject(PLATFORM_ID);
+      if (isPlatformBrowser(platformId)) {
+        await lastValueFrom(aaService.checkLogin()).catch(
+          err => {
+            messageService.error("Error checking login status on app initialization: " + err);
+          }
+        )
+      }
+    }),
 
     provideMatomo(
       {

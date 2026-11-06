@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, afterNextRender } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -38,17 +38,6 @@ export class AppComponent {
   )
   {
     windowFocusCheckLoginService.enabled = true;
-
-    // Run the login check after the initial render. Waiting for it during bootstrap blocks the
-    // first paint (and thus the LCP), so the shell renders immediately with the anonymous state
-    // and the principal is refreshed once the backend responds.
-    afterNextRender(() => {
-      this.aaService.checkLogin().subscribe({
-        error: err => {
-          this.messageService.error("Error checking login status on app initialization: " + err);
-        }
-      });
-    });
 
 
     //Set HTML title to the breadcrumb label
