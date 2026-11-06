@@ -82,8 +82,10 @@ function serializeNode(
 
   // Not allowed: show the tag as text instead of discarding it, but still
   // process its children so allowed markup inside it keeps working.
-  const open = escapeText(`<${tag}${serializeAttributes(element)}>`);
-  return VOID_ELEMENTS.has(tag) ? open : open + children + escapeText(`</${tag}>`);
+  // The tag is assembled from already escaped parts; running `escapeText` over
+  // it as a whole would escape the `&` of an attribute value a second time.
+  const open = `&lt;${tag}${serializeAttributes(element)}&gt;`;
+  return VOID_ELEMENTS.has(tag) ? open : `${open}${children}&lt;/${tag}&gt;`;
 }
 
 function serializeClassAttribute(
@@ -103,10 +105,16 @@ function serializeClassAttribute(
   return kept.length > 0 ? ` class="${escapeAttribute(kept.join(' '))}"` : '';
 }
 
+/**
+ * Renders the attributes of a disallowed tag for display as text. Everything is
+ * escaped here because the result is pasted into the output string verbatim.
+ * Attribute names cannot contain `&`, `<`, `>`, `"` or whitespace, so they are
+ * emitted as they are.
+ */
 function serializeAttributes(element: Element): string {
   let attributes = '';
   for (const attribute of Array.from(element.attributes)) {
-    attributes += ` ${attribute.name}="${escapeAttribute(attribute.value)}"`;
+    attributes += ` ${attribute.name}=&quot;${escapeAttribute(attribute.value)}&quot;`;
   }
   return attributes;
 }
