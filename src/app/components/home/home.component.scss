@@ -30,8 +30,8 @@
 // to three lines and reserve that space so all cards in a row line up.
 .card-title-clamp {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
   overflow-wrap: anywhere;
