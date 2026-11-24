@@ -1,3 +1,36 @@
+# [1.4.0](https://github.com/MPDL/PubManGUI/compare/1.3.1...1.4.0) (2026-11-24)
+
+
+### Bug Fixes
+
+* [INGUI-250] ID Fetch: Error + Waring with same content displayed ([ff02a93](https://github.com/MPDL/PubManGUI/commit/ff02a938fb05f5f45db4e01f7a48aaf6b18cef60))
+* [INGUI-250] ID Fetch: Error + Waring with same content displayed - also for Crossref-DOI ([39b0666](https://github.com/MPDL/PubManGUI/commit/39b0666ad4ad83aa6ddbb43d6f92f8df5939aaf5))
+* [INGUI-350] filter closed access OA status for internal managed files in advanced search ([d4dd919](https://github.com/MPDL/PubManGUI/commit/d4dd9192fb2315da488046df39c3d703ea950981))
+* [INGUI-357] display closed access OA status for locators ([7567786](https://github.com/MPDL/PubManGUI/commit/756778607b66230ff7bfb86723d1316da0d49200))
+* [INGUI-367] update identifierUrl logic to include additional DOI types and correct ISSN URL ([0d202d3](https://github.com/MPDL/PubManGUI/commit/0d202d3a0a580b54da0bdbf75485f12a18f19357))
+* [INGUI-368] unify identifier options logic by using shared constant ([4bcf852](https://github.com/MPDL/PubManGUI/commit/4bcf852dc7a7b5a39dd33f25f3767d09a1f49c7d))
+* allow longer home card titles before clamping ([ea61c46](https://github.com/MPDL/PubManGUI/commit/ea61c46cdb52605c961593dc9e0ba181da2db7b5))
+* Bugfix for genreSpecificProperties -> genreSpeicficResource ([6bdd44e](https://github.com/MPDL/PubManGUI/commit/6bdd44ea9cc0ce2c7b46d9149be93835978c4a6f))
+* harden html-sanitizer against mXSS and parser differentials ([519255e](https://github.com/MPDL/PubManGUI/commit/519255e8b62c7e2543595b6f9fe1d4c5431a2fd0))
+* prevent desktop header search from crowding action icons ([c53127a](https://github.com/MPDL/PubManGUI/commit/c53127a7ffd52cb98b8914c8c1c918fe907dfedf))
+* prevent double escaping disallowed tag attributes ([26af31e](https://github.com/MPDL/PubManGUI/commit/26af31e38edb96a5a690837e73fdfd3024dd5fc7))
+* refactor `toElasticSearchQuery` to use RxJS `pipe` for proper chaining ([8834e2c](https://github.com/MPDL/PubManGUI/commit/8834e2c651c698f28634099c4b2caec2182eedb6))
+* remove minimum home card title height ([03e967f](https://github.com/MPDL/PubManGUI/commit/03e967fce52d35ccd12992d0652b57c1aff8725f))
+
+
+### Features
+
+* [INGUI-359] add read-only mode guard ([603976c](https://github.com/MPDL/PubManGUI/commit/603976cbed21ee3419de1cafecfecd269331a6ce))
+* add more responsive mobile navigation and filter panel ([ebda4eb](https://github.com/MPDL/PubManGUI/commit/ebda4eb593727ae5d3788a2006e1947ace146d4e))
+* **orcid:** new exportType orcid ([5148c0f](https://github.com/MPDL/PubManGUI/commit/5148c0fe2dddbc8b404bfd26e726a0b3eb5eff1a))
+* **orcid:** new exportType orcid II ([ccb51ec](https://github.com/MPDL/PubManGUI/commit/ccb51ec98e45ddf91e0bbbfb8f4a7910e89b50b4))
+
+
+### Performance Improvements
+
+* generate subset icon fonts from source usage ([03cec1b](https://github.com/MPDL/PubManGUI/commit/03cec1b30e0cfceb79e40e667485b3eedacc7ea5))
+* optimize font loading and item citation fetch ([cb1968d](https://github.com/MPDL/PubManGUI/commit/cb1968d5a916485a63efc43616b9286f6c4fd66a))
+* reduce bundle by replacing sanitize-html and Bootstrap JS ([f73784b](https://github.com/MPDL/PubManGUI/commit/f73784b72bd6f83ef3da4ea60f0f0eef5d30b2ad))
 ## [1.3.1](https://github.com/MPDL/PubManGUI/compare/1.2.2...1.3.1) (2026-09-08)
 
 
